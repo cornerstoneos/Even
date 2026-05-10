@@ -1215,7 +1215,7 @@ function initSupabase(){
     sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     checkSession();
   } catch(e) {
-    alert('DEBUG: Supabase init failed — ' + e.message);
+    console.error('Supabase init failed:', e.message);
     showApp();
   }
 }
@@ -2400,7 +2400,10 @@ function animateCounter(el, target) {
   }catch(e){
     hideLoading();
     btn.disabled=false;
-    alert('Error: '+e.message);
+    const msg=e.message&&e.message.toLowerCase().includes('load')?
+      (appLang==='en'?'Connection lost — check your signal and try again.':'Conexión perdida — verifica tu señal e intenta de nuevo.'):
+      (appLang==='en'?'Something went wrong — please try again.':'Algo salió mal — intenta de nuevo.');
+    showToast(msg, 5000);
   }
 }
 
