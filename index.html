@@ -1733,7 +1733,6 @@ function handleFiles(files){
 async function callClaude(messages,maxTokens=2500,useCache=false){
   const body={model:'claude-sonnet-4-20250514',max_tokens:maxTokens,messages};
   if(useCache&&messages.length&&messages[0].role==='user'){
-    // Wrap first message content with cache_control for prompt caching
     const first=messages[0];
     if(typeof first.content==='string'){
       body.messages=[{role:'user',content:[{type:'text',text:first.content,cache_control:{type:'ephemeral'}}]},...messages.slice(1)];
@@ -1743,16 +1742,28 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
       body.messages=[{role:'user',content:cached},...messages.slice(1)];
     }
   }
-  const r=await fetch('https://even-production.up.railway.app/api/estimate',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(body)
-  });
-  if(!r.ok){const e=await r.json();throw new Error(e.error?.message||r.statusText)}
-  const d=await r.json();
-  // Log cache performance
-  if(d.usage){console.log('Cache stats:',JSON.stringify(d.usage));}
-  return d.content.map(b=>b.text||'').join('');
+  const MAX_RETRIES=2;
+  for(let attempt=0;attempt<=MAX_RETRIES;attempt++){
+    try{
+      const ctrl=new AbortController();
+      const tid=setTimeout(()=>ctrl.abort(),100000);
+      const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(body),
+        signal:ctrl.signal
+      });
+      clearTimeout(tid);
+      if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||r.statusText)}
+      const d=await r.json();
+      if(d.usage){console.log('Cache stats:',JSON.stringify(d.usage));}
+      return d.content.map(b=>b.text||'').join('');
+    }catch(e){
+      if(attempt===MAX_RETRIES) throw e;
+      console.warn('API attempt '+(attempt+1)+' failed, retrying…',e.message);
+      await new Promise(r=>setTimeout(r,3000*(attempt+1)));
+    }
+  }
 }
 function parseJ(t){return JSON.parse(t.replace(/```json|```/g,'').trim())}
 const fmt=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
