@@ -118,7 +118,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .field{margin-bottom:13px}
 .field:last-child{margin-bottom:0}
 .flabel{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;display:flex;align-items:center;gap:5px;margin-bottom:6px}
-.ficon{width:15px;height:15px;display:inline-block;vertical-align:middle;stroke:currentColor;flex-shrink:0}
+.ficon{width:15px;height:15px;display:inline-block;vertical-align:middle;stroke:var(--gold);flex-shrink:0}
 .fcontrol{
   width:100%;background:var(--l2);border:1.5px solid var(--rim);border-radius:var(--r);
   padding:0;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;
@@ -757,7 +757,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
         <div class="gc-body">
           <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-in').click()">
             <input type="file" id="file-in" multiple accept="image/*,.pdf,.txt,.doc,.docx" style="display:none" onchange="handleFiles(this.files)">
-            <span class="upload-icon"><i data-lucide="upload-cloud" style="width:34px;height:34px;stroke:var(--gold);display:block"></i></span>
+            <span class="upload-icon"><i data-lucide="upload-cloud" style="width:34px;height:34px;stroke:var(--gold);display:block;margin:0 auto"></i></span>
             <div class="upload-title" data-en="Drop plans, photos, or PDF scopes" data-es="Sube planos, fotos o PDFs">Drop plans, photos, or PDF scopes</div>
             <div class="upload-sub" data-en="Photographs of rolled-out plans work great • <span>Up to 20 images</span>" data-es="Fotos de planos funcionan bien • <span>Hasta 20 imágenes</span>">Photographs of rolled-out plans work great • <span>Up to 20 images</span></div>
             <div class="img-strip" id="img-strip"></div>
