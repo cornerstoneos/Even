@@ -419,8 +419,8 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 /* Cube loader — gold arc orbits the isometric mark */
 .cube-loader{position:relative;width:170px;height:170px;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
 .cube-halo{position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle at center,rgba(255,179,0,.45),rgba(255,179,0,.14) 50%,transparent 72%);animation:cubeHalo 2.4s ease-in-out infinite;filter:blur(3px)}
-.cube-orb{position:absolute;inset:6px;border-radius:50%;border:2px solid transparent;background:conic-gradient(from 0deg,rgba(255,179,0,0) 0deg,rgba(255,179,0,.95) 130deg,rgba(255,179,0,0) 220deg) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 1.5s linear infinite;filter:drop-shadow(0 0 8px rgba(255,179,0,.55))}
-.cube-orb-2{position:absolute;inset:14px;border-radius:50%;border:1.5px solid transparent;background:conic-gradient(from 180deg,rgba(255,179,0,0) 0deg,rgba(255,179,0,.6) 90deg,rgba(255,179,0,0) 160deg) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 2.2s linear infinite reverse}
+.cube-orb{position:absolute;inset:6px;border-radius:50%;border:2px solid rgba(255,179,0,.15);border-top-color:rgba(255,179,0,.95);border-right-color:rgba(255,179,0,.5);animation:spin 1.5s linear infinite;filter:drop-shadow(0 0 6px rgba(255,179,0,.4))}
+.cube-orb-2{position:absolute;inset:14px;border-radius:50%;border:1.5px solid rgba(255,179,0,.1);border-bottom-color:rgba(255,179,0,.7);border-left-color:rgba(255,179,0,.35);animation:spin 2.2s linear infinite reverse}
 .cube-mark{position:relative;z-index:1;width:86px;height:86px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 18px rgba(255,179,0,.5));animation:cubeGlow 2.4s ease-in-out infinite}
 @keyframes cubeGlow{0%,100%{filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 10px rgba(255,179,0,.35))}50%{filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 24px rgba(255,179,0,.75))}}
 @keyframes cubeHalo{0%,100%{transform:scale(.85);opacity:.55}50%{transform:scale(1.15);opacity:1}}
@@ -1767,6 +1767,8 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
 function parseJ(t){return JSON.parse(t.replace(/```json|```/g,'').trim())}
 const fmt=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmtK=n=>'$'+Math.round(n/1000)+'k';
+function savePDF(doc,filename){if(/iPad|iPhone|iPod/.test(navigator.userAgent)){doc.output('dataurlnewwindow');}else{doc.save(filename);}}
+
 
 // ══════════════════════════
 //  THREE-PHASE LOADING
@@ -2683,7 +2685,7 @@ function downloadProposalPDF(){
   doc.text(L==='en'?'Contractor Signature & Date':'Firma del Contratista y Fecha',W-M-170,y+10);
   const pages=doc.getNumberOfPages();
   for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even by Cornerstone OS · Client Proposal · Confidential',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
-  doc.save(`Even-Proposal-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
+  savePDF(doc,`Even-Proposal-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
 }
 
 function downloadCostSheet(){
@@ -2745,7 +2747,7 @@ function downloadCostSheet(){
   if(data.assumptions?.length&&y<700){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(200,146,42);doc.text(L==='en'?'ASSUMPTIONS':'SUPUESTOS',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);data.assumptions.forEach(a=>{if(y<740){doc.text('• '+a,M+4,y);y+=10}})}
   const pages=doc.getNumberOfPages();
   for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even by Cornerstone OS · Internal Cost Sheet · CONFIDENTIAL',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
-  doc.save(`Even-CostSheet-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
+  savePDF(doc,`Even-CostSheet-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
 }
 
 // ── Location hint update ──
