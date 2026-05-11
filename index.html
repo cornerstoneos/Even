@@ -673,6 +673,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
     </div>
     <div class="topbar-right" style="display:flex;align-items:center;gap:10px">
       <span id="user-badge" style="display:none"></span>
+      <button id="dashboard-topbar-btn" onclick="navigate('dashboard')" style="display:none;background:none;border:none;padding:5px;cursor:pointer;line-height:0" title="Saved Jobs"><i data-lucide="folder" style="width:17px;height:17px;stroke:var(--gold)"></i></button>
       <button id="gopro-topbar-btn" onclick="handleUpgrade('monthly')" style="display:none;background:linear-gradient(135deg,#FFB300,#e09900);border:none;color:#000;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px"><img src="assets/logo-hero.png" width="12" height="12" alt="" style="object-fit:contain;vertical-align:middle;margin-right:3px"> GO PRO</button>
       <button id="topbar-auth-btn" onclick="toggleAuthPanel()" style="background:var(--panel);border:1px solid var(--rim);color:var(--muted);padding:5px 10px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px">SIGN IN</button>
       <div class="lang-toggle">
@@ -1253,12 +1254,11 @@ async function loadUserData(){
   try {
     const { data, error } = await sbClient
       .from('users')
-      .select('estimate_count, is_pro')
+      .select('estimate_count, is_pro, prefs, logo_url, stripe_customer_id')
       .eq('id', currentUser.id)
       .single();
-    
+
     if(error || !data){
-      // Create user record if doesn't exist
       await sbClient.from('users').upsert({
         id: currentUser.id,
         email: currentUser.email,
@@ -1270,6 +1270,8 @@ async function loadUserData(){
     } else {
       estimateCount = data.estimate_count || 0;
       isPro = data.is_pro || false;
+      window._userLogoUrl = data.logo_url || null;
+      if(data.prefs) applyPrefs(data.prefs);
     }
     updateUserBadge();
   } catch(e) {
@@ -1299,12 +1301,15 @@ function updateUserBadge(){
     const rem = Math.max(0, FREE_LIMIT - estimateCount);
     const goProBtn = document.getElementById('gopro-topbar-btn');
     const upsellStrip = document.getElementById('post-estimate-upsell');
+    const dashBtn = document.getElementById('dashboard-topbar-btn');
     if(isPro){
       if(badge){ badge.textContent='✦ PRO'; badge.style.display='inline-block'; badge.style.color='var(--gold)'; badge.style.fontSize='10px'; badge.style.fontFamily="'DM Mono',monospace"; badge.style.letterSpacing='.5px'; }
       if(freeDisplay){ freeDisplay.style.display='none'; }
       if(goProBtn){ goProBtn.style.display='none'; }
       if(upsellStrip){ upsellStrip.style.display='none'; }
+      if(dashBtn) dashBtn.style.display='inline-block';
     } else {
+      if(dashBtn) dashBtn.style.display='none';
       if(badge){ badge.style.display='none'; }
       if(freeDisplay){
         freeDisplay.textContent = rem === 2 ? '2 free estimates left' : rem === 1 ? 'Last free estimate — Go Pro to keep going' : 'Free estimates used — Go Pro to continue';
@@ -1536,6 +1541,7 @@ function navigate(scr){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+scr).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+  if(scr==='dashboard') loadDashboard();
   if(scr==='input'){
     currentEstimate=null;
     document.getElementById('li-body').innerHTML='';
@@ -2407,6 +2413,10 @@ function animateCounter(el, target) {
     const psEl = document.getElementById('pay-sched-section');
     if(psEl) psEl.style.display='block';
     incrementEstimateCount();
+    if(isPro && currentUser) {
+      saveEstimateToCloud(data);
+      savePrefs();
+    }
     btn.disabled=false;
   }catch(e){
     hideLoading();
@@ -2472,6 +2482,31 @@ function calcVar(input,estimated){
     const el=document.getElementById('vr-'+idx);
     if(el){el.className=diff>0?'var-neg':'var-pos';el.textContent=(diff>0?'+':'')+fmt(Math.abs(diff))}
   }
+  if(isPro && currentUser && window._currentEstimateId) debounceActualSave();
+}
+let _actualSaveTimer=null;
+function debounceActualSave(){
+  clearTimeout(_actualSaveTimer);
+  _actualSaveTimer=setTimeout(saveActuals, 1200);
+}
+async function saveActuals(){
+  if(!window._currentEstimateId || !currentUser || !sbClient) return;
+  const rows=document.querySelectorAll('#var-body .var-row');
+  const entries=[];
+  rows.forEach((row,i)=>{
+    const input=row.querySelector('input');
+    if(!input||!input.value) return;
+    const actual=parseFloat(input.value.replace(/[$,]/g,''));
+    if(!isNaN(actual)){
+      const descEl=row.querySelector('span');
+      entries.push({estimate_id:window._currentEstimateId,line_index:i,actual_cost:actual,description:descEl?.textContent||''});
+    }
+  });
+  if(!entries.length) return;
+  try {
+    await sbClient.from('cost_entries')
+      .upsert(entries,{onConflict:'estimate_id,line_index'});
+  } catch(e){ console.error('Save actuals error:',e); }
 }
 
 function recalc(idx){
@@ -2995,6 +3030,236 @@ async function submitDataTrade(){
     </div>
   </div>
 </div>
+<!-- Dashboard Screen -->
+<div class="screen" id="s-dashboard">
+  <div class="sbody" style="padding-top:24px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div>
+        <div style="font-size:18px;font-weight:700;color:var(--white)">Saved Jobs</div>
+        <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px">✦ Pro — all your estimates in one place</div>
+      </div>
+      <button onclick="navigate('input')" style="background:none;border:1px solid var(--rim);color:var(--muted);padding:7px 13px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'DM Mono',monospace">+ New Estimate</button>
+    </div>
+
+    <!-- Logo upload card -->
+    <div class="gc" style="margin-bottom:16px">
+      <div class="gc-head">
+        <div class="gc-title"><i data-lucide="building-2" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>Company Logo</div>
+        <div class="gc-tag">Shows on proposals</div>
+      </div>
+      <div class="gc-body" style="padding:14px 12px">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div id="logo-preview-wrap" style="width:64px;height:64px;border:1px solid var(--rim);border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg)">
+            <img id="logo-preview-img" src="" alt="" style="max-width:100%;max-height:100%;display:none;object-fit:contain">
+            <i data-lucide="building-2" id="logo-preview-placeholder" style="width:24px;height:24px;stroke:var(--muted)"></i>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:12px;color:var(--white2);margin-bottom:6px">Upload your company logo to appear on all client proposals.</div>
+            <label style="display:inline-block;padding:7px 13px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--gold);cursor:pointer;font-family:'DM Mono',monospace">
+              <input type="file" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
+              <i data-lucide="upload-cloud" style="width:11px;height:11px;stroke:currentColor;vertical-align:middle;margin-right:4px"></i> Upload Logo
+            </label>
+            <span id="logo-upload-status" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saved estimates list -->
+    <div id="dashboard-list">
+      <div style="text-align:center;padding:40px 20px;color:var(--muted);font-size:13px" id="dashboard-empty">
+        <i data-lucide="folder" style="width:32px;height:32px;stroke:var(--muted);display:block;margin:0 auto 12px"></i>
+        No saved estimates yet. Run your first estimate to see it here.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════
+//  PRO — CLOUD PERSISTENCE
+// ══════════════════════════
+
+async function saveEstimateToCloud(data){
+  if(!currentUser||!sbClient) return;
+  try{
+    const payload={
+      user_id: currentUser.id,
+      client_name: document.getElementById('est-client')?.value||'',
+      project_label: document.getElementById('est-project-label')?.value||document.getElementById('est-location')?.value||'',
+      location: document.getElementById('est-location')?.value||'',
+      trade: document.getElementById('est-trade')?.value||window._ctx?.trade||'',
+      total_bid: data.totalBid||0,
+      estimate_json: data,
+      created_at: new Date().toISOString()
+    };
+    const { data: saved, error } = await sbClient.from('estimates').insert(payload).select('id').single();
+    if(error){ console.error('Save estimate error:',error); return; }
+    window._currentEstimateId = saved.id;
+    showToast('✦ Estimate saved to your account.');
+  }catch(e){ console.error('Save estimate error:',e); }
+}
+
+function savePrefs(){
+  if(!currentUser||!sbClient) return;
+  const prefs={
+    laborType: laborType||'own',
+    bidType: bidType||'fixed',
+    trade: document.getElementById('est-trade')?.value||'',
+    location: document.getElementById('est-location')?.value||''
+  };
+  sbClient.from('users').update({prefs}).eq('id',currentUser.id)
+    .then(({error})=>{ if(error) console.error('Save prefs error:',error); });
+}
+
+function applyPrefs(prefs){
+  if(!prefs) return;
+  if(prefs.laborType){
+    laborType=prefs.laborType;
+    const segLabor=document.getElementById('seg-labor');
+    if(segLabor) segLabor.querySelectorAll('.seg-opt').forEach(b=>{
+      const v=b.getAttribute('onclick')?.match(/'([^']+)'\)$/)?.[1];
+      b.classList.toggle('active',v===prefs.laborType);
+    });
+  }
+  if(prefs.bidType){
+    bidType=prefs.bidType;
+    const segBid=document.getElementById('seg-bid');
+    if(segBid) segBid.querySelectorAll('.seg-opt').forEach(b=>{
+      const v=b.getAttribute('onclick')?.match(/'([^']+)'\)$/)?.[1];
+      b.classList.toggle('active',v===prefs.bidType);
+    });
+  }
+  if(prefs.trade){
+    const el=document.getElementById('est-trade');
+    if(el&&!el.value) el.value=prefs.trade;
+  }
+  if(prefs.location){
+    const el=document.getElementById('est-location');
+    if(el&&!el.value) el.value=prefs.location;
+  }
+}
+
+async function loadDashboard(){
+  if(!currentUser||!sbClient||!isPro) return;
+  const listEl=document.getElementById('dashboard-list');
+  const emptyEl=document.getElementById('dashboard-empty');
+  if(listEl) listEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px">Loading...</div>';
+
+  // Show existing logo if saved
+  if(window._userLogoUrl){
+    const img=document.getElementById('logo-preview-img');
+    const ph=document.getElementById('logo-preview-placeholder');
+    if(img){ img.src=window._userLogoUrl; img.style.display='block'; }
+    if(ph) ph.style.display='none';
+  }
+
+  try{
+    const { data, error } = await sbClient
+      .from('estimates')
+      .select('id,client_name,project_label,location,trade,total_bid,created_at')
+      .eq('user_id',currentUser.id)
+      .order('created_at',{ascending:false})
+      .limit(50);
+
+    if(error||!data||!data.length){
+      if(listEl) listEl.innerHTML='';
+      if(emptyEl) emptyEl.style.display='block';
+      return;
+    }
+    if(emptyEl) emptyEl.style.display='none';
+    if(listEl) listEl.innerHTML=data.map(est=>{
+      const date=new Date(est.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      const label=est.project_label||est.location||'Untitled Job';
+      const client=est.client_name?`<span style="color:var(--muted);font-size:11px">${est.client_name}</span>`:'';
+      return `<div class="gc" style="margin-bottom:10px;cursor:pointer" onclick="loadSavedEstimate('${est.id}')">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px">
+          <div>
+            <div style="font-size:14px;font-weight:600;color:var(--white);margin-bottom:3px">${label}</div>
+            ${client}
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px">${est.trade||''} · ${date}</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:16px;font-weight:700;color:var(--gold)">${fmt(est.total_bid)}</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:3px;display:flex;gap:6px;justify-content:flex-end">
+              <button onclick="event.stopPropagation();redownloadEstimate('${est.id}')" style="background:none;border:none;color:var(--gold);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:0"><i data-lucide="file-bar-chart" style="width:11px;height:11px;stroke:currentColor;vertical-align:middle"></i> PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+    if(window.lucide) lucide.createIcons();
+  }catch(e){ console.error('Load dashboard error:',e); }
+}
+
+async function loadSavedEstimate(estimateId){
+  if(!sbClient) return;
+  try{
+    const { data, error } = await sbClient.from('estimates').select('estimate_json').eq('id',estimateId).single();
+    if(error||!data) return;
+    window._currentEstimateId = estimateId;
+    currentEstimate = data.estimate_json;
+    navigate('estimate');
+    renderEstimate(currentEstimate);
+    const psEl=document.getElementById('pay-sched-section');
+    if(psEl) psEl.style.display='block';
+    loadActuals(estimateId);
+  }catch(e){ console.error('Load saved estimate error:',e); }
+}
+
+async function redownloadEstimate(estimateId){
+  if(!sbClient) return;
+  try{
+    const { data, error } = await sbClient.from('estimates').select('estimate_json,client_name,project_label').eq('id',estimateId).single();
+    if(error||!data) return;
+    currentEstimate = data.estimate_json;
+    downloadProposalPDF();
+  }catch(e){ console.error('Redownload error:',e); }
+}
+
+async function loadActuals(estimateId){
+  if(!sbClient||!estimateId) return;
+  try{
+    const { data } = await sbClient.from('cost_entries').select('*').eq('estimate_id',estimateId);
+    if(!data||!data.length) return;
+    data.forEach(entry=>{
+      const row=document.querySelector(`#var-body .var-row:nth-child(${entry.line_index+1})`);
+      if(!row) return;
+      const input=row.querySelector('input');
+      if(input){ input.value=entry.actual_cost; calcVar(input,0); }
+    });
+  }catch(e){ console.error('Load actuals error:',e); }
+}
+
+// Logo upload
+async function handleLogoUpload(input){
+  if(!input.files||!input.files[0]||!currentUser||!sbClient) return;
+  const file=input.files[0];
+  const statusEl=document.getElementById('logo-upload-status');
+  if(statusEl) statusEl.textContent='Uploading…';
+  try{
+    const ext=file.name.split('.').pop();
+    const path=`${currentUser.id}/logo.${ext}`;
+    const { error: upErr } = await sbClient.storage.from('logos').upload(path,file,{upsert:true,contentType:file.type});
+    if(upErr) throw upErr;
+    const { data: urlData } = sbClient.storage.from('logos').getPublicUrl(path);
+    const publicUrl = urlData.publicUrl;
+    await sbClient.from('users').update({logo_url:publicUrl}).eq('id',currentUser.id);
+    window._userLogoUrl = publicUrl;
+    const img=document.getElementById('logo-preview-img');
+    const ph=document.getElementById('logo-preview-placeholder');
+    if(img){ img.src=publicUrl; img.style.display='block'; }
+    if(ph) ph.style.display='none';
+    if(statusEl) statusEl.textContent='Saved ✓';
+    showToast('Logo saved — will appear on all future proposals.');
+  }catch(e){
+    console.error('Logo upload error:',e);
+    if(statusEl) statusEl.textContent='Upload failed';
+    showToast('Logo upload failed — please try again.');
+  }
+}
+</script>
+
 <script>document.addEventListener("DOMContentLoaded",function(){if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>
