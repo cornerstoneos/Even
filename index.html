@@ -394,6 +394,39 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .var-pos{color:var(--green);font-family:'DM Mono',monospace;font-size:11px;font-weight:600}
 .var-neg{color:var(--red);font-family:'DM Mono',monospace;font-size:11px;font-weight:600}
 
+/* ── DASHBOARD ── */
+.dash-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+.dash-metric{background:var(--panel);border:1px solid var(--rim);border-radius:12px;padding:14px 14px 12px}
+.dash-metric-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px}
+.dash-metric-val{font-size:22px;font-weight:700;color:var(--white);line-height:1}
+.dash-metric-sub{font-size:10px;color:var(--muted);margin-top:4px}
+.dash-insight{background:rgba(255,179,0,0.05);border:1px solid rgba(255,179,0,0.15);border-radius:10px;padding:11px 12px;margin-bottom:7px;font-size:12px;color:var(--white2);line-height:1.55;display:flex;gap:9px;align-items:flex-start}
+.job-card{background:var(--panel);border:1px solid var(--rim);border-radius:12px;margin-bottom:10px;overflow:hidden;transition:border-color .18s}
+.job-card:hover{border-color:rgba(255,179,0,.28)}
+.job-card-top{padding:14px 14px 10px;display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.job-card-main{flex:1;min-width:0}
+.job-card-label{font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.job-card-meta{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px}
+.job-card-right{text-align:right;flex-shrink:0}
+.job-card-total{font-size:16px;font-weight:700;color:var(--gold)}
+.job-variance{font-size:10px;margin-top:3px;font-family:'DM Mono',monospace}
+.job-variance.over{color:#ff6b6b}.job-variance.under{color:#4ade80}
+.status-pill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:20px;font-family:'DM Mono',monospace;white-space:nowrap}
+.status-draft{background:rgba(255,255,255,.06);color:var(--muted)}
+.status-sent{background:rgba(100,160,255,.12);color:#64a0ff}
+.status-won{background:rgba(74,222,128,.12);color:#4ade80}
+.status-active{background:rgba(255,179,0,.12);color:var(--gold)}
+.status-complete{background:rgba(74,222,128,.07);color:#86efac}
+.status-lost{background:rgba(255,100,100,.1);color:#ff6b6b}
+.job-card-actions{display:flex;align-items:center;gap:6px;padding:0 14px 12px;flex-wrap:wrap}
+.job-action-btn{background:none;border:none;color:var(--muted);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:4px 0;display:flex;align-items:center;gap:4px}
+.job-action-btn:hover{color:var(--gold)}
+.job-followup{display:flex;align-items:center;gap:5px;background:rgba(255,179,0,.07);border:1px solid rgba(255,179,0,.2);border-radius:6px;padding:5px 10px;font-size:10px;color:var(--gold);font-family:'DM Mono',monospace;margin:0 14px 10px}
+.job-notes-wrap{padding:0 14px 12px;display:none}
+.job-notes-input{width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:8px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:60px;box-sizing:border-box;line-height:1.5}
+.job-notes-input:focus{border-color:rgba(255,179,0,.4)}
+.status-select{background:var(--bg);border:1px solid var(--rim);color:var(--white2);font-size:10px;border-radius:6px;padding:3px 6px;font-family:'DM Mono',monospace;cursor:pointer;outline:none}
+
 /* ── ALERT ── */
 .alert{border-radius:var(--r);padding:10px 13px;font-size:12.5px;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;line-height:1.5}
 .alert-info{background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);color:#58a6ff}
@@ -3033,46 +3066,90 @@ async function submitDataTrade(){
 </div>
 <!-- Dashboard Screen -->
 <div class="screen" id="s-dashboard">
-  <div class="sbody" style="padding-top:24px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+  <div class="sbody" style="padding-top:20px">
+
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
       <div>
-        <div style="font-size:18px;font-weight:700;color:var(--white)">Saved Jobs</div>
-        <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px">✦ Pro — all your estimates in one place</div>
+        <div style="font-size:19px;font-weight:700;color:var(--white);line-height:1">Command Center</div>
+        <div style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px;letter-spacing:1px">✦ EVEN PRO</div>
       </div>
-      <button onclick="navigate('input')" style="background:none;border:1px solid var(--rim);color:var(--muted);padding:7px 13px;border-radius:8px;font-size:11px;cursor:pointer;font-family:'DM Mono',monospace">+ New Estimate</button>
+      <button onclick="navigate('input')" style="background:var(--gold);border:none;color:#000;padding:9px 15px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px">+ NEW JOB</button>
     </div>
 
-    <!-- Logo upload card -->
-    <div class="gc" style="margin-bottom:16px">
-      <div class="gc-head">
-        <div class="gc-title"><i data-lucide="building-2" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>Company Logo</div>
-        <div class="gc-tag">Shows on proposals</div>
+    <!-- Metrics strip -->
+    <div class="dash-metrics">
+      <div class="dash-metric">
+        <div class="dash-metric-label">Pipeline</div>
+        <div class="dash-metric-val" id="dm-pipeline">—</div>
+        <div class="dash-metric-sub" id="dm-pipeline-sub">open estimates</div>
       </div>
-      <div class="gc-body" style="padding:14px 12px">
-        <div style="display:flex;align-items:center;gap:14px">
-          <div id="logo-preview-wrap" style="width:64px;height:64px;border:1px solid var(--rim);border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg)">
-            <img id="logo-preview-img" src="" alt="" style="max-width:100%;max-height:100%;display:none;object-fit:contain">
-            <i data-lucide="building-2" id="logo-preview-placeholder" style="width:24px;height:24px;stroke:var(--muted)"></i>
-          </div>
-          <div style="flex:1">
-            <div style="font-size:12px;color:var(--white2);margin-bottom:6px">Upload your company logo to appear on all client proposals.</div>
-            <label style="display:inline-block;padding:7px 13px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--gold);cursor:pointer;font-family:'DM Mono',monospace">
-              <input type="file" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
-              <i data-lucide="upload-cloud" style="width:11px;height:11px;stroke:currentColor;vertical-align:middle;margin-right:4px"></i> Upload Logo
-            </label>
-            <span id="logo-upload-status" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+      <div class="dash-metric">
+        <div class="dash-metric-label">Won This Month</div>
+        <div class="dash-metric-val" id="dm-won">—</div>
+        <div class="dash-metric-sub" id="dm-won-sub">—</div>
+      </div>
+      <div class="dash-metric">
+        <div class="dash-metric-label">Active Jobs</div>
+        <div class="dash-metric-val" id="dm-active">—</div>
+        <div class="dash-metric-sub">in progress</div>
+      </div>
+      <div class="dash-metric">
+        <div class="dash-metric-label">Avg Margin</div>
+        <div class="dash-metric-val" id="dm-margin">—</div>
+        <div class="dash-metric-sub">across all jobs</div>
+      </div>
+    </div>
+
+    <!-- AI Insights -->
+    <div id="dash-insights-wrap" style="display:none;margin-bottom:16px">
+      <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:8px;display:flex;align-items:center;gap:6px">
+        <img src="assets/logo-hero.png" width="11" height="11" style="object-fit:contain;vertical-align:middle;opacity:.8"> EVEN INTELLIGENCE
+      </div>
+      <div id="dash-insights"></div>
+    </div>
+
+    <!-- Jobs header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace">All Jobs</div>
+      <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace" id="dash-job-count"></div>
+    </div>
+
+    <!-- Job list -->
+    <div id="dashboard-list">
+      <div id="dashboard-empty" style="text-align:center;padding:40px 20px;color:var(--muted);font-size:13px">
+        <i data-lucide="folder" style="width:32px;height:32px;stroke:var(--muted);display:block;margin:0 auto 12px"></i>
+        No saved jobs yet. Run your first estimate.
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div style="margin-top:28px">
+      <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:10px">Settings</div>
+      <div class="gc">
+        <div class="gc-head">
+          <div class="gc-title"><i data-lucide="building-2" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>Company Logo</div>
+          <div class="gc-tag">Shows on proposals</div>
+        </div>
+        <div class="gc-body" style="padding:14px 12px">
+          <div style="display:flex;align-items:center;gap:14px">
+            <div style="width:56px;height:56px;border:1px solid var(--rim);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg);flex-shrink:0">
+              <img id="logo-preview-img" src="" alt="" style="max-width:100%;max-height:100%;display:none;object-fit:contain">
+              <i data-lucide="building-2" id="logo-preview-placeholder" style="width:20px;height:20px;stroke:var(--muted)"></i>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:12px;color:var(--white2);margin-bottom:7px">Upload your company logo to appear on client proposals.</div>
+              <label style="display:inline-block;padding:7px 13px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--gold);cursor:pointer;font-family:'DM Mono',monospace">
+                <input type="file" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
+                <i data-lucide="upload-cloud" style="width:11px;height:11px;stroke:currentColor;vertical-align:middle;margin-right:4px"></i> Upload
+              </label>
+              <span id="logo-upload-status" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Saved estimates list -->
-    <div id="dashboard-list">
-      <div style="text-align:center;padding:40px 20px;color:var(--muted);font-size:13px" id="dashboard-empty">
-        <i data-lucide="folder" style="width:32px;height:32px;stroke:var(--muted);display:block;margin:0 auto 12px"></i>
-        No saved estimates yet. Run your first estimate to see it here.
-      </div>
-    </div>
   </div>
 </div>
 
@@ -3080,6 +3157,9 @@ async function submitDataTrade(){
 // ══════════════════════════
 //  PRO — CLOUD PERSISTENCE
 // ══════════════════════════
+
+const STATUS_LABELS={draft:'Draft',sent:'Sent',won:'Won',active:'Active',complete:'Complete',lost:'Lost'};
+const STATUS_CLASS={draft:'status-draft',sent:'status-sent',won:'status-won',active:'status-active',complete:'status-complete',lost:'status-lost'};
 
 async function saveEstimateToCloud(data){
   if(!currentUser||!sbClient) return;
@@ -3091,6 +3171,8 @@ async function saveEstimateToCloud(data){
       location: document.getElementById('est-location')?.value||'',
       trade: document.getElementById('est-trade')?.value||window._ctx?.trade||'',
       total_bid: data.totalBid||0,
+      margin_pct: data.profit?.pct||0,
+      status: 'draft',
       estimate_json: data,
       created_at: new Date().toISOString()
     };
@@ -3145,61 +3227,173 @@ async function loadDashboard(){
   if(!currentUser||!sbClient||!isPro) return;
   const listEl=document.getElementById('dashboard-list');
   const emptyEl=document.getElementById('dashboard-empty');
-  if(listEl) listEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px">Loading...</div>';
+  if(listEl) listEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px;font-family:\'DM Mono\',monospace">Loading…</div>';
 
-  // Show existing logo if saved
   if(window._userLogoUrl){
     const img=document.getElementById('logo-preview-img');
     const ph=document.getElementById('logo-preview-placeholder');
-    if(img){ img.src=window._userLogoUrl; img.style.display='block'; }
+    if(img){img.src=window._userLogoUrl;img.style.display='block';}
     if(ph) ph.style.display='none';
   }
 
   try{
-    const { data, error } = await sbClient
-      .from('estimates')
-      .select('id,client_name,project_label,location,trade,total_bid,created_at')
-      .eq('user_id',currentUser.id)
-      .order('created_at',{ascending:false})
-      .limit(50);
+    const [estRes, ceRes] = await Promise.all([
+      sbClient.from('estimates')
+        .select('id,client_name,project_label,location,trade,total_bid,margin_pct,created_at,status,notes,sent_at')
+        .eq('user_id',currentUser.id)
+        .order('created_at',{ascending:false})
+        .limit(50),
+      sbClient.from('cost_entries')
+        .select('estimate_id,actual_cost')
+    ]);
 
-    if(error||!data||!data.length){
+    const estimates = estRes.data || [];
+    const actuals = {};
+    (ceRes.data||[]).forEach(r=>{ actuals[r.estimate_id]=(actuals[r.estimate_id]||0)+r.actual_cost; });
+
+    // Metrics
+    const now=new Date();
+    const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+    const openSt=['draft','sent','active'];
+    const openEsts=estimates.filter(e=>openSt.includes(e.status||'draft'));
+    const pipeline=openEsts.reduce((s,e)=>s+e.total_bid,0);
+    const wonThisMo=estimates.filter(e=>e.status==='won'&&new Date(e.created_at)>=monthStart);
+    const wonVal=wonThisMo.reduce((s,e)=>s+e.total_bid,0);
+    const activeCount=estimates.filter(e=>e.status==='active').length;
+    const margins=estimates.filter(e=>e.margin_pct>0).map(e=>e.margin_pct);
+    const avgMargin=margins.length?Math.round(margins.reduce((s,m)=>s+m,0)/margins.length):null;
+
+    const dm=id=>document.getElementById(id);
+    if(dm('dm-pipeline')) dm('dm-pipeline').textContent=pipeline>0?fmtK(pipeline):'$0';
+    if(dm('dm-pipeline-sub')) dm('dm-pipeline-sub').textContent=openEsts.length+' open';
+    if(dm('dm-won')) dm('dm-won').textContent=wonVal>0?fmtK(wonVal):'$0';
+    if(dm('dm-won-sub')) dm('dm-won-sub').textContent=wonThisMo.length+' closed';
+    if(dm('dm-active')) dm('dm-active').textContent=activeCount||'0';
+    if(dm('dm-margin')) dm('dm-margin').textContent=avgMargin?avgMargin+'%':'—';
+    if(dm('dash-job-count')) dm('dash-job-count').textContent=estimates.length+' total';
+
+    if(!estimates.length){
       if(listEl) listEl.innerHTML='';
       if(emptyEl) emptyEl.style.display='block';
       return;
     }
     if(emptyEl) emptyEl.style.display='none';
-    if(listEl) listEl.innerHTML=data.map(est=>{
-      const date=new Date(est.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+    if(listEl) listEl.innerHTML=estimates.map(est=>{
+      const sk=est.status||'draft';
       const label=est.project_label||est.location||'Untitled Job';
-      const client=est.client_name?`<span style="color:var(--muted);font-size:11px">${est.client_name}</span>`:'';
-      return `<div class="gc" style="margin-bottom:10px;cursor:pointer" onclick="loadSavedEstimate('${est.id}')">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 14px 10px">
-          <div>
-            <div style="font-size:14px;font-weight:600;color:var(--white);margin-bottom:3px">${label}</div>
-            ${client}
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px">${est.trade||''} · ${date}</div>
+      const date=new Date(est.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      const actualTotal=actuals[est.id]||0;
+      let varHtml='';
+      if(actualTotal>0){
+        const diff=actualTotal-est.total_bid;
+        const pct=Math.round((Math.abs(diff)/est.total_bid)*100);
+        const cls=diff>0?'over':'under';
+        const sign=diff>0?'+':'-';
+        varHtml=`<div class="job-variance ${cls}">${fmtK(actualTotal)} actual · ${sign}${pct}%</div>`;
+      }
+      const sentDate=est.sent_at?new Date(est.sent_at):null;
+      const daysSent=sentDate?Math.floor((now-sentDate)/(864e5)):null;
+      const showFU=sk==='sent'&&daysSent!==null&&daysSent>=5;
+      const statusOpts=Object.entries(STATUS_LABELS).map(([k,v])=>`<option value="${k}"${k===sk?' selected':''}>${v}</option>`).join('');
+      return `<div class="job-card" id="jc-${est.id}">
+        <div class="job-card-top" onclick="loadSavedEstimate('${est.id}')">
+          <div class="job-card-main">
+            <div class="job-card-label">${label}</div>
+            ${est.client_name?`<div style="font-size:11px;color:var(--muted);margin-top:1px">${est.client_name}</div>`:''}
+            <div class="job-card-meta">${[est.trade,date].filter(Boolean).join(' · ')}</div>
           </div>
-          <div style="text-align:right">
-            <div style="font-size:16px;font-weight:700;color:var(--gold)">${fmt(est.total_bid)}</div>
-            <div style="font-size:10px;color:var(--muted);margin-top:3px;display:flex;gap:6px;justify-content:flex-end">
-              <button onclick="event.stopPropagation();redownloadEstimate('${est.id}')" style="background:none;border:none;color:var(--gold);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:0"><i data-lucide="file-bar-chart" style="width:11px;height:11px;stroke:currentColor;vertical-align:middle"></i> PDF</button>
-            </div>
+          <div class="job-card-right">
+            <div class="job-card-total">${fmtK(est.total_bid)}</div>
+            ${varHtml}
           </div>
+        </div>
+        ${showFU?`<div class="job-followup"><i data-lucide="clock" style="width:11px;height:11px;stroke:currentColor"></i> Sent ${daysSent} days ago — time to follow up</div>`:''}
+        <div class="job-card-actions">
+          <span class="status-pill ${STATUS_CLASS[sk]}">${STATUS_LABELS[sk]}</span>
+          <select class="status-select" onchange="updateJobStatus('${est.id}',this.value)" onclick="event.stopPropagation()">${statusOpts}</select>
+          <div style="flex:1"></div>
+          <button class="job-action-btn" onclick="event.stopPropagation();toggleNotes('${est.id}')"><i data-lucide="file-text" style="width:11px;height:11px;stroke:currentColor"></i> Notes</button>
+          <button class="job-action-btn" onclick="event.stopPropagation();redownloadEstimate('${est.id}')"><i data-lucide="file-bar-chart" style="width:11px;height:11px;stroke:currentColor"></i> PDF</button>
+        </div>
+        <div class="job-notes-wrap" id="notes-${est.id}">
+          <textarea class="job-notes-input" placeholder="Notes — client contact, site conditions, what you'd do different…" onchange="saveJobNotes('${est.id}',this.value)">${est.notes||''}</textarea>
         </div>
       </div>`;
     }).join('');
     if(window.lucide) lucide.createIcons();
+
+    if(estimates.length>=3) generateInsights(estimates);
   }catch(e){ console.error('Load dashboard error:',e); }
+}
+
+function toggleNotes(estimateId){
+  const w=document.getElementById('notes-'+estimateId);
+  if(!w) return;
+  w.style.display=w.style.display==='block'?'none':'block';
+  if(w.style.display==='block') w.querySelector('textarea')?.focus();
+}
+
+async function updateJobStatus(estimateId,status){
+  if(!sbClient) return;
+  const update={status};
+  if(status==='sent') update.sent_at=new Date().toISOString();
+  try{
+    await sbClient.from('estimates').update(update).eq('id',estimateId);
+    const card=document.getElementById('jc-'+estimateId);
+    if(card){
+      const pill=card.querySelector('.status-pill');
+      if(pill){pill.textContent=STATUS_LABELS[status];pill.className='status-pill '+STATUS_CLASS[status];}
+    }
+  }catch(e){ console.error('Status update error:',e); }
+}
+
+const _noteTimers={};
+function saveJobNotes(estimateId,notes){
+  clearTimeout(_noteTimers[estimateId]);
+  _noteTimers[estimateId]=setTimeout(async()=>{
+    if(!sbClient) return;
+    try{ await sbClient.from('estimates').update({notes}).eq('id',estimateId); }
+    catch(e){ console.error('Notes save error:',e); }
+  },1000);
+}
+
+async function generateInsights(estimates){
+  const wrap=document.getElementById('dash-insights-wrap');
+  const el=document.getElementById('dash-insights');
+  if(!wrap||!el) return;
+  const summary=estimates.slice(0,15).map(e=>
+    `Trade:${e.trade||'?'} Total:$${e.total_bid} Status:${e.status||'draft'} Margin:${e.margin_pct||0}% Location:${e.location||'?'}`
+  ).join('\n');
+  try{
+    const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:400,
+        messages:[{role:'user',content:`You are Even, a business intelligence AI for contractors. Analyze this contractor's estimate history. Return exactly 3 short, specific, actionable insights — each one sentence. Mention real numbers from their data. Focus on margin risk, pricing patterns, or win/loss trends. No generic advice.\n\nData:\n${summary}\n\nReturn ONLY valid JSON, no markdown: {"insights":["...","...","..."]}`}]
+      })
+    });
+    const json=await r.json();
+    const text=json.content?.[0]?.text||'';
+    const parsed=JSON.parse(text);
+    if(parsed.insights?.length){
+      el.innerHTML=parsed.insights.map(ins=>
+        `<div class="dash-insight"><span style="color:var(--gold);flex-shrink:0;margin-top:1px">✦</span><span>${ins}</span></div>`
+      ).join('');
+      wrap.style.display='block';
+    }
+  }catch(e){ console.error('Insights error:',e); }
 }
 
 async function loadSavedEstimate(estimateId){
   if(!sbClient) return;
   try{
-    const { data, error } = await sbClient.from('estimates').select('estimate_json').eq('id',estimateId).single();
+    const { data, error }=await sbClient.from('estimates').select('estimate_json').eq('id',estimateId).single();
     if(error||!data) return;
-    window._currentEstimateId = estimateId;
-    currentEstimate = data.estimate_json;
+    window._currentEstimateId=estimateId;
+    currentEstimate=data.estimate_json;
     navigate('estimate');
     renderEstimate(currentEstimate);
     const psEl=document.getElementById('pay-sched-section');
@@ -3211,9 +3405,9 @@ async function loadSavedEstimate(estimateId){
 async function redownloadEstimate(estimateId){
   if(!sbClient) return;
   try{
-    const { data, error } = await sbClient.from('estimates').select('estimate_json,client_name,project_label').eq('id',estimateId).single();
+    const { data, error }=await sbClient.from('estimates').select('estimate_json,client_name,project_label').eq('id',estimateId).single();
     if(error||!data) return;
-    currentEstimate = data.estimate_json;
+    currentEstimate=data.estimate_json;
     downloadProposalPDF();
   }catch(e){ console.error('Redownload error:',e); }
 }
@@ -3221,18 +3415,17 @@ async function redownloadEstimate(estimateId){
 async function loadActuals(estimateId){
   if(!sbClient||!estimateId) return;
   try{
-    const { data } = await sbClient.from('cost_entries').select('*').eq('estimate_id',estimateId);
+    const { data }=await sbClient.from('cost_entries').select('*').eq('estimate_id',estimateId);
     if(!data||!data.length) return;
     data.forEach(entry=>{
       const row=document.querySelector(`#var-body .var-row:nth-child(${entry.line_index+1})`);
       if(!row) return;
       const input=row.querySelector('input');
-      if(input){ input.value=entry.actual_cost; calcVar(input,0); }
+      if(input){input.value=entry.actual_cost;calcVar(input,0);}
     });
   }catch(e){ console.error('Load actuals error:',e); }
 }
 
-// Logo upload
 async function handleLogoUpload(input){
   if(!input.files||!input.files[0]||!currentUser||!sbClient) return;
   const file=input.files[0];
@@ -3241,15 +3434,15 @@ async function handleLogoUpload(input){
   try{
     const ext=file.name.split('.').pop();
     const path=`${currentUser.id}/logo.${ext}`;
-    const { error: upErr } = await sbClient.storage.from('logos').upload(path,file,{upsert:true,contentType:file.type});
+    const { error: upErr }=await sbClient.storage.from('logos').upload(path,file,{upsert:true,contentType:file.type});
     if(upErr) throw upErr;
-    const { data: urlData } = sbClient.storage.from('logos').getPublicUrl(path);
-    const publicUrl = urlData.publicUrl;
+    const { data: urlData }=sbClient.storage.from('logos').getPublicUrl(path);
+    const publicUrl=urlData.publicUrl;
     await sbClient.from('users').update({logo_url:publicUrl}).eq('id',currentUser.id);
-    window._userLogoUrl = publicUrl;
+    window._userLogoUrl=publicUrl;
     const img=document.getElementById('logo-preview-img');
     const ph=document.getElementById('logo-preview-placeholder');
-    if(img){ img.src=publicUrl; img.style.display='block'; }
+    if(img){img.src=publicUrl;img.style.display='block';}
     if(ph) ph.style.display='none';
     if(statusEl) statusEl.textContent='Saved ✓';
     showToast('Logo saved — will appear on all future proposals.');
