@@ -1176,6 +1176,31 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
         </div>
       </div>
 
+      <!-- Proposal customizer -->
+      <div class="gc" id="proposal-edit-card" style="display:none;margin-bottom:10px">
+        <div class="gc-head">
+          <div class="gc-title"><i data-lucide="file-text" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>Customize Before Download</div>
+          <div class="gc-tag">Live preview</div>
+        </div>
+        <div class="gc-body" style="padding:10px 12px;display:flex;flex-direction:column;gap:10px">
+          <div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px">NOTE TO CLIENT</div>
+            <textarea id="prop-note" placeholder="e.g. Thank you for the opportunity — we look forward to working together." style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()"></textarea>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px">CLIENT WILL SUPPLY</div>
+            <textarea id="prop-supply" placeholder="e.g. Appliances, light fixtures, tile selection, cabinet hardware…" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()"></textarea>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+              <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px">ASSUMPTIONS</div>
+              <button onclick="addProposalAssumption()" style="background:none;border:none;color:var(--gold);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:0">+ ADD</button>
+            </div>
+            <div id="prop-assumptions"></div>
+          </div>
+        </div>
+      </div>
+
       <!-- Email gate -->
       <div class="email-gate" id="email-gate" style="display:none">
         <div style="font-size:28px;margin-bottom:10px">📥</div>
@@ -1590,6 +1615,7 @@ function navigate(scr){
     document.getElementById('email-gate').style.display='none';
     document.getElementById('proposal-section').style.display='none';
     const _ps=document.getElementById('pay-sched-section');if(_ps)_ps.style.display='none';
+    const _pe=document.getElementById('proposal-edit-card');if(_pe)_pe.style.display='none';
     document.getElementById('var-body').innerHTML='';
     document.getElementById('loading-trade-cards').innerHTML='';
     document.getElementById('loading-reveal').classList.remove('visible');
@@ -2443,9 +2469,10 @@ function animateCounter(el, target) {
     hideLoading();
     navigate('estimate');
     renderEstimate(data);
-    // Show payment schedule selector
     const psEl = document.getElementById('pay-sched-section');
     if(psEl) psEl.style.display='block';
+    const peCard = document.getElementById('proposal-edit-card');
+    if(peCard){ peCard.style.display='block'; populateProposalAssumptions(); }
     incrementEstimateCount();
     if(isPro && currentUser) {
       saveEstimateToCloud(data);
@@ -2646,9 +2673,8 @@ function downloadPDF(){
   // Capture lead to Supabase (fire and forget — don't block download if it fails)
   captureLead(email, pdfTarget);
   document.getElementById('email-gate').style.display='none';
-  // Apply selected payment schedule to estimate before generating PDF
   if(currentEstimate) currentEstimate.paymentTerms = selectedPaySched;
-  if(pdfTarget==='proposal'){renderProposalPreview();downloadProposalPDF();}
+  if(pdfTarget==='proposal'){renderProposalPreview();}
   else downloadCostSheet();
 }
 
@@ -2683,17 +2709,22 @@ function renderProposalPreview(){
   const cats={};
   (data.lineItems||[]).forEach(item=>{if(!cats[item.category])cats[item.category]=[];cats[item.category].push(item)});
   let rows=Object.entries(cats).map(([cat,items])=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8920A">${cat}</td></tr>`+items.map(item=>`<tr><td>${item.description}</td><td style="text-align:right;color:#888;font-size:11px">${item.qty} ${item.unit}</td></tr>`).join('')).join('');
+  const clientNote=data.clientNote||'';
+  const clientSupply=data.clientSupply||'';
+  const allExclusions=[...(data.exclusions||[]),...(clientSupply?['Client to supply: '+clientSupply]:[])];
   document.getElementById('proposal-content').innerHTML=`
     <div class="prop-inner">
       <div class="prop-hdr">
         <div><h1>${L==='en'?'Project Proposal':'Propuesta de Proyecto'}</h1><p>Even · Cornerstone OS</p></div>
         <div class="prop-meta"><strong>${data.projectName||'Estimate'}</strong>${now}<br>${ctx?.location||''}<br>${L==='en'?'Client':'Cliente'}: ${ctx?.client||'—'}</div>
       </div>
+      ${clientNote?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${clientNote}</p>`:''}
       <div class="prop-sec">${L==='en'?'Scope of Work':'Alcance del Trabajo'}</div>
       <p style="font-size:12px;color:#666;line-height:1.6;margin-bottom:10px">${L==='en'?'This proposal covers the complete scope of work as outlined below.':'Esta propuesta cubre el alcance completo del trabajo detallado a continuación.'}</p>
       <div class="prop-sec">${L==='en'?'Inclusions':'Incluido'}</div>
       <table class="prop-tbl"><thead><tr><th>${L==='en'?'Description':'Descripción'}</th><th style="text-align:right">${L==='en'?'Qty / Unit':'Cant. / Unidad'}</th></tr></thead><tbody>${rows}</tbody></table>
-      ${data.exclusions?.length?`<div class="prop-sec">${L==='en'?'Exclusions':'Exclusiones'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${data.exclusions.map(e=>`• ${e}`).join('<br>')}</div>`:''}
+      ${allExclusions.length?`<div class="prop-sec">${L==='en'?'Exclusions':'Exclusiones'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${allExclusions.map(e=>`• ${e}`).join('<br>')}</div>`:''}
+      ${data.assumptions?.length?`<div class="prop-sec">${L==='en'?'Assumptions':'Supuestos'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${data.assumptions.map(a=>`• ${a}`).join('<br>')}</div>`:''}
       <div class="prop-sec">${L==='en'?'Investment':'Inversión'}</div>
       <div class="prop-total-bar" style="flex-direction:column;align-items:flex-start;gap:6px"><div style="width:100%;display:flex;justify-content:space-between;align-items:center"><span class="pl">${L==='en'?'Estimated Project Investment':'Inversión Estimada del Proyecto'}</span><span class="pv">${fmtK(Math.round(data.totalBid*0.88))+' — '+fmtK(Math.round(data.totalBid*1.12))}</span></div><div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Midpoint ref: '+fmt(data.totalBid):'Referencia: '+fmt(data.totalBid)}</div></div>
       <p style="font-size:10px;color:#aaa;margin-top:8px">${data.paymentTerms||(L==='en'?'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.':'50% de depósito requerido. Saldo al terminar. Precio válido 30 días.')}</p>
@@ -2743,7 +2774,11 @@ function downloadProposalPDF(){
     doc.setTextColor(140,140,140);doc.text(`${item.qty} ${item.unit}`,W-M-6,y+10,{align:'right'});y+=15;
   });
   y+=8;
-  if(data.exclusions?.length&&y<660){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(180,80,60);doc.text(L==='en'?'EXCLUSIONS':'EXCLUSIONES',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);data.exclusions.slice(0,4).forEach(ex=>{doc.text('• '+ex,M+6,y);y+=10});y+=4}
+  // Client note
+  if(data.clientNote){if(y>680){doc.addPage();y=44}doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(100,100,100);const noteLines=doc.splitTextToSize(data.clientNote,W-M*2);noteLines.forEach(l=>{doc.text(l,M,y);y+=13});y+=6;}
+  // Merged exclusions (AI + client-supply)
+  const pdfExclusions=[...(data.exclusions||[]),...(data.clientSupply?['Client to supply: '+data.clientSupply]:[])];
+  if(pdfExclusions.length&&y<660){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(180,80,60);doc.text(L==='en'?'EXCLUSIONS':'EXCLUSIONES',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);pdfExclusions.slice(0,6).forEach(ex=>{const lines=doc.splitTextToSize('• '+ex,W-M*2-6);lines.forEach(l=>{if(y<740){doc.text(l,M+6,y);y+=10}});});y+=4}
   if(y>710){doc.addPage();y=44}
   doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,36,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(255,179,0);
@@ -3181,6 +3216,38 @@ async function saveEstimateToCloud(data){
     window._currentEstimateId = saved.id;
     showToast('✦ Estimate saved to your account.');
   }catch(e){ console.error('Save estimate error:',e); }
+}
+
+// ── PROPOSAL EDITOR ──────────────────────────────────────────────────────────
+function liveProposalUpdate(){
+  if(!currentEstimate) return;
+  currentEstimate.clientNote = document.getElementById('prop-note')?.value||'';
+  currentEstimate.clientSupply = document.getElementById('prop-supply')?.value?.trim()||'';
+  const inputs = document.querySelectorAll('#prop-assumptions .assumption-input');
+  currentEstimate.assumptions = Array.from(inputs).map(i=>i.value.trim()).filter(Boolean);
+  const ps = document.getElementById('proposal-section');
+  if(ps && ps.style.display!=='none') renderProposalPreview();
+}
+
+function populateProposalAssumptions(){
+  const list = document.getElementById('prop-assumptions');
+  if(!list) return;
+  list.innerHTML='';
+  (currentEstimate?.assumptions||[]).forEach(a=>_addAssumptionRow(a));
+}
+
+function addProposalAssumption(){
+  _addAssumptionRow('');
+  liveProposalUpdate();
+}
+
+function _addAssumptionRow(text){
+  const list = document.getElementById('prop-assumptions');
+  if(!list) return;
+  const div = document.createElement('div');
+  div.style.cssText='display:flex;gap:6px;margin-bottom:6px;align-items:center';
+  div.innerHTML=`<input class="assumption-input" value="${text.replace(/"/g,'&quot;')}" placeholder="e.g. Access to electrical panel confirmed…" style="flex:1;background:var(--bg);border:1px solid var(--rim);border-radius:7px;color:var(--white2);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box" oninput="liveProposalUpdate()"><button onclick="this.parentElement.remove();liveProposalUpdate()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:17px;line-height:1;padding:0 2px;flex-shrink:0">×</button>`;
+  list.appendChild(div);
 }
 
 function savePrefs(){
