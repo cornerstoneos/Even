@@ -430,6 +430,17 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 /* ── ALERT ── */
 .alert{border-radius:var(--r);padding:10px 13px;font-size:12.5px;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;line-height:1.5}
 .alert-info{background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);color:#58a6ff}
+/* ── MARGIN ALERTS ── */
+.margin-alert{display:flex;gap:8px;align-items:flex-start;font-size:11.5px;line-height:1.5;padding:9px 11px;border-radius:9px;margin-bottom:6px}
+.margin-alert-warn{background:rgba(255,179,0,.07);border:1px solid rgba(255,179,0,.2);color:var(--gold)}
+.margin-alert-danger{background:rgba(255,80,80,.07);border:1px solid rgba(255,80,80,.2);color:#ff6b6b}
+.margin-alert-info{background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.18);color:#64a0ff}
+/* ── SIMILAR JOB RECALL ── */
+.similar-recall{background:rgba(255,179,0,.05);border:1px solid rgba(255,179,0,.14);border-radius:10px;padding:10px 13px;margin-bottom:10px;font-size:11.5px;color:var(--white2);line-height:1.55;display:flex;gap:8px;align-items:flex-start}
+/* ── DETAIL TOGGLE ── */
+.detail-toggle{display:flex;gap:5px;margin-bottom:12px}
+.detail-opt{flex:1;padding:7px 4px;border:1px solid var(--rim);border-radius:7px;font-size:9px;font-family:'DM Mono',monospace;text-align:center;cursor:pointer;color:var(--muted);background:var(--bg);letter-spacing:.4px;transition:all .15s}
+.detail-opt.active{border-color:var(--gold);color:var(--gold);background:rgba(255,179,0,.07)}
 
 /* ── FOOT NAV ── */
 .foot-nav{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
@@ -1061,6 +1072,8 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
           <button onclick="addLineGated()" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--gold);cursor:pointer;font-family:'DM Sans',sans-serif" data-en="+ Add" data-es="+ Agregar">+ Add</button>
         </div>
         <div style="padding:10px 12px">
+          <div id="similar-recall" style="display:none;margin-bottom:8px"></div>
+          <div id="margin-alerts" style="display:none;margin-bottom:8px"></div>
           <div class="li-head">
             <span data-en="Description" data-es="Descripción">Description</span>
             <span data-en="Qty" data-es="Cant.">Qty</span>
@@ -1184,6 +1197,14 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
         </div>
         <div class="gc-body" style="padding:10px 12px;display:flex;flex-direction:column;gap:10px">
           <div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px">PRICING DETAIL</div>
+            <div class="detail-toggle">
+              <div class="detail-opt active" onclick="setDetailLevel('full',this)">Full Detail</div>
+              <div class="detail-opt" onclick="setDetailLevel('category',this)">By Category</div>
+              <div class="detail-opt" onclick="setDetailLevel('lump',this)">Lump Sum</div>
+            </div>
+          </div>
+          <div>
             <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px">NOTE TO CLIENT</div>
             <textarea id="prop-note" placeholder="e.g. Thank you for the opportunity — we look forward to working together." style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()"></textarea>
           </div>
@@ -1197,6 +1218,10 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
               <button onclick="addProposalAssumption()" style="background:none;border:none;color:var(--gold);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:0">+ ADD</button>
             </div>
             <div id="prop-assumptions"></div>
+          </div>
+          <div id="beautify-row" style="display:none;padding-top:2px">
+            <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.25);border-radius:8px;color:var(--gold);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-hero.png" width="12" height="12" style="object-fit:contain;vertical-align:middle"> POLISH SCOPE WITH AI</button>
+            <div id="beautify-status" style="font-size:10px;color:var(--muted);text-align:center;margin-top:5px;display:none"></div>
           </div>
         </div>
       </div>
@@ -1616,6 +1641,8 @@ function navigate(scr){
     document.getElementById('proposal-section').style.display='none';
     const _ps=document.getElementById('pay-sched-section');if(_ps)_ps.style.display='none';
     const _pe=document.getElementById('proposal-edit-card');if(_pe)_pe.style.display='none';
+    const _ma=document.getElementById('margin-alerts');if(_ma)_ma.style.display='none';
+    const _sr=document.getElementById('similar-recall');if(_sr)_sr.style.display='none';
     document.getElementById('var-body').innerHTML='';
     document.getElementById('loading-trade-cards').innerHTML='';
     document.getElementById('loading-reveal').classList.remove('visible');
@@ -2518,8 +2545,8 @@ function renderEstimate(data){
   });
   document.getElementById('li-body').innerHTML=html;
 
-  // Variance rows
-  const top=(data.lineItems||[]).slice(0,5);
+  // Variance rows — top 8 by value
+  const top=(data.lineItems||[]).slice().sort((a,b)=>b.total-a.total).slice(0,8);
   document.getElementById('var-body').innerHTML=top.map((item,i)=>`
     <div class="var-row">
       <span style="color:var(--white2);font-size:12px">${item.description.substring(0,28)}${item.description.length>28?'…':''}</span>
@@ -2530,8 +2557,10 @@ function renderEstimate(data){
 
   window._lines=[...(data.lineItems||[]).map(i=>({...i}))];
   renderTotals(data);
-  // Show Even Suggests
+  renderMarginAlerts(data);
+  if(isPro) { const br=document.getElementById('beautify-row'); if(br) br.style.display='block'; }
   setTimeout(()=>renderEvenSuggests(data), 800);
+  if(isPro && currentUser && sbClient) loadSimilarJobs(data);
 }
 
 function calcVar(input,estimated){
@@ -2630,6 +2659,52 @@ function recompute(){
   renderTotals(currentEstimate);
 }
 
+function renderMarginAlerts(data){
+  const el=document.getElementById('margin-alerts');
+  if(!el) return;
+  const alerts=[];
+  const items=data.lineItems||[];
+  const laborItems=items.filter(i=>/(labor|demo|crew|install|remove)/i.test(i.category+' '+i.description));
+  const laborTotal=laborItems.reduce((s,i)=>s+i.total,0);
+  const laborPct=data.subtotal>0?(laborTotal/data.subtotal)*100:0;
+  if(laborPct>0&&laborPct<22) alerts.push({t:'warn',m:`Labor is ${Math.round(laborPct)}% of direct costs — verify crew hours match the full scope.`});
+  const hasDemo=items.some(i=>/(demo|demolition|remove|tear)/i.test(i.category+' '+i.description));
+  const isRemodel=/(remodel|renovation|reno|replace|gut|redo|update)/i.test(data.projectName||'');
+  if(isRemodel&&!hasDemo) alerts.push({t:'warn',m:'No demo line item detected — confirm if removal is in scope or client-supplied.'});
+  if((data.contingency?.pct||0)<5) alerts.push({t:'warn',m:`Contingency at ${data.contingency?.pct||0}% — consider 8–10% for jobs with unknown conditions.`});
+  if((data.profit?.pct||0)<12) alerts.push({t:'danger',m:`Profit margin at ${data.profit?.pct||0}% — below sustainable threshold. Adjust your sliders before bidding.`});
+  const hasPermit=items.some(i=>/(permit|inspection)/i.test(i.description));
+  const isLarge=data.totalBid>25000;
+  if(isLarge&&!hasPermit) alerts.push({t:'info',m:'No permit line item — confirm if permits are required for this scope and jurisdiction.'});
+  if(!alerts.length){el.style.display='none';return;}
+  el.innerHTML=alerts.map(a=>`<div class="margin-alert margin-alert-${a.t}"><i data-lucide="${a.t==='danger'?'alert-triangle':'alert-circle'}" style="width:13px;height:13px;stroke:currentColor;flex-shrink:0;margin-top:1px"></i><span>${a.m}</span></div>`).join('');
+  el.style.display='block';
+  if(window.lucide) lucide.createIcons();
+}
+
+async function loadSimilarJobs(data){
+  const trade=(document.getElementById('est-trade')?.value||data.trade||'').trim();
+  if(!trade||!sbClient) return;
+  const el=document.getElementById('similar-recall');
+  if(!el) return;
+  try{
+    const {data:jobs}=await sbClient.from('estimates')
+      .select('total_bid,margin_pct')
+      .eq('user_id',currentUser.id)
+      .ilike('trade','%'+trade+'%')
+      .order('created_at',{ascending:false})
+      .limit(10);
+    if(!jobs||jobs.length<2) return;
+    const totals=jobs.map(j=>j.total_bid).filter(Boolean);
+    const margins=jobs.map(j=>j.margin_pct).filter(Boolean);
+    const avg=Math.round(totals.reduce((s,v)=>s+v,0)/totals.length);
+    const low=Math.min(...totals),high=Math.max(...totals);
+    const avgM=margins.length?Math.round(margins.reduce((s,v)=>s+v,0)/margins.length):null;
+    el.innerHTML=`<div class="similar-recall"><span style="color:var(--gold);flex-shrink:0">✦</span><span>Based on your last ${jobs.length} <strong>${trade}</strong> jobs — avg ${fmtK(avg)}, range ${fmtK(low)}–${fmtK(high)}${avgM?`, avg margin ${avgM}%`:''}</span></div>`;
+    el.style.display='block';
+  }catch(e){console.error('Similar jobs error:',e);}
+}
+
 function renderTotals(data){
   const pct=data.profit?.pct||22;
   const L=appLang;
@@ -2659,8 +2734,13 @@ function renderTotals(data){
 //  EMAIL + PDF
 // ══════════════════════════
 function showEmailGate(type){
-  // Paywall is now enforced at startEstimate() — anyone reaching here has earned it
   pdfTarget=type;
+  if(isPro && currentUser){
+    if(currentEstimate) currentEstimate.paymentTerms=selectedPaySched;
+    if(type==='proposal') renderProposalPreview();
+    else downloadCostSheet();
+    return;
+  }
   const gate=document.getElementById('email-gate');
   gate.style.display='block';
   gate.scrollIntoView({behavior:'smooth',block:'center'});
@@ -2708,7 +2788,18 @@ function renderProposalPreview(){
   const L=appLang;
   const cats={};
   (data.lineItems||[]).forEach(item=>{if(!cats[item.category])cats[item.category]=[];cats[item.category].push(item)});
-  let rows=Object.entries(cats).map(([cat,items])=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8920A">${cat}</td></tr>`+items.map(item=>`<tr><td>${item.description}</td><td style="text-align:right;color:#888;font-size:11px">${item.qty} ${item.unit}</td></tr>`).join('')).join('');
+  const detail=window._proposalDetail||'full';
+  let rows='';
+  if(detail==='full'){
+    rows=Object.entries(cats).map(([cat,items])=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8920A">${cat}</td></tr>`+items.map(item=>`<tr><td>${item.description}</td><td style="text-align:right;color:#888;font-size:11px">${item.qty} ${item.unit}</td></tr>`).join('')).join('');
+  } else if(detail==='category'){
+    rows=Object.entries(cats).map(([cat,items])=>{
+      const sub=items.reduce((s,i)=>s+i.total,0);
+      return `<tr><td style="font-weight:600;color:#555">${cat}</td><td style="text-align:right;font-weight:600;color:#555">${fmtK(sub)}</td></tr>`;
+    }).join('');
+  } else {
+    rows=`<tr><td colspan="2" style="text-align:center;padding:10px;color:#666;font-size:13px">All work as described in this proposal</td></tr>`;
+  }
   const clientNote=data.clientNote||'';
   const clientSupply=data.clientSupply||'';
   const allExclusions=[...(data.exclusions||[]),...(clientSupply?['Client to supply: '+clientSupply]:[])];
@@ -2760,20 +2851,49 @@ function downloadProposalPDF(){
   doc.text(L==='en'?'PROJECT PROPOSAL':'PROPUESTA DE PROYECTO',M,y);y+=12;
   doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(130,130,130);
   doc.text(`${data.projectName||'Estimate'} · ${ctx.client||'Client'} · ${ctx.location||''}`,M,y);y+=22;
-  doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,18,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
-  doc.text(L==='en'?'DESCRIPTION':'DESCRIPCIÓN',M+6,y+12);doc.text(L==='en'?'QTY / UNIT':'CANT. / UNIDAD',W-M-6,y+12,{align:'right'});
-  y+=20;
-  let lastCat='';
-  (data.lineItems||[]).forEach((item,i)=>{
-    if(y>700){doc.addPage();y=44}
-    if(item.category!==lastCat){lastCat=item.category;doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(200,146,42);doc.text(item.category.toUpperCase(),M+6,y+9);y+=14}
-    if(i%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,15,'F')}
-    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(60,60,60);
-    doc.text(String(item.description).substring(0,58),M+6,y+10);
-    doc.setTextColor(140,140,140);doc.text(`${item.qty} ${item.unit}`,W-M-6,y+10,{align:'right'});y+=15;
-  });
-  y+=8;
+  const pdfDetail=window._proposalDetail||'full';
+  const pdfCats={};
+  (data.lineItems||[]).forEach(item=>{if(!pdfCats[item.category])pdfCats[item.category]=[];pdfCats[item.category].push(item);});
+  if(pdfDetail==='lump'){
+    doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,24,'F');
+    doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(60,60,60);
+    doc.text(L==='en'?'All work as described in this proposal':'Todo el trabajo descrito en esta propuesta',M+8,y+15);y+=32;
+  } else if(pdfDetail==='category'){
+    doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,18,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
+    doc.text(L==='en'?'CATEGORY':'CATEGORÍA',M+6,y+12);doc.text(L==='en'?'SUBTOTAL':'SUBTOTAL',W-M-6,y+12,{align:'right'});
+    y+=20;
+    Object.entries(pdfCats).forEach(([cat,items],ci)=>{
+      if(y>700){doc.addPage();y=44;}
+      const sub=items.reduce((s,i)=>s+i.total,0);
+      if(ci%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,15,'F');}
+      doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(60,60,60);
+      doc.text(cat,M+6,y+10);
+      doc.setFont('helvetica','normal');doc.setTextColor(100,100,100);doc.text(fmt(sub),W-M-6,y+10,{align:'right'});y+=15;
+    });
+    y+=8;
+  } else {
+    doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,18,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
+    doc.text(L==='en'?'DESCRIPTION':'DESCRIPCIÓN',M+6,y+12);doc.text(L==='en'?'QTY / UNIT':'CANT. / UNIDAD',W-M-6,y+12,{align:'right'});
+    y+=20;
+    let lastCat='';let rowIdx=0;
+    (data.lineItems||[]).forEach(item=>{
+      if(y>700){doc.addPage();y=44;}
+      if(item.category!==lastCat){
+        lastCat=item.category;rowIdx=0;
+        doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(200,146,42);
+        doc.text(item.category.toUpperCase(),M+6,y+9);y+=14;
+      }
+      if(rowIdx%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,15,'F');}
+      doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(60,60,60);
+      const descLines=doc.splitTextToSize(String(item.description),W-M*2-80);
+      doc.text(descLines[0],M+6,y+10);
+      doc.setTextColor(140,140,140);doc.text(`${item.qty} ${item.unit}`,W-M-6,y+10,{align:'right'});
+      y+=15;rowIdx++;
+    });
+    y+=8;
+  }
   // Client note
   if(data.clientNote){if(y>680){doc.addPage();y=44}doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(100,100,100);const noteLines=doc.splitTextToSize(data.clientNote,W-M*2);noteLines.forEach(l=>{doc.text(l,M,y);y+=13});y+=6;}
   // Merged exclusions (AI + client-supply)
@@ -2794,6 +2914,10 @@ function downloadProposalPDF(){
   const pages=doc.getNumberOfPages();
   for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even by Cornerstone OS · Client Proposal · Confidential',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
   savePDF(doc,`Even-Proposal-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
+  if(isPro && currentUser && sbClient && window._currentEstimateId){
+    sbClient.from('estimates').update({status:'sent',sent_at:new Date().toISOString()}).eq('id',window._currentEstimateId).then(()=>{});
+    showToast('Proposal downloaded — marked as Sent in your dashboard.');
+  }
 }
 
 function downloadCostSheet(){
@@ -3216,6 +3340,52 @@ async function saveEstimateToCloud(data){
     window._currentEstimateId = saved.id;
     showToast('✦ Estimate saved to your account.');
   }catch(e){ console.error('Save estimate error:',e); }
+}
+
+// ── DETAIL LEVEL TOGGLE ───────────────────────────────────────────────────────
+window._proposalDetail='full';
+function setDetailLevel(level,el){
+  window._proposalDetail=level;
+  document.querySelectorAll('.detail-opt').forEach(o=>o.classList.remove('active'));
+  el.classList.add('active');
+  const ps=document.getElementById('proposal-section');
+  if(ps&&ps.style.display!=='none') renderProposalPreview();
+}
+
+// ── PROPOSAL BEAUTIFIER ───────────────────────────────────────────────────────
+async function proposalBeautify(){
+  if(!currentEstimate) return;
+  const btn=document.getElementById('beautify-btn');
+  const status=document.getElementById('beautify-status');
+  if(btn) btn.disabled=true;
+  if(status){status.textContent='Polishing scope language…';status.style.display='block';}
+  const items=(currentEstimate.lineItems||[]).map(i=>i.description).join(', ');
+  const scope=document.getElementById('scope-text')?.value||currentEstimate.projectName||'';
+  try{
+    const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',max_tokens:500,
+        messages:[{role:'user',content:`You are a professional proposal writer for contractors. Rewrite the following project scope into clean, client-facing proposal language. Sound professional and confident. Keep it concise (2-3 sentences max). Do NOT use jargon. Do NOT mention specific prices. Return ONLY the rewritten text, no quotes, no intro.\n\nOriginal scope: "${scope}"\nWork items: ${items}`}]
+      })
+    });
+    const json=await r.json();
+    const text=(json.content?.[0]?.text||'').trim();
+    if(text){
+      const noteEl=document.getElementById('prop-note');
+      if(noteEl&&!noteEl.value) noteEl.value=text;
+      else if(noteEl) noteEl.value=text;
+      currentEstimate.clientNote=text;
+      if(status){status.textContent='✓ Scope polished';status.style.color='var(--gold)';}
+      const ps=document.getElementById('proposal-section');
+      if(ps&&ps.style.display!=='none') renderProposalPreview();
+    }
+  }catch(e){
+    if(status){status.textContent='Could not connect — try again.';}
+    console.error('Beautify error:',e);
+  }finally{
+    if(btn) btn.disabled=false;
+  }
 }
 
 // ── PROPOSAL EDITOR ──────────────────────────────────────────────────────────
