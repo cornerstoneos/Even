@@ -127,58 +127,6 @@ app.post('/api/estimate', async (req, res) => {
   }
 });
 
-// ─── Stripe checkout session ───────────────────────────────────────────────────
-app.post('/api/create-checkout', async (req, res) => {
-  try {
-    const { userId, email } = req.body;
-
-    const session = await stripe.checkout.sessions.create({
-      mode: 'subscription',
-      payment_method_types: ['card'],
-      customer_email: email,
-      line_items: [{
-        price: process.env.STRIPE_PRICE_ID,
-        quantity: 1
-      }],
-      metadata: {
-        supabase_user_id: userId
-      },
-      success_url: 'https://cornerstone-os.netlify.app/?upgraded=true',
-      cancel_url: 'https://cornerstone-os.netlify.app/'
-    });
-
-    res.json({ url: session.url });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ─── Stripe customer portal ───────────────────────────────────────────────────
-app.post('/api/customer-portal', async (req, res) => {
-  try {
-    const { userId } = req.body;
-
-    const { data: user } = await supabase
-      .from('users')
-      .select('stripe_customer_id')
-      .eq('id', userId)
-      .single();
-
-    if (!user?.stripe_customer_id) {
-      return res.status(404).json({ error: 'No billing account found' });
-    }
-
-    const portal = await stripe.billingPortal.sessions.create({
-      customer: user.stripe_customer_id,
-      return_url: 'https://cornerstone-os.netlify.app/'
-    });
-
-    res.json({ url: portal.url });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 // ─── Start server ─────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Even proxy running on port ${PORT}`));
