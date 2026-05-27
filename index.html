@@ -45,15 +45,16 @@ body{
   position:sticky;top:0;z-index:100;height:56px;
   background:rgba(10,10,10,0.94);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   border-bottom:1px solid var(--rim);
-  display:flex;align-items:center;justify-content:space-between;
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
   padding:0 18px;transition:background .3s;
 }
 body.light .topbar{background:rgba(244,241,235,0.94)}
-.topbar-brand{position:absolute;left:50%;transform:translateX(-50%);text-align:center}
+.topbar-brand{text-align:center}
 .topbar-logo{font-size:16px;font-weight:300;color:var(--white);letter-spacing:.5px;line-height:1}
 .topbar-logo b{color:var(--gold);font-weight:700}
 .topbar-sub{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-top:1px}
-.topbar-left,.topbar-right{display:flex;align-items:center;gap:8px;z-index:1}
+.topbar-left{display:flex;align-items:center;gap:8px;justify-self:start}
+.topbar-right{display:flex;align-items:center;gap:8px;justify-self:end}
 .icon-btn{
   width:32px;height:32px;border-radius:50%;background:var(--glass2);
   border:1px solid var(--rim);display:flex;align-items:center;justify-content:center;
@@ -393,9 +394,53 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .var-pos{color:var(--green);font-family:'DM Mono',monospace;font-size:11px;font-weight:600}
 .var-neg{color:var(--red);font-family:'DM Mono',monospace;font-size:11px;font-weight:600}
 
+/* ── DASHBOARD ── */
+.dash-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+.dash-metric{background:var(--panel);border:1px solid var(--rim);border-radius:12px;padding:14px 14px 12px}
+.dash-metric-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px}
+.dash-metric-val{font-size:22px;font-weight:700;color:var(--white);line-height:1}
+.dash-metric-sub{font-size:10px;color:var(--muted);margin-top:4px}
+.dash-insight{background:rgba(255,179,0,0.05);border:1px solid rgba(255,179,0,0.15);border-radius:10px;padding:11px 12px;margin-bottom:7px;font-size:12px;color:var(--white2);line-height:1.55;display:flex;gap:9px;align-items:flex-start}
+.job-card{background:var(--panel);border:1px solid var(--rim);border-radius:12px;margin-bottom:10px;overflow:hidden;transition:border-color .18s}
+.job-card:hover{border-color:rgba(255,179,0,.28)}
+.job-card-top{padding:14px 14px 10px;display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.job-card-main{flex:1;min-width:0}
+.job-card-label{font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.job-card-meta{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px}
+.job-card-right{text-align:right;flex-shrink:0}
+.job-card-total{font-size:16px;font-weight:700;color:var(--gold)}
+.job-variance{font-size:10px;margin-top:3px;font-family:'DM Mono',monospace}
+.job-variance.over{color:#ff6b6b}.job-variance.under{color:#4ade80}
+.status-pill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:20px;font-family:'DM Mono',monospace;white-space:nowrap}
+.status-draft{background:rgba(255,255,255,.06);color:var(--muted)}
+.status-sent{background:rgba(100,160,255,.12);color:#64a0ff}
+.status-won{background:rgba(74,222,128,.12);color:#4ade80}
+.status-active{background:rgba(255,179,0,.12);color:var(--gold)}
+.status-complete{background:rgba(74,222,128,.07);color:#86efac}
+.status-lost{background:rgba(255,100,100,.1);color:#ff6b6b}
+.job-card-actions{display:flex;align-items:center;gap:6px;padding:0 14px 12px;flex-wrap:wrap}
+.job-action-btn{background:none;border:none;color:var(--muted);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:4px 0;display:flex;align-items:center;gap:4px}
+.job-action-btn:hover{color:var(--gold)}
+.job-followup{display:flex;align-items:center;gap:5px;background:rgba(255,179,0,.07);border:1px solid rgba(255,179,0,.2);border-radius:6px;padding:5px 10px;font-size:10px;color:var(--gold);font-family:'DM Mono',monospace;margin:0 14px 10px}
+.job-notes-wrap{padding:0 14px 12px;display:none}
+.job-notes-input{width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:8px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:60px;box-sizing:border-box;line-height:1.5}
+.job-notes-input:focus{border-color:rgba(255,179,0,.4)}
+.status-select{background:var(--bg);border:1px solid var(--rim);color:var(--white2);font-size:10px;border-radius:6px;padding:3px 6px;font-family:'DM Mono',monospace;cursor:pointer;outline:none}
+
 /* ── ALERT ── */
 .alert{border-radius:var(--r);padding:10px 13px;font-size:12.5px;margin-bottom:12px;display:flex;gap:8px;align-items:flex-start;line-height:1.5}
 .alert-info{background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);color:#58a6ff}
+/* ── MARGIN ALERTS ── */
+.margin-alert{display:flex;gap:8px;align-items:flex-start;font-size:11.5px;line-height:1.5;padding:9px 11px;border-radius:9px;margin-bottom:6px}
+.margin-alert-warn{background:rgba(255,179,0,.07);border:1px solid rgba(255,179,0,.2);color:var(--gold)}
+.margin-alert-danger{background:rgba(255,80,80,.07);border:1px solid rgba(255,80,80,.2);color:#ff6b6b}
+.margin-alert-info{background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.18);color:#64a0ff}
+/* ── SIMILAR JOB RECALL ── */
+.similar-recall{background:rgba(255,179,0,.05);border:1px solid rgba(255,179,0,.14);border-radius:10px;padding:10px 13px;margin-bottom:10px;font-size:11.5px;color:var(--white2);line-height:1.55;display:flex;gap:8px;align-items:flex-start}
+/* ── DETAIL TOGGLE ── */
+.detail-toggle{display:flex;gap:5px;margin-bottom:12px}
+.detail-opt{flex:1;padding:7px 4px;border:1px solid var(--rim);border-radius:7px;font-size:9px;font-family:'DM Mono',monospace;text-align:center;cursor:pointer;color:var(--muted);background:var(--bg);letter-spacing:.4px;transition:all .15s}
+.detail-opt.active{border-color:var(--gold);color:var(--gold);background:rgba(255,179,0,.07)}
 
 /* ── FOOT NAV ── */
 .foot-nav{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
@@ -673,6 +718,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
     </div>
     <div class="topbar-right" style="display:flex;align-items:center;gap:10px">
       <span id="user-badge" style="display:none"></span>
+      <button id="dashboard-topbar-btn" onclick="navigate('dashboard')" style="display:none;background:none;border:none;padding:5px;cursor:pointer;line-height:0" title="Saved Jobs"><i data-lucide="folder" style="width:17px;height:17px;stroke:var(--gold)"></i></button>
       <button id="gopro-topbar-btn" onclick="handleUpgrade('monthly')" style="display:none;background:linear-gradient(135deg,#FFB300,#e09900);border:none;color:#000;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px"><img src="assets/logo-hero.png" width="12" height="12" alt="" style="object-fit:contain;vertical-align:middle;margin-right:3px"> GO PRO</button>
       <button id="topbar-auth-btn" onclick="toggleAuthPanel()" style="background:var(--panel);border:1px solid var(--rim);color:var(--muted);padding:5px 10px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px">SIGN IN</button>
       <div class="lang-toggle">
@@ -1026,6 +1072,8 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
           <button onclick="addLineGated()" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--gold);cursor:pointer;font-family:'DM Sans',sans-serif" data-en="+ Add" data-es="+ Agregar">+ Add</button>
         </div>
         <div style="padding:10px 12px">
+          <div id="similar-recall" style="display:none;margin-bottom:8px"></div>
+          <div id="margin-alerts" style="display:none;margin-bottom:8px"></div>
           <div class="li-head">
             <span data-en="Description" data-es="Descripción">Description</span>
             <span data-en="Qty" data-es="Cant.">Qty</span>
@@ -1137,6 +1185,43 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
           <div class="pay-opt" onclick="selectPaySched(this,'100% payment due upon project completion. Price valid 30 days.')">
             <div class="pay-opt-name" data-en="COD — Pay on Completion" data-es="Pago al Finalizar">COD — Pay on Completion</div>
             <div class="pay-opt-sub" data-en="Full balance due at final walkthrough" data-es="Saldo completo al término del trabajo">Full balance due at final walkthrough</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Proposal customizer -->
+      <div class="gc" id="proposal-edit-card" style="display:none;margin-bottom:10px">
+        <div class="gc-head">
+          <div class="gc-title"><i data-lucide="file-text" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>Customize Before Download</div>
+          <div class="gc-tag">Live preview</div>
+        </div>
+        <div class="gc-body" style="padding:10px 12px;display:flex;flex-direction:column;gap:10px">
+          <div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px">PRICING DETAIL</div>
+            <div class="detail-toggle">
+              <div class="detail-opt active" onclick="setDetailLevel('full',this)">Full Detail</div>
+              <div class="detail-opt" onclick="setDetailLevel('category',this)">By Category</div>
+              <div class="detail-opt" onclick="setDetailLevel('lump',this)">Lump Sum</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px">NOTE TO CLIENT</div>
+            <textarea id="prop-note" placeholder="e.g. Thank you for the opportunity — we look forward to working together." style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()"></textarea>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px">CLIENT WILL SUPPLY</div>
+            <textarea id="prop-supply" placeholder="e.g. Appliances, light fixtures, tile selection, cabinet hardware…" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()"></textarea>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+              <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px">ASSUMPTIONS</div>
+              <button onclick="addProposalAssumption()" style="background:none;border:none;color:var(--gold);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:0">+ ADD</button>
+            </div>
+            <div id="prop-assumptions"></div>
+          </div>
+          <div id="beautify-row" style="display:none;padding-top:2px">
+            <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.25);border-radius:8px;color:var(--gold);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-hero.png" width="12" height="12" style="object-fit:contain;vertical-align:middle"> POLISH SCOPE WITH AI</button>
+            <div id="beautify-status" style="font-size:10px;color:var(--muted);text-align:center;margin-top:5px;display:none"></div>
           </div>
         </div>
       </div>
@@ -1253,12 +1338,11 @@ async function loadUserData(){
   try {
     const { data, error } = await sbClient
       .from('users')
-      .select('estimate_count, is_pro')
+      .select('estimate_count, is_pro, prefs, logo_url, stripe_customer_id')
       .eq('id', currentUser.id)
       .single();
-    
+
     if(error || !data){
-      // Create user record if doesn't exist
       await sbClient.from('users').upsert({
         id: currentUser.id,
         email: currentUser.email,
@@ -1270,6 +1354,8 @@ async function loadUserData(){
     } else {
       estimateCount = data.estimate_count || 0;
       isPro = data.is_pro || false;
+      window._userLogoUrl = data.logo_url || null;
+      if(data.prefs) applyPrefs(data.prefs);
     }
     updateUserBadge();
   } catch(e) {
@@ -1299,12 +1385,15 @@ function updateUserBadge(){
     const rem = Math.max(0, FREE_LIMIT - estimateCount);
     const goProBtn = document.getElementById('gopro-topbar-btn');
     const upsellStrip = document.getElementById('post-estimate-upsell');
+    const dashBtn = document.getElementById('dashboard-topbar-btn');
     if(isPro){
       if(badge){ badge.textContent='✦ PRO'; badge.style.display='inline-block'; badge.style.color='var(--gold)'; badge.style.fontSize='10px'; badge.style.fontFamily="'DM Mono',monospace"; badge.style.letterSpacing='.5px'; }
       if(freeDisplay){ freeDisplay.style.display='none'; }
       if(goProBtn){ goProBtn.style.display='none'; }
       if(upsellStrip){ upsellStrip.style.display='none'; }
+      if(dashBtn) dashBtn.style.display='inline-block';
     } else {
+      if(dashBtn) dashBtn.style.display='none';
       if(badge){ badge.style.display='none'; }
       if(freeDisplay){
         freeDisplay.textContent = rem === 2 ? '2 free estimates left' : rem === 1 ? 'Last free estimate — Go Pro to keep going' : 'Free estimates used — Go Pro to continue';
@@ -1536,6 +1625,7 @@ function navigate(scr){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+scr).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+  if(scr==='dashboard') loadDashboard();
   if(scr==='input'){
     currentEstimate=null;
     document.getElementById('li-body').innerHTML='';
@@ -1550,6 +1640,9 @@ function navigate(scr){
     document.getElementById('email-gate').style.display='none';
     document.getElementById('proposal-section').style.display='none';
     const _ps=document.getElementById('pay-sched-section');if(_ps)_ps.style.display='none';
+    const _pe=document.getElementById('proposal-edit-card');if(_pe)_pe.style.display='none';
+    const _ma=document.getElementById('margin-alerts');if(_ma)_ma.style.display='none';
+    const _sr=document.getElementById('similar-recall');if(_sr)_sr.style.display='none';
     document.getElementById('var-body').innerHTML='';
     document.getElementById('loading-trade-cards').innerHTML='';
     document.getElementById('loading-reveal').classList.remove('visible');
@@ -1767,7 +1860,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
 }
 function parseJ(t){return JSON.parse(t.replace(/```json|```/g,'').trim())}
 const fmt=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmtK=n=>'$'+Math.round(n/1000)+'k';
+const fmtK=n=>n>=1000000?'$'+(n/1000000).toFixed(n%1000000===0?0:1)+'M':'$'+Math.round(n/1000)+'k';
 function savePDF(doc,filename){if(/iPad|iPhone|iPod/.test(navigator.userAgent)){const url=URL.createObjectURL(doc.output('blob'));const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},1000);}else{doc.save(filename);}}
 
 
@@ -2403,10 +2496,15 @@ function animateCounter(el, target) {
     hideLoading();
     navigate('estimate');
     renderEstimate(data);
-    // Show payment schedule selector
     const psEl = document.getElementById('pay-sched-section');
     if(psEl) psEl.style.display='block';
+    const peCard = document.getElementById('proposal-edit-card');
+    if(peCard){ peCard.style.display='block'; populateProposalAssumptions(); }
     incrementEstimateCount();
+    if(isPro && currentUser) {
+      saveEstimateToCloud(data);
+      savePrefs();
+    }
     btn.disabled=false;
   }catch(e){
     hideLoading();
@@ -2447,8 +2545,8 @@ function renderEstimate(data){
   });
   document.getElementById('li-body').innerHTML=html;
 
-  // Variance rows
-  const top=(data.lineItems||[]).slice(0,5);
+  // Variance rows — top 8 by value
+  const top=(data.lineItems||[]).slice().sort((a,b)=>b.total-a.total).slice(0,8);
   document.getElementById('var-body').innerHTML=top.map((item,i)=>`
     <div class="var-row">
       <span style="color:var(--white2);font-size:12px">${item.description.substring(0,28)}${item.description.length>28?'…':''}</span>
@@ -2459,8 +2557,10 @@ function renderEstimate(data){
 
   window._lines=[...(data.lineItems||[]).map(i=>({...i}))];
   renderTotals(data);
-  // Show Even Suggests
+  renderMarginAlerts(data);
+  if(isPro) { const br=document.getElementById('beautify-row'); if(br) br.style.display='block'; }
   setTimeout(()=>renderEvenSuggests(data), 800);
+  if(isPro && currentUser && sbClient) loadSimilarJobs(data);
 }
 
 function calcVar(input,estimated){
@@ -2472,6 +2572,31 @@ function calcVar(input,estimated){
     const el=document.getElementById('vr-'+idx);
     if(el){el.className=diff>0?'var-neg':'var-pos';el.textContent=(diff>0?'+':'')+fmt(Math.abs(diff))}
   }
+  if(isPro && currentUser && window._currentEstimateId) debounceActualSave();
+}
+let _actualSaveTimer=null;
+function debounceActualSave(){
+  clearTimeout(_actualSaveTimer);
+  _actualSaveTimer=setTimeout(saveActuals, 1200);
+}
+async function saveActuals(){
+  if(!window._currentEstimateId || !currentUser || !sbClient) return;
+  const rows=document.querySelectorAll('#var-body .var-row');
+  const entries=[];
+  rows.forEach((row,i)=>{
+    const input=row.querySelector('input');
+    if(!input||!input.value) return;
+    const actual=parseFloat(input.value.replace(/[$,]/g,''));
+    if(!isNaN(actual)){
+      const descEl=row.querySelector('span');
+      entries.push({estimate_id:window._currentEstimateId,line_index:i,actual_cost:actual,description:descEl?.textContent||''});
+    }
+  });
+  if(!entries.length) return;
+  try {
+    await sbClient.from('cost_entries')
+      .upsert(entries,{onConflict:'estimate_id,line_index'});
+  } catch(e){ console.error('Save actuals error:',e); }
 }
 
 function recalc(idx){
@@ -2534,6 +2659,52 @@ function recompute(){
   renderTotals(currentEstimate);
 }
 
+function renderMarginAlerts(data){
+  const el=document.getElementById('margin-alerts');
+  if(!el) return;
+  const alerts=[];
+  const items=data.lineItems||[];
+  const laborItems=items.filter(i=>/(labor|demo|crew|install|remove)/i.test(i.category+' '+i.description));
+  const laborTotal=laborItems.reduce((s,i)=>s+i.total,0);
+  const laborPct=data.subtotal>0?(laborTotal/data.subtotal)*100:0;
+  if(laborPct>0&&laborPct<22) alerts.push({t:'warn',m:`Labor is ${Math.round(laborPct)}% of direct costs — verify crew hours match the full scope.`});
+  const hasDemo=items.some(i=>/(demo|demolition|remove|tear)/i.test(i.category+' '+i.description));
+  const isRemodel=/(remodel|renovation|reno|replace|gut|redo|update)/i.test(data.projectName||'');
+  if(isRemodel&&!hasDemo) alerts.push({t:'warn',m:'No demo line item detected — confirm if removal is in scope or client-supplied.'});
+  if((data.contingency?.pct||0)<5) alerts.push({t:'warn',m:`Contingency at ${data.contingency?.pct||0}% — consider 8–10% for jobs with unknown conditions.`});
+  if((data.profit?.pct||0)<12) alerts.push({t:'danger',m:`Profit margin at ${data.profit?.pct||0}% — below sustainable threshold. Adjust your sliders before bidding.`});
+  const hasPermit=items.some(i=>/(permit|inspection)/i.test(i.description));
+  const isLarge=data.totalBid>25000;
+  if(isLarge&&!hasPermit) alerts.push({t:'info',m:'No permit line item — confirm if permits are required for this scope and jurisdiction.'});
+  if(!alerts.length){el.style.display='none';return;}
+  el.innerHTML=alerts.map(a=>`<div class="margin-alert margin-alert-${a.t}"><i data-lucide="${a.t==='danger'?'alert-triangle':'alert-circle'}" style="width:13px;height:13px;stroke:currentColor;flex-shrink:0;margin-top:1px"></i><span>${a.m}</span></div>`).join('');
+  el.style.display='block';
+  if(window.lucide) lucide.createIcons();
+}
+
+async function loadSimilarJobs(data){
+  const trade=(document.getElementById('est-trade')?.value||data.trade||'').trim();
+  if(!trade||!sbClient) return;
+  const el=document.getElementById('similar-recall');
+  if(!el) return;
+  try{
+    const {data:jobs}=await sbClient.from('estimates')
+      .select('total_bid,margin_pct')
+      .eq('user_id',currentUser.id)
+      .ilike('trade','%'+trade+'%')
+      .order('created_at',{ascending:false})
+      .limit(10);
+    if(!jobs||jobs.length<2) return;
+    const totals=jobs.map(j=>j.total_bid).filter(Boolean);
+    const margins=jobs.map(j=>j.margin_pct).filter(Boolean);
+    const avg=Math.round(totals.reduce((s,v)=>s+v,0)/totals.length);
+    const low=Math.min(...totals),high=Math.max(...totals);
+    const avgM=margins.length?Math.round(margins.reduce((s,v)=>s+v,0)/margins.length):null;
+    el.innerHTML=`<div class="similar-recall"><span style="color:var(--gold);flex-shrink:0">✦</span><span>Based on your last ${jobs.length} <strong>${trade}</strong> jobs — avg ${fmtK(avg)}, range ${fmtK(low)}–${fmtK(high)}${avgM?`, avg margin ${avgM}%`:''}</span></div>`;
+    el.style.display='block';
+  }catch(e){console.error('Similar jobs error:',e);}
+}
+
 function renderTotals(data){
   const pct=data.profit?.pct||22;
   const L=appLang;
@@ -2563,8 +2734,13 @@ function renderTotals(data){
 //  EMAIL + PDF
 // ══════════════════════════
 function showEmailGate(type){
-  // Paywall is now enforced at startEstimate() — anyone reaching here has earned it
   pdfTarget=type;
+  if(isPro && currentUser){
+    if(currentEstimate) currentEstimate.paymentTerms=selectedPaySched;
+    if(type==='proposal') renderProposalPreview();
+    else downloadCostSheet();
+    return;
+  }
   const gate=document.getElementById('email-gate');
   gate.style.display='block';
   gate.scrollIntoView({behavior:'smooth',block:'center'});
@@ -2577,9 +2753,8 @@ function downloadPDF(){
   // Capture lead to Supabase (fire and forget — don't block download if it fails)
   captureLead(email, pdfTarget);
   document.getElementById('email-gate').style.display='none';
-  // Apply selected payment schedule to estimate before generating PDF
   if(currentEstimate) currentEstimate.paymentTerms = selectedPaySched;
-  if(pdfTarget==='proposal'){renderProposalPreview();downloadProposalPDF();}
+  if(pdfTarget==='proposal'){renderProposalPreview();}
   else downloadCostSheet();
 }
 
@@ -2613,18 +2788,34 @@ function renderProposalPreview(){
   const L=appLang;
   const cats={};
   (data.lineItems||[]).forEach(item=>{if(!cats[item.category])cats[item.category]=[];cats[item.category].push(item)});
-  let rows=Object.entries(cats).map(([cat,items])=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8920A">${cat}</td></tr>`+items.map(item=>`<tr><td>${item.description}</td><td style="text-align:right;color:#888;font-size:11px">${item.qty} ${item.unit}</td></tr>`).join('')).join('');
+  const detail=window._proposalDetail||'full';
+  let rows='';
+  if(detail==='full'){
+    rows=Object.entries(cats).map(([cat,items])=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8920A">${cat}</td></tr>`+items.map(item=>`<tr><td>${item.description}</td><td style="text-align:right;color:#888;font-size:11px">${item.qty} ${item.unit}</td></tr>`).join('')).join('');
+  } else if(detail==='category'){
+    rows=Object.entries(cats).map(([cat,items])=>{
+      const sub=items.reduce((s,i)=>s+i.total,0);
+      return `<tr><td style="font-weight:600;color:#555">${cat}</td><td style="text-align:right;font-weight:600;color:#555">${fmtK(sub)}</td></tr>`;
+    }).join('');
+  } else {
+    rows=`<tr><td colspan="2" style="text-align:center;padding:10px;color:#666;font-size:13px">All work as described in this proposal</td></tr>`;
+  }
+  const clientNote=data.clientNote||'';
+  const clientSupply=data.clientSupply||'';
+  const allExclusions=[...(data.exclusions||[]),...(clientSupply?['Client to supply: '+clientSupply]:[])];
   document.getElementById('proposal-content').innerHTML=`
     <div class="prop-inner">
       <div class="prop-hdr">
         <div><h1>${L==='en'?'Project Proposal':'Propuesta de Proyecto'}</h1><p>Even · Cornerstone OS</p></div>
         <div class="prop-meta"><strong>${data.projectName||'Estimate'}</strong>${now}<br>${ctx?.location||''}<br>${L==='en'?'Client':'Cliente'}: ${ctx?.client||'—'}</div>
       </div>
+      ${clientNote?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${clientNote}</p>`:''}
       <div class="prop-sec">${L==='en'?'Scope of Work':'Alcance del Trabajo'}</div>
       <p style="font-size:12px;color:#666;line-height:1.6;margin-bottom:10px">${L==='en'?'This proposal covers the complete scope of work as outlined below.':'Esta propuesta cubre el alcance completo del trabajo detallado a continuación.'}</p>
       <div class="prop-sec">${L==='en'?'Inclusions':'Incluido'}</div>
       <table class="prop-tbl"><thead><tr><th>${L==='en'?'Description':'Descripción'}</th><th style="text-align:right">${L==='en'?'Qty / Unit':'Cant. / Unidad'}</th></tr></thead><tbody>${rows}</tbody></table>
-      ${data.exclusions?.length?`<div class="prop-sec">${L==='en'?'Exclusions':'Exclusiones'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${data.exclusions.map(e=>`• ${e}`).join('<br>')}</div>`:''}
+      ${allExclusions.length?`<div class="prop-sec">${L==='en'?'Exclusions':'Exclusiones'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${allExclusions.map(e=>`• ${e}`).join('<br>')}</div>`:''}
+      ${data.assumptions?.length?`<div class="prop-sec">${L==='en'?'Assumptions':'Supuestos'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${data.assumptions.map(a=>`• ${a}`).join('<br>')}</div>`:''}
       <div class="prop-sec">${L==='en'?'Investment':'Inversión'}</div>
       <div class="prop-total-bar" style="flex-direction:column;align-items:flex-start;gap:6px"><div style="width:100%;display:flex;justify-content:space-between;align-items:center"><span class="pl">${L==='en'?'Estimated Project Investment':'Inversión Estimada del Proyecto'}</span><span class="pv">${fmtK(Math.round(data.totalBid*0.88))+' — '+fmtK(Math.round(data.totalBid*1.12))}</span></div><div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Midpoint ref: '+fmt(data.totalBid):'Referencia: '+fmt(data.totalBid)}</div></div>
       <p style="font-size:10px;color:#aaa;margin-top:8px">${data.paymentTerms||(L==='en'?'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.':'50% de depósito requerido. Saldo al terminar. Precio válido 30 días.')}</p>
@@ -2660,21 +2851,54 @@ function downloadProposalPDF(){
   doc.text(L==='en'?'PROJECT PROPOSAL':'PROPUESTA DE PROYECTO',M,y);y+=12;
   doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(130,130,130);
   doc.text(`${data.projectName||'Estimate'} · ${ctx.client||'Client'} · ${ctx.location||''}`,M,y);y+=22;
-  doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,18,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
-  doc.text(L==='en'?'DESCRIPTION':'DESCRIPCIÓN',M+6,y+12);doc.text(L==='en'?'QTY / UNIT':'CANT. / UNIDAD',W-M-6,y+12,{align:'right'});
-  y+=20;
-  let lastCat='';
-  (data.lineItems||[]).forEach((item,i)=>{
-    if(y>700){doc.addPage();y=44}
-    if(item.category!==lastCat){lastCat=item.category;doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(200,146,42);doc.text(item.category.toUpperCase(),M+6,y+9);y+=14}
-    if(i%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,15,'F')}
-    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(60,60,60);
-    doc.text(String(item.description).substring(0,58),M+6,y+10);
-    doc.setTextColor(140,140,140);doc.text(`${item.qty} ${item.unit}`,W-M-6,y+10,{align:'right'});y+=15;
-  });
-  y+=8;
-  if(data.exclusions?.length&&y<660){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(180,80,60);doc.text(L==='en'?'EXCLUSIONS':'EXCLUSIONES',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);data.exclusions.slice(0,4).forEach(ex=>{doc.text('• '+ex,M+6,y);y+=10});y+=4}
+  const pdfDetail=window._proposalDetail||'full';
+  const pdfCats={};
+  (data.lineItems||[]).forEach(item=>{if(!pdfCats[item.category])pdfCats[item.category]=[];pdfCats[item.category].push(item);});
+  if(pdfDetail==='lump'){
+    doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,24,'F');
+    doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(60,60,60);
+    doc.text(L==='en'?'All work as described in this proposal':'Todo el trabajo descrito en esta propuesta',M+8,y+15);y+=32;
+  } else if(pdfDetail==='category'){
+    doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,18,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
+    doc.text(L==='en'?'CATEGORY':'CATEGORÍA',M+6,y+12);doc.text(L==='en'?'SUBTOTAL':'SUBTOTAL',W-M-6,y+12,{align:'right'});
+    y+=20;
+    Object.entries(pdfCats).forEach(([cat,items],ci)=>{
+      if(y>700){doc.addPage();y=44;}
+      const sub=items.reduce((s,i)=>s+i.total,0);
+      if(ci%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,15,'F');}
+      doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(60,60,60);
+      doc.text(cat,M+6,y+10);
+      doc.setFont('helvetica','normal');doc.setTextColor(100,100,100);doc.text(fmt(sub),W-M-6,y+10,{align:'right'});y+=15;
+    });
+    y+=8;
+  } else {
+    doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,18,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
+    doc.text(L==='en'?'DESCRIPTION':'DESCRIPCIÓN',M+6,y+12);doc.text(L==='en'?'QTY / UNIT':'CANT. / UNIDAD',W-M-6,y+12,{align:'right'});
+    y+=20;
+    let lastCat='';let rowIdx=0;
+    (data.lineItems||[]).forEach(item=>{
+      if(y>700){doc.addPage();y=44;}
+      if(item.category!==lastCat){
+        lastCat=item.category;rowIdx=0;
+        doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(200,146,42);
+        doc.text(item.category.toUpperCase(),M+6,y+9);y+=14;
+      }
+      if(rowIdx%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,15,'F');}
+      doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(60,60,60);
+      const descLines=doc.splitTextToSize(String(item.description),W-M*2-80);
+      doc.text(descLines[0],M+6,y+10);
+      doc.setTextColor(140,140,140);doc.text(`${item.qty} ${item.unit}`,W-M-6,y+10,{align:'right'});
+      y+=15;rowIdx++;
+    });
+    y+=8;
+  }
+  // Client note
+  if(data.clientNote){if(y>680){doc.addPage();y=44}doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(100,100,100);const noteLines=doc.splitTextToSize(data.clientNote,W-M*2);noteLines.forEach(l=>{doc.text(l,M,y);y+=13});y+=6;}
+  // Merged exclusions (AI + client-supply)
+  const pdfExclusions=[...(data.exclusions||[]),...(data.clientSupply?['Client to supply: '+data.clientSupply]:[])];
+  if(pdfExclusions.length&&y<660){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(180,80,60);doc.text(L==='en'?'EXCLUSIONS':'EXCLUSIONES',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);pdfExclusions.slice(0,6).forEach(ex=>{const lines=doc.splitTextToSize('• '+ex,W-M*2-6);lines.forEach(l=>{if(y<740){doc.text(l,M+6,y);y+=10}});});y+=4}
   if(y>710){doc.addPage();y=44}
   doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,36,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(255,179,0);
@@ -2690,6 +2914,10 @@ function downloadProposalPDF(){
   const pages=doc.getNumberOfPages();
   for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even by Cornerstone OS · Client Proposal · Confidential',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
   savePDF(doc,`Even-Proposal-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
+  if(isPro && currentUser && sbClient && window._currentEstimateId){
+    sbClient.from('estimates').update({status:'sent',sent_at:new Date().toISOString()}).eq('id',window._currentEstimateId).then(()=>{});
+    showToast('Proposal downloaded — marked as Sent in your dashboard.');
+  }
 }
 
 function downloadCostSheet(){
@@ -2800,7 +3028,7 @@ function renderEvenSuggests(data) {
   const premLow = Math.round(premium * 0.92);
   const premHigh = Math.round(premium * 1.10);
   const L = appLang;
-  const fmt2 = n => '$' + Math.round(n/1000) + 'k';
+  const fmt2 = n => n>=1000000?'$'+(n/1000000).toFixed(n%1000000===0?0:1)+'M':'$'+Math.round(n/1000)+'k';
 
   // Determine recommendation based on location and scope
   const loc = document.getElementById('est-location').value;
@@ -2995,6 +3223,474 @@ async function submitDataTrade(){
     </div>
   </div>
 </div>
+<!-- Dashboard Screen -->
+<div class="screen" id="s-dashboard">
+  <div class="sbody" style="padding-top:20px">
+
+    <!-- Header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div>
+        <div style="font-size:19px;font-weight:700;color:var(--white);line-height:1">Command Center</div>
+        <div style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px;letter-spacing:1px">✦ EVEN PRO</div>
+      </div>
+      <button onclick="navigate('input')" style="background:var(--gold);border:none;color:#000;padding:9px 15px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px">+ NEW JOB</button>
+    </div>
+
+    <!-- Metrics strip -->
+    <div class="dash-metrics">
+      <div class="dash-metric">
+        <div class="dash-metric-label">Pipeline</div>
+        <div class="dash-metric-val" id="dm-pipeline">—</div>
+        <div class="dash-metric-sub" id="dm-pipeline-sub">open estimates</div>
+      </div>
+      <div class="dash-metric">
+        <div class="dash-metric-label">Won This Month</div>
+        <div class="dash-metric-val" id="dm-won">—</div>
+        <div class="dash-metric-sub" id="dm-won-sub">—</div>
+      </div>
+      <div class="dash-metric">
+        <div class="dash-metric-label">Active Jobs</div>
+        <div class="dash-metric-val" id="dm-active">—</div>
+        <div class="dash-metric-sub">in progress</div>
+      </div>
+      <div class="dash-metric">
+        <div class="dash-metric-label">Avg Margin</div>
+        <div class="dash-metric-val" id="dm-margin">—</div>
+        <div class="dash-metric-sub">across all jobs</div>
+      </div>
+    </div>
+
+    <!-- AI Insights -->
+    <div id="dash-insights-wrap" style="display:none;margin-bottom:16px">
+      <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:8px;display:flex;align-items:center;gap:6px">
+        <img src="assets/logo-hero.png" width="11" height="11" style="object-fit:contain;vertical-align:middle;opacity:.8"> EVEN INTELLIGENCE
+      </div>
+      <div id="dash-insights"></div>
+    </div>
+
+    <!-- Jobs header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace">All Jobs</div>
+      <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace" id="dash-job-count"></div>
+    </div>
+
+    <!-- Job list -->
+    <div id="dashboard-list">
+      <div id="dashboard-empty" style="text-align:center;padding:40px 20px;color:var(--muted);font-size:13px">
+        <i data-lucide="folder" style="width:32px;height:32px;stroke:var(--muted);display:block;margin:0 auto 12px"></i>
+        No saved jobs yet. Run your first estimate.
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div style="margin-top:28px">
+      <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:10px">Settings</div>
+      <div class="gc">
+        <div class="gc-head">
+          <div class="gc-title"><i data-lucide="building-2" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>Company Logo</div>
+          <div class="gc-tag">Shows on proposals</div>
+        </div>
+        <div class="gc-body" style="padding:14px 12px">
+          <div style="display:flex;align-items:center;gap:14px">
+            <div style="width:56px;height:56px;border:1px solid var(--rim);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg);flex-shrink:0">
+              <img id="logo-preview-img" src="" alt="" style="max-width:100%;max-height:100%;display:none;object-fit:contain">
+              <i data-lucide="building-2" id="logo-preview-placeholder" style="width:20px;height:20px;stroke:var(--muted)"></i>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:12px;color:var(--white2);margin-bottom:7px">Upload your company logo to appear on client proposals.</div>
+              <label style="display:inline-block;padding:7px 13px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--gold);cursor:pointer;font-family:'DM Mono',monospace">
+                <input type="file" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
+                <i data-lucide="upload-cloud" style="width:11px;height:11px;stroke:currentColor;vertical-align:middle;margin-right:4px"></i> Upload
+              </label>
+              <span id="logo-upload-status" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ══════════════════════════
+//  PRO — CLOUD PERSISTENCE
+// ══════════════════════════
+
+const STATUS_LABELS={draft:'Draft',sent:'Sent',won:'Won',active:'Active',complete:'Complete',lost:'Lost'};
+const STATUS_CLASS={draft:'status-draft',sent:'status-sent',won:'status-won',active:'status-active',complete:'status-complete',lost:'status-lost'};
+
+async function saveEstimateToCloud(data){
+  if(!currentUser||!sbClient) return;
+  try{
+    const payload={
+      user_id: currentUser.id,
+      client_name: document.getElementById('est-client')?.value||'',
+      project_label: document.getElementById('est-project-label')?.value||document.getElementById('est-location')?.value||'',
+      location: document.getElementById('est-location')?.value||'',
+      trade: document.getElementById('est-trade')?.value||window._ctx?.trade||'',
+      total_bid: data.totalBid||0,
+      margin_pct: data.profit?.pct||0,
+      status: 'draft',
+      estimate_json: data,
+      created_at: new Date().toISOString()
+    };
+    const { data: saved, error } = await sbClient.from('estimates').insert(payload).select('id').single();
+    if(error){ console.error('Save estimate error:',error); return; }
+    window._currentEstimateId = saved.id;
+    showToast('✦ Estimate saved to your account.');
+  }catch(e){ console.error('Save estimate error:',e); }
+}
+
+// ── DETAIL LEVEL TOGGLE ───────────────────────────────────────────────────────
+window._proposalDetail='full';
+function setDetailLevel(level,el){
+  window._proposalDetail=level;
+  document.querySelectorAll('.detail-opt').forEach(o=>o.classList.remove('active'));
+  el.classList.add('active');
+  const ps=document.getElementById('proposal-section');
+  if(ps&&ps.style.display!=='none') renderProposalPreview();
+}
+
+// ── PROPOSAL BEAUTIFIER ───────────────────────────────────────────────────────
+async function proposalBeautify(){
+  if(!currentEstimate) return;
+  const btn=document.getElementById('beautify-btn');
+  const status=document.getElementById('beautify-status');
+  if(btn) btn.disabled=true;
+  if(status){status.textContent='Polishing scope language…';status.style.display='block';}
+  const items=(currentEstimate.lineItems||[]).map(i=>i.description).join(', ');
+  const scope=document.getElementById('scope-text')?.value||currentEstimate.projectName||'';
+  try{
+    const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',max_tokens:500,
+        messages:[{role:'user',content:`You are a professional proposal writer for contractors. Rewrite the following project scope into clean, client-facing proposal language. Sound professional and confident. Keep it concise (2-3 sentences max). Do NOT use jargon. Do NOT mention specific prices. Return ONLY the rewritten text, no quotes, no intro.\n\nOriginal scope: "${scope}"\nWork items: ${items}`}]
+      })
+    });
+    const json=await r.json();
+    const text=(json.content?.[0]?.text||'').trim();
+    if(text){
+      const noteEl=document.getElementById('prop-note');
+      if(noteEl&&!noteEl.value) noteEl.value=text;
+      else if(noteEl) noteEl.value=text;
+      currentEstimate.clientNote=text;
+      if(status){status.textContent='✓ Scope polished';status.style.color='var(--gold)';}
+      const ps=document.getElementById('proposal-section');
+      if(ps&&ps.style.display!=='none') renderProposalPreview();
+    }
+  }catch(e){
+    if(status){status.textContent='Could not connect — try again.';}
+    console.error('Beautify error:',e);
+  }finally{
+    if(btn) btn.disabled=false;
+  }
+}
+
+// ── PROPOSAL EDITOR ──────────────────────────────────────────────────────────
+function liveProposalUpdate(){
+  if(!currentEstimate) return;
+  currentEstimate.clientNote = document.getElementById('prop-note')?.value||'';
+  currentEstimate.clientSupply = document.getElementById('prop-supply')?.value?.trim()||'';
+  const inputs = document.querySelectorAll('#prop-assumptions .assumption-input');
+  currentEstimate.assumptions = Array.from(inputs).map(i=>i.value.trim()).filter(Boolean);
+  const ps = document.getElementById('proposal-section');
+  if(ps && ps.style.display!=='none') renderProposalPreview();
+}
+
+function populateProposalAssumptions(){
+  const list = document.getElementById('prop-assumptions');
+  if(!list) return;
+  list.innerHTML='';
+  (currentEstimate?.assumptions||[]).forEach(a=>_addAssumptionRow(a));
+}
+
+function addProposalAssumption(){
+  _addAssumptionRow('');
+  liveProposalUpdate();
+}
+
+function _addAssumptionRow(text){
+  const list = document.getElementById('prop-assumptions');
+  if(!list) return;
+  const div = document.createElement('div');
+  div.style.cssText='display:flex;gap:6px;margin-bottom:6px;align-items:center';
+  div.innerHTML=`<input class="assumption-input" value="${text.replace(/"/g,'&quot;')}" placeholder="e.g. Access to electrical panel confirmed…" style="flex:1;background:var(--bg);border:1px solid var(--rim);border-radius:7px;color:var(--white2);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box" oninput="liveProposalUpdate()"><button onclick="this.parentElement.remove();liveProposalUpdate()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:17px;line-height:1;padding:0 2px;flex-shrink:0">×</button>`;
+  list.appendChild(div);
+}
+
+function savePrefs(){
+  if(!currentUser||!sbClient) return;
+  const prefs={
+    laborType: laborType||'own',
+    bidType: bidType||'fixed',
+    trade: document.getElementById('est-trade')?.value||'',
+    location: document.getElementById('est-location')?.value||''
+  };
+  sbClient.from('users').update({prefs}).eq('id',currentUser.id)
+    .then(({error})=>{ if(error) console.error('Save prefs error:',error); });
+}
+
+function applyPrefs(prefs){
+  if(!prefs) return;
+  if(prefs.laborType){
+    laborType=prefs.laborType;
+    const segLabor=document.getElementById('seg-labor');
+    if(segLabor) segLabor.querySelectorAll('.seg-opt').forEach(b=>{
+      const v=b.getAttribute('onclick')?.match(/'([^']+)'\)$/)?.[1];
+      b.classList.toggle('active',v===prefs.laborType);
+    });
+  }
+  if(prefs.bidType){
+    bidType=prefs.bidType;
+    const segBid=document.getElementById('seg-bid');
+    if(segBid) segBid.querySelectorAll('.seg-opt').forEach(b=>{
+      const v=b.getAttribute('onclick')?.match(/'([^']+)'\)$/)?.[1];
+      b.classList.toggle('active',v===prefs.bidType);
+    });
+  }
+  if(prefs.trade){
+    const el=document.getElementById('est-trade');
+    if(el&&!el.value) el.value=prefs.trade;
+  }
+  if(prefs.location){
+    const el=document.getElementById('est-location');
+    if(el&&!el.value) el.value=prefs.location;
+  }
+}
+
+async function loadDashboard(){
+  if(!currentUser||!sbClient||!isPro) return;
+  const listEl=document.getElementById('dashboard-list');
+  const emptyEl=document.getElementById('dashboard-empty');
+  if(listEl) listEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px;font-family:\'DM Mono\',monospace">Loading…</div>';
+
+  if(window._userLogoUrl){
+    const img=document.getElementById('logo-preview-img');
+    const ph=document.getElementById('logo-preview-placeholder');
+    if(img){img.src=window._userLogoUrl;img.style.display='block';}
+    if(ph) ph.style.display='none';
+  }
+
+  try{
+    const [estRes, ceRes] = await Promise.all([
+      sbClient.from('estimates')
+        .select('id,client_name,project_label,location,trade,total_bid,margin_pct,created_at,status,notes,sent_at')
+        .eq('user_id',currentUser.id)
+        .order('created_at',{ascending:false})
+        .limit(50),
+      sbClient.from('cost_entries')
+        .select('estimate_id,actual_cost')
+    ]);
+
+    const estimates = estRes.data || [];
+    const actuals = {};
+    (ceRes.data||[]).forEach(r=>{ actuals[r.estimate_id]=(actuals[r.estimate_id]||0)+r.actual_cost; });
+
+    // Metrics
+    const now=new Date();
+    const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+    const openSt=['draft','sent','active'];
+    const openEsts=estimates.filter(e=>openSt.includes(e.status||'draft'));
+    const pipeline=openEsts.reduce((s,e)=>s+e.total_bid,0);
+    const wonThisMo=estimates.filter(e=>e.status==='won'&&new Date(e.created_at)>=monthStart);
+    const wonVal=wonThisMo.reduce((s,e)=>s+e.total_bid,0);
+    const activeCount=estimates.filter(e=>e.status==='active').length;
+    const margins=estimates.filter(e=>e.margin_pct>0).map(e=>e.margin_pct);
+    const avgMargin=margins.length?Math.round(margins.reduce((s,m)=>s+m,0)/margins.length):null;
+
+    const dm=id=>document.getElementById(id);
+    if(dm('dm-pipeline')) dm('dm-pipeline').textContent=pipeline>0?fmtK(pipeline):'$0';
+    if(dm('dm-pipeline-sub')) dm('dm-pipeline-sub').textContent=openEsts.length+' open';
+    if(dm('dm-won')) dm('dm-won').textContent=wonVal>0?fmtK(wonVal):'$0';
+    if(dm('dm-won-sub')) dm('dm-won-sub').textContent=wonThisMo.length+' closed';
+    if(dm('dm-active')) dm('dm-active').textContent=activeCount||'0';
+    if(dm('dm-margin')) dm('dm-margin').textContent=avgMargin?avgMargin+'%':'—';
+    if(dm('dash-job-count')) dm('dash-job-count').textContent=estimates.length+' total';
+
+    if(!estimates.length){
+      if(listEl) listEl.innerHTML='';
+      if(emptyEl) emptyEl.style.display='block';
+      return;
+    }
+    if(emptyEl) emptyEl.style.display='none';
+
+    if(listEl) listEl.innerHTML=estimates.map(est=>{
+      const sk=est.status||'draft';
+      const label=est.project_label||est.location||'Untitled Job';
+      const date=new Date(est.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+      const actualTotal=actuals[est.id]||0;
+      let varHtml='';
+      if(actualTotal>0){
+        const diff=actualTotal-est.total_bid;
+        const pct=Math.round((Math.abs(diff)/est.total_bid)*100);
+        const cls=diff>0?'over':'under';
+        const sign=diff>0?'+':'-';
+        varHtml=`<div class="job-variance ${cls}">${fmtK(actualTotal)} actual · ${sign}${pct}%</div>`;
+      }
+      const sentDate=est.sent_at?new Date(est.sent_at):null;
+      const daysSent=sentDate?Math.floor((now-sentDate)/(864e5)):null;
+      const showFU=sk==='sent'&&daysSent!==null&&daysSent>=5;
+      const statusOpts=Object.entries(STATUS_LABELS).map(([k,v])=>`<option value="${k}"${k===sk?' selected':''}>${v}</option>`).join('');
+      return `<div class="job-card" id="jc-${est.id}">
+        <div class="job-card-top" onclick="loadSavedEstimate('${est.id}')">
+          <div class="job-card-main">
+            <div class="job-card-label">${label}</div>
+            ${est.client_name?`<div style="font-size:11px;color:var(--muted);margin-top:1px">${est.client_name}</div>`:''}
+            <div class="job-card-meta">${[est.trade,date].filter(Boolean).join(' · ')}</div>
+          </div>
+          <div class="job-card-right">
+            <div class="job-card-total">${fmtK(est.total_bid)}</div>
+            ${varHtml}
+          </div>
+        </div>
+        ${showFU?`<div class="job-followup"><i data-lucide="clock" style="width:11px;height:11px;stroke:currentColor"></i> Sent ${daysSent} days ago — time to follow up</div>`:''}
+        <div class="job-card-actions">
+          <span class="status-pill ${STATUS_CLASS[sk]}">${STATUS_LABELS[sk]}</span>
+          <select class="status-select" onchange="updateJobStatus('${est.id}',this.value)" onclick="event.stopPropagation()">${statusOpts}</select>
+          <div style="flex:1"></div>
+          <button class="job-action-btn" onclick="event.stopPropagation();toggleNotes('${est.id}')"><i data-lucide="file-text" style="width:11px;height:11px;stroke:currentColor"></i> Notes</button>
+          <button class="job-action-btn" onclick="event.stopPropagation();redownloadEstimate('${est.id}')"><i data-lucide="file-bar-chart" style="width:11px;height:11px;stroke:currentColor"></i> PDF</button>
+        </div>
+        <div class="job-notes-wrap" id="notes-${est.id}">
+          <textarea class="job-notes-input" placeholder="Notes — client contact, site conditions, what you'd do different…" onchange="saveJobNotes('${est.id}',this.value)">${est.notes||''}</textarea>
+        </div>
+      </div>`;
+    }).join('');
+    if(window.lucide) lucide.createIcons();
+
+    if(estimates.length>=3) generateInsights(estimates);
+  }catch(e){ console.error('Load dashboard error:',e); }
+}
+
+function toggleNotes(estimateId){
+  const w=document.getElementById('notes-'+estimateId);
+  if(!w) return;
+  w.style.display=w.style.display==='block'?'none':'block';
+  if(w.style.display==='block') w.querySelector('textarea')?.focus();
+}
+
+async function updateJobStatus(estimateId,status){
+  if(!sbClient) return;
+  const update={status};
+  if(status==='sent') update.sent_at=new Date().toISOString();
+  try{
+    await sbClient.from('estimates').update(update).eq('id',estimateId);
+    const card=document.getElementById('jc-'+estimateId);
+    if(card){
+      const pill=card.querySelector('.status-pill');
+      if(pill){pill.textContent=STATUS_LABELS[status];pill.className='status-pill '+STATUS_CLASS[status];}
+    }
+  }catch(e){ console.error('Status update error:',e); }
+}
+
+const _noteTimers={};
+function saveJobNotes(estimateId,notes){
+  clearTimeout(_noteTimers[estimateId]);
+  _noteTimers[estimateId]=setTimeout(async()=>{
+    if(!sbClient) return;
+    try{ await sbClient.from('estimates').update({notes}).eq('id',estimateId); }
+    catch(e){ console.error('Notes save error:',e); }
+  },1000);
+}
+
+async function generateInsights(estimates){
+  const wrap=document.getElementById('dash-insights-wrap');
+  const el=document.getElementById('dash-insights');
+  if(!wrap||!el) return;
+  const summary=estimates.slice(0,15).map(e=>
+    `Trade:${e.trade||'?'} Total:$${e.total_bid} Status:${e.status||'draft'} Margin:${e.margin_pct||0}% Location:${e.location||'?'}`
+  ).join('\n');
+  try{
+    const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-haiku-4-5-20251001',
+        max_tokens:400,
+        messages:[{role:'user',content:`You are Even, a business intelligence AI for contractors. Analyze this contractor's estimate history. Return exactly 3 short, specific, actionable insights — each one sentence. Mention real numbers from their data. Focus on margin risk, pricing patterns, or win/loss trends. No generic advice.\n\nData:\n${summary}\n\nReturn ONLY valid JSON, no markdown: {"insights":["...","...","..."]}`}]
+      })
+    });
+    const json=await r.json();
+    const text=json.content?.[0]?.text||'';
+    const parsed=JSON.parse(text);
+    if(parsed.insights?.length){
+      el.innerHTML=parsed.insights.map(ins=>
+        `<div class="dash-insight"><span style="color:var(--gold);flex-shrink:0;margin-top:1px">✦</span><span>${ins}</span></div>`
+      ).join('');
+      wrap.style.display='block';
+    }
+  }catch(e){ console.error('Insights error:',e); }
+}
+
+async function loadSavedEstimate(estimateId){
+  if(!sbClient) return;
+  try{
+    const { data, error }=await sbClient.from('estimates').select('estimate_json').eq('id',estimateId).single();
+    if(error||!data) return;
+    window._currentEstimateId=estimateId;
+    currentEstimate=data.estimate_json;
+    navigate('estimate');
+    renderEstimate(currentEstimate);
+    const psEl=document.getElementById('pay-sched-section');
+    if(psEl) psEl.style.display='block';
+    loadActuals(estimateId);
+  }catch(e){ console.error('Load saved estimate error:',e); }
+}
+
+async function redownloadEstimate(estimateId){
+  if(!sbClient) return;
+  try{
+    const { data, error }=await sbClient.from('estimates').select('estimate_json,client_name,project_label').eq('id',estimateId).single();
+    if(error||!data) return;
+    currentEstimate=data.estimate_json;
+    downloadProposalPDF();
+  }catch(e){ console.error('Redownload error:',e); }
+}
+
+async function loadActuals(estimateId){
+  if(!sbClient||!estimateId) return;
+  try{
+    const { data }=await sbClient.from('cost_entries').select('*').eq('estimate_id',estimateId);
+    if(!data||!data.length) return;
+    data.forEach(entry=>{
+      const row=document.querySelector(`#var-body .var-row:nth-child(${entry.line_index+1})`);
+      if(!row) return;
+      const input=row.querySelector('input');
+      if(input){input.value=entry.actual_cost;calcVar(input,0);}
+    });
+  }catch(e){ console.error('Load actuals error:',e); }
+}
+
+async function handleLogoUpload(input){
+  if(!input.files||!input.files[0]||!currentUser||!sbClient) return;
+  const file=input.files[0];
+  const statusEl=document.getElementById('logo-upload-status');
+  if(statusEl) statusEl.textContent='Uploading…';
+  try{
+    const ext=file.name.split('.').pop();
+    const path=`${currentUser.id}/logo.${ext}`;
+    const { error: upErr }=await sbClient.storage.from('logos').upload(path,file,{upsert:true,contentType:file.type});
+    if(upErr) throw upErr;
+    const { data: urlData }=sbClient.storage.from('logos').getPublicUrl(path);
+    const publicUrl=urlData.publicUrl;
+    await sbClient.from('users').update({logo_url:publicUrl}).eq('id',currentUser.id);
+    window._userLogoUrl=publicUrl;
+    const img=document.getElementById('logo-preview-img');
+    const ph=document.getElementById('logo-preview-placeholder');
+    if(img){img.src=publicUrl;img.style.display='block';}
+    if(ph) ph.style.display='none';
+    if(statusEl) statusEl.textContent='Saved ✓';
+    showToast('Logo saved — will appear on all future proposals.');
+  }catch(e){
+    console.error('Logo upload error:',e);
+    if(statusEl) statusEl.textContent='Upload failed';
+    showToast('Logo upload failed — please try again.');
+  }
+}
+</script>
+
 <script>document.addEventListener("DOMContentLoaded",function(){if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>
