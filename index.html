@@ -610,6 +610,26 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .pro-modal-plan-period{font-size:10px;color:var(--muted);margin-bottom:12px}
 .pro-modal-save-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:20px;white-space:nowrap;font-family:'DM Mono',monospace}
 .pro-modal-close{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;margin-top:6px;display:block;width:100%}
+.supplier-card{background:var(--bg);border:1px solid var(--rim);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.supplier-card-top{display:grid;grid-template-columns:1fr auto 28px;gap:8px;align-items:center;padding:10px 12px;cursor:pointer}
+.supplier-card-title{font-size:12px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.supplier-card-meta{font-size:10px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
+.supplier-card-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.supplier-card-price{font-size:12px;font-weight:700;color:var(--gold);font-family:'DM Mono',monospace;white-space:nowrap}
+.supplier-star{background:none;border:none;cursor:pointer;padding:0;font-size:14px;line-height:1;opacity:.4;transition:opacity .15s}
+.supplier-star.active{opacity:1}
+.supplier-remove{background:none;border:none;color:var(--muted);cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center}
+.supplier-remove:hover{color:#ff6b6b}
+.supplier-expand{padding:0 12px 12px;display:none;border-top:1px solid var(--rim2)}
+.supplier-expand.open{display:block}
+.supplier-field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.supplier-field-row.three{grid-template-columns:1fr 1fr 1fr}
+.supplier-field-label{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:4px}
+.supplier-input{background:var(--panel);border:1px solid var(--rim);border-radius:6px;color:var(--white);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;width:100%;box-sizing:border-box;transition:border .15s}
+.supplier-input:focus{border-color:var(--gold)}
+.supplier-input::placeholder{color:var(--muted)}
+.supplier-select{background:var(--panel);border:1px solid var(--rim);border-radius:6px;color:var(--white);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;width:100%;box-sizing:border-box;appearance:none}
+.price-sheet-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--gold);cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;white-space:nowrap}
 </style>
 
   <!-- Supabase -->
@@ -1642,7 +1662,7 @@ function navigate(scr){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+scr).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
-  if(scr==='dashboard') loadDashboard();
+  if(scr==='dashboard'){ loadDashboard(); renderSupplierList(); }
   if(scr==='input'){
     currentEstimate=null;
     document.getElementById('li-body').innerHTML='';
@@ -2449,7 +2469,7 @@ Columbia SC (City):
 - Plumbing new residential: $452.71 (1 bath) | $548 (2 bath) | $643.29 (3 bath) | $95.29 each additional bath
 - Mechanical/HVAC: $12.39 per unit (AC/furnace/heat pump/mini-split) | $9.28 fans/exhaust/water heater`;
 
-  const prompt=`${SE_RATES}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (15-25 line items min). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["string"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  const prompt=`${SE_RATES}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (15-25 line items min). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["string"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
   // Show loading screen
   showLoading();
@@ -3330,6 +3350,28 @@ async function submitDataTrade(){
       </div>
     </div>
 
+    <!-- My Suppliers -->
+    <div style="margin-top:10px">
+      <div class="gc">
+        <div class="gc-head">
+          <div class="gc-title"><i data-lucide="package" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>My Suppliers</div>
+          <div class="gc-tag">Used in every estimate</div>
+        </div>
+        <div class="gc-body" style="padding:14px 12px">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5">Your prices override regional averages in every estimate. Tap any item to edit full details.</div>
+          <div id="supplier-list"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--rim2)">
+            <button onclick="addSupplierRow()" style="background:none;border:none;color:var(--gold);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;padding:0">+ ADD MATERIAL</button>
+            <label class="price-sheet-btn">
+              <input type="file" accept="image/*" style="display:none" onchange="extractPriceSheet(this)">
+              <i data-lucide="scan" style="width:11px;height:11px;stroke:currentColor"></i> SCAN PRICE SHEET
+            </label>
+          </div>
+          <div id="supplier-scan-status" style="font-size:11px;color:var(--muted);margin-top:8px;display:none"></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -3453,10 +3495,190 @@ function savePrefs(){
     laborType: laborType||'own',
     bidType: bidType||'fixed',
     trade: document.getElementById('est-trade')?.value||'',
-    location: document.getElementById('est-location')?.value||''
+    location: document.getElementById('est-location')?.value||'',
+    suppliers: window._mySuppliers||[]
   };
   sbClient.from('users').update({prefs}).eq('id',currentUser.id)
     .then(({error})=>{ if(error) console.error('Save prefs error:',error); });
+}
+
+// ── MY SUPPLIERS ──────────────────────────────────────────────────────────────
+window._mySuppliers = [];
+let _supplierSaveTimer = null;
+
+const SUPPLIER_CATEGORIES = ['Roofing','Framing','Sheathing','Insulation','Drywall','Flooring',
+  'Tile','Plumbing','Electrical','HVAC','Windows & Doors','Concrete','Painting','Hardware','Other'];
+const SUPPLIER_GRADES = ['Budget','Standard','Premium'];
+
+function _esc(s){ return (s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+function renderSupplierList(){
+  const el = document.getElementById('supplier-list');
+  if(!el) return;
+  if(!window._mySuppliers.length){
+    el.innerHTML='<div style="font-size:11px;color:var(--muted);padding:12px 0;text-align:center">No materials added yet</div>';
+    return;
+  }
+  el.innerHTML = window._mySuppliers.map((s,i)=>{
+    const title = s.product_name || s.material || 'Unnamed material';
+    const meta  = [s.category, s.manufacturer].filter(Boolean).join(' · ');
+    const price = s.price ? `$${s.price}${s.unit?'/'+s.unit:''}` : '—';
+    const catOpts = SUPPLIER_CATEGORIES.map(c=>`<option value="${c}"${s.category===c?' selected':''}>${c}</option>`).join('');
+    const gradeOpts = SUPPLIER_GRADES.map(g=>`<option value="${g}"${s.grade===g?' selected':''}>${g}</option>`).join('');
+    return `<div class="supplier-card" id="sc-${i}">
+      <div class="supplier-card-top" onclick="toggleSupplierExpand(${i})">
+        <div>
+          <div class="supplier-card-title">${_esc(title)}</div>
+          ${meta?`<div class="supplier-card-meta">${_esc(meta)}</div>`:''}
+        </div>
+        <div class="supplier-card-right">
+          <span class="supplier-card-price">${price}</span>
+          <button class="supplier-star${s.preferred?' active':''}" onclick="event.stopPropagation();togglePreferred(${i})" title="Mark as preferred">★</button>
+          <button class="supplier-remove" onclick="event.stopPropagation();removeSupplier(${i})"><i data-lucide="x" style="width:13px;height:13px;stroke:currentColor;pointer-events:none"></i></button>
+        </div>
+      </div>
+      <div class="supplier-expand" id="se-${i}">
+        <div class="supplier-field-row three" style="margin-top:10px">
+          <div><div class="supplier-field-label">Category</div><select class="supplier-select" onchange="updateSupplier(${i},'category',this.value)"><option value="">Select…</option>${catOpts}</select></div>
+          <div><div class="supplier-field-label">Subcategory</div><input class="supplier-input" placeholder="e.g. Shingles" value="${_esc(s.subcategory)}" oninput="updateSupplier(${i},'subcategory',this.value)"></div>
+          <div><div class="supplier-field-label">Grade</div><select class="supplier-select" onchange="updateSupplier(${i},'grade',this.value)"><option value="">Select…</option>${gradeOpts}</select></div>
+        </div>
+        <div class="supplier-field-row">
+          <div><div class="supplier-field-label">Product Name</div><input class="supplier-input" placeholder="Timberline HDZ" value="${_esc(s.product_name)}" oninput="updateSupplier(${i},'product_name',this.value)"></div>
+          <div><div class="supplier-field-label">Manufacturer</div><input class="supplier-input" placeholder="GAF" value="${_esc(s.manufacturer)}" oninput="updateSupplier(${i},'manufacturer',this.value)"></div>
+        </div>
+        <div class="supplier-field-row three">
+          <div><div class="supplier-field-label">Model / SKU</div><input class="supplier-input" placeholder="Optional" value="${_esc(s.model_sku)}" oninput="updateSupplier(${i},'model_sku',this.value)"></div>
+          <div><div class="supplier-field-label">Price ($)</div><input class="supplier-input" type="number" min="0" step="0.01" placeholder="42.00" value="${s.price||''}" oninput="updateSupplier(${i},'price',this.value)" style="-moz-appearance:textfield"></div>
+          <div><div class="supplier-field-label">Unit</div><input class="supplier-input" placeholder="bundle" value="${_esc(s.unit)}" oninput="updateSupplier(${i},'unit',this.value)"></div>
+        </div>
+        <div class="supplier-field-row">
+          <div><div class="supplier-field-label">Supplier</div><input class="supplier-input" placeholder="ABC Supply" value="${_esc(s.supplier)}" oninput="updateSupplier(${i},'supplier',this.value)"></div>
+          <div><div class="supplier-field-label">Region</div><input class="supplier-input" placeholder="Miami-Dade" value="${_esc(s.region)}" oninput="updateSupplier(${i},'region',this.value)"></div>
+        </div>
+        <div style="margin-top:8px"><div class="supplier-field-label">Spec Reference</div><input class="supplier-input" placeholder="e.g. ASTM D3462, FL#12345 (optional — for future engineer use)" value="${_esc(s.spec_ref)}" oninput="updateSupplier(${i},'spec_ref',this.value)"></div>
+      </div>
+    </div>`;
+  }).join('');
+  lucide.createIcons();
+}
+
+function toggleSupplierExpand(i){
+  const el = document.getElementById(`se-${i}`);
+  if(el) el.classList.toggle('open');
+}
+
+function togglePreferred(i){
+  if(!window._mySuppliers[i]) return;
+  window._mySuppliers[i].preferred = !window._mySuppliers[i].preferred;
+  renderSupplierList();
+  debounceSaveSuppliers();
+}
+
+function addSupplierRow(){
+  window._mySuppliers.push({
+    category:'', subcategory:'', manufacturer:'', product_name:'',
+    model_sku:'', unit:'', price:'', supplier:'', region:'',
+    grade:'Standard', preferred:false, spec_ref:'',
+    updated_at: new Date().toISOString()
+  });
+  renderSupplierList();
+  // auto-expand the new card
+  const idx = window._mySuppliers.length - 1;
+  setTimeout(()=>{
+    const el = document.getElementById(`se-${idx}`);
+    if(el){ el.classList.add('open'); el.querySelector('input,select')?.focus(); }
+  }, 50);
+}
+
+function removeSupplier(i){
+  window._mySuppliers.splice(i,1);
+  renderSupplierList();
+  debounceSaveSuppliers();
+}
+
+function updateSupplier(i,field,val){
+  if(!window._mySuppliers[i]) return;
+  window._mySuppliers[i][field] = field==='price' ? (parseFloat(val)||'') : val;
+  window._mySuppliers[i].updated_at = new Date().toISOString();
+  debounceSaveSuppliers();
+}
+
+function debounceSaveSuppliers(){
+  clearTimeout(_supplierSaveTimer);
+  _supplierSaveTimer = setTimeout(savePrefs, 1200);
+}
+
+function getSupplierPromptContext(){
+  const valid = (window._mySuppliers||[]).filter(s=>(s.product_name||s.material)&&s.price);
+  if(!valid.length) return '';
+  const lines = valid.map(s=>{
+    const name = s.product_name || s.material;
+    const mfg  = s.manufacturer ? ` by ${s.manufacturer}` : '';
+    const grade = s.grade ? ` [${s.grade}]` : '';
+    const sup  = s.supplier ? ` from ${s.supplier}` : '';
+    const reg  = s.region ? ` (${s.region})` : '';
+    return `  - ${s.category?s.category+': ':''}${name}${mfg}${grade}: $${s.price}/${s.unit||'unit'}${sup}${reg}${s.preferred?' ✓preferred':''}`;
+  }).join('\n');
+  return `\nCONTRACTOR'S SUPPLIER PRICES — use these exact numbers instead of regional averages where materials match:\n${lines}\n`;
+}
+
+async function extractPriceSheet(input){
+  const file = input.files?.[0];
+  if(!file) return;
+  const status = document.getElementById('supplier-scan-status');
+  if(status){ status.style.display='block'; status.textContent='Reading price sheet…'; }
+
+  try{
+    const reader = new FileReader();
+    reader.onload = async function(e){
+      const b64 = e.target.result.split(',')[1];
+      const mediaType = file.type || 'image/jpeg';
+
+      const body = {
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1500,
+        messages:[{
+          role:'user',
+          content:[
+            {type:'image', source:{type:'base64', media_type:mediaType, data:b64}},
+            {type:'text', text:`Extract all material pricing from this supplier price sheet.
+Return ONLY a JSON array — no markdown, no explanation:
+[{"supplier":"","material":"","price":0,"unit":""}]
+Include every distinct material/product with a price. If supplier name is visible include it. Units: bundle, sheet, sqft, linear ft, bag, gallon, piece, box, roll, ton, etc.`}
+          ]
+        }]
+      };
+
+      const resp = await fetch('/api/estimate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      const data = await resp.json();
+      const text = data.content?.[0]?.text||'';
+      let extracted;
+      try{ extracted = JSON.parse(text.replace(/```json|```/g,'').trim()); }
+      catch(){ throw new Error('Could not parse AI response'); }
+
+      if(!Array.isArray(extracted)||!extracted.length) throw new Error('No prices found');
+
+      extracted.forEach(item=>{
+        if(item.material&&item.price){
+          window._mySuppliers.push({
+            supplier: item.supplier||'',
+            material: item.material,
+            price: parseFloat(item.price)||0,
+            unit: item.unit||''
+          });
+        }
+      });
+
+      renderSupplierList();
+      debounceSaveSuppliers();
+      if(status) status.textContent = `✓ ${extracted.length} items extracted`;
+    };
+    reader.readAsDataURL(file);
+  } catch(e){
+    if(status) status.textContent = `Error: ${e.message}`;
+  }
+  input.value='';
 }
 
 function applyPrefs(prefs){
@@ -3484,6 +3706,10 @@ function applyPrefs(prefs){
   if(prefs.location){
     const el=document.getElementById('est-location');
     if(el&&!el.value) el.value=prefs.location;
+  }
+  if(prefs.suppliers){
+    window._mySuppliers = prefs.suppliers;
+    renderSupplierList();
   }
 }
 
