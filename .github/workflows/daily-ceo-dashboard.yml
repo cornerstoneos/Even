@@ -27,3 +27,12 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Upload CSV fallback artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-output-${{ github.run_id }}
+          path: dashboard-output/
+          if-no-files-found: ignore
+          retention-days: 30
