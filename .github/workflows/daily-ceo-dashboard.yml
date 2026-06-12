@@ -1,0 +1,38 @@
+name: Daily CEO Dashboard
+
+on:
+  schedule:
+    # 7am EST (12:00 UTC) — runs 8am during EDT (summer)
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+jobs:
+  dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r data-pipeline/requirements.txt
+
+      - name: Run CEO Dashboard
+        run: python data-pipeline/ceo_dashboard.py
+        env:
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Upload CSV fallback artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-output-${{ github.run_id }}
+          path: dashboard-output/
+          if-no-files-found: ignore
+          retention-days: 30

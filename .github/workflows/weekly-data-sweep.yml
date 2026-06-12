@@ -1,0 +1,35 @@
+name: Weekly Data Sweep
+
+on:
+  schedule:
+    # Sunday 8pm EST = Monday 01:00 UTC
+    - cron: '0 1 * * 1'
+  workflow_dispatch:
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r data-pipeline/requirements.txt
+
+      - name: Run Data Sweep
+        run: python data-pipeline/even_data_sweep.py
+        env:
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Upload CSV fallback artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sweep-output-${{ github.run_id }}
+          path: sweep-output/
+          if-no-files-found: ignore
+          retention-days: 30
