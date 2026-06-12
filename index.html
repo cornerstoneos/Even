@@ -610,14 +610,25 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .pro-modal-plan-period{font-size:10px;color:var(--muted);margin-bottom:12px}
 .pro-modal-save-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:20px;white-space:nowrap;font-family:'DM Mono',monospace}
 .pro-modal-close{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;margin-top:6px;display:block;width:100%}
-.supplier-row{display:grid;grid-template-columns:1fr 1fr 72px 52px 28px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid var(--rim2)}
-.supplier-row:last-child{border-bottom:none}
-.supplier-input{background:var(--bg);border:1px solid var(--rim);border-radius:6px;color:var(--white);font-size:12px;padding:6px 8px;font-family:'DM Sans',sans-serif;outline:none;width:100%;box-sizing:border-box;transition:border .15s}
+.supplier-card{background:var(--bg);border:1px solid var(--rim);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.supplier-card-top{display:grid;grid-template-columns:1fr auto 28px;gap:8px;align-items:center;padding:10px 12px;cursor:pointer}
+.supplier-card-title{font-size:12px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.supplier-card-meta{font-size:10px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
+.supplier-card-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.supplier-card-price{font-size:12px;font-weight:700;color:var(--gold);font-family:'DM Mono',monospace;white-space:nowrap}
+.supplier-star{background:none;border:none;cursor:pointer;padding:0;font-size:14px;line-height:1;opacity:.4;transition:opacity .15s}
+.supplier-star.active{opacity:1}
+.supplier-remove{background:none;border:none;color:var(--muted);cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center}
+.supplier-remove:hover{color:#ff6b6b}
+.supplier-expand{padding:0 12px 12px;display:none;border-top:1px solid var(--rim2)}
+.supplier-expand.open{display:block}
+.supplier-field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.supplier-field-row.three{grid-template-columns:1fr 1fr 1fr}
+.supplier-field-label{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:4px}
+.supplier-input{background:var(--panel);border:1px solid var(--rim);border-radius:6px;color:var(--white);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;width:100%;box-sizing:border-box;transition:border .15s}
 .supplier-input:focus{border-color:var(--gold)}
 .supplier-input::placeholder{color:var(--muted)}
-.supplier-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0;line-height:1;display:flex;align-items:center;justify-content:center}
-.supplier-remove:hover{color:#ff6b6b}
-.supplier-col-head{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace}
+.supplier-select{background:var(--panel);border:1px solid var(--rim);border-radius:6px;color:var(--white);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;width:100%;box-sizing:border-box;appearance:none}
 .price-sheet-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--gold);cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;white-space:nowrap}
 </style>
 
@@ -3347,14 +3358,7 @@ async function submitDataTrade(){
           <div class="gc-tag">Used in every estimate</div>
         </div>
         <div class="gc-body" style="padding:14px 12px">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5">Your prices override regional averages in every estimate. Add what you actually pay — Even uses your numbers.</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 72px 52px 28px;gap:6px;margin-bottom:6px;padding:0 2px">
-            <div class="supplier-col-head">Supplier</div>
-            <div class="supplier-col-head">Material</div>
-            <div class="supplier-col-head">Price</div>
-            <div class="supplier-col-head">Unit</div>
-            <div></div>
-          </div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5">Your prices override regional averages in every estimate. Tap any item to edit full details.</div>
           <div id="supplier-list"></div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--rim2)">
             <button onclick="addSupplierRow()" style="background:none;border:none;color:var(--gold);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;padding:0">+ ADD MATERIAL</button>
@@ -3502,30 +3506,89 @@ function savePrefs(){
 window._mySuppliers = [];
 let _supplierSaveTimer = null;
 
+const SUPPLIER_CATEGORIES = ['Roofing','Framing','Sheathing','Insulation','Drywall','Flooring',
+  'Tile','Plumbing','Electrical','HVAC','Windows & Doors','Concrete','Painting','Hardware','Other'];
+const SUPPLIER_GRADES = ['Budget','Standard','Premium'];
+
+function _esc(s){ return (s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
 function renderSupplierList(){
   const el = document.getElementById('supplier-list');
   if(!el) return;
   if(!window._mySuppliers.length){
-    el.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:8px 0;text-align:center">No materials added yet</div>';
+    el.innerHTML='<div style="font-size:11px;color:var(--muted);padding:12px 0;text-align:center">No materials added yet</div>';
     return;
   }
-  el.innerHTML = window._mySuppliers.map((s,i)=>`
-    <div class="supplier-row">
-      <input class="supplier-input" placeholder="ABC Roofing Supply" value="${(s.supplier||'').replace(/"/g,'&quot;')}" oninput="updateSupplier(${i},'supplier',this.value)">
-      <input class="supplier-input" placeholder="3-tab shingles" value="${(s.material||'').replace(/"/g,'&quot;')}" oninput="updateSupplier(${i},'material',this.value)">
-      <input class="supplier-input" type="number" placeholder="42" min="0" step="0.01" value="${s.price||''}" oninput="updateSupplier(${i},'price',this.value)" style="-moz-appearance:textfield">
-      <input class="supplier-input" placeholder="bundle" value="${(s.unit||'').replace(/"/g,'&quot;')}" oninput="updateSupplier(${i},'unit',this.value)">
-      <button class="supplier-remove" onclick="removeSupplier(${i})"><i data-lucide="x" style="width:13px;height:13px;stroke:currentColor;pointer-events:none"></i></button>
-    </div>`).join('');
+  el.innerHTML = window._mySuppliers.map((s,i)=>{
+    const title = s.product_name || s.material || 'Unnamed material';
+    const meta  = [s.category, s.manufacturer].filter(Boolean).join(' · ');
+    const price = s.price ? `$${s.price}${s.unit?'/'+s.unit:''}` : '—';
+    const catOpts = SUPPLIER_CATEGORIES.map(c=>`<option value="${c}"${s.category===c?' selected':''}>${c}</option>`).join('');
+    const gradeOpts = SUPPLIER_GRADES.map(g=>`<option value="${g}"${s.grade===g?' selected':''}>${g}</option>`).join('');
+    return `<div class="supplier-card" id="sc-${i}">
+      <div class="supplier-card-top" onclick="toggleSupplierExpand(${i})">
+        <div>
+          <div class="supplier-card-title">${_esc(title)}</div>
+          ${meta?`<div class="supplier-card-meta">${_esc(meta)}</div>`:''}
+        </div>
+        <div class="supplier-card-right">
+          <span class="supplier-card-price">${price}</span>
+          <button class="supplier-star${s.preferred?' active':''}" onclick="event.stopPropagation();togglePreferred(${i})" title="Mark as preferred">★</button>
+          <button class="supplier-remove" onclick="event.stopPropagation();removeSupplier(${i})"><i data-lucide="x" style="width:13px;height:13px;stroke:currentColor;pointer-events:none"></i></button>
+        </div>
+      </div>
+      <div class="supplier-expand" id="se-${i}">
+        <div class="supplier-field-row three" style="margin-top:10px">
+          <div><div class="supplier-field-label">Category</div><select class="supplier-select" onchange="updateSupplier(${i},'category',this.value)"><option value="">Select…</option>${catOpts}</select></div>
+          <div><div class="supplier-field-label">Subcategory</div><input class="supplier-input" placeholder="e.g. Shingles" value="${_esc(s.subcategory)}" oninput="updateSupplier(${i},'subcategory',this.value)"></div>
+          <div><div class="supplier-field-label">Grade</div><select class="supplier-select" onchange="updateSupplier(${i},'grade',this.value)"><option value="">Select…</option>${gradeOpts}</select></div>
+        </div>
+        <div class="supplier-field-row">
+          <div><div class="supplier-field-label">Product Name</div><input class="supplier-input" placeholder="Timberline HDZ" value="${_esc(s.product_name)}" oninput="updateSupplier(${i},'product_name',this.value)"></div>
+          <div><div class="supplier-field-label">Manufacturer</div><input class="supplier-input" placeholder="GAF" value="${_esc(s.manufacturer)}" oninput="updateSupplier(${i},'manufacturer',this.value)"></div>
+        </div>
+        <div class="supplier-field-row three">
+          <div><div class="supplier-field-label">Model / SKU</div><input class="supplier-input" placeholder="Optional" value="${_esc(s.model_sku)}" oninput="updateSupplier(${i},'model_sku',this.value)"></div>
+          <div><div class="supplier-field-label">Price ($)</div><input class="supplier-input" type="number" min="0" step="0.01" placeholder="42.00" value="${s.price||''}" oninput="updateSupplier(${i},'price',this.value)" style="-moz-appearance:textfield"></div>
+          <div><div class="supplier-field-label">Unit</div><input class="supplier-input" placeholder="bundle" value="${_esc(s.unit)}" oninput="updateSupplier(${i},'unit',this.value)"></div>
+        </div>
+        <div class="supplier-field-row">
+          <div><div class="supplier-field-label">Supplier</div><input class="supplier-input" placeholder="ABC Supply" value="${_esc(s.supplier)}" oninput="updateSupplier(${i},'supplier',this.value)"></div>
+          <div><div class="supplier-field-label">Region</div><input class="supplier-input" placeholder="Miami-Dade" value="${_esc(s.region)}" oninput="updateSupplier(${i},'region',this.value)"></div>
+        </div>
+        <div style="margin-top:8px"><div class="supplier-field-label">Spec Reference</div><input class="supplier-input" placeholder="e.g. ASTM D3462, FL#12345 (optional — for future engineer use)" value="${_esc(s.spec_ref)}" oninput="updateSupplier(${i},'spec_ref',this.value)"></div>
+      </div>
+    </div>`;
+  }).join('');
   lucide.createIcons();
 }
 
-function addSupplierRow(){
-  window._mySuppliers.push({supplier:'',material:'',price:'',unit:''});
+function toggleSupplierExpand(i){
+  const el = document.getElementById(`se-${i}`);
+  if(el) el.classList.toggle('open');
+}
+
+function togglePreferred(i){
+  if(!window._mySuppliers[i]) return;
+  window._mySuppliers[i].preferred = !window._mySuppliers[i].preferred;
   renderSupplierList();
-  // focus first input of new row
-  const rows = document.querySelectorAll('.supplier-row');
-  if(rows.length) rows[rows.length-1].querySelector('input')?.focus();
+  debounceSaveSuppliers();
+}
+
+function addSupplierRow(){
+  window._mySuppliers.push({
+    category:'', subcategory:'', manufacturer:'', product_name:'',
+    model_sku:'', unit:'', price:'', supplier:'', region:'',
+    grade:'Standard', preferred:false, spec_ref:'',
+    updated_at: new Date().toISOString()
+  });
+  renderSupplierList();
+  // auto-expand the new card
+  const idx = window._mySuppliers.length - 1;
+  setTimeout(()=>{
+    const el = document.getElementById(`se-${idx}`);
+    if(el){ el.classList.add('open'); el.querySelector('input,select')?.focus(); }
+  }, 50);
 }
 
 function removeSupplier(i){
@@ -3537,6 +3600,7 @@ function removeSupplier(i){
 function updateSupplier(i,field,val){
   if(!window._mySuppliers[i]) return;
   window._mySuppliers[i][field] = field==='price' ? (parseFloat(val)||'') : val;
+  window._mySuppliers[i].updated_at = new Date().toISOString();
   debounceSaveSuppliers();
 }
 
@@ -3546,10 +3610,17 @@ function debounceSaveSuppliers(){
 }
 
 function getSupplierPromptContext(){
-  const valid = (window._mySuppliers||[]).filter(s=>s.material&&s.price);
+  const valid = (window._mySuppliers||[]).filter(s=>(s.product_name||s.material)&&s.price);
   if(!valid.length) return '';
-  const lines = valid.map(s=>`  - ${s.material}: $${s.price}/${s.unit||'unit'}${s.supplier?' ('+s.supplier+')':''}`).join('\n');
-  return `\nCONTRACTOR'S OWN SUPPLIER PRICES — use these exact prices instead of regional averages where the material matches:\n${lines}\n`;
+  const lines = valid.map(s=>{
+    const name = s.product_name || s.material;
+    const mfg  = s.manufacturer ? ` by ${s.manufacturer}` : '';
+    const grade = s.grade ? ` [${s.grade}]` : '';
+    const sup  = s.supplier ? ` from ${s.supplier}` : '';
+    const reg  = s.region ? ` (${s.region})` : '';
+    return `  - ${s.category?s.category+': ':''}${name}${mfg}${grade}: $${s.price}/${s.unit||'unit'}${sup}${reg}${s.preferred?' ✓preferred':''}`;
+  }).join('\n');
+  return `\nCONTRACTOR'S SUPPLIER PRICES — use these exact numbers instead of regional averages where materials match:\n${lines}\n`;
 }
 
 async function extractPriceSheet(input){
