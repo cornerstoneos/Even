@@ -610,6 +610,15 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .pro-modal-plan-period{font-size:10px;color:var(--muted);margin-bottom:12px}
 .pro-modal-save-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:20px;white-space:nowrap;font-family:'DM Mono',monospace}
 .pro-modal-close{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;margin-top:6px;display:block;width:100%}
+.supplier-row{display:grid;grid-template-columns:1fr 1fr 72px 52px 28px;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid var(--rim2)}
+.supplier-row:last-child{border-bottom:none}
+.supplier-input{background:var(--bg);border:1px solid var(--rim);border-radius:6px;color:var(--white);font-size:12px;padding:6px 8px;font-family:'DM Sans',sans-serif;outline:none;width:100%;box-sizing:border-box;transition:border .15s}
+.supplier-input:focus{border-color:var(--gold)}
+.supplier-input::placeholder{color:var(--muted)}
+.supplier-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:0;line-height:1;display:flex;align-items:center;justify-content:center}
+.supplier-remove:hover{color:#ff6b6b}
+.supplier-col-head{font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace}
+.price-sheet-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--gold);cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;white-space:nowrap}
 </style>
 
   <!-- Supabase -->
@@ -1642,7 +1651,7 @@ function navigate(scr){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+scr).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
-  if(scr==='dashboard') loadDashboard();
+  if(scr==='dashboard'){ loadDashboard(); renderSupplierList(); }
   if(scr==='input'){
     currentEstimate=null;
     document.getElementById('li-body').innerHTML='';
@@ -2449,7 +2458,7 @@ Columbia SC (City):
 - Plumbing new residential: $452.71 (1 bath) | $548 (2 bath) | $643.29 (3 bath) | $95.29 each additional bath
 - Mechanical/HVAC: $12.39 per unit (AC/furnace/heat pump/mini-split) | $9.28 fans/exhaust/water heater`;
 
-  const prompt=`${SE_RATES}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (15-25 line items min). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["string"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  const prompt=`${SE_RATES}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (15-25 line items min). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["string"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
   // Show loading screen
   showLoading();
@@ -3330,6 +3339,35 @@ async function submitDataTrade(){
       </div>
     </div>
 
+    <!-- My Suppliers -->
+    <div style="margin-top:10px">
+      <div class="gc">
+        <div class="gc-head">
+          <div class="gc-title"><i data-lucide="package" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>My Suppliers</div>
+          <div class="gc-tag">Used in every estimate</div>
+        </div>
+        <div class="gc-body" style="padding:14px 12px">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5">Your prices override regional averages in every estimate. Add what you actually pay — Even uses your numbers.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 72px 52px 28px;gap:6px;margin-bottom:6px;padding:0 2px">
+            <div class="supplier-col-head">Supplier</div>
+            <div class="supplier-col-head">Material</div>
+            <div class="supplier-col-head">Price</div>
+            <div class="supplier-col-head">Unit</div>
+            <div></div>
+          </div>
+          <div id="supplier-list"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--rim2)">
+            <button onclick="addSupplierRow()" style="background:none;border:none;color:var(--gold);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;padding:0">+ ADD MATERIAL</button>
+            <label class="price-sheet-btn">
+              <input type="file" accept="image/*" style="display:none" onchange="extractPriceSheet(this)">
+              <i data-lucide="scan" style="width:11px;height:11px;stroke:currentColor"></i> SCAN PRICE SHEET
+            </label>
+          </div>
+          <div id="supplier-scan-status" style="font-size:11px;color:var(--muted);margin-top:8px;display:none"></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -3453,10 +3491,123 @@ function savePrefs(){
     laborType: laborType||'own',
     bidType: bidType||'fixed',
     trade: document.getElementById('est-trade')?.value||'',
-    location: document.getElementById('est-location')?.value||''
+    location: document.getElementById('est-location')?.value||'',
+    suppliers: window._mySuppliers||[]
   };
   sbClient.from('users').update({prefs}).eq('id',currentUser.id)
     .then(({error})=>{ if(error) console.error('Save prefs error:',error); });
+}
+
+// ── MY SUPPLIERS ──────────────────────────────────────────────────────────────
+window._mySuppliers = [];
+let _supplierSaveTimer = null;
+
+function renderSupplierList(){
+  const el = document.getElementById('supplier-list');
+  if(!el) return;
+  if(!window._mySuppliers.length){
+    el.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:8px 0;text-align:center">No materials added yet</div>';
+    return;
+  }
+  el.innerHTML = window._mySuppliers.map((s,i)=>`
+    <div class="supplier-row">
+      <input class="supplier-input" placeholder="ABC Roofing Supply" value="${(s.supplier||'').replace(/"/g,'&quot;')}" oninput="updateSupplier(${i},'supplier',this.value)">
+      <input class="supplier-input" placeholder="3-tab shingles" value="${(s.material||'').replace(/"/g,'&quot;')}" oninput="updateSupplier(${i},'material',this.value)">
+      <input class="supplier-input" type="number" placeholder="42" min="0" step="0.01" value="${s.price||''}" oninput="updateSupplier(${i},'price',this.value)" style="-moz-appearance:textfield">
+      <input class="supplier-input" placeholder="bundle" value="${(s.unit||'').replace(/"/g,'&quot;')}" oninput="updateSupplier(${i},'unit',this.value)">
+      <button class="supplier-remove" onclick="removeSupplier(${i})"><i data-lucide="x" style="width:13px;height:13px;stroke:currentColor;pointer-events:none"></i></button>
+    </div>`).join('');
+  lucide.createIcons();
+}
+
+function addSupplierRow(){
+  window._mySuppliers.push({supplier:'',material:'',price:'',unit:''});
+  renderSupplierList();
+  // focus first input of new row
+  const rows = document.querySelectorAll('.supplier-row');
+  if(rows.length) rows[rows.length-1].querySelector('input')?.focus();
+}
+
+function removeSupplier(i){
+  window._mySuppliers.splice(i,1);
+  renderSupplierList();
+  debounceSaveSuppliers();
+}
+
+function updateSupplier(i,field,val){
+  if(!window._mySuppliers[i]) return;
+  window._mySuppliers[i][field] = field==='price' ? (parseFloat(val)||'') : val;
+  debounceSaveSuppliers();
+}
+
+function debounceSaveSuppliers(){
+  clearTimeout(_supplierSaveTimer);
+  _supplierSaveTimer = setTimeout(savePrefs, 1200);
+}
+
+function getSupplierPromptContext(){
+  const valid = (window._mySuppliers||[]).filter(s=>s.material&&s.price);
+  if(!valid.length) return '';
+  const lines = valid.map(s=>`  - ${s.material}: $${s.price}/${s.unit||'unit'}${s.supplier?' ('+s.supplier+')':''}`).join('\n');
+  return `\nCONTRACTOR'S OWN SUPPLIER PRICES — use these exact prices instead of regional averages where the material matches:\n${lines}\n`;
+}
+
+async function extractPriceSheet(input){
+  const file = input.files?.[0];
+  if(!file) return;
+  const status = document.getElementById('supplier-scan-status');
+  if(status){ status.style.display='block'; status.textContent='Reading price sheet…'; }
+
+  try{
+    const reader = new FileReader();
+    reader.onload = async function(e){
+      const b64 = e.target.result.split(',')[1];
+      const mediaType = file.type || 'image/jpeg';
+
+      const body = {
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1500,
+        messages:[{
+          role:'user',
+          content:[
+            {type:'image', source:{type:'base64', media_type:mediaType, data:b64}},
+            {type:'text', text:`Extract all material pricing from this supplier price sheet.
+Return ONLY a JSON array — no markdown, no explanation:
+[{"supplier":"","material":"","price":0,"unit":""}]
+Include every distinct material/product with a price. If supplier name is visible include it. Units: bundle, sheet, sqft, linear ft, bag, gallon, piece, box, roll, ton, etc.`}
+          ]
+        }]
+      };
+
+      const resp = await fetch('/api/estimate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      const data = await resp.json();
+      const text = data.content?.[0]?.text||'';
+      let extracted;
+      try{ extracted = JSON.parse(text.replace(/```json|```/g,'').trim()); }
+      catch(){ throw new Error('Could not parse AI response'); }
+
+      if(!Array.isArray(extracted)||!extracted.length) throw new Error('No prices found');
+
+      extracted.forEach(item=>{
+        if(item.material&&item.price){
+          window._mySuppliers.push({
+            supplier: item.supplier||'',
+            material: item.material,
+            price: parseFloat(item.price)||0,
+            unit: item.unit||''
+          });
+        }
+      });
+
+      renderSupplierList();
+      debounceSaveSuppliers();
+      if(status) status.textContent = `✓ ${extracted.length} items extracted`;
+    };
+    reader.readAsDataURL(file);
+  } catch(e){
+    if(status) status.textContent = `Error: ${e.message}`;
+  }
+  input.value='';
 }
 
 function applyPrefs(prefs){
@@ -3484,6 +3635,10 @@ function applyPrefs(prefs){
   if(prefs.location){
     const el=document.getElementById('est-location');
     if(el&&!el.value) el.value=prefs.location;
+  }
+  if(prefs.suppliers){
+    window._mySuppliers = prefs.suppliers;
+    renderSupplierList();
   }
 }
 
