@@ -1888,6 +1888,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
       clearTimeout(tid);
       if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||r.statusText)}
       const d=await r.json();
+      if(!Array.isArray(d.content)) throw new Error(d.error?.message||'Empty response from estimate API');
       if(d.usage){console.log('Cache stats:',JSON.stringify(d.usage));}
       return d.content.map(b=>b.text||'').join('');
     }catch(e){
