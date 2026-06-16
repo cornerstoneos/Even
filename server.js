@@ -121,7 +121,7 @@ app.post('/api/estimate', async (req, res) => {
       body: JSON.stringify(req.body)
     });
     const data = await response.json();
-    res.json(data);
+    res.status(response.status).json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
