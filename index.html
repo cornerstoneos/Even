@@ -2079,20 +2079,19 @@ async function startEstimate(){
   }
   // Build context-rich prompt with construction primer for better OCR + scope extraction
   const imgContext=uploadedImages.length>0?`\nIMAGES ATTACHED: ${uploadedImages.length} construction plan/photo(s). Perform high-accuracy OCR on all text. Extract all dimensions, material callouts, notes, scope items, and quantities visible in the images. Pay special attention to leader lines, revision clouds, and specification notes. Images may be multiple pages of the same scope — combine and reconcile all information across images before responding.`:'';
-  msgContent.push({type:'text',text:`CONTEXT: Construction estimating tool for Southeast US contractors. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}|Labor:${laborType}|Bid:${bidType}\nLanguage:${appLang==='es'?'Spanish':'English'}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nThink like an experienced general contractor. Extract all materials, labor tasks, measurements, and missing scope items. Identify hidden costs, missing scope, and risk items not explicitly listed. Return ONLY valid JSON (no markdown, no preamble):\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["string"]}],"keyFacts":["string"],"questions":[{"id":"q1","question":"string","hint":"string","options":["choice1","choice2","choice3","choice4"]}]}\nAsk 4-6 precise pricing-critical questions. For each question provide 3-4 specific tappable options relevant to that exact scope. Options: short (2-5 words), mutually exclusive, common contractor scenarios.`});
+  msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask 3-5 pricing-critical questions with 3-4 short options each.`});
 
   try{
-    const res=await callClaude([{role:'user',content:msgContent}]);
+    const res=await callClaude([{role:'user',content:msgContent}],800);
     let data;
     try{
       data=parseJ(res);
     }catch(parseErr){
-      // JSON malformed — ask Claude to fix it once
       const fixRes=await callClaude([
         {role:'user',content:msgContent},
         {role:'assistant',content:res},
         {role:'user',content:'Your response was not valid JSON. Return ONLY the corrected JSON object, nothing else.'}
-      ]);
+      ],600);
       data=parseJ(fixRes);
     }
     window._scopeData=data;
@@ -2133,7 +2132,6 @@ function renderQuestions(questions){
     const opts=(q.options&&q.options.length)?q.options:buildChipOptions(q);
     return `<div class="q-block" id="qblock-${i}">
       <div class="q-label">${i+1}. ${q.question}</div>
-      ${q.hint?`<div class="q-hint-text">💡 ${q.hint}</div>`:''}
       <div class="q-chips" id="qchips-${i}">
         ${opts.map(o=>`<button class="q-chip" onclick="selectChip(${i},'${o.replace(/'/g,"\'")}',this)">${o}</button>`).join('')}
       </div>
