@@ -1863,7 +1863,7 @@ function handleFiles(files){
 //  CLAUDE API
 // ══════════════════════════
 async function callClaude(messages,maxTokens=2500,useCache=false){
-  const body={model:'claude-sonnet-4-20250514',max_tokens:maxTokens,messages};
+  const body={model:'claude-sonnet-4-6',max_tokens:maxTokens,messages};
   if(useCache&&messages.length&&messages[0].role==='user'){
     const first=messages[0];
     if(typeof first.content==='string'){
