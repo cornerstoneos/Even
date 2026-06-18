@@ -2519,7 +2519,13 @@ Columbia SC (City):
     ]);
 
     const data=parseJ(res);
-    // Accurate math
+    // Accurate math — defend against a valid response that omits these objects
+    data.overhead=data.overhead||{pct:ctx.oh};
+    data.contingency=data.contingency||{pct:ctx.cushion};
+    data.profit=data.profit||{pct:ctx.profit};
+    if(data.overhead.pct==null) data.overhead.pct=ctx.oh;
+    if(data.contingency.pct==null) data.contingency.pct=ctx.cushion;
+    if(data.profit.pct==null) data.profit.pct=ctx.profit;
     data.subtotal=(data.lineItems||[]).reduce((s,i)=>s+(i.total||0),0);
     data.overhead.amount=Math.round(data.subtotal*(data.overhead.pct/100));
     data.contingency.amount=Math.round(data.subtotal*(data.contingency.pct/100));
