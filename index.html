@@ -2233,6 +2233,7 @@ async function calculateEstimate(){
     const other=document.getElementById(`qother-${i}`);
     if(other&&other.value&&!answers[q.question]) answers[q.question]=other.value;
   });
+  try{
   const ctx=window._ctx;
   const scope=document.getElementById('scope-text')?.value?.trim()||'';
   if(!ctx||!scope){
@@ -2511,7 +2512,6 @@ Columbia SC (City):
     ?tradeBreakdown.map(t=>`${t.icon} ${t.trade} scope identified — ${t.items?.length||0} items`)
     :(appLang==='en'?['🔨 General scope identified','⚡ Specialty work noted','📦 Materials scope parsed']:['🔨 Alcance general identificado','⚡ Trabajo especializado anotado','📦 Materiales identificados']);
 
-  try{
     // Run API call in parallel with loading animation
     const [res]=await Promise.all([
       callClaude([{role:'user',content:prompt}],3500,true),
