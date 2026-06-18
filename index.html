@@ -2234,7 +2234,12 @@ async function calculateEstimate(){
     if(other&&other.value&&!answers[q.question]) answers[q.question]=other.value;
   });
   const ctx=window._ctx;
-  const scope=document.getElementById('scope-text').value.trim();
+  const scope=document.getElementById('scope-text')?.value?.trim()||'';
+  if(!ctx||!scope){
+    btn.disabled=false;
+    showToast('Session expired — please go back and re-enter your scope.',4000);
+    return;
+  }
   const ansText=Object.entries(answers).map(([q,a])=>`Q: ${q}\nA: ${a}`).join('\n\n');
 
   // HVHZ detection
