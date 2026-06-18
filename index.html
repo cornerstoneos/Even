@@ -1928,6 +1928,17 @@ function showLoading(){
   document.getElementById('screen-loading').classList.add('active');
 }
 function hideLoading(){document.getElementById('screen-loading').classList.remove('active')}
+function animateCounter(el,target){
+  if(!el)return;
+  const start=parseInt((el.textContent||'0').replace(/[$,]/g,''))||0;
+  const dur=400,steps=20;let i=0;
+  const interval=setInterval(()=>{
+    i++;
+    const val=Math.round(start+(target-start)*(i/steps));
+    el.innerHTML='$'+val.toLocaleString()+'<span>'+(appLang==='en'?' estimated':' estimado')+'</span>';
+    if(i>=steps)clearInterval(interval);
+  },dur/steps);
+}
 
 async function runLoadingPhases(phase1Lines,phase2Lines,finalTotal){
   const terminal=document.getElementById('loading-terminal');
@@ -2511,20 +2522,6 @@ Columbia SC (City):
     data.profit.amount=Math.round(base*(data.profit.pct/100));
     data.totalBid=data.subtotal+data.overhead.amount+data.contingency.amount+data.profit.amount;
     currentEstimate=data;
-
-// animateCounter — defined here before use
-function animateCounter(el, target) {
-  if(!el) return;
-  const start = parseInt((el.textContent || '0').replace(/[$,]/g, '')) || 0;
-  const dur = 400, steps = 20;
-  let i = 0;
-  const interval = setInterval(() => {
-    i++;
-    const val = Math.round(start + (target - start) * (i / steps));
-    el.innerHTML = '$' + val.toLocaleString() + '<span>' + (appLang === 'en' ? ' estimated' : ' estimado') + '</span>';
-    if (i >= steps) clearInterval(interval);
-  }, dur / steps);
-}
 
     // Animate to real total
     const counter=document.getElementById('loading-counter');
