@@ -2485,7 +2485,7 @@ Columbia SC (City):
 - Plumbing new residential: $452.71 (1 bath) | $548 (2 bath) | $643.29 (3 bath) | $95.29 each additional bath
 - Mechanical/HVAC: $12.39 per unit (AC/furnace/heat pump/mini-split) | $9.28 fans/exhaust/water heater`;
 
-  const prompt=`${SE_RATES}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (15-25 line items min). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["string"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  const prompt=`${SE_RATES}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (15-25 line items min). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
   // Show loading screen
   showLoading();
@@ -3499,7 +3499,16 @@ function populateProposalAssumptions(){
   const list = document.getElementById('prop-assumptions');
   if(!list) return;
   list.innerHTML='';
-  (currentEstimate?.assumptions||[]).forEach(a=>_addAssumptionRow(a));
+  const all = currentEstimate?.assumptions||[];
+  const SHOW = 4;
+  all.slice(0, SHOW).forEach(a=>_addAssumptionRow(a));
+  if(all.length > SHOW){
+    const toggle = document.createElement('button');
+    toggle.textContent = `+ ${all.length - SHOW} more`;
+    toggle.style.cssText='background:none;border:none;color:var(--text-accent);font-size:11px;cursor:pointer;font-family:"DM Mono",monospace;padding:2px 0;margin-bottom:4px';
+    toggle.onclick = ()=>{ all.slice(SHOW).forEach(a=>_addAssumptionRow(a)); toggle.remove(); liveProposalUpdate(); };
+    list.appendChild(toggle);
+  }
 }
 
 function addProposalAssumption(){
