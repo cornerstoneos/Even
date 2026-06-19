@@ -1898,7 +1898,13 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
     }
   }
 }
-function parseJ(t){return JSON.parse(t.replace(/```json|```/g,'').trim())}
+function parseJ(t){
+  let s=t.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
+  try{return JSON.parse(s);}catch(e){}
+  const m=s.match(/\{[\s\S]*\}/);
+  if(m){try{return JSON.parse(m[0]);}catch(e){}}
+  throw new Error('Could not parse estimate response — try again');
+}
 const fmt=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmtK=n=>n>=1000000?'$'+(n/1000000).toFixed(n%1000000===0?0:1)+'M':'$'+Math.round(n/1000)+'k';
 function savePDF(doc,filename){if(/iPad|iPhone|iPod/.test(navigator.userAgent)){const url=URL.createObjectURL(doc.output('blob'));const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},1000);}else{doc.save(filename);}}
@@ -2514,7 +2520,7 @@ Columbia SC (City):
 
     // Run API call in parallel with loading animation
     const [res]=await Promise.all([
-      callClaude([{role:'user',content:prompt}],3500,true),
+      callClaude([{role:'user',content:prompt}],5000,true),
       runLoadingPhases(phase1,phase2,150000)
     ]);
 
@@ -3436,7 +3442,7 @@ async function proposalBeautify(){
     const r=await fetch('https://even-production.up.railway.app/api/estimate',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        model:'claude-haiku-4-5-20251001',max_tokens:500,
+        model:'claude-haiku-4-5',max_tokens:500,
         messages:[{role:'user',content:`You are a professional proposal writer for contractors. Rewrite the following project scope into clean, client-facing proposal language. Sound professional and confident. Keep it concise (2-3 sentences max). Do NOT use jargon. Do NOT mention specific prices. Return ONLY the rewritten text, no quotes, no intro.\n\nOriginal scope: "${scope}"\nWork items: ${items}`}]
       })
     });
@@ -3643,7 +3649,7 @@ async function extractPriceSheet(input){
       const mediaType = file.type || 'image/jpeg';
 
       const body = {
-        model: 'claude-haiku-4-5-20251001',
+        model: 'claude-haiku-4-5',
         max_tokens: 1500,
         messages:[{
           role:'user',
@@ -3875,7 +3881,7 @@ async function generateInsights(estimates){
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        model:'claude-haiku-4-5-20251001',
+        model:'claude-haiku-4-5',
         max_tokens:400,
         messages:[{role:'user',content:`You are Even, a business intelligence AI for contractors. Analyze this contractor's estimate history. Return exactly 3 short, specific, actionable insights — each one sentence. Mention real numbers from their data. Focus on margin risk, pricing patterns, or win/loss trends. No generic advice.\n\nData:\n${summary}\n\nReturn ONLY valid JSON, no markdown: {"insights":["...","...","..."]}`}]
       })
