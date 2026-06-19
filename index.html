@@ -10,7 +10,7 @@
 
 :root {
   --gold:#BD0029;--gold-dim:rgba(189,0,41,0.11);--gold-glow:rgba(189,0,41,0.28);
-  --gold-border:rgba(189,0,41,0.22);
+  --gold-border:rgba(189,0,41,0.22);--text-accent:#009B3A;
   --bg:#0A0A0A;--l1:#111;--l2:#161616;--l3:#1C1C1C;--l4:#242424;
   --rim:rgba(255,255,255,0.07);--rim2:rgba(255,255,255,0.11);
   --white:#F0EDE8;--white2:#BEBAB2;--muted:#72726A;
@@ -51,7 +51,7 @@ body{
 body.light .topbar{background:rgba(244,241,235,0.94)}
 .topbar-brand{text-align:center}
 .topbar-logo{font-size:16px;font-weight:300;color:var(--white);letter-spacing:.5px;line-height:1}
-.topbar-logo b{color:var(--gold);font-weight:700}
+.topbar-logo b{color:var(--text-accent);font-weight:700}
 .topbar-sub{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-top:1px}
 .topbar-left{display:flex;align-items:center;gap:8px;justify-self:start}
 .topbar-right{display:flex;align-items:center;gap:8px;justify-self:end}
@@ -90,7 +90,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .scircle.done{background:var(--green-dim);border:1.5px solid var(--green);color:var(--green)}
 .scircle.future{background:var(--l3);border:1.5px solid var(--rim2);color:var(--muted)}
 .slbl{font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;font-family:'DM Mono',monospace}
-.slbl.active{color:var(--gold)}.slbl.done{color:var(--green)}.slbl.future{color:var(--muted)}
+.slbl.active{color:var(--text-accent)}.slbl.done{color:var(--green)}.slbl.future{color:var(--muted)}
 .sline{flex:1;height:1.5px;margin:0 6px;position:relative;top:-10px;max-width:52px}
 .sline.done{background:var(--green)}.sline.future{background:var(--rim2)}
 
@@ -112,7 +112,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
   display:flex;align-items:center;justify-content:space-between;
 }
 .gc-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--white2);font-family:'DM Mono',monospace}
-.gc-tag{font-size:9px;font-weight:700;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);padding:2px 8px;border-radius:10px;font-family:'DM Mono',monospace;letter-spacing:.8px}
+.gc-tag{font-size:9px;font-weight:700;color:var(--text-accent);background:var(--gold-dim);border:1px solid var(--gold-border);padding:2px 8px;border-radius:10px;font-family:'DM Mono',monospace;letter-spacing:.8px}
 .gc-body{padding:16px 18px}
 
 /* ── FIELDS ── */
@@ -132,7 +132,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .fcontrol::after{
   content:'›';
   position:absolute;right:14px;top:50%;transform:translateY(-50%) rotate(90deg);
-  color:var(--gold);font-size:18px;font-weight:300;pointer-events:none;
+  color:var(--text-accent);font-size:18px;font-weight:300;pointer-events:none;
   line-height:1;
 }
 .fcontrol select{
@@ -150,7 +150,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 }
 .finput:focus{border-color:rgba(189,0,41,0.45);box-shadow:0 0 0 3px var(--gold-dim)}
 .finput::placeholder{color:var(--muted)}
-.fhint{font-size:10px;color:var(--gold);margin-top:4px;padding-left:14px;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:4px}
+.fhint{font-size:10px;color:var(--text-accent);margin-top:4px;padding-left:14px;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:4px}
 .fhint::before{content:'✦';font-size:8px}
 .fchev{display:none}
 .ftextarea{
@@ -174,7 +174,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .slider-wrap{margin-bottom:18px}
 .slider-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .slider-name{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--white2);font-family:'DM Mono',monospace}
-.slider-badge{font-size:13px;font-weight:700;color:var(--gold);font-family:'DM Mono',monospace;background:var(--gold-dim);border:1px solid var(--gold-border);padding:2px 10px;border-radius:10px}
+.slider-badge{font-size:13px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;background:var(--gold-dim);border:1px solid var(--gold-border);padding:2px 10px;border-radius:10px}
 .slider-track{position:relative;height:5px;border-radius:3px;background:var(--l4);cursor:pointer}
 .slider-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:linear-gradient(to right,rgba(189,0,41,.4),var(--gold));pointer-events:none}
 .slider-thumb{
@@ -199,7 +199,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 }
 @keyframes shieldPulse{0%,100%{box-shadow:0 0 0 0 var(--gold-glow)}50%{box-shadow:0 0 0 7px rgba(189,0,41,0)}}
 .protect-text .plabel{font-size:9px;color:var(--muted);letter-spacing:.5px;font-family:'DM Mono',monospace;margin-bottom:1px}
-.protect-text .pval{font-size:24px;font-weight:700;color:var(--gold);letter-spacing:-.5px;line-height:1}
+.protect-text .pval{font-size:24px;font-weight:700;color:var(--text-accent);letter-spacing:-.5px;line-height:1}
 .protect-text .psub{font-size:10px;color:var(--muted);margin-top:2px}
 
 /* ── STACKED BARS ── */
@@ -223,11 +223,11 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .upload-icon{font-size:34px;display:block;margin-bottom:10px;filter:drop-shadow(0 0 12px rgba(189,0,41,0.5))}
 .upload-title{font-size:14px;font-weight:600;color:var(--white);margin-bottom:5px}
 .upload-sub{font-size:12px;color:var(--muted);line-height:1.5}
-.upload-sub span{color:var(--gold)}
+.upload-sub span{color:var(--text-accent)}
 .img-strip{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:12px}
 .img-thumb{width:52px;height:52px;border-radius:8px;object-fit:cover;border:2px solid var(--rim2);animation:popIn .2s ease both}
 @keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
-.img-more{width:52px;height:52px;border-radius:8px;background:var(--gold-dim);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--gold);font-family:'DM Mono',monospace}
+.img-more{width:52px;height:52px;border-radius:8px;background:var(--gold-dim);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace}
 
 /* ── OR DIVIDER ── */
 .or-divider{display:flex;align-items:center;gap:12px;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:1px;margin:12px 0}
@@ -273,14 +273,14 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .trade-card{background:var(--l2);border:1px solid var(--rim);border-radius:var(--r);padding:11px 14px;margin-bottom:8px;animation:fadeUp .2s ease both}
 .trade-head{display:flex;align-items:center;gap:8px;margin-bottom:5px}
 .trade-icon-wrap{font-size:14px}
-.trade-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-family:'DM Mono',monospace}
+.trade-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-accent);font-family:'DM Mono',monospace}
 .trade-items{display:flex;flex-direction:column;gap:3px}
 .trade-item{font-size:12.5px;color:var(--muted);display:flex;gap:7px;line-height:1.4}
 .trade-item::before{content:'–';color:var(--rim2);flex-shrink:0}
 
 /* ── KEY FACTS ── */
 .fact-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.fact-chip{background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:3px 10px;font-size:10px;color:var(--gold);font-weight:600;font-family:'DM Mono',monospace}
+.fact-chip{background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:20px;padding:3px 10px;font-size:10px;color:var(--text-accent);font-weight:600;font-family:'DM Mono',monospace}
 
 /* ── LINE ITEMS ── */
 .li-head{display:grid;grid-template-columns:1fr 62px 80px 82px 94px 30px;gap:5px;padding:6px 12px;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace}
@@ -288,10 +288,10 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .li-row:hover{border-color:var(--rim2)}
 .li-row input{background:transparent;border:none;border-bottom:1px solid transparent;color:var(--white);font-size:12.5px;font-family:'DM Sans',sans-serif;padding:2px 0;outline:none;width:100%;transition:border .15s}
 .li-row input:focus{border-bottom-color:var(--gold)}
-.li-total{font-family:'DM Mono',monospace;font-size:12px;color:var(--gold);text-align:right;font-weight:500}
+.li-total{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-accent);text-align:right;font-weight:500}
 .li-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;text-align:center;transition:color .15s;padding:0;width:26px}
 .li-del:hover{color:var(--red)}
-.cat-div{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);padding:12px 12px 4px;display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace}
+.cat-div{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-accent);padding:12px 12px 4px;display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace}
 .cat-div::after{content:'';flex:1;height:1px;background:var(--gold-border)}
 
 /* ── TOTALS ── */
@@ -316,7 +316,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .tier-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
 .tier-card-name{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;font-family:'DM Mono',monospace}
 .tier-card-name.budget{color:#64B5F6}
-.tier-card-name.mid{color:var(--gold)}
+.tier-card-name.mid{color:var(--text-accent)}
 .tier-card-name.premium{color:#CE93D8}
 .tier-card-range{font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--white)}
 .tier-card-desc{font-size:11px;color:var(--muted);line-height:1.4}
@@ -339,8 +339,8 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
   border:1.5px solid var(--rim2);background:var(--l2);color:var(--white2);
   cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif;
 }
-.q-chip:hover{border-color:var(--gold);color:var(--gold)}
-.q-chip.selected,.q-chip.active{border-color:var(--gold);background:var(--gold-dim);color:var(--gold)}
+.q-chip:hover{border-color:var(--gold);color:var(--text-accent)}
+.q-chip.selected,.q-chip.active{border-color:var(--gold);background:var(--gold-dim);color:var(--text-accent)}
 .q-other{
   width:100%;background:var(--l2);border:1.5px solid var(--rim);border-radius:10px;
   padding:9px 13px;color:var(--white);font-size:12px;font-family:'DM Sans',sans-serif;
@@ -349,7 +349,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .q-other:focus{border-color:rgba(189,0,41,.4)}
 .q-other::placeholder{color:var(--muted)}
 .bid-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:3px}
-.bid-val{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;color:var(--gold);letter-spacing:-.5px}
+.bid-val{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;color:var(--text-accent);letter-spacing:-.5px}
 
 /* ── MARGIN METER ── */
 .meter{margin-top:14px}
@@ -408,20 +408,20 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .job-card-label{font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .job-card-meta{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px}
 .job-card-right{text-align:right;flex-shrink:0}
-.job-card-total{font-size:16px;font-weight:700;color:var(--gold)}
+.job-card-total{font-size:16px;font-weight:700;color:var(--text-accent)}
 .job-variance{font-size:10px;margin-top:3px;font-family:'DM Mono',monospace}
 .job-variance.over{color:#ff6b6b}.job-variance.under{color:#4ade80}
 .status-pill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:20px;font-family:'DM Mono',monospace;white-space:nowrap}
 .status-draft{background:rgba(255,255,255,.06);color:var(--muted)}
 .status-sent{background:rgba(100,160,255,.12);color:#64a0ff}
 .status-won{background:rgba(74,222,128,.12);color:#4ade80}
-.status-active{background:rgba(189,0,41,.12);color:var(--gold)}
+.status-active{background:rgba(189,0,41,.12);color:var(--text-accent)}
 .status-complete{background:rgba(74,222,128,.07);color:#86efac}
 .status-lost{background:rgba(255,100,100,.1);color:#ff6b6b}
 .job-card-actions{display:flex;align-items:center;gap:6px;padding:0 14px 12px;flex-wrap:wrap}
 .job-action-btn{background:none;border:none;color:var(--muted);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:4px 0;display:flex;align-items:center;gap:4px}
-.job-action-btn:hover{color:var(--gold)}
-.job-followup{display:flex;align-items:center;gap:5px;background:rgba(189,0,41,.07);border:1px solid rgba(189,0,41,.2);border-radius:6px;padding:5px 10px;font-size:10px;color:var(--gold);font-family:'DM Mono',monospace;margin:0 14px 10px}
+.job-action-btn:hover{color:var(--text-accent)}
+.job-followup{display:flex;align-items:center;gap:5px;background:rgba(189,0,41,.07);border:1px solid rgba(189,0,41,.2);border-radius:6px;padding:5px 10px;font-size:10px;color:var(--text-accent);font-family:'DM Mono',monospace;margin:0 14px 10px}
 .job-notes-wrap{padding:0 14px 12px;display:none}
 .job-notes-input{width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:8px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:60px;box-sizing:border-box;line-height:1.5}
 .job-notes-input:focus{border-color:rgba(189,0,41,.4)}
@@ -432,7 +432,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .alert-info{background:rgba(88,166,255,0.08);border:1px solid rgba(88,166,255,0.2);color:#58a6ff}
 /* ── MARGIN ALERTS ── */
 .margin-alert{display:flex;gap:8px;align-items:flex-start;font-size:11.5px;line-height:1.5;padding:9px 11px;border-radius:9px;margin-bottom:6px}
-.margin-alert-warn{background:rgba(189,0,41,.07);border:1px solid rgba(189,0,41,.2);color:var(--gold)}
+.margin-alert-warn{background:rgba(189,0,41,.07);border:1px solid rgba(189,0,41,.2);color:var(--text-accent)}
 .margin-alert-danger{background:rgba(255,80,80,.07);border:1px solid rgba(255,80,80,.2);color:#ff6b6b}
 .margin-alert-info{background:rgba(88,166,255,.07);border:1px solid rgba(88,166,255,.18);color:#64a0ff}
 /* ── SIMILAR JOB RECALL ── */
@@ -440,7 +440,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 /* ── DETAIL TOGGLE ── */
 .detail-toggle{display:flex;gap:5px;margin-bottom:12px}
 .detail-opt{flex:1;padding:7px 4px;border:1px solid var(--rim);border-radius:7px;font-size:9px;font-family:'DM Mono',monospace;text-align:center;cursor:pointer;color:var(--muted);background:var(--bg);letter-spacing:.4px;transition:all .15s}
-.detail-opt.active{border-color:var(--gold);color:var(--gold);background:rgba(189,0,41,.07)}
+.detail-opt.active{border-color:var(--gold);color:var(--text-accent);background:rgba(189,0,41,.07)}
 
 /* ── FOOT NAV ── */
 .foot-nav{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
@@ -458,7 +458,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 #screen-loading.active{display:flex}
 
 .loading-logo{font-size:22px;font-weight:300;color:var(--white);letter-spacing:.5px;margin-bottom:6px}
-.loading-logo b{color:var(--gold);font-weight:700}
+.loading-logo b{color:var(--text-accent);font-weight:700}
 .loading-sub-brand{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:40px}
 
 /* Cube loader — gold arc orbits the isometric mark */
@@ -473,7 +473,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 
 /* Phase display */
 .loading-phase-wrap{width:100%;max-width:360px}
-.loading-phase-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-family:'DM Mono',monospace;text-align:center;margin-bottom:14px}
+.loading-phase-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-accent);font-family:'DM Mono',monospace;text-align:center;margin-bottom:14px}
 .loading-terminal{
   background:var(--l1);border:1px solid var(--rim2);border-radius:var(--r);
   padding:16px 18px;min-height:160px;max-height:200px;overflow:hidden;
@@ -490,7 +490,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
   display:flex;gap:8px;align-items:flex-start;
 }
 @keyframes termAppear{to{opacity:1}}
-.term-prefix{color:var(--gold);flex-shrink:0}
+.term-prefix{color:var(--text-accent);flex-shrink:0}
 .term-line.success .term-prefix{color:var(--green)}
 .term-line.processing .term-prefix{color:var(--orange)}
 .term-cursor{display:inline-block;width:7px;height:13px;background:var(--gold);margin-left:2px;animation:blink .8s infinite;vertical-align:middle}
@@ -512,7 +512,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
   font-size:10px;font-family:'DM Mono',monospace;
 }
 .loading-progress-step{color:var(--muted)}
-.loading-progress-pct{color:var(--gold)}
+.loading-progress-pct{color:var(--text-accent)}
 
 /* Counting number */
 .loading-trade-cards{
@@ -529,7 +529,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 }
 .loading-trade-card.visible{opacity:1;transform:none}
 .loading-trade-card-icon{font-size:16px;flex-shrink:0}
-.loading-trade-card-name{font-weight:600;color:var(--gold);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.loading-trade-card-name{font-weight:600;color:var(--text-accent);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase}
 .loading-trade-card-count{margin-left:auto;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace}
 .loading-reveal{
   text-align:center;margin-top:12px;opacity:0;transition:opacity .4s;
@@ -537,7 +537,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .loading-reveal.visible{opacity:1}
 .loading-reveal-amount{
   font-family:'DM Mono',monospace;font-size:28px;font-weight:500;
-  color:var(--gold);letter-spacing:-1px;
+  color:var(--text-accent);letter-spacing:-1px;
 }
 .loading-reveal-label{font-size:10px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace;letter-spacing:1px}
 
@@ -596,7 +596,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .pro-modal-icon{font-size:38px;margin-bottom:12px}
 .pro-modal-title{font-size:22px;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.2}
 .pro-modal-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px}
-.pro-modal-tag{font-size:11px;color:var(--gold);font-family:'DM Mono',monospace;letter-spacing:.3px;margin-bottom:18px;opacity:.85;display:block}
+.pro-modal-tag{font-size:11px;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.3px;margin-bottom:18px;opacity:.85;display:block}
 .pro-modal-features{text-align:left;background:var(--l2);border:1px solid var(--rim);border-radius:12px;padding:14px 16px;margin-bottom:20px}
 .pro-modal-features div{font-size:12px;color:var(--white2);line-height:2}
 .pro-modal-pricing{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
@@ -604,7 +604,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .pro-modal-plan.hero{background:var(--l2);border:2px solid var(--gold)}
 .pro-modal-plan.secondary{background:var(--l2);border:1px solid var(--rim2)}
 .pro-modal-plan-label{font-size:9px;font-weight:700;letter-spacing:1.5px;margin-bottom:5px;font-family:'DM Mono',monospace}
-.pro-modal-plan.hero .pro-modal-plan-label{color:var(--gold)}
+.pro-modal-plan.hero .pro-modal-plan-label{color:var(--text-accent)}
 .pro-modal-plan.secondary .pro-modal-plan-label{color:var(--muted)}
 .pro-modal-plan-price{font-size:30px;font-weight:700;color:var(--white);line-height:1}
 .pro-modal-plan-period{font-size:10px;color:var(--muted);margin-bottom:12px}
@@ -615,7 +615,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .supplier-card-title{font-size:12px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .supplier-card-meta{font-size:10px;color:var(--muted);margin-top:2px;font-family:'DM Mono',monospace}
 .supplier-card-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.supplier-card-price{font-size:12px;font-weight:700;color:var(--gold);font-family:'DM Mono',monospace;white-space:nowrap}
+.supplier-card-price{font-size:12px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;white-space:nowrap}
 .supplier-star{background:none;border:none;cursor:pointer;padding:0;font-size:14px;line-height:1;opacity:.4;transition:opacity .15s}
 .supplier-star.active{opacity:1}
 .supplier-remove{background:none;border:none;color:var(--muted);cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center}
@@ -629,7 +629,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .supplier-input:focus{border-color:var(--gold)}
 .supplier-input::placeholder{color:var(--muted)}
 .supplier-select{background:var(--panel);border:1px solid var(--rim);border-radius:6px;color:var(--white);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;width:100%;box-sizing:border-box;appearance:none}
-.price-sheet-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--gold);cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;white-space:nowrap}
+.price-sheet-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--text-accent);cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;white-space:nowrap}
 </style>
 
   <!-- Supabase -->
@@ -688,7 +688,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
     <div style="margin-bottom:12px;display:flex;justify-content:center"><img src="assets/logo-hero.png" width="48" height="48" alt="" style="object-fit:contain;filter:drop-shadow(0 0 12px rgba(189,0,41,.6))"></div>
     <h2 style="color:var(--white);margin-bottom:6px;font-size:22px">You've used your 3 free estimates</h2>
     <p style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:8px">Upgrade to Even Pro — unlimited estimates, both PDFs, bilingual support.</p>
-    <p style="color:var(--gold);font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.3px;margin-bottom:16px;opacity:.85">Contractors using Even close bids 40% faster.</p>
+    <p style="color:var(--text-accent);font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.3px;margin-bottom:16px;opacity:.85">Contractors using Even close bids 40% faster.</p>
 
     <!-- Feature list -->
     <div style="text-align:left;background:var(--panel);border-radius:12px;padding:14px 18px;margin-bottom:20px">
@@ -699,7 +699,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
       <!-- Monthly — HERO -->
       <div style="background:var(--panel);border:2px solid var(--gold);border-radius:14px;padding:18px 14px;position:relative">
-        <div style="font-size:9px;color:var(--gold);font-weight:700;letter-spacing:1.5px;margin-bottom:6px;font-family:'DM Mono',monospace">MONTHLY</div>
+        <div style="font-size:9px;color:var(--text-accent);font-weight:700;letter-spacing:1.5px;margin-bottom:6px;font-family:'DM Mono',monospace">MONTHLY</div>
         <div style="font-size:32px;font-weight:700;color:var(--white);line-height:1">$49</div>
         <div style="font-size:10px;color:var(--muted);margin-bottom:14px">/month</div>
         <button onclick="handleUpgrade('monthly')" style="width:100%;padding:11px 6px;background:var(--gold);border:none;border-radius:9px;color:#000;font-weight:700;font-size:12px;cursor:pointer">Start Monthly</button>
@@ -772,7 +772,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
     </div>
   </div>
   <div id="auth-signed-in" style="display:none;text-align:center">
-    <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Signed in as<br><span id="auth-user-email" style="color:var(--gold)"></span></div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Signed in as<br><span id="auth-user-email" style="color:var(--text-accent)"></span></div>
     <button onclick="handleSignOut()" style="background:none;border:1px solid var(--rim);color:var(--muted);padding:8px 16px;border-radius:6px;font-size:11px;cursor:pointer">Sign Out</button>
   </div>
   <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--rim);font-size:11px;color:var(--muted);text-align:center;line-height:1.5">
@@ -1098,7 +1098,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
       <div class="gc">
         <div class="gc-head">
           <div class="gc-title" data-en="Line Item Estimate" data-es="Estimado por Partidas">Line Item Estimate</div>
-          <button onclick="addLineGated()" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--gold);cursor:pointer;font-family:'DM Sans',sans-serif" data-en="+ Add" data-es="+ Agregar">+ Add</button>
+          <button onclick="addLineGated()" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--text-accent);cursor:pointer;font-family:'DM Sans',sans-serif" data-en="+ Add" data-es="+ Agregar">+ Add</button>
         </div>
         <div style="padding:10px 12px">
           <div id="similar-recall" style="display:none;margin-bottom:8px"></div>
@@ -1146,7 +1146,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
           <!-- Post-estimate Go Pro strip — hidden for Pro users -->
           <div id="post-estimate-upsell" style="display:none;margin:10px 0 2px 0;background:linear-gradient(135deg,rgba(189,0,41,.07),rgba(189,0,41,.03));border:1px solid rgba(189,0,41,.2);border-radius:10px;padding:11px 14px;align-items:center;justify-content:space-between;gap:10px">
             <div>
-              <div style="font-size:11px;font-weight:700;color:var(--gold);font-family:'DM Mono',monospace;letter-spacing:.5px">MORE JOBS THIS WEEK?</div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.5px">MORE JOBS THIS WEEK?</div>
               <div id="upsell-sub" style="font-size:11px;color:var(--muted);margin-top:2px">Unlimited estimates · $49/mo</div>
             </div>
             <button onclick="handleUpgrade('monthly')" style="background:var(--gold);border:none;color:#000;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Mono',monospace">Go Pro →</button>
@@ -1159,7 +1159,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
           </div>
           <!-- Your Final Bid — moved here so contractors set their number before downloading -->
           <div style="border-top:1px solid var(--rim);margin-top:8px;padding-top:12px">
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px">YOUR FINAL BID <span style="color:var(--gold);font-size:9px;letter-spacing:.3px">OPTIONAL</span></div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px">YOUR FINAL BID <span style="color:var(--text-accent);font-size:9px;letter-spacing:.3px">OPTIONAL</span></div>
             <div style="position:relative">
               <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none">$</span>
               <input id="final-bid-input" type="number" min="0" step="100" placeholder="Override the bid — client sees this on PDF" oninput="onFinalBidChange(this.value)" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;padding:9px 10px 9px 22px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;-moz-appearance:textfield"/>
@@ -1229,12 +1229,12 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
               <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px">ASSUMPTIONS</div>
-              <button onclick="addProposalAssumption()" style="background:none;border:none;color:var(--gold);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:0">+ ADD</button>
+              <button onclick="addProposalAssumption()" style="background:none;border:none;color:var(--text-accent);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:0">+ ADD</button>
             </div>
             <div id="prop-assumptions"></div>
           </div>
           <div id="beautify-row" style="display:none;padding-top:2px">
-            <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(189,0,41,.08);border:1px solid rgba(189,0,41,.25);border-radius:8px;color:var(--gold);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-hero.png" width="12" height="12" style="object-fit:contain;vertical-align:middle"> POLISH SCOPE WITH AI</button>
+            <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(189,0,41,.08);border:1px solid rgba(189,0,41,.25);border-radius:8px;color:var(--text-accent);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-hero.png" width="12" height="12" style="object-fit:contain;vertical-align:middle"> POLISH SCOPE WITH AI</button>
             <div id="beautify-status" style="font-size:10px;color:var(--muted);text-align:center;margin-top:5px;display:none"></div>
           </div>
         </div>
@@ -2049,7 +2049,7 @@ function showToast(msg, duration=3800){
   if(!t){
     t = document.createElement('div');
     t.id = 'even-toast';
-    t.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a18;border:1px solid var(--gold);color:var(--gold);padding:11px 20px;border-radius:10px;font-size:12px;font-family:monospace;letter-spacing:.4px;z-index:9999;opacity:0;transition:all .35s ease;pointer-events:none;white-space:nowrap;max-width:90vw;text-align:center";
+    t.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a18;border:1px solid var(--gold);color:var(--text-accent);padding:11px 20px;border-radius:10px;font-size:12px;font-family:monospace;letter-spacing:.4px;z-index:9999;opacity:0;transition:all .35s ease;pointer-events:none;white-space:nowrap;max-width:90vw;text-align:center";
     document.body.appendChild(t);
   }
   t.textContent = msg;
@@ -2614,7 +2614,7 @@ function renderEstimate(data){
         </div>`).join('')}
       </div>
       <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:rgba(10,10,10,.55);border-radius:8px;padding:12px">
-        <div style="font-size:10px;font-weight:700;color:var(--gold);font-family:'DM Mono',monospace;letter-spacing:.8px">PRO FEATURE</div>
+        <div style="font-size:10px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.8px">PRO FEATURE</div>
         <div style="font-size:11px;color:var(--muted);text-align:center;line-height:1.4">Track actual costs on every job.<br>Even learns and sharpens your future estimates.</div>
         <button onclick="openProModal('Cost Tracker','Upgrade to Even Pro to log actual job costs and improve every future estimate.')" style="background:var(--gold);border:none;color:#fff;padding:8px 18px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;margin-top:2px">Upgrade to Pro →</button>
       </div>
@@ -2766,7 +2766,7 @@ async function loadSimilarJobs(data){
     const avg=Math.round(totals.reduce((s,v)=>s+v,0)/totals.length);
     const low=Math.min(...totals),high=Math.max(...totals);
     const avgM=margins.length?Math.round(margins.reduce((s,v)=>s+v,0)/margins.length):null;
-    el.innerHTML=`<div class="similar-recall"><span style="color:var(--gold);flex-shrink:0">✦</span><span>Based on your last ${jobs.length} <strong>${trade}</strong> jobs — avg ${fmtK(avg)}, range ${fmtK(low)}–${fmtK(high)}${avgM?`, avg margin ${avgM}%`:''}</span></div>`;
+    el.innerHTML=`<div class="similar-recall"><span style="color:var(--text-accent);flex-shrink:0">✦</span><span>Based on your last ${jobs.length} <strong>${trade}</strong> jobs — avg ${fmtK(avg)}, range ${fmtK(low)}–${fmtK(high)}${avgM?`, avg margin ${avgM}%`:''}</span></div>`;
     el.style.display='block';
   }catch(e){console.error('Similar jobs error:',e);}
 }
@@ -3366,7 +3366,7 @@ async function submitDataTrade(){
             </div>
             <div style="flex:1">
               <div style="font-size:12px;color:var(--white2);margin-bottom:7px">Upload your company logo to appear on client proposals.</div>
-              <label style="display:inline-block;padding:7px 13px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--gold);cursor:pointer;font-family:'DM Mono',monospace">
+              <label style="display:inline-block;padding:7px 13px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--text-accent);cursor:pointer;font-family:'DM Mono',monospace">
                 <input type="file" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
                 <i data-lucide="upload-cloud" style="width:11px;height:11px;stroke:currentColor;vertical-align:middle;margin-right:4px"></i> Upload
               </label>
@@ -3388,7 +3388,7 @@ async function submitDataTrade(){
           <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5">Your prices override regional averages in every estimate. Tap any item to edit full details.</div>
           <div id="supplier-list"></div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--rim2)">
-            <button onclick="addSupplierRow()" style="background:none;border:none;color:var(--gold);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;padding:0">+ ADD MATERIAL</button>
+            <button onclick="addSupplierRow()" style="background:none;border:none;color:var(--text-accent);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;padding:0">+ ADD MATERIAL</button>
             <label class="price-sheet-btn">
               <input type="file" accept="image/*" style="display:none" onchange="extractPriceSheet(this)">
               <i data-lucide="scan" style="width:11px;height:11px;stroke:currentColor"></i> SCAN PRICE SHEET
@@ -3905,7 +3905,7 @@ async function generateInsights(estimates){
     const parsed=JSON.parse(text);
     if(parsed.insights?.length){
       el.innerHTML=parsed.insights.map(ins=>
-        `<div class="dash-insight"><span style="color:var(--gold);flex-shrink:0;margin-top:1px">✦</span><span>${ins}</span></div>`
+        `<div class="dash-insight"><span style="color:var(--text-accent);flex-shrink:0;margin-top:1px">✦</span><span>${ins}</span></div>`
       ).join('');
       wrap.style.display='block';
     }
