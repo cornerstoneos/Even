@@ -3662,7 +3662,7 @@ Include every distinct material/product with a price. If supplier name is visibl
       const text = data.content?.[0]?.text||'';
       let extracted;
       try{ extracted = JSON.parse(text.replace(/```json|```/g,'').trim()); }
-      catch(){ throw new Error('Could not parse AI response'); }
+      catch(e){ throw new Error('Could not parse AI response'); }
 
       if(!Array.isArray(extracted)||!extracted.length) throw new Error('No prices found');
 
