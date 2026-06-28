@@ -4,6 +4,7 @@ import Explainer, { ExplainerES } from './routes/Explainer'
 import PainPoint from './routes/PainPoint'
 import WhoWeAre from './routes/WhoWeAre'
 import Speed, { SpeedES } from './routes/Speed'
+import TwoOutputs from './routes/TwoOutputs'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/who-we-are" element={<WhoWeAre />} />
         <Route path="/speed" element={<Speed />} />
         <Route path="/speed-es" element={<SpeedES />} />
+        <Route path="/two-outputs" element={<TwoOutputs />} />
       </Routes>
     </BrowserRouter>
   )
@@ -32,6 +34,7 @@ const ASSETS = [
   { path: '/who-we-are', label: 'Who We Are', meta: '33s loop · brand statement' },
   { path: '/speed', label: 'Speed', meta: '25s loop · live estimate · phone call' },
   { path: '/speed-es', label: 'Speed (ES)', meta: '25s loop · Spanish version' },
+  { path: '/two-outputs', label: 'Two Outputs', meta: '27s loop · proposal + internal sheet' },
 ]
 
 function Home() {
