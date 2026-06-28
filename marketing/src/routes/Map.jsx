@@ -147,10 +147,10 @@ function MapBase({ strings }) {
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <ComposableMap
           projection="geoAlbersUsa"
-          projectionConfig={{ scale: 860 }}
+          projectionConfig={{ scale: 720 }}
           width={960}
-          height={560}
-          style={{ width: '86vw', height: 'auto', maxHeight: '68vh', overflow: 'visible' }}
+          height={600}
+          style={{ width: '82vw', height: 'auto', maxHeight: '58vh', overflow: 'visible' }}
         >
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
@@ -401,8 +401,8 @@ const EN = {
     { target: 20, suffix: '+', label: 'Permit Databases' },
     { word: 'Live', label: 'Labor Rates' },
   ],
-  tagline1: 'Permit fees. Labor rates. Local costs.',
-  tagline2: 'Every city runs different. Even knows yours.',
+  tagline1: 'Current permit fees. Current labor rates. Current material costs.',
+  tagline2: 'Pulled live. Specific to your market.',
   url: 'even-os.com',
 }
 
@@ -413,8 +413,8 @@ const ES = {
     { target: 20, suffix: '+', label: 'Bases de Datos' },
     { word: 'En Vivo', label: 'Tarifas Laborales' },
   ],
-  tagline1: 'Permisos. Tarifas laborales. Costos locales.',
-  tagline2: 'Cada ciudad es diferente. Even sabe la tuya.',
+  tagline1: 'Permisos actuales. Tarifas laborales actuales. Costos de materiales actuales.',
+  tagline2: 'Datos en tiempo real. Específicos a tu mercado.',
   url: 'even-os.com',
 }
 
