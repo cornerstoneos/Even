@@ -1,205 +1,195 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const LINES = [
-  { text: 'I used to guess.', at: 800, size: 'lg', weight: 700 },
-  { text: 'Lost jobs.', at: 3200, size: 'lg', weight: 700 },
-  { text: 'Left money.', at: 5400, size: 'lg', weight: 700 },
-  { text: 'Bid wrong.', at: 7600, size: 'lg', weight: 700 },
-]
-
-const PIVOT = {
-  text: 'Built the thing I wish I had.',
-  at: 10800,
+const PHASES = {
+  line0: 800,
+  line1: 3100,
+  line2: 5400,
+  line3: 7700,
+  dim: 9300,
+  exitPain: 10100,
+  pivot: 11000,
+  brand: 14200,
+  sub: 15300,
+  logo: 17800,
 }
 
-const BRAND = {
-  text: 'Even.',
-  at: 14200,
-}
+const LINES = ['I used to guess.', 'Lost jobs.', 'Left money.', 'Bid wrong.']
+const LOOP = 21500
 
-const LOGO_AT = 16800
-const LOOP = 21000
+function WordReveal({ text }) {
+  const words = text.split(' ')
+  return (
+    <div style={{ fontSize: 'clamp(1.8rem, 5.5vw, 2.6rem)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: '#ffffff' }}>
+      {words.map((word, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+          style={{ display: 'inline-block', marginRight: '0.3em' }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </div>
+  )
+}
 
 export default function PainPoint() {
-  const [visibleLines, setVisibleLines] = useState([])
-  const [showPivot, setShowPivot] = useState(false)
-  const [showBrand, setShowBrand] = useState(false)
-  const [showLogo, setShowLogo] = useState(false)
-  const [dim, setDim] = useState(false)
+  const [p, setP] = useState({})
   const timers = useRef([])
 
   function reset() {
     timers.current.forEach(clearTimeout)
     timers.current = []
-    setVisibleLines([])
-    setShowPivot(false)
-    setShowBrand(false)
-    setShowLogo(false)
-    setDim(false)
+    setP({})
   }
 
   function run() {
     reset()
-
-    LINES.forEach((line, i) => {
-      timers.current.push(setTimeout(() => {
-        setVisibleLines(prev => [...prev, i])
-      }, line.at))
+    Object.entries(PHASES).forEach(([key, delay]) => {
+      timers.current.push(setTimeout(() => setP(prev => ({ ...prev, [key]: true })), delay))
     })
-
-    // Dim the initial lines before pivot
-    timers.current.push(setTimeout(() => setDim(true), 9800))
-
-    timers.current.push(setTimeout(() => setShowPivot(true), PIVOT.at))
-    timers.current.push(setTimeout(() => setShowBrand(true), BRAND.at))
-    timers.current.push(setTimeout(() => setShowLogo(true), LOGO_AT))
-
     timers.current.push(setTimeout(run, LOOP))
   }
 
-  useEffect(() => {
-    run()
-    return () => timers.current.forEach(clearTimeout)
-  }, [])
+  useEffect(() => { run(); return () => timers.current.forEach(clearTimeout) }, [])
+
+  const showPain = !p.exitPain
+  const showPivot = !!(p.pivot && !p.brand)
+  const showBrand = !!p.brand
 
   return (
     <div
       style={{
-        width: '100vw',
-        height: '100vh',
-        background: '#080808',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontFamily: 'Inter, sans-serif',
-        overflow: 'hidden',
-        position: 'relative',
+        width: '100vw', height: '100vh', background: '#080808',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontFamily: 'Inter, sans-serif', overflow: 'hidden', position: 'relative',
       }}
     >
-      <div
+      {/* Ambient gold bloom — grows on brand */}
+      <motion.div
+        animate={{ opacity: showBrand ? 0.13 : 0, scale: showBrand ? 1.7 : 0.5 }}
+        transition={{ duration: 2.8, ease: 'easeOut' }}
         style={{
-          width: '100%',
-          maxWidth: '620px',
-          padding: '0 2rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0',
+          position: 'absolute', inset: 0,
+          background: 'radial-gradient(circle at 30% 55%, rgba(212,175,55,0.9) 0%, transparent 55%)',
+          pointerEvents: 'none',
         }}
-      >
-        {/* Opening lines */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.1rem', marginBottom: '2.5rem' }}>
-          {LINES.map((line, i) => (
-            <AnimatePresence key={i}>
-              {visibleLines.includes(i) && (
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{
-                    opacity: dim ? 0.2 : 1,
-                    y: 0,
-                  }}
-                  transition={{
-                    opacity: { duration: dim ? 1.2 : 0.7, ease: 'easeOut' },
-                    y: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-                  }}
-                  style={{
-                    color: '#ffffff',
-                    fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
-                    fontWeight: 700,
-                    lineHeight: 1.15,
-                    letterSpacing: '-0.02em',
-                  }}
-                >
-                  {line.text}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          ))}
-        </div>
+      />
 
-        {/* Pivot line */}
-        <AnimatePresence>
-          {showPivot && (
+      <div style={{ width: '100%', maxWidth: '640px', padding: '0 2.5rem', position: 'relative' }}>
+        <AnimatePresence mode="wait">
+          {showPain && (
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                color: 'rgba(255,255,255,0.65)',
-                fontSize: 'clamp(1rem, 2.5vw, 1.3rem)',
-                fontWeight: 400,
-                lineHeight: 1.5,
-                letterSpacing: '-0.01em',
-                marginBottom: '1.75rem',
-                fontStyle: 'italic',
-              }}
+              key="pain"
+              animate={{ opacity: p.dim ? 0.08 : 1 }}
+              exit={{ opacity: 0, x: -30, filter: 'blur(6px)' }}
+              transition={{ duration: 0.55, ease: [0.4, 0, 1, 1] }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem', position: 'relative', paddingLeft: '1.35rem' }}
             >
-              {PIVOT.text}
+              {/* Left accent line */}
+              <motion.div
+                initial={{ scaleY: 0, opacity: 0 }}
+                animate={{ scaleY: p.dim ? 0 : 1, opacity: p.dim ? 0 : 1 }}
+                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  position: 'absolute', left: 0, top: '0.15rem', bottom: '0.15rem',
+                  width: '2px',
+                  background: 'linear-gradient(180deg, #D4AF37, rgba(212,175,55,0.04))',
+                  borderRadius: '1px', transformOrigin: 'top',
+                }}
+              />
+              {LINES.map((text, i) => (
+                p[`line${i}`] && <WordReveal key={i} text={text} />
+              ))}
             </motion.div>
           )}
-        </AnimatePresence>
 
-        {/* Brand reveal */}
-        <AnimatePresence>
-          {showBrand && (
+          {showPivot && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              key="pivot"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
             >
-              <span
+              {/* Rule wipe */}
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
                 style={{
-                  color: '#D4AF37',
-                  fontSize: 'clamp(3rem, 10vw, 6rem)',
-                  fontWeight: 900,
-                  letterSpacing: '-0.04em',
-                  lineHeight: 1,
-                  display: 'block',
+                  height: '1px',
+                  background: 'linear-gradient(90deg, #D4AF37, rgba(212,175,55,0))',
+                  marginBottom: '1.75rem', transformOrigin: 'left',
+                }}
+              />
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.95, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  color: 'rgba(255,255,255,0.58)', margin: 0,
+                  fontSize: 'clamp(1rem, 2.8vw, 1.4rem)',
+                  fontWeight: 400, lineHeight: 1.5, fontStyle: 'italic', letterSpacing: '-0.01em',
                 }}
               >
-                {BRAND.text}
-              </span>
+                Built the thing I wish I had.
+              </motion.p>
+            </motion.div>
+          )}
+
+          {showBrand && (
+            <motion.div
+              key="brand"
+              initial={{ opacity: 0, y: 28, scale: 0.88 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div
+                style={{
+                  color: '#D4AF37',
+                  fontSize: 'clamp(3.5rem, 14vw, 8rem)',
+                  fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 0.95,
+                }}
+              >
+                Even.
+              </div>
+              <AnimatePresence>
+                {p.sub && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      color: 'rgba(255,255,255,0.22)',
+                      fontSize: 'clamp(0.65rem, 2vw, 0.85rem)',
+                      letterSpacing: '0.06em', fontWeight: 300,
+                      marginTop: '1.1rem',
+                    }}
+                  >
+                    Built for the way you actually work.
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* Logo lockup */}
+      {/* Logo */}
       <AnimatePresence>
-        {showLogo && (
+        {p.logo && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.2 }}
-            style={{
-              position: 'absolute',
-              bottom: '2rem',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
+            style={{ position: 'absolute', bottom: '2rem', left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}
           >
-            <img
-              src="/logo.png"
-              alt="Even"
-              style={{ height: '1.4rem', objectFit: 'contain' }}
-              onError={e => { e.target.style.display = 'none' }}
-            />
-            <span
-              style={{
-                color: '#D4AF37',
-                fontSize: '0.55rem',
-                letterSpacing: '0.35em',
-                textTransform: 'uppercase',
-                fontWeight: 600,
-              }}
-            >
-              even-os.com
-            </span>
+            <img src="/logo.png" alt="Even" style={{ height: '1.4rem', objectFit: 'contain' }} onError={e => { e.target.style.display = 'none' }} />
+            <span style={{ color: '#D4AF37', fontSize: '0.55rem', letterSpacing: '0.35em', textTransform: 'uppercase', fontWeight: 600 }}>even-os.com</span>
           </motion.div>
         )}
       </AnimatePresence>
