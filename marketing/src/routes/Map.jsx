@@ -12,6 +12,7 @@ const MARKETS = [
       { name: 'Miami', coords: [-80.19, 25.76] },
       { name: 'Orlando', coords: [-81.38, 28.54] },
       { name: 'Tampa', coords: [-82.46, 27.95] },
+      { name: 'Jacksonville', coords: [-81.66, 30.33], anchor: 'start', dx: 5 },
     ],
     delay: 2000,
   },

@@ -613,23 +613,46 @@ export default function Explainer() {
                   transition={{ duration: 0.5 }}
                   style={{ marginTop: '1.25rem' }}
                 >
-                  <motion.div
-                    animate={{ boxShadow: ['0 0 0 0 rgba(212,175,55,0)', '0 0 16px 3px rgba(212,175,55,0.18)', '0 0 0 0 rgba(212,175,55,0)'] }}
-                    transition={{ duration: 1.8, repeat: 2, ease: 'easeInOut' }}
-                    style={{
-                      background: '#D4AF37',
-                      color: '#080808',
-                      borderRadius: '4px',
-                      padding: '0.7rem',
-                      textAlign: 'center',
-                      fontSize: '0.7rem',
-                      fontWeight: 800,
-                      letterSpacing: '0.12em',
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    Export PDF ↗
-                  </motion.div>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <motion.div
+                      animate={{ boxShadow: ['0 0 0 0 rgba(212,175,55,0)', '0 0 16px 3px rgba(212,175,55,0.18)', '0 0 0 0 rgba(212,175,55,0)'] }}
+                      transition={{ duration: 1.8, repeat: 2, ease: 'easeInOut' }}
+                      style={{
+                        flex: 1,
+                        background: '#D4AF37',
+                        color: '#080808',
+                        borderRadius: '4px',
+                        padding: '0.7rem 0.5rem',
+                        textAlign: 'center',
+                        fontSize: '0.62rem',
+                        fontWeight: 800,
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      Client Proposal ↗
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.4, delay: 0.4 }}
+                      style={{
+                        flex: 1,
+                        background: 'transparent',
+                        border: '1px solid rgba(212,175,55,0.35)',
+                        color: '#D4AF37',
+                        borderRadius: '4px',
+                        padding: '0.7rem 0.5rem',
+                        textAlign: 'center',
+                        fontSize: '0.62rem',
+                        fontWeight: 700,
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      Internal Cost
+                    </motion.div>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
