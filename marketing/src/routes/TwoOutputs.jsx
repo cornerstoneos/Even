@@ -13,8 +13,9 @@ const LOOP = 27000
 
 const PHASES = {
   estimate: 500,
-  exportBtn: 2300,
-  exportTap: 3100,
+  estimateRows: 1000,
+  exportBtn: 2600,
+  exportTap: 3400,
   docsSlide: 3800,
   proposalExpand: 6400,
   proposalScroll: 8000,
@@ -275,26 +276,73 @@ export default function TwoOutputs() {
           <motion.div key="estimate"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scale: 0.96, filter: 'blur(4px)' }}
             transition={{ duration: 0.38, ease: [0.4, 0, 1, 1] }}
-            style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem', padding: '0 2rem' }}
+            style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', padding: '0 2rem', width: '100%', maxWidth: '380px' }}
           >
+            {/* Job label */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
               style={{ color: 'rgba(255,255,255,0.28)', fontSize: '0.58rem', letterSpacing: '0.25em', textTransform: 'uppercase' }}>
               Roofing Replacement · Houston, TX
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.7 }}
-              style={{ color: '#D4AF37', fontSize: 'clamp(3rem, 14vw, 4.5rem)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
-              $28,468
-            </motion.div>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-              style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
-              Estimated Total
+
+            {/* Cost breakdown rows */}
+            <AnimatePresence>
+              {p.estimateRows && (
+                <motion.div
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}
+                  style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0' }}
+                >
+                  {[
+                    { label: 'Materials', value: '$12,795' },
+                    { label: 'Labor', value: '$9,000' },
+                    { label: 'Permits & Fees', value: '$3,993' },
+                  ].map(({ label, value }, i) => (
+                    <motion.div
+                      key={label}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.38, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                      style={{
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        padding: '0.55rem 0',
+                        borderBottom: i < 2 ? '1px solid rgba(255,255,255,0.06)' : 'none',
+                      }}
+                    >
+                      <span style={{ color: 'rgba(255,255,255,0.38)', fontSize: '0.64rem', letterSpacing: '0.06em' }}>{label}</span>
+                      <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.72rem', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>{value}</span>
+                    </motion.div>
+                  ))}
+
+                  {/* Divider before total */}
+                  <motion.div
+                    initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ height: '1px', background: 'linear-gradient(90deg, #D4AF37, rgba(212,175,55,0.2))', margin: '0.6rem 0', transformOrigin: 'left' }}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Total */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: p.estimateRows ? 1 : 0, y: p.estimateRows ? 0 : 10 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.3rem' }}
+            >
+              <div style={{ color: '#D4AF37', fontSize: 'clamp(2.8rem, 13vw, 4.2rem)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
+                $28,468
+              </div>
+              <div style={{ color: 'rgba(255,255,255,0.22)', fontSize: '0.57rem', letterSpacing: '0.22em', textTransform: 'uppercase' }}>
+                Estimated Total
+              </div>
             </motion.div>
 
+            {/* Export button */}
             <AnimatePresence>
               {p.exportBtn && (
                 <motion.div
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}
-                  style={{ marginTop: '1rem' }}
+                  style={{ marginTop: '0.4rem' }}
                 >
                   <motion.div
                     animate={p.exportTap ? { scale: [1, 0.93, 1] } : { boxShadow: ['0 0 0 0 rgba(212,175,55,0)', '0 0 18px 4px rgba(212,175,55,0.2)', '0 0 0 0 rgba(212,175,55,0)'] }}
