@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Map, { MapES } from './routes/Map'
-import Explainer from './routes/Explainer'
+import Explainer, { ExplainerES } from './routes/Explainer'
 import PainPoint from './routes/PainPoint'
 import WhoWeAre from './routes/WhoWeAre'
 
@@ -12,6 +12,7 @@ export default function App() {
         <Route path="/map" element={<Map />} />
         <Route path="/map-es" element={<MapES />} />
         <Route path="/explainer" element={<Explainer />} />
+        <Route path="/explainer-es" element={<ExplainerES />} />
         <Route path="/pain-point" element={<PainPoint />} />
         <Route path="/who-we-are" element={<WhoWeAre />} />
       </Routes>
@@ -22,7 +23,8 @@ export default function App() {
 const ASSETS = [
   { path: '/map', label: 'US Market Map', meta: '30s loop · state activation · landscape' },
   { path: '/map-es', label: 'US Market Map (ES)', meta: '30s loop · Spanish version' },
-  { path: '/explainer', label: 'App Explainer', meta: '20s loop · estimate walkthrough' },
+  { path: '/explainer', label: 'App Explainer', meta: '30s loop · phone mockup' },
+  { path: '/explainer-es', label: 'App Explainer (ES)', meta: '30s loop · Spanish version' },
   { path: '/pain-point', label: 'Pain Point', meta: '20s loop · founder story' },
   { path: '/who-we-are', label: 'Who We Are', meta: '30s loop · brand statement' },
 ]
