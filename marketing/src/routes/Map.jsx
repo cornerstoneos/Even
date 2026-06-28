@@ -145,7 +145,8 @@ function MapBase({ strings }) {
       }}
     >
       {/* Map */}
-      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ position: 'absolute', top: '3rem', bottom: '12rem', left: 0, right: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+        <div style={{ transform: 'scale(1.35)', transformOrigin: 'center center' }}>
         <ComposableMap
           projection="geoAlbersUsa"
           projectionConfig={{ scale: 950 }}
@@ -213,6 +214,7 @@ function MapBase({ strings }) {
               : null
           )}
         </ComposableMap>
+        </div>
       </div>
 
       {/* Title */}
@@ -225,9 +227,9 @@ function MapBase({ strings }) {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             style={{
               position: 'absolute',
-              top: '2rem',
-              left: '50%',
-              transform: 'translateX(-50%)',
+              top: '1.25rem',
+              left: 0,
+              right: 0,
               textAlign: 'center',
             }}
           >
@@ -256,11 +258,11 @@ function MapBase({ strings }) {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             style={{
               position: 'absolute',
-              bottom: '8.5rem',
-              left: '50%',
-              transform: 'translateX(-50%)',
+              bottom: '7.5rem',
+              left: '1rem',
+              right: '1rem',
               display: 'flex',
-              gap: 'clamp(1.5rem, 5vw, 4rem)',
+              justifyContent: 'space-around',
               alignItems: 'flex-end',
             }}
           >
@@ -269,7 +271,7 @@ function MapBase({ strings }) {
                 <div
                   style={{
                     color: '#D4AF37',
-                    fontSize: stat.word ? 'clamp(1.2rem, 4vw, 2rem)' : 'clamp(2.2rem, 7vw, 4rem)',
+                    fontSize: stat.word ? 'clamp(1.1rem, 5.5vw, 2rem)' : 'clamp(1.8rem, 7vw, 4rem)',
                     fontWeight: 900,
                     lineHeight: 1,
                     fontVariantNumeric: 'tabular-nums',
@@ -310,11 +312,10 @@ function MapBase({ strings }) {
             transition={{ duration: 1.2 }}
             style={{
               position: 'absolute',
-              bottom: '5rem',
-              left: '50%',
-              transform: 'translateX(-50%)',
+              bottom: '4.5rem',
+              left: '1rem',
+              right: '1rem',
               textAlign: 'center',
-              whiteSpace: 'nowrap',
             }}
           >
             <p
@@ -353,8 +354,8 @@ function MapBase({ strings }) {
             style={{
               position: 'absolute',
               bottom: '1.75rem',
-              left: '50%',
-              transform: 'translateX(-50%)',
+              left: 0,
+              right: 0,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
