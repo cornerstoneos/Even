@@ -3,6 +3,7 @@ import Map, { MapES } from './routes/Map'
 import Explainer, { ExplainerES } from './routes/Explainer'
 import PainPoint from './routes/PainPoint'
 import WhoWeAre from './routes/WhoWeAre'
+import Speed, { SpeedES } from './routes/Speed'
 
 export default function App() {
   return (
@@ -15,6 +16,8 @@ export default function App() {
         <Route path="/explainer-es" element={<ExplainerES />} />
         <Route path="/pain-point" element={<PainPoint />} />
         <Route path="/who-we-are" element={<WhoWeAre />} />
+        <Route path="/speed" element={<Speed />} />
+        <Route path="/speed-es" element={<SpeedES />} />
       </Routes>
     </BrowserRouter>
   )
@@ -25,8 +28,10 @@ const ASSETS = [
   { path: '/map-es', label: 'US Market Map (ES)', meta: '30s loop · Spanish version' },
   { path: '/explainer', label: 'App Explainer', meta: '30s loop · phone mockup' },
   { path: '/explainer-es', label: 'App Explainer (ES)', meta: '30s loop · Spanish version' },
-  { path: '/pain-point', label: 'Pain Point', meta: '20s loop · founder story' },
-  { path: '/who-we-are', label: 'Who We Are', meta: '30s loop · brand statement' },
+  { path: '/pain-point', label: 'Pain Point', meta: '26s loop · who wins bids' },
+  { path: '/who-we-are', label: 'Who We Are', meta: '33s loop · brand statement' },
+  { path: '/speed', label: 'Speed', meta: '25s loop · live estimate · phone call' },
+  { path: '/speed-es', label: 'Speed (ES)', meta: '25s loop · Spanish version' },
 ]
 
 function Home() {
