@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import Map from './routes/Map'
+import Map, { MapES } from './routes/Map'
 import Explainer from './routes/Explainer'
 import PainPoint from './routes/PainPoint'
 import WhoWeAre from './routes/WhoWeAre'
@@ -10,6 +10,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/map" element={<Map />} />
+        <Route path="/map-es" element={<MapES />} />
         <Route path="/explainer" element={<Explainer />} />
         <Route path="/pain-point" element={<PainPoint />} />
         <Route path="/who-we-are" element={<WhoWeAre />} />
@@ -20,6 +21,7 @@ export default function App() {
 
 const ASSETS = [
   { path: '/map', label: 'US Market Map', meta: '30s loop · state activation · landscape' },
+  { path: '/map-es', label: 'US Market Map (ES)', meta: '30s loop · Spanish version' },
   { path: '/explainer', label: 'App Explainer', meta: '20s loop · estimate walkthrough' },
   { path: '/pain-point', label: 'Pain Point', meta: '20s loop · founder story' },
   { path: '/who-we-are', label: 'Who We Are', meta: '30s loop · brand statement' },
@@ -56,7 +58,7 @@ function Home() {
           gridTemplateColumns: 'repeat(2, 1fr)',
           gap: '0.75rem',
           width: '100%',
-          maxWidth: '560px',
+          maxWidth: '680px',
         }}
       >
         {ASSETS.map(({ path, label, meta }) => (

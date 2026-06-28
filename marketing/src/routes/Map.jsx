@@ -4,6 +4,7 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
 
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'
 
+// anchor: text-anchor for SVG label. dx/dy: label offset in SVG units.
 const MARKETS = [
   {
     name: 'Florida',
@@ -18,15 +19,16 @@ const MARKETS = [
     name: 'Georgia',
     cities: [
       { name: 'Atlanta', coords: [-84.39, 33.75] },
-      { name: 'Savannah', coords: [-81.10, 32.08] },
+      { name: 'Savannah', coords: [-81.10, 32.08], anchor: 'start', dx: 5 },
     ],
     delay: 5200,
   },
   {
     name: 'South Carolina',
     cities: [
-      { name: 'Charleston', coords: [-79.93, 32.78] },
+      { name: 'Charleston', coords: [-79.93, 32.78], anchor: 'start', dx: 5 },
       { name: 'Columbia', coords: [-81.03, 34.00] },
+      { name: 'Greenville', coords: [-82.39, 34.85], anchor: 'end', dx: -5 },
     ],
     delay: 8400,
   },
@@ -34,7 +36,8 @@ const MARKETS = [
     name: 'North Carolina',
     cities: [
       { name: 'Charlotte', coords: [-80.84, 35.23] },
-      { name: 'Raleigh', coords: [-78.64, 35.78] },
+      { name: 'Raleigh', coords: [-78.64, 35.78], anchor: 'start', dx: 5 },
+      { name: 'Greensboro', coords: [-79.79, 36.07], anchor: 'end', dx: -5, dy: -14 },
     ],
     delay: 11600,
   },
@@ -50,8 +53,10 @@ const MARKETS = [
     name: 'Texas',
     cities: [
       { name: 'Houston', coords: [-95.37, 29.76] },
-      { name: 'Dallas', coords: [-96.80, 32.78] },
+      { name: 'San Antonio', coords: [-98.49, 29.42], anchor: 'end', dx: -5 },
       { name: 'Austin', coords: [-97.74, 30.27] },
+      { name: 'Dallas', coords: [-96.80, 32.78] },
+      { name: 'McKinney', coords: [-96.69, 33.20], anchor: 'start', dx: 5 },
     ],
     delay: 18000,
   },
@@ -59,7 +64,7 @@ const MARKETS = [
     name: 'Arizona',
     cities: [
       { name: 'Phoenix', coords: [-112.07, 33.45] },
-      { name: 'Scottsdale', coords: [-111.93, 33.49] },
+      { name: 'Tucson', coords: [-110.97, 32.22] },
     ],
     delay: 21200,
   },
@@ -81,7 +86,7 @@ function Counter({ target, running, suffix = '' }) {
   return <>{val}{suffix}</>
 }
 
-export default function Map() {
+function MapBase({ strings }) {
   const [activeStates, setActiveStates] = useState(new Set())
   const [visibleCities, setVisibleCities] = useState(new Set())
   const [showTitle, setShowTitle] = useState(false)
@@ -189,8 +194,9 @@ export default function Map() {
                     />
                     <circle r={6} fill="rgba(255,255,255,0.08)" />
                     <text
-                      textAnchor="middle"
-                      y={-10}
+                      textAnchor={city.anchor || 'middle'}
+                      x={city.dx || 0}
+                      y={city.dy || -10}
                       style={{
                         fill: 'rgba(255,255,255,0.8)',
                         fontSize: '6.5px',
@@ -233,7 +239,7 @@ export default function Map() {
                 textTransform: 'uppercase',
               }}
             >
-              Active Markets
+              {strings.title}
             </div>
           </motion.div>
         )}
@@ -253,27 +259,27 @@ export default function Map() {
               left: '50%',
               transform: 'translateX(-50%)',
               display: 'flex',
-              gap: '5rem',
+              gap: '4.5rem',
               alignItems: 'flex-end',
             }}
           >
-            {[
-              { target: 7, suffix: '', label: 'States' },
-              { target: 30, suffix: '+', label: 'Cities' },
-              { target: 20, suffix: '+', label: 'Permit Databases' },
-            ].map(({ target, suffix, label }) => (
-              <div key={label} style={{ textAlign: 'center' }}>
+            {strings.stats.map((stat) => (
+              <div key={stat.label} style={{ textAlign: 'center' }}>
                 <div
                   style={{
                     color: '#D4AF37',
-                    fontSize: '4rem',
+                    fontSize: stat.word ? '2rem' : '4rem',
                     fontWeight: 900,
                     lineHeight: 1,
                     fontVariantNumeric: 'tabular-nums',
-                    letterSpacing: '-0.02em',
+                    letterSpacing: stat.word ? '0.05em' : '-0.02em',
+                    textTransform: stat.word ? 'uppercase' : 'none',
                   }}
                 >
-                  <Counter target={target} running={showStats} suffix={suffix} />
+                  {stat.word
+                    ? stat.word
+                    : <Counter target={stat.target} running={showStats} suffix={stat.suffix} />
+                  }
                 </div>
                 <div
                   style={{
@@ -285,7 +291,7 @@ export default function Map() {
                     marginTop: '0.5rem',
                   }}
                 >
-                  {label}
+                  {stat.label}
                 </div>
               </div>
             ))}
@@ -303,21 +309,33 @@ export default function Map() {
             transition={{ duration: 1.2 }}
             style={{
               position: 'absolute',
-              bottom: '5.5rem',
+              bottom: '5rem',
               left: '50%',
               transform: 'translateX(-50%)',
+              textAlign: 'center',
               whiteSpace: 'nowrap',
             }}
           >
             <p
               style={{
-                color: 'rgba(255,255,255,0.4)',
-                fontSize: '0.75rem',
-                letterSpacing: '0.12em',
+                color: 'rgba(255,255,255,0.35)',
+                fontSize: '0.7rem',
+                letterSpacing: '0.1em',
                 fontWeight: 300,
+                marginBottom: '0.25rem',
               }}
             >
-              We operate everywhere. These markets have the real numbers.
+              {strings.tagline1}
+            </p>
+            <p
+              style={{
+                color: 'rgba(255,255,255,0.6)',
+                fontSize: '0.75rem',
+                letterSpacing: '0.08em',
+                fontWeight: 500,
+              }}
+            >
+              {strings.tagline2}
             </p>
           </motion.div>
         )}
@@ -357,13 +375,13 @@ export default function Map() {
                 fontWeight: 600,
               }}
             >
-              even-os.com
+              {strings.url}
             </span>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Subtle vignette */}
+      {/* Vignette */}
       <div
         style={{
           position: 'absolute',
@@ -374,4 +392,36 @@ export default function Map() {
       />
     </div>
   )
+}
+
+const EN = {
+  title: 'Active Markets',
+  stats: [
+    { target: 30, suffix: '+', label: 'Cities' },
+    { target: 20, suffix: '+', label: 'Permit Databases' },
+    { word: 'Live', label: 'Labor Rates' },
+  ],
+  tagline1: 'Permit fees. Labor rates. Local costs.',
+  tagline2: 'Every city runs different. Even knows yours.',
+  url: 'even-os.com',
+}
+
+const ES = {
+  title: 'Mercados Activos',
+  stats: [
+    { target: 30, suffix: '+', label: 'Ciudades' },
+    { target: 20, suffix: '+', label: 'Bases de Datos' },
+    { word: 'En Vivo', label: 'Tarifas Laborales' },
+  ],
+  tagline1: 'Permisos. Tarifas laborales. Costos locales.',
+  tagline2: 'Cada ciudad es diferente. Even sabe la tuya.',
+  url: 'even-os.com',
+}
+
+export default function Map() {
+  return <MapBase strings={EN} />
+}
+
+export function MapES() {
+  return <MapBase strings={ES} />
 }
