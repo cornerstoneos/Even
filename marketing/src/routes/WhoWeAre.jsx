@@ -3,35 +3,36 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const SECTIONS = [
   {
-    label: 'What We Are',
-    body: 'Even is the estimating engine\nfor modern contractors.',
+    label: 'The Tool',
+    body: "Knows what a permit costs in your city\nbefore you pull one.",
     at: 800,
   },
   {
-    label: 'Who We Serve',
-    body: 'Roofing. HVAC. Electrical. Plumbing.\nAny trade bidding real jobs.',
+    label: 'Right Now',
+    body: "Knows what labor runs in your zip code\nright now.",
     at: 6000,
   },
   {
-    label: 'When We Show Up',
-    body: 'Before you price the job.\nBefore you walk out the door.',
+    label: 'Under 2 Minutes',
+    body: "Prices your job with local data\nyou can't get anywhere else.",
     at: 11200,
   },
   {
-    label: 'Where We Work',
-    body: '7 states. 30+ cities.\n20+ live permit databases.',
+    label: 'Not This',
+    body: "Not a spreadsheet.\nNot a guess. Not your cousin's number from 2022.",
     at: 16400,
   },
   {
-    label: 'Why We Exist',
-    body: "Because contractors\nshouldn't have to guess.",
+    label: 'Already Knows You',
+    body: 'It already knows your market.',
     at: 21600,
   },
 ]
 
-const TAGLINE_AT = 25500
-const LOGO_AT = 27500
-const LOOP = 32000
+const BRAND_AT = 25500
+const TAGLINE_AT = 27200
+const LOGO_AT = 28800
+const LOOP = 33000
 
 function StaggerBody({ body }) {
   const lines = body.split('\n')
@@ -62,6 +63,7 @@ function StaggerBody({ body }) {
 
 export default function WhoWeAre() {
   const [activeIndex, setActiveIndex] = useState(-1)
+  const [showBrand, setShowBrand] = useState(false)
   const [showTagline, setShowTagline] = useState(false)
   const [showLogo, setShowLogo] = useState(false)
   const timers = useRef([])
@@ -70,6 +72,7 @@ export default function WhoWeAre() {
     timers.current.forEach(clearTimeout)
     timers.current = []
     setActiveIndex(-1)
+    setShowBrand(false)
     setShowTagline(false)
     setShowLogo(false)
   }
@@ -79,6 +82,7 @@ export default function WhoWeAre() {
     SECTIONS.forEach((s, i) => {
       timers.current.push(setTimeout(() => setActiveIndex(i), s.at))
     })
+    timers.current.push(setTimeout(() => setShowBrand(true), BRAND_AT))
     timers.current.push(setTimeout(() => setShowTagline(true), TAGLINE_AT))
     timers.current.push(setTimeout(() => setShowLogo(true), LOGO_AT))
     timers.current.push(setTimeout(run, LOOP))
@@ -98,7 +102,7 @@ export default function WhoWeAre() {
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: 'rgba(255,255,255,0.05)', zIndex: 10 }}>
         <motion.div
           animate={{
-            width: showTagline
+            width: showBrand
               ? '100%'
               : activeIndex >= 0
                 ? `${((activeIndex + 1) / SECTIONS.length) * 100}%`
@@ -109,9 +113,19 @@ export default function WhoWeAre() {
         />
       </div>
 
+      {/* Gold bloom behind brand */}
+      <motion.div
+        animate={{ opacity: showBrand ? 0.1 : 0, scale: showBrand ? 1.6 : 0.6 }}
+        transition={{ duration: 2.5, ease: 'easeOut' }}
+        style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: 'radial-gradient(circle at center, rgba(212,175,55,0.9) 0%, transparent 55%)',
+        }}
+      />
+
       {/* Main content */}
       <AnimatePresence mode="wait">
-        {!showTagline && activeIndex >= 0 && (
+        {!showBrand && activeIndex >= 0 && (
           <motion.div
             key={activeIndex}
             initial={{ opacity: 0, y: 22 }}
@@ -122,19 +136,13 @@ export default function WhoWeAre() {
           >
             {/* Label + counter */}
             <div
-              style={{
-                display: 'flex', justifyContent: 'center', alignItems: 'center',
-                gap: '1rem', marginBottom: '1.5rem',
-              }}
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '1.25rem' }}
             >
               <motion.div
                 initial={{ opacity: 0, x: -6 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.08 }}
-                style={{
-                  color: '#D4AF37', fontSize: '0.55rem',
-                  letterSpacing: '0.45em', textTransform: 'uppercase', fontWeight: 700,
-                }}
+                style={{ color: '#D4AF37', fontSize: '0.55rem', letterSpacing: '0.45em', textTransform: 'uppercase', fontWeight: 700 }}
               >
                 {SECTIONS[activeIndex].label}
               </motion.div>
@@ -142,77 +150,73 @@ export default function WhoWeAre() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.28 }}
                 transition={{ duration: 0.5, delay: 0.15 }}
-                style={{
-                  color: '#ffffff', fontSize: '0.5rem',
-                  letterSpacing: '0.1em', fontVariantNumeric: 'tabular-nums', fontWeight: 500,
-                }}
+                style={{ color: '#ffffff', fontSize: '0.5rem', letterSpacing: '0.1em', fontVariantNumeric: 'tabular-nums', fontWeight: 500 }}
               >
                 {String(activeIndex + 1).padStart(2, '0')} / {String(SECTIONS.length).padStart(2, '0')}
               </motion.div>
             </div>
 
-            {/* Divider under label */}
+            {/* Divider */}
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.6, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                height: '1px', background: 'rgba(212,175,55,0.15)',
-                marginBottom: '1.5rem', transformOrigin: 'center',
-              }}
+              style={{ height: '1px', background: 'rgba(212,175,55,0.15)', marginBottom: '1.5rem', transformOrigin: 'center' }}
             />
 
-            {/* Body text with word stagger */}
-            <div
-              style={{
-                color: '#ffffff',
-                fontSize: 'clamp(1.6rem, 4.5vw, 2.2rem)',
-                fontWeight: 700, lineHeight: 1.2, letterSpacing: '-0.025em',
-              }}
-            >
+            {/* Body */}
+            <div style={{ color: '#ffffff', fontSize: 'clamp(1.6rem, 4.5vw, 2.2rem)', fontWeight: 700, lineHeight: 1.2, letterSpacing: '-0.025em' }}>
               <StaggerBody body={SECTIONS[activeIndex].body} />
             </div>
           </motion.div>
         )}
 
-        {showTagline && (
+        {showBrand && (
           <motion.div
-            key="tagline"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ textAlign: 'center', maxWidth: '680px', padding: '0 2rem' }}
+            key="brand"
+            initial={{ opacity: 0, y: 24, scale: 0.88 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ textAlign: 'center', padding: '0 2rem' }}
           >
             <div
               style={{
-                color: '#ffffff',
-                fontSize: 'clamp(1.4rem, 4vw, 2rem)',
-                fontWeight: 300, lineHeight: 1.3, letterSpacing: '-0.01em',
+                color: '#D4AF37',
+                fontSize: 'clamp(3.5rem, 13vw, 7.5rem)',
+                fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 0.95,
+                marginBottom: showTagline ? '1.5rem' : 0,
               }}
             >
-              You run the business.
+              Even.
             </div>
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.65, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                height: '1px', background: 'rgba(212,175,55,0.3)',
-                margin: '0.9rem auto', width: '2.5rem', transformOrigin: 'center',
-              }}
-            />
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.85, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-              style={{
-                color: '#ffffff',
-                fontSize: 'clamp(1.4rem, 4vw, 2rem)',
-                fontWeight: 800, lineHeight: 1.3, letterSpacing: '-0.025em',
-              }}
-            >
-              We run the numbers.
-            </motion.div>
+
+            <AnimatePresence>
+              {showTagline && (
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <div style={{ color: '#ffffff', fontSize: 'clamp(1.2rem, 3.5vw, 1.75rem)', fontWeight: 300, lineHeight: 1.3, letterSpacing: '-0.01em' }}>
+                    You run the business.
+                  </div>
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ height: '1px', background: 'rgba(212,175,55,0.3)', margin: '0.85rem auto', width: '2.5rem', transformOrigin: 'center' }}
+                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ color: '#ffffff', fontSize: 'clamp(1.2rem, 3.5vw, 1.75rem)', fontWeight: 800, lineHeight: 1.3, letterSpacing: '-0.025em' }}
+                  >
+                    We run the numbers.
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>

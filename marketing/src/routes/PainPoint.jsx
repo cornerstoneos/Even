@@ -2,37 +2,46 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const PHASES = {
-  line0: 800,
-  line1: 3100,
-  line2: 5400,
-  line3: 7700,
-  dim: 9300,
-  exitPain: 10100,
-  pivot: 11000,
-  brand: 14200,
-  sub: 15300,
-  logo: 17800,
+  b0: 800,    b0x: 3900,
+  b1: 4300,   b1x: 6600,
+  b2: 7000,   b2x: 9900,
+  b3: 10300,  b3x: 12800,
+  b4: 13200,  b4x: 15200,
+  b5: 15600,  b5x: 17800,
+  b6: 18200,  b6x: 20000,
+  brand: 20400,
+  logo: 22500,
 }
+const LOOP = 26500
 
-const LINES = ['I used to guess.', 'Lost jobs.', 'Left money.', 'Bid wrong.']
-const LOOP = 21500
-
-function WordReveal({ text }) {
-  const words = text.split(' ')
+function Beat({ text, size, weight = 700, color = '#ffffff', lineHeight = 1.2, wordDelay = 0 }) {
+  const lines = text.split('\n')
+  let g = 0
+  const rows = lines.map(line => line.split(' ').map(word => ({ word, delay: wordDelay + g++ * 0.07 })))
   return (
-    <div style={{ fontSize: 'clamp(1.8rem, 5.5vw, 2.6rem)', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: '#ffffff' }}>
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-          style={{ display: 'inline-block', marginRight: '0.3em' }}
-        >
-          {word}
-        </motion.span>
+    <motion.div
+      initial={{ y: 16 }}
+      animate={{ y: 0 }}
+      exit={{ opacity: 0, x: -26, filter: 'blur(5px)' }}
+      transition={{ duration: 0.35, ease: [0.4, 0, 1, 1] }}
+      style={{ fontSize: size, fontWeight: weight, color, lineHeight, letterSpacing: '-0.02em' }}
+    >
+      {rows.map((words, li) => (
+        <div key={li} style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {words.map(({ word, delay }, wi) => (
+            <motion.span
+              key={wi}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay, ease: [0.16, 1, 0.3, 1] }}
+              style={{ display: 'inline-block', marginRight: '0.28em', marginBottom: '0.06em' }}
+            >
+              {word}
+            </motion.span>
+          ))}
+        </div>
       ))}
-    </div>
+    </motion.div>
   )
 }
 
@@ -56,10 +65,6 @@ export default function PainPoint() {
 
   useEffect(() => { run(); return () => timers.current.forEach(clearTimeout) }, [])
 
-  const showPain = !p.exitPain
-  const showPivot = !!(p.pivot && !p.brand)
-  const showBrand = !!p.brand
-
   return (
     <div
       style={{
@@ -68,83 +73,122 @@ export default function PainPoint() {
         fontFamily: 'Inter, sans-serif', overflow: 'hidden', position: 'relative',
       }}
     >
-      {/* Ambient gold bloom — grows on brand */}
+      {/* Gold bloom on brand */}
       <motion.div
-        animate={{ opacity: showBrand ? 0.13 : 0, scale: showBrand ? 1.7 : 0.5 }}
+        animate={{ opacity: p.brand ? 0.12 : 0, scale: p.brand ? 1.8 : 0.5 }}
         transition={{ duration: 2.8, ease: 'easeOut' }}
         style={{
-          position: 'absolute', inset: 0,
-          background: 'radial-gradient(circle at 30% 55%, rgba(212,175,55,0.9) 0%, transparent 55%)',
-          pointerEvents: 'none',
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: 'radial-gradient(circle at 28% 52%, rgba(212,175,55,0.9) 0%, transparent 52%)',
         }}
       />
 
       <div style={{ width: '100%', maxWidth: '640px', padding: '0 2.5rem', position: 'relative' }}>
-        <AnimatePresence mode="wait">
-          {showPain && (
-            <motion.div
-              key="pain"
-              animate={{ opacity: p.dim ? 0.08 : 1 }}
-              exit={{ opacity: 0, x: -30, filter: 'blur(6px)' }}
-              transition={{ duration: 0.55, ease: [0.4, 0, 1, 1] }}
-              style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem', position: 'relative', paddingLeft: '1.35rem' }}
-            >
-              {/* Left accent line */}
-              <motion.div
-                initial={{ scaleY: 0, opacity: 0 }}
-                animate={{ scaleY: p.dim ? 0 : 1, opacity: p.dim ? 0 : 1 }}
-                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  position: 'absolute', left: 0, top: '0.15rem', bottom: '0.15rem',
-                  width: '2px',
-                  background: 'linear-gradient(180deg, #D4AF37, rgba(212,175,55,0.04))',
-                  borderRadius: '1px', transformOrigin: 'top',
-                }}
-              />
-              {LINES.map((text, i) => (
-                p[`line${i}`] && <WordReveal key={i} text={text} />
-              ))}
-            </motion.div>
+        <AnimatePresence>
+
+          {/* Beat 0 — opener */}
+          {p.b0 && !p.b0x && (
+            <Beat
+              key="b0"
+              text={"The contractor who wins the bid\nisn't smarter than you."}
+              size="clamp(1.45rem, 4.4vw, 2.2rem)"
+              weight={700}
+            />
           )}
 
-          {showPivot && (
+          {/* Beat 1 */}
+          {p.b1 && !p.b1x && (
+            <Beat
+              key="b1"
+              text={"He's not faster.\nHe's not cheaper."}
+              size="clamp(1.25rem, 3.8vw, 1.9rem)"
+              weight={600}
+              color="rgba(255,255,255,0.78)"
+            />
+          )}
+
+          {/* Beat 2 — pivot, with rule wipe */}
+          {p.b2 && !p.b2x && (
             <motion.div
-              key="pivot"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
+              key="b2"
+              initial={{ y: 16 }}
+              animate={{ y: 0 }}
+              exit={{ opacity: 0, x: -26, filter: 'blur(5px)' }}
+              transition={{ duration: 0.35, ease: [0.4, 0, 1, 1] }}
             >
-              {/* Rule wipe */}
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
-                transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   height: '1px',
                   background: 'linear-gradient(90deg, #D4AF37, rgba(212,175,55,0))',
-                  marginBottom: '1.75rem', transformOrigin: 'left',
+                  marginBottom: '0.85rem', transformOrigin: 'left',
                 }}
               />
-              <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.95, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  color: 'rgba(255,255,255,0.58)', margin: 0,
-                  fontSize: 'clamp(1rem, 2.8vw, 1.4rem)',
-                  fontWeight: 400, lineHeight: 1.5, fontStyle: 'italic', letterSpacing: '-0.01em',
-                }}
-              >
-                Built the thing I wish I had.
-              </motion.p>
+              <div style={{ fontSize: 'clamp(1.55rem, 4.8vw, 2.4rem)', fontWeight: 700, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
+                {['He', 'knows', 'his', 'numbers.'].map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.45, delay: 0.22 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ display: 'inline-block', marginRight: '0.28em' }}
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </div>
             </motion.div>
           )}
 
-          {showBrand && (
+          {/* Beat 3 — the specifics */}
+          {p.b3 && !p.b3x && (
+            <Beat
+              key="b3"
+              text={"Permit fees. Local labor rates.\nReal material costs."}
+              size="clamp(1.35rem, 4vw, 2rem)"
+              weight={600}
+            />
+          )}
+
+          {/* Beat 4 — the contrast, dimmer italic */}
+          {p.b4 && !p.b4x && (
+            <Beat
+              key="b4"
+              text={"Not guesses. Not last year's prices.\nNot what his cousin told him."}
+              size="clamp(1rem, 3vw, 1.5rem)"
+              weight={400}
+              color="rgba(255,255,255,0.4)"
+              lineHeight={1.4}
+            />
+          )}
+
+          {/* Beat 5 — the verdict */}
+          {p.b5 && !p.b5x && (
+            <Beat
+              key="b5"
+              text={"The guys losing bids\nare pricing jobs blind."}
+              size="clamp(1.45rem, 4.4vw, 2.2rem)"
+              weight={700}
+            />
+          )}
+
+          {/* Beat 6 — the punchline */}
+          {p.b6 && !p.b6x && (
+            <Beat
+              key="b6"
+              text={"The guys winning them\naren't."}
+              size="clamp(1.45rem, 4.4vw, 2.2rem)"
+              weight={700}
+            />
+          )}
+
+          {/* Brand */}
+          {p.brand && (
             <motion.div
               key="brand"
-              initial={{ opacity: 0, y: 28, scale: 0.88 }}
+              initial={{ opacity: 0, y: 30, scale: 0.88 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
             >
@@ -157,25 +201,9 @@ export default function PainPoint() {
               >
                 Even.
               </div>
-              <AnimatePresence>
-                {p.sub && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                    style={{
-                      color: 'rgba(255,255,255,0.22)',
-                      fontSize: 'clamp(0.65rem, 2vw, 0.85rem)',
-                      letterSpacing: '0.06em', fontWeight: 300,
-                      marginTop: '1.1rem',
-                    }}
-                  >
-                    Built for the way you actually work.
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </motion.div>
           )}
+
         </AnimatePresence>
       </div>
 
@@ -186,10 +214,15 @@ export default function PainPoint() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.2 }}
-            style={{ position: 'absolute', bottom: '2rem', left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}
+            style={{
+              position: 'absolute', bottom: '2rem', left: 0, right: 0,
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
+            }}
           >
             <img src="/logo.png" alt="Even" style={{ height: '1.4rem', objectFit: 'contain' }} onError={e => { e.target.style.display = 'none' }} />
-            <span style={{ color: '#D4AF37', fontSize: '0.55rem', letterSpacing: '0.35em', textTransform: 'uppercase', fontWeight: 600 }}>even-os.com</span>
+            <span style={{ color: '#D4AF37', fontSize: '0.55rem', letterSpacing: '0.35em', textTransform: 'uppercase', fontWeight: 600 }}>
+              even-os.com
+            </span>
           </motion.div>
         )}
       </AnimatePresence>
