@@ -1,83 +1,147 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, animate } from 'framer-motion'
 
-const LOOP = 22000
+const LOOP = 30000
 
 const PHASES = {
   nav: 400,
-  cameraRoll: 1200,
-  select: 2600,
-  uploadStart: 3300,
-  uploadDone: 4600,
-  formSection: 5200,
-  jobType: 5400,
-  location: 6000,
-  size: 6500,
-  runBtn: 7100,
-  runTap: 7700,
-  permitLabel: 8200,
-  permitLoading: 8400,
-  permitRows: 9600,
-  estimateLabel: 11600,
-  estimateRows: 12000,
-  total: 13800,
-  bid: 14800,
-  exportBtn: 15800,
-  addHome: 17200,
-  logo: 19000,
+  cameraRoll: 1400,
+  select: 3200,
+  uploadStart: 4200,
+  scanLine: 4400,
+  uploadDone: 6200,
+  formSection: 7400,
+  jobType: 7700,
+  location: 8500,
+  size: 9200,
+  runBtn: 10000,
+  runTap: 10800,
+  permitLabel: 11500,
+  permitLoading: 11800,
+  permitRows: 13200,
+  estimateLabel: 15500,
+  estimateRows: 16000,
+  total: 18200,
+  bid: 19400,
+  exportBtn: 20800,
+  addHome: 23000,
+  logo: 25500,
 }
 
-// Blueprint thumbnail grid
-function BlueprintThumb({ selected, delay }) {
+// Readable floor plan blueprint
+function FloorPlan({ selected, scanning, analyzed }) {
+  const line = 'rgba(80,140,220,0.5)'
+  const dim = 'rgba(80,140,220,0.25)'
+  const label = 'rgba(100,160,255,0.55)'
+
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.92 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.35, delay }}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
       style={{
-        aspectRatio: '1',
-        background: selected ? '#0d1520' : '#111',
-        border: `1.5px solid ${selected ? '#D4AF37' : 'rgba(255,255,255,0.06)'}`,
+        width: '100%',
+        background: '#090e1a',
+        border: `1.5px solid ${selected ? '#D4AF37' : 'rgba(80,140,220,0.2)'}`,
         borderRadius: '6px',
         position: 'relative',
         overflow: 'hidden',
-        transition: 'border-color 0.3s ease',
-        cursor: 'default',
+        transition: 'border-color 0.4s ease',
+        padding: '1rem',
       }}
     >
-      {/* Blueprint grid */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(rgba(80,120,200,0.12) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(80,120,200,0.12) 1px, transparent 1px)
-          `,
-          backgroundSize: '10px 10px',
-        }}
-      />
-      {/* Floor plan shapes */}
-      <div style={{ position: 'absolute', top: '18%', left: '12%', right: '35%', bottom: '18%', border: '1px solid rgba(80,140,220,0.25)' }} />
-      <div style={{ position: 'absolute', top: '18%', left: '68%', right: '10%', bottom: '40%', border: '1px solid rgba(80,140,220,0.2)' }} />
-      <div style={{ position: 'absolute', top: '62%', left: '68%', right: '10%', bottom: '18%', border: '1px solid rgba(80,140,220,0.2)' }} />
-      {selected && (
-        <div
+      {/* Blueprint grid background */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        backgroundImage: `linear-gradient(rgba(80,120,200,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(80,120,200,0.07) 1px, transparent 1px)`,
+        backgroundSize: '14px 14px',
+      }} />
+
+      {/* Floor plan SVG */}
+      <svg viewBox="0 0 200 130" style={{ width: '100%', height: 'auto', display: 'block', position: 'relative' }}>
+        {/* Outer walls */}
+        <rect x="10" y="10" width="180" height="110" fill="none" stroke={line} strokeWidth="2.5" />
+
+        {/* Interior walls */}
+        {/* Vertical divide ~55% */}
+        <line x1="110" y1="10" x2="110" y2="80" stroke={line} strokeWidth="1.5" />
+        {/* Horizontal divide in right section */}
+        <line x1="110" y1="55" x2="190" y2="55" stroke={line} strokeWidth="1.5" />
+        {/* Horizontal divide left section */}
+        <line x1="10" y1="75" x2="110" y2="75" stroke={line} strokeWidth="1.5" />
+
+        {/* Doors (arcs) */}
+        <path d="M110 75 Q95 75 95 60" fill="none" stroke={dim} strokeWidth="1" />
+        <path d="M110 55 Q125 55 125 40" fill="none" stroke={dim} strokeWidth="1" />
+
+        {/* Windows */}
+        <line x1="30" y1="10" x2="60" y2="10" stroke="rgba(150,200,255,0.6)" strokeWidth="2.5" />
+        <line x1="130" y1="10" x2="170" y2="10" stroke="rgba(150,200,255,0.6)" strokeWidth="2.5" />
+        <line x1="190" y1="30" x2="190" y2="50" stroke="rgba(150,200,255,0.6)" strokeWidth="2.5" />
+
+        {/* Room labels */}
+        <text x="55" y="48" textAnchor="middle" style={{ fontSize: '7px', fill: label, fontFamily: 'Inter,sans-serif', fontWeight: 600, letterSpacing: '0.08em' }}>LIVING</text>
+        <text x="55" y="95" textAnchor="middle" style={{ fontSize: '7px', fill: label, fontFamily: 'Inter,sans-serif', fontWeight: 600, letterSpacing: '0.08em' }}>KITCHEN</text>
+        <text x="150" y="38" textAnchor="middle" style={{ fontSize: '7px', fill: label, fontFamily: 'Inter,sans-serif', fontWeight: 600, letterSpacing: '0.08em' }}>BED 1</text>
+        <text x="150" y="90" textAnchor="middle" style={{ fontSize: '7px', fill: label, fontFamily: 'Inter,sans-serif', fontWeight: 600, letterSpacing: '0.08em' }}>BED 2</text>
+
+        {/* Dimension lines */}
+        <line x1="10" y1="125" x2="190" y2="125" stroke={dim} strokeWidth="0.8" markerEnd="url(#arr)" />
+        <text x="100" y="123" textAnchor="middle" style={{ fontSize: '5.5px', fill: 'rgba(80,140,220,0.4)', fontFamily: 'Inter,sans-serif' }}>48 ft</text>
+        <line x1="4" y1="10" x2="4" y2="120" stroke={dim} strokeWidth="0.8" />
+        <text x="2" y="68" textAnchor="middle" style={{ fontSize: '5.5px', fill: 'rgba(80,140,220,0.4)', fontFamily: 'Inter,sans-serif' }} transform="rotate(-90 2 68)">50 ft</text>
+      </svg>
+
+      {/* Scan line animation */}
+      {scanning && !analyzed && (
+        <motion.div
+          initial={{ top: '0%' }}
+          animate={{ top: '100%' }}
+          transition={{ duration: 1.6, ease: 'linear' }}
           style={{
             position: 'absolute',
-            top: 4,
-            right: 4,
-            width: 16,
-            height: 16,
-            borderRadius: '50%',
-            background: '#D4AF37',
+            left: 0,
+            right: 0,
+            height: '2px',
+            background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.8), transparent)',
+            boxShadow: '0 0 8px rgba(212,175,55,0.4)',
+            pointerEvents: 'none',
+          }}
+        />
+      )}
+
+      {/* Analyzed overlay */}
+      {analyzed && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          style={{
+            position: 'absolute',
+            top: 6, right: 6,
+            background: 'rgba(212,175,55,0.12)',
+            border: '1px solid rgba(212,175,55,0.4)',
+            borderRadius: '3px',
+            padding: '3px 7px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
+            gap: '4px',
           }}
         >
-          <svg width="8" height="6" viewBox="0 0 8 6" fill="none">
-            <path d="M1 3L3 5L7 1" stroke="#080808" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <span style={{ color: '#D4AF37', fontSize: '0.55rem', fontWeight: 700 }}>✓ Plans read</span>
+        </motion.div>
+      )}
+
+      {/* Selected checkmark */}
+      {selected && !analyzed && (
+        <div style={{
+          position: 'absolute', top: 6, right: 6,
+          width: 18, height: 18, borderRadius: '50%',
+          background: '#D4AF37',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
+            <path d="M1 3.5L3.5 6L8 1" stroke="#080808" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       )}
@@ -321,18 +385,13 @@ export default function Explainer() {
                   Upload Plans
                 </div>
 
-                {/* Thumbnail grid */}
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: '0.5rem',
-                    marginBottom: '1rem',
-                  }}
-                >
-                  {[0, 1, 2, 3, 4, 5].map(i => (
-                    <BlueprintThumb key={i} selected={p.select && i === 2} delay={i * 0.06} />
-                  ))}
+                {/* Floor plan */}
+                <div style={{ marginBottom: '1rem' }}>
+                  <FloorPlan
+                    selected={p.select}
+                    scanning={p.scanLine && !p.uploadDone}
+                    analyzed={p.uploadDone}
+                  />
                 </div>
 
                 {/* Upload progress */}

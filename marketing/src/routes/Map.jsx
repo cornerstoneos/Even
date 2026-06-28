@@ -147,10 +147,10 @@ function MapBase({ strings }) {
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <ComposableMap
           projection="geoAlbersUsa"
-          projectionConfig={{ scale: 720 }}
+          projectionConfig={{ scale: 950 }}
           width={960}
-          height={600}
-          style={{ width: '82vw', height: 'auto', maxHeight: '58vh', overflow: 'visible' }}
+          height={560}
+          style={{ width: '96vw', height: 'auto', overflow: 'visible' }}
         >
           <Geographies geography={GEO_URL}>
             {({ geographies }) =>
@@ -259,7 +259,7 @@ function MapBase({ strings }) {
               left: '50%',
               transform: 'translateX(-50%)',
               display: 'flex',
-              gap: '4.5rem',
+              gap: 'clamp(1.5rem, 5vw, 4rem)',
               alignItems: 'flex-end',
             }}
           >
@@ -268,7 +268,7 @@ function MapBase({ strings }) {
                 <div
                   style={{
                     color: '#D4AF37',
-                    fontSize: stat.word ? '2rem' : '4rem',
+                    fontSize: stat.word ? 'clamp(1.2rem, 4vw, 2rem)' : 'clamp(2.2rem, 7vw, 4rem)',
                     fontWeight: 900,
                     lineHeight: 1,
                     fontVariantNumeric: 'tabular-nums',
