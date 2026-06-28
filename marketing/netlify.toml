@@ -1,7 +1,6 @@
 [build]
-  base = "marketing"
   command = "npm install && npm run build"
-  publish = "marketing/dist"
+  publish = "dist"
 
 [[redirects]]
   from = "/*"
