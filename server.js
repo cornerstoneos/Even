@@ -127,6 +127,7 @@ app.post('/api/estimate', async (req, res) => {
     console.error('ANTHROPIC_API_KEY is not set — cannot call Anthropic');
     return res.status(500).json({ error: { message: 'Server misconfigured: ANTHROPIC_API_KEY missing' } });
   }
+  const wantStream = req.body && req.body.stream === true;
   const MAX_TRIES = 3;
   let lastErr;
   for (let attempt = 1; attempt <= MAX_TRIES; attempt++) {
@@ -141,16 +142,43 @@ app.post('/api/estimate', async (req, res) => {
         },
         body: JSON.stringify(req.body)
       });
-      const data = await response.json();
-      // Log the real reason Anthropic rejected — otherwise Railway logs show nothing useful
+
+      // Errors always come back as a normal JSON body — read + forward it (never stream an error)
       if (!response.ok) {
+        const data = await response.json().catch(() => ({ error: { message: 'HTTP ' + response.status } }));
         console.error(`Anthropic ${response.status} for model=${req.body?.model}:`, JSON.stringify(data));
+        return res.status(response.status).json(data);
       }
+
+      if (wantStream) {
+        // Pipe the Anthropic SSE stream straight to the browser. Once bytes start
+        // flowing we're committed — no retry mid-stream — so the retry loop only
+        // guards connection setup above.
+        res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
+        res.setHeader('Cache-Control', 'no-cache, no-transform');
+        res.setHeader('Connection', 'keep-alive');
+        res.setHeader('X-Accel-Buffering', 'no');
+        res.flushHeaders && res.flushHeaders();
+        const reader = response.body.getReader();
+        try {
+          for (;;) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            res.write(Buffer.from(value));
+          }
+        } catch (streamErr) {
+          console.error('Anthropic stream interrupted:', streamErr.message);
+        }
+        return res.end();
+      }
+
+      const data = await response.json();
       return res.status(response.status).json(data);
     } catch (err) {
-      // Transient socket drops ("Premature close", ECONNRESET) — retry with backoff before giving up
+      // Transient socket drops ("Premature close", ECONNRESET) during setup — retry with backoff
       lastErr = err;
       console.error(`Anthropic proxy fetch failed (attempt ${attempt}/${MAX_TRIES}):`, err.message);
+      if (res.headersSent) return res.end();
       if (attempt < MAX_TRIES) await new Promise(r => setTimeout(r, 1500 * attempt));
     }
   }

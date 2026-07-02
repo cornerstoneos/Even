@@ -532,6 +532,21 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .loading-trade-card-icon{font-size:16px;flex-shrink:0}
 .loading-trade-card-name{font-weight:600;color:var(--text-accent);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase}
 .loading-trade-card-count{margin-left:auto;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace}
+.loading-live{
+  width:100%;max-width:380px;margin-top:14px;
+  display:flex;flex-direction:column;gap:5px;
+}
+.loading-live-row{
+  display:flex;align-items:center;gap:10px;
+  background:var(--l2);border:1px solid var(--rim2);border-radius:9px;
+  padding:8px 12px;font-size:12px;color:var(--white2);
+  opacity:0;transform:translateY(6px);
+  animation:liveRowIn .32s ease forwards;
+}
+@keyframes liveRowIn{to{opacity:1;transform:none}}
+.loading-live-desc{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.loading-live-amt{margin-left:auto;flex-shrink:0;font-family:'DM Mono',monospace;font-weight:600;color:var(--text-accent)}
+.loading-live-tick{flex-shrink:0;color:var(--green);font-size:11px}
 .loading-reveal{
   text-align:center;margin-top:12px;opacity:0;transition:opacity .4s;
 }
@@ -672,6 +687,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
   </div>
 
   <div class="loading-trade-cards" id="loading-trade-cards"></div>
+  <div class="loading-live" id="loading-live-items"></div>
   <div class="loading-reveal" id="loading-reveal" style="display:none">
     <div class="loading-reveal-amount" id="loading-reveal-amount">—</div>
     <div class="loading-reveal-label">ESTIMATED BID RANGE</div>
@@ -1902,6 +1918,95 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
     }
   }
 }
+// Streaming variant — POSTs with stream:true and invokes onDelta(fullText, deltaText)
+// as text arrives. Returns the full accumulated text. Falls back to callClaude on any
+// streaming failure so an estimate is never lost.
+async function callClaudeStream(messages,maxTokens,onDelta,useCache=true){
+  const body={model:'claude-sonnet-4-6',max_tokens:maxTokens,stream:true,messages};
+  if(useCache&&messages.length&&messages[0].role==='user'){
+    const first=messages[0];
+    if(typeof first.content==='string'){
+      body.messages=[{role:'user',content:[{type:'text',text:first.content,cache_control:{type:'ephemeral'}}]},...messages.slice(1)];
+    } else if(Array.isArray(first.content)){
+      const cached=[...first.content];
+      if(cached.length>0) cached[0]={...cached[0],cache_control:{type:'ephemeral'}};
+      body.messages=[{role:'user',content:cached},...messages.slice(1)];
+    }
+  }
+  const ctrl=new AbortController();
+  const tid=setTimeout(()=>ctrl.abort(),150000);
+  let r;
+  try{
+    r=await fetch('https://even-production.up.railway.app/api/estimate',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(body),signal:ctrl.signal
+    });
+  }catch(e){ clearTimeout(tid); throw e; }
+  if(!r.ok){
+    clearTimeout(tid);
+    const e=await r.json().catch(()=>({}));
+    throw new Error((e.error?.message||('HTTP '+r.status))+' ('+r.status+')');
+  }
+  // If the server didn't stream (older deploy), fall back to reading it as one JSON body
+  const ctype=r.headers.get('content-type')||'';
+  if(!r.body||!ctype.includes('text/event-stream')){
+    clearTimeout(tid);
+    const d=await r.json().catch(()=>null);
+    const full=Array.isArray(d?.content)?d.content.map(b=>b.text||'').join(''):'';
+    if(full&&onDelta) onDelta(full,full);
+    if(!full) throw new Error('Empty response from estimate API');
+    return full;
+  }
+  const reader=r.body.getReader();
+  const decoder=new TextDecoder();
+  let buf='',full='';
+  for(;;){
+    const {done,value}=await reader.read();
+    if(done) break;
+    buf+=decoder.decode(value,{stream:true});
+    // SSE frames are separated by blank lines
+    let idx;
+    while((idx=buf.indexOf('\n\n'))>=0){
+      const frame=buf.slice(0,idx); buf=buf.slice(idx+2);
+      for(const line of frame.split('\n')){
+        const t=line.trim();
+        if(!t.startsWith('data:')) continue;
+        const payload=t.slice(5).trim();
+        if(!payload||payload==='[DONE]') continue;
+        let evt; try{evt=JSON.parse(payload);}catch(e){continue;}
+        if(evt.type==='content_block_delta'&&evt.delta?.type==='text_delta'){
+          full+=evt.delta.text;
+          if(onDelta) onDelta(full,evt.delta.text);
+        } else if(evt.type==='error'){
+          clearTimeout(tid);
+          throw new Error(evt.error?.message||'Streaming error');
+        }
+      }
+    }
+  }
+  clearTimeout(tid);
+  if(!full) throw new Error('Empty response from estimate API');
+  return full;
+}
+// Pull all COMPLETE line-item objects out of a partial/streaming JSON string, so we
+// can render each row the moment the model finishes writing it.
+function extractStreamLineItems(partial){
+  const items=[];
+  const key=partial.indexOf('"lineItems"');
+  if(key<0) return items;
+  const arrStart=partial.indexOf('[',key);
+  if(arrStart<0) return items;
+  let depth=0,inStr=false,esc=false,objStart=-1;
+  for(let i=arrStart+1;i<partial.length;i++){
+    const c=partial[i];
+    if(inStr){ if(esc)esc=false; else if(c==='\\')esc=true; else if(c==='"')inStr=false; continue; }
+    if(c==='"'){inStr=true;continue;}
+    if(c==='{'){ if(depth===0)objStart=i; depth++; }
+    else if(c==='}'){ depth--; if(depth===0&&objStart>=0){ try{items.push(JSON.parse(partial.slice(objStart,i+1)));}catch(e){} objStart=-1; } }
+    else if(c===']'&&depth===0){ break; }
+  }
+  return items;
+}
 function parseJ(t){
   let s=t.replace(/```json\s*/g,'').replace(/```\s*/g,'').trim();
   try{return JSON.parse(s);}catch(e){}
@@ -1933,6 +2038,7 @@ function showLoading(){
   const pa=document.getElementById('pay-sched-section');if(pa)pa.style.display='none';
   document.getElementById('var-body').innerHTML='';
   document.getElementById('loading-trade-cards').innerHTML='';
+  const live=document.getElementById('loading-live-items');if(live)live.innerHTML='';
   const rev=document.getElementById('loading-reveal');if(rev)rev.classList.remove('visible');
   currentEstimate=null;
   document.getElementById('screen-loading').classList.add('active');
@@ -1950,7 +2056,7 @@ function animateCounter(el,target){
   },dur/steps);
 }
 
-async function runLoadingPhases(phase1Lines,phase2Lines,waitFor){
+async function runLoadingPhases(phase1Lines,phase2Lines){
   const terminal=document.getElementById('loading-terminal');
   const bar=document.getElementById('loading-bar');
   const pct=document.getElementById('loading-pct');
@@ -2000,67 +2106,9 @@ async function runLoadingPhases(phase1Lines,phase2Lines,waitFor){
   }
   await new Promise(r=>setTimeout(r,300));
 
-  // Phase 3 — Pricing
-  phaseLabel.textContent=appLang==='en'?'Phase 3 · Pricing & Calculating':'Fase 3 · Cotizando y Calculando';
-  // logo SVG persists from HTML
-  const location=document.getElementById('est-location').value;
-  const pricingLines=appLang==='en'?[
-    `Applying ${location} regional rates…`,
-    'Calculating labor costs…',
-    'Pricing materials…',
-    'Adding overhead + cushion…',
-    `Applying ${sliderVals.profit}% profit target…`,
-    'Finalizing estimate…'
-  ]:[
-    `Aplicando tarifas de ${location}…`,
-    'Calculando mano de obra…',
-    'Cotizando materiales…',
-    'Agregando gastos generales…',
-    `Aplicando ${sliderVals.profit}% de ganancia…`,
-    'Finalizando estimado…'
-  ];
-  delay=0;
-  const tradeContainer=document.getElementById('loading-trade-cards');
-  const revealEl=document.getElementById('loading-reveal');
-  const revealAmount=document.getElementById('loading-reveal-amount');
-  tradeContainer.innerHTML='';
-  revealEl.classList.remove('visible');
-
-  // Show trade cards from phase2
-  for(let i=0;i<phase2Lines.length;i++){
-    const priceLine=pricingLines[i%pricingLines.length];
-    await pushTermLine(priceLine,'processing',delay);
-    setProgress(63+Math.round((i+1)/phase2Lines.length*30),(appLang==='en'?'Calculating costs…':'Calculando costos…'));
-    // Add animated trade card
-    const card=document.createElement('div');
-    card.className='loading-trade-card';
-    const icons=['⚡','🔧','🏗️','🪵','🎨','❄️','📋','🔨'];
-    const icon=icons[i%icons.length];
-    card.innerHTML=`<span class="loading-trade-card-icon">${icon}</span><div><div class="loading-trade-card-name">${phase2Lines[i].replace(/[^a-zA-Z\s]/g,'').trim()}</div></div><span class="loading-trade-card-count">${Math.floor(Math.random()*8)+2} items</span>`;
-    tradeContainer.appendChild(card);
-    setTimeout(()=>card.classList.add('visible'),50);
-    delay+=380;
-  }
-  await new Promise(r=>setTimeout(r,600));
-
-  // Hold near the end until the real estimate lands — the bar must never sit at
-  // 100% while the model is still generating (that reads as "frozen / broken").
-  let done=false;
-  if(waitFor&&typeof waitFor.then==='function'){ waitFor.then(()=>{done=true;},()=>{done=true;}); }
-  else { done=true; }
-  const holdMsgs=appLang==='en'
-    ?['Finalizing estimate…','Double-checking the math…','Tightening line items…','Applying your margins…','Almost there…']
-    :['Finalizando estimado…','Verificando los cálculos…','Ajustando partidas…','Aplicando tus márgenes…','Casi listo…'];
-  let prog=90,h=0,guard=0;
-  setProgress(prog,holdMsgs[0]);
-  while(!done&&guard<160){
-    await new Promise(r=>setTimeout(r,1300));
-    if(prog<97) prog+=1;
-    setProgress(prog,holdMsgs[h%holdMsgs.length]);
-    h++;guard++;
-  }
-  setProgress(100,appLang==='en'?'Complete ✓':'Completo ✓');
-  await new Promise(r=>setTimeout(r,400));
+  // Intro ends here (~55%). Phase 3 is driven live by the streamed response in
+  // calculateEstimate — line items render one-by-one as the model writes them.
+  setProgress(55,appLang==='en'?'Pricing line items…':'Cotizando partidas…');
 }
 
 // ══════════════════════════
@@ -2374,7 +2422,7 @@ PROFIT STACKING — CORRECT METHOD:
 
 `;
 
-  const prompt=`${SE_RATES}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (12-18 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  const prompt=`${SE_RATES}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
   // Show loading screen
   showLoading();
@@ -2401,11 +2449,49 @@ PROFIT STACKING — CORRECT METHOD:
     ?tradeBreakdown.map(t=>`${t.icon} ${t.trade} scope identified — ${t.items?.length||0} items`)
     :(appLang==='en'?['🔨 General scope identified','⚡ Specialty work noted','📦 Materials scope parsed']:['🔨 Alcance general identificado','⚡ Trabajo especializado anotado','📦 Materiales identificados']);
 
-    // Kick off the API, then run the loading animation which HOLDS near the end
-    // until the real response lands — so the bar never sits at 100% while still working
-    const apiPromise=callClaude([{role:'user',content:prompt}],3500,true);
-    await runLoadingPhases(phase1,phase2,apiPromise);
-    const res=await apiPromise;
+    // Scripted intro (reading scope, analyzing trades), then stream phase 3 LIVE —
+    // each line item appears the moment the model finishes writing it.
+    await runLoadingPhases(phase1,phase2);
+
+    const bar=document.getElementById('loading-bar');
+    const pctEl=document.getElementById('loading-pct');
+    const stepEl=document.getElementById('loading-step-text');
+    const phaseLabel=document.getElementById('loading-phase-label');
+    const liveEl=document.getElementById('loading-live-items');
+    if(liveEl) liveEl.innerHTML='';
+    phaseLabel.textContent=appLang==='en'?'Phase 3 · Building Estimate':'Fase 3 · Construyendo Estimado';
+    const setProg=(p,l)=>{bar.style.width=Math.min(p,100)+'%';pctEl.textContent=Math.round(Math.min(p,100))+'%';if(l)stepEl.textContent=l;};
+    setProg(56,appLang==='en'?'Pricing line items…':'Cotizando partidas…');
+
+    const EXPECT=15; let rendered=0;
+    const onDelta=(full)=>{
+      const items=extractStreamLineItems(full);
+      for(let k=rendered;k<items.length;k++){
+        const it=items[k]||{};
+        const row=document.createElement('div');
+        row.className='loading-live-row';
+        const amt=typeof it.total==='number'?('$'+Math.round(it.total).toLocaleString()):'';
+        const desc=(it.description||it.category||'Item').toString().replace(/[<>]/g,'').slice(0,60);
+        row.innerHTML=`<span class="loading-live-tick">✓</span><span class="loading-live-desc">${desc}</span><span class="loading-live-amt">${amt}</span>`;
+        liveEl&&liveEl.appendChild(row);
+        if(liveEl) liveEl.scrollTop=liveEl.scrollHeight;
+      }
+      if(items.length>rendered){
+        rendered=items.length;
+        setProg(56+Math.min(rendered/EXPECT,1)*40,(appLang==='en'?`Pricing line items… (${rendered})`:`Cotizando partidas… (${rendered})`));
+      }
+    };
+
+    let res;
+    try{
+      res=await callClaudeStream([{role:'user',content:prompt}],4500,onDelta,true);
+    }catch(streamErr){
+      // Streaming failed — fall back to a normal request so an estimate is never lost
+      console.warn('Stream failed, falling back to non-stream:',streamErr.message);
+      setProg(70,appLang==='en'?'Finalizing estimate…':'Finalizando estimado…');
+      res=await callClaude([{role:'user',content:prompt}],4500,true);
+    }
+    setProg(100,appLang==='en'?'Complete ✓':'Completo ✓');
 
     const data=parseJ(res);
     // Accurate math — defend against a valid response that omits these objects
