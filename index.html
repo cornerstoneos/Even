@@ -10,22 +10,23 @@
 
 :root {
   --gold:#BD0029;--gold-dim:rgba(189,0,41,0.11);--gold-glow:rgba(189,0,41,0.28);
-  --gold-border:rgba(189,0,41,0.22);--text-accent:#009B3A;
+  --gold-border:rgba(189,0,41,0.22);--text-accent:#1D4ED8;
   --bg:#0A0A0A;--l1:#111;--l2:#161616;--l3:#1C1C1C;--l4:#242424;
   --rim:rgba(255,255,255,0.07);--rim2:rgba(255,255,255,0.11);
   --white:#F0EDE8;--white2:#BEBAB2;--muted:#72726A;
   --glass:rgba(255,255,255,0.03);--glass2:rgba(255,255,255,0.06);
-  --green:#3ECF6E;--green-dim:rgba(62,207,110,0.11);--green-b:rgba(62,207,110,0.25);
+  --green:#3B82F6;--green-dim:rgba(59,130,246,0.11);--green-b:rgba(59,130,246,0.25);
   --orange:#FF8C42;--red:#BD0029;--purple:#A78BFA;
   --r:14px;--rlg:20px;
 }
 body.light{
-  --bg:#F4F1EB;--l1:#EDEAE3;--l2:#E6E2DA;--l3:#DEDAD1;--l4:#D5D1C7;
+  --bg:#FFFFFF;--l1:#F7F7F8;--l2:#F1F1F3;--l3:#EAEAEE;--l4:#E1E1E7;
   --rim:rgba(0,0,0,0.07);--rim2:rgba(0,0,0,0.11);
   --white:#1A1A18;--white2:#44443E;--muted:#888880;
   --glass:rgba(0,0,0,0.025);--glass2:rgba(0,0,0,0.05);
   --gold:#9B0020;--gold-dim:rgba(155,0,32,0.09);
   --gold-glow:rgba(155,0,32,0.22);--gold-border:rgba(155,0,32,0.18);
+  --text-accent:#1D4ED8;--green:#2563EB;--green-dim:rgba(37,99,235,0.10);--green-b:rgba(37,99,235,0.22);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;font-size:15px}
@@ -48,7 +49,7 @@ body{
   display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
   padding:0 18px;transition:background .3s;
 }
-body.light .topbar{background:rgba(244,241,235,0.94)}
+body.light .topbar{background:rgba(255,255,255,0.94)}
 .topbar-brand{text-align:center}
 .topbar-logo{font-size:16px;font-weight:300;color:var(--white);letter-spacing:.5px;line-height:1}
 .topbar-logo b{color:var(--text-accent);font-weight:700}
@@ -465,7 +466,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .cube-loader{position:relative;width:170px;height:170px;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
 .cube-halo{position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle at center,rgba(189,0,41,.4),rgba(189,0,41,.12) 50%,transparent 72%);animation:cubeHalo 2.4s ease-in-out infinite;filter:blur(3px)}
 .cube-orb{position:absolute;inset:6px;border-radius:50%;border:2px solid rgba(189,0,41,.15);border-top-color:rgba(189,0,41,.95);border-right-color:rgba(189,0,41,.5);animation:spin 1.5s linear infinite;filter:drop-shadow(0 0 6px rgba(189,0,41,.4))}
-.cube-orb-2{position:absolute;inset:14px;border-radius:50%;border:1.5px solid rgba(0,155,58,.15);border-bottom-color:rgba(0,155,58,.9);border-left-color:rgba(0,155,58,.45);animation:spin 2.2s linear infinite reverse;filter:drop-shadow(0 0 5px rgba(0,155,58,.35))}
+.cube-orb-2{position:absolute;inset:14px;border-radius:50%;border:1.5px solid rgba(29,78,216,.15);border-bottom-color:rgba(29,78,216,.9);border-left-color:rgba(29,78,216,.45);animation:spin 2.2s linear infinite reverse;filter:drop-shadow(0 0 5px rgba(29,78,216,.35))}
 .cube-mark{position:relative;z-index:1;width:86px;height:86px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 18px rgba(189,0,41,.4));animation:cubeGlow 2.4s ease-in-out infinite}
 @keyframes cubeGlow{0%,100%{filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 10px rgba(189,0,41,.3))}50%{filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 24px rgba(189,0,41,.6))}}
 @keyframes cubeHalo{0%,100%{transform:scale(.85);opacity:.55}50%{transform:scale(1.15);opacity:1}}
@@ -3148,10 +3149,11 @@ function selectTier(tier, el) {
   // Could regenerate estimate at selected tier in future version
 }
 
-// Force dark mode always on load
-document.body.classList.remove('light');
+// Force light mode always on load (4th of July — white background)
+isLight=true;
+document.body.classList.add('light');
 const _themeBtn = document.querySelector('.theme-btn');
-const _moonI=document.querySelector('.theme-moon'),_sunI=document.querySelector('.theme-sun');if(_moonI)_moonI.style.display='none';if(_sunI)_sunI.style.display='';
+const _moonI=document.querySelector('.theme-moon'),_sunI=document.querySelector('.theme-sun');if(_moonI)_moonI.style.display='';if(_sunI)_sunI.style.display='none';
 
 // Init
 updateCombined();
