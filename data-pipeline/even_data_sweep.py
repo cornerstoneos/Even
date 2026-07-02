@@ -14,7 +14,7 @@ Writes to Even Data Sheet:
   - Tab "Review Flags"    → anything needing manual cleanup
 """
 
-import os, json, time, datetime, re, csv, pathlib, requests
+import os, json, time, datetime, re, requests
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import anthropic
@@ -32,43 +32,28 @@ TODAY = datetime.date.today().strftime("%-m/%-d/%y")
 AI    = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 FLAGS = []
 
-# ── Google Auth — falls back to CSV if credentials unavailable ────────────────
+# ── Google Auth — service account only, hard-fails if unavailable ─────────────
 _sheets_service = None
-_csv_mode       = False
-_csv_dir        = pathlib.Path("sweep-output")
 
 def get_sheets_service():
-    global _sheets_service, _csv_mode
+    global _sheets_service
     creds_json = os.environ.get("GOOGLE_CREDENTIALS_JSON")
     if not creds_json:
-        print("  ⚑ GOOGLE_CREDENTIALS_JSON not set — switching to CSV fallback")
-        _csv_mode = True
-        _csv_dir.mkdir(exist_ok=True)
-        return None
+        raise RuntimeError(
+            "GOOGLE_CREDENTIALS_JSON is not set. This script authenticates only "
+            "via a Google service account key passed in that environment variable "
+            "(set as a GitHub Actions secret) — there is no other auth path."
+        )
     try:
-        info  = json.loads(creds_json)
-        creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
-        _sheets_service = build("sheets", "v4", credentials=creds)
-        return _sheets_service
-    except Exception as e:
-        print(f"  ⚑ Google Sheets auth failed: {e} — switching to CSV fallback")
-        _csv_mode = True
-        _csv_dir.mkdir(exist_ok=True)
-        return None
+        info = json.loads(creds_json)
+    except json.JSONDecodeError as e:
+        raise RuntimeError(f"GOOGLE_CREDENTIALS_JSON is not valid JSON: {e}") from e
+    creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
+    _sheets_service = build("sheets", "v4", credentials=creds)
+    return _sheets_service
 
 def append_rows(service, tab, rows):
     if not rows:
-        return
-    if _csv_mode or service is None:
-        safe = tab.replace(" ", "_").replace("/", "-")
-        path = _csv_dir / f"{safe}.csv"
-        write_header = not path.exists()
-        with open(path, "a", newline="", encoding="utf-8") as f:
-            w = csv.writer(f)
-            if write_header:
-                pass  # rows already include header on first write from callers
-            w.writerows(rows)
-        print(f"  ✓ {len(rows)} rows → {path}")
         return
     service.spreadsheets().values().append(
         spreadsheetId=SHEET_ID,
