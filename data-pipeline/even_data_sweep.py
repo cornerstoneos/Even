@@ -3,8 +3,9 @@
 even_data_sweep.py — GitHub Actions version
 Even/Cornerstone OS — Full Market Data Population Script
 
-Runs in GitHub Actions (no browser, no local files).
-Auth via GOOGLE_CREDENTIALS_JSON secret (service account).
+Runs in GitHub Actions (no browser, no local files, no key).
+Auth via Workload Identity Federation (google-github-actions/auth step
+in the workflow) — this script just reads Application Default Credentials.
 Anthropic API via ANTHROPIC_API_KEY secret.
 
 Writes to Even Data Sheet:
@@ -14,8 +15,8 @@ Writes to Even Data Sheet:
   - Tab "Review Flags"    → anything needing manual cleanup
 """
 
-import os, json, time, datetime, re, csv, pathlib, requests
-from google.oauth2 import service_account
+import os, json, time, datetime, re, requests
+import google.auth
 from googleapiclient.discovery import build
 import anthropic
 
@@ -32,43 +33,25 @@ TODAY = datetime.date.today().strftime("%-m/%-d/%y")
 AI    = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 FLAGS = []
 
-# ── Google Auth — falls back to CSV if credentials unavailable ────────────────
+# ── Google Auth — Workload Identity Federation via Application Default Creds ──
 _sheets_service = None
-_csv_mode       = False
-_csv_dir        = pathlib.Path("sweep-output")
 
 def get_sheets_service():
-    global _sheets_service, _csv_mode
-    creds_json = os.environ.get("GOOGLE_CREDENTIALS_JSON")
-    if not creds_json:
-        print("  ⚑ GOOGLE_CREDENTIALS_JSON not set — switching to CSV fallback")
-        _csv_mode = True
-        _csv_dir.mkdir(exist_ok=True)
-        return None
+    global _sheets_service
     try:
-        info  = json.loads(creds_json)
-        creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
-        _sheets_service = build("sheets", "v4", credentials=creds)
-        return _sheets_service
+        creds, _ = google.auth.default(scopes=SCOPES)
     except Exception as e:
-        print(f"  ⚑ Google Sheets auth failed: {e} — switching to CSV fallback")
-        _csv_mode = True
-        _csv_dir.mkdir(exist_ok=True)
-        return None
+        raise RuntimeError(
+            "Failed to load Application Default Credentials. In CI this means "
+            "the google-github-actions/auth step (Workload Identity Federation) "
+            "didn't run before this script, or the workflow lacks 'id-token: "
+            "write' permission — there is no other auth path."
+        ) from e
+    _sheets_service = build("sheets", "v4", credentials=creds)
+    return _sheets_service
 
 def append_rows(service, tab, rows):
     if not rows:
-        return
-    if _csv_mode or service is None:
-        safe = tab.replace(" ", "_").replace("/", "-")
-        path = _csv_dir / f"{safe}.csv"
-        write_header = not path.exists()
-        with open(path, "a", newline="", encoding="utf-8") as f:
-            w = csv.writer(f)
-            if write_header:
-                pass  # rows already include header on first write from callers
-            w.writerows(rows)
-        print(f"  ✓ {len(rows)} rows → {path}")
         return
     service.spreadsheets().values().append(
         spreadsheetId=SHEET_ID,
