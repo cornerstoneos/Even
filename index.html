@@ -465,12 +465,14 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 /* Cube loader — gold arc orbits the isometric mark */
 .cube-loader{position:relative;width:170px;height:170px;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
 .cube-halo{position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle at center,rgba(228,0,43,.4),rgba(228,0,43,.12) 50%,transparent 72%);animation:cubeHalo 2.4s ease-in-out infinite;filter:blur(3px)}
-.cube-orb{position:absolute;inset:6px;border-radius:50%;border:2px solid rgba(228,0,43,.15);border-top-color:rgba(228,0,43,.95);border-right-color:rgba(228,0,43,.5);animation:spin 1.5s linear infinite;filter:drop-shadow(0 0 6px rgba(228,0,43,.4))}
-.cube-orb-2{position:absolute;inset:14px;border-radius:50%;border:1.5px solid rgba(29,78,216,.15);border-bottom-color:rgba(29,78,216,.9);border-left-color:rgba(29,78,216,.45);animation:spin 2.2s linear infinite reverse;filter:drop-shadow(0 0 5px rgba(29,78,216,.35))}
+.cube-orb{position:absolute;inset:6px;border-radius:50%;border:2px solid rgba(228,0,43,.14);border-top-color:rgba(228,0,43,.95);animation:spin 1.4s linear infinite;filter:drop-shadow(0 0 6px rgba(228,0,43,.4))}
+.cube-orb-2{position:absolute;inset:17px;border-radius:50%;border:2px solid rgba(29,78,216,.13);border-top-color:rgba(29,78,216,.9);animation:spin 2s linear infinite;filter:drop-shadow(0 0 5px rgba(29,78,216,.35))}
 .cube-mark{position:relative;z-index:1;width:86px;height:86px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 18px rgba(228,0,43,.4));animation:cubeGlow 2.4s ease-in-out infinite}
 @keyframes cubeGlow{0%,100%{filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 10px rgba(228,0,43,.3))}50%{filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 24px rgba(228,0,43,.6))}}
 @keyframes cubeHalo{0%,100%{transform:scale(.85);opacity:.55}50%{transform:scale(1.15);opacity:1}}
 @keyframes spin{to{transform:rotate(360deg)}}
+.think-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text-accent);margin-right:9px;vertical-align:middle;animation:thinkPulse 1s ease-in-out infinite}
+@keyframes thinkPulse{0%,100%{opacity:.3;transform:scale(.75)}50%{opacity:1;transform:scale(1.15)}}
 
 /* Phase display */
 .loading-phase-wrap{width:100%;max-width:360px}
@@ -2128,6 +2130,19 @@ function showToast(msg, duration=3800){
   t._timer = setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(10px)'; }, duration);
 }
 
+// Keep a status line alive (cycling messages + animated dots) so a waiting
+// step never looks frozen. Returns a stop() to call when the work finishes.
+function startThinkingStatus(elId,msgs){
+  const el=document.getElementById(elId);
+  if(!el) return ()=>{};
+  let mi=0,dots=1,stopped=false;
+  const render=()=>{ if(stopped)return; el.innerHTML=`<span class="think-dot"></span>${msgs[mi%msgs.length]}${'.'.repeat(dots)}`; };
+  render();
+  const dotTimer=setInterval(()=>{dots=dots%3+1;render();},420);
+  const msgTimer=setInterval(()=>{mi++;dots=1;render();},2200);
+  return ()=>{ stopped=true; clearInterval(dotTimer); clearInterval(msgTimer); };
+}
+
 async function startEstimate(){
   // Gate at run time for free users — not at PDF download
   if(!canRunEstimate()&&!isPro){
@@ -2152,7 +2167,9 @@ async function startEstimate(){
   window._ctx={trade,location,projtype,sqft,client,bidType,laborType,oh:sliderVals.oh,profit:sliderVals.profit,cushion:sliderVals.cushion,projectLabel:document.getElementById('est-project-label')?.value||''};
 
   navigate('refine');
-  document.getElementById('ai-summary-text').innerHTML=T[appLang].analyzing;
+  const stopStatus=startThinkingStatus('ai-summary-text',appLang==='en'
+    ?['Reading your scope','Identifying the trades','Checking key details','Prepping your questions']
+    :['Leyendo tu alcance','Identificando los oficios','Revisando detalles clave','Preparando tus preguntas']);
 
   const msgContent=[];
   if(uploadedImages.length>0){
@@ -2176,6 +2193,7 @@ async function startEstimate(){
       data=parseJ(fixRes);
     }
     window._scopeData=data;
+    stopStatus();
     document.getElementById('ai-summary-text').innerHTML=T[appLang].extracted;
     renderScopeExtracted(data);
     renderQuestions(data.questions);
@@ -2183,6 +2201,7 @@ async function startEstimate(){
     document.getElementById('questions-section').style.display='block';
     document.getElementById('gen-btn').disabled=false;
   }catch(e){
+    stopStatus();
     document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">${e.message||'Something went wrong analyzing your scope — please try again'}</span>`;
     document.getElementById('gen-btn').disabled=false;
   }
