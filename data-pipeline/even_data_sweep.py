@@ -50,6 +50,18 @@ def get_sheets_service():
     _sheets_service = build("sheets", "v4", credentials=creds)
     return _sheets_service
 
+def ensure_tabs(service):
+    meta     = service.spreadsheets().get(spreadsheetId=SHEET_ID).execute()
+    existing = {s["properties"]["title"] for s in meta["sheets"]}
+    missing  = [t for t in (TAB_MATERIALS, TAB_LABOR, TAB_PERMITS, TAB_FLAGS) if t not in existing]
+    if not missing:
+        return
+    service.spreadsheets().batchUpdate(
+        spreadsheetId=SHEET_ID,
+        body={"requests": [{"addSheet": {"properties": {"title": t}}} for t in missing]},
+    ).execute()
+    print(f"  ✓ Created missing tab(s): {', '.join(missing)}")
+
 def append_rows(service, tab, rows):
     if not rows:
         return
@@ -599,7 +611,7 @@ Return ONLY a JSON array:
     print(f"  Pulling materials: {market_name} (zip {zip_code})")
     try:
         resp = AI.messages.create(
-            model="claude-sonnet-4-20250514", max_tokens=2000,
+            model="claude-sonnet-4-6", max_tokens=2000,
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=[{"role": "user", "content": prompt}],
         )
@@ -641,7 +653,7 @@ Skip commercial-only types."""
         print(f"  Scraping permits: {city}")
         try:
             resp = AI.messages.create(
-                model="claude-sonnet-4-20250514", max_tokens=2000,
+                model="claude-sonnet-4-6", max_tokens=2000,
                 tools=[{"type": "web_search_20250305", "name": "web_search"}],
                 messages=[{"role": "user", "content": prompt}],
             )
@@ -690,13 +702,10 @@ def write_flags(svc):
         print("\n✓ No flags — clean sweep.")
         return
     print(f"\n⚑ {len(FLAGS)} flags for manual review")
-    try:
-        append_rows(svc, TAB_FLAGS, [
-            [f["market"], f["type"], f["item"], f["reason"], TODAY]
-            for f in FLAGS
-        ])
-    except Exception:
-        print("  (Add a 'Review Flags' tab to the sheet to auto-capture these)")
+    append_rows(svc, TAB_FLAGS, [
+        [f["market"], f["type"], f["item"], f["reason"], TODAY]
+        for f in FLAGS
+    ])
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
@@ -706,7 +715,9 @@ def main():
     print("=" * 55)
 
     svc = get_sheets_service()
-    print("✓ Google Sheets authenticated\n")
+    print("✓ Google Sheets authenticated")
+    ensure_tabs(svc)
+    print()
 
     for market in MARKETS:
         name = market["market"]
