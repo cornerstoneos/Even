@@ -107,8 +107,22 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (re
 
 app.use(express.json({ limit: '25mb' }));
 
+// ─── Health check ───────────────────────────────────────────────────────────
+app.get('/health', (req, res) => {
+  res.json({
+    ok: true,
+    hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
+    hasSupabaseKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+    hasStripeSecret: !!process.env.STRIPE_WEBHOOK_SECRET
+  });
+});
+
 // ─── Anthropic proxy ──────────────────────────────────────────────────────────
 app.post('/api/estimate', async (req, res) => {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    console.error('ANTHROPIC_API_KEY is not set — cannot call Anthropic');
+    return res.status(500).json({ error: { message: 'Server misconfigured: ANTHROPIC_API_KEY missing' } });
+  }
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -121,9 +135,14 @@ app.post('/api/estimate', async (req, res) => {
       body: JSON.stringify(req.body)
     });
     const data = await response.json();
+    // Log the real reason Anthropic rejected — otherwise Railway logs show nothing useful
+    if (!response.ok) {
+      console.error(`Anthropic ${response.status} for model=${req.body?.model}:`, JSON.stringify(data));
+    }
     res.status(response.status).json(data);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Anthropic proxy fetch failed:', err.message);
+    res.status(500).json({ error: { message: err.message || 'Upstream fetch failed' } });
   }
 });
 
