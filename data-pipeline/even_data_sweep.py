@@ -3,8 +3,9 @@
 even_data_sweep.py — GitHub Actions version
 Even/Cornerstone OS — Full Market Data Population Script
 
-Runs in GitHub Actions (no browser, no local files).
-Auth via GOOGLE_CREDENTIALS_JSON secret (service account).
+Runs in GitHub Actions (no browser, no local files, no key).
+Auth via Workload Identity Federation (google-github-actions/auth step
+in the workflow) — this script just reads Application Default Credentials.
 Anthropic API via ANTHROPIC_API_KEY secret.
 
 Writes to Even Data Sheet:
@@ -15,7 +16,7 @@ Writes to Even Data Sheet:
 """
 
 import os, json, time, datetime, re, requests
-from google.oauth2 import service_account
+import google.auth
 from googleapiclient.discovery import build
 import anthropic
 
@@ -32,23 +33,20 @@ TODAY = datetime.date.today().strftime("%-m/%-d/%y")
 AI    = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 FLAGS = []
 
-# ── Google Auth — service account only, hard-fails if unavailable ─────────────
+# ── Google Auth — Workload Identity Federation via Application Default Creds ──
 _sheets_service = None
 
 def get_sheets_service():
     global _sheets_service
-    creds_json = os.environ.get("GOOGLE_CREDENTIALS_JSON")
-    if not creds_json:
-        raise RuntimeError(
-            "GOOGLE_CREDENTIALS_JSON is not set. This script authenticates only "
-            "via a Google service account key passed in that environment variable "
-            "(set as a GitHub Actions secret) — there is no other auth path."
-        )
     try:
-        info = json.loads(creds_json)
-    except json.JSONDecodeError as e:
-        raise RuntimeError(f"GOOGLE_CREDENTIALS_JSON is not valid JSON: {e}") from e
-    creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
+        creds, _ = google.auth.default(scopes=SCOPES)
+    except Exception as e:
+        raise RuntimeError(
+            "Failed to load Application Default Credentials. In CI this means "
+            "the google-github-actions/auth step (Workload Identity Federation) "
+            "didn't run before this script, or the workflow lacks 'id-token: "
+            "write' permission — there is no other auth path."
+        ) from e
     _sheets_service = build("sheets", "v4", credentials=creds)
     return _sheets_service
 
