@@ -1881,12 +1881,21 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
         signal:ctrl.signal
       });
       clearTimeout(tid);
-      if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.error?.message||r.statusText)}
+      if(!r.ok){
+        const e=await r.json().catch(()=>({}));
+        // HTTP/2 responses have empty statusText — always fall back to the status code so the error is never blank
+        const detail=e.error?.message||r.statusText||('HTTP '+r.status);
+        const friendly=r.status>=500?`Server busy (${r.status}) — please try again in a moment`:(r.status===429?'Rate limited — wait a few seconds and retry':detail);
+        throw new Error(friendly);
+      }
       const d=await r.json();
       if(!Array.isArray(d.content)) throw new Error(d.error?.message||'Empty response from estimate API');
       if(d.usage){console.log('Cache stats:',JSON.stringify(d.usage));}
       return d.content.map(b=>b.text||'').join('');
     }catch(e){
+      // Give aborted/timeouts and network drops a readable message instead of a blank one
+      if(e.name==='AbortError') e=new Error('Request timed out — check your connection and try again');
+      else if(!e.message) e=new Error('Network error — could not reach the estimate service');
       if(attempt===MAX_RETRIES) throw e;
       console.warn('API attempt '+(attempt+1)+' failed, retrying…',e.message);
       await new Promise(r=>setTimeout(r,3000*(attempt+1)));
@@ -2114,7 +2123,7 @@ async function startEstimate(){
     document.getElementById('questions-section').style.display='block';
     document.getElementById('gen-btn').disabled=false;
   }catch(e){
-    document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">Error: ${e.message}</span>`;
+    document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">${e.message||'Something went wrong analyzing your scope — please try again'}</span>`;
     document.getElementById('gen-btn').disabled=false;
   }
 }
