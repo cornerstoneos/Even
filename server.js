@@ -1,7 +1,11 @@
 const express = require('express');
-const fetch = require('node-fetch');
+const nodeFetch = require('node-fetch');
 const cors = require('cors');
 const crypto = require('crypto');
+
+// Prefer Node's built-in fetch (undici) — node-fetch v2 throws "Premature close"
+// on long Anthropic responses. Fall back to node-fetch on older runtimes.
+const fetch = (...args) => (globalThis.fetch ? globalThis.fetch(...args) : nodeFetch(...args));
 
 const app = express();
 app.use(cors());
@@ -123,27 +127,34 @@ app.post('/api/estimate', async (req, res) => {
     console.error('ANTHROPIC_API_KEY is not set — cannot call Anthropic');
     return res.status(500).json({ error: { message: 'Server misconfigured: ANTHROPIC_API_KEY missing' } });
   }
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-beta': 'prompt-caching-2024-07-31'
-      },
-      body: JSON.stringify(req.body)
-    });
-    const data = await response.json();
-    // Log the real reason Anthropic rejected — otherwise Railway logs show nothing useful
-    if (!response.ok) {
-      console.error(`Anthropic ${response.status} for model=${req.body?.model}:`, JSON.stringify(data));
+  const MAX_TRIES = 3;
+  let lastErr;
+  for (let attempt = 1; attempt <= MAX_TRIES; attempt++) {
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': process.env.ANTHROPIC_API_KEY,
+          'anthropic-version': '2023-06-01',
+          'anthropic-beta': 'prompt-caching-2024-07-31'
+        },
+        body: JSON.stringify(req.body)
+      });
+      const data = await response.json();
+      // Log the real reason Anthropic rejected — otherwise Railway logs show nothing useful
+      if (!response.ok) {
+        console.error(`Anthropic ${response.status} for model=${req.body?.model}:`, JSON.stringify(data));
+      }
+      return res.status(response.status).json(data);
+    } catch (err) {
+      // Transient socket drops ("Premature close", ECONNRESET) — retry with backoff before giving up
+      lastErr = err;
+      console.error(`Anthropic proxy fetch failed (attempt ${attempt}/${MAX_TRIES}):`, err.message);
+      if (attempt < MAX_TRIES) await new Promise(r => setTimeout(r, 1500 * attempt));
     }
-    res.status(response.status).json(data);
-  } catch (err) {
-    console.error('Anthropic proxy fetch failed:', err.message);
-    res.status(500).json({ error: { message: err.message || 'Upstream fetch failed' } });
   }
+  res.status(502).json({ error: { message: (lastErr && lastErr.message) || 'Upstream fetch failed after retries' } });
 });
 
 // ─── Start server ─────────────────────────────────────────────────────────────
