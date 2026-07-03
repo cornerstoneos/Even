@@ -1015,6 +1015,36 @@ def write_flags(svc):
         for f in FLAGS
     ])
 
+# ── Supabase (grounds live app estimates in this sweep's data) ────────────────
+def supabase_upsert_market(market, state, zone, materials, labor, permits):
+    url = os.environ.get("SUPABASE_URL")
+    key = os.environ.get("SUPABASE_SERVICE_KEY")
+    if not url or not key:
+        print("  ⚑ SUPABASE_URL/SUPABASE_SERVICE_KEY not set — skipping market_data upsert")
+        return
+    try:
+        r = requests.post(
+            f"{url}/rest/v1/market_data?on_conflict=market",
+            headers={
+                "apikey": key,
+                "Authorization": f"Bearer {key}",
+                "Content-Type": "application/json",
+                "Prefer": "resolution=merge-duplicates,return=minimal",
+            },
+            json={
+                "market": market, "state": state, "zone": zone,
+                "materials": materials, "labor": labor, "permits": permits,
+                "updated_at": datetime.datetime.utcnow().isoformat(),
+            },
+            timeout=15,
+        )
+        if r.ok:
+            print(f"  ✓ Supabase market_data upserted → {market}")
+        else:
+            print(f"  ⚑ Supabase upsert failed for {market}: {r.status_code} {r.text[:200]}")
+    except Exception as e:
+        print(f"  ⚑ Supabase upsert error for {market}: {e}")
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     print("=" * 55)
@@ -1031,17 +1061,24 @@ def main():
         name = market["market"]
         print(f"\n── {name}, {market['state']} ──")
 
+        labor_rows = []
         if not market.get("skip_labor"):
-            write_labor(svc, market, fetch_bls_labor(market))
+            labor_rows = fetch_bls_labor(market)
+            write_labor(svc, market, labor_rows)
         else:
             print(f"  ↷ Labor: skipping (already in sheet)")
 
+        materials_rows = []
         if not market.get("skip_materials"):
-            write_materials(svc, market, fetch_materials_ai(market))
+            materials_rows = fetch_materials_ai(market)
+            write_materials(svc, market, materials_rows)
         else:
             print(f"  ↷ Materials: skipping (already in sheet)")
 
-        write_permits(svc, market, fetch_permits(market))
+        permit_rows = fetch_permits(market)
+        write_permits(svc, market, permit_rows)
+
+        supabase_upsert_market(name, market["state"], market["zone"], materials_rows, labor_rows, permit_rows)
 
     write_flags(svc)
     print(f"\n{'='*55}")
