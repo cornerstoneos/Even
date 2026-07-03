@@ -457,6 +457,314 @@ MARKETS = [
             "SEISMIC ZONE: New Madrid Seismic Zone — unique foundation and structural considerations.",
         ],
     },
+
+    # ── ILLINOIS ──────────────────────────────────────────────────────────────
+    {
+        "market": "Chicago", "zone": "Cook County", "state": "IL",
+        "bls_area_code": "16980", "bls_area_name": "Chicago-Naperville-Elgin, IL-IN-WI",
+        "home_depot_zip": "60601",
+        "permit_cities": [
+            {"city": "City of Chicago", "url": "https://www.chicago.gov/city/en/depts/bldgs/provdrs/permits/svcs/permit_fee_calculator.html"},
+        ],
+        "market_notes": [
+            "FROST DEPTH: City code requires footings at minimum 42 in below grade — deeper/costlier excavation than most Midwest peers.",
+            "LAKE-EFFECT WIND/SNOW: Lakefront corridor exposure drives elevated ASCE 7 wind and snow load requirements.",
+            "UNION LABOR: One of the most heavily unionized construction markets in the US — labor commonly runs 45–55% of project cost.",
+            "HISTORIC/LANDMARKS OVERLAY: Commission on Chicago Landmarks review required for exterior work in designated districts (Pullman, Old Town Triangle).",
+            "PERMIT FEE STRUCTURE: DOB requires a non-refundable upfront deposit plus separate CDOT public-way permits.",
+        ],
+    },
+
+    # ── MICHIGAN ──────────────────────────────────────────────────────────────
+    {
+        "market": "Detroit", "zone": "Wayne County", "state": "MI",
+        "bls_area_code": "19820", "bls_area_name": "Detroit-Warren-Dearborn, MI",
+        "home_depot_zip": "48226",
+        "permit_cities": [
+            {"city": "City of Detroit (BSEED)", "url": "https://detroitmi.gov/document/bseed-construction-fee-schedule"},
+        ],
+        "market_notes": [
+            "FROST DEPTH: Michigan Residential Code / BSEED amendments require minimum 42 in footing depth.",
+            "PREVAILING WAGE VOLATILITY: State law repealed in 2018, reinstated for state-funded work in 2024 — confirm funding source before estimating; federal Davis-Bacon applies separately.",
+            "REHAB/BLIGHT STOCK: Large inventory of aging/vacant structures — permitting frequently follows rehab/demolition/blight-remediation paths distinct from new-build.",
+            "HISTORIC DISTRICTS: Detroit Historic District Commission review required for exterior alterations (Corktown, Boston-Edison, Indian Village).",
+            "LAKE-EFFECT WEATHER: Freeze-thaw cycling from Great Lakes proximity affects masonry/roofing durability specs.",
+        ],
+    },
+
+    # ── MINNESOTA ─────────────────────────────────────────────────────────────
+    {
+        "market": "Minneapolis", "zone": "Hennepin County", "state": "MN",
+        "bls_area_code": "33460", "bls_area_name": "Minneapolis-St. Paul-Bloomington, MN-WI",
+        "home_depot_zip": "55402",
+        "permit_cities": [
+            {"city": "City of Minneapolis", "url": "https://www.minneapolismn.gov/business-services/licenses-permits-inspections/construction-permits/permits-overview/fees/building/"},
+        ],
+        "market_notes": [
+            "FROST DEPTH: Minnesota Rule 1303.1600 sets 42 in minimum footing depth for Hennepin County — among the coldest-climate markets in the registry.",
+            "COLD-CLIMATE ENERGY CODE: Above-baseline-IECC envelope/insulation/HVAC requirements raise costs vs. warmer peers.",
+            "PREVAILING WAGE ACTIVE: State prevailing wage law currently in force for public works.",
+            "HERITAGE PRESERVATION OVERLAY: HPC review required in local historic districts (Warehouse District, Mill District, St. Anthony Falls).",
+            "COMPRESSED CONSTRUCTION SEASON: Harsh winters shorten the outdoor/earthwork season — winter-condition concrete and scheduling premiums common.",
+        ],
+    },
+
+    # ── OHIO ──────────────────────────────────────────────────────────────────
+    {
+        "market": "Columbus", "zone": "Franklin County", "state": "OH",
+        "bls_area_code": "18140", "bls_area_name": "Columbus, OH",
+        "home_depot_zip": "43215",
+        "permit_cities": [
+            {"city": "City of Columbus", "url": "https://www.columbus.gov/Business-Development/Building-Zoning-Services"},
+        ],
+        "market_notes": [
+            "FROST DEPTH: City code sets frost line at 32 in — shallower/cheaper excavation than most Midwest peers.",
+            "PREVAILING WAGE: Ohio Rev. Code Ch. 4115 applies to public improvements, with recent school-district exemptions carved out.",
+            "HISTORIC DISTRICT DENSITY: Unusually large number of locally designated districts (German Village, Italian Village, Victorian Village, Brewery District), each with its own Architectural Review Commission.",
+            "LABOR MARKET PRESSURE: Intel's New Albany chip-plant buildout is straining regional skilled-trades supply and materials pricing.",
+            "FEE SCHEDULE CHURN: City republishes its fee schedule with mid-year revisions — confirm currently effective version before use.",
+        ],
+    },
+
+    # ── INDIANA ───────────────────────────────────────────────────────────────
+    {
+        "market": "Indianapolis", "zone": "Marion County", "state": "IN",
+        "bls_area_code": "26900", "bls_area_name": "Indianapolis-Carmel-Anderson, IN",
+        "home_depot_zip": "46204",
+        "permit_cities": [
+            {"city": "Indianapolis / Marion County (DBNS)", "url": "https://www.indy.gov/activity/license-and-permit-fees"},
+        ],
+        "market_notes": [
+            "NO STATE PREVAILING WAGE: Indiana repealed its Common Construction Wage Act in 2015 and bars local prevailing-wage rules — public labor costs run lower/more variable than neighboring states; federal Davis-Bacon still applies to federally funded work.",
+            "MODERATE FROST DEPTH: Generally 30–36 in below grade, shallower than Great Lakes-adjacent markets.",
+            "HISTORIC PRESERVATION OVERLAY: IHPC requires a Certificate of Appropriateness for exterior work in local historic areas (Lockerbie Square, Chatham-Arch, Herron-Morton).",
+            "SINGLE PERMITTING AUTHORITY: Consolidated Indianapolis-Marion County government (Unigov) means DBNS is the sole permitting authority — simpler than fragmented multi-municipality metros.",
+        ],
+    },
+
+    # ── MISSOURI ──────────────────────────────────────────────────────────────
+    {
+        "market": "Kansas City", "zone": "Jackson County", "state": "MO",
+        "bls_area_code": "28140", "bls_area_name": "Kansas City, MO-KS",
+        "home_depot_zip": "64106",
+        "permit_cities": [
+            {"city": "Kansas City, MO", "url": "https://www.kcmo.gov/city-hall/departments/city-planning-development/building-and-development-fee-schedule"},
+        ],
+        "market_notes": [
+            "FROST DEPTH: KCMO amendments require minimum 36 in footing depth (12 in for small accessory structures ≤600 sqft).",
+            "CROSS-STATE MSA: Metro straddles Missouri and Kansas — confirm which state/county applies before estimating; Missouri's prevailing wage law (HB 1729, 2018) has a $75K project floor and tiered thresholds.",
+            "HISTORIC DISTRICTS: KC Historic Preservation Commission requires a Certificate of Appropriateness for exterior alterations (Historic Northeast, Union Hill, Longfellow).",
+            "FLOOD ZONES: Confluence of Missouri/Kansas Rivers puts River Market and West Bottoms/Fairfax in FEMA flood zones — elevation/floodproofing consideration on renovation work.",
+        ],
+    },
+
+    # ── NEVADA ────────────────────────────────────────────────────────────────
+    {
+        "market": "Las Vegas", "zone": "Clark County", "state": "NV",
+        "bls_area_code": "29820", "bls_area_name": "Las Vegas-Henderson-North Las Vegas, NV",
+        "home_depot_zip": "89101",
+        "permit_cities": [
+            {"city": "City of Las Vegas", "url": "https://files.lasvegasnevada.gov/building-safety/Building-Safety-Fee-Tables.pdf"},
+            {"city": "Clark County (unincorporated, incl. the Strip)", "url": "https://www.clarkcountynv.gov/government/departments/building___fire_prevention/plan_submittal/fees-calculator"},
+        ],
+        "market_notes": [
+            "JURISDICTIONAL SPLIT: The Strip and much of the resort corridor sit in unincorporated Clark County, not the City of Las Vegas — confirm which building department applies before using a fee schedule.",
+            "WATER/DROUGHT: SNWA and state law restrict/phase out nonfunctional turf on non-single-family parcels, pulling xeriscape landscape design into permit review.",
+            "EXTREME HEAT: Summer design temps drive enhanced HVAC sizing and cool-roof energy-code emphasis.",
+            "MODERATE SEISMIC: Typically Seismic Design Category C — less stringent than CA/WA/OR/NV-coastal peers but still requires engineered lateral systems on larger structures.",
+        ],
+    },
+
+    # ── CALIFORNIA ────────────────────────────────────────────────────────────
+    {
+        "market": "Los Angeles", "zone": "Los Angeles County", "state": "CA",
+        "bls_area_code": "31080", "bls_area_name": "Los Angeles-Long Beach-Anaheim, CA",
+        "home_depot_zip": "90012",
+        "permit_cities": [
+            {"city": "City of Los Angeles (LADBS)", "url": "https://ladbs.org/faq/fee-schedules"},
+        ],
+        "market_notes": [
+            "FRAGMENTED PERMITTING: LADBS only covers the City of LA proper — LA County has ~88 incorporated cities (Santa Monica, Long Beach, Pasadena, Beverly Hills, etc.), each with its own building department/fee schedule. Do not assume one schedule covers the metro.",
+            "SEISMIC RETROFIT: LA Ordinance 183893 mandates retrofit of pre-1980 soft-story wood-frame multifamily and non-ductile concrete buildings — relevant on older-stock renovations.",
+            "TITLE 24 / CALGREEN: Statewide mandatory energy and green-building code affects insulation, HVAC efficiency, EV-charging rough-in, and solar-ready requirements on nearly every permit.",
+            "WUI/FIRE: Hillside communities (Hollywood Hills, Pacific Palisades, Sylmar) sit in Very High Fire Hazard Severity Zones, triggering CBC Chapter 7A ignition-resistant construction.",
+            "IMPACT FEES: Affordable Housing Linkage Fee and other development impact fees layer on top of base LADBS permit/plan-check fees.",
+        ],
+    },
+    {
+        "market": "San Francisco", "zone": "San Francisco / Bay Area", "state": "CA",
+        "bls_area_code": "41860", "bls_area_name": "San Francisco-Oakland-Fremont, CA",
+        "home_depot_zip": "94103",
+        "permit_cities": [
+            {"city": "City & County of San Francisco (DBI)", "url": "https://sfdbi.org/fees"},
+        ],
+        "market_notes": [
+            "EXTREME FRAGMENTATION: The Bay Area spans 9 counties and ~101 incorporated cities, each with an independent building department/fee schedule (SF is a consolidated city-county with one DBI; Oakland, Berkeley, San Jose, etc. are all separate). Treat this as an SF-specific entry, not a regional one.",
+            "SEISMIC: High seismic zone straddling the San Andreas and Hayward faults. SF's Mandatory Soft Story Retrofit Program (Ord. 66-13) requires retrofit of pre-1978 wood-frame buildings with 5+ units and a soft/weak ground story.",
+            "TITLE 24 / CALGREEN: Same statewide CA energy/green-building code stack as LA/San Diego.",
+            "HIGH IMPACT FEES: SF layers substantial affordable-housing and transportation impact fees atop base permit/plan-check costs — among the highest in the country.",
+        ],
+    },
+    {
+        "market": "San Diego", "zone": "San Diego County", "state": "CA",
+        "bls_area_code": "41740", "bls_area_name": "San Diego-Chula Vista-Carlsbad, CA",
+        "home_depot_zip": "92101",
+        "permit_cities": [
+            {"city": "City of San Diego (Development Services)", "url": "https://www.sandiego.gov/development-services/fees"},
+        ],
+        "market_notes": [
+            "FRAGMENTED PERMITTING: City of San Diego, County of San Diego, and other incorporated cities (Chula Vista, Carlsbad, Oceanside, Escondido) each maintain independent fee schedules — confirm jurisdiction before estimating.",
+            "SEISMIC: Rose Canyon Fault runs directly through the city — typically Seismic Design Category D.",
+            "TITLE 24 / CALGREEN: Same statewide CA energy/green-building requirements as LA/SF.",
+            "WUI/FIRE: Significant wildland-urban interface exposure in backcountry/canyon-adjacent communities (Rancho Bernardo, Scripps Ranch) — triggers CBC Chapter 7A and PRC 4291 defensible-space requirements.",
+        ],
+    },
+
+    # ── WASHINGTON ────────────────────────────────────────────────────────────
+    {
+        "market": "Seattle", "zone": "King County", "state": "WA",
+        "bls_area_code": "42660", "bls_area_name": "Seattle-Tacoma-Bellevue, WA",
+        "home_depot_zip": "98101",
+        "permit_cities": [
+            {"city": "City of Seattle (SDCI)", "url": "https://www.seattle.gov/sdci/permits/how-much-will-your-permit-cost"},
+        ],
+        "market_notes": [
+            "SEISMIC: Seismic Design Category D — Cascadia Subduction Zone plus the shallow Seattle Fault drive some of the most stringent lateral-design requirements in the country.",
+            "URM STOCK: ~1,100 pre-1945 unreinforced masonry buildings citywide; a voluntary retrofit pathway was added to the 2021 Existing Building Code in 2024 — relevant to renovation cost on older brick buildings.",
+            "ENERGY CODE: Washington State Energy Code is among the most stringent in the US, with heat-pump provisions.",
+            "MOISTURE/ENVELOPE: Wet climate drives rigorous weather-resistive-barrier and envelope detailing.",
+            "SURCHARGES: State adds a 4.5% surcharge on SDCI permit fees, plus a 5% city technology fee — both stack onto quoted base fees.",
+        ],
+    },
+
+    # ── OREGON ────────────────────────────────────────────────────────────────
+    {
+        "market": "Portland", "zone": "Multnomah County", "state": "OR",
+        "bls_area_code": "38900", "bls_area_name": "Portland-Vancouver-Hillsboro, OR-WA",
+        "home_depot_zip": "97201",
+        "permit_cities": [
+            {"city": "Portland Permitting & Development", "url": "https://www.portland.gov/ppd/current-fee-schedules"},
+        ],
+        "market_notes": [
+            "SEISMIC: Within the Cascadia Subduction Zone hazard area, similar to Seattle, with a significant downtown URM inventory (no mandatory retrofit ordinance yet).",
+            "STATE SURCHARGE: Oregon adds a 12% surcharge to building, plumbing, electrical, and mechanical permit fees statewide.",
+            "SYSTEM DEVELOPMENT CHARGES: Significant one-time impact fees on new construction/increased use, layered atop base permit/plan-review fees — can exceed the permit fee itself on larger projects.",
+            "STORMWATER: Notably strict stormwater management requirements (green infrastructure, Clean River Rewards) affect site/civil permit scope and cost.",
+        ],
+    },
+
+    # ── COLORADO ──────────────────────────────────────────────────────────────
+    {
+        "market": "Denver", "zone": "Denver County", "state": "CO",
+        "bls_area_code": "19740", "bls_area_name": "Denver-Aurora-Centennial, CO",
+        "home_depot_zip": "80202",
+        "permit_cities": [
+            {"city": "City & County of Denver", "url": "https://www.denvergov.org/Government/Agencies-Departments-Offices/Agencies-Departments-Offices-Directory/Community-Planning-and-Development/Plan-Review-Permits-and-Inspections/Development-Fees"},
+        ],
+        "market_notes": [
+            "SNOW LOAD: Ground snow load ~30–43 psf depending on code year — a real structural cost driver absent in most West-coast markets.",
+            "HAIL: Front Range has the highest hailstorm frequency in the US — drives impact-resistant (Class 4) roofing specification and cost.",
+            "FREEZE-THAW/FROST DEPTH: High-altitude freeze-thaw cycling drives deeper frost-protected footing requirements and concrete admixture/curing specs.",
+            "WILDFIRE: Foothill/urban-interface areas (western Jefferson County, metro fringe) fall under Colorado wildfire hazard zone rules.",
+            "LOW SEISMIC: Typically Seismic Design Category B — cheaper lateral-system requirements than CA/WA/OR/NV markets.",
+        ],
+    },
+
+    # ── NEW YORK ──────────────────────────────────────────────────────────────
+    {
+        "market": "New York City", "zone": "NYC Metro", "state": "NY",
+        "bls_area_code": "35620", "bls_area_name": "New York-Newark-Jersey City, NY-NJ-PA",
+        "home_depot_zip": "10007",
+        "permit_cities": [
+            {"city": "NYC Dept. of Buildings", "url": "https://www.nyc.gov/assets/buildings/pdf/new_permit_fee_structure.pdf"},
+        ],
+        "market_notes": [
+            "MULTI-AGENCY PERMITTING: DOB citywide permit plus separate LPC Certificate of Appropriateness/No Effect required for landmarked buildings and ~150 historic districts; borough-specific DOB offices add filing variance.",
+            "UNION LABOR / SCAFFOLD LAW: Heavily unionized trades; NY Labor Law §240/241 (Scaffold Law) imposes absolute liability on contractors for elevation-related injuries, driving up insurance costs on vertical work.",
+            "SITE SAFETY TRAINING: Local Law 196 requires 40-hour Site Safety Training cards for workers and 62-hour Supervisor cards on major construction/demolition sites.",
+            "OLDER HOUSING STOCK: Pre-1978 stock triggers Local Law 1/31 lead paint abatement in occupied multiple dwellings; asbestos filings common in pre-war renovation.",
+            "FLOOD ZONES: Post-Sandy FEMA maps (Zone A/AE/VE) cover large swaths of coastal Brooklyn, Queens, Staten Island, and Lower Manhattan.",
+        ],
+    },
+
+    # ── MASSACHUSETTS ─────────────────────────────────────────────────────────
+    {
+        "market": "Boston", "zone": "Suffolk County", "state": "MA",
+        "bls_area_code": "14460", "bls_area_name": "Boston-Cambridge-Newton, MA-NH",
+        "home_depot_zip": "02108",
+        "permit_cities": [
+            {"city": "City of Boston (ISD)", "url": "https://www.boston.gov/departments/inspectional-services"},
+        ],
+        "market_notes": [
+            "HISTORIC DISTRICTS: Beacon Hill, Back Bay, South End, and other Architectural Conservation/Landmark Districts require local commission design review before ISD issues exterior work permits — a separate track from the base building permit.",
+            "UNION LABOR / PREVAILING WAGE: Strong building trades presence; MGL c.149 §26-27 mandates prevailing wage on public construction.",
+            "FROST DEPTH: 780 CMR generally requires footings at 48 in below grade statewide — deeper than most Mid-Atlantic markets.",
+            "OLDER HOUSING STOCK: Dense pre-1978 triple-decker/rowhouse stock triggers Massachusetts Lead Law deleading requirements on renovation.",
+            "COASTAL FLOOD RESILIENCE: FEMA zones plus Boston's Coastal Flood Resilience Overlay District impose elevation/flood-proofing on harbor-adjacent parcels; large projects also trigger Article 80 (BPDA) review.",
+        ],
+    },
+
+    # ── PENNSYLVANIA ──────────────────────────────────────────────────────────
+    {
+        "market": "Philadelphia", "zone": "Philadelphia County", "state": "PA",
+        "bls_area_code": "37980", "bls_area_name": "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",
+        "home_depot_zip": "19102",
+        "permit_cities": [
+            {"city": "City of Philadelphia (L&I)", "url": "https://www.phila.gov/documents/fees-for-li-permits-and-licenses/"},
+        ],
+        "market_notes": [
+            "HISTORIC DISTRICT OVERLAY: Philadelphia Historical Commission review mandatory before L&I issues a permit for exterior work on locally designated buildings/districts.",
+            "UNION LABOR / PREVAILING WAGE: Strong building trades presence via the Philadelphia Building & Construction Trades Council; PA prevailing wage law applies to public contracts.",
+            "OLDER ROWHOME STOCK: Dense pre-1978 rowhome inventory drives frequent lead paint/asbestos abatement triggers and PA/Philly-specific lead-safe certification requirements.",
+            "PERMITTING SYSTEM: All permits route through the eCLIPSE portal; zoning/use registration is a distinct, often-required precursor before a building permit can be pulled.",
+        ],
+    },
+    {
+        "market": "Pittsburgh", "zone": "Allegheny County", "state": "PA",
+        "bls_area_code": "38300", "bls_area_name": "Pittsburgh, PA",
+        "home_depot_zip": "15222",
+        "permit_cities": [
+            {"city": "City of Pittsburgh (PLI)", "url": "https://www.pittsburghpa.gov/Business-Development/Permits-Licenses-and-Inspections/Fees"},
+        ],
+        "market_notes": [
+            "STEEP SLOPE / LANDSLIDE HAZARD: Mapped Landslide-Prone Areas — new construction on slopes over ~15% grade generally requires a geotechnical study, adding 15-30 days and real engineering cost.",
+            "RETAINING WALLS: City ordinance caps cut to 10 ft and fill to 6 ft in slope-sensitive areas, often forcing retaining wall systems into otherwise simple projects.",
+            "HISTORIC DISTRICTS: Locally designated districts (Manchester, Mexican War Streets) plus PHLF-recognized structures add design review for exterior work.",
+            "RIVERFRONT FLOOD ZONES: FEMA flood zones along the Monongahela/Allegheny/Ohio confluence affect riverfront/lowland parcels.",
+            "OLDER HOUSING STOCK: Significant pre-1978 frame and masonry stock triggers lead paint abatement consideration on renovation.",
+        ],
+    },
+
+    # ── DISTRICT OF COLUMBIA / MARYLAND ──────────────────────────────────────
+    {
+        "market": "Washington DC", "zone": "District of Columbia", "state": "DC",
+        "bls_area_code": "47900", "bls_area_name": "Washington-Arlington-Alexandria, DC-VA-MD-WV",
+        "home_depot_zip": "20024",
+        "permit_cities": [
+            {"city": "DC Department of Buildings", "url": "https://dob.dc.gov/page/get-permit"},
+        ],
+        "market_notes": [
+            "HISTORIC PRESERVATION IS A PREREQUISITE: For substantial work on a historic property, Historic Preservation Office/Review Board review happens BEFORE DOB will accept the building permit application, not in parallel. DC has an unusually large historic-district footprint (Capitol Hill, Georgetown, Dupont Circle).",
+            "HEIGHT OF BUILDINGS ACT: Federal statute caps building heights citywide (generally 90 ft residential, up to 130 ft on major commercial corridors) — a structural/typology constraint not present in most other markets.",
+            "FEDERAL/DAVIS-BACON OVERLAY: Significant share of construction touches federally-funded or federal-adjacent work, pulling in Davis-Bacon prevailing wage on top of DC's own prevailing wage law.",
+            "GREEN BUILDING MANDATES: DC's Green Building Act requires LEED certification (or equivalent) for larger private and DC-government projects.",
+            "OLDER ROWHOME STOCK: Extensive pre-1978 rowhouse inventory drives lead paint abatement requirements on renovation, similar to Philadelphia/Baltimore.",
+        ],
+    },
+    {
+        "market": "Baltimore", "zone": "Baltimore City", "state": "MD",
+        "bls_area_code": "12580", "bls_area_name": "Baltimore-Columbia-Towson, MD",
+        "home_depot_zip": "21202",
+        "permit_cities": [
+            {"city": "Baltimore City (DHCD)", "url": "https://dhcd.baltimorecity.gov/pi/permits"},
+        ],
+        "market_notes": [
+            "CHAP HISTORIC DISTRICT REVIEW: Commission for Historical and Architectural Preservation requires a Certificate of Approval BEFORE a permit can issue for exterior work in local historic districts (Federal Hill, Fells Point, Mount Vernon) — even for work like exterior painting or storm windows that wouldn't need a permit elsewhere.",
+            "STRICT LEAD PAINT REGIME: Some of the country's most stringent lead-paint laws given the city's historic lead-poisoning crisis; pre-1978 rowhome renovation triggers mandatory MDE-standard abatement beyond generic federal RRP rules.",
+            "VACANT/DISTRESSED STOCK: Large inventory of vacant-building-notice properties — often follows different permit pathways and typically needs stabilization work atypical of occupied-building renovation.",
+            "ROWHOME-DOMINATED STOCK: Predominantly masonry rowhome construction; moderate frost depth (~24-30 in), lower than Boston/Pittsburgh but still a real foundation factor.",
+        ],
+    },
 ]
 
 # ── BLS Occupations ───────────────────────────────────────────────────────────
