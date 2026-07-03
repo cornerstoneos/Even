@@ -2314,6 +2314,48 @@ function setQAnswer(idx,value){
   if(other) delete other.dataset.fromChip;
 }
 
+async function fetchMarketPricing(location){
+  if(!location) return null;
+  try{
+    const r=await fetch(`/api/market-data?location=${encodeURIComponent(location)}`);
+    if(!r.ok) return null;
+    const data=await r.json();
+    if(!data||!data.market||(!data.materials?.length&&!data.labor?.length&&!data.permits?.length)) return null;
+    return data;
+  }catch(e){
+    console.error('Market data fetch failed:',e.message);
+    return null;
+  }
+}
+
+function buildDynamicPricingBlock(md,adjMultiplier,adjLabel,hvhzNote){
+  const laborLines=(md.labor||[]).map(r=>`${r.trade||''}: $${r.low}/hr (low) $${r.mid}/hr (mid) $${r.high}/hr (high)`).join('\n');
+  const materialLines=(md.materials||[]).map(r=>`${r.item||''}${r.category?' ('+r.category+')':''}: $${r.low}/${r.unit||'unit'} (low) $${r.mid}/${r.unit||'unit'} (mid) $${r.high}/${r.unit||'unit'} (high)`).join('\n');
+  const permitLines=(md.permits||[]).map(r=>`${r.municipality||''} — ${r.work_type||''}: ${r.min_fee?'$'+r.min_fee+' min':''} ${r.rate||''} ${r.method||''}`.trim()).join('\n');
+  return `LOCAL MARKET PRICING — ${md.market}, ${md.state} (apply ${adjLabel} multiplier of ${adjMultiplier}):${hvhzNote}
+
+LABOR RATES (BLS, ${md.market} metro):
+${laborLines||'No labor data available for this market yet — use general knowledge.'}
+
+MATERIAL COSTS (${md.market}):
+${materialLines||'No material cost data available for this market yet — use general knowledge.'}
+
+PERMIT FEES (${md.market}):
+${permitLines||'No permit fee data available for this market yet — use general knowledge.'}
+
+NOTE: These are base wage rates. Contractor billing rates (what they charge clients) are typically 2.0-2.8x the labor wage to account for burden, insurance, overhead, and profit. Use billing rates when calculating labor line items.
+
+IMPORTANT PRICING INSTRUCTIONS:
+- Use MID rates as your default for standard residential work
+- Use LOW rates for budget/competitive bids or simple jobs
+- Use HIGH rates for premium finishes, luxury homes, complex scopes
+- Apply the market multiplier (${adjMultiplier}) to all costs
+- Always add 10-15% material waste factor for cuts and damage
+- SUBCONTRACTOR RATES vs LABOR RATES: When a contractor is hiring subs (not direct labor), sub billing rates run 15-40% higher than direct labor. Always ask if work is self-performed or subcontracted — this moves the number significantly
+- CONTRACTOR TIME: Always include project management labor — GC managing subs typically bills 10-15% of total project cost or 8-16 hours per week of project duration
+`;
+}
+
 async function calculateEstimate(){
   const btn=document.getElementById('calc-btn');
   btn.disabled=true;
@@ -2441,7 +2483,10 @@ PROFIT STACKING — CORRECT METHOD:
 
 `;
 
-  const prompt=`${SE_RATES}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  const marketData=await fetchMarketPricing(ctx.location);
+  const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote):SE_RATES;
+
+  const prompt=`${pricingBlock}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
   // Show loading screen
   showLoading();

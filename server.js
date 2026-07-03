@@ -2,6 +2,7 @@ const express = require('express');
 const nodeFetch = require('node-fetch');
 const cors = require('cors');
 const crypto = require('crypto');
+const MARKETS = require('./data/markets.json');
 
 // Prefer Node's built-in fetch (undici) — node-fetch v2 throws "Premature close"
 // on long Anthropic responses. Fall back to node-fetch on older runtimes.
@@ -11,6 +12,63 @@ const app = express();
 app.use(cors());
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://klgofcqrncabfhskiijn.supabase.co';
+
+// ─── Market resolution (zip/city → nearest covered market) ───────────────────
+function haversineMiles(lat1, lng1, lat2, lng2) {
+  const R = 3958.8;
+  const toRad = d => d * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1), dLng = toRad(lng2 - lng1);
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function nearestMarket(lat, lng) {
+  let best = null, bestDist = Infinity;
+  for (const m of MARKETS) {
+    const d = haversineMiles(lat, lng, m.lat, m.lng);
+    if (d < bestDist) { bestDist = d; best = m; }
+  }
+  return best ? { ...best, distanceMiles: Math.round(bestDist) } : null;
+}
+
+// Free, keyless zip → lat/lng lookup (no API key to manage, no dataset to bundle/maintain)
+async function zipToLatLng(zip) {
+  try {
+    const r = await fetch(`https://api.zippopotam.us/us/${zip}`, { signal: AbortSignal.timeout(4000) });
+    if (!r.ok) return null;
+    const data = await r.json();
+    const place = data?.places?.[0];
+    if (!place) return null;
+    return { lat: parseFloat(place.latitude), lng: parseFloat(place.longitude) };
+  } catch (e) {
+    console.error('zipToLatLng failed:', e.message);
+    return null;
+  }
+}
+
+// Resolves free-text location input ("City, State" or a 5-digit zip) to the nearest covered market.
+async function resolveMarket(locationText) {
+  if (!locationText) return null;
+  const text = locationText.trim();
+
+  const zipMatch = text.match(/\b(\d{5})\b/);
+  if (zipMatch) {
+    const coords = await zipToLatLng(zipMatch[1]);
+    if (coords) return nearestMarket(coords.lat, coords.lng);
+  }
+
+  // Fall back to a direct text match against our covered markets (handles users
+  // who type an exact covered city/zone name without a zip).
+  const lower = text.toLowerCase();
+  const exact = MARKETS.find(m =>
+    lower.includes(m.market.toLowerCase()) || lower.includes(m.zone.toLowerCase())
+  );
+  return exact || null;
+}
+
+async function getMarketData(market) {
+  return supabaseFind('market_data', { market }, 'market,state,zone,materials,labor,permits,updated_at');
+}
 
 function verifyStripeSignature(rawBody, sigHeader, secret) {
   if (!secret) throw new Error('Missing STRIPE_WEBHOOK_SECRET env var');
@@ -119,6 +177,21 @@ app.get('/health', (req, res) => {
     hasSupabaseKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
     hasStripeSecret: !!process.env.STRIPE_WEBHOOK_SECRET
   });
+});
+
+// ─── Markets (for frontend autocomplete) ─────────────────────────────────────
+app.get('/api/markets', (req, res) => {
+  res.json(MARKETS.map(({ market, state, zone }) => ({ market, state, zone })));
+});
+
+// ─── Local market data lookup (grounds estimates in real pipeline data) ──────
+app.get('/api/market-data', async (req, res) => {
+  const location = req.query.location || '';
+  const matched = await resolveMarket(location);
+  if (!matched) return res.json({ market: null });
+  const data = await getMarketData(matched.market);
+  if (!data) return res.json({ market: matched.market, state: matched.state, zone: matched.zone, materials: null, labor: null, permits: null });
+  res.json(data);
 });
 
 // ─── Anthropic proxy ──────────────────────────────────────────────────────────
