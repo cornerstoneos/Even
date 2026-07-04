@@ -3538,11 +3538,12 @@ const STATUS_CLASS={draft:'status-draft',sent:'status-sent',won:'status-won',act
 async function saveEstimateToCloud(data){
   if(!currentUser||!sbClient) return;
   try{
+    const locationVal=document.getElementById('est-location')?.value||'';
     const payload={
       user_id: currentUser.id,
       client_name: document.getElementById('est-client')?.value||'',
-      project_label: document.getElementById('est-project-label')?.value||document.getElementById('est-location')?.value||'',
-      location: document.getElementById('est-location')?.value||'',
+      project_label: document.getElementById('est-project-label')?.value||locationVal,
+      location: locationVal,
       trade: document.getElementById('est-trade')?.value||window._ctx?.trade||'',
       total_bid: data.totalBid||0,
       margin_pct: data.profit?.pct||0,
