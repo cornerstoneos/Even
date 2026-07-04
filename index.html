@@ -1140,6 +1140,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
         </div>
         <div style="padding:10px 12px">
           <div id="similar-recall" style="display:none;margin-bottom:8px"></div>
+          <div id="calibration-recall" style="display:none;margin-bottom:8px"></div>
           <div id="margin-alerts" style="display:none;margin-bottom:8px"></div>
           <div class="li-head">
             <span data-en="Description" data-es="Descripción">Description</span>
@@ -1346,6 +1347,9 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 // ══════════════════════════════════════════
 const SUPABASE_URL = 'https://klgofcqrncabfhskiijn.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_nBf8FEP-zsgCGXlTImEDKQ_cknCqWok';
+// index.html is static-hosted (Netlify); the API lives on a separate Railway deployment,
+// so every backend call needs the absolute origin — relative /api/... would hit Netlify, not this.
+const API_ORIGIN = 'https://even-production.up.railway.app';
 const STRIPE_KEY          = 'pk_live_51TR3WJB41neZFjHYGsqXEHKIknMlCMHSujFXXN9y0JFjMIxNJ0wG7gM5BoJIJfqJFqL4PvRY9MJj5Sb1TBqwdLMI00WlrqFoV5';
 const STRIPE_PRICE_MONTHLY = 'price_1TR3XoB41neZFjHYzJRYKAhb';
 const STRIPE_PRICE_ANNUAL  = 'price_1TSTyNB41neZFjHYQgDzq8RR';
@@ -1367,6 +1371,27 @@ function escapeHtml(str){
   if(str===null||str===undefined) return '';
   return String(str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+
+// ── Client-side error reporting ─────────────────────────────────────────────
+// Dedupe by message so a repeated failure (e.g. a render loop) reports once, not a flood.
+const _reportedErrors=new Set();
+function reportClientError(message, stack, context){
+  const key=String(message).slice(0,200);
+  if(_reportedErrors.has(key)) return;
+  _reportedErrors.add(key);
+  fetch(`${API_ORIGIN}/api/log-error`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message,stack,url:location.href,context})
+  }).catch(()=>{});
+}
+window.addEventListener('error', e=>{
+  reportClientError(e.message||'Unknown error', e.error?.stack, {line:e.lineno,col:e.colno,file:e.filename});
+});
+window.addEventListener('unhandledrejection', e=>{
+  const reason=e.reason;
+  reportClientError(reason?.message||String(reason), reason?.stack, {type:'unhandledrejection'});
+});
 
 // Init Supabase
 function initSupabase(){
@@ -1721,6 +1746,8 @@ function navigate(scr){
     const _pe=document.getElementById('proposal-edit-card');if(_pe)_pe.style.display='none';
     const _ma=document.getElementById('margin-alerts');if(_ma)_ma.style.display='none';
     const _sr=document.getElementById('similar-recall');if(_sr)_sr.style.display='none';
+    const _cr=document.getElementById('calibration-recall');if(_cr)_cr.style.display='none';
+    window._costCalibration=null;
     document.getElementById('var-body').innerHTML='';
     window._finalBid=null;window._proposalDetail='full';
     const _fbi=document.getElementById('final-bid-input');if(_fbi)_fbi.value='';
@@ -1920,7 +1947,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
     try{
       const ctrl=new AbortController();
       const tid=setTimeout(()=>ctrl.abort(),100000);
-      const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+      const r=await fetch(`${API_ORIGIN}/api/estimate`,{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify(body),
@@ -1967,7 +1994,7 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true){
   const tid=setTimeout(()=>ctrl.abort(),150000);
   let r;
   try{
-    r=await fetch('https://even-production.up.railway.app/api/estimate',{
+    r=await fetch(`${API_ORIGIN}/api/estimate`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify(body),signal:ctrl.signal
     });
@@ -2364,7 +2391,7 @@ let _marketsListCache=null;
 async function loadMarketsList(){
   if(_marketsListCache) return _marketsListCache;
   try{
-    const r=await fetch('/api/markets');
+    const r=await fetch(`${API_ORIGIN}/api/markets`);
     _marketsListCache=r.ok?await r.json():[];
   }catch(e){ _marketsListCache=[]; }
   return _marketsListCache;
@@ -2437,7 +2464,7 @@ document.addEventListener('click',function(e){
 async function fetchMarketPricing(location){
   if(!location) return null;
   try{
-    const r=await fetch(`/api/market-data?location=${encodeURIComponent(location)}`);
+    const r=await fetch(`${API_ORIGIN}/api/market-data?location=${encodeURIComponent(location)}`);
     if(!r.ok) return null;
     const data=await r.json();
     if(!data||!data.market||(!data.materials?.length&&!data.labor?.length&&!data.permits?.length)) return null;
@@ -2474,6 +2501,50 @@ IMPORTANT PRICING INSTRUCTIONS:
 - SUBCONTRACTOR RATES vs LABOR RATES: When a contractor is hiring subs (not direct labor), sub billing rates run 15-40% higher than direct labor. Always ask if work is self-performed or subcontracted — this moves the number significantly
 - CONTRACTOR TIME: Always include project management labor — GC managing subs typically bills 10-15% of total project cost or 8-16 hours per week of project duration
 `;
+}
+
+// Compares this contractor's logged actual costs (cost_entries) against what each line item
+// was originally estimated at, grouped by category, so recurring under/over-bidding patterns
+// can calibrate the next estimate instead of silently repeating.
+async function getCostCalibration(trade){
+  if(!isPro||!currentUser||!sbClient||!trade) return null;
+  try{
+    const { data:jobs }=await sbClient.from('estimates')
+      .select('id,estimate_json')
+      .eq('user_id',currentUser.id)
+      .ilike('trade','%'+trade+'%')
+      .order('created_at',{ascending:false})
+      .limit(15);
+    if(!jobs||!jobs.length) return null;
+    const ids=jobs.map(j=>j.id);
+    const { data:entries }=await sbClient.from('cost_entries')
+      .select('estimate_id,line_index,actual_cost')
+      .in('estimate_id',ids);
+    if(!entries||entries.length<3) return null;
+    const byId=Object.fromEntries(jobs.map(j=>[j.id,j.estimate_json]));
+    const byCategory={};
+    entries.forEach(e=>{
+      const line=byId[e.estimate_id]?.lineItems?.[e.line_index];
+      if(!line||!line.total) return;
+      const cat=line.category||'Other';
+      const variancePct=((e.actual_cost-line.total)/line.total)*100;
+      (byCategory[cat]||=[]).push(variancePct);
+    });
+    return Object.entries(byCategory)
+      .filter(([,arr])=>arr.length>=2)
+      .map(([category,arr])=>({category,avgVariancePct:Math.round(arr.reduce((s,v)=>s+v,0)/arr.length),n:arr.length}))
+      .filter(c=>Math.abs(c.avgVariancePct)>=5);
+  }catch(e){ console.error('Cost calibration error:',e); return null; }
+}
+
+function renderCalibrationBanner(){
+  const el=document.getElementById('calibration-recall');
+  if(!el) return;
+  const cal=window._costCalibration;
+  if(!cal||!cal.length){ el.style.display='none'; return; }
+  const parts=cal.map(c=>`<strong>${escapeHtml(c.category)}</strong> ${c.avgVariancePct>0?'+':''}${c.avgVariancePct}%`).join(', ');
+  el.innerHTML=`<div class="similar-recall"><span style="color:var(--text-accent);flex-shrink:0">✦</span><span>Calibrated from your logged actuals — ${parts} vs. estimate, adjusted into this bid.</span></div>`;
+  el.style.display='block';
 }
 
 async function calculateEstimate(){
@@ -2606,8 +2677,11 @@ PROFIT STACKING — CORRECT METHOD:
   const marketData=await fetchMarketPricing(ctx.location);
   const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote):SE_RATES;
   const confidenceTier=computeConfidenceTier(marketData);
+  const costCalibration=await getCostCalibration(ctx.trade);
+  window._costCalibration=costCalibration;
+  const calibrationNote=costCalibration?.length?`\n\nCOST CALIBRATION FROM THIS CONTRACTOR'S LOGGED ACTUALS — apply these adjustments:\n${costCalibration.map(c=>`${c.category}: actuals have run ${c.avgVariancePct>0?'+':''}${c.avgVariancePct}% vs. estimate across ${c.n} logged job${c.n>1?'s':''} — ${c.avgVariancePct>0?'price this category higher':'price this category lower'} to match.`).join('\n')}`:'';
 
-  const prompt=`${pricingBlock}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  const prompt=`${pricingBlock}${calibrationNote}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
   // Show loading screen
   showLoading();
@@ -2795,6 +2869,7 @@ function renderEstimate(data){
   if(isPro) { const br=document.getElementById('beautify-row'); if(br) br.style.display='block'; }
   setTimeout(()=>renderEvenSuggests(data), 800);
   if(isPro && currentUser && sbClient) loadSimilarJobs(data);
+  renderCalibrationBanner();
 }
 
 function calcVar(input,estimated){
@@ -3650,7 +3725,7 @@ async function proposalBeautify(){
   const items=(currentEstimate.lineItems||[]).map(i=>i.description).join(', ');
   const scope=document.getElementById('scope-text')?.value||currentEstimate.projectName||'';
   try{
-    const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+    const r=await fetch(`${API_ORIGIN}/api/estimate`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-haiku-4-5',max_tokens:500,
@@ -4101,7 +4176,7 @@ async function generateInsights(estimates){
     `Trade:${e.trade||'?'} Total:$${e.total_bid} Status:${e.status||'draft'} Margin:${e.margin_pct||0}% Location:${e.location||'?'}`
   ).join('\n');
   try{
-    const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+    const r=await fetch(`${API_ORIGIN}/api/estimate`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({

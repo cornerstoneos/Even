@@ -120,6 +120,26 @@ async function supabaseFind(table, match, select) {
   return data?.[0] || null;
 }
 
+// Fire-and-forget error logging to Supabase — never throws, never blocks the caller.
+async function logError(source, message, context) {
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!key) return;
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/error_log`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': key,
+        'Authorization': `Bearer ${key}`,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ source, message: String(message).slice(0, 2000), context: context || null })
+    });
+  } catch (e) {
+    console.error('logError failed:', e.message);
+  }
+}
+
 // Stripe webhook — must be registered BEFORE express.json() to get raw body
 app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
@@ -130,6 +150,7 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (re
     event = verifyStripeSignature(req.body.toString('utf8'), sig, secret);
   } catch (err) {
     console.error('Stripe webhook sig error:', err.message);
+    logError('stripe_webhook', err.message, { stage: 'signature' });
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
@@ -162,6 +183,7 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (re
     }
   } catch (err) {
     console.error('Webhook handler error:', err);
+    logError('stripe_webhook', err.message, { stage: 'handler', eventType: event?.type });
   }
 
   res.json({ received: true });
@@ -198,6 +220,7 @@ app.get('/api/market-data', async (req, res) => {
 app.post('/api/estimate', async (req, res) => {
   if (!process.env.ANTHROPIC_API_KEY) {
     console.error('ANTHROPIC_API_KEY is not set — cannot call Anthropic');
+    logError('anthropic_proxy', 'ANTHROPIC_API_KEY missing', null);
     return res.status(500).json({ error: { message: 'Server misconfigured: ANTHROPIC_API_KEY missing' } });
   }
   const wantStream = req.body && req.body.stream === true;
@@ -220,6 +243,7 @@ app.post('/api/estimate', async (req, res) => {
       if (!response.ok) {
         const data = await response.json().catch(() => ({ error: { message: 'HTTP ' + response.status } }));
         console.error(`Anthropic ${response.status} for model=${req.body?.model}:`, JSON.stringify(data));
+        if (response.status >= 500 || response.status === 429) logError('anthropic_proxy', `HTTP ${response.status}: ${JSON.stringify(data).slice(0, 500)}`, { model: req.body?.model });
         return res.status(response.status).json(data);
       }
 
@@ -241,6 +265,7 @@ app.post('/api/estimate', async (req, res) => {
           }
         } catch (streamErr) {
           console.error('Anthropic stream interrupted:', streamErr.message);
+          logError('anthropic_proxy', streamErr.message, { stage: 'stream', model: req.body?.model });
         }
         return res.end();
       }
@@ -255,7 +280,16 @@ app.post('/api/estimate', async (req, res) => {
       if (attempt < MAX_TRIES) await new Promise(r => setTimeout(r, 1500 * attempt));
     }
   }
+  logError('anthropic_proxy', (lastErr && lastErr.message) || 'Upstream fetch failed after retries', { stage: 'exhausted', model: req.body?.model });
   res.status(502).json({ error: { message: (lastErr && lastErr.message) || 'Upstream fetch failed after retries' } });
+});
+
+// ─── Client-side error reporting ──────────────────────────────────────────────
+app.post('/api/log-error', async (req, res) => {
+  const { message, stack, url, context } = req.body || {};
+  if (!message) return res.status(400).json({ error: 'message is required' });
+  await logError('client', String(message).slice(0, 2000), { stack: stack ? String(stack).slice(0, 2000) : null, url, ...context });
+  res.json({ ok: true });
 });
 
 // ─── Start server ─────────────────────────────────────────────────────────────
