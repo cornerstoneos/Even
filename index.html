@@ -2314,6 +2314,81 @@ function setQAnswer(idx,value){
   if(other) delete other.dataset.fromChip;
 }
 
+// ── City autocomplete (replaces the free-text-only location field) ──
+let _marketsListCache=null;
+async function loadMarketsList(){
+  if(_marketsListCache) return _marketsListCache;
+  try{
+    const r=await fetch('/api/markets');
+    _marketsListCache=r.ok?await r.json():[];
+  }catch(e){ _marketsListCache=[]; }
+  return _marketsListCache;
+}
+
+let _cityOptions=[];
+let _cityActiveIdx=-1;
+
+async function cityAutocomplete(value){
+  const dd=document.getElementById('city-dropdown');
+  const q=(value||'').trim().toLowerCase();
+  if(q.length<2){ closeCityDropdown(); return; }
+  // A 5-digit zip is handled entirely server-side (nearest-market geocoding) —
+  // no point suggesting from the 43-city list against a number.
+  if(/^\d{5}$/.test(q)){ closeCityDropdown(); return; }
+  const markets=await loadMarketsList();
+  const matches=markets.filter(m=>
+    m.market.toLowerCase().includes(q)||m.state.toLowerCase().includes(q)||m.zone.toLowerCase().includes(q)
+  ).slice(0,8);
+  _cityOptions=matches;
+  _cityActiveIdx=-1;
+  if(!matches.length){ closeCityDropdown(); return; }
+  dd.innerHTML=matches.map((m,i)=>
+    `<div class="city-opt" data-idx="${i}" onclick="selectCityOption(${i})" onmouseenter="this.style.background='var(--l2)'" onmouseleave="this.style.background='transparent'" style="padding:10px 14px;cursor:pointer;font-size:13px;color:var(--white);border-bottom:1px solid var(--rim);transition:background .1s">${m.market}, ${m.state} <span style="color:var(--muted);font-size:11px">— ${m.zone}</span></div>`
+  ).join('');
+  dd.style.display='block';
+}
+
+function selectCityOption(i){
+  const m=_cityOptions[i];
+  if(!m) return;
+  const input=document.getElementById('est-location');
+  input.value=`${m.market}, ${m.state}`;
+  input.dispatchEvent(new Event('change'));
+  closeCityDropdown();
+}
+
+function closeCityDropdown(){
+  const dd=document.getElementById('city-dropdown');
+  dd.style.display='none'; dd.innerHTML='';
+  _cityOptions=[]; _cityActiveIdx=-1;
+}
+
+function highlightCityOption(){
+  const dd=document.getElementById('city-dropdown');
+  [...dd.children].forEach((el,i)=>{ el.style.background=i===_cityActiveIdx?'var(--l2)':'transparent'; });
+}
+
+function cityKeyNav(event){
+  if(!_cityOptions.length) return;
+  if(event.key==='ArrowDown'){
+    event.preventDefault();
+    _cityActiveIdx=Math.min(_cityActiveIdx+1,_cityOptions.length-1);
+    highlightCityOption();
+  }else if(event.key==='ArrowUp'){
+    event.preventDefault();
+    _cityActiveIdx=Math.max(_cityActiveIdx-1,0);
+    highlightCityOption();
+  }else if(event.key==='Enter'){
+    if(_cityActiveIdx>=0){ event.preventDefault(); selectCityOption(_cityActiveIdx); }
+  }else if(event.key==='Escape'){
+    closeCityDropdown();
+  }
+}
+
+document.addEventListener('click',function(e){
+  if(!e.target.closest('#est-location')&&!e.target.closest('#city-dropdown')) closeCityDropdown();
+});
+
 async function fetchMarketPricing(location){
   if(!location) return null;
   try{
