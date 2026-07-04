@@ -49,10 +49,11 @@ function Home() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         gap: '2.5rem',
         fontFamily: 'Inter, sans-serif',
-        padding: '2rem',
+        padding: '3rem 2rem 4rem',
+        overflowY: 'auto',
       }}
     >
       <div style={{ textAlign: 'center' }}>
