@@ -106,6 +106,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .gc{
   background:var(--glass);border:1px solid var(--rim);border-radius:var(--rlg);
   box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 4px 20px rgba(0,0,0,.25);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
   overflow:hidden;margin-bottom:12px;
 }
 .gc-head{
@@ -254,6 +255,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .qcard{
   background:var(--glass);border:1.5px solid var(--rim);border-radius:var(--r);
   padding:14px 16px;margin-bottom:10px;transition:border-color .15s;
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
   animation:fadeUp .2s ease both;
 }
 .qcard:focus-within{border-color:rgba(228,0,43,0.35)}
@@ -268,7 +270,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 /* ── AI BUBBLE ── */
 .ai-bubble{display:flex;gap:11px;margin-bottom:14px;animation:fadeUp .25s ease both}
 .ai-avatar{width:34px;height:34px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--gold),#e8a020);display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 12px rgba(228,0,43,.3)}
-.ai-msg{background:var(--l2);border:1px solid var(--rim);border-radius:4px 14px 14px 14px;padding:12px 15px;flex:1;font-size:13.5px;line-height:1.65;color:var(--white2);box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.ai-msg{background:var(--glass2);border:1px solid var(--rim);border-radius:4px 14px 14px 14px;padding:12px 15px;flex:1;font-size:13.5px;line-height:1.65;color:var(--white2);box-shadow:0 2px 12px rgba(0,0,0,.2);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%)}
 
 /* ── SCOPE TRADE CARD ── */
 .trade-card{background:var(--l2);border:1px solid var(--rim);border-radius:var(--r);padding:11px 14px;margin-bottom:8px;animation:fadeUp .2s ease both}
@@ -299,7 +301,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .tot-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--rim)}
 .tot-row:last-child{border:none}
 .tot-lbl{font-size:13px;color:var(--muted)}
-.tot-val{font-family:'DM Mono',monospace;font-size:13px;color:var(--white2)}
+.tot-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--white2)}
 .tot-row.pos .tot-val{color:var(--green)}
 .tot-row.pur .tot-val{color:var(--purple)}
 
@@ -329,7 +331,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .market-adj-opt.active{background:var(--gold);color:#000}
 
 /* ── Q SHEET (all questions on one screen) ── */
-.q-sheet{background:var(--glass);border:1.5px solid var(--rim);border-radius:var(--r);padding:16px;margin-bottom:10px;animation:fadeUp .2s ease both}
+.q-sheet{background:var(--glass);border:1.5px solid var(--rim);border-radius:var(--r);padding:16px;margin-bottom:10px;backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);animation:fadeUp .2s ease both}
 .q-block{margin-bottom:18px}
 .q-block:last-child{margin-bottom:0}
 .q-label{font-size:13px;font-weight:600;color:var(--white);margin-bottom:8px;line-height:1.4}
@@ -350,13 +352,13 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .q-other:focus{border-color:rgba(228,0,43,.4)}
 .q-other::placeholder{color:var(--muted)}
 .bid-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:3px}
-.bid-val{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;color:var(--text-accent);letter-spacing:-.5px}
+.bid-val{font-family:'DM Mono',monospace;font-size:26px;font-weight:800;color:var(--text-accent);letter-spacing:-.8px}
 
 /* ── MARGIN METER ── */
 .meter{margin-top:14px}
 .meter-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .meter-lbl{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace}
-.meter-pct{font-family:'DM Mono',monospace;font-size:15px;font-weight:500}
+.meter-pct{font-family:'DM Mono',monospace;font-size:16px;font-weight:800;letter-spacing:-.3px}
 .meter-bar{height:4px;border-radius:2px;background:var(--l4);overflow:hidden}
 .meter-fill{height:100%;border-radius:2px;transition:width 1s ease,background .3s}
 .meter-verdict{font-size:11px;margin-top:5px;font-weight:600}
@@ -478,10 +480,11 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .loading-phase-wrap{width:100%;max-width:360px}
 .loading-phase-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-accent);font-family:'DM Mono',monospace;text-align:center;margin-bottom:14px}
 .loading-terminal{
-  background:var(--l1);border:1px solid var(--rim2);border-radius:var(--r);
+  background:var(--glass2);border:1px solid var(--rim2);border-radius:var(--r);
   padding:16px 18px;min-height:160px;max-height:200px;overflow:hidden;
   font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;
   position:relative;
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
 }
 .loading-terminal::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
@@ -538,12 +541,19 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
   width:100%;max-width:380px;margin-top:14px;
   display:flex;flex-direction:column;gap:5px;
 }
+.loading-skel-row{
+  height:34px;border-radius:9px;
+  background:linear-gradient(100deg,var(--glass2) 30%,var(--rim2) 50%,var(--glass2) 70%);
+  background-size:200% 100%;animation:skelShimmer 1.4s ease-in-out infinite;
+}
+@keyframes skelShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .loading-live-row{
   display:flex;align-items:flex-start;gap:10px;
-  background:var(--l2);border:1px solid var(--rim2);border-radius:9px;
+  background:var(--glass2);border:1px solid var(--rim2);border-radius:9px;
   padding:8px 12px;font-size:12px;color:var(--white2);
   opacity:0;transform:translateY(6px);
   animation:liveRowIn .32s ease forwards;
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
 }
 @keyframes liveRowIn{to{opacity:1;transform:none}}
 .loading-live-desc{flex:1;min-width:0;white-space:normal;line-height:1.4}
@@ -574,7 +584,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .prop-tbl td{padding:7px 8px;border-bottom:1px solid #faf7f3;font-size:11px}
 .prop-total-bar{background:#1a1a18;color:#FFC933;padding:13px 15px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-top:14px}
 .prop-total-bar .pl{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.prop-total-bar .pv{font-family:'DM Mono',monospace;font-size:18px;font-weight:500}
+.prop-total-bar .pv{font-family:'DM Mono',monospace;font-size:18px;font-weight:800;letter-spacing:-.3px}
 .prop-sig{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
 .prop-sig-line{border-top:1px solid #e2ddd6;padding-top:7px;font-size:9px;color:#bbb;letter-spacing:.5px}
 .prop-disclaimer{font-size:9px;color:#ccc;margin-top:16px;text-align:center;line-height:1.5}
@@ -720,7 +730,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 
     <!-- Feature list -->
     <div style="text-align:left;background:var(--panel);border-radius:12px;padding:14px 18px;margin-bottom:20px">
-      <div style="font-size:12px;color:var(--white2);line-height:2">✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Internal cost sheet + client proposal<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Southeast regional pricing</div>
+      <div style="font-size:12px;color:var(--white2);line-height:2">✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Internal cost sheet + client proposal<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Regional market pricing</div>
     </div>
 
     <!-- Side by side pricing -->
@@ -1169,7 +1179,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
           </div>
           <div class="disclaimer">
             <span style="flex-shrink:0"><i data-lucide="zap" style="width:13px;height:13px;stroke:var(--gold);vertical-align:middle"></i></span>
-            <span data-en="AI-estimated using Southeast regional data. Verify material costs against current supplier quotes before submitting." data-es="Estimado con IA usando datos del Sureste. Verifica costos con tu proveedor antes de enviar.">AI-estimated using Southeast regional data. Verify material costs against current supplier quotes before submitting.</span>
+            <span data-en="AI-estimated using regional market data. Verify material costs against current supplier quotes before submitting." data-es="Estimado con IA usando datos regionales del mercado. Verifica costos con tu proveedor antes de enviar.">AI-estimated using regional market data. Verify material costs against current supplier quotes before submitting.</span>
           </div>
           <!-- Post-estimate Go Pro strip — hidden for Pro users -->
           <div id="post-estimate-upsell" style="display:none;margin:10px 0 2px 0;background:linear-gradient(135deg,rgba(228,0,43,.07),rgba(228,0,43,.03));border:1px solid rgba(228,0,43,.2);border-radius:10px;padding:11px 14px;align-items:center;justify-content:space-between;gap:10px">
@@ -1671,8 +1681,8 @@ function toggleTheme(){
 //  LANGUAGE
 // ══════════════════════════
 const T={
-  en:{tagline:'Scope in. Winning bid out.<br>Built for contractors.',analyzing:'Reading your scope…',extracted:'Got it. Here\'s what I read from your scope — review before I build the numbers:',qIntro:'A few things will move the number a lot — answer these and I\'ll lock in your estimate.',calculating:'Calculating your estimate with Southeast regional rates'},
-  es:{tagline:'Alcance adentro. Oferta ganadora afuera.<br>Hecho para contratistas.',analyzing:'Leyendo tu alcance…',extracted:'Listo. Esto es lo que leí de tu alcance — revisa antes de calcular:',qIntro:'Estas preguntas afectan el precio significativamente — respóndelas y generaré tu estimado.',calculating:'Calculando con tarifas regionales del Sureste'}
+  en:{tagline:'Scope in. Winning bid out.<br>Built for contractors.',analyzing:'Reading your scope…',extracted:'Got it. Here\'s what I read from your scope — review before I build the numbers:',qIntro:'A few things will move the number a lot — answer these and I\'ll lock in your estimate.',calculating:'Calculating your estimate with regional market rates'},
+  es:{tagline:'Alcance adentro. Oferta ganadora afuera.<br>Hecho para contratistas.',analyzing:'Leyendo tu alcance…',extracted:'Listo. Esto es lo que leí de tu alcance — revisa antes de calcular:',qIntro:'Estas preguntas afectan el precio significativamente — respóndelas y generaré tu estimado.',calculating:'Calculando con tarifas regionales del mercado'}
 };
 function setLang(lang,btn){
   appLang=lang;
@@ -2619,7 +2629,10 @@ PROFIT STACKING — CORRECT METHOD:
     const stepEl=document.getElementById('loading-step-text');
     const phaseLabel=document.getElementById('loading-phase-label');
     const liveEl=document.getElementById('loading-live-items');
-    if(liveEl) liveEl.innerHTML='';
+    // Skeleton rows fill the dead space while the model is still writing its
+    // first line item — the longest single wait in the whole flow otherwise
+    // had nothing visible happening in this area.
+    if(liveEl) liveEl.innerHTML='<div class="loading-skel-row"></div><div class="loading-skel-row"></div><div class="loading-skel-row"></div>';
     phaseLabel.textContent=appLang==='en'?'Phase 3 · Building Estimate':'Fase 3 · Construyendo Estimado';
     const setProg=(p,l)=>{bar.style.width=Math.min(p,100)+'%';pctEl.textContent=Math.round(Math.min(p,100))+'%';if(l)stepEl.textContent=l;};
     setProg(56,appLang==='en'?'Pricing line items…':'Cotizando partidas…');
@@ -2627,6 +2640,10 @@ PROFIT STACKING — CORRECT METHOD:
     const EXPECT=15; let rendered=0;
     const onDelta=(full)=>{
       const items=extractStreamLineItems(full);
+      if(items.length>rendered&&liveEl){
+        const skel=liveEl.querySelectorAll('.loading-skel-row');
+        skel.forEach(s=>s.remove());
+      }
       for(let k=rendered;k<items.length;k++){
         const it=items[k]||{};
         const row=document.createElement('div');
@@ -2920,7 +2937,14 @@ function renderTotals(data){
   const rangeLow=Math.round(data.totalBid*0.88);
   const rangeHigh=Math.round(data.totalBid*1.12);
   const rangeEl=document.getElementById('bid-range-display');
-  if(rangeEl) rangeEl.textContent=fmtK(rangeLow)+' — '+fmtK(rangeHigh);
+  if(rangeEl){
+    rangeEl.textContent=fmtK(rangeLow)+' — '+fmtK(rangeHigh);
+    // Replay the reveal animation each time the number lands, so the headline
+    // figure always feels like a fresh result, not a static label.
+    rangeEl.style.animation='none';
+    void rangeEl.offsetWidth;
+    rangeEl.style.animation='popIn .4s cubic-bezier(.2,.9,.3,1.3) both';
+  }
   const fill=document.getElementById('meter-fill');
   const pctEl=document.getElementById('meter-pct');
   const verdict=document.getElementById('meter-verdict');
@@ -3025,7 +3049,7 @@ function renderProposalPreview(){
         <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Client Signature & Date':'Firma del Cliente y Fecha'}</div></div>
         <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Contractor Signature & Date':'Firma del Contratista y Fecha'}</div></div>
       </div>
-      <div class="prop-disclaimer">${L==='en'?'AI-estimated using Southeast regional market data. Verify material costs against current supplier quotes. Generated by Even · Cornerstone OS.':'Estimado con IA usando datos del mercado del Sureste. Verifica costos con tu proveedor. Generado por Even · Cornerstone OS.'}</div>
+      <div class="prop-disclaimer">${L==='en'?'AI-estimated using regional market data. Verify material costs against current supplier quotes. Generated by Even · Cornerstone OS.':'Estimado con IA usando datos regionales del mercado. Verifica costos con tu proveedor. Generado por Even · Cornerstone OS.'}</div>
     </div>`;
   document.getElementById('proposal-section').style.display='block';
   document.getElementById('proposal-section').scrollIntoView({behavior:'smooth',block:'start'});
@@ -3383,7 +3407,7 @@ async function submitDataTrade(){
     <div class="pro-modal-desc" id="pro-modal-desc">Upgrade to Even Pro to unlock this.</div>
     <span class="pro-modal-tag">Contractors using Even close bids 40% faster.</span>
     <div class="pro-modal-features">
-      <div>✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Add &amp; edit line items<br>✓ Actual cost tracker<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Southeast regional pricing</div>
+      <div>✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Add &amp; edit line items<br>✓ Actual cost tracker<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Regional market pricing</div>
     </div>
     <div class="pro-modal-pricing">
       <div class="pro-modal-plan hero">
