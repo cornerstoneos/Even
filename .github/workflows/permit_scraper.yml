@@ -1,0 +1,30 @@
+name: Permit Fee Scraper
+
+on:
+  workflow_dispatch:
+    inputs:
+      market_limit:
+        description: 'Only scrape the first N markets (leave blank for all 43)'
+        required: false
+        type: string
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install -r data-pipeline/requirements.txt
+      - name: Run permit scraper
+        run: python data-pipeline/permit_scraper.py ${{ inputs.market_limit }}
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: permit-research-${{ github.run_id }}
+          path: data-pipeline/permit-research/
+          retention-days: 30
