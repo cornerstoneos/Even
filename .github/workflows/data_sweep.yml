@@ -36,5 +36,6 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          BLS_API_KEY: ${{ secrets.BLS_API_KEY }}
           MARKET_LIMIT: ${{ inputs.market_limit }}
         run: python data-pipeline/even_data_sweep.py

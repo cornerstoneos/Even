@@ -106,6 +106,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .gc{
   background:var(--glass);border:1px solid var(--rim);border-radius:var(--rlg);
   box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 4px 20px rgba(0,0,0,.25);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
   overflow:hidden;margin-bottom:12px;
 }
 .gc-head{
@@ -254,6 +255,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .qcard{
   background:var(--glass);border:1.5px solid var(--rim);border-radius:var(--r);
   padding:14px 16px;margin-bottom:10px;transition:border-color .15s;
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
   animation:fadeUp .2s ease both;
 }
 .qcard:focus-within{border-color:rgba(228,0,43,0.35)}
@@ -268,7 +270,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 /* ── AI BUBBLE ── */
 .ai-bubble{display:flex;gap:11px;margin-bottom:14px;animation:fadeUp .25s ease both}
 .ai-avatar{width:34px;height:34px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,var(--gold),#e8a020);display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 12px rgba(228,0,43,.3)}
-.ai-msg{background:var(--l2);border:1px solid var(--rim);border-radius:4px 14px 14px 14px;padding:12px 15px;flex:1;font-size:13.5px;line-height:1.65;color:var(--white2);box-shadow:0 2px 12px rgba(0,0,0,.2)}
+.ai-msg{background:var(--glass2);border:1px solid var(--rim);border-radius:4px 14px 14px 14px;padding:12px 15px;flex:1;font-size:13.5px;line-height:1.65;color:var(--white2);box-shadow:0 2px 12px rgba(0,0,0,.2);backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%)}
 
 /* ── SCOPE TRADE CARD ── */
 .trade-card{background:var(--l2);border:1px solid var(--rim);border-radius:var(--r);padding:11px 14px;margin-bottom:8px;animation:fadeUp .2s ease both}
@@ -299,7 +301,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .tot-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--rim)}
 .tot-row:last-child{border:none}
 .tot-lbl{font-size:13px;color:var(--muted)}
-.tot-val{font-family:'DM Mono',monospace;font-size:13px;color:var(--white2)}
+.tot-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--white2)}
 .tot-row.pos .tot-val{color:var(--green)}
 .tot-row.pur .tot-val{color:var(--purple)}
 
@@ -329,7 +331,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .market-adj-opt.active{background:var(--gold);color:#000}
 
 /* ── Q SHEET (all questions on one screen) ── */
-.q-sheet{background:var(--glass);border:1.5px solid var(--rim);border-radius:var(--r);padding:16px;margin-bottom:10px;animation:fadeUp .2s ease both}
+.q-sheet{background:var(--glass);border:1.5px solid var(--rim);border-radius:var(--r);padding:16px;margin-bottom:10px;backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);animation:fadeUp .2s ease both}
 .q-block{margin-bottom:18px}
 .q-block:last-child{margin-bottom:0}
 .q-label{font-size:13px;font-weight:600;color:var(--white);margin-bottom:8px;line-height:1.4}
@@ -350,13 +352,13 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .q-other:focus{border-color:rgba(228,0,43,.4)}
 .q-other::placeholder{color:var(--muted)}
 .bid-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:3px}
-.bid-val{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;color:var(--text-accent);letter-spacing:-.5px}
+.bid-val{font-family:'DM Mono',monospace;font-size:26px;font-weight:800;color:var(--text-accent);letter-spacing:-.8px}
 
 /* ── MARGIN METER ── */
 .meter{margin-top:14px}
 .meter-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .meter-lbl{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace}
-.meter-pct{font-family:'DM Mono',monospace;font-size:15px;font-weight:500}
+.meter-pct{font-family:'DM Mono',monospace;font-size:16px;font-weight:800;letter-spacing:-.3px}
 .meter-bar{height:4px;border-radius:2px;background:var(--l4);overflow:hidden}
 .meter-fill{height:100%;border-radius:2px;transition:width 1s ease,background .3s}
 .meter-verdict{font-size:11px;margin-top:5px;font-weight:600}
@@ -478,10 +480,11 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .loading-phase-wrap{width:100%;max-width:360px}
 .loading-phase-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-accent);font-family:'DM Mono',monospace;text-align:center;margin-bottom:14px}
 .loading-terminal{
-  background:var(--l1);border:1px solid var(--rim2);border-radius:var(--r);
+  background:var(--glass2);border:1px solid var(--rim2);border-radius:var(--r);
   padding:16px 18px;min-height:160px;max-height:200px;overflow:hidden;
   font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;
   position:relative;
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
 }
 .loading-terminal::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
@@ -538,15 +541,22 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
   width:100%;max-width:380px;margin-top:14px;
   display:flex;flex-direction:column;gap:5px;
 }
+.loading-skel-row{
+  height:34px;border-radius:9px;
+  background:linear-gradient(100deg,var(--glass2) 30%,var(--rim2) 50%,var(--glass2) 70%);
+  background-size:200% 100%;animation:skelShimmer 1.4s ease-in-out infinite;
+}
+@keyframes skelShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .loading-live-row{
-  display:flex;align-items:center;gap:10px;
-  background:var(--l2);border:1px solid var(--rim2);border-radius:9px;
+  display:flex;align-items:flex-start;gap:10px;
+  background:var(--glass2);border:1px solid var(--rim2);border-radius:9px;
   padding:8px 12px;font-size:12px;color:var(--white2);
   opacity:0;transform:translateY(6px);
   animation:liveRowIn .32s ease forwards;
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
 }
 @keyframes liveRowIn{to{opacity:1;transform:none}}
-.loading-live-desc{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.loading-live-desc{flex:1;min-width:0;white-space:normal;line-height:1.4}
 .loading-live-amt{margin-left:auto;flex-shrink:0;font-family:'DM Mono',monospace;font-weight:600;color:var(--text-accent)}
 .loading-live-tick{flex-shrink:0;color:var(--green);font-size:11px}
 .loading-reveal{
@@ -574,7 +584,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .prop-tbl td{padding:7px 8px;border-bottom:1px solid #faf7f3;font-size:11px}
 .prop-total-bar{background:#1a1a18;color:#FFC933;padding:13px 15px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin-top:14px}
 .prop-total-bar .pl{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.prop-total-bar .pv{font-family:'DM Mono',monospace;font-size:18px;font-weight:500}
+.prop-total-bar .pv{font-family:'DM Mono',monospace;font-size:18px;font-weight:800;letter-spacing:-.3px}
 .prop-sig{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
 .prop-sig-line{border-top:1px solid #e2ddd6;padding-top:7px;font-size:9px;color:#bbb;letter-spacing:.5px}
 .prop-disclaimer{font-size:9px;color:#ccc;margin-top:16px;text-align:center;line-height:1.5}
@@ -586,8 +596,17 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--rim2);border-radius:2px}
 
 @media(max-width:440px){
-  .li-head,.li-row{grid-template-columns:1fr 52px 70px 70px 82px 26px;gap:4px;font-size:11px}
-  .li-head{font-size:8.5px}
+  /* Description was squeezed into a fixed 6-column row alongside qty/unit/
+     cost/total, truncating to 3-4 characters on narrow screens. Stack it:
+     description gets its own full-width row, numeric fields go below. */
+  .li-head{display:none}
+  .li-row{grid-template-columns:repeat(5,1fr);grid-template-rows:auto auto;gap:4px 6px;font-size:11px}
+  .li-row>*:nth-child(1){grid-column:1/-1}
+  .li-row>*:nth-child(2){grid-column:1}
+  .li-row>*:nth-child(3){grid-column:2}
+  .li-row>*:nth-child(4){grid-column:3}
+  .li-row>*:nth-child(5){grid-column:4}
+  .li-row>*:nth-child(6){grid-column:5}
   .bid-val{font-size:22px}
   .pdf-grid{grid-template-columns:1fr}
 }
@@ -711,7 +730,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 
     <!-- Feature list -->
     <div style="text-align:left;background:var(--panel);border-radius:12px;padding:14px 18px;margin-bottom:20px">
-      <div style="font-size:12px;color:var(--white2);line-height:2">✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Internal cost sheet + client proposal<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Southeast regional pricing</div>
+      <div style="font-size:12px;color:var(--white2);line-height:2">✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Internal cost sheet + client proposal<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Regional market pricing</div>
     </div>
 
     <!-- Side by side pricing -->
@@ -1121,6 +1140,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
         </div>
         <div style="padding:10px 12px">
           <div id="similar-recall" style="display:none;margin-bottom:8px"></div>
+          <div id="calibration-recall" style="display:none;margin-bottom:8px"></div>
           <div id="margin-alerts" style="display:none;margin-bottom:8px"></div>
           <div class="li-head">
             <span data-en="Description" data-es="Descripción">Description</span>
@@ -1160,7 +1180,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
           </div>
           <div class="disclaimer">
             <span style="flex-shrink:0"><i data-lucide="zap" style="width:13px;height:13px;stroke:var(--gold);vertical-align:middle"></i></span>
-            <span data-en="AI-estimated using Southeast regional data. Verify material costs against current supplier quotes before submitting." data-es="Estimado con IA usando datos del Sureste. Verifica costos con tu proveedor antes de enviar.">AI-estimated using Southeast regional data. Verify material costs against current supplier quotes before submitting.</span>
+            <span data-en="AI-estimated using regional market data. Verify material costs against current supplier quotes before submitting." data-es="Estimado con IA usando datos regionales del mercado. Verifica costos con tu proveedor antes de enviar.">AI-estimated using regional market data. Verify material costs against current supplier quotes before submitting.</span>
           </div>
           <!-- Post-estimate Go Pro strip — hidden for Pro users -->
           <div id="post-estimate-upsell" style="display:none;margin:10px 0 2px 0;background:linear-gradient(135deg,rgba(228,0,43,.07),rgba(228,0,43,.03));border:1px solid rgba(228,0,43,.2);border-radius:10px;padding:11px 14px;align-items:center;justify-content:space-between;gap:10px">
@@ -1327,6 +1347,9 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 // ══════════════════════════════════════════
 const SUPABASE_URL = 'https://klgofcqrncabfhskiijn.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_nBf8FEP-zsgCGXlTImEDKQ_cknCqWok';
+// index.html is static-hosted (Netlify); the API lives on a separate Railway deployment,
+// so every backend call needs the absolute origin — relative /api/... would hit Netlify, not this.
+const API_ORIGIN = 'https://even-production.up.railway.app';
 const STRIPE_KEY          = 'pk_live_51TR3WJB41neZFjHYGsqXEHKIknMlCMHSujFXXN9y0JFjMIxNJ0wG7gM5BoJIJfqJFqL4PvRY9MJj5Sb1TBqwdLMI00WlrqFoV5';
 const STRIPE_PRICE_MONTHLY = 'price_1TR3XoB41neZFjHYzJRYKAhb';
 const STRIPE_PRICE_ANNUAL  = 'price_1TSTyNB41neZFjHYQgDzq8RR';
@@ -1339,6 +1362,36 @@ let estimateCount = 0;
 let isPro = false;
 let authMode = 'login';
 let stripe = null; // initialized lazily on first use
+
+// Escapes text pulled from user input or AI responses before it's spliced into
+// innerHTML template literals — scope text and other user fields flow into
+// Claude prompts, and the model's JSON response text gets rendered back, so
+// any of it could contain HTML/script fragments.
+function escapeHtml(str){
+  if(str===null||str===undefined) return '';
+  return String(str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ── Client-side error reporting ─────────────────────────────────────────────
+// Dedupe by message so a repeated failure (e.g. a render loop) reports once, not a flood.
+const _reportedErrors=new Set();
+function reportClientError(message, stack, context){
+  const key=String(message).slice(0,200);
+  if(_reportedErrors.has(key)) return;
+  _reportedErrors.add(key);
+  fetch(`${API_ORIGIN}/api/log-error`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({message,stack,url:location.href,context})
+  }).catch(()=>{});
+}
+window.addEventListener('error', e=>{
+  reportClientError(e.message||'Unknown error', e.error?.stack, {line:e.lineno,col:e.colno,file:e.filename});
+});
+window.addEventListener('unhandledrejection', e=>{
+  const reason=e.reason;
+  reportClientError(reason?.message||String(reason), reason?.stack, {type:'unhandledrejection'});
+});
 
 // Init Supabase
 function initSupabase(){
@@ -1653,8 +1706,8 @@ function toggleTheme(){
 //  LANGUAGE
 // ══════════════════════════
 const T={
-  en:{tagline:'Scope in. Winning bid out.<br>Built for contractors.',analyzing:'Reading your scope…',extracted:'Got it. Here\'s what I read from your scope — review before I build the numbers:',qIntro:'A few things will move the number a lot — answer these and I\'ll lock in your estimate.',calculating:'Calculating your estimate with Southeast regional rates'},
-  es:{tagline:'Alcance adentro. Oferta ganadora afuera.<br>Hecho para contratistas.',analyzing:'Leyendo tu alcance…',extracted:'Listo. Esto es lo que leí de tu alcance — revisa antes de calcular:',qIntro:'Estas preguntas afectan el precio significativamente — respóndelas y generaré tu estimado.',calculating:'Calculando con tarifas regionales del Sureste'}
+  en:{tagline:'Scope in. Winning bid out.<br>Built for contractors.',analyzing:'Reading your scope…',extracted:'Got it. Here\'s what I read from your scope — review before I build the numbers:',qIntro:'A few things will move the number a lot — answer these and I\'ll lock in your estimate.',calculating:'Calculating your estimate with regional market rates'},
+  es:{tagline:'Alcance adentro. Oferta ganadora afuera.<br>Hecho para contratistas.',analyzing:'Leyendo tu alcance…',extracted:'Listo. Esto es lo que leí de tu alcance — revisa antes de calcular:',qIntro:'Estas preguntas afectan el precio significativamente — respóndelas y generaré tu estimado.',calculating:'Calculando con tarifas regionales del mercado'}
 };
 function setLang(lang,btn){
   appLang=lang;
@@ -1693,6 +1746,8 @@ function navigate(scr){
     const _pe=document.getElementById('proposal-edit-card');if(_pe)_pe.style.display='none';
     const _ma=document.getElementById('margin-alerts');if(_ma)_ma.style.display='none';
     const _sr=document.getElementById('similar-recall');if(_sr)_sr.style.display='none';
+    const _cr=document.getElementById('calibration-recall');if(_cr)_cr.style.display='none';
+    window._costCalibration=null;
     document.getElementById('var-body').innerHTML='';
     window._finalBid=null;window._proposalDetail='full';
     const _fbi=document.getElementById('final-bid-input');if(_fbi)_fbi.value='';
@@ -1892,7 +1947,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
     try{
       const ctrl=new AbortController();
       const tid=setTimeout(()=>ctrl.abort(),100000);
-      const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+      const r=await fetch(`${API_ORIGIN}/api/estimate`,{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify(body),
@@ -1939,7 +1994,7 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true){
   const tid=setTimeout(()=>ctrl.abort(),150000);
   let r;
   try{
-    r=await fetch('https://even-production.up.railway.app/api/estimate',{
+    r=await fetch(`${API_ORIGIN}/api/estimate`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify(body),signal:ctrl.signal
     });
@@ -2018,6 +2073,19 @@ function parseJ(t){
 }
 const fmt=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmtK=n=>n>=1000000?'$'+(n/1000000).toFixed(n%1000000===0?0:1)+'M':'$'+Math.round(n/1000)+'k';
+
+// Confidence tier drives the bid range width — tighter when the estimate is
+// actually grounded in real local materials/labor/permit data, wider when it
+// fell back to general AI knowledge. Set once per estimate in calculateEstimate();
+// everywhere that draws the range (results screen, both PDFs) reads it from here
+// instead of a flat constant, so "confidence-adjusted" is no longer decorative.
+const CONFIDENCE_RANGE={high:[0.92,1.08],medium:[0.88,1.12],low:[0.80,1.20]};
+function getConfidenceRange(data){ return CONFIDENCE_RANGE[data?.confidenceTier]||CONFIDENCE_RANGE.medium; }
+function computeConfidenceTier(marketData){
+  if(!marketData) return 'low';
+  const grounded=[marketData.materials,marketData.labor,marketData.permits].filter(a=>a&&a.length).length;
+  return grounded>=3?'high':grounded>=1?'medium':'low';
+}
 function savePDF(doc,filename){if(/iPad|iPhone|iPod/.test(navigator.userAgent)){const url=URL.createObjectURL(doc.output('blob'));const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},1000);}else{doc.save(filename);}}
 
 
@@ -2136,10 +2204,13 @@ function startThinkingStatus(elId,msgs){
   const el=document.getElementById(elId);
   if(!el) return ()=>{};
   let mi=0,dots=1,stopped=false;
-  const render=()=>{ if(stopped)return; el.innerHTML=`<span class="think-dot"></span>${msgs[mi%msgs.length]}${'.'.repeat(dots)}`; };
+  // Clamp at the last message instead of wrapping — a slow response shouldn't
+  // ever look like it went backward to an earlier stage ("Reading your scope"
+  // reappearing after "Prepping your questions" already showed).
+  const render=()=>{ if(stopped)return; el.innerHTML=`<span class="think-dot"></span>${msgs[Math.min(mi,msgs.length-1)]}${'.'.repeat(dots)}`; };
   render();
   const dotTimer=setInterval(()=>{dots=dots%3+1;render();},420);
-  const msgTimer=setInterval(()=>{mi++;dots=1;render();},2200);
+  const msgTimer=setInterval(()=>{if(mi<msgs.length-1){mi++;dots=1;render();}},2200);
   return ()=>{ stopped=true; clearInterval(dotTimer); clearInterval(msgTimer); };
 }
 
@@ -2177,7 +2248,7 @@ async function startEstimate(){
   }
   // Build context-rich prompt with construction primer for better OCR + scope extraction
   const imgContext=uploadedImages.length>0?`\nIMAGES ATTACHED: ${uploadedImages.length} construction plan/photo(s). Perform high-accuracy OCR on all text. Extract all dimensions, material callouts, notes, scope items, and quantities visible in the images. Pay special attention to leader lines, revision clouds, and specification notes. Images may be multiple pages of the same scope — combine and reconcile all information across images before responding.`:'';
-  msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask 3-5 pricing-critical questions with 3-4 short options each.`});
+  msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.`});
 
   try{
     const res=await callClaude([{role:'user',content:msgContent}],800);
@@ -2202,7 +2273,7 @@ async function startEstimate(){
     document.getElementById('gen-btn').disabled=false;
   }catch(e){
     stopStatus();
-    document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">${e.message||'Something went wrong analyzing your scope — please try again'}</span>`;
+    document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">${escapeHtml(e.message)||'Something went wrong analyzing your scope — please try again'}</span>`;
     document.getElementById('gen-btn').disabled=false;
   }
 }
@@ -2211,11 +2282,11 @@ function renderScopeExtracted(data){
   const grid=document.getElementById('scope-grid');
   grid.innerHTML=(data.tradeBreakdown||[]).map((t,i)=>`
     <div class="trade-card" style="animation-delay:${i*.07}s">
-      <div class="trade-head"><span class="trade-icon-wrap">${t.icon||'🔧'}</span><span class="trade-name">${t.trade}</span></div>
-      <div class="trade-items">${(t.items||[]).map(item=>`<div class="trade-item">${item}</div>`).join('')}</div>
+      <div class="trade-head"><span class="trade-icon-wrap">${escapeHtml(t.icon)||'🔧'}</span><span class="trade-name">${escapeHtml(t.trade)}</span></div>
+      <div class="trade-items">${(t.items||[]).map(item=>`<div class="trade-item">${escapeHtml(item)}</div>`).join('')}</div>
     </div>`).join('');
   if(data.keyFacts?.length){
-    grid.innerHTML+=`<div class="fact-row">${data.keyFacts.map(f=>`<span class="fact-chip">${f}</span>`).join('')}</div>`;
+    grid.innerHTML+=`<div class="fact-row">${data.keyFacts.map(f=>`<span class="fact-chip">${escapeHtml(f)}</span>`).join('')}</div>`;
   }
 }
 
@@ -2231,9 +2302,9 @@ function renderQuestions(questions){
   const blocks=questions.map((q,i)=>{
     const opts=(q.options&&q.options.length)?q.options:buildChipOptions(q);
     return `<div class="q-block" id="qblock-${i}">
-      <div class="q-label">${i+1}. ${q.question}</div>
+      <div class="q-label">${i+1}. ${escapeHtml(q.question)}</div>
       <div class="q-chips" id="qchips-${i}">
-        ${opts.map(o=>`<button class="q-chip" onclick="selectChip(${i},'${o.replace(/'/g,"\'")}',this)">${o}</button>`).join('')}
+        ${opts.map(o=>`<button class="q-chip" onclick="selectChip(${i},'${encodeURIComponent(o).replace(/'/g,'%27')}',this)">${escapeHtml(o)}</button>`).join('')}
       </div>
       <input class="q-other" id="qother-${i}" placeholder="${appLang==='en'?'Other / additional detail…':'Otro / detalle adicional…'}" oninput="setQAnswer(${i},this.value)">
     </div>`;
@@ -2295,6 +2366,7 @@ function buildChipOptions(q){
 }
 
 function selectChip(idx,value,el){
+  value=decodeURIComponent(value);
   const chips=document.querySelectorAll(`#qchips-${idx} .q-chip`);
   chips.forEach(c=>{c.classList.remove('selected');c.classList.remove('active');});
   el.classList.add('selected');
@@ -2314,10 +2386,85 @@ function setQAnswer(idx,value){
   if(other) delete other.dataset.fromChip;
 }
 
+// ── City autocomplete (replaces the free-text-only location field) ──
+let _marketsListCache=null;
+async function loadMarketsList(){
+  if(_marketsListCache) return _marketsListCache;
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/markets`);
+    _marketsListCache=r.ok?await r.json():[];
+  }catch(e){ _marketsListCache=[]; }
+  return _marketsListCache;
+}
+
+let _cityOptions=[];
+let _cityActiveIdx=-1;
+
+async function cityAutocomplete(value){
+  const dd=document.getElementById('city-dropdown');
+  const q=(value||'').trim().toLowerCase();
+  if(q.length<2){ closeCityDropdown(); return; }
+  // A 5-digit zip is handled entirely server-side (nearest-market geocoding) —
+  // no point suggesting from the 43-city list against a number.
+  if(/^\d{5}$/.test(q)){ closeCityDropdown(); return; }
+  const markets=await loadMarketsList();
+  const matches=markets.filter(m=>
+    m.market.toLowerCase().includes(q)||m.state.toLowerCase().includes(q)||m.zone.toLowerCase().includes(q)
+  ).slice(0,8);
+  _cityOptions=matches;
+  _cityActiveIdx=-1;
+  if(!matches.length){ closeCityDropdown(); return; }
+  dd.innerHTML=matches.map((m,i)=>
+    `<div class="city-opt" data-idx="${i}" onclick="selectCityOption(${i})" onmouseenter="this.style.background='var(--l2)'" onmouseleave="this.style.background='transparent'" style="padding:10px 14px;cursor:pointer;font-size:13px;color:var(--white);border-bottom:1px solid var(--rim);transition:background .1s">${m.market}, ${m.state} <span style="color:var(--muted);font-size:11px">— ${m.zone}</span></div>`
+  ).join('');
+  dd.style.display='block';
+}
+
+function selectCityOption(i){
+  const m=_cityOptions[i];
+  if(!m) return;
+  const input=document.getElementById('est-location');
+  input.value=`${m.market}, ${m.state}`;
+  input.dispatchEvent(new Event('change'));
+  closeCityDropdown();
+}
+
+function closeCityDropdown(){
+  const dd=document.getElementById('city-dropdown');
+  dd.style.display='none'; dd.innerHTML='';
+  _cityOptions=[]; _cityActiveIdx=-1;
+}
+
+function highlightCityOption(){
+  const dd=document.getElementById('city-dropdown');
+  [...dd.children].forEach((el,i)=>{ el.style.background=i===_cityActiveIdx?'var(--l2)':'transparent'; });
+}
+
+function cityKeyNav(event){
+  if(!_cityOptions.length) return;
+  if(event.key==='ArrowDown'){
+    event.preventDefault();
+    _cityActiveIdx=Math.min(_cityActiveIdx+1,_cityOptions.length-1);
+    highlightCityOption();
+  }else if(event.key==='ArrowUp'){
+    event.preventDefault();
+    _cityActiveIdx=Math.max(_cityActiveIdx-1,0);
+    highlightCityOption();
+  }else if(event.key==='Enter'){
+    if(_cityActiveIdx>=0){ event.preventDefault(); selectCityOption(_cityActiveIdx); }
+  }else if(event.key==='Escape'){
+    closeCityDropdown();
+  }
+}
+
+document.addEventListener('click',function(e){
+  if(!e.target.closest('#est-location')&&!e.target.closest('#city-dropdown')) closeCityDropdown();
+});
+
 async function fetchMarketPricing(location){
   if(!location) return null;
   try{
-    const r=await fetch(`/api/market-data?location=${encodeURIComponent(location)}`);
+    const r=await fetch(`${API_ORIGIN}/api/market-data?location=${encodeURIComponent(location)}`);
     if(!r.ok) return null;
     const data=await r.json();
     if(!data||!data.market||(!data.materials?.length&&!data.labor?.length&&!data.permits?.length)) return null;
@@ -2354,6 +2501,50 @@ IMPORTANT PRICING INSTRUCTIONS:
 - SUBCONTRACTOR RATES vs LABOR RATES: When a contractor is hiring subs (not direct labor), sub billing rates run 15-40% higher than direct labor. Always ask if work is self-performed or subcontracted — this moves the number significantly
 - CONTRACTOR TIME: Always include project management labor — GC managing subs typically bills 10-15% of total project cost or 8-16 hours per week of project duration
 `;
+}
+
+// Compares this contractor's logged actual costs (cost_entries) against what each line item
+// was originally estimated at, grouped by category, so recurring under/over-bidding patterns
+// can calibrate the next estimate instead of silently repeating.
+async function getCostCalibration(trade){
+  if(!isPro||!currentUser||!sbClient||!trade) return null;
+  try{
+    const { data:jobs }=await sbClient.from('estimates')
+      .select('id,estimate_json')
+      .eq('user_id',currentUser.id)
+      .ilike('trade','%'+trade+'%')
+      .order('created_at',{ascending:false})
+      .limit(15);
+    if(!jobs||!jobs.length) return null;
+    const ids=jobs.map(j=>j.id);
+    const { data:entries }=await sbClient.from('cost_entries')
+      .select('estimate_id,line_index,actual_cost')
+      .in('estimate_id',ids);
+    if(!entries||entries.length<3) return null;
+    const byId=Object.fromEntries(jobs.map(j=>[j.id,j.estimate_json]));
+    const byCategory={};
+    entries.forEach(e=>{
+      const line=byId[e.estimate_id]?.lineItems?.[e.line_index];
+      if(!line||!line.total) return;
+      const cat=line.category||'Other';
+      const variancePct=((e.actual_cost-line.total)/line.total)*100;
+      (byCategory[cat]||=[]).push(variancePct);
+    });
+    return Object.entries(byCategory)
+      .filter(([,arr])=>arr.length>=2)
+      .map(([category,arr])=>({category,avgVariancePct:Math.round(arr.reduce((s,v)=>s+v,0)/arr.length),n:arr.length}))
+      .filter(c=>Math.abs(c.avgVariancePct)>=5);
+  }catch(e){ console.error('Cost calibration error:',e); return null; }
+}
+
+function renderCalibrationBanner(){
+  const el=document.getElementById('calibration-recall');
+  if(!el) return;
+  const cal=window._costCalibration;
+  if(!cal||!cal.length){ el.style.display='none'; return; }
+  const parts=cal.map(c=>`<strong>${escapeHtml(c.category)}</strong> ${c.avgVariancePct>0?'+':''}${c.avgVariancePct}%`).join(', ');
+  el.innerHTML=`<div class="similar-recall"><span style="color:var(--text-accent);flex-shrink:0">✦</span><span>Calibrated from your logged actuals — ${parts} vs. estimate, adjusted into this bid.</span></div>`;
+  el.style.display='block';
 }
 
 async function calculateEstimate(){
@@ -2485,8 +2676,12 @@ PROFIT STACKING — CORRECT METHOD:
 
   const marketData=await fetchMarketPricing(ctx.location);
   const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote):SE_RATES;
+  const confidenceTier=computeConfidenceTier(marketData);
+  const costCalibration=await getCostCalibration(ctx.trade);
+  window._costCalibration=costCalibration;
+  const calibrationNote=costCalibration?.length?`\n\nCOST CALIBRATION FROM THIS CONTRACTOR'S LOGGED ACTUALS — apply these adjustments:\n${costCalibration.map(c=>`${c.category}: actuals have run ${c.avgVariancePct>0?'+':''}${c.avgVariancePct}% vs. estimate across ${c.n} logged job${c.n>1?'s':''} — ${c.avgVariancePct>0?'price this category higher':'price this category lower'} to match.`).join('\n')}`:'';
 
-  const prompt=`${pricingBlock}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  const prompt=`${pricingBlock}${calibrationNote}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
   // Show loading screen
   showLoading();
@@ -2494,15 +2689,15 @@ PROFIT STACKING — CORRECT METHOD:
   // Generate phase content for loading
   const phase1=appLang==='en'?[
     `📋 Reading scope of work…`,
-    `📍 Location: ${ctx.location} detected`,
-    `🔨 Trade: ${ctx.trade}`,
+    `📍 Location: ${escapeHtml(ctx.location)} detected`,
+    `🔨 Trade: ${escapeHtml(ctx.trade)}`,
     ctx.sqft!=='not specified'?`📐 ${ctx.sqft} sq ft confirmed`:`📐 Square footage: not specified`,
     `⚙️ Overhead: ${ctx.oh}% · Profit: ${ctx.profit}% · Cushion: ${ctx.cushion}%`,
     `🔍 Identifying trades and scope items…`
   ]:[
     `📋 Leyendo alcance de trabajo…`,
-    `📍 Ubicación: ${ctx.location} detectada`,
-    `🔨 Oficio: ${ctx.trade}`,
+    `📍 Ubicación: ${escapeHtml(ctx.location)} detectada`,
+    `🔨 Oficio: ${escapeHtml(ctx.trade)}`,
     `📐 ${ctx.sqft!=='not specified'?ctx.sqft+' pies cuadrados confirmados':'Pies cuadrados: no especificado'}`,
     `⚙️ Gastos: ${ctx.oh}% · Ganancia: ${ctx.profit}% · Colchón: ${ctx.cushion}%`,
     `🔍 Identificando oficios y alcance…`
@@ -2510,7 +2705,7 @@ PROFIT STACKING — CORRECT METHOD:
 
   const tradeBreakdown=window._scopeData?.tradeBreakdown||[];
   const phase2=tradeBreakdown.length>0
-    ?tradeBreakdown.map(t=>`${t.icon} ${t.trade} scope identified — ${t.items?.length||0} items`)
+    ?tradeBreakdown.map(t=>`${escapeHtml(t.icon)} ${escapeHtml(t.trade)} scope identified — ${t.items?.length||0} items`)
     :(appLang==='en'?['🔨 General scope identified','⚡ Specialty work noted','📦 Materials scope parsed']:['🔨 Alcance general identificado','⚡ Trabajo especializado anotado','📦 Materiales identificados']);
 
     // Scripted intro (reading scope, analyzing trades), then stream phase 3 LIVE —
@@ -2522,7 +2717,10 @@ PROFIT STACKING — CORRECT METHOD:
     const stepEl=document.getElementById('loading-step-text');
     const phaseLabel=document.getElementById('loading-phase-label');
     const liveEl=document.getElementById('loading-live-items');
-    if(liveEl) liveEl.innerHTML='';
+    // Skeleton rows fill the dead space while the model is still writing its
+    // first line item — the longest single wait in the whole flow otherwise
+    // had nothing visible happening in this area.
+    if(liveEl) liveEl.innerHTML='<div class="loading-skel-row"></div><div class="loading-skel-row"></div><div class="loading-skel-row"></div>';
     phaseLabel.textContent=appLang==='en'?'Phase 3 · Building Estimate':'Fase 3 · Construyendo Estimado';
     const setProg=(p,l)=>{bar.style.width=Math.min(p,100)+'%';pctEl.textContent=Math.round(Math.min(p,100))+'%';if(l)stepEl.textContent=l;};
     setProg(56,appLang==='en'?'Pricing line items…':'Cotizando partidas…');
@@ -2530,12 +2728,16 @@ PROFIT STACKING — CORRECT METHOD:
     const EXPECT=15; let rendered=0;
     const onDelta=(full)=>{
       const items=extractStreamLineItems(full);
+      if(items.length>rendered&&liveEl){
+        const skel=liveEl.querySelectorAll('.loading-skel-row');
+        skel.forEach(s=>s.remove());
+      }
       for(let k=rendered;k<items.length;k++){
         const it=items[k]||{};
         const row=document.createElement('div');
         row.className='loading-live-row';
         const amt=typeof it.total==='number'?('$'+Math.round(it.total).toLocaleString()):'';
-        const desc=(it.description||it.category||'Item').toString().replace(/[<>]/g,'').slice(0,60);
+        const desc=escapeHtml((it.description||it.category||'Item').toString().slice(0,140));
         row.innerHTML=`<span class="loading-live-tick">✓</span><span class="loading-live-desc">${desc}</span><span class="loading-live-amt">${amt}</span>`;
         liveEl&&liveEl.appendChild(row);
         if(liveEl) liveEl.scrollTop=liveEl.scrollHeight;
@@ -2571,6 +2773,7 @@ PROFIT STACKING — CORRECT METHOD:
     const base=data.subtotal+data.overhead.amount+data.contingency.amount;
     data.profit.amount=Math.round(base*(data.profit.pct/100));
     data.totalBid=data.subtotal+data.overhead.amount+data.contingency.amount+data.profit.amount;
+    data.confidenceTier=confidenceTier;
     currentEstimate=data;
 
     // Animate to real total
@@ -2605,7 +2808,7 @@ PROFIT STACKING — CORRECT METHOD:
 //  RENDER ESTIMATE
 // ══════════════════════════
 function getCatIcon(c){const m={Labor:'👷',Materials:'📦',Electrical:'⚡',Plumbing:'🔧',HVAC:'❄️',Permits:'📋',Equipment:'🔨',Demo:'🗜️',Demolition:'🗜️',Flooring:'🪵',Tile:'🟫',Mechanical:'⚙️',Painting:'🎨',Roofing:'🏠',Concrete:'🪨',Cleanup:'🧹'};return m[c]||'🔧'}
-function esc(s){return String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+function esc(s){return escapeHtml(s)}
 
 function renderEstimate(data){
   const cats={};
@@ -2636,7 +2839,7 @@ function renderEstimate(data){
   if(isPro){
     varBody.innerHTML=sorted.map((item,i)=>`
       <div class="var-row">
-        <span style="color:var(--white2);font-size:12px">${item.description.substring(0,28)}${item.description.length>28?'…':''}</span>
+        <span style="color:var(--white2);font-size:12px">${escapeHtml(item.description.substring(0,28))}${item.description.length>28?'…':''}</span>
         <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${fmt(item.total)}</span>
         <input placeholder="$0" onchange="calcVar(this,${item.total})" style="background:transparent;border:none;border-bottom:1px solid var(--rim);color:var(--white);font-size:12px;font-family:'DM Mono',monospace;outline:none;width:100%;padding:2px 0">
         <span id="vr-${i}" style="font-size:11px;color:var(--muted)">—</span>
@@ -2646,7 +2849,7 @@ function renderEstimate(data){
     varBody.innerHTML=`<div style="position:relative">
       <div style="filter:blur(4px);pointer-events:none;user-select:none">
         ${preview.map(item=>`<div class="var-row">
-          <span style="color:var(--white2);font-size:12px">${item.description.substring(0,28)}…</span>
+          <span style="color:var(--white2);font-size:12px">${escapeHtml(item.description.substring(0,28))}…</span>
           <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${fmt(item.total)}</span>
           <input placeholder="$0" disabled style="background:transparent;border:none;border-bottom:1px solid var(--rim);color:var(--white);font-size:12px;width:100%;padding:2px 0">
           <span style="font-size:11px;color:var(--muted)">—</span>
@@ -2666,6 +2869,7 @@ function renderEstimate(data){
   if(isPro) { const br=document.getElementById('beautify-row'); if(br) br.style.display='block'; }
   setTimeout(()=>renderEvenSuggests(data), 800);
   if(isPro && currentUser && sbClient) loadSimilarJobs(data);
+  renderCalibrationBanner();
 }
 
 function calcVar(input,estimated){
@@ -2805,7 +3009,7 @@ async function loadSimilarJobs(data){
     const avg=Math.round(totals.reduce((s,v)=>s+v,0)/totals.length);
     const low=Math.min(...totals),high=Math.max(...totals);
     const avgM=margins.length?Math.round(margins.reduce((s,v)=>s+v,0)/margins.length):null;
-    el.innerHTML=`<div class="similar-recall"><span style="color:var(--text-accent);flex-shrink:0">✦</span><span>Based on your last ${jobs.length} <strong>${trade}</strong> jobs — avg ${fmtK(avg)}, range ${fmtK(low)}–${fmtK(high)}${avgM?`, avg margin ${avgM}%`:''}</span></div>`;
+    el.innerHTML=`<div class="similar-recall"><span style="color:var(--text-accent);flex-shrink:0">✦</span><span>Based on your last ${jobs.length} <strong>${escapeHtml(trade)}</strong> jobs — avg ${fmtK(avg)}, range ${fmtK(low)}–${fmtK(high)}${avgM?`, avg margin ${avgM}%`:''}</span></div>`;
     el.style.display='block';
   }catch(e){console.error('Similar jobs error:',e);}
 }
@@ -2819,11 +3023,21 @@ function renderTotals(data){
     <div class="tot-row pos"><span class="tot-lbl">${L==='en'?'Risk Cushion':'Colchón'} (${data.contingency.pct}%)</span><span class="tot-val">${fmt(data.contingency.amount)}</span></div>
     <div class="tot-row pur"><span class="tot-lbl">${L==='en'?'Profit':'Ganancia'} (${data.profit.pct}%)</span><span class="tot-val">${fmt(data.profit.amount)}</span></div>`;
   document.getElementById('bid-val-display').textContent=fmt(data.totalBid);
-  // Bid RANGE as primary (±12% confidence-adjusted)
-  const rangeLow=Math.round(data.totalBid*0.88);
-  const rangeHigh=Math.round(data.totalBid*1.12);
+  // Bid RANGE as primary — width now actually reflects confidence (tighter
+  // when grounded in real local data, wider when it's general AI knowledge)
+  // instead of a flat constant.
+  const [rangeLoMult,rangeHiMult]=getConfidenceRange(data);
+  const rangeLow=Math.round(data.totalBid*rangeLoMult);
+  const rangeHigh=Math.round(data.totalBid*rangeHiMult);
   const rangeEl=document.getElementById('bid-range-display');
-  if(rangeEl) rangeEl.textContent=fmtK(rangeLow)+' — '+fmtK(rangeHigh);
+  if(rangeEl){
+    rangeEl.textContent=fmtK(rangeLow)+' — '+fmtK(rangeHigh);
+    // Replay the reveal animation each time the number lands, so the headline
+    // figure always feels like a fresh result, not a static label.
+    rangeEl.style.animation='none';
+    void rangeEl.offsetWidth;
+    rangeEl.style.animation='popIn .4s cubic-bezier(.2,.9,.3,1.3) both';
+  }
   const fill=document.getElementById('meter-fill');
   const pctEl=document.getElementById('meter-pct');
   const verdict=document.getElementById('meter-verdict');
@@ -2896,11 +3110,11 @@ function renderProposalPreview(){
   const detail=window._proposalDetail||'full';
   let rows='';
   if(detail==='full'){
-    rows=Object.entries(cats).map(([cat,items])=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8920A">${cat}</td></tr>`+items.map(item=>`<tr><td>${item.description}</td><td style="text-align:right;color:#888;font-size:11px">${item.qty} ${item.unit}</td></tr>`).join('')).join('');
+    rows=Object.entries(cats).map(([cat,items])=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8920A">${escapeHtml(cat)}</td></tr>`+items.map(item=>`<tr><td>${escapeHtml(item.description)}</td><td style="text-align:right;color:#888;font-size:11px">${escapeHtml(item.qty)} ${escapeHtml(item.unit)}</td></tr>`).join('')).join('');
   } else if(detail==='category'){
     rows=Object.entries(cats).map(([cat,items])=>{
       const sub=items.reduce((s,i)=>s+i.total,0);
-      return `<tr><td style="font-weight:600;color:#555">${cat}</td><td style="text-align:right;font-weight:600;color:#555">${fmtK(sub)}</td></tr>`;
+      return `<tr><td style="font-weight:600;color:#555">${escapeHtml(cat)}</td><td style="text-align:right;font-weight:600;color:#555">${fmtK(sub)}</td></tr>`;
     }).join('');
   } else {
     rows=`<tr><td colspan="2" style="text-align:center;padding:10px;color:#666;font-size:13px">All work as described in this proposal</td></tr>`;
@@ -2912,23 +3126,23 @@ function renderProposalPreview(){
     <div class="prop-inner">
       <div class="prop-hdr">
         <div><h1>${L==='en'?'Project Proposal':'Propuesta de Proyecto'}</h1><p>Even · Cornerstone OS</p></div>
-        <div class="prop-meta"><strong>${data.projectName||'Estimate'}</strong>${now}<br>${ctx?.location||''}<br>${L==='en'?'Client':'Cliente'}: ${ctx?.client||'—'}</div>
+        <div class="prop-meta"><strong>${escapeHtml(data.projectName||'Estimate')}</strong>${now}<br>${escapeHtml(ctx?.location||'')}<br>${L==='en'?'Client':'Cliente'}: ${escapeHtml(ctx?.client||'—')}</div>
       </div>
-      ${clientNote?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${clientNote}</p>`:''}
+      ${clientNote?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${escapeHtml(clientNote)}</p>`:''}
       <div class="prop-sec">${L==='en'?'Scope of Work':'Alcance del Trabajo'}</div>
       <p style="font-size:12px;color:#666;line-height:1.6;margin-bottom:10px">${L==='en'?'This proposal covers the complete scope of work as outlined below.':'Esta propuesta cubre el alcance completo del trabajo detallado a continuación.'}</p>
       <div class="prop-sec">${L==='en'?'Inclusions':'Incluido'}</div>
       <table class="prop-tbl"><thead><tr><th>${L==='en'?'Description':'Descripción'}</th><th style="text-align:right">${L==='en'?'Qty / Unit':'Cant. / Unidad'}</th></tr></thead><tbody>${rows}</tbody></table>
-      ${allExclusions.length?`<div class="prop-sec">${L==='en'?'Exclusions':'Exclusiones'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${allExclusions.map(e=>`• ${e}`).join('<br>')}</div>`:''}
-      ${data.assumptions?.length?`<div class="prop-sec">${L==='en'?'Assumptions':'Supuestos'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${data.assumptions.map(a=>`• ${a}`).join('<br>')}</div>`:''}
+      ${allExclusions.length?`<div class="prop-sec">${L==='en'?'Exclusions':'Exclusiones'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${allExclusions.map(e=>`• ${escapeHtml(e)}`).join('<br>')}</div>`:''}
+      ${data.assumptions?.length?`<div class="prop-sec">${L==='en'?'Assumptions':'Supuestos'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${data.assumptions.map(a=>`• ${escapeHtml(a)}`).join('<br>')}</div>`:''}
       <div class="prop-sec">${L==='en'?'Investment':'Inversión'}</div>
-      <div class="prop-total-bar" style="flex-direction:column;align-items:flex-start;gap:6px"><div style="width:100%;display:flex;justify-content:space-between;align-items:center"><span class="pl">${L==='en'?'Total Project Investment':'Inversión Total del Proyecto'}</span><span class="pv">${window._finalBid?fmt(window._finalBid):fmtK(Math.round(data.totalBid*0.88))+' — '+fmtK(Math.round(data.totalBid*1.12))}</span></div>${window._finalBid?`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Even range: '+fmtK(Math.round(data.totalBid*0.88))+'–'+fmtK(Math.round(data.totalBid*1.12)):'Rango Even: '+fmtK(Math.round(data.totalBid*0.88))+'–'+fmtK(Math.round(data.totalBid*1.12))}</div>`:`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Midpoint ref: '+fmt(data.totalBid):'Referencia: '+fmt(data.totalBid)}</div>`}</div>
-      <p style="font-size:10px;color:#aaa;margin-top:8px">${data.paymentTerms||(L==='en'?'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.':'50% de depósito requerido. Saldo al terminar. Precio válido 30 días.')}</p>
+      <div class="prop-total-bar" style="flex-direction:column;align-items:flex-start;gap:6px"><div style="width:100%;display:flex;justify-content:space-between;align-items:center"><span class="pl">${L==='en'?'Total Project Investment':'Inversión Total del Proyecto'}</span><span class="pv">${window._finalBid?fmt(window._finalBid):fmtK(Math.round(data.totalBid*getConfidenceRange(data)[0]))+' — '+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[1]))}</span></div>${window._finalBid?`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Even range: '+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[0]))+'–'+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[1])):'Rango Even: '+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[0]))+'–'+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[1]))}</div>`:`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Midpoint ref: '+fmt(data.totalBid):'Referencia: '+fmt(data.totalBid)}</div>`}</div>
+      <p style="font-size:10px;color:#aaa;margin-top:8px">${escapeHtml(data.paymentTerms)||(L==='en'?'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.':'50% de depósito requerido. Saldo al terminar. Precio válido 30 días.')}</p>
       <div class="prop-sig">
         <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Client Signature & Date':'Firma del Cliente y Fecha'}</div></div>
         <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Contractor Signature & Date':'Firma del Contratista y Fecha'}</div></div>
       </div>
-      <div class="prop-disclaimer">${L==='en'?'AI-estimated using Southeast regional market data. Verify material costs against current supplier quotes. Generated by Even · Cornerstone OS.':'Estimado con IA usando datos del mercado del Sureste. Verifica costos con tu proveedor. Generado por Even · Cornerstone OS.'}</div>
+      <div class="prop-disclaimer">${L==='en'?'AI-estimated using regional market data. Verify material costs against current supplier quotes. Generated by Even · Cornerstone OS.':'Estimado con IA usando datos regionales del mercado. Verifica costos con tu proveedor. Generado por Even · Cornerstone OS.'}</div>
     </div>`;
   document.getElementById('proposal-section').style.display='block';
   document.getElementById('proposal-section').scrollIntoView({behavior:'smooth',block:'start'});
@@ -3008,9 +3222,15 @@ function downloadProposalPDF(){
   doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,36,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(255,179,0);
   doc.text(L==='en'?'TOTAL PROJECT INVESTMENT':'INVERSIÓN TOTAL',M+10,y+21);
-  const pdfBidAmt=window._finalBid||data.totalBid;
-  doc.setFontSize(13);doc.text(fmt(pdfBidAmt),W-M-10,y+21,{align:'right'});y+=48;
-  if(window._finalBid){doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(130,100,30);doc.text('Even estimated range: '+fmtK(Math.round(data.totalBid*0.88))+'–'+fmtK(Math.round(data.totalBid*1.12)),M,y);y+=12;}
+  const [propLoMult,propHiMult]=getConfidenceRange(data);
+  const propRangeLow=Math.round(data.totalBid*propLoMult),propRangeHigh=Math.round(data.totalBid*propHiMult);
+  // Default headline is the range (matches the on-screen preview) — a manual
+  // final-bid override takes precedence and becomes the headline instead,
+  // with Even's range demoted to a small reference line underneath.
+  const pdfBidText=window._finalBid?fmt(window._finalBid):fmtK(propRangeLow)+' – '+fmtK(propRangeHigh);
+  doc.setFontSize(13);doc.text(pdfBidText,W-M-10,y+21,{align:'right'});y+=48;
+  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(130,100,30);
+  doc.text(window._finalBid?'Even estimated range: '+fmtK(propRangeLow)+'–'+fmtK(propRangeHigh):'Midpoint reference: '+fmt(data.totalBid),M,y);y+=12;
   doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(160,160,160);
   doc.text(data.paymentTerms||(L==='en'?'50% deposit to schedule. Balance due on completion. Price valid 30 days.':'50% depósito para agendar. Saldo al terminar. Precio válido 30 días.'),M,y);y+=32;
   if(y>730){doc.addPage();y=44}
@@ -3079,10 +3299,21 @@ function downloadCostSheet(){
     if(y>730){doc.addPage();y=44}
     doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(100,100,100);doc.text(label,M+4,y+12);doc.setTextColor(...color);doc.text(val,W-M-4,y+12,{align:'right'});y+=20;
   });
-  y+=4;if(y>720){doc.addPage();y=44}
-  doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,34,'F');
+  y+=4;if(y>710){doc.addPage();y=44}
+  // Same precedence rule as the client proposal: a manual final-bid override
+  // becomes the headline number; otherwise the range is, with Even's midpoint
+  // as the secondary reference line either way.
+  const [csLoMult,csHiMult]=getConfidenceRange(data);
+  const csRangeLow=Math.round(data.totalBid*csLoMult),csRangeHigh=Math.round(data.totalBid*csHiMult);
+  const csBidText=window._finalBid?fmt(window._finalBid):fmtK(csRangeLow)+' – '+fmtK(csRangeHigh);
+  const csSubText=window._finalBid?'Even estimated range: '+fmtK(csRangeLow)+'–'+fmtK(csRangeHigh):'Midpoint reference: '+fmt(data.totalBid);
+  doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,44,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(255,179,0);
-  doc.text(L==='en'?'TOTAL BID':'OFERTA TOTAL',M+10,y+21);doc.setFontSize(13);doc.text(fmt(data.totalBid),W-M-10,y+21,{align:'right'});y+=46;
+  doc.text(L==='en'?'TOTAL BID':'OFERTA TOTAL',M+10,y+18);
+  doc.setFontSize(13);doc.text(csBidText,W-M-10,y+18,{align:'right'});
+  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(255,220,140);
+  doc.text(csSubText,M+10,y+34);
+  y+=56;
   if(data.assumptions?.length&&y<700){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(200,146,42);doc.text(L==='en'?'ASSUMPTIONS':'SUPUESTOS',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);data.assumptions.forEach(a=>{if(y<740){doc.text('• '+a,M+4,y);y+=10}})}
   const pages=doc.getNumberOfPages();
   for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even by Cornerstone OS · Internal Cost Sheet · CONFIDENTIAL',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
@@ -3286,7 +3517,7 @@ async function submitDataTrade(){
     <div class="pro-modal-desc" id="pro-modal-desc">Upgrade to Even Pro to unlock this.</div>
     <span class="pro-modal-tag">Contractors using Even close bids 40% faster.</span>
     <div class="pro-modal-features">
-      <div>✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Add &amp; edit line items<br>✓ Actual cost tracker<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Southeast regional pricing</div>
+      <div>✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Add &amp; edit line items<br>✓ Actual cost tracker<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Regional market pricing</div>
     </div>
     <div class="pro-modal-pricing">
       <div class="pro-modal-plan hero">
@@ -3453,11 +3684,12 @@ const STATUS_CLASS={draft:'status-draft',sent:'status-sent',won:'status-won',act
 async function saveEstimateToCloud(data){
   if(!currentUser||!sbClient) return;
   try{
+    const locationVal=document.getElementById('est-location')?.value||'';
     const payload={
       user_id: currentUser.id,
       client_name: document.getElementById('est-client')?.value||'',
-      project_label: document.getElementById('est-project-label')?.value||document.getElementById('est-location')?.value||'',
-      location: document.getElementById('est-location')?.value||'',
+      project_label: document.getElementById('est-project-label')?.value||locationVal,
+      location: locationVal,
       trade: document.getElementById('est-trade')?.value||window._ctx?.trade||'',
       total_bid: data.totalBid||0,
       margin_pct: data.profit?.pct||0,
@@ -3493,7 +3725,7 @@ async function proposalBeautify(){
   const items=(currentEstimate.lineItems||[]).map(i=>i.description).join(', ');
   const scope=document.getElementById('scope-text')?.value||currentEstimate.projectName||'';
   try{
-    const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+    const r=await fetch(`${API_ORIGIN}/api/estimate`,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-haiku-4-5',max_tokens:500,
@@ -3561,7 +3793,7 @@ function _addAssumptionRow(text){
   if(!list) return;
   const div = document.createElement('div');
   div.style.cssText='display:flex;gap:6px;margin-bottom:6px;align-items:center';
-  div.innerHTML=`<input class="assumption-input" value="${text.replace(/"/g,'&quot;')}" placeholder="e.g. Access to electrical panel confirmed…" style="flex:1;background:var(--bg);border:1px solid var(--rim);border-radius:7px;color:var(--white2);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box" oninput="liveProposalUpdate()"><button onclick="this.parentElement.remove();liveProposalUpdate()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:17px;line-height:1;padding:0 2px;flex-shrink:0">×</button>`;
+  div.innerHTML=`<input class="assumption-input" value="${escapeHtml(text)}" placeholder="e.g. Access to electrical panel confirmed…" style="flex:1;background:var(--bg);border:1px solid var(--rim);border-radius:7px;color:var(--white2);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box" oninput="liveProposalUpdate()"><button onclick="this.parentElement.remove();liveProposalUpdate()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:17px;line-height:1;padding:0 2px;flex-shrink:0">×</button>`;
   list.appendChild(div);
 }
 
@@ -3586,7 +3818,7 @@ const SUPPLIER_CATEGORIES = ['Roofing','Framing','Sheathing','Insulation','Drywa
   'Tile','Plumbing','Electrical','HVAC','Windows & Doors','Concrete','Painting','Hardware','Other'];
 const SUPPLIER_GRADES = ['Budget','Standard','Premium'];
 
-function _esc(s){ return (s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function _esc(s){ return escapeHtml(s); }
 
 function renderSupplierList(){
   const el = document.getElementById('supplier-list');
@@ -3858,7 +4090,11 @@ async function loadDashboard(){
         const pct=Math.round((Math.abs(diff)/rangeMid)*100);
         const cls=diff>0?'over':'under';
         const sign=diff>0?'+':'-';
-        varHtml=`<div class="job-variance ${cls}" title="Even range: ${fmtK(Math.round(rangeMid*0.88))}–${fmtK(Math.round(rangeMid*1.12))}">Your bid: ${fmtK(finalBid)} · ${sign}${pct}% vs range</div>`;
+        // estimate_json stores the full estimate object, so confidenceTier
+        // travels with it for anything saved after this change; older saves
+        // fall back to the medium tier via getConfidenceRange's default.
+        const [jcLoMult,jcHiMult]=getConfidenceRange(est.estimate_json);
+        varHtml=`<div class="job-variance ${cls}" title="Even range: ${fmtK(Math.round(rangeMid*jcLoMult))}–${fmtK(Math.round(rangeMid*jcHiMult))}">Your bid: ${fmtK(finalBid)} · ${sign}${pct}% vs range</div>`;
       } else if(actualTotal>0){
         const diff=actualTotal-est.total_bid;
         const pct=Math.round((Math.abs(diff)/est.total_bid)*100);
@@ -3873,9 +4109,9 @@ async function loadDashboard(){
       return `<div class="job-card" id="jc-${est.id}">
         <div class="job-card-top" onclick="loadSavedEstimate('${est.id}')">
           <div class="job-card-main">
-            <div class="job-card-label">${label}</div>
-            ${est.client_name?`<div style="font-size:11px;color:var(--muted);margin-top:1px">${est.client_name}</div>`:''}
-            <div class="job-card-meta">${[est.trade,date].filter(Boolean).join(' · ')}</div>
+            <div class="job-card-label">${escapeHtml(label)}</div>
+            ${est.client_name?`<div style="font-size:11px;color:var(--muted);margin-top:1px">${escapeHtml(est.client_name)}</div>`:''}
+            <div class="job-card-meta">${escapeHtml([est.trade,date].filter(Boolean).join(' · '))}</div>
           </div>
           <div class="job-card-right">
             <div class="job-card-total">${fmtK(est.total_bid)}</div>
@@ -3940,7 +4176,7 @@ async function generateInsights(estimates){
     `Trade:${e.trade||'?'} Total:$${e.total_bid} Status:${e.status||'draft'} Margin:${e.margin_pct||0}% Location:${e.location||'?'}`
   ).join('\n');
   try{
-    const r=await fetch('https://even-production.up.railway.app/api/estimate',{
+    const r=await fetch(`${API_ORIGIN}/api/estimate`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
@@ -3954,7 +4190,7 @@ async function generateInsights(estimates){
     const parsed=JSON.parse(text);
     if(parsed.insights?.length){
       el.innerHTML=parsed.insights.map(ins=>
-        `<div class="dash-insight"><span style="color:var(--text-accent);flex-shrink:0;margin-top:1px">✦</span><span>${ins}</span></div>`
+        `<div class="dash-insight"><span style="color:var(--text-accent);flex-shrink:0;margin-top:1px">✦</span><span>${escapeHtml(ins)}</span></div>`
       ).join('');
       wrap.style.display='block';
     }
