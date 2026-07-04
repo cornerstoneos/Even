@@ -2046,6 +2046,19 @@ function parseJ(t){
 }
 const fmt=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 const fmtK=n=>n>=1000000?'$'+(n/1000000).toFixed(n%1000000===0?0:1)+'M':'$'+Math.round(n/1000)+'k';
+
+// Confidence tier drives the bid range width — tighter when the estimate is
+// actually grounded in real local materials/labor/permit data, wider when it
+// fell back to general AI knowledge. Set once per estimate in calculateEstimate();
+// everywhere that draws the range (results screen, both PDFs) reads it from here
+// instead of a flat constant, so "confidence-adjusted" is no longer decorative.
+const CONFIDENCE_RANGE={high:[0.92,1.08],medium:[0.88,1.12],low:[0.80,1.20]};
+function getConfidenceRange(data){ return CONFIDENCE_RANGE[data?.confidenceTier]||CONFIDENCE_RANGE.medium; }
+function computeConfidenceTier(marketData){
+  if(!marketData) return 'low';
+  const grounded=[marketData.materials,marketData.labor,marketData.permits].filter(a=>a&&a.length).length;
+  return grounded>=3?'high':grounded>=1?'medium':'low';
+}
 function savePDF(doc,filename){if(/iPad|iPhone|iPod/.test(navigator.userAgent)){const url=URL.createObjectURL(doc.output('blob'));const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},1000);}else{doc.save(filename);}}
 
 
@@ -2208,7 +2221,7 @@ async function startEstimate(){
   }
   // Build context-rich prompt with construction primer for better OCR + scope extraction
   const imgContext=uploadedImages.length>0?`\nIMAGES ATTACHED: ${uploadedImages.length} construction plan/photo(s). Perform high-accuracy OCR on all text. Extract all dimensions, material callouts, notes, scope items, and quantities visible in the images. Pay special attention to leader lines, revision clouds, and specification notes. Images may be multiple pages of the same scope — combine and reconcile all information across images before responding.`:'';
-  msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask 3-5 pricing-critical questions with 3-4 short options each.`});
+  msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.`});
 
   try{
     const res=await callClaude([{role:'user',content:msgContent}],800);
@@ -2592,6 +2605,7 @@ PROFIT STACKING — CORRECT METHOD:
 
   const marketData=await fetchMarketPricing(ctx.location);
   const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote):SE_RATES;
+  const confidenceTier=computeConfidenceTier(marketData);
 
   const prompt=`${pricingBlock}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
@@ -2685,6 +2699,7 @@ PROFIT STACKING — CORRECT METHOD:
     const base=data.subtotal+data.overhead.amount+data.contingency.amount;
     data.profit.amount=Math.round(base*(data.profit.pct/100));
     data.totalBid=data.subtotal+data.overhead.amount+data.contingency.amount+data.profit.amount;
+    data.confidenceTier=confidenceTier;
     currentEstimate=data;
 
     // Animate to real total
@@ -2933,9 +2948,12 @@ function renderTotals(data){
     <div class="tot-row pos"><span class="tot-lbl">${L==='en'?'Risk Cushion':'Colchón'} (${data.contingency.pct}%)</span><span class="tot-val">${fmt(data.contingency.amount)}</span></div>
     <div class="tot-row pur"><span class="tot-lbl">${L==='en'?'Profit':'Ganancia'} (${data.profit.pct}%)</span><span class="tot-val">${fmt(data.profit.amount)}</span></div>`;
   document.getElementById('bid-val-display').textContent=fmt(data.totalBid);
-  // Bid RANGE as primary (±12% confidence-adjusted)
-  const rangeLow=Math.round(data.totalBid*0.88);
-  const rangeHigh=Math.round(data.totalBid*1.12);
+  // Bid RANGE as primary — width now actually reflects confidence (tighter
+  // when grounded in real local data, wider when it's general AI knowledge)
+  // instead of a flat constant.
+  const [rangeLoMult,rangeHiMult]=getConfidenceRange(data);
+  const rangeLow=Math.round(data.totalBid*rangeLoMult);
+  const rangeHigh=Math.round(data.totalBid*rangeHiMult);
   const rangeEl=document.getElementById('bid-range-display');
   if(rangeEl){
     rangeEl.textContent=fmtK(rangeLow)+' — '+fmtK(rangeHigh);
@@ -3043,7 +3061,7 @@ function renderProposalPreview(){
       ${allExclusions.length?`<div class="prop-sec">${L==='en'?'Exclusions':'Exclusiones'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${allExclusions.map(e=>`• ${escapeHtml(e)}`).join('<br>')}</div>`:''}
       ${data.assumptions?.length?`<div class="prop-sec">${L==='en'?'Assumptions':'Supuestos'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${data.assumptions.map(a=>`• ${escapeHtml(a)}`).join('<br>')}</div>`:''}
       <div class="prop-sec">${L==='en'?'Investment':'Inversión'}</div>
-      <div class="prop-total-bar" style="flex-direction:column;align-items:flex-start;gap:6px"><div style="width:100%;display:flex;justify-content:space-between;align-items:center"><span class="pl">${L==='en'?'Total Project Investment':'Inversión Total del Proyecto'}</span><span class="pv">${window._finalBid?fmt(window._finalBid):fmtK(Math.round(data.totalBid*0.88))+' — '+fmtK(Math.round(data.totalBid*1.12))}</span></div>${window._finalBid?`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Even range: '+fmtK(Math.round(data.totalBid*0.88))+'–'+fmtK(Math.round(data.totalBid*1.12)):'Rango Even: '+fmtK(Math.round(data.totalBid*0.88))+'–'+fmtK(Math.round(data.totalBid*1.12))}</div>`:`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Midpoint ref: '+fmt(data.totalBid):'Referencia: '+fmt(data.totalBid)}</div>`}</div>
+      <div class="prop-total-bar" style="flex-direction:column;align-items:flex-start;gap:6px"><div style="width:100%;display:flex;justify-content:space-between;align-items:center"><span class="pl">${L==='en'?'Total Project Investment':'Inversión Total del Proyecto'}</span><span class="pv">${window._finalBid?fmt(window._finalBid):fmtK(Math.round(data.totalBid*getConfidenceRange(data)[0]))+' — '+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[1]))}</span></div>${window._finalBid?`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Even range: '+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[0]))+'–'+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[1])):'Rango Even: '+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[0]))+'–'+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[1]))}</div>`:`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Midpoint ref: '+fmt(data.totalBid):'Referencia: '+fmt(data.totalBid)}</div>`}</div>
       <p style="font-size:10px;color:#aaa;margin-top:8px">${escapeHtml(data.paymentTerms)||(L==='en'?'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.':'50% de depósito requerido. Saldo al terminar. Precio válido 30 días.')}</p>
       <div class="prop-sig">
         <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Client Signature & Date':'Firma del Cliente y Fecha'}</div></div>
@@ -3129,9 +3147,15 @@ function downloadProposalPDF(){
   doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,36,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(255,179,0);
   doc.text(L==='en'?'TOTAL PROJECT INVESTMENT':'INVERSIÓN TOTAL',M+10,y+21);
-  const pdfBidAmt=window._finalBid||data.totalBid;
-  doc.setFontSize(13);doc.text(fmt(pdfBidAmt),W-M-10,y+21,{align:'right'});y+=48;
-  if(window._finalBid){doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(130,100,30);doc.text('Even estimated range: '+fmtK(Math.round(data.totalBid*0.88))+'–'+fmtK(Math.round(data.totalBid*1.12)),M,y);y+=12;}
+  const [propLoMult,propHiMult]=getConfidenceRange(data);
+  const propRangeLow=Math.round(data.totalBid*propLoMult),propRangeHigh=Math.round(data.totalBid*propHiMult);
+  // Default headline is the range (matches the on-screen preview) — a manual
+  // final-bid override takes precedence and becomes the headline instead,
+  // with Even's range demoted to a small reference line underneath.
+  const pdfBidText=window._finalBid?fmt(window._finalBid):fmtK(propRangeLow)+' – '+fmtK(propRangeHigh);
+  doc.setFontSize(13);doc.text(pdfBidText,W-M-10,y+21,{align:'right'});y+=48;
+  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(130,100,30);
+  doc.text(window._finalBid?'Even estimated range: '+fmtK(propRangeLow)+'–'+fmtK(propRangeHigh):'Midpoint reference: '+fmt(data.totalBid),M,y);y+=12;
   doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(160,160,160);
   doc.text(data.paymentTerms||(L==='en'?'50% deposit to schedule. Balance due on completion. Price valid 30 days.':'50% depósito para agendar. Saldo al terminar. Precio válido 30 días.'),M,y);y+=32;
   if(y>730){doc.addPage();y=44}
@@ -3200,10 +3224,21 @@ function downloadCostSheet(){
     if(y>730){doc.addPage();y=44}
     doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(100,100,100);doc.text(label,M+4,y+12);doc.setTextColor(...color);doc.text(val,W-M-4,y+12,{align:'right'});y+=20;
   });
-  y+=4;if(y>720){doc.addPage();y=44}
-  doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,34,'F');
+  y+=4;if(y>710){doc.addPage();y=44}
+  // Same precedence rule as the client proposal: a manual final-bid override
+  // becomes the headline number; otherwise the range is, with Even's midpoint
+  // as the secondary reference line either way.
+  const [csLoMult,csHiMult]=getConfidenceRange(data);
+  const csRangeLow=Math.round(data.totalBid*csLoMult),csRangeHigh=Math.round(data.totalBid*csHiMult);
+  const csBidText=window._finalBid?fmt(window._finalBid):fmtK(csRangeLow)+' – '+fmtK(csRangeHigh);
+  const csSubText=window._finalBid?'Even estimated range: '+fmtK(csRangeLow)+'–'+fmtK(csRangeHigh):'Midpoint reference: '+fmt(data.totalBid);
+  doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,44,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(255,179,0);
-  doc.text(L==='en'?'TOTAL BID':'OFERTA TOTAL',M+10,y+21);doc.setFontSize(13);doc.text(fmt(data.totalBid),W-M-10,y+21,{align:'right'});y+=46;
+  doc.text(L==='en'?'TOTAL BID':'OFERTA TOTAL',M+10,y+18);
+  doc.setFontSize(13);doc.text(csBidText,W-M-10,y+18,{align:'right'});
+  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(255,220,140);
+  doc.text(csSubText,M+10,y+34);
+  y+=56;
   if(data.assumptions?.length&&y<700){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(200,146,42);doc.text(L==='en'?'ASSUMPTIONS':'SUPUESTOS',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);data.assumptions.forEach(a=>{if(y<740){doc.text('• '+a,M+4,y);y+=10}})}
   const pages=doc.getNumberOfPages();
   for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even by Cornerstone OS · Internal Cost Sheet · CONFIDENTIAL',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
@@ -3980,7 +4015,11 @@ async function loadDashboard(){
         const pct=Math.round((Math.abs(diff)/rangeMid)*100);
         const cls=diff>0?'over':'under';
         const sign=diff>0?'+':'-';
-        varHtml=`<div class="job-variance ${cls}" title="Even range: ${fmtK(Math.round(rangeMid*0.88))}–${fmtK(Math.round(rangeMid*1.12))}">Your bid: ${fmtK(finalBid)} · ${sign}${pct}% vs range</div>`;
+        // estimate_json stores the full estimate object, so confidenceTier
+        // travels with it for anything saved after this change; older saves
+        // fall back to the medium tier via getConfidenceRange's default.
+        const [jcLoMult,jcHiMult]=getConfidenceRange(est.estimate_json);
+        varHtml=`<div class="job-variance ${cls}" title="Even range: ${fmtK(Math.round(rangeMid*jcLoMult))}–${fmtK(Math.round(rangeMid*jcHiMult))}">Your bid: ${fmtK(finalBid)} · ${sign}${pct}% vs range</div>`;
       } else if(actualTotal>0){
         const diff=actualTotal-est.total_bid;
         const pct=Math.round((Math.abs(diff)/est.total_bid)*100);
