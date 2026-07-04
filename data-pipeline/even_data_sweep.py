@@ -919,7 +919,7 @@ Return ONLY a JSON array:
     print(f"  Pulling materials: {market_name} (zip {zip_code})")
     try:
         resp = AI.messages.create(
-            model="claude-sonnet-4-6", max_tokens=2000,
+            model="claude-sonnet-4-6", max_tokens=4096,
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=[{"role": "user", "content": prompt}],
         )
@@ -961,7 +961,7 @@ Skip commercial-only types."""
         print(f"  Scraping permits: {city}")
         try:
             resp = AI.messages.create(
-                model="claude-sonnet-4-6", max_tokens=2000,
+                model="claude-sonnet-4-6", max_tokens=4096,
                 tools=[{"type": "web_search_20250305", "name": "web_search"}],
                 messages=[{"role": "user", "content": prompt}],
             )
@@ -1047,9 +1047,14 @@ def supabase_upsert_market(market, state, zone, materials, labor, permits):
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
+    markets = MARKETS
+    limit = os.environ.get("MARKET_LIMIT", "").strip()
+    if limit:
+        markets = MARKETS[:int(limit)]
+
     print("=" * 55)
     print("EVEN DATA SWEEP — Black Lab Holdings / Cornerstone OS")
-    print(f"Date: {TODAY}  |  Markets: {len(MARKETS)}")
+    print(f"Date: {TODAY}  |  Markets: {len(markets)}" + (f" (limited from {len(MARKETS)})" if limit else ""))
     print("=" * 55)
 
     svc = get_sheets_service()
@@ -1057,7 +1062,7 @@ def main():
     ensure_tabs(svc)
     print()
 
-    for market in MARKETS:
+    for market in markets:
         name = market["market"]
         print(f"\n── {name}, {market['state']} ──")
 

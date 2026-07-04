@@ -2,6 +2,11 @@ name: Even Data Sweep
 
 on:
   workflow_dispatch:
+    inputs:
+      market_limit:
+        description: 'Only sweep the first N markets (leave blank for all 43 — use a small number to test cheaply before a full run)'
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -31,4 +36,5 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          MARKET_LIMIT: ${{ inputs.market_limit }}
         run: python data-pipeline/even_data_sweep.py
