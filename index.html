@@ -17,6 +17,7 @@
   --glass:rgba(255,255,255,0.03);--glass2:rgba(255,255,255,0.06);
   --green:#3B82F6;--green-dim:rgba(59,130,246,0.11);--green-b:rgba(59,130,246,0.25);
   --orange:#FF8C42;--red:#E4002B;--purple:#A78BFA;
+  --panel:#1C1C1C;
   --r:14px;--rlg:20px;
 }
 body.light{
@@ -27,6 +28,7 @@ body.light{
   --gold:#E4002B;--gold-dim:rgba(228,0,43,0.10);
   --gold-glow:rgba(228,0,43,0.26);--gold-border:rgba(228,0,43,0.22);--red:#E4002B;
   --text-accent:#1D4ED8;--green:#2563EB;--green-dim:rgba(37,99,235,0.10);--green-b:rgba(37,99,235,0.22);
+  --panel:#FFFFFF;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;font-size:15px}
@@ -540,6 +542,7 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 .loading-live{
   width:100%;max-width:380px;margin-top:14px;
   display:flex;flex-direction:column;gap:5px;
+  max-height:220px;overflow-y:auto;
 }
 .loading-skel-row{
   height:34px;border-radius:9px;
@@ -557,7 +560,6 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 }
 @keyframes liveRowIn{to{opacity:1;transform:none}}
 .loading-live-desc{flex:1;min-width:0;white-space:normal;line-height:1.4}
-.loading-live-amt{margin-left:auto;flex-shrink:0;font-family:'DM Mono',monospace;font-weight:600;color:var(--text-accent)}
 .loading-live-tick{flex-shrink:0;color:var(--green);font-size:11px}
 .loading-reveal{
   text-align:center;margin-top:12px;opacity:0;transition:opacity .4s;
@@ -2725,7 +2727,10 @@ PROFIT STACKING — CORRECT METHOD:
     const setProg=(p,l)=>{bar.style.width=Math.min(p,100)+'%';pctEl.textContent=Math.round(Math.min(p,100))+'%';if(l)stepEl.textContent=l;};
     setProg(56,appLang==='en'?'Pricing line items…':'Cotizando partidas…');
 
-    const EXPECT=15; let rendered=0;
+    const EXPECT=15; let rendered=0; const seenCats=new Set();
+    // Show category only, never the description or dollar amount — this is a
+    // live "what's being priced" reveal, not a preview of the actual numbers,
+    // which haven't had overhead/contingency/profit stacked on yet.
     const onDelta=(full)=>{
       const items=extractStreamLineItems(full);
       if(items.length>rendered&&liveEl){
@@ -2734,13 +2739,15 @@ PROFIT STACKING — CORRECT METHOD:
       }
       for(let k=rendered;k<items.length;k++){
         const it=items[k]||{};
-        const row=document.createElement('div');
-        row.className='loading-live-row';
-        const amt=typeof it.total==='number'?('$'+Math.round(it.total).toLocaleString()):'';
-        const desc=escapeHtml((it.description||it.category||'Item').toString().slice(0,140));
-        row.innerHTML=`<span class="loading-live-tick">✓</span><span class="loading-live-desc">${desc}</span><span class="loading-live-amt">${amt}</span>`;
-        liveEl&&liveEl.appendChild(row);
-        if(liveEl) liveEl.scrollTop=liveEl.scrollHeight;
+        const cat=(it.category||'Scope').toString().slice(0,40);
+        if(!seenCats.has(cat)){
+          seenCats.add(cat);
+          const row=document.createElement('div');
+          row.className='loading-live-row';
+          row.innerHTML=`<span class="loading-live-tick">✓</span><span class="loading-live-desc">${escapeHtml(cat)}</span>`;
+          liveEl&&liveEl.appendChild(row);
+          if(liveEl) liveEl.scrollTop=liveEl.scrollHeight;
+        }
       }
       if(items.length>rendered){
         rendered=items.length;
