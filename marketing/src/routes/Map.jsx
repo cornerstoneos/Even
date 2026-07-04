@@ -4,8 +4,10 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
 
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'
 
-// anchor: text-anchor for SVG label. dx/dy: label offset in SVG units.
+// anchor: SVG text-anchor. dx/dy: label offset in SVG units.
+// name: string for single state, array for multi-state groups that activate together.
 const MARKETS = [
+  // ── Southeast ────────────────────────────────────────────────────────────────
   {
     name: 'Florida',
     cities: [
@@ -50,6 +52,7 @@ const MARKETS = [
     ],
     delay: 14800,
   },
+  // ── South / Southwest ─────────────────────────────────────────────────────────
   {
     name: 'Texas',
     cities: [
@@ -69,9 +72,55 @@ const MARKETS = [
     ],
     delay: 21200,
   },
+  // ── West ──────────────────────────────────────────────────────────────────────
+  {
+    name: ['California', 'Nevada', 'Oregon', 'Washington'],
+    cities: [
+      { name: 'Los Angeles', coords: [-118.24, 34.05], anchor: 'end', dx: -5 },
+      { name: 'San Diego', coords: [-117.16, 32.72], anchor: 'end', dx: -5, dy: 10 },
+      { name: 'San Francisco', coords: [-122.42, 37.77], anchor: 'end', dx: -5 },
+      { name: 'Las Vegas', coords: [-115.14, 36.17], anchor: 'start', dx: 5 },
+      { name: 'Portland', coords: [-122.68, 45.52], anchor: 'end', dx: -5 },
+      { name: 'Seattle', coords: [-122.33, 47.61], anchor: 'end', dx: -5, dy: -10 },
+    ],
+    delay: 22800,
+  },
+  {
+    name: 'Colorado',
+    cities: [
+      { name: 'Denver', coords: [-104.99, 39.74], anchor: 'start', dx: 5 },
+    ],
+    delay: 24200,
+  },
+  // ── Midwest ───────────────────────────────────────────────────────────────────
+  {
+    name: ['Illinois', 'Michigan', 'Minnesota', 'Ohio', 'Indiana', 'Missouri'],
+    cities: [
+      { name: 'Chicago', coords: [-87.63, 41.88], anchor: 'end', dx: -5 },
+      { name: 'Detroit', coords: [-83.05, 42.33], anchor: 'start', dx: 5 },
+      { name: 'Minneapolis', coords: [-93.27, 44.98], anchor: 'end', dx: -5 },
+      { name: 'Columbus', coords: [-82.99, 39.96], anchor: 'start', dx: 5 },
+      { name: 'Indianapolis', coords: [-86.16, 39.77], dy: 12 },
+      { name: 'Kansas City', coords: [-94.58, 39.10], anchor: 'end', dx: -5 },
+    ],
+    delay: 25600,
+  },
+  // ── Northeast ─────────────────────────────────────────────────────────────────
+  {
+    name: ['New York', 'Massachusetts', 'Pennsylvania', 'District of Columbia', 'Maryland'],
+    cities: [
+      { name: 'NYC', coords: [-74.01, 40.71], anchor: 'start', dx: 5, dy: -10 },
+      { name: 'Boston', coords: [-71.06, 42.36], anchor: 'start', dx: 5 },
+      { name: 'Philadelphia', coords: [-75.16, 39.95], anchor: 'start', dx: 5, dy: 8 },
+      { name: 'Pittsburgh', coords: [-79.99, 40.44], anchor: 'end', dx: -5 },
+      { name: 'D.C.', coords: [-77.04, 38.91], anchor: 'start', dx: 5, dy: 10 },
+      { name: 'Baltimore', coords: [-76.61, 39.29], anchor: 'start', dx: 5, dy: -10 },
+    ],
+    delay: 27400,
+  },
 ]
 
-const LOOP = 31000
+const LOOP = 37000
 
 function Counter({ target, running, suffix = '' }) {
   const [val, setVal] = useState(0)
@@ -89,7 +138,7 @@ function Counter({ target, running, suffix = '' }) {
 
 function MapBase({ strings }) {
   const [activeStates, setActiveStates] = useState(new Set())
-  const [visibleCities, setVisibleCities] = useState(new Set())
+  const [visibleMarkets, setVisibleMarkets] = useState(new Set())
   const [showTitle, setShowTitle] = useState(false)
   const [showStats, setShowStats] = useState(false)
   const [showTagline, setShowTagline] = useState(false)
@@ -100,7 +149,7 @@ function MapBase({ strings }) {
     timers.current.forEach(clearTimeout)
     timers.current = []
     setActiveStates(new Set())
-    setVisibleCities(new Set())
+    setVisibleMarkets(new Set())
     setShowTitle(false)
     setShowStats(false)
     setShowTagline(false)
@@ -115,14 +164,18 @@ function MapBase({ strings }) {
     reset()
     schedule(() => setShowTitle(true), 400)
 
-    MARKETS.forEach(m => {
-      schedule(() => setActiveStates(prev => new Set([...prev, m.name])), m.delay)
-      schedule(() => setVisibleCities(prev => new Set([...prev, m.name])), m.delay + 500)
+    MARKETS.forEach((m, idx) => {
+      schedule(() => setActiveStates(prev => {
+        const next = new Set(prev)
+        ;(Array.isArray(m.name) ? m.name : [m.name]).forEach(n => next.add(n))
+        return next
+      }), m.delay)
+      schedule(() => setVisibleMarkets(prev => new Set([...prev, idx])), m.delay + 500)
     })
 
-    schedule(() => setShowStats(true), 23000)
-    schedule(() => setShowTagline(true), 25500)
-    schedule(() => setShowLogo(true), 27500)
+    schedule(() => setShowStats(true), 29500)
+    schedule(() => setShowTagline(true), 32000)
+    schedule(() => setShowLogo(true), 34000)
     schedule(run, LOOP)
   }
 
@@ -184,10 +237,10 @@ function MapBase({ strings }) {
             }
           </Geographies>
 
-          {MARKETS.map(market =>
-            visibleCities.has(market.name)
+          {MARKETS.map((market, idx) =>
+            visibleMarkets.has(idx)
               ? market.cities.map(city => (
-                  <Marker key={`${market.name}-${city.name}`} coordinates={city.coords}>
+                  <Marker key={`${idx}-${city.name}`} coordinates={city.coords}>
                     <circle
                       r={2.5}
                       fill="#ffffff"
@@ -399,8 +452,8 @@ function MapBase({ strings }) {
 const EN = {
   title: 'Active Markets',
   stats: [
-    { target: 30, suffix: '+', label: 'Cities' },
-    { target: 20, suffix: '+', label: 'Permit Databases' },
+    { target: 40, suffix: '+', label: 'Cities' },
+    { target: 30, suffix: '+', label: 'Permit Databases' },
     { word: 'Live', label: 'Labor Rates' },
   ],
   tagline1: 'Current permit fees. Current labor rates. Current material costs.',
@@ -411,8 +464,8 @@ const EN = {
 const ES = {
   title: 'Mercados Activos',
   stats: [
-    { target: 30, suffix: '+', label: 'Ciudades' },
-    { target: 20, suffix: '+', label: 'Bases de Datos' },
+    { target: 40, suffix: '+', label: 'Ciudades' },
+    { target: 30, suffix: '+', label: 'Bases de Datos' },
     { word: 'En Vivo', label: 'Tarifas Laborales' },
   ],
   tagline1: 'Permisos actuales. Tarifas laborales actuales. Costos de materiales actuales.',
