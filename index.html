@@ -539,14 +539,14 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
   display:flex;flex-direction:column;gap:5px;
 }
 .loading-live-row{
-  display:flex;align-items:center;gap:10px;
+  display:flex;align-items:flex-start;gap:10px;
   background:var(--l2);border:1px solid var(--rim2);border-radius:9px;
   padding:8px 12px;font-size:12px;color:var(--white2);
   opacity:0;transform:translateY(6px);
   animation:liveRowIn .32s ease forwards;
 }
 @keyframes liveRowIn{to{opacity:1;transform:none}}
-.loading-live-desc{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.loading-live-desc{flex:1;min-width:0;white-space:normal;line-height:1.4}
 .loading-live-amt{margin-left:auto;flex-shrink:0;font-family:'DM Mono',monospace;font-weight:600;color:var(--text-accent)}
 .loading-live-tick{flex-shrink:0;color:var(--green);font-size:11px}
 .loading-reveal{
@@ -586,8 +586,17 @@ body.light .topbar{background:rgba(255,255,255,0.94)}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--rim2);border-radius:2px}
 
 @media(max-width:440px){
-  .li-head,.li-row{grid-template-columns:1fr 52px 70px 70px 82px 26px;gap:4px;font-size:11px}
-  .li-head{font-size:8.5px}
+  /* Description was squeezed into a fixed 6-column row alongside qty/unit/
+     cost/total, truncating to 3-4 characters on narrow screens. Stack it:
+     description gets its own full-width row, numeric fields go below. */
+  .li-head{display:none}
+  .li-row{grid-template-columns:repeat(5,1fr);grid-template-rows:auto auto;gap:4px 6px;font-size:11px}
+  .li-row>*:nth-child(1){grid-column:1/-1}
+  .li-row>*:nth-child(2){grid-column:1}
+  .li-row>*:nth-child(3){grid-column:2}
+  .li-row>*:nth-child(4){grid-column:3}
+  .li-row>*:nth-child(5){grid-column:4}
+  .li-row>*:nth-child(6){grid-column:5}
   .bid-val{font-size:22px}
   .pdf-grid{grid-template-columns:1fr}
 }
@@ -2145,10 +2154,13 @@ function startThinkingStatus(elId,msgs){
   const el=document.getElementById(elId);
   if(!el) return ()=>{};
   let mi=0,dots=1,stopped=false;
-  const render=()=>{ if(stopped)return; el.innerHTML=`<span class="think-dot"></span>${msgs[mi%msgs.length]}${'.'.repeat(dots)}`; };
+  // Clamp at the last message instead of wrapping — a slow response shouldn't
+  // ever look like it went backward to an earlier stage ("Reading your scope"
+  // reappearing after "Prepping your questions" already showed).
+  const render=()=>{ if(stopped)return; el.innerHTML=`<span class="think-dot"></span>${msgs[Math.min(mi,msgs.length-1)]}${'.'.repeat(dots)}`; };
   render();
   const dotTimer=setInterval(()=>{dots=dots%3+1;render();},420);
-  const msgTimer=setInterval(()=>{mi++;dots=1;render();},2200);
+  const msgTimer=setInterval(()=>{if(mi<msgs.length-1){mi++;dots=1;render();}},2200);
   return ()=>{ stopped=true; clearInterval(dotTimer); clearInterval(msgTimer); };
 }
 
@@ -2620,7 +2632,7 @@ PROFIT STACKING — CORRECT METHOD:
         const row=document.createElement('div');
         row.className='loading-live-row';
         const amt=typeof it.total==='number'?('$'+Math.round(it.total).toLocaleString()):'';
-        const desc=escapeHtml((it.description||it.category||'Item').toString().slice(0,60));
+        const desc=escapeHtml((it.description||it.category||'Item').toString().slice(0,140));
         row.innerHTML=`<span class="loading-live-tick">✓</span><span class="loading-live-desc">${desc}</span><span class="loading-live-amt">${amt}</span>`;
         liveEl&&liveEl.appendChild(row);
         if(liveEl) liveEl.scrollTop=liveEl.scrollHeight;
