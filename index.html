@@ -1340,6 +1340,15 @@ let isPro = false;
 let authMode = 'login';
 let stripe = null; // initialized lazily on first use
 
+// Escapes text pulled from user input or AI responses before it's spliced into
+// innerHTML template literals — scope text and other user fields flow into
+// Claude prompts, and the model's JSON response text gets rendered back, so
+// any of it could contain HTML/script fragments.
+function escapeHtml(str){
+  if(str===null||str===undefined) return '';
+  return String(str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
 // Init Supabase
 function initSupabase(){
   if(typeof supabase === 'undefined' || typeof supabase.createClient !== 'function'){
@@ -2202,7 +2211,7 @@ async function startEstimate(){
     document.getElementById('gen-btn').disabled=false;
   }catch(e){
     stopStatus();
-    document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">${e.message||'Something went wrong analyzing your scope — please try again'}</span>`;
+    document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">${escapeHtml(e.message)||'Something went wrong analyzing your scope — please try again'}</span>`;
     document.getElementById('gen-btn').disabled=false;
   }
 }
@@ -2211,11 +2220,11 @@ function renderScopeExtracted(data){
   const grid=document.getElementById('scope-grid');
   grid.innerHTML=(data.tradeBreakdown||[]).map((t,i)=>`
     <div class="trade-card" style="animation-delay:${i*.07}s">
-      <div class="trade-head"><span class="trade-icon-wrap">${t.icon||'🔧'}</span><span class="trade-name">${t.trade}</span></div>
-      <div class="trade-items">${(t.items||[]).map(item=>`<div class="trade-item">${item}</div>`).join('')}</div>
+      <div class="trade-head"><span class="trade-icon-wrap">${escapeHtml(t.icon)||'🔧'}</span><span class="trade-name">${escapeHtml(t.trade)}</span></div>
+      <div class="trade-items">${(t.items||[]).map(item=>`<div class="trade-item">${escapeHtml(item)}</div>`).join('')}</div>
     </div>`).join('');
   if(data.keyFacts?.length){
-    grid.innerHTML+=`<div class="fact-row">${data.keyFacts.map(f=>`<span class="fact-chip">${f}</span>`).join('')}</div>`;
+    grid.innerHTML+=`<div class="fact-row">${data.keyFacts.map(f=>`<span class="fact-chip">${escapeHtml(f)}</span>`).join('')}</div>`;
   }
 }
 
@@ -2231,9 +2240,9 @@ function renderQuestions(questions){
   const blocks=questions.map((q,i)=>{
     const opts=(q.options&&q.options.length)?q.options:buildChipOptions(q);
     return `<div class="q-block" id="qblock-${i}">
-      <div class="q-label">${i+1}. ${q.question}</div>
+      <div class="q-label">${i+1}. ${escapeHtml(q.question)}</div>
       <div class="q-chips" id="qchips-${i}">
-        ${opts.map(o=>`<button class="q-chip" onclick="selectChip(${i},'${o.replace(/'/g,"\'")}',this)">${o}</button>`).join('')}
+        ${opts.map(o=>`<button class="q-chip" onclick="selectChip(${i},'${encodeURIComponent(o).replace(/'/g,'%27')}',this)">${escapeHtml(o)}</button>`).join('')}
       </div>
       <input class="q-other" id="qother-${i}" placeholder="${appLang==='en'?'Other / additional detail…':'Otro / detalle adicional…'}" oninput="setQAnswer(${i},this.value)">
     </div>`;
@@ -2295,6 +2304,7 @@ function buildChipOptions(q){
 }
 
 function selectChip(idx,value,el){
+  value=decodeURIComponent(value);
   const chips=document.querySelectorAll(`#qchips-${idx} .q-chip`);
   chips.forEach(c=>{c.classList.remove('selected');c.classList.remove('active');});
   el.classList.add('selected');
@@ -2569,15 +2579,15 @@ PROFIT STACKING — CORRECT METHOD:
   // Generate phase content for loading
   const phase1=appLang==='en'?[
     `📋 Reading scope of work…`,
-    `📍 Location: ${ctx.location} detected`,
-    `🔨 Trade: ${ctx.trade}`,
+    `📍 Location: ${escapeHtml(ctx.location)} detected`,
+    `🔨 Trade: ${escapeHtml(ctx.trade)}`,
     ctx.sqft!=='not specified'?`📐 ${ctx.sqft} sq ft confirmed`:`📐 Square footage: not specified`,
     `⚙️ Overhead: ${ctx.oh}% · Profit: ${ctx.profit}% · Cushion: ${ctx.cushion}%`,
     `🔍 Identifying trades and scope items…`
   ]:[
     `📋 Leyendo alcance de trabajo…`,
-    `📍 Ubicación: ${ctx.location} detectada`,
-    `🔨 Oficio: ${ctx.trade}`,
+    `📍 Ubicación: ${escapeHtml(ctx.location)} detectada`,
+    `🔨 Oficio: ${escapeHtml(ctx.trade)}`,
     `📐 ${ctx.sqft!=='not specified'?ctx.sqft+' pies cuadrados confirmados':'Pies cuadrados: no especificado'}`,
     `⚙️ Gastos: ${ctx.oh}% · Ganancia: ${ctx.profit}% · Colchón: ${ctx.cushion}%`,
     `🔍 Identificando oficios y alcance…`
@@ -2585,7 +2595,7 @@ PROFIT STACKING — CORRECT METHOD:
 
   const tradeBreakdown=window._scopeData?.tradeBreakdown||[];
   const phase2=tradeBreakdown.length>0
-    ?tradeBreakdown.map(t=>`${t.icon} ${t.trade} scope identified — ${t.items?.length||0} items`)
+    ?tradeBreakdown.map(t=>`${escapeHtml(t.icon)} ${escapeHtml(t.trade)} scope identified — ${t.items?.length||0} items`)
     :(appLang==='en'?['🔨 General scope identified','⚡ Specialty work noted','📦 Materials scope parsed']:['🔨 Alcance general identificado','⚡ Trabajo especializado anotado','📦 Materiales identificados']);
 
     // Scripted intro (reading scope, analyzing trades), then stream phase 3 LIVE —
@@ -2610,7 +2620,7 @@ PROFIT STACKING — CORRECT METHOD:
         const row=document.createElement('div');
         row.className='loading-live-row';
         const amt=typeof it.total==='number'?('$'+Math.round(it.total).toLocaleString()):'';
-        const desc=(it.description||it.category||'Item').toString().replace(/[<>]/g,'').slice(0,60);
+        const desc=escapeHtml((it.description||it.category||'Item').toString().slice(0,60));
         row.innerHTML=`<span class="loading-live-tick">✓</span><span class="loading-live-desc">${desc}</span><span class="loading-live-amt">${amt}</span>`;
         liveEl&&liveEl.appendChild(row);
         if(liveEl) liveEl.scrollTop=liveEl.scrollHeight;
@@ -2680,7 +2690,7 @@ PROFIT STACKING — CORRECT METHOD:
 //  RENDER ESTIMATE
 // ══════════════════════════
 function getCatIcon(c){const m={Labor:'👷',Materials:'📦',Electrical:'⚡',Plumbing:'🔧',HVAC:'❄️',Permits:'📋',Equipment:'🔨',Demo:'🗜️',Demolition:'🗜️',Flooring:'🪵',Tile:'🟫',Mechanical:'⚙️',Painting:'🎨',Roofing:'🏠',Concrete:'🪨',Cleanup:'🧹'};return m[c]||'🔧'}
-function esc(s){return String(s).replace(/"/g,'&quot;').replace(/</g,'&lt;')}
+function esc(s){return escapeHtml(s)}
 
 function renderEstimate(data){
   const cats={};
@@ -2711,7 +2721,7 @@ function renderEstimate(data){
   if(isPro){
     varBody.innerHTML=sorted.map((item,i)=>`
       <div class="var-row">
-        <span style="color:var(--white2);font-size:12px">${item.description.substring(0,28)}${item.description.length>28?'…':''}</span>
+        <span style="color:var(--white2);font-size:12px">${escapeHtml(item.description.substring(0,28))}${item.description.length>28?'…':''}</span>
         <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${fmt(item.total)}</span>
         <input placeholder="$0" onchange="calcVar(this,${item.total})" style="background:transparent;border:none;border-bottom:1px solid var(--rim);color:var(--white);font-size:12px;font-family:'DM Mono',monospace;outline:none;width:100%;padding:2px 0">
         <span id="vr-${i}" style="font-size:11px;color:var(--muted)">—</span>
@@ -2721,7 +2731,7 @@ function renderEstimate(data){
     varBody.innerHTML=`<div style="position:relative">
       <div style="filter:blur(4px);pointer-events:none;user-select:none">
         ${preview.map(item=>`<div class="var-row">
-          <span style="color:var(--white2);font-size:12px">${item.description.substring(0,28)}…</span>
+          <span style="color:var(--white2);font-size:12px">${escapeHtml(item.description.substring(0,28))}…</span>
           <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${fmt(item.total)}</span>
           <input placeholder="$0" disabled style="background:transparent;border:none;border-bottom:1px solid var(--rim);color:var(--white);font-size:12px;width:100%;padding:2px 0">
           <span style="font-size:11px;color:var(--muted)">—</span>
@@ -2880,7 +2890,7 @@ async function loadSimilarJobs(data){
     const avg=Math.round(totals.reduce((s,v)=>s+v,0)/totals.length);
     const low=Math.min(...totals),high=Math.max(...totals);
     const avgM=margins.length?Math.round(margins.reduce((s,v)=>s+v,0)/margins.length):null;
-    el.innerHTML=`<div class="similar-recall"><span style="color:var(--text-accent);flex-shrink:0">✦</span><span>Based on your last ${jobs.length} <strong>${trade}</strong> jobs — avg ${fmtK(avg)}, range ${fmtK(low)}–${fmtK(high)}${avgM?`, avg margin ${avgM}%`:''}</span></div>`;
+    el.innerHTML=`<div class="similar-recall"><span style="color:var(--text-accent);flex-shrink:0">✦</span><span>Based on your last ${jobs.length} <strong>${escapeHtml(trade)}</strong> jobs — avg ${fmtK(avg)}, range ${fmtK(low)}–${fmtK(high)}${avgM?`, avg margin ${avgM}%`:''}</span></div>`;
     el.style.display='block';
   }catch(e){console.error('Similar jobs error:',e);}
 }
@@ -2971,11 +2981,11 @@ function renderProposalPreview(){
   const detail=window._proposalDetail||'full';
   let rows='';
   if(detail==='full'){
-    rows=Object.entries(cats).map(([cat,items])=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8920A">${cat}</td></tr>`+items.map(item=>`<tr><td>${item.description}</td><td style="text-align:right;color:#888;font-size:11px">${item.qty} ${item.unit}</td></tr>`).join('')).join('');
+    rows=Object.entries(cats).map(([cat,items])=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8920A">${escapeHtml(cat)}</td></tr>`+items.map(item=>`<tr><td>${escapeHtml(item.description)}</td><td style="text-align:right;color:#888;font-size:11px">${escapeHtml(item.qty)} ${escapeHtml(item.unit)}</td></tr>`).join('')).join('');
   } else if(detail==='category'){
     rows=Object.entries(cats).map(([cat,items])=>{
       const sub=items.reduce((s,i)=>s+i.total,0);
-      return `<tr><td style="font-weight:600;color:#555">${cat}</td><td style="text-align:right;font-weight:600;color:#555">${fmtK(sub)}</td></tr>`;
+      return `<tr><td style="font-weight:600;color:#555">${escapeHtml(cat)}</td><td style="text-align:right;font-weight:600;color:#555">${fmtK(sub)}</td></tr>`;
     }).join('');
   } else {
     rows=`<tr><td colspan="2" style="text-align:center;padding:10px;color:#666;font-size:13px">All work as described in this proposal</td></tr>`;
@@ -2987,18 +2997,18 @@ function renderProposalPreview(){
     <div class="prop-inner">
       <div class="prop-hdr">
         <div><h1>${L==='en'?'Project Proposal':'Propuesta de Proyecto'}</h1><p>Even · Cornerstone OS</p></div>
-        <div class="prop-meta"><strong>${data.projectName||'Estimate'}</strong>${now}<br>${ctx?.location||''}<br>${L==='en'?'Client':'Cliente'}: ${ctx?.client||'—'}</div>
+        <div class="prop-meta"><strong>${escapeHtml(data.projectName||'Estimate')}</strong>${now}<br>${escapeHtml(ctx?.location||'')}<br>${L==='en'?'Client':'Cliente'}: ${escapeHtml(ctx?.client||'—')}</div>
       </div>
-      ${clientNote?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${clientNote}</p>`:''}
+      ${clientNote?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${escapeHtml(clientNote)}</p>`:''}
       <div class="prop-sec">${L==='en'?'Scope of Work':'Alcance del Trabajo'}</div>
       <p style="font-size:12px;color:#666;line-height:1.6;margin-bottom:10px">${L==='en'?'This proposal covers the complete scope of work as outlined below.':'Esta propuesta cubre el alcance completo del trabajo detallado a continuación.'}</p>
       <div class="prop-sec">${L==='en'?'Inclusions':'Incluido'}</div>
       <table class="prop-tbl"><thead><tr><th>${L==='en'?'Description':'Descripción'}</th><th style="text-align:right">${L==='en'?'Qty / Unit':'Cant. / Unidad'}</th></tr></thead><tbody>${rows}</tbody></table>
-      ${allExclusions.length?`<div class="prop-sec">${L==='en'?'Exclusions':'Exclusiones'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${allExclusions.map(e=>`• ${e}`).join('<br>')}</div>`:''}
-      ${data.assumptions?.length?`<div class="prop-sec">${L==='en'?'Assumptions':'Supuestos'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${data.assumptions.map(a=>`• ${a}`).join('<br>')}</div>`:''}
+      ${allExclusions.length?`<div class="prop-sec">${L==='en'?'Exclusions':'Exclusiones'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${allExclusions.map(e=>`• ${escapeHtml(e)}`).join('<br>')}</div>`:''}
+      ${data.assumptions?.length?`<div class="prop-sec">${L==='en'?'Assumptions':'Supuestos'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${data.assumptions.map(a=>`• ${escapeHtml(a)}`).join('<br>')}</div>`:''}
       <div class="prop-sec">${L==='en'?'Investment':'Inversión'}</div>
       <div class="prop-total-bar" style="flex-direction:column;align-items:flex-start;gap:6px"><div style="width:100%;display:flex;justify-content:space-between;align-items:center"><span class="pl">${L==='en'?'Total Project Investment':'Inversión Total del Proyecto'}</span><span class="pv">${window._finalBid?fmt(window._finalBid):fmtK(Math.round(data.totalBid*0.88))+' — '+fmtK(Math.round(data.totalBid*1.12))}</span></div>${window._finalBid?`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Even range: '+fmtK(Math.round(data.totalBid*0.88))+'–'+fmtK(Math.round(data.totalBid*1.12)):'Rango Even: '+fmtK(Math.round(data.totalBid*0.88))+'–'+fmtK(Math.round(data.totalBid*1.12))}</div>`:`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Midpoint ref: '+fmt(data.totalBid):'Referencia: '+fmt(data.totalBid)}</div>`}</div>
-      <p style="font-size:10px;color:#aaa;margin-top:8px">${data.paymentTerms||(L==='en'?'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.':'50% de depósito requerido. Saldo al terminar. Precio válido 30 días.')}</p>
+      <p style="font-size:10px;color:#aaa;margin-top:8px">${escapeHtml(data.paymentTerms)||(L==='en'?'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.':'50% de depósito requerido. Saldo al terminar. Precio válido 30 días.')}</p>
       <div class="prop-sig">
         <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Client Signature & Date':'Firma del Cliente y Fecha'}</div></div>
         <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Contractor Signature & Date':'Firma del Contratista y Fecha'}</div></div>
@@ -3636,7 +3646,7 @@ function _addAssumptionRow(text){
   if(!list) return;
   const div = document.createElement('div');
   div.style.cssText='display:flex;gap:6px;margin-bottom:6px;align-items:center';
-  div.innerHTML=`<input class="assumption-input" value="${text.replace(/"/g,'&quot;')}" placeholder="e.g. Access to electrical panel confirmed…" style="flex:1;background:var(--bg);border:1px solid var(--rim);border-radius:7px;color:var(--white2);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box" oninput="liveProposalUpdate()"><button onclick="this.parentElement.remove();liveProposalUpdate()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:17px;line-height:1;padding:0 2px;flex-shrink:0">×</button>`;
+  div.innerHTML=`<input class="assumption-input" value="${escapeHtml(text)}" placeholder="e.g. Access to electrical panel confirmed…" style="flex:1;background:var(--bg);border:1px solid var(--rim);border-radius:7px;color:var(--white2);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box" oninput="liveProposalUpdate()"><button onclick="this.parentElement.remove();liveProposalUpdate()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:17px;line-height:1;padding:0 2px;flex-shrink:0">×</button>`;
   list.appendChild(div);
 }
 
@@ -3661,7 +3671,7 @@ const SUPPLIER_CATEGORIES = ['Roofing','Framing','Sheathing','Insulation','Drywa
   'Tile','Plumbing','Electrical','HVAC','Windows & Doors','Concrete','Painting','Hardware','Other'];
 const SUPPLIER_GRADES = ['Budget','Standard','Premium'];
 
-function _esc(s){ return (s||'').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+function _esc(s){ return escapeHtml(s); }
 
 function renderSupplierList(){
   const el = document.getElementById('supplier-list');
@@ -3948,9 +3958,9 @@ async function loadDashboard(){
       return `<div class="job-card" id="jc-${est.id}">
         <div class="job-card-top" onclick="loadSavedEstimate('${est.id}')">
           <div class="job-card-main">
-            <div class="job-card-label">${label}</div>
-            ${est.client_name?`<div style="font-size:11px;color:var(--muted);margin-top:1px">${est.client_name}</div>`:''}
-            <div class="job-card-meta">${[est.trade,date].filter(Boolean).join(' · ')}</div>
+            <div class="job-card-label">${escapeHtml(label)}</div>
+            ${est.client_name?`<div style="font-size:11px;color:var(--muted);margin-top:1px">${escapeHtml(est.client_name)}</div>`:''}
+            <div class="job-card-meta">${escapeHtml([est.trade,date].filter(Boolean).join(' · '))}</div>
           </div>
           <div class="job-card-right">
             <div class="job-card-total">${fmtK(est.total_bid)}</div>
@@ -4029,7 +4039,7 @@ async function generateInsights(estimates){
     const parsed=JSON.parse(text);
     if(parsed.insights?.length){
       el.innerHTML=parsed.insights.map(ins=>
-        `<div class="dash-insight"><span style="color:var(--text-accent);flex-shrink:0;margin-top:1px">✦</span><span>${ins}</span></div>`
+        `<div class="dash-insight"><span style="color:var(--text-accent);flex-shrink:0;margin-top:1px">✦</span><span>${escapeHtml(ins)}</span></div>`
       ).join('');
       wrap.style.display='block';
     }
