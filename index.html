@@ -1950,9 +1950,13 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
       clearTimeout(tid);
       if(!r.ok){
         const e=await r.json().catch(()=>({}));
-        // HTTP/2 responses have empty statusText — always fall back to the status code so the error is never blank
-        const detail=e.error?.message||r.statusText||('HTTP '+r.status);
-        const friendly=r.status>=500?`Server busy (${r.status}) — please try again in a moment`:(r.status===429?'Rate limited — wait a few seconds and retry':detail);
+        // Prefer the server/Anthropic message when present; only fall back to a generic status line when there is none
+        const detail=e.error?.message||'';
+        let friendly;
+        if(r.status===429) friendly='Rate limited — wait a few seconds and retry';
+        else if(detail) friendly=`${detail} (${r.status})`;
+        else if(r.status>=500) friendly=`Server busy (${r.status}) — please try again in a moment`;
+        else friendly=r.statusText||('HTTP '+r.status);
         throw new Error(friendly);
       }
       const d=await r.json();
