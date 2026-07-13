@@ -3177,23 +3177,74 @@ function renderProposalPreview(){
   document.getElementById('proposal-section').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function downloadProposalPDF(){
+// PDF branding helpers — let a Pro contractor's own logo/color appear on
+// documents sent to their clients instead of only Even's.
+function hexToRgb(hex){
+  const m=/^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex||'');
+  return m?[parseInt(m[1],16),parseInt(m[2],16),parseInt(m[3],16)]:[255,179,0];
+}
+// Fetches the contractor's uploaded logo and returns a data URI plus its natural
+// pixel dimensions (needed to fit it into the PDF header without distorting it).
+// Resolves to null on any failure so PDF generation always has a safe fallback.
+function loadLogoForPDF(url){
+  if(!url) return Promise.resolve(null);
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.crossOrigin='anonymous';
+    const timer=setTimeout(()=>resolve(null),5000);
+    img.onload=()=>{
+      clearTimeout(timer);
+      try{
+        const canvas=document.createElement('canvas');
+        canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+        const c=canvas.getContext('2d');
+        c.drawImage(img,0,0);
+        resolve({dataUri:canvas.toDataURL('image/png'),w:img.naturalWidth,h:img.naturalHeight});
+      }catch(e){ resolve(null); }
+    };
+    img.onerror=()=>{ clearTimeout(timer); resolve(null); };
+    img.src=url;
+  });
+}
+// Draws the PDF header — contractor's logo on white if they've uploaded one
+// (their brand leads on their own client-facing document), otherwise the
+// existing black/gold Even header, unchanged, for anyone who hasn't set one up.
+function drawPDFHeader(doc,W,barH,logo,accent,now){
+  if(logo){
+    doc.setFillColor(255,255,255);doc.rect(0,0,W,barH,'F');
+    doc.setFillColor(...accent);doc.rect(0,barH,W,3,'F');
+    const maxH=barH-20,maxW=180;
+    let w=logo.w,h=logo.h;
+    const scale=Math.min(maxH/h,maxW/w,1);
+    w=w*scale;h=h*scale;
+    doc.addImage(logo.dataUri,'PNG',24,(barH-h)/2,w,h);
+    doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(120,120,120);
+    doc.text(now,W-24,barH/2+3,{align:'right'});
+  } else {
+    doc.setFillColor(10,10,10);doc.rect(0,0,W,barH,'F');
+    doc.setFillColor(...accent);doc.rect(0,barH,W,3,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(barH>55?18:14);doc.setTextColor(...accent);
+    doc.text('EVEN',24,barH*0.63);
+    doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);
+    doc.text('BY CORNERSTONE OS',24,barH-10);doc.text(now,W-24,barH-10,{align:'right'});
+  }
+}
+
+async function downloadProposalPDF(){
   if(!currentEstimate){alert('No estimate loaded. Run an estimate first.');return;}
   const jsPDFLib=window.jspdf||window.jsPDF||{};
   const jsPDF=jsPDFLib.jsPDF||window.jsPDF;
   if(!jsPDF){alert('PDF engine not loaded. Please refresh and try again.');return;}
+  const accent=hexToRgb(window._accentColor);
+  const mutedAccent=accent.map(c=>Math.round(c*0.75));
+  const logo=await loadLogoForPDF(window._userLogoUrl);
   const doc=new jsPDF({unit:'pt',format:'letter'});
   const data=currentEstimate;
   const ctx=window._ctx||{trade:data.trade||'',location:data.location||'',client:data.client||'Client'};
   const W=612,M=52,L=appLang;
   let y=0;
   const now=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  doc.setFillColor(10,10,10);doc.rect(0,0,W,60,'F');
-  doc.setFillColor(255,179,0);doc.rect(0,60,W,3,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(18);doc.setTextColor(255,179,0);
-  doc.text('EVEN',M,38);
-  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);
-  doc.text('BY CORNERSTONE OS',M,50);doc.text(now,W-M,50,{align:'right'});
+  drawPDFHeader(doc,W,60,logo,accent,now);
   y=82;
   doc.setFont('helvetica','bold');doc.setFontSize(14);doc.setTextColor(26,26,24);
   doc.text(L==='en'?'PROJECT PROPOSAL':'PROPUESTA DE PROYECTO',M,y);y+=12;
@@ -3230,7 +3281,7 @@ function downloadProposalPDF(){
       if(y>700){doc.addPage();y=44;}
       if(item.category!==lastCat){
         lastCat=item.category;rowIdx=0;
-        doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(200,146,42);
+        doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...mutedAccent);
         doc.text(item.category.toUpperCase(),M+6,y+9);y+=14;
       }
       if(rowIdx%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,15,'F');}
@@ -3249,7 +3300,7 @@ function downloadProposalPDF(){
   if(pdfExclusions.length&&y<660){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(180,80,60);doc.text(L==='en'?'EXCLUSIONS':'EXCLUSIONES',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);pdfExclusions.slice(0,6).forEach(ex=>{const lines=doc.splitTextToSize('• '+ex,W-M*2-6);lines.forEach(l=>{if(y<740){doc.text(l,M+6,y);y+=10}});});y+=4}
   if(y>710){doc.addPage();y=44}
   doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,36,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(255,179,0);
+  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...accent);
   doc.text(L==='en'?'TOTAL PROJECT INVESTMENT':'INVERSIÓN TOTAL',M+10,y+21);
   const [propLoMult,propHiMult]=getConfidenceRange(data);
   const propRangeLow=Math.round(data.totalBid*propLoMult),propRangeHigh=Math.round(data.totalBid*propHiMult);
@@ -3258,7 +3309,7 @@ function downloadProposalPDF(){
   // with Even's range demoted to a small reference line underneath.
   const pdfBidText=window._finalBid?fmt(window._finalBid):fmtK(propRangeLow)+' – '+fmtK(propRangeHigh);
   doc.setFontSize(13);doc.text(pdfBidText,W-M-10,y+21,{align:'right'});y+=48;
-  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(130,100,30);
+  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...mutedAccent);
   doc.text(window._finalBid?'Even estimated range: '+fmtK(propRangeLow)+'–'+fmtK(propRangeHigh):'Midpoint reference: '+fmt(data.totalBid),M,y);y+=12;
   doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(160,160,160);
   doc.text(data.paymentTerms||(L==='en'?'50% deposit to schedule. Balance due on completion. Price valid 30 days.':'50% depósito para agendar. Saldo al terminar. Precio válido 30 días.'),M,y);y+=32;
@@ -3276,11 +3327,15 @@ function downloadProposalPDF(){
   }
 }
 
-function downloadCostSheet(){
+async function downloadCostSheet(){
   if(!currentEstimate){alert('No estimate loaded. Run an estimate first.');return;}
   const jsPDFLib=window.jspdf||window.jsPDF||{};
   const jsPDF=jsPDFLib.jsPDF||window.jsPDF;
   if(!jsPDF){alert('PDF engine not loaded. Please refresh and try again.');return;}
+  const accent=hexToRgb(window._accentColor);
+  const mutedAccent=accent.map(c=>Math.round(c*0.75));
+  const paleAccent=accent.map(c=>Math.round(c+(255-c)*0.6));
+  const logo=await loadLogoForPDF(window._userLogoUrl);
   const doc=new jsPDF({unit:'pt',format:'letter'});
   // Ensure all financial fields exist before rendering
   currentEstimate.subtotal=currentEstimate.subtotal||0;
@@ -3298,13 +3353,22 @@ function downloadCostSheet(){
   const W=612,M=48,L=appLang;
   let y=0;
   const now=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  doc.setFillColor(10,10,10);doc.rect(0,0,W,52,'F');
-  doc.setFillColor(255,179,0);doc.rect(0,52,W,3,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(14);doc.setTextColor(255,179,0);
-  doc.text(L==='en'?'EVEN · INTERNAL COST SHEET':'EVEN · HOJA DE COSTOS INTERNA',M,34);
-  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(120,120,120);
-  doc.text(L==='en'?'CONFIDENTIAL — NOT FOR CLIENT DISTRIBUTION':'CONFIDENCIAL — NO DISTRIBUIR AL CLIENTE',M,46);doc.text(now,W-M,46,{align:'right'});
-  y=72;
+  if(logo){
+    drawPDFHeader(doc,W,52,logo,accent,now);
+    // The header layout is generic (shared with the client proposal) once a
+    // contractor's logo takes over — this marker keeps the "don't send this
+    // to the client" warning visible regardless of which header rendered.
+    doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(180,60,50);
+    doc.text(L==='en'?'CONFIDENTIAL — NOT FOR CLIENT DISTRIBUTION':'CONFIDENCIAL — NO DISTRIBUIR AL CLIENTE',M,66);
+  } else {
+    doc.setFillColor(10,10,10);doc.rect(0,0,W,52,'F');
+    doc.setFillColor(...accent);doc.rect(0,52,W,3,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(14);doc.setTextColor(...accent);
+    doc.text(L==='en'?'EVEN · INTERNAL COST SHEET':'EVEN · HOJA DE COSTOS INTERNA',M,34);
+    doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(120,120,120);
+    doc.text(L==='en'?'CONFIDENTIAL — NOT FOR CLIENT DISTRIBUTION':'CONFIDENCIAL — NO DISTRIBUIR AL CLIENTE',M,46);doc.text(now,W-M,46,{align:'right'});
+  }
+  y=logo?84:72;
   doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(26,26,24);doc.text(data.projectName||'Project',M,y);y+=12;
   doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(130,130,130);doc.text(`${ctx.trade||''} · ${ctx.location||''} · ${ctx.client||''}`,M,y);y+=20;
   const cols=[M+4,248,310,378,446,W-M-4];
@@ -3315,13 +3379,13 @@ function downloadCostSheet(){
   let lc='';
   (data.lineItems||[]).forEach((item,i)=>{
     if(y>710){doc.addPage();y=44}
-    if(item.category!==lc){lc=item.category;doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(200,146,42);doc.text(item.category.toUpperCase(),M+4,y+8);y+=13}
+    if(item.category!==lc){lc=item.category;doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...mutedAccent);doc.text(item.category.toUpperCase(),M+4,y+8);y+=13}
     if(i%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,14,'F')}
     doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(50,50,50);
     doc.text(String(item.description).substring(0,52),M+4,y+9);
     doc.setTextColor(120,120,120);doc.text(String(item.qty),cols[1],y+9);doc.text(String(item.unit),cols[2],y+9);
     doc.text(fmt(item.unitCost),cols[3],y+9,{align:'right'});
-    doc.setTextColor(200,146,42);doc.text(fmt(item.total),cols[4],y+9,{align:'right'});y+=14;
+    doc.setTextColor(...mutedAccent);doc.text(fmt(item.total),cols[4],y+9,{align:'right'});y+=14;
   });
   y+=8;
   [[L==='en'?'Direct Cost Subtotal':'Subtotal de Costos',fmt(data.subtotal),[50,50,50]],[`${L==='en'?'Overhead':'Gastos'} (${data.overhead.pct}%)`,fmt(data.overhead.amount),[120,120,120]],[`${L==='en'?'Risk Cushion':'Colchón'} (${data.contingency.pct}%)`,fmt(data.contingency.amount),[45,122,79]],[`${L==='en'?'Profit':'Ganancia'} (${data.profit.pct}%)`,fmt(data.profit.amount),[124,92,191]]].forEach(([label,val,color])=>{
@@ -3337,13 +3401,13 @@ function downloadCostSheet(){
   const csBidText=window._finalBid?fmt(window._finalBid):fmtK(csRangeLow)+' – '+fmtK(csRangeHigh);
   const csSubText=window._finalBid?'Even estimated range: '+fmtK(csRangeLow)+'–'+fmtK(csRangeHigh):'Midpoint reference: '+fmt(data.totalBid);
   doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,44,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(255,179,0);
+  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...accent);
   doc.text(L==='en'?'TOTAL BID':'OFERTA TOTAL',M+10,y+18);
   doc.setFontSize(13);doc.text(csBidText,W-M-10,y+18,{align:'right'});
-  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(255,220,140);
+  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...paleAccent);
   doc.text(csSubText,M+10,y+34);
   y+=56;
-  if(data.assumptions?.length&&y<700){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(200,146,42);doc.text(L==='en'?'ASSUMPTIONS':'SUPUESTOS',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);data.assumptions.forEach(a=>{if(y<740){doc.text('• '+a,M+4,y);y+=10}})}
+  if(data.assumptions?.length&&y<700){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...mutedAccent);doc.text(L==='en'?'ASSUMPTIONS':'SUPUESTOS',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);data.assumptions.forEach(a=>{if(y<740){doc.text('• '+a,M+4,y);y+=10}})}
   const pages=doc.getNumberOfPages();
   for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even by Cornerstone OS · Internal Cost Sheet · CONFIDENTIAL',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
   savePDF(doc,`Even-CostSheet-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
@@ -3667,6 +3731,19 @@ async function submitDataTrade(){
               <span id="logo-upload-status" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
             </div>
           </div>
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--rim)">
+            <div style="font-size:12px;color:var(--white2);margin-bottom:8px">Accent color on your PDFs</div>
+            <div id="accent-swatches" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <div class="accent-swatch" data-color="#FFB300" onclick="selectAccentColor('#FFB300')" style="width:24px;height:24px;border-radius:50%;background:#FFB300;cursor:pointer;border:2px solid transparent"></div>
+              <div class="accent-swatch" data-color="#2563EB" onclick="selectAccentColor('#2563EB')" style="width:24px;height:24px;border-radius:50%;background:#2563EB;cursor:pointer;border:2px solid transparent"></div>
+              <div class="accent-swatch" data-color="#16A34A" onclick="selectAccentColor('#16A34A')" style="width:24px;height:24px;border-radius:50%;background:#16A34A;cursor:pointer;border:2px solid transparent"></div>
+              <div class="accent-swatch" data-color="#DC2626" onclick="selectAccentColor('#DC2626')" style="width:24px;height:24px;border-radius:50%;background:#DC2626;cursor:pointer;border:2px solid transparent"></div>
+              <div class="accent-swatch" data-color="#7C3AED" onclick="selectAccentColor('#7C3AED')" style="width:24px;height:24px;border-radius:50%;background:#7C3AED;cursor:pointer;border:2px solid transparent"></div>
+              <div class="accent-swatch" data-color="#0F172A" onclick="selectAccentColor('#0F172A')" style="width:24px;height:24px;border-radius:50%;background:#0F172A;cursor:pointer;border:2px solid transparent"></div>
+              <input type="color" id="accent-custom-input" value="#FFB300" onchange="selectAccentColor(this.value)" style="width:24px;height:24px;padding:0;border:2px solid var(--rim);border-radius:50%;cursor:pointer;background:none">
+              <span id="accent-save-status" style="font-size:11px;color:var(--muted);margin-left:4px"></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3827,10 +3904,36 @@ function savePrefs(){
     bidType: bidType||'fixed',
     trade: document.getElementById('est-trade')?.value||'',
     location: document.getElementById('est-location')?.value||'',
-    suppliers: window._mySuppliers||[]
+    suppliers: window._mySuppliers||[],
+    accentColor: window._accentColor||'#FFB300'
   };
   sbClient.from('users').update({prefs}).eq('id',currentUser.id)
     .then(({error})=>{ if(error) console.error('Save prefs error:',error); });
+}
+
+// PDF accent color — defaults to Even's own gold; a Pro contractor can override it
+// so proposals/cost sheets carry their own brand instead of ours.
+window._accentColor = '#FFB300';
+function renderAccentSwatches(){
+  document.querySelectorAll('.accent-swatch').forEach(el=>{
+    el.style.borderColor = el.dataset.color.toLowerCase()===window._accentColor.toLowerCase() ? 'var(--white)' : 'transparent';
+  });
+  const custom=document.getElementById('accent-custom-input');
+  if(custom) custom.value=window._accentColor;
+}
+function selectAccentColor(hex){
+  window._accentColor=hex;
+  renderAccentSwatches();
+  const status=document.getElementById('accent-save-status');
+  if(status) status.textContent='Saving…';
+  if(!currentUser||!sbClient) return;
+  sbClient.from('users').select('prefs').eq('id',currentUser.id).single().then(({data})=>{
+    const prefs={...(data?.prefs||{}),accentColor:hex};
+    sbClient.from('users').update({prefs}).eq('id',currentUser.id).then(({error})=>{
+      if(status) status.textContent=error?'':'Saved ✓';
+      if(error) console.error('Save accent color error:',error);
+    });
+  });
 }
 
 // ── MY SUPPLIERS ──────────────────────────────────────────────────────────────
@@ -4042,6 +4145,10 @@ function applyPrefs(prefs){
     window._mySuppliers = prefs.suppliers;
     renderSupplierList();
   }
+  if(prefs.accentColor){
+    window._accentColor = prefs.accentColor;
+    renderAccentSwatches();
+  }
 }
 
 async function loadDashboard(){
@@ -4050,6 +4157,7 @@ async function loadDashboard(){
   const emptyEl=document.getElementById('dashboard-empty');
   if(listEl) listEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px;font-family:\'DM Mono\',monospace">Loading…</div>';
 
+  renderAccentSwatches();
   if(window._userLogoUrl){
     const img=document.getElementById('logo-preview-img');
     const ph=document.getElementById('logo-preview-placeholder');
