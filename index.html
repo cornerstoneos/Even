@@ -477,15 +477,18 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .loading-logo b{color:var(--text-accent);font-weight:700}
 .loading-sub-brand{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:40px}
 
-/* Cube loader — gold arc orbits the isometric mark */
+/* Cube loader — gold rings frame the isometric mark. Fixed in place (no spin):
+   an earlier version rotated them, which meant the ring composition visibly
+   swept through very different-looking orientations over a single loading
+   run — reported repeatedly as the rings "switching." Static reads as
+   intentional framing instead of a moving spinner changing its look mid-wait. */
 .cube-loader{position:relative;width:170px;height:170px;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
 .cube-halo{position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle at center,rgba(255,179,0,.4),rgba(255,179,0,.12) 50%,transparent 72%);animation:cubeHalo 2.4s ease-in-out infinite;filter:blur(3px)}
-.cube-orb{position:absolute;inset:6px;border-radius:50%;border:2px solid rgba(255,179,0,.14);border-top-color:rgba(255,179,0,.95);animation:spin 1.6s linear infinite;filter:drop-shadow(0 0 6px rgba(255,179,0,.4))}
-.cube-orb-2{position:absolute;inset:17px;border-radius:50%;border:2px solid rgba(255,179,0,.13);border-top-color:rgba(255,179,0,.9);animation:spin 1.6s linear infinite;filter:drop-shadow(0 0 5px rgba(255,179,0,.35))}
+.cube-orb{position:absolute;inset:6px;border-radius:50%;border:2px solid rgba(255,179,0,.14);border-top-color:rgba(255,179,0,.95);filter:drop-shadow(0 0 6px rgba(255,179,0,.4))}
+.cube-orb-2{position:absolute;inset:17px;border-radius:50%;border:2px solid rgba(255,179,0,.13);border-top-color:rgba(255,179,0,.9);filter:drop-shadow(0 0 5px rgba(255,179,0,.35))}
 .cube-mark{position:relative;z-index:1;width:86px;height:86px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 18px rgba(255,179,0,.4));animation:cubeGlow 2.4s ease-in-out infinite}
 @keyframes cubeGlow{0%,100%{filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 10px rgba(255,179,0,.3))}50%{filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 24px rgba(255,179,0,.6))}}
 @keyframes cubeHalo{0%,100%{transform:scale(.85);opacity:.55}50%{transform:scale(1.15);opacity:1}}
-@keyframes spin{to{transform:rotate(360deg)}}
 .think-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text-accent);margin-right:9px;vertical-align:middle;animation:thinkPulse 1s ease-in-out infinite}
 @keyframes thinkPulse{0%,100%{opacity:.3;transform:scale(.75)}50%{opacity:1;transform:scale(1.15)}}
 
