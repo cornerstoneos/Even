@@ -242,6 +242,9 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .img-thumb{width:52px;height:52px;border-radius:8px;object-fit:cover;border:2px solid var(--rim2);animation:popIn .2s ease both}
 @keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
 .img-more{width:52px;height:52px;border-radius:8px;background:var(--gold-dim);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace}
+.doc-chip{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;width:52px;height:52px;border-radius:8px;background:var(--l2);border:2px solid var(--rim2);animation:popIn .2s ease both;overflow:hidden;padding:2px}
+.doc-chip i{width:16px;height:16px;stroke:var(--text-accent)}
+.doc-chip span{font-size:7px;color:var(--muted);font-family:'DM Mono',monospace;max-width:48px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* ── OR DIVIDER ── */
 .or-divider{display:flex;align-items:center;gap:12px;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:1px;margin:12px 0}
@@ -1650,6 +1653,7 @@ function handleUpgrade(plan){
 function goHome(){
   // Reset estimate state
   uploadedImages=[];
+  uploadedDocs=[];
   const imgStrip=document.getElementById('img-strip');
   if(imgStrip) imgStrip.innerHTML='';
   const scopeText=document.getElementById('scope-text');
@@ -1688,7 +1692,7 @@ function checkUpgradeReturn(){
 //  STATE
 // ══════════════════════════
 let appLang='en', isLight=false, bidType='fixed', laborType='own';
-let uploadedImages=[], currentEstimate=null, pdfTarget='proposal';
+let uploadedImages=[], uploadedDocs=[], currentEstimate=null, pdfTarget='proposal';
 const sliderVals={oh:12,profit:22,cushion:8};
 
 // ══════════════════════════
@@ -1759,7 +1763,8 @@ function navigate(scr){
     document.getElementById('est-sqft').value='';
     const imgStrip=document.getElementById('img-strip');
     if(imgStrip) imgStrip.innerHTML='';
-    window._uploadedImages=[];
+    uploadedImages=[];
+    uploadedDocs=[];
     window._allQuestions=[];
     window._qAnswers={};
     window._scopeData=null;
@@ -1883,16 +1888,40 @@ function processImageFile(file){
   });
 }
 
+// Reads a PDF as base64 for Claude's native document support (no client-side
+// rendering needed — the model OCRs/extracts text, tables, and diagrams
+// directly from the PDF itself). Capped well under Anthropic's per-doc and
+// request-size limits, and under the server's JSON body limit once
+// base64-encoded (~37% larger than the raw file).
+const MAX_PDF_BYTES=15*1024*1024;
+function processDocFile(file){
+  return new Promise((resolve,reject)=>{
+    if(file.size>MAX_PDF_BYTES){reject(new Error(`${file.name} is too large (max 15MB)`));return;}
+    const reader=new FileReader();
+    reader.onerror=()=>reject(new Error('Could not read: '+file.name));
+    reader.onload=e=>{
+      const b64=e.target.result.split(',')[1];
+      if(!b64){reject(new Error('Could not encode: '+file.name));return;}
+      resolve({data:b64,type:'application/pdf',name:file.name});
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 function handleFiles(files){
   const strip=document.getElementById('img-strip');
   strip.innerHTML='';
   uploadedImages=[];
+  uploadedDocs=[];
   // Only accept image files (including HEIC/HEIF by extension)
   const imgs=Array.from(files).filter(f=>
     f.type.startsWith('image/') ||
     f.name.toLowerCase().endsWith('.heic') ||
     f.name.toLowerCase().endsWith('.heif')
   );
+  const docs=Array.from(files).filter(f=>
+    f.type==='application/pdf' || f.name.toLowerCase().endsWith('.pdf')
+  ).slice(0,3);
   let processed=0;
   imgs.forEach((file,i)=>{
     processImageFile(file).then(result=>{
@@ -1919,9 +1948,30 @@ function handleFiles(files){
       console.warn('Image skipped:',err.message);
     });
   });
+  docs.forEach(file=>{
+    processDocFile(file).then(result=>{
+      uploadedDocs.push(result);
+      const _st=document.getElementById('scope-text');
+      if(_st&&_st.value.trim()===''){_st.value='See attached plans for scope of work.';}
+      const chip=document.createElement('div');
+      chip.className='doc-chip';
+      chip.innerHTML=`<i data-lucide="file-text"></i><span>${escapeHtml(file.name)}</span>`;
+      strip.appendChild(chip);
+      if(window.lucide) lucide.createIcons();
+    }).catch(err=>{
+      console.warn('PDF skipped:',err.message);
+      showToast(err.message,4000);
+    });
+  });
   // Handle plain text files (scope paste)
   const txt=Array.from(files).find(f=>f.type==='text/plain');
   if(txt){const r=new FileReader();r.onload=e=>{if(!document.getElementById('scope-text').value.trim()) document.getElementById('scope-text').value=e.target.result.substring(0,3000)};r.readAsText(txt);}
+  // Word docs are accepted by the file picker but can't be read directly — say so
+  // instead of silently dropping them (the same failure mode the PDF bug had).
+  const hasWordDoc=Array.from(files).some(f=>/\.docx?$/i.test(f.name));
+  if(hasWordDoc){
+    showToast(appLang==='en'?'Word docs aren\'t supported yet — please save as PDF or paste the text.':'Los documentos Word aún no son compatibles — guarda como PDF o pega el texto.',5000);
+  }
 }
 
 // ══════════════════════════
@@ -2227,7 +2277,7 @@ async function startEstimate(){
     showToast('Last free estimate — Go Pro to keep going', 5000);
   }
   const scope=document.getElementById('scope-text').value.trim();
-  if(!scope&&uploadedImages.length===0){alert(appLang==='en'?'Please add a scope of work first.':'Por favor agrega un alcance de trabajo.');return}
+  if(!scope&&uploadedImages.length===0&&uploadedDocs.length===0){alert(appLang==='en'?'Please add a scope of work first.':'Por favor agrega un alcance de trabajo.');return}
   document.getElementById('gen-btn').disabled=true;
 
   const trade=document.getElementById('est-trade').value;
@@ -2243,11 +2293,17 @@ async function startEstimate(){
     :['Leyendo tu alcance','Identificando los oficios','Revisando detalles clave','Preparando tus preguntas']);
 
   const msgContent=[];
+  if(uploadedDocs.length>0){
+    uploadedDocs.forEach(doc=>msgContent.push({type:'document',source:{type:'base64',media_type:doc.type,data:doc.data}}));
+  }
   if(uploadedImages.length>0){
     uploadedImages.slice(0,10).forEach(img=>msgContent.push({type:'image',source:{type:'base64',media_type:img.type,data:img.data}}));
   }
   // Build context-rich prompt with construction primer for better OCR + scope extraction
-  const imgContext=uploadedImages.length>0?`\nIMAGES ATTACHED: ${uploadedImages.length} construction plan/photo(s). Perform high-accuracy OCR on all text. Extract all dimensions, material callouts, notes, scope items, and quantities visible in the images. Pay special attention to leader lines, revision clouds, and specification notes. Images may be multiple pages of the same scope — combine and reconcile all information across images before responding.`:'';
+  const attachedParts=[];
+  if(uploadedDocs.length>0) attachedParts.push(`${uploadedDocs.length} PDF plan/spec document(s)`);
+  if(uploadedImages.length>0) attachedParts.push(`${uploadedImages.length} construction plan/photo(s)`);
+  const imgContext=attachedParts.length>0?`\nATTACHED: ${attachedParts.join(' and ')}. Perform high-accuracy OCR on all text. Extract all dimensions, material callouts, notes, scope items, and quantities visible. Pay special attention to leader lines, revision clouds, and specification notes. Attachments may be multiple pages of the same scope — combine and reconcile all information across them before responding.`:'';
   msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.`});
 
   try{
