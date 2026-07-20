@@ -2632,70 +2632,21 @@ async function calculateEstimate(){
   const adjMultiplier = marketAdj==='aggressive' ? 0.92 : marketAdj==='premium' ? 1.12 : 1.0;
   const adjLabel = marketAdj==='aggressive' ? 'aggressive/competitive pricing (-8%)' : marketAdj==='premium' ? 'premium market pricing (+12%)' : 'standard market pricing';
 
-  const SE_RATES=`SOUTHEAST REGIONAL PRICING DATABASE — REAL MARKET DATA (apply ${adjLabel} multiplier of ${adjMultiplier}):${hvhzNote}\n\nBOR RATES — Miami-Fort Lauderdale-West Palm Beach Metro (BLS May 2024):
-Construction Laborers: $16.77/hr (low) $21.14/hr (mid) $28.39/hr (high)
-Carpenters: $18.31/hr (low) $23.27/hr (mid) $32.71/hr (high)
-Drywall Installers: $16.45/hr (low) $23.23/hr (mid) $28.38/hr (high)
-Electricians: $18.98/hr (low) $26.96/hr (mid) $36.07/hr (high)
-Painters: $17.63/hr (low) $22.60/hr (mid) $28.89/hr (high)
-Plumbers/Pipefitters: $18.93/hr (low) $27.01/hr (mid) $34.86/hr (high)
-Roofers: $17.19/hr (low) $22.78/hr (mid) $30.58/hr (high)
-Tile and Stone Setters: $15.41/hr (low) $24.76/hr (mid) $35.08/hr (high)
-Cement Masons/Concrete: $18.31/hr (low) $22.80/hr (mid) $36.30/hr (high)
-Plasterers/Stucco: $16.05/hr (low) $26.00/hr (mid) $41.80/hr (high)
-Sheet Metal Workers: $18.67/hr (low) $27.20/hr (mid) $41.29/hr (high)
-First Line Supervisors: $23.24/hr (low) $35.37/hr (mid) $58.67/hr (high)
+  // No local market data exists for this location yet — be honest about that
+  // instead of handing the model specific-but-wrong numbers borrowed from an
+  // unrelated market. General estimating knowledge, calibrated to the actual
+  // stated location, beats false precision from a city that isn't this one.
+  const GENERIC_RATES=`No verified local labor, material, or permit data exists yet for ${ctx.location||'this location'} — apply ${adjLabel} multiplier of ${adjMultiplier}.${hvhzNote}
 
-NOTE: These are base wage rates. Contractor billing rates (what they charge clients) are typically 2.0-2.8x the labor wage to account for burden, insurance, overhead, and profit. Use billing rates when calculating labor line items.
-
-MATERIAL COSTS — Miami-Dade, Miami Proper (Home Depot Store 33101, April 2026):
-Architectural Shingles (GAF Timberline HDZ): $38.67/bundle (bulk 39+) $42.97/bundle (standard) $55/bundle (premium) — 3 bundles = 1 square (100sf)
-Roofing Underlayment (synthetic): $74.98/roll (low - Everbilt 1000sf) $107/roll (mid - GAF FeltBuster 1000sf) $195/roll (high - GAF Tiger Paw 1000sf)
-Ridge Cap Shingles: $38/bundle (low) $55/bundle (mid) $70/bundle (high)
-Drywall 1/2 inch 4x8 sheet: $11.46/sheet (low) $20/sheet (mid) $25/sheet (high)
-2x4x8 Stud: $3.47/piece (low) $3.85/piece (mid) $4.58/piece (high)
-3/4 inch Plywood sheet: $25/sheet (low) $40/sheet (mid) $90/sheet (high)
-Cement Board/Durock sheet: $11.25/sheet (low) $14.27/sheet (mid) $32.40/sheet (high)
-Luxury Vinyl Plank Flooring: $1.69/sf (low) $2.49/sf (mid) $3.29/sf (high)
-Ceramic Floor Tile: $0.59/sf (low) $1.09/sf (mid) $1.99/sf (high)
-24x24 Porcelain Tile: $1.75/sf (low) $3.23/sf (mid) $10/sf (high)
-Behr Premium Interior Paint: $31.60/gallon (low) $38/gallon (mid) $41/gallon (high)
-4 inch PVC Pipe: $24/10ft length (low) $30/10ft length (mid) $37/10ft length (high)
-3/4 inch Copper Pipe: $39/10ft length (low) $48/10ft length (mid) $53/10ft length (high)
-60 lb Concrete Mix: $4.85/bag (low) $7.97/bag (mid) $16.97/bag (high)
-
-OTHER SOUTHEAST MARKETS — relative to Miami-Dade:
-Atlanta GA: Labor 8-12% less than Miami. Materials 5-8% less than Miami.
-Charlotte NC: Labor 12-18% less than Miami. Materials 9-12% less than Miami.
-Charleston SC: Labor 14-18% less than Miami. Materials 10-13% less than Miami.
-Columbia SC: Labor 15-20% less than Miami. Materials 11-14% less than Miami.
-Fort Lauderdale FL: Within 2-4% of Miami pricing.
-West Palm Beach FL: Within 3-5% of Miami pricing.
-Orlando FL: Labor 6-10% less than Miami. Materials within 3% of Miami.
-Tampa FL: Labor 7-11% less than Miami. Materials within 4% of Miami.
-Jacksonville FL: Labor 10-14% less than Miami. Materials 5-8% less than Miami.
-Raleigh NC: Labor 13-17% less than Miami. Materials 10-13% less than Miami.
-Greenville SC: Labor 16-20% less than Miami. Materials 12-15% less than Miami.
-
-PERMIT FEES — Southeast Markets:
-Miami-Dade: Residential remodel $900-2800, Roofing $400-1200, Electrical $300-800, Plumbing $300-750
-Atlanta/Fulton: Residential remodel $650-1900, Roofing $300-900, Electrical $250-650, Plumbing $250-600
-Charlotte/Mecklenburg: Residential remodel $550-1600, Roofing $250-750, Electrical $200-550, Plumbing $200-500
-Charleston County: Residential remodel $500-1400, Roofing $225-700, Electrical $175-500, Plumbing $175-450
-Columbia/Richland: Residential remodel $450-1300, Roofing $200-650, Electrical $150-450, Plumbing $150-400
-
-IMPORTANT PRICING INSTRUCTIONS:
-- Use MID rates as your default for standard residential work
-- Use LOW rates for budget/competitive bids or simple jobs
-- Use HIGH rates for premium finishes, luxury homes, complex scopes
-- Apply the market multiplier (${adjMultiplier}) to all costs
-- Miami-Dade jobs: always include Notice of Commencement for jobs over $2,500
-- Always add 10-15% material waste factor for cuts and damage
-- Labor billing rates should be 2.0-2.5x the BLS wage rates shown above
-- SUBCONTRACTOR RATES vs LABOR RATES: When a contractor is hiring subs (not direct labor), sub billing rates run 15-40% higher than direct labor. Always ask if work is self-performed or subcontracted — this moves the number significantly
-- CONTRACTOR TIME: Always include project management labor — GC managing subs typically bills 10-15% of total project cost or 8-16 hours per week of project duration
-- ACTUAL MATERIAL COST: Flag when contractor may have supplier pricing below retail. Prompt to adjust if they have trade accounts at ABC Supply, Beacon, or local suppliers
-- FUEL AND LOGISTICS: For jobs over $5,000 always include fuel, vehicle wear, and site visits as a line item — minimum $150-400 depending on project duration and distance
+PRICING MODE — GENERAL KNOWLEDGE (no local market data grounding this estimate):
+- Use your own general construction-estimating knowledge, calibrated realistically to ${ctx.location||'the stated location'} and current national trends. Do not borrow specific wage, material, or permit numbers from any other city or region — reason about this location on its own merits (regional cost of living, typical labor market, climate) instead.
+- Contractor billing rates (what they charge clients) are typically 2.0-2.8x direct labor wage cost to account for burden, insurance, overhead, and profit.
+- Apply the market multiplier (${adjMultiplier}) to all costs.
+- Always add 10-15% material waste factor for cuts and damage.
+- SUBCONTRACTOR RATES vs LABOR RATES: When a contractor is hiring subs (not direct labor), sub billing rates run 15-40% higher than direct labor. Always ask if work is self-performed or subcontracted — this moves the number significantly.
+- CONTRACTOR TIME: Always include project management labor — GC managing subs typically bills 10-15% of total project cost or 8-16 hours per week of project duration.
+- ACTUAL MATERIAL COST: Flag when contractor may have supplier pricing below retail. Prompt to adjust if they have trade accounts at ABC Supply, Beacon, or local suppliers.
+- FUEL AND LOGISTICS: For jobs over $5,000 always include fuel, vehicle wear, and site visits as a line item — minimum $150-400 depending on project duration and distance.
 
 MATERIAL SYSTEM CONSISTENCY — CRITICAL:
 - Schluter system (Kerdi, Kerdi-Board, Kerdi-Band): When specified, it REPLACES cement board AND liquid waterproofing (RedGard). Do NOT include both. Schluter-Kerdi Board kit for tub surround runs $500-700 including thinset. Remove cement board line items when Schluter is used.
@@ -2711,12 +2662,6 @@ DEMO COMPLEXITY — LABOR HOUR GUIDELINES:
 - Combined 2nd floor cast iron + mud bed: Budget 20-24 hours total demo labor minimum — 16 hours is consistently underbid
 - Tile demo over mud bed: Add 2 hours per 100sf vs tile over backer board
 
-MIAMI-SPECIFIC LABOR PREMIUMS:
-- Attic access work (April through September): Add 25-35% premium to any labor requiring attic time — extreme heat conditions, safety risk, slower pace
-- Exhaust fan ducting through Miami attic: Always price attic time separately as premium labor — minimum 3-4 hours additional
-- Flat roof access: Add $150-250 safety/access premium
-- Hurricane prep requirements during active season: Add 10% contingency to exterior work May-November
-
 FLOOR AND SURFACE PROTECTION — MINIMUM STANDARDS:
 - Floor protection materials alone (Ram Board + tape) for stairs + hallway + work path: $300-450 minimum before any labor
 - Never price floor protection under $400 total (materials + labor) for occupied luxury homes
@@ -2731,13 +2676,13 @@ PROFIT STACKING — CORRECT METHOD:
 `;
 
   const marketData=await fetchMarketPricing(ctx.location);
-  const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote):SE_RATES;
+  const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote):GENERIC_RATES;
   const confidenceTier=computeConfidenceTier(marketData);
   const costCalibration=await getCostCalibration(ctx.trade);
   window._costCalibration=costCalibration;
   const calibrationNote=costCalibration?.length?`\n\nCOST CALIBRATION FROM THIS CONTRACTOR'S LOGGED ACTUALS — apply these adjustments:\n${costCalibration.map(c=>`${c.category}: actuals have run ${c.avgVariancePct>0?'+':''}${c.avgVariancePct}% vs. estimate across ${c.n} logged job${c.n>1?'s':''} — ${c.avgVariancePct>0?'price this category higher':'price this category lower'} to match.`).join('\n')}`:'';
 
-  const prompt=`${pricingBlock}${calibrationNote}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if Miami. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  const prompt=`${pricingBlock}${calibrationNote}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if the jurisdiction is known for slow permit turnaround. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
   // Show loading screen
   showLoading();
