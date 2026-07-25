@@ -71,6 +71,25 @@ async function zipToLatLng(zip) {
   }
 }
 
+const escapeRegex = s => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+// Longest whole-word match wins. Word boundaries matter: plain substring matching
+// resolves "Miamisburg, OH" to Miami and "Hollywood, CA" to Hollywood FL. Returns the
+// length of the string that actually matched so callers can compare specificity
+// across two different lists.
+function bestNameMatch(lower, list, namesOf) {
+  let hit = null, len = 0;
+  for (const entry of list) {
+    for (const raw of namesOf(entry)) {
+      if (!raw) continue;
+      const c = String(raw).toLowerCase();
+      if (c.length <= len) continue;
+      if (new RegExp(`\\b${escapeRegex(c)}\\b`).test(lower)) { hit = entry; len = c.length; }
+    }
+  }
+  return { hit, len };
+}
+
 // Resolves free-text location input ("City, State" or a 5-digit zip) to the nearest
 // covered market, and — where we can tell — the specific municipality within it.
 async function resolveMarket(locationText) {
@@ -98,26 +117,14 @@ async function resolveMarket(locationText) {
   // narrow someone who typed the county down to a single city's fee schedule.
   // Comparing match length lets "Miami-Dade" resolve to the market while
   // "Miami Gardens" and "North Miami Beach" still beat the shorter "Miami".
-  const muniByName = [...MUNICIPALITIES]
-    .sort((a, b) => b.name.length - a.name.length)
-    .find(m => lower.includes(m.name.toLowerCase()));
-  const marketByName = [...MARKETS]
-    .sort((a, b) => Math.max(b.market.length, b.zone.length) - Math.max(a.market.length, a.zone.length))
-    .find(m => lower.includes(m.market.toLowerCase()) || lower.includes(m.zone.toLowerCase()));
+  const muni = bestNameMatch(lower, MUNICIPALITIES, m => [m.name, ...(m.aliases || [])]);
+  const market = bestNameMatch(lower, MARKETS, m => [m.market, m.zone]);
 
-  const muniLen = muniByName ? muniByName.name.length : 0;
-  const marketLen = marketByName
-    ? Math.max(
-        lower.includes(marketByName.market.toLowerCase()) ? marketByName.market.length : 0,
-        lower.includes(marketByName.zone.toLowerCase()) ? marketByName.zone.length : 0
-      )
-    : 0;
-
-  if (muniByName && muniLen >= marketLen) {
-    const parent = MARKETS.find(m => m.market === muniByName.market);
-    if (parent) return { ...parent, municipality: muniByName.name, distanceMiles: 0 };
+  if (muni.hit && muni.len >= market.len) {
+    const parent = MARKETS.find(m => m.market === muni.hit.market);
+    if (parent) return { ...parent, municipality: muni.hit.name, distanceMiles: 0 };
   }
-  return marketByName || null;
+  return market.hit || null;
 }
 
 async function getMarketData(market) {

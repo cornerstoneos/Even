@@ -1,90 +1,731 @@
 [
-  { "name": "Miami", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.7743, "lng": -80.1937 },
-  { "name": "Miami Beach", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.7907, "lng": -80.1300 },
-  { "name": "Hialeah", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8576, "lng": -80.2781 },
-  { "name": "Miami Gardens", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.9420, "lng": -80.2456 },
-  { "name": "Coral Gables", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.7215, "lng": -80.2684 },
-  { "name": "Doral", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8195, "lng": -80.3553 },
-  { "name": "Homestead", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.4687, "lng": -80.4776 },
-  { "name": "North Miami", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8901, "lng": -80.1867 },
-  { "name": "North Miami Beach", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.9331, "lng": -80.1625 },
-  { "name": "Aventura", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.9565, "lng": -80.1428 },
-  { "name": "Cutler Bay", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.5808, "lng": -80.3468 },
-  { "name": "Palmetto Bay", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.6220, "lng": -80.3245 },
-  { "name": "Pinecrest", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.6673, "lng": -80.3084 },
-  { "name": "Key Biscayne", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.6942, "lng": -80.1626 },
-  { "name": "Sunny Isles Beach", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.9429, "lng": -80.1226 },
-  { "name": "Miami Lakes", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.9087, "lng": -80.3087 },
-  { "name": "Hialeah Gardens", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8651, "lng": -80.3245 },
-  { "name": "Opa-locka", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.9023, "lng": -80.2503 },
-  { "name": "Sweetwater", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.7634, "lng": -80.3730 },
-  { "name": "South Miami", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.7079, "lng": -80.2939 },
-  { "name": "West Miami", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.7595, "lng": -80.2967 },
-  { "name": "Miami Springs", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8223, "lng": -80.2895 },
-  { "name": "Miami Shores", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8637, "lng": -80.1928 },
-  { "name": "Florida City", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.4479, "lng": -80.4792 },
-  { "name": "Surfside", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8787, "lng": -80.1256 },
-  { "name": "Bal Harbour", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8917, "lng": -80.1264 },
-  { "name": "Bay Harbor Islands", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8873, "lng": -80.1320 },
-  { "name": "North Bay Village", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8462, "lng": -80.1531 },
-  { "name": "Biscayne Park", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8823, "lng": -80.1811 },
-  { "name": "El Portal", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8562, "lng": -80.1934 },
-  { "name": "Virginia Gardens", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8134, "lng": -80.2989 },
-  { "name": "Medley", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.8351, "lng": -80.3245 },
-  { "name": "Golden Beach", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.9634, "lng": -80.1223 },
-  { "name": "Kendall", "market": "Miami-Dade", "state": "FL", "county": "Miami-Dade", "lat": 25.6793, "lng": -80.3173 },
-
-  { "name": "Fort Lauderdale", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.1224, "lng": -80.1373 },
-  { "name": "Hollywood", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.0112, "lng": -80.1495 },
-  { "name": "Pembroke Pines", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.0031, "lng": -80.2241 },
-  { "name": "Coral Springs", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.2712, "lng": -80.2706 },
-  { "name": "Miramar", "market": "Broward", "state": "FL", "county": "Broward", "lat": 25.9873, "lng": -80.2323 },
-  { "name": "Sunrise", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.1339, "lng": -80.2934 },
-  { "name": "Plantation", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.1276, "lng": -80.2331 },
-  { "name": "Davie", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.0765, "lng": -80.2521 },
-  { "name": "Pompano Beach", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.2379, "lng": -80.1248 },
-  { "name": "Deerfield Beach", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.3184, "lng": -80.0998 },
-  { "name": "Weston", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.1004, "lng": -80.3998 },
-  { "name": "Tamarac", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.2129, "lng": -80.2497 },
-  { "name": "Margate", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.2445, "lng": -80.2064 },
-  { "name": "Coconut Creek", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.2517, "lng": -80.1789 },
-  { "name": "Lauderhill", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.1403, "lng": -80.2134 },
-  { "name": "North Lauderdale", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.2170, "lng": -80.2259 },
-  { "name": "Oakland Park", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.1723, "lng": -80.1319 },
-  { "name": "Hallandale Beach", "market": "Broward", "state": "FL", "county": "Broward", "lat": 25.9812, "lng": -80.1484 },
-  { "name": "Dania Beach", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.0537, "lng": -80.1439 },
-  { "name": "Cooper City", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.0570, "lng": -80.2717 },
-  { "name": "Parkland", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.3101, "lng": -80.2372 },
-  { "name": "Wilton Manors", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.1595, "lng": -80.1392 },
-  { "name": "Lauderdale Lakes", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.1673, "lng": -80.2073 },
-  { "name": "Lighthouse Point", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.2756, "lng": -80.0876 },
-  { "name": "West Park", "market": "Broward", "state": "FL", "county": "Broward", "lat": 25.9834, "lng": -80.1892 },
-  { "name": "Southwest Ranches", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.0578, "lng": -80.3339 },
-  { "name": "Pembroke Park", "market": "Broward", "state": "FL", "county": "Broward", "lat": 25.9884, "lng": -80.1795 },
-  { "name": "Lauderdale-by-the-Sea", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.1917, "lng": -80.0973 },
-  { "name": "Hillsboro Beach", "market": "Broward", "state": "FL", "county": "Broward", "lat": 26.2895, "lng": -80.0806 },
-
-  { "name": "West Palm Beach", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.7153, "lng": -80.0534 },
-  { "name": "Boca Raton", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.3683, "lng": -80.1289 },
-  { "name": "Boynton Beach", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.5318, "lng": -80.0905 },
-  { "name": "Delray Beach", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.4615, "lng": -80.0728 },
-  { "name": "Jupiter", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.9342, "lng": -80.0942 },
-  { "name": "Palm Beach Gardens", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.8234, "lng": -80.1387 },
-  { "name": "Wellington", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.6618, "lng": -80.2684 },
-  { "name": "Lake Worth Beach", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.6165, "lng": -80.0570 },
-  { "name": "Riviera Beach", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.7753, "lng": -80.0581 },
-  { "name": "Royal Palm Beach", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.7085, "lng": -80.2295 },
-  { "name": "Greenacres", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.6276, "lng": -80.1256 },
-  { "name": "Belle Glade", "market": "Palm Beach", "state": "FL", "county": "Palm Beach", "lat": 26.6845, "lng": -80.6676 },
-  { "name": "Palm Springs", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" },
-  { "name": "North Palm Beach", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" },
-  { "name": "Tequesta", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" },
-  { "name": "Juno Beach", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" },
-  { "name": "Lake Park", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" },
-  { "name": "Lantana", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" },
-  { "name": "Highland Beach", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" },
-  { "name": "Pahokee", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" },
-  { "name": "Loxahatchee Groves", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" },
-  { "name": "Westlake", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" },
-  { "name": "Jupiter Farms", "market": "Palm Beach", "state": "FL", "county": "Palm Beach" }
+  {
+    "name": "Miami",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.7743,
+    "lng": -80.1937
+  },
+  {
+    "name": "Miami Beach",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.7907,
+    "lng": -80.13,
+    "aliases": [
+      "South Beach",
+      "SoBe"
+    ]
+  },
+  {
+    "name": "Hialeah",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8576,
+    "lng": -80.2781
+  },
+  {
+    "name": "Miami Gardens",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.942,
+    "lng": -80.2456,
+    "aliases": [
+      "MG"
+    ]
+  },
+  {
+    "name": "Coral Gables",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.7215,
+    "lng": -80.2684,
+    "aliases": [
+      "Gables"
+    ]
+  },
+  {
+    "name": "Doral",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8195,
+    "lng": -80.3553
+  },
+  {
+    "name": "Homestead",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.4687,
+    "lng": -80.4776
+  },
+  {
+    "name": "North Miami",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8901,
+    "lng": -80.1867
+  },
+  {
+    "name": "North Miami Beach",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.9331,
+    "lng": -80.1625,
+    "aliases": [
+      "NMB"
+    ]
+  },
+  {
+    "name": "Aventura",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.9565,
+    "lng": -80.1428
+  },
+  {
+    "name": "Cutler Bay",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.5808,
+    "lng": -80.3468
+  },
+  {
+    "name": "Palmetto Bay",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.622,
+    "lng": -80.3245
+  },
+  {
+    "name": "Pinecrest",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.6673,
+    "lng": -80.3084
+  },
+  {
+    "name": "Key Biscayne",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.6942,
+    "lng": -80.1626,
+    "aliases": [
+      "Biscayne"
+    ]
+  },
+  {
+    "name": "Sunny Isles Beach",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.9429,
+    "lng": -80.1226,
+    "aliases": [
+      "Sunny Isles"
+    ]
+  },
+  {
+    "name": "Miami Lakes",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.9087,
+    "lng": -80.3087
+  },
+  {
+    "name": "Hialeah Gardens",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8651,
+    "lng": -80.3245
+  },
+  {
+    "name": "Opa-locka",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.9023,
+    "lng": -80.2503
+  },
+  {
+    "name": "Sweetwater",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.7634,
+    "lng": -80.373
+  },
+  {
+    "name": "South Miami",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.7079,
+    "lng": -80.2939
+  },
+  {
+    "name": "West Miami",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.7595,
+    "lng": -80.2967
+  },
+  {
+    "name": "Miami Springs",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8223,
+    "lng": -80.2895
+  },
+  {
+    "name": "Miami Shores",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8637,
+    "lng": -80.1928
+  },
+  {
+    "name": "Florida City",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.4479,
+    "lng": -80.4792
+  },
+  {
+    "name": "Surfside",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8787,
+    "lng": -80.1256
+  },
+  {
+    "name": "Bal Harbour",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8917,
+    "lng": -80.1264
+  },
+  {
+    "name": "Bay Harbor Islands",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8873,
+    "lng": -80.132
+  },
+  {
+    "name": "North Bay Village",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8462,
+    "lng": -80.1531
+  },
+  {
+    "name": "Biscayne Park",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8823,
+    "lng": -80.1811
+  },
+  {
+    "name": "El Portal",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8562,
+    "lng": -80.1934
+  },
+  {
+    "name": "Virginia Gardens",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8134,
+    "lng": -80.2989
+  },
+  {
+    "name": "Medley",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.8351,
+    "lng": -80.3245
+  },
+  {
+    "name": "Golden Beach",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.9634,
+    "lng": -80.1223
+  },
+  {
+    "name": "Kendall",
+    "market": "Miami-Dade",
+    "state": "FL",
+    "county": "Miami-Dade",
+    "lat": 25.6793,
+    "lng": -80.3173
+  },
+  {
+    "name": "Fort Lauderdale",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.1224,
+    "lng": -80.1373,
+    "aliases": [
+      "Ft Lauderdale",
+      "Ft. Lauderdale",
+      "FTL",
+      "Lauderdale"
+    ]
+  },
+  {
+    "name": "Hollywood",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.0112,
+    "lng": -80.1495
+  },
+  {
+    "name": "Pembroke Pines",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.0031,
+    "lng": -80.2241,
+    "aliases": [
+      "Pines"
+    ]
+  },
+  {
+    "name": "Coral Springs",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.2712,
+    "lng": -80.2706
+  },
+  {
+    "name": "Miramar",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 25.9873,
+    "lng": -80.2323
+  },
+  {
+    "name": "Sunrise",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.1339,
+    "lng": -80.2934
+  },
+  {
+    "name": "Plantation",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.1276,
+    "lng": -80.2331
+  },
+  {
+    "name": "Davie",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.0765,
+    "lng": -80.2521
+  },
+  {
+    "name": "Pompano Beach",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.2379,
+    "lng": -80.1248,
+    "aliases": [
+      "Pompano"
+    ]
+  },
+  {
+    "name": "Deerfield Beach",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.3184,
+    "lng": -80.0998,
+    "aliases": [
+      "Deerfield"
+    ]
+  },
+  {
+    "name": "Weston",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.1004,
+    "lng": -80.3998
+  },
+  {
+    "name": "Tamarac",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.2129,
+    "lng": -80.2497
+  },
+  {
+    "name": "Margate",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.2445,
+    "lng": -80.2064
+  },
+  {
+    "name": "Coconut Creek",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.2517,
+    "lng": -80.1789
+  },
+  {
+    "name": "Lauderhill",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.1403,
+    "lng": -80.2134
+  },
+  {
+    "name": "North Lauderdale",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.217,
+    "lng": -80.2259
+  },
+  {
+    "name": "Oakland Park",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.1723,
+    "lng": -80.1319
+  },
+  {
+    "name": "Hallandale Beach",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 25.9812,
+    "lng": -80.1484,
+    "aliases": [
+      "Hallandale"
+    ]
+  },
+  {
+    "name": "Dania Beach",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.0537,
+    "lng": -80.1439,
+    "aliases": [
+      "Dania"
+    ]
+  },
+  {
+    "name": "Cooper City",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.057,
+    "lng": -80.2717
+  },
+  {
+    "name": "Parkland",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.3101,
+    "lng": -80.2372
+  },
+  {
+    "name": "Wilton Manors",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.1595,
+    "lng": -80.1392
+  },
+  {
+    "name": "Lauderdale Lakes",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.1673,
+    "lng": -80.2073
+  },
+  {
+    "name": "Lighthouse Point",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.2756,
+    "lng": -80.0876
+  },
+  {
+    "name": "West Park",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 25.9834,
+    "lng": -80.1892
+  },
+  {
+    "name": "Southwest Ranches",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.0578,
+    "lng": -80.3339
+  },
+  {
+    "name": "Pembroke Park",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 25.9884,
+    "lng": -80.1795
+  },
+  {
+    "name": "Lauderdale-by-the-Sea",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.1917,
+    "lng": -80.0973,
+    "aliases": [
+      "Lauderdale by the Sea",
+      "LBTS"
+    ]
+  },
+  {
+    "name": "Hillsboro Beach",
+    "market": "Broward",
+    "state": "FL",
+    "county": "Broward",
+    "lat": 26.2895,
+    "lng": -80.0806
+  },
+  {
+    "name": "West Palm Beach",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.7153,
+    "lng": -80.0534,
+    "aliases": [
+      "WPB"
+    ]
+  },
+  {
+    "name": "Boca Raton",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.3683,
+    "lng": -80.1289,
+    "aliases": [
+      "Boca"
+    ]
+  },
+  {
+    "name": "Boynton Beach",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.5318,
+    "lng": -80.0905,
+    "aliases": [
+      "Boynton"
+    ]
+  },
+  {
+    "name": "Delray Beach",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.4615,
+    "lng": -80.0728,
+    "aliases": [
+      "Delray",
+      "Del Ray"
+    ]
+  },
+  {
+    "name": "Jupiter",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.9342,
+    "lng": -80.0942
+  },
+  {
+    "name": "Palm Beach Gardens",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.8234,
+    "lng": -80.1387,
+    "aliases": [
+      "PBG"
+    ]
+  },
+  {
+    "name": "Wellington",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.6618,
+    "lng": -80.2684
+  },
+  {
+    "name": "Lake Worth Beach",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.6165,
+    "lng": -80.057,
+    "aliases": [
+      "Lake Worth"
+    ]
+  },
+  {
+    "name": "Riviera Beach",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.7753,
+    "lng": -80.0581
+  },
+  {
+    "name": "Royal Palm Beach",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.7085,
+    "lng": -80.2295
+  },
+  {
+    "name": "Greenacres",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.6276,
+    "lng": -80.1256
+  },
+  {
+    "name": "Belle Glade",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach",
+    "lat": 26.6845,
+    "lng": -80.6676
+  },
+  {
+    "name": "Palm Springs",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  },
+  {
+    "name": "North Palm Beach",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  },
+  {
+    "name": "Tequesta",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  },
+  {
+    "name": "Juno Beach",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  },
+  {
+    "name": "Lake Park",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  },
+  {
+    "name": "Lantana",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  },
+  {
+    "name": "Highland Beach",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  },
+  {
+    "name": "Pahokee",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  },
+  {
+    "name": "Loxahatchee Groves",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  },
+  {
+    "name": "Westlake",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  },
+  {
+    "name": "Jupiter Farms",
+    "market": "Palm Beach",
+    "state": "FL",
+    "county": "Palm Beach"
+  }
 ]
