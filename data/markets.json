@@ -50,5 +50,12 @@
   { "market": "Philadelphia", "state": "PA", "zone": "Philadelphia County", "zip": "19102", "lat": 39.9526, "lng": -75.1652 },
   { "market": "Pittsburgh", "state": "PA", "zone": "Allegheny County", "zip": "15222", "lat": 40.4406, "lng": -79.9959 },
   { "market": "Washington DC", "state": "DC", "zone": "District of Columbia", "zip": "20024", "lat": 38.9072, "lng": -77.0369 },
-  { "market": "Baltimore", "state": "MD", "zone": "Baltimore City", "zip": "21202", "lat": 39.2904, "lng": -76.6122 }
+  { "market": "Baltimore", "state": "MD", "zone": "Baltimore City", "zip": "21202", "lat": 39.2904, "lng": -76.6122 },
+
+  { "market": "San Antonio", "state": "TX", "zone": "Bexar County", "zip": "78205", "lat": 29.4241, "lng": -98.4936 },
+  { "market": "Oakland", "state": "CA", "zone": "Alameda County", "zip": "94612", "lat": 37.8044, "lng": -122.2712 },
+  { "market": "San Jose", "state": "CA", "zone": "Santa Clara County", "zip": "95113", "lat": 37.3382, "lng": -121.8863 },
+  { "market": "Sacramento", "state": "CA", "zone": "Sacramento County", "zip": "95814", "lat": 38.5816, "lng": -121.4944 },
+  { "market": "Milwaukee", "state": "WI", "zone": "Milwaukee County", "zip": "53202", "lat": 43.0389, "lng": -87.9065 },
+  { "market": "St. Louis", "state": "MO", "zone": "St. Louis City", "zip": "63101", "lat": 38.6270, "lng": -90.1994 }
 ]
