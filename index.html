@@ -440,6 +440,16 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .job-action-btn{background:none;border:none;color:var(--muted);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:4px 0;display:flex;align-items:center;gap:4px}
 .job-action-btn:hover{color:var(--text-accent)}
 .job-followup{display:flex;align-items:center;gap:5px;background:rgba(255,179,0,.07);border:1px solid rgba(255,179,0,.2);border-radius:6px;padding:5px 10px;font-size:10px;color:var(--text-accent);font-family:'DM Mono',monospace;margin:0 14px 10px}
+/* Distinct from the follow-up nudge (gold): logging actuals feeds calibration
+   rather than chasing a client, so it reads green to separate the two asks. */
+.job-log-actuals{background:rgba(62,207,110,.07);border-color:rgba(62,207,110,.22);color:var(--green)}
+.cal-progress{background:var(--l1);border:1px solid var(--rim);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.cal-progress.active{background:rgba(62,207,110,.06);border-color:rgba(62,207,110,.22)}
+.cal-progress-head{display:flex;align-items:center;gap:6px;font-size:11px;font-family:'DM Mono',monospace;color:var(--text-accent);margin-bottom:8px}
+.cal-progress.active .cal-progress-head{color:var(--green)}
+.cal-progress-bar{height:4px;background:var(--rim);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.cal-progress-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .4s ease}
+.cal-progress-sub{font-size:11px;color:var(--muted);line-height:1.5}
 .job-notes-wrap{padding:0 14px 12px;display:none}
 .job-notes-input{width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:8px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:60px;box-sizing:border-box;line-height:1.5}
 .job-notes-input:focus{border-color:rgba(255,179,0,.4)}
@@ -1142,6 +1152,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
         <div style="padding:10px 12px">
           <div id="similar-recall" style="display:none;margin-bottom:8px"></div>
           <div id="calibration-recall" style="display:none;margin-bottom:8px"></div>
+          <div id="permit-scope-note" style="display:none;margin-bottom:8px"></div>
           <div id="margin-alerts" style="display:none;margin-bottom:8px"></div>
           <div class="li-head">
             <span data-en="Description" data-es="Descripción">Description</span>
@@ -2132,10 +2143,33 @@ const fmtK=n=>n>=1000000?'$'+(n/1000000).toFixed(n%1000000===0?0:1)+'M':'$'+Math
 // instead of a flat constant, so "confidence-adjusted" is no longer decorative.
 const CONFIDENCE_RANGE={high:[0.92,1.08],medium:[0.88,1.12],low:[0.80,1.20]};
 function getConfidenceRange(data){ return CONFIDENCE_RANGE[data?.confidenceTier]||CONFIDENCE_RANGE.medium; }
+// Source-quality ranking for material rows, worst → best. Presence of data is not
+// the same as quality of data: a retail Home Depot shelf price and a signed local
+// supply house quote both populate the same array, but only one of them earns a
+// tight bid range.
+const MATERIAL_TIER_RANK={retail:1,retail_adjusted:2,national_estimate:2,pro_distributor:3,local_supply_house:4};
+
+// Median, not best — one supply house quote among thirty retail rows shouldn't
+// promote the whole market. Untiered rows (pre-dating the tier system) count as
+// retail, which is what they actually were.
+function materialSourceQuality(materials){
+  const core=(materials||[]).filter(r=>r&&r.category!=='Equipment Rental');
+  if(!core.length) return 0;
+  const ranks=core.map(r=>MATERIAL_TIER_RANK[r.tier]||1).sort((a,b)=>a-b);
+  return ranks[Math.floor(ranks.length/2)];
+}
+
 function computeConfidenceTier(marketData){
   if(!marketData) return 'low';
   const grounded=[marketData.materials,marketData.labor,marketData.permits].filter(a=>a&&a.length).length;
-  return grounded>=3?'high':grounded>=1?'medium':'low';
+  if(grounded===0) return 'low';
+  if(grounded<3) return 'medium';
+  // All three layers present. "High" additionally requires that the materials are
+  // actually pro-tier and that the permit rows are the issuing city's own — a county
+  // baseline standing in for an unresearched city is not city-level grounding.
+  const proTierMaterials=materialSourceQuality(marketData.materials)>=3;
+  const cityLevelPermits=marketData.permitScope==='municipality';
+  return (proTierMaterials&&cityLevelPermits)?'high':'medium';
 }
 function savePDF(doc,filename){if(/iPad|iPhone|iPod/.test(navigator.userAgent)){const url=URL.createObjectURL(doc.output('blob'));const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},1000);}else{doc.save(filename);}}
 
@@ -2603,6 +2637,33 @@ async function getCostCalibration(trade){
   }catch(e){ console.error('Cost calibration error:',e); return null; }
 }
 
+// Says out loud which permit schedule actually backed this estimate. The prompt
+// asks the model to disclose a county fallback, but a prompt instruction is not a
+// guarantee — a contractor bidding in Lantana needs to see that the fees came from
+// the Palm Beach County schedule whether or not the model chose to mention it.
+// It also tells them exactly which city is worth reporting back on, which is free
+// research for us.
+function renderPermitScopeNote(){
+  const el=document.getElementById('permit-scope-note');
+  if(!el) return;
+  const meta=window._marketMeta;
+  if(!meta||!meta.market){ el.style.display='none'; return; }
+  const city=meta.municipality;
+  const county=meta.permitCounty?escapeHtml(meta.permitCounty):'county-level';
+  let msg='';
+  if(meta.permitScope==='county-fallback'&&meta.permitCount>0){
+    msg=`Permit fees estimated from the ${county} schedule. ${escapeHtml(city||'This city')}'s own fees aren't in our database yet — actual city fees may differ.`;
+  }else if(meta.permitScope==='county-fallback'&&!meta.permitCount){
+    msg=`No city or county permit fee data for ${escapeHtml(city||'this city')} yet — permit costs here are a general estimate, not a local fee schedule. Verify with the building department.`;
+  }else if(meta.permitScope==='partial'){
+    msg=`Permit fees drawn from a partial ${escapeHtml(meta.market)} schedule — not every municipality in this metro is covered yet. Verify with the issuing jurisdiction.`;
+  }else if(meta.permitScope==='county'){
+    msg=`Permit fees estimated from the ${county} schedule — a specific city wasn't identified from the address entered.`;
+  }else{ el.style.display='none'; return; }
+  el.innerHTML=`<div class="similar-recall" style="border-color:rgba(255,179,0,.25)"><span style="color:var(--text-accent);flex-shrink:0">⚑</span><span>${msg}</span></div>`;
+  el.style.display='block';
+}
+
 function renderCalibrationBanner(){
   const el=document.getElementById('calibration-recall');
   if(!el) return;
@@ -2688,6 +2749,18 @@ PROFIT STACKING — CORRECT METHOD:
   const marketData=await fetchMarketPricing(ctx.location);
   const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote):GENERIC_RATES;
   const confidenceTier=computeConfidenceTier(marketData);
+  // Kept separately from the estimate payload so the permit-scope disclosure can be
+  // rendered deterministically rather than depending on the model to mention it.
+  window._marketMeta=marketData?{
+    market:marketData.market,
+    municipality:marketData.municipality,
+    permitScope:marketData.permitScope,
+    permitCount:(marketData.permits||[]).length,
+    // Read the county's real name off the data rather than assuming it matches the
+    // market name — that only holds in tri-county. Charlotte's permits are issued by
+    // Mecklenburg County, so "the Charlotte County schedule" would be plainly wrong.
+    permitCounty:(marketData.permits||[]).map(p=>p.municipality||'').find(n=>/\bcounty\b/i.test(n))||null
+  }:null;
   const costCalibration=await getCostCalibration(ctx.trade);
   window._costCalibration=costCalibration;
   const calibrationNote=costCalibration?.length?`\n\nCOST CALIBRATION FROM THIS CONTRACTOR'S LOGGED ACTUALS — apply these adjustments:\n${costCalibration.map(c=>`${c.category}: actuals have run ${c.avgVariancePct>0?'+':''}${c.avgVariancePct}% vs. estimate across ${c.n} logged job${c.n>1?'s':''} — ${c.avgVariancePct>0?'price this category higher':'price this category lower'} to match.`).join('\n')}`:'';
@@ -2913,6 +2986,7 @@ function renderEstimate(data){
   setTimeout(()=>renderEvenSuggests(data), 800);
   if(isPro && currentUser && sbClient) loadSimilarJobs(data);
   renderCalibrationBanner();
+  renderPermitScopeNote();
 }
 
 function calcVar(input,estimated){
@@ -4182,7 +4256,10 @@ async function loadDashboard(){
   try{
     const [estRes, ceRes] = await Promise.all([
       sbClient.from('estimates')
-        .select('id,client_name,project_label,location,trade,total_bid,margin_pct,created_at,status,notes,sent_at')
+        // estimate_json is needed for the final-bid variance chip and its confidence
+        // range — it was being read below but never selected, so that chip has never
+        // rendered for anyone.
+        .select('id,client_name,project_label,location,trade,total_bid,margin_pct,created_at,status,notes,sent_at,estimate_json')
         .eq('user_id',currentUser.id)
         .order('created_at',{ascending:false})
         .limit(50),
@@ -4222,7 +4299,28 @@ async function loadDashboard(){
     }
     if(emptyEl) emptyEl.style.display='none';
 
-    if(listEl) listEl.innerHTML=estimates.map(est=>{
+    // The calibration loop needs logged actuals to fire, but that requirement was
+    // invisible — the cost tracker sits on the estimate screen, where a contractor
+    // has no actuals yet, and nothing ever told them why logging matters or how
+    // close they are. Surfacing progress is the whole point of this banner.
+    const jobsWithActuals=estimates.filter(e=>actuals[e.id]).length;
+    const CAL_MIN_JOBS=2;
+    let calBanner='';
+    if(isPro&&jobsWithActuals<CAL_MIN_JOBS){
+      const remaining=CAL_MIN_JOBS-jobsWithActuals;
+      calBanner=`<div class="cal-progress">
+        <div class="cal-progress-head"><i data-lucide="target" style="width:12px;height:12px;stroke:currentColor"></i> Cost calibration — ${jobsWithActuals} of ${CAL_MIN_JOBS} jobs logged</div>
+        <div class="cal-progress-bar"><div class="cal-progress-fill" style="width:${Math.round((jobsWithActuals/CAL_MIN_JOBS)*100)}%"></div></div>
+        <div class="cal-progress-sub">Log what ${remaining===1?'one more job':'your jobs'} actually cost and Even starts correcting future bids toward your real numbers, by category. Open a finished job below to enter actuals.</div>
+      </div>`;
+    } else if(isPro&&jobsWithActuals>=CAL_MIN_JOBS){
+      calBanner=`<div class="cal-progress active">
+        <div class="cal-progress-head"><i data-lucide="check-circle" style="width:12px;height:12px;stroke:currentColor"></i> Cost calibration active — ${jobsWithActuals} jobs logged</div>
+        <div class="cal-progress-sub">Future estimates in these categories are being adjusted toward your logged actuals.</div>
+      </div>`;
+    }
+
+    if(listEl) listEl.innerHTML=calBanner+estimates.map(est=>{
       const sk=est.status||'draft';
       const label=est.project_label||est.location||'Untitled Job';
       const date=new Date(est.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
@@ -4250,6 +4348,9 @@ async function loadDashboard(){
       const sentDate=est.sent_at?new Date(est.sent_at):null;
       const daysSent=sentDate?Math.floor((now-sentDate)/(864e5)):null;
       const showFU=sk==='sent'&&daysSent!==null&&daysSent>=5;
+      // A job that's won/active/complete has real costs behind it by now — that's the
+      // moment logging actuals is both possible and worth asking for.
+      const needsActuals=isPro&&!actualTotal&&['won','active','complete'].includes(sk);
       const statusOpts=Object.entries(STATUS_LABELS).map(([k,v])=>`<option value="${k}"${k===sk?' selected':''}>${v}</option>`).join('');
       return `<div class="job-card" id="jc-${est.id}">
         <div class="job-card-top" onclick="loadSavedEstimate('${est.id}')">
@@ -4264,6 +4365,7 @@ async function loadDashboard(){
           </div>
         </div>
         ${showFU?`<div class="job-followup"><i data-lucide="clock" style="width:11px;height:11px;stroke:currentColor"></i> Sent ${daysSent} days ago — time to follow up</div>`:''}
+        ${needsActuals?`<div class="job-followup job-log-actuals"><i data-lucide="calculator" style="width:11px;height:11px;stroke:currentColor"></i> ${STATUS_LABELS[sk]} — log what it actually cost to sharpen your next bid</div>`:''}
         <div class="job-card-actions">
           <span class="status-pill ${STATUS_CLASS[sk]}">${STATUS_LABELS[sk]}</span>
           <select class="status-select" onchange="updateJobStatus('${est.id}',this.value)" onclick="event.stopPropagation()">${statusOpts}</select>
@@ -4349,6 +4451,9 @@ async function loadSavedEstimate(estimateId){
     if(error||!data) return;
     window._currentEstimateId=estimateId;
     currentEstimate=data.estimate_json;
+    // Permit scope isn't persisted on the saved estimate, so clear it rather than
+    // letting the previous estimate's disclosure carry over onto this one.
+    window._marketMeta=null;
     navigate('estimate');
     renderEstimate(currentEstimate);
     const psEl=document.getElementById('pay-sched-section');
