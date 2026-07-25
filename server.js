@@ -3,6 +3,7 @@ const nodeFetch = require('node-fetch');
 const cors = require('cors');
 const crypto = require('crypto');
 const MARKETS = require('./data/markets.json');
+const MUNICIPALITIES = require('./data/municipalities.json');
 
 // Prefer Node's built-in fetch (undici) — node-fetch v2 throws "Premature close"
 // on long Anthropic responses. Fall back to node-fetch on older runtimes.
@@ -22,13 +23,37 @@ function haversineMiles(lat1, lng1, lat2, lng2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+// Beyond this, "nearest market" stops being a meaningful proxy for local pricing.
+// Without a cap, a contractor in Boise silently inherits Denver's permit fees and
+// material prices and the estimate is scored as fully-grounded local data — the
+// same false precision the Miami fallback used to produce, just one layer down.
+const MAX_MARKET_DISTANCE_MILES = 75;
+
+// A municipality only counts as "you are here" if it's genuinely close. Past this
+// we know the county but not the city, so permits fall back to county-level rows.
+const MAX_MUNICIPALITY_DISTANCE_MILES = 15;
+
 function nearestMarket(lat, lng) {
   let best = null, bestDist = Infinity;
   for (const m of MARKETS) {
     const d = haversineMiles(lat, lng, m.lat, m.lng);
     if (d < bestDist) { bestDist = d; best = m; }
   }
-  return best ? { ...best, distanceMiles: Math.round(bestDist) } : null;
+  if (!best || bestDist > MAX_MARKET_DISTANCE_MILES) return null;
+  return { ...best, distanceMiles: Math.round(bestDist) };
+}
+
+// Narrows a resolved market down to a specific city, so permit fees can be filtered
+// to the jurisdiction that will actually issue the permit instead of every city in
+// the metro. Municipalities without coordinates are name-match only (see below).
+function nearestMunicipality(lat, lng, market) {
+  let best = null, bestDist = Infinity;
+  for (const m of MUNICIPALITIES) {
+    if (m.market !== market || typeof m.lat !== 'number') continue;
+    const d = haversineMiles(lat, lng, m.lat, m.lng);
+    if (d < bestDist) { bestDist = d; best = m; }
+  }
+  return best && bestDist <= MAX_MUNICIPALITY_DISTANCE_MILES ? best : null;
 }
 
 // Free, keyless zip → lat/lng lookup (no API key to manage, no dataset to bundle/maintain)
@@ -46,24 +71,53 @@ async function zipToLatLng(zip) {
   }
 }
 
-// Resolves free-text location input ("City, State" or a 5-digit zip) to the nearest covered market.
+// Resolves free-text location input ("City, State" or a 5-digit zip) to the nearest
+// covered market, and — where we can tell — the specific municipality within it.
 async function resolveMarket(locationText) {
   if (!locationText) return null;
   const text = locationText.trim();
+  const lower = text.toLowerCase();
 
+  // A zip is the most precise signal available and is checked first — a street name
+  // can contain a city name ("123 Miami St, Boise ID 83702"), so trusting free text
+  // over the zip would resolve that address to Florida.
   const zipMatch = text.match(/\b(\d{5})\b/);
   if (zipMatch) {
     const coords = await zipToLatLng(zipMatch[1]);
-    if (coords) return nearestMarket(coords.lat, coords.lng);
+    if (coords) {
+      const market = nearestMarket(coords.lat, coords.lng);
+      if (!market) return null;
+      const muni = nearestMunicipality(coords.lat, coords.lng, market.market);
+      return muni ? { ...market, municipality: muni.name } : market;
+    }
   }
 
-  // Fall back to a direct text match against our covered markets (handles users
-  // who type an exact covered city/zone name without a zip).
-  const lower = text.toLowerCase();
-  const exact = MARKETS.find(m =>
-    lower.includes(m.market.toLowerCase()) || lower.includes(m.zone.toLowerCase())
-  );
-  return exact || null;
+  // No usable zip — fall back to name matching, longest-match-wins across BOTH lists
+  // rather than municipalities-first. Municipality names are substrings of some market
+  // names ("Miami" inside "Miami-Dade"), so a naive municipality-first pass would
+  // narrow someone who typed the county down to a single city's fee schedule.
+  // Comparing match length lets "Miami-Dade" resolve to the market while
+  // "Miami Gardens" and "North Miami Beach" still beat the shorter "Miami".
+  const muniByName = [...MUNICIPALITIES]
+    .sort((a, b) => b.name.length - a.name.length)
+    .find(m => lower.includes(m.name.toLowerCase()));
+  const marketByName = [...MARKETS]
+    .sort((a, b) => Math.max(b.market.length, b.zone.length) - Math.max(a.market.length, a.zone.length))
+    .find(m => lower.includes(m.market.toLowerCase()) || lower.includes(m.zone.toLowerCase()));
+
+  const muniLen = muniByName ? muniByName.name.length : 0;
+  const marketLen = marketByName
+    ? Math.max(
+        lower.includes(marketByName.market.toLowerCase()) ? marketByName.market.length : 0,
+        lower.includes(marketByName.zone.toLowerCase()) ? marketByName.zone.length : 0
+      )
+    : 0;
+
+  if (muniByName && muniLen >= marketLen) {
+    const parent = MARKETS.find(m => m.market === muniByName.market);
+    if (parent) return { ...parent, municipality: muniByName.name, distanceMiles: 0 };
+  }
+  return marketByName || null;
 }
 
 async function getMarketData(market) {
@@ -202,9 +256,53 @@ app.get('/health', (req, res) => {
 });
 
 // ─── Markets (for frontend autocomplete) ─────────────────────────────────────
+// Municipalities are included so a contractor in Hialeah or Miami Gardens can find
+// their own city in the dropdown instead of having to know it maps to "Miami-Dade".
 app.get('/api/markets', (req, res) => {
-  res.json(MARKETS.map(({ market, state, zone }) => ({ market, state, zone })));
+  const markets = MARKETS.map(({ market, state, zone }) => ({ market, state, zone, kind: 'market' }));
+  const munis = MUNICIPALITIES.map(({ name, market, state, county }) => ({
+    market: name, state, zone: `${county} County · ${market}`, kind: 'municipality', parent: market
+  }));
+  res.json([...markets, ...munis]);
 });
+
+// Permit rows are stored per-municipality, so a fully-researched metro can carry
+// hundreds of them. Sending all of them costs real tokens on every estimate and
+// buries the two lines that actually apply to this job. Narrow to the jurisdiction
+// that will issue the permit, plus the county baseline.
+const UNKNOWN_MUNI_PERMIT_CAP = 40;
+
+function normalizeMuni(s) {
+  return String(s || '')
+    .toLowerCase()
+    .replace(/\b(city|town|village|county) of\b/g, '')
+    .replace(/\bfl\b|\bflorida\b/g, '')
+    .replace(/[^a-z\s-]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function filterPermits(permits, municipality) {
+  if (!Array.isArray(permits) || !permits.length) return { permits, scope: 'none' };
+
+  const isCounty = r => /\bcounty\b/i.test(r.municipality || '');
+  const countyRows = permits.filter(isCounty);
+
+  if (municipality) {
+    const target = normalizeMuni(municipality);
+    const cityRows = permits.filter(r => !isCounty(r) && normalizeMuni(r.municipality) === target);
+    if (cityRows.length) {
+      return { permits: [...cityRows, ...countyRows], scope: 'municipality', municipality };
+    }
+    // We know exactly where they are, we just haven't researched this city's fee
+    // schedule yet. County rows are the honest stand-in — flagged, not passed off
+    // as this city's actual fees.
+    return { permits: countyRows, scope: 'county-fallback', municipality };
+  }
+
+  if (countyRows.length) return { permits: countyRows, scope: 'county' };
+  return { permits: permits.slice(0, UNKNOWN_MUNI_PERMIT_CAP), scope: 'partial' };
+}
 
 // ─── Local market data lookup (grounds estimates in real pipeline data) ──────
 app.get('/api/market-data', async (req, res) => {
@@ -212,8 +310,9 @@ app.get('/api/market-data', async (req, res) => {
   const matched = await resolveMarket(location);
   if (!matched) return res.json({ market: null });
   const data = await getMarketData(matched.market);
-  if (!data) return res.json({ market: matched.market, state: matched.state, zone: matched.zone, materials: null, labor: null, permits: null });
-  res.json(data);
+  if (!data) return res.json({ market: matched.market, state: matched.state, zone: matched.zone, municipality: matched.municipality || null, materials: null, labor: null, permits: null });
+  const { permits, scope, municipality } = filterPermits(data.permits, matched.municipality);
+  res.json({ ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope });
 });
 
 // ─── Anthropic proxy ──────────────────────────────────────────────────────────

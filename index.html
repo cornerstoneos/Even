@@ -2461,7 +2461,7 @@ async function cityAutocomplete(value){
   const q=(value||'').trim().toLowerCase();
   if(q.length<2){ closeCityDropdown(); return; }
   // A 5-digit zip is handled entirely server-side (nearest-market geocoding) —
-  // no point suggesting from the 43-city list against a number.
+  // no point suggesting from the city list against a number.
   if(/^\d{5}$/.test(q)){ closeCityDropdown(); return; }
   const markets=await loadMarketsList();
   const matches=markets.filter(m=>
@@ -2535,7 +2535,17 @@ function buildDynamicPricingBlock(md,adjMultiplier,adjLabel,hvhzNote){
   const laborLines=(md.labor||[]).map(r=>`${r.trade||''}: $${r.low}/hr (low) $${r.mid}/hr (mid) $${r.high}/hr (high)`).join('\n');
   const materialLines=(md.materials||[]).map(r=>`${r.item||''}${r.category?' ('+r.category+')':''}: $${r.low}/${r.unit||'unit'} (low) $${r.mid}/${r.unit||'unit'} (mid) $${r.high}/${r.unit||'unit'} (high)`).join('\n');
   const permitLines=(md.permits||[]).map(r=>`${r.municipality||''} — ${r.work_type||''}: ${r.min_fee?'$'+r.min_fee+' min':''} ${r.rate||''} ${r.method||''}`.trim()).join('\n');
-  return `LOCAL MARKET PRICING — ${md.market}, ${md.state} (apply ${adjLabel} multiplier of ${adjMultiplier}):${hvhzNote}
+  // Permits are filtered server-side to the issuing jurisdiction. Say plainly which
+  // scope these rows represent so the model doesn't present a county baseline as if
+  // it were the city's own adopted fee schedule.
+  const loc=md.municipality?`${md.municipality}, ${md.state}`:`${md.market}, ${md.state}`;
+  const permitHeader={
+    'municipality':`PERMIT FEES (${md.municipality} — issuing jurisdiction, plus ${md.market} county baseline):`,
+    'county-fallback':`PERMIT FEES (${md.market} COUNTY BASELINE ONLY — ${md.municipality}'s own fee schedule has not been researched yet. Use these as an approximation and state in the estimate that ${md.municipality} permit fees should be verified directly with the city):`,
+    'county':`PERMIT FEES (${md.market} county baseline — specific municipality not identified from the address):`,
+    'partial':`PERMIT FEES (${md.market} — PARTIAL LIST, not every municipality in this metro is shown):`
+  }[md.permitScope]||`PERMIT FEES (${md.market}):`;
+  return `LOCAL MARKET PRICING — ${loc} (apply ${adjLabel} multiplier of ${adjMultiplier}):${hvhzNote}
 
 LABOR RATES (BLS, ${md.market} metro):
 ${laborLines||'No labor data available for this market yet — use general knowledge.'}
@@ -2543,7 +2553,7 @@ ${laborLines||'No labor data available for this market yet — use general knowl
 MATERIAL COSTS (${md.market}):
 ${materialLines||'No material cost data available for this market yet — use general knowledge.'}
 
-PERMIT FEES (${md.market}):
+${permitHeader}
 ${permitLines||'No permit fee data available for this market yet — use general knowledge.'}
 
 NOTE: These are base wage rates. Contractor billing rates (what they charge clients) are typically 2.0-2.8x the labor wage to account for burden, insurance, overhead, and profit. Use billing rates when calculating labor line items.
