@@ -672,8 +672,15 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .supplier-expand{padding:0 12px 12px;display:none;border-top:1px solid var(--rim2)}
 /* The point of the subs list isn't storage — it's that Even reads the rate back to
    the contractor against the local wage so they don't have to do that math. */
-.sub-benchmark{display:flex;align-items:flex-start;gap:6px;margin:0 12px 10px;padding:7px 9px;border-radius:6px;font-size:10px;line-height:1.45;font-family:'DM Mono',monospace;background:rgba(62,207,110,.07);border:1px solid rgba(62,207,110,.2);color:var(--green)}
+.sub-benchmark{display:none;align-items:flex-start;gap:6px;margin:0 12px 10px;padding:7px 9px;border-radius:6px;font-size:10px;line-height:1.45;font-family:'DM Mono',monospace;background:rgba(62,207,110,.07);border:1px solid rgba(62,207,110,.2);color:var(--green)}
+.sub-benchmark.open{display:flex}
 .sub-benchmark.warn{background:rgba(255,179,0,.07);border-color:rgba(255,179,0,.22);color:var(--text-accent)}
+/* Present but quiet. Sits at the same weight as the remove button until a rate falls
+   outside the normal band, when it picks up a tint — a nudge, not an alarm. */
+.sub-info{background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;color:var(--muted);opacity:.55;transition:opacity .15s,color .15s}
+.sub-info:hover{opacity:1}
+.sub-info.ok{color:var(--green)}
+.sub-info.warn{color:var(--text-accent);opacity:.85}
 .supplier-expand.open{display:block}
 .supplier-field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .supplier-field-row.three{grid-template-columns:1fr 1fr 1fr}
@@ -4259,7 +4266,12 @@ async function renderSubList(){
     const tradeOpts=SUB_TRADES.map(t=>`<option value="${t}"${s.trade===t?' selected':''}>${t}</option>`).join('');
     const rtOpts=SUB_RATE_TYPES.map(([v,l])=>`<option value="${v}"${s.rate_type===v?' selected':''}>${l}</option>`).join('');
     const bm=subRateBenchmark(s);
-    const bmHtml=bm?`<div class="sub-benchmark ${bm.tone}"><span style="flex-shrink:0">✦</span><span>${_esc(bm.text)}</span></div>`:'';
+    // Collapsed by default. The icon is always there so the depth is discoverable,
+    // but the contractor gets their rate back without being lectured about it —
+    // it only speaks when they ask. Out-of-band rates tint the icon so it catches
+    // the eye slightly without becoming a warning banner.
+    const bmHtml=bm?`<div class="sub-benchmark ${bm.tone}" id="subbm-${i}"><span style="flex-shrink:0">✦</span><span>${_esc(bm.text)}</span></div>`:'';
+    const bmBtn=bm?`<button class="sub-info ${bm.tone}" onclick="event.stopPropagation();toggleSubBenchmark(${i})" title="How this rate compares locally"><i data-lucide="info" style="width:13px;height:13px;stroke:currentColor;pointer-events:none"></i></button>`:'';
     return `<div class="supplier-card" id="subc-${i}">
       <div class="supplier-card-top" onclick="toggleSubExpand(${i})">
         <div>
@@ -4268,6 +4280,7 @@ async function renderSubList(){
         </div>
         <div class="supplier-card-right">
           <span class="supplier-card-price">${_esc(rate)}</span>
+          ${bmBtn}
           <button class="supplier-star${s.preferred?' active':''}" onclick="event.stopPropagation();toggleSubPreferred(${i})" title="Mark as preferred">★</button>
           <button class="supplier-remove" onclick="event.stopPropagation();removeSub(${i})"><i data-lucide="x" style="width:13px;height:13px;stroke:currentColor;pointer-events:none"></i></button>
         </div>
@@ -4295,6 +4308,7 @@ async function renderSubList(){
 }
 
 function toggleSubExpand(i){ document.getElementById(`sube-${i}`)?.classList.toggle('open'); }
+function toggleSubBenchmark(i){ document.getElementById(`subbm-${i}`)?.classList.toggle('open'); }
 function toggleSubPreferred(i){
   if(!window._mySubs[i]) return;
   window._mySubs[i].preferred=!window._mySubs[i].preferred;
