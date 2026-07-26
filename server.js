@@ -311,15 +311,23 @@ function filterPermits(permits, municipality) {
   return { permits: permits.slice(0, UNKNOWN_MUNI_PERMIT_CAP), scope: 'partial' };
 }
 
+// Florida Building Code R202 defines the High Velocity Hurricane Zone as exactly
+// two counties: Miami-Dade and Broward. Palm Beach is Wind-Borne Debris Region but
+// NOT HVHZ, so it does not carry NOA-approved product cost. Deciding this from the
+// resolved market rather than substring-matching the raw address is what keeps
+// "Hollywood, CA" from being priced as hurricane zone.
+const HVHZ_MARKETS = new Set(['Miami-Dade', 'Broward']);
+
 // ─── Local market data lookup (grounds estimates in real pipeline data) ──────
 app.get('/api/market-data', async (req, res) => {
   const location = req.query.location || '';
   const matched = await resolveMarket(location);
-  if (!matched) return res.json({ market: null });
+  if (!matched) return res.json({ market: null, hvhz: null });
+  const hvhz = HVHZ_MARKETS.has(matched.market);
   const data = await getMarketData(matched.market);
-  if (!data) return res.json({ market: matched.market, state: matched.state, zone: matched.zone, municipality: matched.municipality || null, materials: null, labor: null, permits: null });
+  if (!data) return res.json({ market: matched.market, state: matched.state, zone: matched.zone, municipality: matched.municipality || null, hvhz, materials: null, labor: null, permits: null });
   const { permits, scope, municipality } = filterPermits(data.permits, matched.municipality);
-  res.json({ ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope });
+  res.json({ ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, hvhz });
 });
 
 // ─── Anthropic proxy ──────────────────────────────────────────────────────────

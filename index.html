@@ -2552,11 +2552,18 @@ document.addEventListener('click',function(e){
 });
 
 async function fetchMarketPricing(location){
+  // Cleared up front so a failed lookup falls back to text matching for THIS address
+  // instead of silently inheriting the previous estimate's hurricane-zone answer.
+  window._hvhzResolved=null;
   if(!location) return null;
   try{
     const r=await fetch(`${API_ORIGIN}/api/market-data?location=${encodeURIComponent(location)}`);
     if(!r.ok) return null;
     const data=await r.json();
+    // HVHZ is a statutory property of the location, not of whether we happen to have
+    // priced that market yet — stash it before the no-pricing-data bail-out so a
+    // Broward job still gets hurricane-zone treatment with an empty market row.
+    window._hvhzResolved=(data&&data.market&&typeof data.hvhz==='boolean')?data.hvhz:null;
     if(!data||!data.market||(!data.materials?.length&&!data.labor?.length&&!data.permits?.length)) return null;
     return data;
   }catch(e){
@@ -2692,10 +2699,25 @@ async function calculateEstimate(){
   }
   const ansText=Object.entries(answers).map(([q,a])=>`Q: ${q}\nA: ${a}`).join('\n\n');
 
-  // HVHZ detection
+  // HVHZ detection. Florida Building Code R202 defines the High Velocity Hurricane
+  // Zone as exactly two counties — Miami-Dade and Broward. Palm Beach is Wind-Borne
+  // Debris Region but NOT HVHZ, so it must not carry NOA-approved product cost.
+  //
+  // This is decided server-side from the resolved market wherever possible. The old
+  // hand-maintained substring list covered 28 of 63 HVHZ municipalities: every one of
+  // Broward's 29 cities was missing, so Fort Lauderdale, Hollywood, Pembroke Pines and
+  // the rest silently skipped NOA materials, enhanced fasteners, the special inspector
+  // and the 8-12% exterior uplift — a systematic under-estimate on exterior work.
   const cityInput=(document.getElementById('est-location').value||'').toLowerCase();
-  const hvhzCities=['miami','miami-dade','miami beach','coral gables','hialeah','doral','kendall','homestead','florida city','cutler bay','palmetto bay','pinecrest','south miami','west miami','sweetwater','medley','virginia gardens','miami springs','miami gardens','north miami','north miami beach','aventura','bal harbour','bay harbor','biscayne park','el portal','miami shores'];
-  const isHVHZ=hvhzCities.some(c=>cityInput.includes(c));
+  const marketData=await fetchMarketPricing(ctx.location);
+  // Fallback list, used only if the market lookup itself failed. Gated on a Florida
+  // signal because several of these names exist elsewhere — "Hollywood, CA" must not
+  // be priced as a hurricane zone.
+  const HVHZ_FALLBACK=['aventura','bal harbour','bay harbor islands','biscayne park','broward','broward county','coconut creek','cooper city','coral gables','coral springs','cutler bay','dania beach','davie','deerfield beach','doral','el portal','florida city','fort lauderdale','golden beach','hallandale beach','hialeah','hialeah gardens','hillsboro beach','hollywood','homestead','kendall','key biscayne','lauderdale lakes','lauderdale-by-the-sea','lauderhill','lighthouse point','margate','medley','miami','miami beach','miami gardens','miami lakes','miami shores','miami springs','miami-dade','miami-dade county','miramar','north bay village','north lauderdale','north miami','north miami beach','oakland park','opa-locka','palmetto bay','parkland','pembroke park','pembroke pines','pinecrest','plantation','pompano beach','south miami','southwest ranches','sunny isles beach','sunrise','surfside','sweetwater','tamarac','virginia gardens','west miami','west park','weston','wilton manors'];
+  const serverHVHZ=(typeof window._hvhzResolved==='boolean')?window._hvhzResolved:null;
+  const looksFlorida=/\b(fl|florida)\b/i.test(cityInput);
+  const isHVHZ=serverHVHZ!==null?serverHVHZ
+    :(looksFlorida&&HVHZ_FALLBACK.some(c=>new RegExp(`\\b${c.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\b`,'i').test(cityInput)));
   const hvhzNote=isHVHZ?'\n\nHVHZ COMPLIANCE REQUIRED: This job is in a High Velocity Hurricane Zone. AUTOMATICALLY ADD these line items:\n- HVHZ-compliant materials (Miami-Dade NOA approved)\n- Enhanced fasteners (6d ring shank, 6-inch spacing)\n- Notice of Commencement for jobs over $2,500\n- Special inspector may be required — add $400-800\n- Add 8-12% to all exterior scope items for HVHZ compliance':'';
   if(isHVHZ) console.log('HVHZ market detected:', cityInput);
 
@@ -2746,7 +2768,6 @@ PROFIT STACKING — CORRECT METHOD:
 
 `;
 
-  const marketData=await fetchMarketPricing(ctx.location);
   const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote):GENERIC_RATES;
   const confidenceTier=computeConfidenceTier(marketData);
   // Kept separately from the estimate payload so the permit-scope disclosure can be
