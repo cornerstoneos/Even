@@ -495,8 +495,6 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 }
 #screen-loading.active{display:flex}
 
-.loading-logo{font-size:22px;font-weight:300;color:var(--white);letter-spacing:.5px;margin-bottom:6px}
-.loading-logo b{color:var(--text-accent);font-weight:700}
 
 /* Cube loader — gold rings frame the isometric mark. Fixed in place (no spin):
    an earlier version rotated them, which meant the ring composition visibly
@@ -504,6 +502,13 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
    run — reported repeatedly as the rings "switching." Static reads as
    intentional framing instead of a moving spinner changing its look mid-wait. */
 .brand-mark-wrap{display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+/* Mark over wordmark — the lockup, used anywhere the brand is presented rather
+   than just referenced. The word is live text (DM Sans is already loaded), so it
+   never softens on a retina screen and recolours with the theme. */
+.brand-lockup{display:flex;flex-direction:column;align-items:center;gap:9px}
+.brand-lockup img{object-fit:contain;display:block}
+.brand-lockup-word{font-weight:300;color:var(--white);letter-spacing:.5px;line-height:1}
+.brand-lockup-word b{color:var(--text-accent);font-weight:700}
 /* Flat mark, no bevel/glow/rings. The wait is carried by the stream and the bar —
    the logo is an anchor, not the event. */
 .brand-mark{width:58px;height:58px;object-fit:contain;display:block}
@@ -719,10 +724,9 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 ════════════════════════════════════ -->
 <div id="screen-loading">
 
-  <div class="loading-logo">even<b>.</b></div>
-
-  <div class="brand-mark-wrap" id="loading-center-icon">
+  <div class="brand-lockup" id="loading-center-icon" style="margin-bottom:22px">
     <img id="loading-logo-mark" src="assets/logo-flat.png" alt="Even" class="brand-mark">
+    <div class="brand-lockup-word" style="font-size:21px">even<b>.</b></div>
   </div>
 
   <div class="loading-phase-wrap">
@@ -755,7 +759,10 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 ════════════════════════════════════ -->
 <div id="screen-paywall" class="screen" style="min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;background:var(--bg)">
   <div style="width:100%;max-width:400px;text-align:center">
-    <div style="margin-bottom:12px;display:flex;justify-content:center"><img src="assets/logo-flat.png" width="48" height="48" alt="" style="object-fit:contain;"></div>
+    <div class="brand-lockup" style="margin-bottom:14px">
+      <img src="assets/logo-flat.png" width="46" height="46" alt="Even">
+      <div class="brand-lockup-word" style="font-size:20px">even<b>.</b></div>
+    </div>
     <h2 style="color:var(--white);margin-bottom:6px;font-size:22px">You've used your 3 free estimates</h2>
     <p style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:8px">Upgrade to Even Pro — unlimited estimates, both PDFs, bilingual support.</p>
     <p style="color:var(--text-accent);font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.3px;margin-bottom:16px;opacity:.85">Contractors using Even close bids 40% faster.</p>
@@ -879,7 +886,10 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 
       <!-- Hero -->
       <div style="text-align:center;padding:16px 0 24px">
-        <img src="assets/logo-flat.png" alt="Even" style="height:70px;width:70px;object-fit:contain;display:block;margin:0 auto 8px">
+        <div class="brand-lockup" style="margin-bottom:10px">
+          <img src="assets/logo-flat.png" alt="Even" style="height:62px;width:62px">
+          <div class="brand-lockup-word" style="font-size:25px">even<b>.</b></div>
+        </div>
         <div style="font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5" data-en="Scope in. Winning bid out.<br>Built for contractors." data-es="Alcance adentro. Oferta ganadora afuera.<br>Hecho para contratistas.">Scope in. Winning bid out.<br>Built for contractors.</div>
       </div>
 
