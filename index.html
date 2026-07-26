@@ -670,6 +670,25 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .supplier-remove{background:none;border:none;color:var(--muted);cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center}
 .supplier-remove:hover{color:#ff6b6b}
 .supplier-expand{padding:0 12px 12px;display:none;border-top:1px solid var(--rim2)}
+/* The point of the subs list isn't storage — it's that Even reads the rate back to
+   the contractor against the local wage so they don't have to do that math. */
+.sub-benchmark{display:none;align-items:flex-start;gap:6px;margin:0 12px 10px;padding:7px 9px;border-radius:6px;font-size:10px;line-height:1.45;font-family:'DM Mono',monospace;background:rgba(62,207,110,.07);border:1px solid rgba(62,207,110,.2);color:var(--green)}
+.sub-benchmark.open{display:flex}
+.sub-benchmark.warn{background:rgba(255,179,0,.07);border-color:rgba(255,179,0,.22);color:var(--text-accent)}
+/* Present but quiet. Sits at the same weight as the remove button until a rate falls
+   outside the normal band, when it picks up a tint — a nudge, not an alarm. */
+.sub-info{background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;color:var(--muted);opacity:.55;transition:opacity .15s,color .15s}
+.sub-info:hover{opacity:1}
+.sub-info.ok{color:var(--green)}
+.sub-info.warn{color:var(--text-accent);opacity:.85}
+/* Bid-range receipts — same collapsed-by-default contract as .sub-benchmark. */
+.bid-intel{display:none;margin-top:8px;padding:8px 10px;border-radius:6px;background:var(--bg);border:1px solid var(--rim);font-family:'DM Mono',monospace;font-size:10px;line-height:1.6;color:var(--muted)}
+.bid-intel.open{display:block;animation:popIn .25s ease both}
+.bi-head{color:var(--white2);font-weight:700;letter-spacing:.4px;margin-bottom:4px}
+.bi-row{display:flex;gap:6px;align-items:flex-start}
+.bi-row.on{color:var(--white2)}
+.bi-row.on span{color:var(--white2)}
+.bi-foot{margin-top:5px;padding-top:5px;border-top:1px solid var(--rim2);font-size:9px;color:var(--muted)}
 .supplier-expand.open{display:block}
 .supplier-field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .supplier-field-row.three{grid-template-columns:1fr 1fr 1fr}
@@ -1175,7 +1194,10 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
             <div style="width:100%">
               <div class="bid-lbl" data-en="Estimated Project Investment" data-es="Inversión Estimada del Proyecto">Estimated Project Investment</div>
               <div class="bid-val" id="bid-range-display" style="font-size:22px">—</div>
-              <div style="font-size:10px;color:var(--muted);margin-top:3px" data-en="Bid range · confidence-adjusted" data-es="Rango de oferta · ajustado por confianza">Bid range · confidence-adjusted</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:5px"><span data-en="Bid range · confidence-adjusted" data-es="Rango de oferta · ajustado por confianza">Bid range · confidence-adjusted</span><button class="sub-info" id="bid-intel-btn" style="display:none" onclick="document.getElementById('bid-intel').classList.toggle('open')" title="What sets this range"><i data-lucide="info" style="width:12px;height:12px;stroke:currentColor;pointer-events:none"></i></button></div>
+              <!-- The receipts behind the range width. Collapsed by default — the label
+                   stays quiet, the depth is one tap away for whoever wants the back end. -->
+              <div class="bid-intel" id="bid-intel"></div>
             </div>
             <div style="border-top:1px solid var(--rim);padding-top:8px;width:100%;display:flex;justify-content:space-between;align-items:center">
               <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace" data-en="Midpoint reference" data-es="Referencia central">Midpoint reference</div>
@@ -1741,7 +1763,7 @@ function navigate(scr){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+scr).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
-  if(scr==='dashboard'){ loadDashboard(); renderSupplierList(); }
+  if(scr==='dashboard'){ loadDashboard(); renderSupplierList(); renderSubList(); }
   if(scr==='input'){
     currentEstimate=null;
     document.getElementById('li-body').innerHTML='';
@@ -1988,8 +2010,12 @@ function handleFiles(files){
 // ══════════════════════════
 //  CLAUDE API
 // ══════════════════════════
-async function callClaude(messages,maxTokens=2500,useCache=false){
-  const body={model:'claude-sonnet-4-6',max_tokens:maxTokens,messages};
+async function callClaude(messages,maxTokens=2500,useCache=false,effort=null){
+  // Sonnet 5: adaptive thinking is on by default — the model reasons through the
+  // math before writing. max_tokens caps thinking + response together, so callers
+  // pass larger budgets than the visible output alone would need.
+  const body={model:'claude-sonnet-5',max_tokens:maxTokens,messages};
+  if(effort) body.output_config={effort};
   if(useCache&&messages.length&&messages[0].role==='user'){
     const first=messages[0];
     if(typeof first.content==='string'){
@@ -2041,7 +2067,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
 // as text arrives. Returns the full accumulated text. Falls back to callClaude on any
 // streaming failure so an estimate is never lost.
 async function callClaudeStream(messages,maxTokens,onDelta,useCache=true){
-  const body={model:'claude-sonnet-4-6',max_tokens:maxTokens,stream:true,messages};
+  const body={model:'claude-sonnet-5',max_tokens:maxTokens,stream:true,messages};
   if(useCache&&messages.length&&messages[0].role==='user'){
     const first=messages[0];
     if(typeof first.content==='string'){
@@ -2093,6 +2119,9 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true){
         const payload=t.slice(5).trim();
         if(!payload||payload==='[DONE]') continue;
         let evt; try{evt=JSON.parse(payload);}catch(e){continue;}
+        // Any event counts as liveness — ping and thinking events arrive while the
+        // model is still reasoning, before the first visible text token.
+        window._streamEventAt=Date.now();
         if(evt.type==='content_block_delta'&&evt.delta?.type==='text_delta'){
           full+=evt.delta.text;
           if(onDelta) onDelta(full,evt.delta.text);
@@ -2341,7 +2370,7 @@ async function startEstimate(){
   msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.`});
 
   try{
-    const res=await callClaude([{role:'user',content:msgContent}],800);
+    const res=await callClaude([{role:'user',content:msgContent}],3000,false,'low');
     let data;
     try{
       data=parseJ(res);
@@ -2350,7 +2379,7 @@ async function startEstimate(){
         {role:'user',content:msgContent},
         {role:'assistant',content:res},
         {role:'user',content:'Your response was not valid JSON. Return ONLY the corrected JSON object, nothing else.'}
-      ],600);
+      ],1500,false,'low');
       data=parseJ(fixRes);
     }
     window._scopeData=data;
@@ -2777,6 +2806,9 @@ PROFIT STACKING — CORRECT METHOD:
     municipality:marketData.municipality,
     permitScope:marketData.permitScope,
     permitCount:(marketData.permits||[]).length,
+    materialCount:(marketData.materials||[]).filter(r=>r&&r.category!=='Equipment Rental').length,
+    laborCount:(marketData.labor||[]).length,
+    proMaterials:materialSourceQuality(marketData.materials)>=3,
     // Read the county's real name off the data rather than assuming it matches the
     // market name — that only holds in tri-county. Charlotte's permits are issued by
     // Mecklenburg County, so "the Charlotte County schedule" would be plainly wrong.
@@ -2786,7 +2818,7 @@ PROFIT STACKING — CORRECT METHOD:
   window._costCalibration=costCalibration;
   const calibrationNote=costCalibration?.length?`\n\nCOST CALIBRATION FROM THIS CONTRACTOR'S LOGGED ACTUALS — apply these adjustments:\n${costCalibration.map(c=>`${c.category}: actuals have run ${c.avgVariancePct>0?'+':''}${c.avgVariancePct}% vs. estimate across ${c.n} logged job${c.n>1?'s':''} — ${c.avgVariancePct>0?'price this category higher':'price this category lower'} to match.`).join('\n')}`:'';
 
-  const prompt=`${pricingBlock}${calibrationNote}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if the jurisdiction is known for slow permit turnaround. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  const prompt=`${pricingBlock}${calibrationNote}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}${getSubPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if the jurisdiction is known for slow permit turnaround. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
   // Show loading screen
   showLoading();
@@ -2840,7 +2872,7 @@ PROFIT STACKING — CORRECT METHOD:
       let timer;
       const promise=new Promise((_,reject)=>{
         timer=setInterval(()=>{
-          if(Date.now()-lastProgress>STALL_MS){
+          if(Date.now()-Math.max(lastProgress,window._streamEventAt||0)>STALL_MS){
             clearInterval(timer);
             reject(new Error('stall_timeout'));
           }
@@ -2879,7 +2911,7 @@ PROFIT STACKING — CORRECT METHOD:
     let res;
     let guard=makeStallGuard();
     try{
-      res=await Promise.race([callClaudeStream([{role:'user',content:prompt}],4500,onDelta,true),guard.promise]);
+      res=await Promise.race([callClaudeStream([{role:'user',content:prompt}],12000,onDelta,true),guard.promise]);
       guard.cancel();
     }catch(streamErr){
       guard.cancel();
@@ -2889,7 +2921,7 @@ PROFIT STACKING — CORRECT METHOD:
       lastProgress=Date.now();
       guard=makeStallGuard();
       try{
-        res=await Promise.race([callClaude([{role:'user',content:prompt}],4500,true),guard.promise]);
+        res=await Promise.race([callClaude([{role:'user',content:prompt}],12000,true),guard.promise]);
       }finally{ guard.cancel(); }
     }
     setProg(100,appLang==='en'?'Complete ✓':'Completo ✓');
@@ -3152,6 +3184,39 @@ async function loadSimilarJobs(data){
   }catch(e){console.error('Similar jobs error:',e);}
 }
 
+// The receipts behind the range width — which data layers ground this estimate and
+// which don't. Same hidden-in-plain-sight rule as the sub rate check: the headline
+// stays clean, and the icon only exists when there's a real breakdown behind it.
+function renderBidIntel(data,loMult,hiMult){
+  const btn=document.getElementById('bid-intel-btn');
+  const el=document.getElementById('bid-intel');
+  if(!btn||!el) return;
+  const tier=data?.confidenceTier;
+  const meta=window._marketMeta;
+  if(!tier){ btn.style.display='none'; el.classList.remove('open'); return; }
+  const pct=Math.round((hiMult-1)*100);
+  const tierLabel={high:'HIGH',medium:'MEDIUM',low:'LOW'}[tier]||'MEDIUM';
+  const rows=[];
+  if(meta&&meta.market){
+    const scopeWord={'municipality':`${meta.municipality||meta.market} city schedule`,'county-fallback':`${meta.permitCounty||'county'} baseline`,'county':`${meta.permitCounty||'county'} schedule`,'partial':'partial metro list'}[meta.permitScope];
+    rows.push(meta.permitCount>0
+      ?`<div class="bi-row on">✓ <span>Permits — ${escapeHtml(scopeWord||meta.market)} (${meta.permitCount} fees)</span></div>`
+      :`<div class="bi-row">— <span>Permits — none local yet</span></div>`);
+    rows.push(meta.materialCount>0
+      ?`<div class="bi-row on">✓ <span>Materials — ${meta.materialCount} local items${meta.proMaterials?' · pro-tier':' · retail-based'}</span></div>`
+      :`<div class="bi-row">— <span>Materials — none local yet</span></div>`);
+    rows.push(meta.laborCount>0
+      ?`<div class="bi-row on">✓ <span>Labor — ${meta.laborCount} trades, BLS ${escapeHtml(meta.market)} metro</span></div>`
+      :`<div class="bi-row">— <span>Labor — no local wage data yet</span></div>`);
+  }else{
+    // Saved estimates don't carry the data snapshot — say only what's true.
+    rows.push(`<div class="bi-row">— <span>Data snapshot not stored with this saved estimate</span></div>`);
+  }
+  el.innerHTML=`<div class="bi-head">±${pct}% range · ${tierLabel} confidence</div>${rows.join('')}<div class="bi-foot">Tighter data → tighter range. The range narrows as local coverage deepens.</div>`;
+  btn.style.display='flex';
+  el.classList.remove('open');
+}
+
 function renderTotals(data){
   const pct=data.profit?.pct||22;
   const L=appLang;
@@ -3176,6 +3241,7 @@ function renderTotals(data){
     void rangeEl.offsetWidth;
     rangeEl.style.animation='popIn .4s cubic-bezier(.2,.9,.3,1.3) both';
   }
+  renderBidIntel(data,rangeLoMult,rangeHiMult);
   const fill=document.getElementById('meter-fill');
   const pctEl=document.getElementById('meter-pct');
   const verdict=document.getElementById('meter-verdict');
@@ -3879,6 +3945,25 @@ async function submitDataTrade(){
       </div>
     </div>
 
+    <!-- My Subs — mirrors My Suppliers. Subbed labor is usually the largest cost on
+         a job, and without this the model falls back to a generic "subs bill 15-40%
+         over direct labor" guess on exactly the biggest number in the estimate. -->
+    <div style="margin-top:10px">
+      <div class="gc">
+        <div class="gc-head">
+          <div class="gc-title"><i data-lucide="hard-hat" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>My Subs</div>
+          <div class="gc-tag">Used in every estimate</div>
+        </div>
+        <div class="gc-body" style="padding:14px 12px">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5">Your subs' real rates replace Even's generic markup on subbed trades. Add a trade and a rate — Even fills in the rest. <span style="color:var(--text-accent)">Private to your account.</span></div>
+          <div id="sub-list"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--rim2)">
+            <button onclick="addSubRow()" style="background:none;border:none;color:var(--text-accent);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;padding:0">+ ADD SUB</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -4014,6 +4099,7 @@ function savePrefs(){
     trade: document.getElementById('est-trade')?.value||'',
     location: document.getElementById('est-location')?.value||'',
     suppliers: window._mySuppliers||[],
+    subs: window._mySubs||[],
     accentColor: window._accentColor||'#FFB300'
   };
   sbClient.from('users').update({prefs}).eq('id',currentUser.id)
@@ -4152,6 +4238,171 @@ function debounceSaveSuppliers(){
   _supplierSaveTimer = setTimeout(savePrefs, 1200);
 }
 
+// ══════════════════════════
+//  MY SUBS
+// ══════════════════════════
+const SUB_TRADES=['Electrical','Plumbing','HVAC','Roofing','Framing / Carpentry','Drywall',
+  'Painting','Flooring / Tile','Concrete / Masonry','Stucco','Demolition','General Labor',
+  'Landscaping','Pool','Solar','Other'];
+const SUB_RATE_TYPES=[['hour','$ / hour'],['day','$ / day'],['sqft','$ / sq ft'],['lump','Lump sum'],['pct','% of trade scope']];
+
+// Maps a sub trade onto the BLS OEWS occupation actually present in market labor data,
+// so a quoted rate can be sanity-checked against the local wage for that trade.
+const SUB_TRADE_TO_BLS={
+  'Electrical':'Electricians',
+  'Plumbing':'Plumbers, Pipefitters, and Steamfitters',
+  'HVAC':'Sheet Metal Workers',
+  'Roofing':'Roofers',
+  'Framing / Carpentry':'Carpenters',
+  'Drywall':'Drywall and Ceiling Tile Installers',
+  'Painting':'Painters, Construction and Maintenance',
+  'Flooring / Tile':'Tile and Stone Setters',
+  'Concrete / Masonry':'Cement Masons and Concrete Finishers',
+  'Stucco':'Plasterers and Stucco Masons',
+  'Demolition':'Construction Laborers',
+  'General Labor':'Construction Laborers'
+};
+
+// A contractor billing rate normally lands 2.0-2.8x the direct wage once burden,
+// insurance, overhead and profit are stacked. Outside that, it's worth a second look
+// — which is the point: Even says it, so the contractor doesn't have to work it out.
+const SUB_MULT_LOW=2.0, SUB_MULT_HIGH=2.8;
+
+window._mySubs=[];
+window._benchmarkLabor=null;
+
+// Pulled once per dashboard visit off the contractor's saved location, purely to
+// benchmark their own sub rates. Silent failure — this is a nice-to-have on top of
+// the list, never a reason the list doesn't render.
+async function loadBenchmarkLabor(){
+  if(window._benchmarkLabor!==null) return;
+  const loc=document.getElementById('est-location')?.value||'';
+  if(!loc){ window._benchmarkLabor=[]; return; }
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/market-data?location=${encodeURIComponent(loc)}`);
+    const d=r.ok?await r.json():null;
+    window._benchmarkLabor=(d&&Array.isArray(d.labor))?d.labor:[];
+    window._benchmarkMarket=d?.market||null;
+  }catch(e){ window._benchmarkLabor=[]; }
+}
+
+// Returns {text, tone} or null. Only meaningful for hourly rates — a lump sum or
+// per-sqft price has no wage to compare against without knowing the scope.
+function subRateBenchmark(sub){
+  if(!sub||sub.rate_type!=='hour') return null;
+  const rate=parseFloat(sub.rate);
+  if(!rate||!isFinite(rate)) return null;
+  const bls=SUB_TRADE_TO_BLS[sub.trade];
+  const rows=window._benchmarkLabor||[];
+  if(!bls||!rows.length) return null;
+  const row=rows.find(r=>r.trade===bls);
+  if(!row||!row.mid) return null;
+  const mult=rate/row.mid;
+  const market=window._benchmarkMarket||'your market';
+  const m=mult.toFixed(1);
+  if(mult<SUB_MULT_LOW) return {text:`${m}× the ${market} median wage ($${row.mid}/hr). Below the typical ${SUB_MULT_LOW.toFixed(1)}–${SUB_MULT_HIGH.toFixed(1)}× billing range — cheap, or they may be under-insured.`,tone:'warn'};
+  if(mult>SUB_MULT_HIGH) return {text:`${m}× the ${market} median wage ($${row.mid}/hr). Above the typical ${SUB_MULT_LOW.toFixed(1)}–${SUB_MULT_HIGH.toFixed(1)}× billing range — worth a conversation at renewal.`,tone:'warn'};
+  return {text:`${m}× the ${market} median wage ($${row.mid}/hr) — right inside the normal ${SUB_MULT_LOW.toFixed(1)}–${SUB_MULT_HIGH.toFixed(1)}× billing range.`,tone:'ok'};
+}
+
+async function renderSubList(){
+  const el=document.getElementById('sub-list');
+  if(!el) return;
+  await loadBenchmarkLabor();
+  if(!window._mySubs.length){
+    el.innerHTML='<div style="font-size:11px;color:var(--muted);padding:12px 0;text-align:center">No subs added yet</div>';
+    return;
+  }
+  el.innerHTML=window._mySubs.map((s,i)=>{
+    const title=s.company||'Unnamed sub';
+    const meta=[s.trade,s.contact].filter(Boolean).join(' · ');
+    const rt=SUB_RATE_TYPES.find(([v])=>v===s.rate_type);
+    const rate=s.rate?(s.rate_type==='pct'?`${s.rate}%`:`$${s.rate}${s.rate_type&&s.rate_type!=='lump'?'/'+s.rate_type:''}`):'—';
+    const tradeOpts=SUB_TRADES.map(t=>`<option value="${t}"${s.trade===t?' selected':''}>${t}</option>`).join('');
+    const rtOpts=SUB_RATE_TYPES.map(([v,l])=>`<option value="${v}"${s.rate_type===v?' selected':''}>${l}</option>`).join('');
+    const bm=subRateBenchmark(s);
+    // Collapsed by default. The icon is always there so the depth is discoverable,
+    // but the contractor gets their rate back without being lectured about it —
+    // it only speaks when they ask. Out-of-band rates tint the icon so it catches
+    // the eye slightly without becoming a warning banner.
+    const bmHtml=bm?`<div class="sub-benchmark ${bm.tone}" id="subbm-${i}"><span style="flex-shrink:0">✦</span><span>${_esc(bm.text)}</span></div>`:'';
+    const bmBtn=bm?`<button class="sub-info ${bm.tone}" onclick="event.stopPropagation();toggleSubBenchmark(${i})" title="How this rate compares locally"><i data-lucide="info" style="width:13px;height:13px;stroke:currentColor;pointer-events:none"></i></button>`:'';
+    return `<div class="supplier-card" id="subc-${i}">
+      <div class="supplier-card-top" onclick="toggleSubExpand(${i})">
+        <div>
+          <div class="supplier-card-title">${_esc(title)}</div>
+          ${meta?`<div class="supplier-card-meta">${_esc(meta)}</div>`:''}
+        </div>
+        <div class="supplier-card-right">
+          <span class="supplier-card-price">${_esc(rate)}</span>
+          ${bmBtn}
+          <button class="supplier-star${s.preferred?' active':''}" onclick="event.stopPropagation();toggleSubPreferred(${i})" title="Mark as preferred">★</button>
+          <button class="supplier-remove" onclick="event.stopPropagation();removeSub(${i})"><i data-lucide="x" style="width:13px;height:13px;stroke:currentColor;pointer-events:none"></i></button>
+        </div>
+      </div>
+      ${bmHtml}
+      <div class="supplier-expand" id="sube-${i}">
+        <div class="supplier-field-row" style="margin-top:10px">
+          <div><div class="supplier-field-label">Trade</div><select class="supplier-select" onchange="updateSub(${i},'trade',this.value)"><option value="">Select…</option>${tradeOpts}</select></div>
+          <div><div class="supplier-field-label">Company</div><input class="supplier-input" placeholder="Rivera Electric" value="${_esc(s.company)}" oninput="updateSub(${i},'company',this.value)"></div>
+        </div>
+        <div class="supplier-field-row three">
+          <div><div class="supplier-field-label">Rate Type</div><select class="supplier-select" onchange="updateSub(${i},'rate_type',this.value)"><option value="">Select…</option>${rtOpts}</select></div>
+          <div><div class="supplier-field-label">Rate</div><input class="supplier-input" type="number" min="0" step="0.01" placeholder="95.00" value="${s.rate||''}" oninput="updateSub(${i},'rate',this.value)" style="-moz-appearance:textfield"></div>
+          <div><div class="supplier-field-label">License #</div><input class="supplier-input" placeholder="Optional" value="${_esc(s.license_no)}" oninput="updateSub(${i},'license_no',this.value)"></div>
+        </div>
+        <div class="supplier-field-row">
+          <div><div class="supplier-field-label">Contact</div><input class="supplier-input" placeholder="Name or phone" value="${_esc(s.contact)}" oninput="updateSub(${i},'contact',this.value)"></div>
+          <div><div class="supplier-field-label">Region</div><input class="supplier-input" placeholder="Broward" value="${_esc(s.region)}" oninput="updateSub(${i},'region',this.value)"></div>
+        </div>
+        <div style="margin-top:8px"><div class="supplier-field-label">Typical Scope / Notes</div><input class="supplier-input" placeholder="e.g. panel swaps, service upgrades — 3 jobs together" value="${_esc(s.notes)}" oninput="updateSub(${i},'notes',this.value)"></div>
+      </div>
+    </div>`;
+  }).join('');
+  if(window.lucide) lucide.createIcons();
+}
+
+function toggleSubExpand(i){ document.getElementById(`sube-${i}`)?.classList.toggle('open'); }
+function toggleSubBenchmark(i){ document.getElementById(`subbm-${i}`)?.classList.toggle('open'); }
+function toggleSubPreferred(i){
+  if(!window._mySubs[i]) return;
+  window._mySubs[i].preferred=!window._mySubs[i].preferred;
+  renderSubList(); debounceSaveSubs();
+}
+function addSubRow(){
+  window._mySubs.push({trade:'',company:'',contact:'',rate_type:'hour',rate:'',
+    license_no:'',region:'',notes:'',preferred:false,updated_at:new Date().toISOString()});
+  renderSubList();
+  const idx=window._mySubs.length-1;
+  setTimeout(()=>{
+    const el=document.getElementById(`sube-${idx}`);
+    if(el){ el.classList.add('open'); el.querySelector('input,select')?.focus(); }
+  },50);
+}
+function removeSub(i){ window._mySubs.splice(i,1); renderSubList(); debounceSaveSubs(); }
+function updateSub(i,field,val){
+  if(!window._mySubs[i]) return;
+  window._mySubs[i][field]=field==='rate'?(parseFloat(val)||''):val;
+  window._mySubs[i].updated_at=new Date().toISOString();
+  // Trade, rate and rate type all feed the benchmark line, so re-render to keep it
+  // truthful instead of showing a comparison against a stale trade.
+  if(field==='trade'||field==='rate'||field==='rate_type') renderSubList();
+  debounceSaveSubs();
+}
+let _subSaveTimer;
+function debounceSaveSubs(){ clearTimeout(_subSaveTimer); _subSaveTimer=setTimeout(savePrefs,1200); }
+
+function getSubPromptContext(){
+  const valid=(window._mySubs||[]).filter(s=>s.trade&&s.rate);
+  if(!valid.length) return '';
+  const lines=valid.map(s=>{
+    const unit=({hour:'/hr',day:'/day',sqft:'/sqft',lump:' lump sum',pct:'% of trade scope'})[s.rate_type]||'';
+    const amt=s.rate_type==='pct'?`${s.rate}%`:`$${s.rate}${unit}`;
+    return `  - ${s.trade}${s.company?` (${s.company})`:''}: ${amt}${s.notes?` — ${s.notes}`:''}${s.preferred?' ✓preferred':''}`;
+  }).join('\n');
+  return `\nCONTRACTOR'S ACTUAL SUBCONTRACTOR RATES — use these exact rates for these trades instead of the generic 15-40% sub markup. These are what this contractor really pays:\n${lines}\n`;
+}
+
 function getSupplierPromptContext(){
   const valid = (window._mySuppliers||[]).filter(s=>(s.product_name||s.material)&&s.price);
   if(!valid.length) return '';
@@ -4249,6 +4500,9 @@ function applyPrefs(prefs){
   if(prefs.location){
     const el=document.getElementById('est-location');
     if(el&&!el.value) el.value=prefs.location;
+  }
+  if(prefs.subs){
+    window._mySubs = prefs.subs;
   }
   if(prefs.suppliers){
     window._mySuppliers = prefs.suppliers;
