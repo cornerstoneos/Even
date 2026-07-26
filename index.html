@@ -2010,8 +2010,12 @@ function handleFiles(files){
 // ══════════════════════════
 //  CLAUDE API
 // ══════════════════════════
-async function callClaude(messages,maxTokens=2500,useCache=false){
-  const body={model:'claude-sonnet-4-6',max_tokens:maxTokens,messages};
+async function callClaude(messages,maxTokens=2500,useCache=false,effort=null){
+  // Sonnet 5: adaptive thinking is on by default — the model reasons through the
+  // math before writing. max_tokens caps thinking + response together, so callers
+  // pass larger budgets than the visible output alone would need.
+  const body={model:'claude-sonnet-5',max_tokens:maxTokens,messages};
+  if(effort) body.output_config={effort};
   if(useCache&&messages.length&&messages[0].role==='user'){
     const first=messages[0];
     if(typeof first.content==='string'){
@@ -2063,7 +2067,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false){
 // as text arrives. Returns the full accumulated text. Falls back to callClaude on any
 // streaming failure so an estimate is never lost.
 async function callClaudeStream(messages,maxTokens,onDelta,useCache=true){
-  const body={model:'claude-sonnet-4-6',max_tokens:maxTokens,stream:true,messages};
+  const body={model:'claude-sonnet-5',max_tokens:maxTokens,stream:true,messages};
   if(useCache&&messages.length&&messages[0].role==='user'){
     const first=messages[0];
     if(typeof first.content==='string'){
@@ -2115,6 +2119,9 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true){
         const payload=t.slice(5).trim();
         if(!payload||payload==='[DONE]') continue;
         let evt; try{evt=JSON.parse(payload);}catch(e){continue;}
+        // Any event counts as liveness — ping and thinking events arrive while the
+        // model is still reasoning, before the first visible text token.
+        window._streamEventAt=Date.now();
         if(evt.type==='content_block_delta'&&evt.delta?.type==='text_delta'){
           full+=evt.delta.text;
           if(onDelta) onDelta(full,evt.delta.text);
@@ -2363,7 +2370,7 @@ async function startEstimate(){
   msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.`});
 
   try{
-    const res=await callClaude([{role:'user',content:msgContent}],800);
+    const res=await callClaude([{role:'user',content:msgContent}],3000,false,'low');
     let data;
     try{
       data=parseJ(res);
@@ -2372,7 +2379,7 @@ async function startEstimate(){
         {role:'user',content:msgContent},
         {role:'assistant',content:res},
         {role:'user',content:'Your response was not valid JSON. Return ONLY the corrected JSON object, nothing else.'}
-      ],600);
+      ],1500,false,'low');
       data=parseJ(fixRes);
     }
     window._scopeData=data;
@@ -2865,7 +2872,7 @@ PROFIT STACKING — CORRECT METHOD:
       let timer;
       const promise=new Promise((_,reject)=>{
         timer=setInterval(()=>{
-          if(Date.now()-lastProgress>STALL_MS){
+          if(Date.now()-Math.max(lastProgress,window._streamEventAt||0)>STALL_MS){
             clearInterval(timer);
             reject(new Error('stall_timeout'));
           }
@@ -2904,7 +2911,7 @@ PROFIT STACKING — CORRECT METHOD:
     let res;
     let guard=makeStallGuard();
     try{
-      res=await Promise.race([callClaudeStream([{role:'user',content:prompt}],4500,onDelta,true),guard.promise]);
+      res=await Promise.race([callClaudeStream([{role:'user',content:prompt}],12000,onDelta,true),guard.promise]);
       guard.cancel();
     }catch(streamErr){
       guard.cancel();
@@ -2914,7 +2921,7 @@ PROFIT STACKING — CORRECT METHOD:
       lastProgress=Date.now();
       guard=makeStallGuard();
       try{
-        res=await Promise.race([callClaude([{role:'user',content:prompt}],4500,true),guard.promise]);
+        res=await Promise.race([callClaude([{role:'user',content:prompt}],12000,true),guard.promise]);
       }finally{ guard.cancel(); }
     }
     setProg(100,appLang==='en'?'Complete ✓':'Completo ✓');
