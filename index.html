@@ -4,18 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: blob:; connect-src *;">
-<title>Even — Cornerstone OS</title>
+<title>Even OS</title>
 <meta name="description" content="Paste your scope of work, get an accurate contractor-grade bid back in minutes. No spreadsheets, no guesswork.">
-<link rel="icon" type="image/png" href="/assets/logo-hero.png">
+<link rel="icon" type="image/png" href="/assets/logo-flat.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icon-180.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0A0A0A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Even OS">
+<meta name="mobile-web-app-capable" content="yes">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://even-os.com">
 <meta property="og:title" content="Even — Scope In. Winning Bid Out.">
 <meta property="og:description" content="Paste your scope of work, get an accurate contractor-grade bid back in minutes. No spreadsheets, no guesswork.">
-<meta property="og:image" content="https://even-os.com/assets/logo-hero.png">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://even-os.com/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Even — Scope In. Winning Bid Out.">
 <meta name="twitter:description" content="Paste your scope of work, get an accurate contractor-grade bid back in minutes. No spreadsheets, no guesswork.">
-<meta name="twitter:image" content="https://even-os.com/assets/logo-hero.png">
+<meta name="twitter:image" content="https://even-os.com/assets/og-card.png">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@300;400;500&display=swap');
 
@@ -65,7 +74,6 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .topbar-brand{text-align:center}
 .topbar-logo{font-size:16px;font-weight:300;color:var(--white);letter-spacing:.5px;line-height:1}
 .topbar-logo b{color:var(--text-accent);font-weight:700}
-.topbar-sub{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-top:1px}
 .topbar-left{display:flex;align-items:center;gap:8px;justify-self:start}
 .topbar-right{display:flex;align-items:center;gap:8px;justify-self:end}
 .icon-btn{
@@ -207,13 +215,13 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 }
 .protect-box::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 15% 50%,rgba(255,179,0,0.05),transparent 65%);pointer-events:none}
 .protect-shield{
-  width:40px;height:40px;border-radius:10px;background:var(--gold-dim);
-  border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;
-  font-size:20px;flex-shrink:0;animation:shieldPulse 3s ease-in-out infinite;
+  width:40px;height:40px;border-radius:10px;background:var(--l2);
+  border:1px solid var(--rim2);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
 }
 @keyframes shieldPulse{0%,100%{box-shadow:0 0 0 0 var(--gold-glow)}50%{box-shadow:0 0 0 7px rgba(255,179,0,0)}}
 .protect-text .plabel{font-size:9px;color:var(--muted);letter-spacing:.5px;font-family:'DM Mono',monospace;margin-bottom:1px}
-.protect-text .pval{font-size:24px;font-weight:700;color:var(--text-accent);letter-spacing:-.5px;line-height:1}
+.protect-text .pval{font-size:24px;font-weight:500;color:var(--text-accent);letter-spacing:-.5px;line-height:1;font-family:'DM Mono',monospace;}
 .protect-text .psub{font-size:10px;color:var(--muted);margin-top:2px}
 
 /* ── STACKED BARS ── */
@@ -290,7 +298,8 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 /* ── SCOPE TRADE CARD ── */
 .trade-card{background:var(--l2);border:1px solid var(--rim);border-radius:var(--r);padding:11px 14px;margin-bottom:8px;animation:fadeUp .2s ease both}
 .trade-head{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-.trade-icon-wrap{font-size:14px}
+.trade-icon-wrap{display:inline-flex;align-items:center}
+.cat-icon{width:14px;height:14px;stroke:currentColor;vertical-align:middle}
 .trade-name{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-accent);font-family:'DM Mono',monospace}
 .trade-items{display:flex;flex-direction:column;gap:3px}
 .trade-item{font-size:12.5px;color:var(--muted);display:flex;gap:7px;line-height:1.4}
@@ -309,7 +318,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .li-total{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-accent);text-align:right;font-weight:500}
 .li-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;text-align:center;transition:color .15s;padding:0;width:26px}
 .li-del:hover{color:var(--red)}
-.cat-div{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-accent);padding:12px 12px 4px;display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace}
+.cat-div{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:12px 12px 4px;display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace}
 .cat-div::after{content:'';flex:1;height:1px;background:var(--gold-border)}
 
 /* ── TOTALS ── */
@@ -426,7 +435,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .job-card-label{font-size:14px;font-weight:600;color:var(--white);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .job-card-meta{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px}
 .job-card-right{text-align:right;flex-shrink:0}
-.job-card-total{font-size:16px;font-weight:700;color:var(--text-accent)}
+.job-card-total{font-size:16px;font-weight:500;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:-.3px}
 .job-variance{font-size:10px;margin-top:3px;font-family:'DM Mono',monospace}
 .job-variance.over{color:#ff6b6b}.job-variance.under{color:#4ade80}
 .status-pill{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:20px;font-family:'DM Mono',monospace;white-space:nowrap}
@@ -486,46 +495,53 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 }
 #screen-loading.active{display:flex}
 
-.loading-logo{font-size:22px;font-weight:300;color:var(--white);letter-spacing:.5px;margin-bottom:6px}
-.loading-logo b{color:var(--text-accent);font-weight:700}
-.loading-sub-brand{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:40px}
 
 /* Cube loader — gold rings frame the isometric mark. Fixed in place (no spin):
    an earlier version rotated them, which meant the ring composition visibly
    swept through very different-looking orientations over a single loading
    run — reported repeatedly as the rings "switching." Static reads as
    intentional framing instead of a moving spinner changing its look mid-wait. */
-.cube-loader{position:relative;width:170px;height:170px;display:flex;align-items:center;justify-content:center;margin-bottom:24px}
-.cube-halo{position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle at center,rgba(255,179,0,.4),rgba(255,179,0,.12) 50%,transparent 72%);animation:cubeHalo 2.4s ease-in-out infinite;filter:blur(3px)}
-.cube-orb{position:absolute;inset:6px;border-radius:50%;border:2px solid rgba(255,179,0,.14);border-top-color:rgba(255,179,0,.95);filter:drop-shadow(0 0 6px rgba(255,179,0,.4))}
-.cube-orb-2{position:absolute;inset:17px;border-radius:50%;border:2px solid rgba(255,179,0,.13);border-top-color:rgba(255,179,0,.9);filter:drop-shadow(0 0 5px rgba(255,179,0,.35))}
-.cube-mark{position:relative;z-index:1;width:86px;height:86px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 18px rgba(255,179,0,.4));animation:cubeGlow 2.4s ease-in-out infinite}
-@keyframes cubeGlow{0%,100%{filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 10px rgba(255,179,0,.3))}50%{filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)) drop-shadow(0 0 24px rgba(255,179,0,.6))}}
-@keyframes cubeHalo{0%,100%{transform:scale(.85);opacity:.55}50%{transform:scale(1.15);opacity:1}}
+.brand-mark-wrap{display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+/* Mark over wordmark — the lockup, used anywhere the brand is presented rather
+   than just referenced. The word is live text (DM Sans is already loaded), so it
+   never softens on a retina screen and recolours with the theme. */
+/* Embossed art has its lighting baked in, so it cannot be recoloured — the
+   charcoal render from the brand sheet is the light-theme counterpart. */
+.emb-light{display:none}
+body.light .emb-dark{display:none}
+body.light .emb-light{display:block}
+.brand-lockup{display:flex;flex-direction:column;align-items:center;gap:9px}
+.brand-lockup img{object-fit:contain;display:block}
+.brand-lockup-word{font-weight:300;color:var(--white);letter-spacing:.5px;line-height:1}
+.brand-lockup-word b{color:var(--text-accent);font-weight:700}
+/* Flat mark, no bevel/glow/rings. The wait is carried by the stream and the bar —
+   the logo is an anchor, not the event. */
+.brand-mark{width:58px;height:58px;object-fit:contain;display:block}
 .think-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text-accent);margin-right:9px;vertical-align:middle;animation:thinkPulse 1s ease-in-out infinite}
 @keyframes thinkPulse{0%,100%{opacity:.3;transform:scale(.75)}50%{opacity:1;transform:scale(1.15)}}
 
 /* Phase display */
 .loading-phase-wrap{width:100%;max-width:360px}
-.loading-phase-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-accent);font-family:'DM Mono',monospace;text-align:center;margin-bottom:14px}
+.loading-phase-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;text-align:center;margin-bottom:14px}
 .loading-terminal{
   background:var(--glass2);border:1px solid var(--rim2);border-radius:var(--r);
-  padding:16px 18px;min-height:160px;max-height:200px;overflow:hidden;
-  font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;
+  padding:18px 20px;min-height:250px;max-height:290px;overflow:hidden;
+  font-family:'DM Mono',monospace;font-weight:400;font-size:13px;
+  letter-spacing:.1px;
   position:relative;
   backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
 }
 .loading-terminal::before{
   content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(to right,transparent,var(--gold-glow),transparent);
+  background:linear-gradient(to right,transparent,var(--rim),transparent);
 }
 .term-line{
-  color:var(--white2);line-height:1.7;opacity:0;
+  color:var(--white2);line-height:1.85;opacity:0;
   animation:termAppear .3s ease forwards;
   display:flex;gap:8px;align-items:flex-start;
 }
 @keyframes termAppear{to{opacity:1}}
-.term-prefix{color:var(--text-accent);flex-shrink:0}
+.term-prefix{color:var(--muted);flex-shrink:0}
 .term-line.success .term-prefix{color:var(--green)}
 .term-line.processing .term-prefix{color:var(--orange)}
 .term-cursor{display:inline-block;width:7px;height:13px;background:var(--gold);margin-left:2px;animation:blink .8s infinite;vertical-align:middle}
@@ -713,14 +729,9 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 ════════════════════════════════════ -->
 <div id="screen-loading">
 
-  <div class="loading-logo">even<b>.</b></div>
-  <div class="loading-sub-brand">cornerstone os</div>
-
-  <div class="cube-loader" id="loading-center-icon">
-    <div class="cube-halo"></div>
-    <div class="cube-orb-2"></div>
-    <div class="cube-orb"></div>
-    <img id="loading-logo-mark" src="assets/logo-hero.png" alt="Even" class="cube-mark">
+  <div class="brand-lockup" id="loading-center-icon" style="margin-bottom:22px">
+    <img id="loading-logo-mark" src="assets/logo-emb.png" alt="Even" class="brand-mark emb-dark"><img src="assets/logo-emb-light.png" alt="" class="brand-mark emb-light">
+    <div class="brand-lockup-word" style="font-size:21px">even<b>.</b></div>
   </div>
 
   <div class="loading-phase-wrap">
@@ -753,7 +764,10 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 ════════════════════════════════════ -->
 <div id="screen-paywall" class="screen" style="min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;background:var(--bg)">
   <div style="width:100%;max-width:400px;text-align:center">
-    <div style="margin-bottom:12px;display:flex;justify-content:center"><img src="assets/logo-hero.png" width="48" height="48" alt="" style="object-fit:contain;filter:drop-shadow(0 0 12px rgba(255,179,0,.6))"></div>
+    <div class="brand-lockup" style="margin-bottom:14px">
+      <img src="assets/logo-emb.png" class="emb-dark " alt="Even" style="width:46px;height:46px;object-fit:contain;display:block"><img src="assets/logo-emb-light.png" class="emb-light " alt="" style="width:46px;height:46px;object-fit:contain">
+      <div class="brand-lockup-word" style="font-size:20px">even<b>.</b></div>
+    </div>
     <h2 style="color:var(--white);margin-bottom:6px;font-size:22px">You've used your 3 free estimates</h2>
     <p style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:8px">Upgrade to Even Pro — unlimited estimates, both PDFs, bilingual support.</p>
     <p style="color:var(--text-accent);font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.3px;margin-bottom:16px;opacity:.85">Contractors using Even close bids 40% faster.</p>
@@ -766,17 +780,17 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
     <!-- Side by side pricing -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
       <!-- Monthly — HERO -->
-      <div style="background:var(--panel);border:2px solid var(--gold);border-radius:14px;padding:18px 14px;position:relative">
-        <div style="font-size:9px;color:var(--text-accent);font-weight:700;letter-spacing:1.5px;margin-bottom:6px;font-family:'DM Mono',monospace">MONTHLY</div>
-        <div style="font-size:32px;font-weight:700;color:var(--white);line-height:1">$49</div>
+      <div style="background:var(--panel);border:1px solid var(--rim);border-radius:14px;padding:18px 14px;position:relative">
+        <div style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:1.5px;margin-bottom:6px;font-family:'DM Mono',monospace">MONTHLY</div>
+        <div style="font-size:32px;font-weight:500;color:var(--white);line-height:1;font-family:'DM Mono',monospace;letter-spacing:-.5px">$49</div>
         <div style="font-size:10px;color:var(--muted);margin-bottom:14px">/month</div>
         <button onclick="handleUpgrade('monthly')" style="width:100%;padding:11px 6px;background:var(--gold);border:none;border-radius:9px;color:#000;font-weight:700;font-size:12px;cursor:pointer">Start Monthly</button>
       </div>
       <!-- Annual -->
       <div style="background:var(--panel);border:1px solid var(--rim2);border-radius:14px;padding:18px 14px;position:relative">
-        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:20px;white-space:nowrap">SAVE $98</div>
+        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:20px;white-space:nowrap;font-family:'DM Mono',monospace;">SAVE $98</div>
         <div style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:1.5px;margin-bottom:6px;font-family:'DM Mono',monospace">ANNUAL</div>
-        <div style="font-size:32px;font-weight:700;color:var(--white);line-height:1">$490</div>
+        <div style="font-size:32px;font-weight:500;color:var(--white);line-height:1;font-family:'DM Mono',monospace;letter-spacing:-.5px">$490</div>
         <div style="font-size:10px;color:var(--muted);margin-bottom:14px">/year</div>
         <button onclick="handleUpgrade('annual')" style="width:100%;padding:11px 6px;background:transparent;border:1.5px solid var(--rim2);border-radius:9px;color:var(--white2);font-weight:600;font-size:12px;cursor:pointer">Go Annual</button>
       </div>
@@ -802,12 +816,11 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
     </div>
     <div class="topbar-brand" onclick="goHome()" style="cursor:pointer" title="New estimate">
       <div class="topbar-logo">even<b>.</b></div>
-      <div class="topbar-sub">cornerstone os</div>
     </div>
     <div class="topbar-right" style="display:flex;align-items:center;gap:10px">
       <span id="user-badge" style="display:none"></span>
       <button id="dashboard-topbar-btn" onclick="navigate('dashboard')" style="display:none;background:none;border:none;padding:5px;cursor:pointer;line-height:0" title="Saved Jobs"><i data-lucide="folder" style="width:17px;height:17px;stroke:var(--gold)"></i></button>
-      <button id="gopro-topbar-btn" onclick="handleUpgrade('monthly')" style="display:none;background:linear-gradient(135deg,#FFB300,#e09900);border:none;color:#000;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px"><img src="assets/logo-hero.png" width="12" height="12" alt="" style="object-fit:contain;vertical-align:middle;margin-right:3px"> GO PRO</button>
+      <button id="gopro-topbar-btn" onclick="handleUpgrade('monthly')" style="display:none;background:linear-gradient(135deg,#FFB300,#e09900);border:none;color:#000;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px"><img src="assets/logo-flat.png" width="12" height="12" alt="" style="object-fit:contain;vertical-align:middle;margin-right:3px"> GO PRO</button>
       <button id="topbar-auth-btn" onclick="toggleAuthPanel()" style="background:var(--panel);border:1px solid var(--rim);color:var(--muted);padding:5px 10px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px">SIGN IN</button>
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
@@ -878,7 +891,10 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 
       <!-- Hero -->
       <div style="text-align:center;padding:16px 0 24px">
-        <img src="assets/logo-hero.png" alt="Even" style="height:70px;width:70px;object-fit:contain;display:block;margin:0 auto 8px">
+        <div class="brand-lockup" style="margin-bottom:10px">
+          <img src="assets/logo-emb.png" class="emb-dark " alt="Even" style="width:62px;height:62px;object-fit:contain;display:block"><img src="assets/logo-emb-light.png" class="emb-light " alt="" style="width:62px;height:62px;object-fit:contain">
+          <div class="brand-lockup-word" style="font-size:25px">even<b>.</b></div>
+        </div>
         <div style="font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5" data-en="Scope in. Winning bid out.<br>Built for contractors." data-es="Alcance adentro. Oferta ganadora afuera.<br>Hecho para contratistas.">Scope in. Winning bid out.<br>Built for contractors.</div>
       </div>
 
@@ -1092,7 +1108,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
       </div>
 
       <button class="cta" id="gen-btn" onclick="startEstimate()">
-        <img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,179,0,.5))">
+        <img src="assets/logo-flat.png" width="18" height="18" alt="" style="object-fit:contain;">
         <span data-en="Analyze Scope & Build Estimate" data-es="Analizar Alcance y Generar Estimado">Analyze Scope & Build Estimate</span>
       </button>
 
@@ -1115,7 +1131,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
       </div>
 
       <div class="ai-bubble" id="ai-summary-bubble">
-        <div class="ai-avatar"><img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,179,0,.5))"></div>
+        <div class="ai-avatar"><img src="assets/logo-flat.png" width="18" height="18" alt="" style="object-fit:contain;"></div>
         <div class="ai-msg" id="ai-summary-text" data-en="Reading your scope…" data-es="Leyendo tu alcance…">Reading your scope…</div>
       </div>
 
@@ -1133,7 +1149,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 
       <div id="questions-section" style="display:none">
         <div class="ai-bubble" style="margin-top:4px">
-          <div class="ai-avatar"><img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,179,0,.5))"></div>
+          <div class="ai-avatar"><img src="assets/logo-flat.png" width="18" height="18" alt="" style="object-fit:contain;"></div>
           <div class="ai-msg">
             <strong data-en="A few things will move the number —" data-es="Estas preguntas afectan el precio —">A few things will move the number —</strong>
             <span data-en=" answer these and I'll lock in your estimate." data-es=" respóndelas y generaré tu estimado."> answer these and I'll lock in your estimate.</span>
@@ -1227,7 +1243,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 
           <!-- EVEN SUGGESTS -->
           <div class="even-suggests" id="even-suggests" style="display:none">
-            <div class="even-suggests-label"><img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,179,0,.5))"> <span data-en="Even Suggests" data-es="Even Sugiere">Even Suggests</span></div>
+            <div class="even-suggests-label"><img src="assets/logo-flat.png" width="18" height="18" alt="" style="object-fit:contain;"> <span data-en="Even Suggests" data-es="Even Sugiere">Even Suggests</span></div>
             <div class="tier-cards" id="tier-cards"></div>
           </div>
           <!-- Your Final Bid — moved here so contractors set their number before downloading -->
@@ -1307,7 +1323,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
             <div id="prop-assumptions"></div>
           </div>
           <div id="beautify-row" style="display:none;padding-top:2px">
-            <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.25);border-radius:8px;color:var(--text-accent);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-hero.png" width="12" height="12" style="object-fit:contain;vertical-align:middle"> POLISH SCOPE WITH AI</button>
+            <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.25);border-radius:8px;color:var(--text-accent);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-flat.png" width="12" height="12" style="object-fit:contain;vertical-align:middle"> POLISH SCOPE WITH AI</button>
             <div id="beautify-status" style="font-size:10px;color:var(--muted);text-align:center;margin-top:5px;display:none"></div>
           </div>
         </div>
@@ -1332,7 +1348,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 
       <!-- Email gate -->
       <div class="email-gate" id="email-gate" style="display:none">
-        <div style="font-size:28px;margin-bottom:10px">📥</div>
+        <div style="margin-bottom:10px"><i data-lucide="inbox" style="width:26px;height:26px;stroke:var(--muted)"></i></div>
         <h3 data-en="Download Your Estimate" data-es="Descarga Tu Estimado">Download Your Estimate</h3>
         <p data-en="Enter your email to download. We'll save your estimate and settings — no password needed." data-es="Ingresa tu correo para descargar. Guardaremos tu estimado y configuración.">Enter your email to download. We'll save your estimate and settings — no password needed.</p>
         <div class="email-row">
@@ -1663,7 +1679,7 @@ async function handleAuth(){
       setTimeout(()=>{}, 300);
     }
   } catch(e) {
-    errEl.textContent='Something went wrong. Try again.';
+    errEl.textContent="Couldn't reach the sign-in service. Check your connection and try again.";
   }
   btn.textContent = authMode === 'login' ? 'Sign In' : 'Create Account';
   btn.disabled=false;
@@ -2270,24 +2286,20 @@ async function runLoadingPhases(phase1Lines,phase2Lines){
   phaseLabel.textContent=appLang==='en'?'Phase 1 · Reading Scope':'Fase 1 · Leyendo Alcance';
   // logo SVG persists from HTML
   setProgress(0,'Initializing…');
-  let delay=0;
   for(let i=0;i<phase1Lines.length;i++){
-    await pushTermLine(phase1Lines[i],'',delay);
+    await pushTermLine(phase1Lines[i],'',i===0?0:170);
     setProgress(Math.round((i+1)/phase1Lines.length*28),(appLang==='en'?'Reading scope…':'Leyendo alcance…'));
-    delay+=320;
   }
-  await new Promise(r=>setTimeout(r,200));
+  await new Promise(r=>setTimeout(r,140));
 
   // Phase 2 — Analyzing trades
   phaseLabel.textContent=appLang==='en'?'Phase 2 · Analyzing Trades':'Fase 2 · Analizando Oficios';
   // logo SVG persists from HTML
-  delay=0;
   for(let i=0;i<phase2Lines.length;i++){
-    await pushTermLine(phase2Lines[i],'success',delay);
+    await pushTermLine(phase2Lines[i],'success',190);
     setProgress(28+Math.round((i+1)/phase2Lines.length*35),(appLang==='en'?'Identifying scope…':'Identificando alcance…'));
-    delay+=380;
   }
-  await new Promise(r=>setTimeout(r,300));
+  await new Promise(r=>setTimeout(r,180));
 
   // Intro ends here (~55%). Phase 3 is driven live by the streamed response in
   // calculateEstimate — line items render one-by-one as the model writes them.
@@ -2392,7 +2404,7 @@ async function startEstimate(){
     document.getElementById('gen-btn').disabled=false;
   }catch(e){
     stopStatus();
-    document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">${escapeHtml(e.message)||'Something went wrong analyzing your scope — please try again'}</span>`;
+    document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">${escapeHtml(e.message)||'Couldn\'t read that scope. Add a little more detail, or re-upload the file.'}</span>`;
     document.getElementById('gen-btn').disabled=false;
   }
 }
@@ -2401,12 +2413,13 @@ function renderScopeExtracted(data){
   const grid=document.getElementById('scope-grid');
   grid.innerHTML=(data.tradeBreakdown||[]).map((t,i)=>`
     <div class="trade-card" style="animation-delay:${i*.07}s">
-      <div class="trade-head"><span class="trade-icon-wrap">${escapeHtml(t.icon)||'🔧'}</span><span class="trade-name">${escapeHtml(t.trade)}</span></div>
+      <div class="trade-head"><span class="trade-icon-wrap">${getCatIcon(t.trade)}</span><span class="trade-name">${escapeHtml(t.trade)}</span></div>
       <div class="trade-items">${(t.items||[]).map(item=>`<div class="trade-item">${escapeHtml(item)}</div>`).join('')}</div>
     </div>`).join('');
   if(data.keyFacts?.length){
     grid.innerHTML+=`<div class="fact-row">${data.keyFacts.map(f=>`<span class="fact-chip">${escapeHtml(f)}</span>`).join('')}</div>`;
   }
+  if(window.lucide) lucide.createIcons();
 }
 
 function renderQuestions(questions){
@@ -2825,25 +2838,25 @@ PROFIT STACKING — CORRECT METHOD:
 
   // Generate phase content for loading
   const phase1=appLang==='en'?[
-    `📋 Reading scope of work…`,
-    `📍 Location: ${escapeHtml(ctx.location)} detected`,
-    `🔨 Trade: ${escapeHtml(ctx.trade)}`,
-    ctx.sqft!=='not specified'?`📐 ${ctx.sqft} sq ft confirmed`:`📐 Square footage: not specified`,
-    `⚙️ Overhead: ${ctx.oh}% · Profit: ${ctx.profit}% · Cushion: ${ctx.cushion}%`,
-    `🔍 Identifying trades and scope items…`
+    `Reading scope of work…`,
+    `Location: ${escapeHtml(ctx.location)} detected`,
+    `Trade: ${escapeHtml(ctx.trade)}`,
+    ctx.sqft!=='not specified'?`${ctx.sqft} sq ft confirmed`:`Square footage: not specified`,
+    `Overhead: ${ctx.oh}% · Profit: ${ctx.profit}% · Cushion: ${ctx.cushion}%`,
+    `Identifying trades and scope items…`
   ]:[
-    `📋 Leyendo alcance de trabajo…`,
-    `📍 Ubicación: ${escapeHtml(ctx.location)} detectada`,
-    `🔨 Oficio: ${escapeHtml(ctx.trade)}`,
-    `📐 ${ctx.sqft!=='not specified'?ctx.sqft+' pies cuadrados confirmados':'Pies cuadrados: no especificado'}`,
-    `⚙️ Gastos: ${ctx.oh}% · Ganancia: ${ctx.profit}% · Colchón: ${ctx.cushion}%`,
-    `🔍 Identificando oficios y alcance…`
+    `Leyendo alcance de trabajo…`,
+    `Ubicación: ${escapeHtml(ctx.location)} detectada`,
+    `Oficio: ${escapeHtml(ctx.trade)}`,
+    `${ctx.sqft!=='not specified'?ctx.sqft+' pies cuadrados confirmados':'Pies cuadrados: no especificado'}`,
+    `Gastos: ${ctx.oh}% · Ganancia: ${ctx.profit}% · Colchón: ${ctx.cushion}%`,
+    `Identificando oficios y alcance…`
   ];
 
   const tradeBreakdown=window._scopeData?.tradeBreakdown||[];
   const phase2=tradeBreakdown.length>0
     ?tradeBreakdown.map(t=>`${escapeHtml(t.icon)} ${escapeHtml(t.trade)} scope identified — ${t.items?.length||0} items`)
-    :(appLang==='en'?['🔨 General scope identified','⚡ Specialty work noted','📦 Materials scope parsed']:['🔨 Alcance general identificado','⚡ Trabajo especializado anotado','📦 Materiales identificados']);
+    :(appLang==='en'?['General scope identified','Specialty work noted','Materials scope parsed']:['Alcance general identificado','Trabajo especializado anotado','Materiales identificados']);
 
     // Scripted intro (reading scope, analyzing trades), then stream phase 3 LIVE —
     // each line item appears the moment the model finishes writing it.
@@ -2968,7 +2981,7 @@ PROFIT STACKING — CORRECT METHOD:
       (appLang==='en'?'Taking too long — check your connection and try again.':'Está tardando demasiado — verifica tu conexión e intenta de nuevo.'):
       e.message&&e.message.toLowerCase().includes('load')?
       (appLang==='en'?'Connection lost — check your signal and try again.':'Conexión perdida — verifica tu señal e intenta de nuevo.'):
-      (appLang==='en'?'Something went wrong — please try again.':'Algo salió mal — intenta de nuevo.');
+      (appLang==='en'?'The estimate didn\'t come back. Your scope is saved — run it again.':'El estimado no regresó. Tu alcance está guardado — inténtalo de nuevo.');
     showToast(msg, 5000);
   }
 }
@@ -2976,7 +2989,10 @@ PROFIT STACKING — CORRECT METHOD:
 // ══════════════════════════
 //  RENDER ESTIMATE
 // ══════════════════════════
-function getCatIcon(c){const m={Labor:'👷',Materials:'📦',Electrical:'⚡',Plumbing:'🔧',HVAC:'❄️',Permits:'📋',Equipment:'🔨',Demo:'🗜️',Demolition:'🗜️',Flooring:'🪵',Tile:'🟫',Mechanical:'⚙️',Painting:'🎨',Roofing:'🏠',Concrete:'🪨',Cleanup:'🧹'};return m[c]||'🔧'}
+// One icon family, one stroke weight, one size — replaces the emoji set.
+const CAT_ICONS={Labor:'hard-hat',Materials:'package',Electrical:'zap',Plumbing:'droplet',HVAC:'wind',Permits:'file-text',Equipment:'wrench',Demo:'hammer',Demolition:'hammer',Flooring:'grid-3x3',Tile:'grid-3x3',Mechanical:'cog',Painting:'paint-roller',Roofing:'home',Concrete:'layers',Cleanup:'trash-2'};
+function catIconName(c){return CAT_ICONS[c]||'wrench'}
+function getCatIcon(c){return `<i data-lucide="${catIconName(c)}" class="cat-icon"></i>`}
 function esc(s){return escapeHtml(s)}
 
 function renderEstimate(data){
@@ -3248,9 +3264,9 @@ function renderTotals(data){
   const w=Math.min(pct*2.2,100);
   fill.style.width=w+'%';
   pctEl.textContent=pct+'%';
-  if(pct>=22){fill.style.background='var(--green)';pctEl.style.color='var(--green)';verdict.style.color='var(--green)';verdict.textContent=L==='en'?'✅ Strong — bid with confidence':'✅ Fuerte — presenta con confianza'}
-  else if(pct>=15){fill.style.background='var(--gold)';pctEl.style.color='var(--gold)';verdict.style.color='var(--gold)';verdict.textContent=L==='en'?'⚠️ Acceptable — watch costs closely':'⚠️ Aceptable — vigila los costos'}
-  else{fill.style.background='var(--red)';pctEl.style.color='var(--red)';verdict.style.color='var(--red)';verdict.textContent=L==='en'?'🚨 Thin — consider adjusting margin':'🚨 Bajo — considera ajustar el margen'}
+  if(pct>=22){fill.style.background='var(--green)';pctEl.style.color='var(--green)';verdict.style.color='var(--green)';verdict.textContent=L==='en'?'Strong — bid with confidence':'Fuerte — presenta con confianza'}
+  else if(pct>=15){fill.style.background='var(--gold)';pctEl.style.color='var(--gold)';verdict.style.color='var(--gold)';verdict.textContent=L==='en'?'Acceptable — watch costs closely':'Aceptable — vigila los costos'}
+  else{fill.style.background='var(--red)';pctEl.style.color='var(--red)';verdict.style.color='var(--red)';verdict.textContent=L==='en'?'Thin — consider adjusting margin':'Bajo — considera ajustar el margen'}
 }
 
 // ══════════════════════════
@@ -3329,7 +3345,7 @@ function renderProposalPreview(){
   document.getElementById('proposal-content').innerHTML=`
     <div class="prop-inner">
       <div class="prop-hdr">
-        <div><h1>${L==='en'?'Project Proposal':'Propuesta de Proyecto'}</h1><p>Even · Cornerstone OS</p></div>
+        <div><h1>${L==='en'?'Project Proposal':'Propuesta de Proyecto'}</h1><p>Even OS</p></div>
         <div class="prop-meta"><strong>${escapeHtml(data.projectName||'Estimate')}</strong>${now}<br>${escapeHtml(ctx?.location||'')}<br>${L==='en'?'Client':'Cliente'}: ${escapeHtml(ctx?.client||'—')}</div>
       </div>
       ${clientNote?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${escapeHtml(clientNote)}</p>`:''}
@@ -3346,7 +3362,7 @@ function renderProposalPreview(){
         <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Client Signature & Date':'Firma del Cliente y Fecha'}</div></div>
         <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Contractor Signature & Date':'Firma del Contratista y Fecha'}</div></div>
       </div>
-      <div class="prop-disclaimer">${L==='en'?'AI-estimated using regional market data. Verify material costs against current supplier quotes. Generated by Even · Cornerstone OS.':'Estimado con IA usando datos regionales del mercado. Verifica costos con tu proveedor. Generado por Even · Cornerstone OS.'}</div>
+      <div class="prop-disclaimer">${L==='en'?'AI-estimated using regional market data. Verify material costs against current supplier quotes. Generated by Even OS.':'Estimado con IA usando datos regionales del mercado. Verifica costos con tu proveedor. Generado por Even OS.'}</div>
     </div>`;
   document.getElementById('proposal-section').style.display='block';
   document.getElementById('proposal-section').scrollIntoView({behavior:'smooth',block:'start'});
@@ -3401,7 +3417,7 @@ function drawPDFHeader(doc,W,barH,logo,accent,now){
     doc.setFont('helvetica','bold');doc.setFontSize(barH>55?18:14);doc.setTextColor(...accent);
     doc.text('EVEN',24,barH*0.63);
     doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);
-    doc.text('BY CORNERSTONE OS',24,barH-10);doc.text(now,W-24,barH-10,{align:'right'});
+    doc.text('EVEN OS',24,barH-10);doc.text(now,W-24,barH-10,{align:'right'});
   }
 }
 
@@ -3494,7 +3510,7 @@ async function downloadProposalPDF(){
   doc.text(L==='en'?'Client Signature & Date':'Firma del Cliente y Fecha',M,y+10);
   doc.text(L==='en'?'Contractor Signature & Date':'Firma del Contratista y Fecha',W-M-170,y+10);
   const pages=doc.getNumberOfPages();
-  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even by Cornerstone OS · Client Proposal · Confidential',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
+  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even OS · Client Proposal · Confidential',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
   savePDF(doc,`Even-Proposal-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
   if(isPro && currentUser && sbClient && window._currentEstimateId){
     sbClient.from('estimates').update({status:'sent',sent_at:new Date().toISOString()}).eq('id',window._currentEstimateId).then(()=>{});
@@ -3584,7 +3600,7 @@ async function downloadCostSheet(){
   y+=56;
   if(data.assumptions?.length&&y<700){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...mutedAccent);doc.text(L==='en'?'ASSUMPTIONS':'SUPUESTOS',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);data.assumptions.forEach(a=>{if(y<740){doc.text('• '+a,M+4,y);y+=10}})}
   const pages=doc.getNumberOfPages();
-  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even by Cornerstone OS · Internal Cost Sheet · CONFIDENTIAL',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
+  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even OS · Internal Cost Sheet · CONFIDENTIAL',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
   savePDF(doc,`Even-CostSheet-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
 }
 
@@ -3774,7 +3790,7 @@ async function submitDataTrade(){
 <!-- Pro Feature Modal -->
 <div id="pro-feature-modal">
   <div class="pro-modal-inner">
-    <div class="pro-modal-icon"><img src="assets/logo-hero.png" width="38" height="38" alt="" style="object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,179,0,.5))"></div>
+    <div class="pro-modal-icon"><img src="assets/logo-flat.png" width="38" height="38" alt="" style="object-fit:contain;"></div>
     <div class="pro-modal-title" id="pro-modal-title">Pro Feature</div>
     <div class="pro-modal-desc" id="pro-modal-desc">Upgrade to Even Pro to unlock this.</div>
     <span class="pro-modal-tag">Contractors using Even close bids 40% faster.</span>
@@ -3864,7 +3880,7 @@ async function submitDataTrade(){
     <!-- AI Insights -->
     <div id="dash-insights-wrap" style="display:none;margin-bottom:16px">
       <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:8px;display:flex;align-items:center;gap:6px">
-        <img src="assets/logo-hero.png" width="11" height="11" style="object-fit:contain;vertical-align:middle;opacity:.8"> EVEN INTELLIGENCE
+        <img src="assets/logo-flat.png" width="11" height="11" style="object-fit:contain;vertical-align:middle;opacity:.8"> EVEN INTELLIGENCE
       </div>
       <div id="dash-insights"></div>
     </div>
