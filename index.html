@@ -2220,25 +2220,80 @@ function getConfidenceRange(data){ return CONFIDENCE_RANGE[data?.confidenceTier]
 // tight bid range.
 const MATERIAL_TIER_RANK={retail:1,retail_adjusted:2,national_estimate:2,pro_distributor:3,local_supply_house:4};
 
+// Which material categories a trade actually buys from. Matched as substrings so
+// the model's own trade names out of the scope breakdown ("Interior Painting",
+// "Rough Plumbing") land correctly. A broad trade maps to null: on a full remodel
+// every category genuinely is in play. A trade that matches nothing contributes
+// nothing rather than silently widening the set.
+const TRADE_MATERIALS={
+  'general contractor':null,'remodel':null,'renovation':null,'residential':null,'commercial':null,
+  'roof':['Roofing'],
+  'electric':['Electrical'],
+  'plumb':['Plumbing'],
+  'hvac':['HVAC'],'mechanical':['HVAC'],'air condition':['HVAC'],
+  'fram':['Framing'],'carpentry':['Framing'],'deck':['Framing'],
+  'paint':['Paint'],
+  'floor':['Flooring'],'tile':['Flooring'],
+  'concrete':['Concrete'],'foundation':['Concrete'],
+  'drywall':['Drywall'],
+  'siding':['Siding'],'stucco':['Siding']
+};
+
+// The categories this particular estimate will actually price against. Returns
+// null when everything is in play, which is the correct answer for a GC on a
+// full remodel — not a fallback.
+function scopeMaterialCategories(trade,tradeBreakdown){
+  const names=[trade,...((tradeBreakdown||[]).map(t=>t&&(t.trade||t.name)))].filter(Boolean);
+  const cats=new Set();
+  let matched=false;
+  for(const raw of names){
+    const lower=String(raw).toLowerCase();
+    let hit,len=0;
+    for(const key in TRADE_MATERIALS){ if(key.length>len&&lower.includes(key)){hit=key;len=key.length;} }
+    if(hit===undefined) continue;
+    matched=true;
+    const mapped=TRADE_MATERIALS[hit];
+    if(mapped===null) return null;   // a broad trade puts every category in play
+    mapped.forEach(c=>cats.add(c));
+  }
+  return (matched&&cats.size)?cats:null;
+}
+
 // Median, not best — one supply house quote among thirty retail rows shouldn't
 // promote the whole market. Untiered rows (pre-dating the tier system) count as
 // retail, which is what they actually were.
-function materialSourceQuality(materials){
-  const core=(materials||[]).filter(r=>r&&r.category!=='Equipment Rental');
+//
+// Scoped to the categories this job actually buys from. Market-wide was wrong in
+// a way that mattered: loading 28 pro-tier electrical and HVAC rows would flip
+// the market median and raise confidence on a *painting* job that still runs on
+// the same retail-tier paint row. The tier has to describe the estimate in front
+// of the contractor, not the market's average.
+function materialSourceQuality(materials,categories){
+  const core=inScopeMaterials(materials,categories);
   if(!core.length) return 0;
   const ranks=core.map(r=>MATERIAL_TIER_RANK[r.tier]||1).sort((a,b)=>a-b);
   return ranks[Math.floor(ranks.length/2)];
 }
 
-function computeConfidenceTier(marketData){
+// Equipment rental is national and priced per-job, so it never speaks to how
+// well-grounded a market's material pricing is.
+function inScopeMaterials(materials,categories){
+  return (materials||[]).filter(r=>r&&r.category!=='Equipment Rental'
+    &&(!categories||categories.has(r.category)));
+}
+
+function computeConfidenceTier(marketData,categories){
   if(!marketData) return 'low';
-  const grounded=[marketData.materials,marketData.labor,marketData.permits].filter(a=>a&&a.length).length;
+  // Materials count as grounding only when this job's own categories are covered.
+  // Twenty-eight electrical rows do not ground a paint job.
+  const scopedMaterials=inScopeMaterials(marketData.materials,categories);
+  const grounded=[scopedMaterials,marketData.labor,marketData.permits].filter(a=>a&&a.length).length;
   if(grounded===0) return 'low';
   if(grounded<3) return 'medium';
   // All three layers present. "High" additionally requires that the materials are
   // actually pro-tier and that the permit rows are the issuing city's own — a county
   // baseline standing in for an unresearched city is not city-level grounding.
-  const proTierMaterials=materialSourceQuality(marketData.materials)>=3;
+  const proTierMaterials=materialSourceQuality(marketData.materials,categories)>=3;
   const cityLevelPermits=marketData.permitScope==='municipality';
   return (proTierMaterials&&cityLevelPermits)?'high':'medium';
 }
@@ -2837,7 +2892,9 @@ PROFIT STACKING — CORRECT METHOD:
 `;
 
   const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote):GENERIC_RATES;
-  const confidenceTier=computeConfidenceTier(marketData);
+  // Scored against what this job buys, not what the market happens to hold.
+  const scopeCats=scopeMaterialCategories(ctx.trade,window._scopeData?.tradeBreakdown);
+  const confidenceTier=computeConfidenceTier(marketData,scopeCats);
   // Kept separately from the estimate payload so the permit-scope disclosure can be
   // rendered deterministically rather than depending on the model to mention it.
   window._marketMeta=marketData?{
@@ -2845,9 +2902,10 @@ PROFIT STACKING — CORRECT METHOD:
     municipality:marketData.municipality,
     permitScope:marketData.permitScope,
     permitCount:(marketData.permits||[]).length,
-    materialCount:(marketData.materials||[]).filter(r=>r&&r.category!=='Equipment Rental').length,
+    materialCount:inScopeMaterials(marketData.materials,scopeCats).length,
+    materialScope:scopeCats?[...scopeCats].join(', '):null,
     laborCount:(marketData.labor||[]).length,
-    proMaterials:materialSourceQuality(marketData.materials)>=3,
+    proMaterials:materialSourceQuality(marketData.materials,scopeCats)>=3,
     // Read the county's real name off the data rather than assuming it matches the
     // market name — that only holds in tri-county. Charlotte's permits are issued by
     // Mecklenburg County, so "the Charlotte County schedule" would be plainly wrong.
@@ -3278,9 +3336,12 @@ function renderBidIntel(data,loMult,hiMult){
     rows.push(meta.permitCount>0
       ?`<div class="bi-row on">✓ <span>Permits — ${escapeHtml(scopeWord||meta.market)} (${meta.permitCount} fees)</span></div>`
       :`<div class="bi-row">— <span>Permits — none local yet</span></div>`);
+    // Name the trades the count covers. Scoped to this job, "1 local item" is
+    // accurate but reads as broken without saying what it is 1 price *for*.
+    const matFor=meta.materialScope?` for ${escapeHtml(meta.materialScope)}`:'';
     rows.push(meta.materialCount>0
-      ?`<div class="bi-row on">✓ <span>Materials — ${meta.materialCount} local items${meta.proMaterials?' · pro-tier':' · retail-based'}</span></div>`
-      :`<div class="bi-row">— <span>Materials — none local yet</span></div>`);
+      ?`<div class="bi-row on">✓ <span>Materials — ${meta.materialCount} local price${meta.materialCount===1?'':'s'}${matFor}${meta.proMaterials?' · pro-tier':' · retail-based'}</span></div>`
+      :`<div class="bi-row">— <span>Materials — no local pricing${matFor} yet</span></div>`);
     rows.push(meta.laborCount>0
       ?`<div class="bi-row on">✓ <span>Labor — ${meta.laborCount} trades, BLS ${escapeHtml(meta.market)} metro</span></div>`
       :`<div class="bi-row">— <span>Labor — no local wage data yet</span></div>`);
