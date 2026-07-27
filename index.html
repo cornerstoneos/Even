@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; img-src * data: blob:; connect-src *;">
 <title>Even OS</title>
 <meta name="description" content="Paste your scope of work, get an accurate contractor-grade bid back in minutes. No spreadsheets, no guesswork.">
-<link rel="icon" type="image/png" href="/assets/logo-flat.png">
+<link rel="icon" type="image/png" href="/assets/favicon-64.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/icon-180.png">
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#0A0A0A">
@@ -505,16 +505,13 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 /* Mark over wordmark — the lockup, used anywhere the brand is presented rather
    than just referenced. The word is live text (DM Sans is already loaded), so it
    never softens on a retina screen and recolours with the theme. */
-/* Embossed art has its lighting baked in, so it cannot be recoloured — the
-   charcoal render from the brand sheet is the light-theme counterpart. */
-.emb-light{display:none}
-body.light .emb-dark{display:none}
-body.light .emb-light{display:block}
+/* The cube reads on both grounds — it carries its own light rather than
+   sitting on the background — so one file serves both themes, no swap. */
 .brand-lockup{display:flex;flex-direction:column;align-items:center;gap:9px}
 .brand-lockup img{object-fit:contain;display:block}
 .brand-lockup-word{font-weight:300;color:var(--white);letter-spacing:.5px;line-height:1}
 .brand-lockup-word b{color:var(--text-accent);font-weight:700}
-/* Flat mark, no bevel/glow/rings. The wait is carried by the stream and the bar —
+/* No rings, no halo. The wait is carried by the stream and the bar —
    the logo is an anchor, not the event. */
 .brand-mark{width:58px;height:58px;object-fit:contain;display:block}
 .think-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--text-accent);margin-right:9px;vertical-align:middle;animation:thinkPulse 1s ease-in-out infinite}
@@ -730,7 +727,7 @@ body.light .emb-light{display:block}
 <div id="screen-loading">
 
   <div class="brand-lockup" id="loading-center-icon" style="margin-bottom:22px">
-    <img id="loading-logo-mark" src="assets/logo-emb.png" alt="Even" class="brand-mark emb-dark"><img src="assets/logo-emb-light.png" alt="" class="brand-mark emb-light">
+    <img id="loading-logo-mark" src="assets/logo-hero.png" alt="Even" class="brand-mark">
     <div class="brand-lockup-word" style="font-size:21px">even<b>.</b></div>
   </div>
 
@@ -765,7 +762,7 @@ body.light .emb-light{display:block}
 <div id="screen-paywall" class="screen" style="min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;background:var(--bg)">
   <div style="width:100%;max-width:400px;text-align:center">
     <div class="brand-lockup" style="margin-bottom:14px">
-      <img src="assets/logo-emb.png" class="emb-dark " alt="Even" style="width:46px;height:46px;object-fit:contain;display:block"><img src="assets/logo-emb-light.png" class="emb-light " alt="" style="width:46px;height:46px;object-fit:contain">
+      <img src="assets/logo-hero.png" alt="Even" style="width:46px;height:46px;object-fit:contain;display:block">
       <div class="brand-lockup-word" style="font-size:20px">even<b>.</b></div>
     </div>
     <h2 style="color:var(--white);margin-bottom:6px;font-size:22px">You've used your 3 free estimates</h2>
@@ -820,7 +817,7 @@ body.light .emb-light{display:block}
     <div class="topbar-right" style="display:flex;align-items:center;gap:10px">
       <span id="user-badge" style="display:none"></span>
       <button id="dashboard-topbar-btn" onclick="navigate('dashboard')" style="display:none;background:none;border:none;padding:5px;cursor:pointer;line-height:0" title="Saved Jobs"><i data-lucide="folder" style="width:17px;height:17px;stroke:var(--gold)"></i></button>
-      <button id="gopro-topbar-btn" onclick="handleUpgrade('monthly')" style="display:none;background:linear-gradient(135deg,#FFB300,#e09900);border:none;color:#000;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px"><img src="assets/logo-flat.png" width="12" height="12" alt="" style="object-fit:contain;vertical-align:middle;margin-right:3px"> GO PRO</button>
+      <button id="gopro-topbar-btn" onclick="handleUpgrade('monthly')" style="display:none;background:linear-gradient(135deg,#FFB300,#e09900);border:none;color:#000;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px"><img src="assets/logo-hero.png" width="16" height="16" alt="" style="object-fit:contain;vertical-align:middle;margin-right:3px"> GO PRO</button>
       <button id="topbar-auth-btn" onclick="toggleAuthPanel()" style="background:var(--panel);border:1px solid var(--rim);color:var(--muted);padding:5px 10px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px">SIGN IN</button>
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
@@ -892,7 +889,7 @@ body.light .emb-light{display:block}
       <!-- Hero -->
       <div style="text-align:center;padding:16px 0 24px">
         <div class="brand-lockup" style="margin-bottom:10px">
-          <img src="assets/logo-emb.png" class="emb-dark " alt="Even" style="width:62px;height:62px;object-fit:contain;display:block"><img src="assets/logo-emb-light.png" class="emb-light " alt="" style="width:62px;height:62px;object-fit:contain">
+          <img src="assets/logo-hero.png" alt="Even" style="width:62px;height:62px;object-fit:contain;display:block">
           <div class="brand-lockup-word" style="font-size:25px">even<b>.</b></div>
         </div>
         <div style="font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5" data-en="Scope in. Winning bid out.<br>Built for contractors." data-es="Alcance adentro. Oferta ganadora afuera.<br>Hecho para contratistas.">Scope in. Winning bid out.<br>Built for contractors.</div>
@@ -1108,7 +1105,7 @@ body.light .emb-light{display:block}
       </div>
 
       <button class="cta" id="gen-btn" onclick="startEstimate()">
-        <img src="assets/logo-flat.png" width="18" height="18" alt="" style="object-fit:contain;">
+        <img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;">
         <span data-en="Analyze Scope & Build Estimate" data-es="Analizar Alcance y Generar Estimado">Analyze Scope & Build Estimate</span>
       </button>
 
@@ -1131,7 +1128,7 @@ body.light .emb-light{display:block}
       </div>
 
       <div class="ai-bubble" id="ai-summary-bubble">
-        <div class="ai-avatar"><img src="assets/logo-flat.png" width="18" height="18" alt="" style="object-fit:contain;"></div>
+        <div class="ai-avatar"><img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;"></div>
         <div class="ai-msg" id="ai-summary-text" data-en="Reading your scope…" data-es="Leyendo tu alcance…">Reading your scope…</div>
       </div>
 
@@ -1149,7 +1146,7 @@ body.light .emb-light{display:block}
 
       <div id="questions-section" style="display:none">
         <div class="ai-bubble" style="margin-top:4px">
-          <div class="ai-avatar"><img src="assets/logo-flat.png" width="18" height="18" alt="" style="object-fit:contain;"></div>
+          <div class="ai-avatar"><img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;"></div>
           <div class="ai-msg">
             <strong data-en="A few things will move the number —" data-es="Estas preguntas afectan el precio —">A few things will move the number —</strong>
             <span data-en=" answer these and I'll lock in your estimate." data-es=" respóndelas y generaré tu estimado."> answer these and I'll lock in your estimate.</span>
@@ -1243,7 +1240,7 @@ body.light .emb-light{display:block}
 
           <!-- EVEN SUGGESTS -->
           <div class="even-suggests" id="even-suggests" style="display:none">
-            <div class="even-suggests-label"><img src="assets/logo-flat.png" width="18" height="18" alt="" style="object-fit:contain;"> <span data-en="Even Suggests" data-es="Even Sugiere">Even Suggests</span></div>
+            <div class="even-suggests-label"><img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;"> <span data-en="Even Suggests" data-es="Even Sugiere">Even Suggests</span></div>
             <div class="tier-cards" id="tier-cards"></div>
           </div>
           <!-- Your Final Bid — moved here so contractors set their number before downloading -->
@@ -1323,7 +1320,7 @@ body.light .emb-light{display:block}
             <div id="prop-assumptions"></div>
           </div>
           <div id="beautify-row" style="display:none;padding-top:2px">
-            <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.25);border-radius:8px;color:var(--text-accent);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-flat.png" width="12" height="12" style="object-fit:contain;vertical-align:middle"> POLISH SCOPE WITH AI</button>
+            <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.25);border-radius:8px;color:var(--text-accent);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-hero.png" width="16" height="16" style="object-fit:contain;vertical-align:middle"> POLISH SCOPE WITH AI</button>
             <div id="beautify-status" style="font-size:10px;color:var(--muted);text-align:center;margin-top:5px;display:none"></div>
           </div>
         </div>
@@ -3790,7 +3787,7 @@ async function submitDataTrade(){
 <!-- Pro Feature Modal -->
 <div id="pro-feature-modal">
   <div class="pro-modal-inner">
-    <div class="pro-modal-icon"><img src="assets/logo-flat.png" width="38" height="38" alt="" style="object-fit:contain;"></div>
+    <div class="pro-modal-icon"><img src="assets/logo-hero.png" width="38" height="38" alt="" style="object-fit:contain;"></div>
     <div class="pro-modal-title" id="pro-modal-title">Pro Feature</div>
     <div class="pro-modal-desc" id="pro-modal-desc">Upgrade to Even Pro to unlock this.</div>
     <span class="pro-modal-tag">Contractors using Even close bids 40% faster.</span>
@@ -3880,7 +3877,7 @@ async function submitDataTrade(){
     <!-- AI Insights -->
     <div id="dash-insights-wrap" style="display:none;margin-bottom:16px">
       <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:8px;display:flex;align-items:center;gap:6px">
-        <img src="assets/logo-flat.png" width="11" height="11" style="object-fit:contain;vertical-align:middle;opacity:.8"> EVEN INTELLIGENCE
+        <img src="assets/logo-hero.png" width="16" height="16" style="object-fit:contain;vertical-align:middle;opacity:.85"> EVEN INTELLIGENCE
       </div>
       <div id="dash-insights"></div>
     </div>
