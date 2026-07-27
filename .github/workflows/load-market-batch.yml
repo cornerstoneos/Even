@@ -1,0 +1,36 @@
+name: Load Market Batch
+
+# Loads data/batches/even_master_batch.json into Supabase market_data.
+# Runs here rather than in the SQL editor because the batch is ~2 MB, which is
+# not a realistic paste on a phone. Trigger from the Actions tab.
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Dry run first, then switch to write'
+        required: true
+        default: 'dry-run'
+        type: choice
+        options:
+          - dry-run
+          - write
+
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # No pip install — the loader only uses the standard library.
+      - name: Load batch
+        run: |
+          python data-pipeline/load_market_batch.py \
+            ${{ inputs.mode == 'dry-run' && '--dry-run' || '' }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
