@@ -505,6 +505,11 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 /* Mark over wordmark — the lockup, used anywhere the brand is presented rather
    than just referenced. The word is live text (DM Sans is already loaded), so it
    never softens on a retina screen and recolours with the theme. */
+/* Embossed art has its lighting baked in, so it cannot be recoloured — the
+   charcoal render from the brand sheet is the light-theme counterpart. */
+.emb-light{display:none}
+body.light .emb-dark{display:none}
+body.light .emb-light{display:block}
 .brand-lockup{display:flex;flex-direction:column;align-items:center;gap:9px}
 .brand-lockup img{object-fit:contain;display:block}
 .brand-lockup-word{font-weight:300;color:var(--white);letter-spacing:.5px;line-height:1}
@@ -725,7 +730,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 <div id="screen-loading">
 
   <div class="brand-lockup" id="loading-center-icon" style="margin-bottom:22px">
-    <img id="loading-logo-mark" src="assets/logo-flat.png" alt="Even" class="brand-mark">
+    <img id="loading-logo-mark" src="assets/logo-emb.png" alt="Even" class="brand-mark emb-dark"><img src="assets/logo-emb-light.png" alt="" class="brand-mark emb-light">
     <div class="brand-lockup-word" style="font-size:21px">even<b>.</b></div>
   </div>
 
@@ -760,7 +765,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 <div id="screen-paywall" class="screen" style="min-height:100vh;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;background:var(--bg)">
   <div style="width:100%;max-width:400px;text-align:center">
     <div class="brand-lockup" style="margin-bottom:14px">
-      <img src="assets/logo-flat.png" width="46" height="46" alt="Even">
+      <img src="assets/logo-emb.png" class="emb-dark " alt="Even" style="width:46px;height:46px;object-fit:contain;display:block"><img src="assets/logo-emb-light.png" class="emb-light " alt="" style="width:46px;height:46px;object-fit:contain">
       <div class="brand-lockup-word" style="font-size:20px">even<b>.</b></div>
     </div>
     <h2 style="color:var(--white);margin-bottom:6px;font-size:22px">You've used your 3 free estimates</h2>
@@ -887,7 +892,7 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
       <!-- Hero -->
       <div style="text-align:center;padding:16px 0 24px">
         <div class="brand-lockup" style="margin-bottom:10px">
-          <img src="assets/logo-flat.png" alt="Even" style="height:62px;width:62px">
+          <img src="assets/logo-emb.png" class="emb-dark " alt="Even" style="width:62px;height:62px;object-fit:contain;display:block"><img src="assets/logo-emb-light.png" class="emb-light " alt="" style="width:62px;height:62px;object-fit:contain">
           <div class="brand-lockup-word" style="font-size:25px">even<b>.</b></div>
         </div>
         <div style="font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5" data-en="Scope in. Winning bid out.<br>Built for contractors." data-es="Alcance adentro. Oferta ganadora afuera.<br>Hecho para contratistas.">Scope in. Winning bid out.<br>Built for contractors.</div>
