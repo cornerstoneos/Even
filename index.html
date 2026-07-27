@@ -74,8 +74,18 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .topbar-brand{text-align:center}
 .topbar-logo{font-size:16px;font-weight:300;color:var(--white);letter-spacing:.5px;line-height:1}
 .topbar-logo b{color:var(--text-accent);font-weight:700}
-.topbar-left{display:flex;align-items:center;gap:8px;justify-self:start}
-.topbar-right{display:flex;align-items:center;gap:8px;justify-self:end}
+.topbar-left{display:flex;align-items:center;gap:8px;justify-self:start;min-width:0}
+/* min-width:0 lets the track shrink instead of overflowing back across the
+   centred wordmark, and nowrap stops SIGN IN breaking onto two lines when
+   GO PRO appears alongside it. */
+.topbar-right{display:flex;align-items:center;gap:8px;justify-self:end;min-width:0}
+.topbar-right button{white-space:nowrap}
+/* With GO PRO showing, the right cluster needs 265px of a 394px usable bar. The
+   centre track can't give that back, so it overflowed left and the pill landed
+   on top of the wordmark. Nothing fits at any phone width, so the wordmark
+   yields — it returns for Pro users and before the first estimate, and the
+   contractor knows what app they're in by the time GO PRO appears. */
+body.has-gopro .topbar-brand{display:none}
 .icon-btn{
   width:32px;height:32px;border-radius:50%;background:var(--glass2);
   border:1px solid var(--rim);display:flex;align-items:center;justify-content:center;
@@ -562,9 +572,14 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 .loading-progress-step{color:var(--muted)}
 .loading-progress-pct{color:var(--text-accent)}
 
+/* Two columns. Categories are short ("Labor", "Permits", "Disposal"), so one
+   column wasted half the width and pushed the earlier rows out of the box —
+   the list auto-scrolls, so what the contractor saw was the top clipped mid-row
+   while the tool was still working. Two columns fit a whole estimate's
+   categories without scrolling at all. */
 .loading-live{
   width:100%;max-width:380px;margin-top:14px;
-  display:flex;flex-direction:column;gap:5px;
+  display:grid;grid-template-columns:1fr 1fr;gap:5px;align-content:start;
   max-height:220px;overflow-y:auto;
 }
 .loading-skel-row{
@@ -574,15 +589,16 @@ body.light .topbar{background:rgba(244,241,235,0.94)}
 }
 @keyframes skelShimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .loading-live-row{
-  display:flex;align-items:flex-start;gap:10px;
+  display:flex;align-items:center;gap:8px;min-width:0;
   background:var(--glass2);border:1px solid var(--rim2);border-radius:9px;
-  padding:8px 12px;font-size:12px;color:var(--white2);
+  padding:7px 10px;font-size:11.5px;color:var(--white2);
   opacity:0;transform:translateY(6px);
   animation:liveRowIn .32s ease forwards;
   backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
 }
 @keyframes liveRowIn{to{opacity:1;transform:none}}
-.loading-live-desc{flex:1;min-width:0;white-space:normal;line-height:1.4}
+/* A long category must not wrap to two lines and break the grid rhythm. */
+.loading-live-desc{flex:1;min-width:0;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .loading-live-tick{flex-shrink:0;color:var(--green);font-size:11px}
 .loading-reveal{
   text-align:center;margin-top:12px;opacity:0;transition:opacity .4s;
@@ -1542,6 +1558,7 @@ function updateUserBadge(){
       if(goProBtn){ goProBtn.style.display='none'; }
       if(upsellStrip){ upsellStrip.style.display='none'; }
       if(dashBtn) dashBtn.style.display='inline-block';
+      document.body.classList.remove('has-gopro');
     } else {
       if(dashBtn) dashBtn.style.display='none';
       if(badge){ badge.style.display='none'; }
@@ -1552,6 +1569,7 @@ function updateUserBadge(){
       }
       // Show Go Pro pill after first estimate
       if(goProBtn){ goProBtn.style.display = estimateCount > 0 ? 'inline-block' : 'none'; }
+      document.body.classList.toggle('has-gopro', estimateCount > 0);
       // Show post-estimate upsell strip on estimate screen
       if(upsellStrip){
         const upsellSub = document.getElementById('upsell-sub');
@@ -2176,7 +2194,18 @@ function parseJ(t){
   throw new Error('Could not parse estimate response — try again');
 }
 const fmt=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmtK=n=>n>=1000000?'$'+(n/1000000).toFixed(n%1000000===0?0:1)+'M':'$'+Math.round(n/1000)+'k';
+const money0=n=>'$'+Math.round(Number(n)||0).toLocaleString('en-US');
+// Rounding everything to the nearest whole thousand collapsed real ranges into
+// nonsense on small jobs: a $1,932–$2,268 bid rendered as "$2k — $2k", and the
+// Budget and Mid Range tiers came out identical. Below $10k a contractor thinks
+// in dollars, so show dollars. This feeds the headline range and both PDFs.
+const fmtK=n=>{
+  const v=Math.round(Number(n)||0);
+  if(Math.abs(v)>=1000000) return '$'+(v/1000000).toFixed(v%1000000===0?0:1)+'M';
+  if(Math.abs(v)<10000) return money0(v);
+  const k=v/1000;
+  return '$'+(Math.abs(k)<100?k.toFixed(k%1===0?0:1):Math.round(k))+'k';
+};
 
 // Confidence tier drives the bid range width — tighter when the estimate is
 // actually grounded in real local materials/labor/permit data, wider when it
@@ -2828,7 +2857,7 @@ PROFIT STACKING — CORRECT METHOD:
   window._costCalibration=costCalibration;
   const calibrationNote=costCalibration?.length?`\n\nCOST CALIBRATION FROM THIS CONTRACTOR'S LOGGED ACTUALS — apply these adjustments:\n${costCalibration.map(c=>`${c.category}: actuals have run ${c.avgVariancePct>0?'+':''}${c.avgVariancePct}% vs. estimate across ${c.n} logged job${c.n>1?'s':''} — ${c.avgVariancePct>0?'price this category higher':'price this category lower'} to match.`).join('\n')}`:'';
 
-  const prompt=`${pricingBlock}${calibrationNote}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}${getSubPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items). ALWAYS include: permits & inspections, demo/debris removal, material delivery & logistics ($350-600), drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting if the jurisdiction is known for slow permit turnaround. These protect the contractor's margin.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  const prompt=`${pricingBlock}${calibrationNote}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}${getSubPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items for a full remodel; fewer for a small single-trade job — do not pad).\nMARGIN PROTECTORS — include each one only when this scope actually calls for it, sized to this job: permits & inspections, debris removal, material delivery & logistics, drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting where the jurisdiction is slow.\nSIZING ANCILLARY LINES — these scale with the job or they discredit the whole bid:\n- Material delivery & logistics is a real supplier delivery charge, never a flat fee. Materials that fit in the contractor's own truck: omit it, or a $40-75 trip charge. A supplier drop (lumber, drywall, tile, roofing, multi-pallet): $150-350. $350-600 only when material cost exceeds $3,000 or the job needs multiple drops.\n- Debris removal scales to actual debris volume. Bagged debris from a small job is $0-75. A pull-off dumpster ($400-700) only when demo generates real volume.\n- Floor and surface protection applies only to occupied homes with a work path through finished space.\n- HARD RULE: when direct labor + material cost is under $5,000, delivery + disposal + protection combined must not exceed 15% of that direct cost. A $350 delivery line on a $300 paint job is the fastest way to lose a contractor's trust.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
 
   // Show loading screen
   showLoading();
@@ -2867,12 +2896,40 @@ PROFIT STACKING — CORRECT METHOD:
     // Skeleton rows fill the dead space while the model is still writing its
     // first line item — the longest single wait in the whole flow otherwise
     // had nothing visible happening in this area.
-    if(liveEl) liveEl.innerHTML='<div class="loading-skel-row"></div><div class="loading-skel-row"></div><div class="loading-skel-row"></div>';
+    if(liveEl) liveEl.innerHTML='<div class="loading-skel-row"></div>'.repeat(4); // 2x2 in the grid
     phaseLabel.textContent=appLang==='en'?'Phase 3 · Building Estimate':'Fase 3 · Construyendo Estimado';
-    const setProg=(p,l)=>{bar.style.width=Math.min(p,100)+'%';pctEl.textContent=Math.round(Math.min(p,100))+'%';if(l)stepEl.textContent=l;};
+    let progShown=56;
+    const setProg=(p,l)=>{const v=Math.min(p,100);progShown=Math.max(progShown,v);bar.style.width=progShown+'%';pctEl.textContent=Math.round(progShown)+'%';if(l)stepEl.textContent=l;};
     setProg(56,appLang==='en'?'Pricing line items…':'Cotizando partidas…');
 
     const EXPECT=15; let rendered=0; const seenCats=new Set();
+    // The bar used to sit dead on 56% until the model finished writing its first
+    // complete line item — 15-30s of nothing, which reads as a crash, especially
+    // if the screen sleeps and comes back unchanged. So during that window show
+    // what the app itself actually did: the market data this estimate is standing
+    // on. These are real counts off the loaded row, not invented progress.
+    const warmup=(()=>{
+      const m=window._marketMeta;
+      const en=appLang==='en';
+      const steps=[];
+      if(m){
+        if(m.permitCount>0) steps.push(en?`Permit schedule: ${m.municipality||m.market} · ${m.permitCount} fees`:`Tarifas de permisos: ${m.municipality||m.market} · ${m.permitCount}`);
+        if(m.materialCount>0) steps.push(en?`${m.materialCount} local material prices loaded`:`${m.materialCount} precios de materiales locales`);
+        if(m.laborCount>0) steps.push(en?`${m.laborCount} local wage rates applied`:`${m.laborCount} tarifas salariales locales`);
+      }
+      steps.push(en?'Sizing quantities against scope…':'Calculando cantidades…');
+      steps.push(en?'Pricing line items…':'Cotizando partidas…');
+      return steps;
+    })();
+    // Creeps toward 72% and stops. Real parsed line items take over from there,
+    // so the bar never rewinds and never claims to be further along than it is.
+    let warmIdx=0;
+    const warmupTimer=setInterval(()=>{
+      if(rendered>0){clearInterval(warmupTimer);return;}
+      if(warmIdx<warmup.length) setProg(progShown+2.4,warmup[warmIdx++]);
+      else setProg(Math.min(progShown+0.7,72));
+    },1400);
+
     // Watchdog for a stalled connection (e.g. the app was backgrounded and the OS
     // silently killed the stream): if nothing has happened in STALL_MS, bail out to
     // the outer catch instead of leaving the loading screen frozen with no way back.
@@ -2921,22 +2978,28 @@ PROFIT STACKING — CORRECT METHOD:
     let res;
     let guard=makeStallGuard();
     try{
-      res=await Promise.race([callClaudeStream([{role:'user',content:prompt}],12000,onDelta,true),guard.promise]);
-      guard.cancel();
-    }catch(streamErr){
-      guard.cancel();
-      // Streaming failed — fall back to a normal request so an estimate is never lost
-      console.warn('Stream failed, falling back to non-stream:',streamErr.message);
-      setProg(70,appLang==='en'?'Finalizing estimate…':'Finalizando estimado…');
-      lastProgress=Date.now();
-      guard=makeStallGuard();
       try{
-        res=await Promise.race([callClaude([{role:'user',content:prompt}],12000,true),guard.promise]);
-      }finally{ guard.cancel(); }
+        res=await Promise.race([callClaudeStream([{role:'user',content:prompt}],12000,onDelta,true),guard.promise]);
+        guard.cancel();
+      }catch(streamErr){
+        guard.cancel();
+        // Streaming failed — fall back to a normal request so an estimate is never lost
+        console.warn('Stream failed, falling back to non-stream:',streamErr.message);
+        setProg(70,appLang==='en'?'Finalizing estimate…':'Finalizando estimado…');
+        lastProgress=Date.now();
+        guard=makeStallGuard();
+        try{
+          res=await Promise.race([callClaude([{role:'user',content:prompt}],12000,true),guard.promise]);
+        }finally{ guard.cancel(); }
+      }
+    }finally{
+      // Must not outlive the request — on a failure path nothing else clears it.
+      clearInterval(warmupTimer);
     }
     setProg(100,appLang==='en'?'Complete ✓':'Completo ✓');
 
     const data=parseJ(res);
+    clampAncillaryToJobSize(data);
     // Accurate math — defend against a valid response that omits these objects
     data.overhead=data.overhead||{pct:ctx.oh};
     data.contingency=data.contingency||{pct:ctx.cushion};
@@ -3635,19 +3698,80 @@ function setMarketAdj(btn, val) {
   document.getElementById('market-adj-hint').textContent = hintMap[val];
 }
 
+// Delivery, disposal and floor protection are overhead on the work — they follow
+// the job's size. Left unchecked the model treats them as flat defaults, which
+// produces things like a $350 material delivery on a $300 paint job: three times
+// the materials, more than half the direct cost. The prompt says not to; this
+// makes sure. A contractor who sees that line once stops trusting the tool.
+const ANCILLARY_RE=/deliver|logistic|freight|haul|disposal|debris|dumpster|trash removal|floor protection|surface protection|ram ?board/i;
+// Only bites on small jobs — on a real remodel a dumpster and a lumber drop are
+// legitimately several hundred dollars and nothing here should touch them.
+const ANCILLARY_SMALL_JOB=5000;
+const ANCILLARY_MAX_SHARE=0.15;
+const ANCILLARY_MIN_LINE=25;
+
+function isAncillaryLine(item){
+  return ANCILLARY_RE.test(`${item?.category||''} ${item?.description||''}`);
+}
+
+function clampAncillaryToJobSize(data){
+  const items=data?.lineItems;
+  if(!Array.isArray(items)||!items.length) return null;
+  const anc=items.filter(isAncillaryLine);
+  if(!anc.length) return null;
+
+  const ancTotal=anc.reduce((s,i)=>s+(+i.total||0),0);
+  // The real work: everything that isn't overhead-on-the-work.
+  const workCost=items.filter(i=>!isAncillaryLine(i)).reduce((s,i)=>s+(+i.total||0),0);
+  if(workCost<=0||workCost>=ANCILLARY_SMALL_JOB) return null;
+
+  const cap=workCost*ANCILLARY_MAX_SHARE;
+  if(ancTotal<=cap) return null;
+
+  // Scale the group proportionally, keeping the model's relative judgement about
+  // which of these lines matters more on this particular job.
+  const factor=cap/ancTotal;
+  const dropped=[];
+  for(const item of anc){
+    const scaled=Math.round((+item.total||0)*factor);
+    // A $14 debris-removal line reads as padding and costs as much trust as the
+    // $350 one did. Below this it isn't a charge, it's noise — drop the line.
+    if(scaled<ANCILLARY_MIN_LINE){ dropped.push(item); continue; }
+    item.total=scaled;
+    const qty=+item.qty;
+    item.unitCost=qty>0?Math.round((scaled/qty)*100)/100:scaled;
+  }
+  if(dropped.length) data.lineItems=items.filter(i=>!dropped.includes(i));
+
+  const after=data.lineItems.filter(isAncillaryLine).reduce((s,i)=>s+(+i.total||0),0);
+  // Say so. Silently rewriting the contractor's numbers is worse than the bug.
+  const note=after>0
+    ? `Delivery, disposal and site protection scaled to job size (${money0(ancTotal)} → ${money0(after)}) — flat minimums don't apply at this scope.`
+    : `Delivery and disposal excluded — at this scope the materials go in the truck and the debris is bagged. Add them back if the job needs a supplier drop or a dumpster.`;
+  data.assumptions=Array.isArray(data.assumptions)?data.assumptions:[];
+  data.assumptions.unshift(note);
+  return {before:ancTotal,after,workCost,dropped:dropped.length};
+}
+
 // Even Suggests tiers
 function renderEvenSuggests(data) {
   const mid = data.totalBid;
   const budget = Math.round(mid * 0.76);
   const premium = Math.round(mid * 1.38);
-  const budgetLow = Math.round(budget * 0.94);
-  const budgetHigh = Math.round(budget * 1.06);
-  const midLow = Math.round(mid * 0.92);
-  const midHigh = Math.round(mid * 1.08);
-  const premLow = Math.round(premium * 0.92);
-  const premHigh = Math.round(premium * 1.10);
+  // Spread comes from how well-grounded this estimate actually is, not a fixed
+  // guess — the same range the headline and the PDFs use. Real local materials,
+  // labor and city permits tighten these tiers; falling back to general
+  // knowledge widens them. That is the honest answer, and it means loading
+  // better market data visibly narrows the number the contractor quotes.
+  const [cLo,cHi] = getConfidenceRange(data);
+  const budgetLow = Math.round(budget * cLo);
+  const budgetHigh = Math.round(budget * cHi);
+  const midLow = Math.round(mid * cLo);
+  const midHigh = Math.round(mid * cHi);
+  const premLow = Math.round(premium * cLo);
+  const premHigh = Math.round(premium * cHi);
   const L = appLang;
-  const fmt2 = n => n>=1000000?'$'+(n/1000000).toFixed(n%1000000===0?0:1)+'M':'$'+Math.round(n/1000)+'k';
+  const fmt2 = fmtK;
 
   // Determine recommendation based on location and scope
   const loc = document.getElementById('est-location').value;
