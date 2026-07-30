@@ -2440,7 +2440,7 @@ async function startEstimate(){
   const location=document.getElementById('est-location').value;
   const projtype=document.getElementById('est-projtype').value;
   const sqft=document.getElementById('est-sqft').value||'not specified';
-  const client=document.getElementById('est-client').value||'Client';
+  const client=document.getElementById('est-client').value.trim();
   window._ctx={trade,location,projtype,sqft,client,bidType,laborType,oh:sliderVals.oh,profit:sliderVals.profit,cushion:sliderVals.cushion,projectLabel:document.getElementById('est-project-label')?.value||''};
 
   navigate('refine');
@@ -3552,7 +3552,7 @@ async function downloadProposalPDF(){
   const logo=await loadLogoForPDF(window._userLogoUrl);
   const doc=new jsPDF({unit:'pt',format:'letter'});
   const data=currentEstimate;
-  const ctx=window._ctx||{trade:data.trade||'',location:data.location||'',client:data.client||'Client'};
+  const ctx=window._ctx||{trade:data.trade||'',location:data.location||'',client:data.client||''};
   const W=612,M=52,L=appLang;
   let y=0;
   const now=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
@@ -3561,7 +3561,7 @@ async function downloadProposalPDF(){
   doc.setFont('helvetica','bold');doc.setFontSize(14);doc.setTextColor(26,26,24);
   doc.text(L==='en'?'PROJECT PROPOSAL':'PROPUESTA DE PROYECTO',M,y);y+=12;
   doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(130,130,130);
-  doc.text(`${data.projectName||'Estimate'} · ${ctx.client||'Client'} · ${ctx.location||''}`,M,y);y+=22;
+  doc.text([data.projectName||'Estimate',ctx.client&&ctx.client!=='Client'?ctx.client:'',ctx.location].filter(Boolean).join(' · '),M,y);y+=22;
   const pdfDetail=window._proposalDetail||'full';
   const pdfCats={};
   (data.lineItems||[]).forEach(item=>{if(!pdfCats[item.category])pdfCats[item.category]=[];pdfCats[item.category].push(item);});
@@ -3590,18 +3590,26 @@ async function downloadProposalPDF(){
     y+=20;
     let lastCat='';let rowIdx=0;
     (data.lineItems||[]).forEach(item=>{
-      if(y>700){doc.addPage();y=44;}
+      // Measure before breaking so a multi-line row can't run off the bottom.
+      doc.setFont('helvetica','normal');doc.setFontSize(9);
+      const probe=doc.splitTextToSize(String(item.description||''),W-M*2-80);
+      const need=Math.max(15,probe.length*11+5)+(item.category!==lastCat?14:0);
+      if(y+need>752){doc.addPage();y=44;}
       if(item.category!==lastCat){
         lastCat=item.category;rowIdx=0;
         doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...mutedAccent);
-        doc.text(item.category.toUpperCase(),M+6,y+9);y+=14;
+        doc.text(String(item.category||'').toUpperCase(),M+6,y+9);y+=14;
       }
-      if(rowIdx%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,15,'F');}
-      doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(60,60,60);
-      const descLines=doc.splitTextToSize(String(item.description),W-M*2-80);
-      doc.text(descLines[0],M+6,y+10);
+      doc.setFont('helvetica','normal');doc.setFontSize(9);
+      // Was rendering descLines[0] only — the wrap was computed and then thrown
+      // away, so anything past one line vanished from the client's copy.
+      const descLines=doc.splitTextToSize(String(item.description||''),W-M*2-80);
+      const rowH=Math.max(15,descLines.length*11+5);
+      if(rowIdx%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,rowH,'F');}
+      doc.setTextColor(60,60,60);
+      descLines.forEach((line,n)=>doc.text(line,M+6,y+10+n*11));
       doc.setTextColor(140,140,140);doc.text(`${item.qty} ${item.unit}`,W-M-6,y+10,{align:'right'});
-      y+=15;rowIdx++;
+      y+=rowH;rowIdx++;
     });
     y+=8;
   }
@@ -3609,7 +3617,22 @@ async function downloadProposalPDF(){
   if(data.clientNote){if(y>680){doc.addPage();y=44}doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(100,100,100);const noteLines=doc.splitTextToSize(data.clientNote,W-M*2);noteLines.forEach(l=>{doc.text(l,M,y);y+=13});y+=6;}
   // Merged exclusions (AI + client-supply)
   const pdfExclusions=[...(data.exclusions||[]),...(data.clientSupply?['Client to supply: '+data.clientSupply]:[])];
-  if(pdfExclusions.length&&y<660){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(180,80,60);doc.text(L==='en'?'EXCLUSIONS':'EXCLUSIONES',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);pdfExclusions.slice(0,6).forEach(ex=>{const lines=doc.splitTextToSize('• '+ex,W-M*2-6);lines.forEach(l=>{if(y<740){doc.text(l,M+6,y);y+=10}});});y+=4}
+  // Exclusions are what the contractor is NOT doing — dropping them silently
+  // because the page ran short is the one thing this section must never do.
+  // Paginate instead of vanishing.
+  if(pdfExclusions.length){
+    if(y>700){doc.addPage();y=44}
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(180,80,60);
+    doc.text(L==='en'?'EXCLUSIONS':'EXCLUSIONES',M,y);y+=11;
+    doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);
+    pdfExclusions.slice(0,6).forEach(ex=>{
+      doc.splitTextToSize('• '+ex,W-M*2-6).forEach(l=>{
+        if(y>752){doc.addPage();y=44;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140)}
+        doc.text(l,M+6,y);y+=10;
+      });
+    });
+    y+=4;
+  }
   if(y>710){doc.addPage();y=44}
   doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,36,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...accent);
@@ -3660,7 +3683,7 @@ async function downloadCostSheet(){
   const ctx=window._ctx||{
     trade:data.trade||'',
     location:data.location||'',
-    client:data.client||'Client'
+    client:data.client||''
   };
   const W=612,M=48,L=appLang;
   let y=0;
@@ -3682,22 +3705,41 @@ async function downloadCostSheet(){
   }
   y=logo?84:72;
   doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(26,26,24);doc.text(data.projectName||'Project',M,y);y+=12;
-  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(130,130,130);doc.text(`${ctx.trade||''} · ${ctx.location||''} · ${ctx.client||''}`,M,y);y+=20;
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(130,130,130);
+  // Join only what's actually filled in. `client` defaults to the literal string
+  // "Client" when the field is blank, which printed the placeholder as if it were
+  // the customer's name.
+  doc.text([ctx.trade,ctx.location,ctx.client&&ctx.client!=='Client'?ctx.client:''].filter(Boolean).join(' · '),M,y);y+=20;
   const cols=[M+4,248,310,378,446,W-M-4];
   doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,17,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
   ['DESCRIPTION','QTY','UNIT','UNIT COST','TOTAL',''].forEach((h,i)=>{if(i<5)doc.text(h,i===0?cols[0]:cols[i],y+11,{align:i>=3?'right':'left'})});
   y+=19;
   let lc='';
+  // Descriptions were cut at a fixed 52 characters, which is both too long for
+  // the column (it ran under the QTY value — "27-unl7") and too short for the
+  // text, which lost the end of every line. Wrap to the real column width and
+  // let the row grow instead. The client proposal already did this; the cost
+  // sheet was the one template still truncating.
+  const DESC_W=cols[1]-cols[0]-10;   // description column, minus a gutter before QTY
+  const LINE_H=10, ROW_PAD=5;
   (data.lineItems||[]).forEach((item,i)=>{
-    if(y>710){doc.addPage();y=44}
-    if(item.category!==lc){lc=item.category;doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...mutedAccent);doc.text(item.category.toUpperCase(),M+4,y+8);y+=13}
-    if(i%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,14,'F')}
+    doc.setFont('helvetica','normal');doc.setFontSize(8);
+    const descLines=doc.splitTextToSize(String(item.description||''),DESC_W);
+    const rowH=Math.max(14,descLines.length*LINE_H+ROW_PAD);
+    const headerH=item.category!==lc?13:0;
+    // Break before drawing, measuring the row we are about to draw rather than
+    // a fixed 14 — a three-line row used to run off the bottom of the page.
+    if(y+headerH+rowH>752){doc.addPage();y=44}
+    if(item.category!==lc){lc=item.category;doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...mutedAccent);doc.text(String(item.category||'').toUpperCase(),M+4,y+8);y+=13}
+    if(i%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,rowH,'F')}
     doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(50,50,50);
-    doc.text(String(item.description).substring(0,52),M+4,y+9);
+    descLines.forEach((line,n)=>doc.text(line,cols[0],y+9+n*LINE_H));
+    // Numbers stay on the first line so the columns read straight across.
     doc.setTextColor(120,120,120);doc.text(String(item.qty),cols[1],y+9);doc.text(String(item.unit),cols[2],y+9);
     doc.text(fmt(item.unitCost),cols[3],y+9,{align:'right'});
-    doc.setTextColor(...mutedAccent);doc.text(fmt(item.total),cols[4],y+9,{align:'right'});y+=14;
+    doc.setTextColor(...mutedAccent);doc.text(fmt(item.total),cols[4],y+9,{align:'right'});
+    y+=rowH;
   });
   y+=8;
   [[L==='en'?'Direct Cost Subtotal':'Subtotal de Costos',fmt(data.subtotal),[50,50,50]],[`${L==='en'?'Overhead':'Gastos'} (${data.overhead.pct}%)`,fmt(data.overhead.amount),[120,120,120]],[`${L==='en'?'Risk Cushion':'Colchón'} (${data.contingency.pct}%)`,fmt(data.contingency.amount),[45,122,79]],[`${L==='en'?'Profit':'Ganancia'} (${data.profit.pct}%)`,fmt(data.profit.amount),[124,92,191]]].forEach(([label,val,color])=>{
@@ -3719,7 +3761,23 @@ async function downloadCostSheet(){
   doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...paleAccent);
   doc.text(csSubText,M+10,y+34);
   y+=56;
-  if(data.assumptions?.length&&y<700){doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...mutedAccent);doc.text(L==='en'?'ASSUMPTIONS':'SUPUESTOS',M,y);y+=11;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);data.assumptions.forEach(a=>{if(y<740){doc.text('• '+a,M+4,y);y+=10}})}
+  // Assumptions ran straight off the right edge — no wrap at all — and the
+  // whole section was dropped whenever it started below y=700. This is the
+  // reasoning behind every number on the sheet, so it wraps to the page and
+  // paginates rather than being clipped or skipped.
+  if(data.assumptions?.length){
+    if(y>700){doc.addPage();y=44}
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...mutedAccent);
+    doc.text(L==='en'?'ASSUMPTIONS':'SUPUESTOS',M,y);y+=11;
+    const restyle=()=>{doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140)};
+    restyle();
+    data.assumptions.forEach(a=>{
+      doc.splitTextToSize('• '+String(a),W-M*2-8).forEach(l=>{
+        if(y>752){doc.addPage();y=44;restyle()}
+        doc.text(l,M+4,y);y+=10;
+      });
+    });
+  }
   const pages=doc.getNumberOfPages();
   for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even OS · Internal Cost Sheet · CONFIDENTIAL',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
   savePDF(doc,`Even-CostSheet-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
