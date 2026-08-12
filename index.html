@@ -600,6 +600,19 @@ body.has-gopro .topbar-brand{display:none}
 /* A long category must not wrap to two lines and break the grid rhythm. */
 .loading-live-desc{flex:1;min-width:0;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .loading-live-tick{flex-shrink:0;color:var(--green);font-size:11px}
+/* The model's own reasoning, streamed. Spans both grid columns and is set in mono
+   at low contrast — it's a work log to glance at, not something to read closely. */
+.loading-think{
+  grid-column:1/-1;
+  font-family:'DM Mono',monospace;font-size:11px;line-height:1.65;
+  color:var(--muted);
+  padding:10px 12px;border-left:2px solid var(--rim);
+  min-height:56px;
+}
+.loading-think::after{
+  content:'';display:inline-block;width:6px;height:11px;background:var(--gold);
+  margin-left:3px;vertical-align:-1px;animation:blink .9s infinite;
+}
 .loading-reveal{
   text-align:center;margin-top:12px;opacity:0;transition:opacity .4s;
 }
@@ -2041,22 +2054,38 @@ function handleFiles(files){
 // ══════════════════════════
 //  CLAUDE API
 // ══════════════════════════
+// Sonnet 5 defaults to `high` effort AND thinks by default — together that was the
+// 60-80s estimate and the minute of dead bar. Per Anthropic's migration guidance
+// Sonnet 5 at `medium` is comparable to Sonnet 4.6 at `high`, so this buys the
+// latency back at the quality level the app was already tuned against.
+const ESTIMATE_EFFORT='medium';
+// Caching is a prefix match: everything before the breakpoint is reused, everything
+// after is reprocessed. The old code always put the breakpoint on the FIRST block —
+// and the whole prompt was one block containing the job's scope, so the key changed
+// on every estimate and the cache never once hit. A caller that splits its prompt
+// into stable-then-volatile blocks and marks the boundary itself is left alone.
+function applyCacheBreakpoint(body,messages,useCache){
+  if(!useCache||!messages.length||messages[0].role!=='user') return;
+  const first=messages[0];
+  if(typeof first.content==='string'){
+    body.messages=[{role:'user',content:[{type:'text',text:first.content,cache_control:{type:'ephemeral'}}]},...messages.slice(1)];
+    return;
+  }
+  if(!Array.isArray(first.content)||!first.content.length) return;
+  // Caller already placed the breakpoint where the prompt stops being stable.
+  if(first.content.some(b=>b&&b.cache_control)) return;
+  const cached=[...first.content];
+  cached[0]={...cached[0],cache_control:{type:'ephemeral'}};
+  body.messages=[{role:'user',content:cached},...messages.slice(1)];
+}
+
 async function callClaude(messages,maxTokens=2500,useCache=false,effort=null){
   // Sonnet 5: adaptive thinking is on by default — the model reasons through the
   // math before writing. max_tokens caps thinking + response together, so callers
   // pass larger budgets than the visible output alone would need.
   const body={model:'claude-sonnet-5',max_tokens:maxTokens,messages};
   if(effort) body.output_config={effort};
-  if(useCache&&messages.length&&messages[0].role==='user'){
-    const first=messages[0];
-    if(typeof first.content==='string'){
-      body.messages=[{role:'user',content:[{type:'text',text:first.content,cache_control:{type:'ephemeral'}}]},...messages.slice(1)];
-    } else if(Array.isArray(first.content)){
-      const cached=[...first.content];
-      if(cached.length>0) cached[0]={...cached[0],cache_control:{type:'ephemeral'}};
-      body.messages=[{role:'user',content:cached},...messages.slice(1)];
-    }
-  }
+  applyCacheBreakpoint(body,messages,useCache);
   const MAX_RETRIES=2;
   for(let attempt=0;attempt<=MAX_RETRIES;attempt++){
     try{
@@ -2097,18 +2126,15 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null){
 // Streaming variant — POSTs with stream:true and invokes onDelta(fullText, deltaText)
 // as text arrives. Returns the full accumulated text. Falls back to callClaude on any
 // streaming failure so an estimate is never lost.
-async function callClaudeStream(messages,maxTokens,onDelta,useCache=true){
+async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}){
   const body={model:'claude-sonnet-5',max_tokens:maxTokens,stream:true,messages};
-  if(useCache&&messages.length&&messages[0].role==='user'){
-    const first=messages[0];
-    if(typeof first.content==='string'){
-      body.messages=[{role:'user',content:[{type:'text',text:first.content,cache_control:{type:'ephemeral'}}]},...messages.slice(1)];
-    } else if(Array.isArray(first.content)){
-      const cached=[...first.content];
-      if(cached.length>0) cached[0]={...cached[0],cache_control:{type:'ephemeral'}};
-      body.messages=[{role:'user',content:cached},...messages.slice(1)];
-    }
-  }
+  if(opts.effort) body.output_config={effort:opts.effort};
+  // Sonnet 5 thinks by default and returns thinking blocks with EMPTY text unless
+  // asked for a summary. That empty stream is what the dead progress bar was made
+  // of: the model was working the whole time and had no way to say so. Asking for
+  // the summary turns that silence into visible reasoning.
+  if(opts.onThinking) body.thinking={type:'adaptive',display:'summarized'};
+  applyCacheBreakpoint(body,messages,useCache);
   const ctrl=new AbortController();
   const tid=setTimeout(()=>ctrl.abort(),150000);
   let r;
@@ -2156,6 +2182,8 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true){
         if(evt.type==='content_block_delta'&&evt.delta?.type==='text_delta'){
           full+=evt.delta.text;
           if(onDelta) onDelta(full,evt.delta.text);
+        } else if(evt.type==='content_block_delta'&&evt.delta?.type==='thinking_delta'){
+          if(opts.onThinking) opts.onThinking(evt.delta.thinking||'');
         } else if(evt.type==='error'){
           clearTimeout(tid);
           throw new Error(evt.error?.message||'Streaming error');
@@ -2369,7 +2397,7 @@ async function runLoadingPhases(phase1Lines,phase2Lines){
   setProgress(0,'Initializing…');
   for(let i=0;i<phase1Lines.length;i++){
     await pushTermLine(phase1Lines[i],'',i===0?0:170);
-    setProgress(Math.round((i+1)/phase1Lines.length*28),(appLang==='en'?'Reading scope…':'Leyendo alcance…'));
+    setProgress(Math.round((i+1)/phase1Lines.length*10),(appLang==='en'?'Reading scope…':'Leyendo alcance…'));
   }
   await new Promise(r=>setTimeout(r,140));
 
@@ -2378,13 +2406,13 @@ async function runLoadingPhases(phase1Lines,phase2Lines){
   // logo SVG persists from HTML
   for(let i=0;i<phase2Lines.length;i++){
     await pushTermLine(phase2Lines[i],'success',190);
-    setProgress(28+Math.round((i+1)/phase2Lines.length*35),(appLang==='en'?'Identifying scope…':'Identificando alcance…'));
+    setProgress(10+Math.round((i+1)/phase2Lines.length*10),(appLang==='en'?'Identifying scope…':'Identificando alcance…'));
   }
   await new Promise(r=>setTimeout(r,180));
 
   // Intro ends here (~55%). Phase 3 is driven live by the streamed response in
   // calculateEstimate — line items render one-by-one as the model writes them.
-  setProgress(55,appLang==='en'?'Pricing line items…':'Cotizando partidas…');
+  setProgress(20,appLang==='en'?'Reading local market data…':'Leyendo datos del mercado…');
 }
 
 // ══════════════════════════
@@ -2915,7 +2943,29 @@ PROFIT STACKING — CORRECT METHOD:
   window._costCalibration=costCalibration;
   const calibrationNote=costCalibration?.length?`\n\nCOST CALIBRATION FROM THIS CONTRACTOR'S LOGGED ACTUALS — apply these adjustments:\n${costCalibration.map(c=>`${c.category}: actuals have run ${c.avgVariancePct>0?'+':''}${c.avgVariancePct}% vs. estimate across ${c.n} logged job${c.n>1?'s':''} — ${c.avgVariancePct>0?'price this category higher':'price this category lower'} to match.`).join('\n')}`:'';
 
-  const prompt=`${pricingBlock}${calibrationNote}\n\nYou are Even, expert estimating AI.\nTrade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}\nOverhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}\nLanguage:${appLang==='es'?'Spanish':'English'}\n${getSupplierPromptContext()}${getSubPromptContext()}\nSCOPE:${scope}\nANSWERS:${ansText}\nEXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}\n\nReturn ONLY JSON — be granular (14-22 line items for a full remodel; fewer for a small single-trade job — do not pad).\nMARGIN PROTECTORS — include each one only when this scope actually calls for it, sized to this job: permits & inspections, debris removal, material delivery & logistics, drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting where the jurisdiction is slow.\nSIZING ANCILLARY LINES — these scale with the job or they discredit the whole bid:\n- Material delivery & logistics is a real supplier delivery charge, never a flat fee. Materials that fit in the contractor's own truck: omit it, or a $40-75 trip charge. A supplier drop (lumber, drywall, tile, roofing, multi-pallet): $150-350. $350-600 only when material cost exceeds $3,000 or the job needs multiple drops.\n- Debris removal scales to actual debris volume. Bagged debris from a small job is $0-75. A pull-off dumpster ($400-700) only when demo generates real volume.\n- Floor and surface protection applies only to occupied homes with a work path through finished space.\n- HARD RULE: when direct labor + material cost is under $5,000, delivery + disposal + protection combined must not exceed 15% of that direct cost. A $350 delivery line on a $300 paint job is the fastest way to lose a contractor's trust.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}\nCompute all math correctly.`;
+  // Three blocks, ordered stable → volatile, because caching is a prefix match.
+  // RULES never change; MARKET changes only when the contractor switches city; the
+  // job text changes every run. The breakpoint sits after MARKET, so on a second
+  // estimate in the same market roughly 10k of the ~11k input tokens are served
+  // from cache instead of being reprocessed. Previously the scope text sat inside
+  // the cached block, so the key changed every time and nothing was ever reused.
+  const RULES=`You are Even, expert estimating AI. Return ONLY JSON.
+BE GRANULAR — 14-22 line items for a full remodel; fewer for a small single-trade job. Do not pad.\nMARGIN PROTECTORS — include each one only when this scope actually calls for it, sized to this job: permits & inspections, debris removal, material delivery & logistics, drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting where the jurisdiction is slow.\nSIZING ANCILLARY LINES — these scale with the job or they discredit the whole bid:\n- Material delivery & logistics is a real supplier delivery charge, never a flat fee. Materials that fit in the contractor's own truck: omit it, or a $40-75 trip charge. A supplier drop (lumber, drywall, tile, roofing, multi-pallet): $150-350. $350-600 only when material cost exceeds $3,000 or the job needs multiple drops.\n- Debris removal scales to actual debris volume. Bagged debris from a small job is $0-75. A pull-off dumpster ($400-700) only when demo generates real volume.\n- Floor and surface protection applies only to occupied homes with a work path through finished space.\n- HARD RULE: when direct labor + material cost is under $5,000, delivery + disposal + protection combined must not exceed 15% of that direct cost. A $350 delivery line on a $300 paint job is the fastest way to lose a contractor's trust.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}
+Compute all math correctly.`;
+  const MARKET=`${pricingBlock}`;
+  const JOB=`Trade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}
+Overhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}
+Language:${appLang==='es'?'Spanish':'English'}${calibrationNote}
+${getSupplierPromptContext()}${getSubPromptContext()}
+SCOPE:${scope}
+ANSWERS:${ansText}
+EXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}
+Return the JSON for THIS job now.`;
+  const promptBlocks=[
+    {type:'text',text:RULES},
+    {type:'text',text:MARKET,cache_control:{type:'ephemeral'}},
+    {type:'text',text:JOB}
+  ];
 
   // Show loading screen
   showLoading();
@@ -2956,37 +3006,67 @@ PROFIT STACKING — CORRECT METHOD:
     // had nothing visible happening in this area.
     if(liveEl) liveEl.innerHTML='<div class="loading-skel-row"></div>'.repeat(4); // 2x2 in the grid
     phaseLabel.textContent=appLang==='en'?'Phase 3 · Building Estimate':'Fase 3 · Construyendo Estimado';
-    let progShown=56;
+    // The scripted phases finish in ~1.7s and used to claim 56% of the bar; the
+    // model then took 60s for the remaining 44%. The bar now reflects the clock:
+    // scripted work ends at 20%, the model owns 20-96%.
+    let progShown=20;
     const setProg=(p,l)=>{const v=Math.min(p,100);progShown=Math.max(progShown,v);bar.style.width=progShown+'%';pctEl.textContent=Math.round(progShown)+'%';if(l)stepEl.textContent=l;};
-    setProg(56,appLang==='en'?'Pricing line items…':'Cotizando partidas…');
+    setProg(20,appLang==='en'?'Reading local market data…':'Leyendo datos del mercado…');
 
     const EXPECT=15; let rendered=0; const seenCats=new Set();
-    // The bar used to sit dead on 56% until the model finished writing its first
-    // complete line item — 15-30s of nothing, which reads as a crash, especially
-    // if the screen sleeps and comes back unchanged. So during that window show
-    // what the app itself actually did: the market data this estimate is standing
-    // on. These are real counts off the loaded row, not invented progress.
+
+    // Sonnet 5 reasons before it writes. That reasoning is the minute the bar used
+    // to spend frozen, so show it: `display:'summarized'` streams a readable
+    // summary, and it goes straight into the terminal the contractor is already
+    // watching. Real work, legible while it happens — not a spinner.
+    let thinkBuf='',thinkEl=null;
+    const onThinking=(chunk)=>{
+      if(!chunk) return;
+      thinkBuf+=chunk;
+      if(!thinkEl&&liveEl){
+        liveEl.innerHTML='';
+        thinkEl=document.createElement('div');
+        thinkEl.className='loading-think';
+        liveEl.appendChild(thinkEl);
+        stepEl.textContent=appLang==='en'?'Working through the scope…':'Analizando el alcance…';
+      }
+      if(thinkEl){
+        // Tail only — the box is short and the newest sentence is the useful one.
+        const flat=thinkBuf.replace(/\s+/g,' ').trim();
+        let tail=flat.slice(-260);
+        // slice(-260) lands mid-word; step forward to the next space so the box
+        // never opens on a fragment like "nting only".
+        if(tail.length<flat.length){const sp=tail.indexOf(' ');if(sp>0&&sp<40) tail=tail.slice(sp+1);}
+        thinkEl.textContent=tail;
+        liveEl.scrollTop=liveEl.scrollHeight;
+      }
+      // Progress during thinking is driven by the timer below, not by delta
+      // frequency — deltas arrive in bursts, and a burst-driven bar stutters.
+    };
+
+    // Backstop for the window before the first thinking token: real counts off the
+    // loaded market row, not invented progress.
     const warmup=(()=>{
       const m=window._marketMeta;
       const en=appLang==='en';
       const steps=[];
       if(m){
         if(m.permitCount>0) steps.push(en?`Permit schedule: ${m.municipality||m.market} · ${m.permitCount} fees`:`Tarifas de permisos: ${m.municipality||m.market} · ${m.permitCount}`);
-        if(m.materialCount>0) steps.push(en?`${m.materialCount} local material prices loaded`:`${m.materialCount} precios de materiales locales`);
+        if(m.materialCount>0) steps.push(en?`${m.materialCount} local material prices${m.materialScope?' for '+m.materialScope:''}`:`${m.materialCount} precios de materiales locales`);
         if(m.laborCount>0) steps.push(en?`${m.laborCount} local wage rates applied`:`${m.laborCount} tarifas salariales locales`);
       }
       steps.push(en?'Sizing quantities against scope…':'Calculando cantidades…');
-      steps.push(en?'Pricing line items…':'Cotizando partidas…');
       return steps;
     })();
-    // Creeps toward 72% and stops. Real parsed line items take over from there,
-    // so the bar never rewinds and never claims to be further along than it is.
     let warmIdx=0;
     const warmupTimer=setInterval(()=>{
       if(rendered>0){clearInterval(warmupTimer);return;}
-      if(warmIdx<warmup.length) setProg(progShown+2.4,warmup[warmIdx++]);
-      else setProg(Math.min(progShown+0.7,72));
-    },1400);
+      // Once the model is reasoning on screen, keep advancing but stop writing
+      // status text over it.
+      if(thinkBuf){ setProg(Math.min(progShown+1.6,58)); return; }
+      if(warmIdx<warmup.length) setProg(progShown+3,warmup[warmIdx++]);
+      else setProg(Math.min(progShown+0.8,44));
+    },1300);
 
     // Watchdog for a stalled connection (e.g. the app was backgrounded and the OS
     // silently killed the stream): if nothing has happened in STALL_MS, bail out to
@@ -3012,8 +3092,8 @@ PROFIT STACKING — CORRECT METHOD:
       lastProgress=Date.now();
       const items=extractStreamLineItems(full);
       if(items.length>rendered&&liveEl){
-        const skel=liveEl.querySelectorAll('.loading-skel-row');
-        skel.forEach(s=>s.remove());
+        liveEl.querySelectorAll('.loading-skel-row,.loading-think').forEach(n=>n.remove());
+        thinkEl=null;
       }
       for(let k=rendered;k<items.length;k++){
         const it=items[k]||{};
@@ -3029,7 +3109,7 @@ PROFIT STACKING — CORRECT METHOD:
       }
       if(items.length>rendered){
         rendered=items.length;
-        setProg(56+Math.min(rendered/EXPECT,1)*40,(appLang==='en'?`Pricing line items… (${rendered})`:`Cotizando partidas… (${rendered})`));
+        setProg(60+Math.min(rendered/EXPECT,1)*36,(appLang==='en'?`Pricing line items… (${rendered})`:`Cotizando partidas… (${rendered})`));
       }
     };
 
@@ -3037,7 +3117,7 @@ PROFIT STACKING — CORRECT METHOD:
     let guard=makeStallGuard();
     try{
       try{
-        res=await Promise.race([callClaudeStream([{role:'user',content:prompt}],12000,onDelta,true),guard.promise]);
+        res=await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],12000,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking}),guard.promise]);
         guard.cancel();
       }catch(streamErr){
         guard.cancel();
@@ -3047,7 +3127,7 @@ PROFIT STACKING — CORRECT METHOD:
         lastProgress=Date.now();
         guard=makeStallGuard();
         try{
-          res=await Promise.race([callClaude([{role:'user',content:prompt}],12000,true),guard.promise]);
+          res=await Promise.race([callClaude([{role:'user',content:promptBlocks}],12000,true,ESTIMATE_EFFORT),guard.promise]);
         }finally{ guard.cancel(); }
       }
     }finally{
