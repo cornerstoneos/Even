@@ -64,7 +64,7 @@ check('scope text is NOT inside the cached prefix',
 console.log('\n=== Request config ===');
 check("estimate runs at medium effort", /const ESTIMATE_EFFORT='medium'/.test(html));
 check('streaming call passes effort + onThinking',
-  /callClaudeStream\(\[\{role:'user',content:promptBlocks\}\],12000,onDelta,true,\{effort:ESTIMATE_EFFORT,onThinking\}\)/.test(html));
+  /callClaudeStream\(\[\{role:'user',content:promptBlocks\}\],EST_TOKENS,onDelta,true,\{effort:ESTIMATE_EFFORT,onThinking\}\)/.test(html));
 check('non-streaming fallback passes effort too',
   /callClaude\(\[\{role:'user',content:promptBlocks\}\],12000,true,ESTIMATE_EFFORT\)/.test(html));
 check('thinking summary requested only when a consumer exists',
@@ -82,6 +82,34 @@ check('scripted phase 1 ends at 10%, phase 2 at 20% — no rewind into phase 3',
   /phase1Lines\.length\*10/.test(html) && /10\+Math\.round\(\(i\+1\)\/phase2Lines\.length\*10\)/.test(html));
 check('backstop creep capped below the thinking band', /Math\.min\(progShown\+0\.8,44\)/.test(html));
 check('monotonic guard still present', /progShown=Math\.max\(progShown,v\)/.test(html));
+
+
+
+console.log('\n=== Truncation guard (the "cutoff synthesis" failure) ===');
+check('streaming path watches message_delta for stop_reason',
+  /evt\.type==='message_delta'&&evt\.delta\?\.stop_reason/.test(html));
+check('streaming refuses to return a truncated body',
+  /if\(stopReason==='max_tokens'\) throw new Error\('truncated_output'\)/.test(html));
+check('non-streaming path checks stop_reason too',
+  /if\(d\.stop_reason==='max_tokens'\) throw new Error\('truncated_output'\)/.test(html));
+check('truncation is not swallowed by the generic network retry',
+  /if\(e\.message==='truncated_output'\) throw e;/.test(html));
+check('truncation retries the STREAM with a bigger ceiling, not the fallback',
+  /res=truncated\s*\n?\s*\? await Promise\.race\(\[callClaudeStream\(\[\{role:'user',content:promptBlocks\}\],EST_TOKENS_RETRY/.test(html));
+check('retry ceiling is larger than the first attempt',
+  /const EST_TOKENS=24000, EST_TOKENS_RETRY=48000/.test(html));
+check('the contractor is told what is happening, not shown a generic error',
+  /Long scope — giving it more room…/.test(html));
+
+console.log('\n=== The money math is deterministic — effort cannot move it ===');
+for(const [what,re_] of [
+  ['subtotal is recomputed from line items', /data\.subtotal=\(data\.lineItems\|\|\[\]\)\.reduce/],
+  ['overhead recomputed in code', /data\.overhead\.amount=Math\.round\(data\.subtotal\*/],
+  ['contingency recomputed in code', /data\.contingency\.amount=Math\.round\(data\.subtotal\*/],
+  ['profit stacked on base in code', /data\.profit\.amount=Math\.round\(base\*/],
+  ['total is a sum, never the model’s number', /data\.totalBid=data\.subtotal\+data\.overhead\.amount/],
+  ['ancillary clamp runs on every estimate', /clampAncillaryToJobSize\(data\)/],
+]) check(what, re_.test(html));
 
 console.log(`\n──────────────\n${pass} passed, ${fail} failed\n`);
 process.exit(fail?1:0);

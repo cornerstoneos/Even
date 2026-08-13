@@ -2112,8 +2112,13 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null){
       const d=await r.json();
       if(!Array.isArray(d.content)) throw new Error(d.error?.message||'Empty response from estimate API');
       if(d.usage){console.log('Cache stats:',JSON.stringify(d.usage));}
+      // Same guard as the streaming path: a body cut off at the token ceiling can
+      // still parse while missing line items. Don't hand a partial bid back.
+      if(d.stop_reason==='max_tokens') throw new Error('truncated_output');
       return d.content.map(b=>b.text||'').join('');
     }catch(e){
+      // Truncation is deterministic — retrying the same request reproduces it.
+      if(e.message==='truncated_output') throw e;
       // Give aborted/timeouts and network drops a readable message instead of a blank one
       if(e.name==='AbortError') e=new Error('Request timed out — check your connection and try again');
       else if(!e.message) e=new Error('Network error — could not reach the estimate service');
@@ -2161,7 +2166,7 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
   }
   const reader=r.body.getReader();
   const decoder=new TextDecoder();
-  let buf='',full='';
+  let buf='',full='',stopReason=null;
   for(;;){
     const {done,value}=await reader.read();
     if(done) break;
@@ -2184,6 +2189,8 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
           if(onDelta) onDelta(full,evt.delta.text);
         } else if(evt.type==='content_block_delta'&&evt.delta?.type==='thinking_delta'){
           if(opts.onThinking) opts.onThinking(evt.delta.thinking||'');
+        } else if(evt.type==='message_delta'&&evt.delta?.stop_reason){
+          stopReason=evt.delta.stop_reason;
         } else if(evt.type==='error'){
           clearTimeout(tid);
           throw new Error(evt.error?.message||'Streaming error');
@@ -2193,6 +2200,11 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
   }
   clearTimeout(tid);
   if(!full) throw new Error('Empty response from estimate API');
+  // A truncated estimate is the dangerous failure: the JSON can still parse while
+  // silently missing line items, so it looks like a finished bid. Thinking now
+  // shares the max_tokens budget with the response, which makes this reachable.
+  // Never return a truncated body — the caller retries with more headroom.
+  if(stopReason==='max_tokens') throw new Error('truncated_output');
   return full;
 }
 // Pull all COMPLETE line-item objects out of a partial/streaming JSON string, so we
@@ -3113,21 +3125,32 @@ Return the JSON for THIS job now.`;
       }
     };
 
+    // Thinking and the response share this budget. Streaming has no HTTP-timeout
+    // reason to keep it tight, so it is set well above what a 22-line estimate
+    // needs — unused budget costs nothing, a truncated bid costs trust.
+    const EST_TOKENS=24000, EST_TOKENS_RETRY=48000;
     let res;
     let guard=makeStallGuard();
     try{
       try{
-        res=await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],12000,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking}),guard.promise]);
+        res=await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],EST_TOKENS,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking}),guard.promise]);
         guard.cancel();
       }catch(streamErr){
         guard.cancel();
-        // Streaming failed — fall back to a normal request so an estimate is never lost
-        console.warn('Stream failed, falling back to non-stream:',streamErr.message);
-        setProg(70,appLang==='en'?'Finalizing estimate…':'Finalizando estimado…');
+        const truncated=streamErr.message==='truncated_output';
+        console.warn(truncated?'Estimate hit the token ceiling — retrying with more headroom'
+                              :'Stream failed, falling back to non-stream: '+streamErr.message);
+        setProg(70,truncated?(appLang==='en'?'Long scope — giving it more room…':'Alcance largo — ampliando…')
+                            :(appLang==='en'?'Finalizing estimate…':'Finalizando estimado…'));
         lastProgress=Date.now();
         guard=makeStallGuard();
         try{
-          res=await Promise.race([callClaude([{role:'user',content:promptBlocks}],12000,true,ESTIMATE_EFFORT),guard.promise]);
+          // On truncation, retry the stream with double the ceiling rather than
+          // dropping to non-streaming — the ceiling was the problem, not the
+          // transport, and the contractor keeps seeing line items arrive.
+          res=truncated
+            ? await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],EST_TOKENS_RETRY,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking}),guard.promise])
+            : await Promise.race([callClaude([{role:'user',content:promptBlocks}],12000,true,ESTIMATE_EFFORT),guard.promise]);
         }finally{ guard.cancel(); }
       }
     }finally{
