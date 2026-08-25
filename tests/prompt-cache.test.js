@@ -111,5 +111,16 @@ for(const [what,re_] of [
   ['ancillary clamp runs on every estimate', /clampAncillaryToJobSize\(data\)/],
 ]) check(what, re_.test(html));
 
+
+
+console.log('\n=== Auth redirects point at the live site, not Supabase defaults ===');
+check('Google sign-in sends redirectTo',
+  /signInWithOAuth\(\{provider:'google',options:\{redirectTo:window\.location\.origin\}\}\)/.test(html));
+check('signUp sends emailRedirectTo (confirmation email would use Site URL otherwise)',
+  /signUp\(\{ email, password, options:\{ emailRedirectTo: window\.location\.origin \} \}\)/.test(html));
+// Comments may mention it; a localhost URL in a string literal is the bug.
+check('no localhost URL hardcoded in the app',
+  !/['"`]https?:\/\/localhost/.test(html), (html.match(/.{30}\/\/localhost.{30}/)||[])[0]);
+
 console.log(`\n──────────────\n${pass} passed, ${fail} failed\n`);
 process.exit(fail?1:0);
