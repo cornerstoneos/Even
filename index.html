@@ -1744,29 +1744,45 @@ function goHome(){
 }
 
 // Check upgrade success on load
-function checkUpgradeReturn(){
+//
+// The URL parameter is a hint that someone came back from Stripe — it is not
+// proof of payment. Anyone can type ?upgraded=true. This used to WRITE
+// is_pro:true straight from that parameter, which handed out Pro to anyone who
+// guessed the URL. The Stripe webhook is the only thing that has actually seen
+// a payment, so it is the only thing that grants Pro; this now just reads back
+// what the webhook decided.
+async function checkUpgradeReturn(){
   const params = new URLSearchParams(window.location.search);
-  if(params.get('upgraded')==='true'){
-    if(currentUser && sbClient){
-      sbClient.from('users').update({is_pro:true}).eq('id',currentUser.id).then(()=>{
-        isPro=true;
-        estimateCount=0;
-        saveLocalCount();
-        updateUserBadge();
-        window.history.replaceState({}, '', window.location.pathname);
-        // Toast instead of alert — non-blocking
-        showToast('✦ Welcome to Even Pro — unlimited estimates unlocked.');
-      });
-    } else {
-      // Not signed in but paid — still set local Pro flag and show toast
-      isPro=true;
-      updateUserBadge();
-      window.history.replaceState({}, '', window.location.pathname);
-      showToast('✦ Welcome to Even Pro — unlimited estimates unlocked.');
-    }
-  }
-}
+  if(params.get('upgraded')!=='true') return;
+  window.history.replaceState({}, '', window.location.pathname);
 
+  if(!currentUser || !sbClient){
+    // Paid while signed out — we cannot tie the payment to an account, and
+    // guessing would be the same hole. Tell them what to do instead.
+    showToast(appLang==='en'
+      ? 'Payment received. Sign in with the email you paid with to unlock Pro.'
+      : 'Pago recibido. Inicia sesión con el correo del pago para activar Pro.', 6000);
+    return;
+  }
+
+  // The webhook usually lands before the browser gets back, but not always —
+  // poll briefly rather than declaring failure on a race we expect to win.
+  for(let attempt=0; attempt<5; attempt++){
+    const {data} = await sbClient.from('users').select('is_pro').eq('id',currentUser.id).maybeSingle();
+    if(data?.is_pro){
+      isPro=true;
+      estimateCount=0;
+      saveLocalCount();
+      updateUserBadge();
+      showToast('✦ Welcome to Even Pro — unlimited estimates unlocked.');
+      return;
+    }
+    await new Promise(r=>setTimeout(r, 1200));
+  }
+  showToast(appLang==='en'
+    ? 'Payment received — activating your account. Refresh in a moment.'
+    : 'Pago recibido — activando tu cuenta. Actualiza en un momento.', 6000);
+}
 
 // ══════════════════════════
 //  STATE

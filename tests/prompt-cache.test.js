@@ -122,5 +122,18 @@ check('signUp sends emailRedirectTo (confirmation email would use Site URL other
 check('no localhost URL hardcoded in the app',
   !/['"`]https?:\/\/localhost/.test(html), (html.match(/.{30}\/\/localhost.{30}/)||[])[0]);
 
+
+
+console.log('\n=== Pro is granted by the Stripe webhook, not by a URL parameter ===');
+const up=html.slice(html.indexOf('async function checkUpgradeReturn'),html.indexOf('checkUpgradeReturn();'));
+check('the client never writes is_pro', !/\.update\(\{is_pro/.test(up),
+  'a client-side is_pro write is a free-Pro hole — ?upgraded=true is not proof of payment');
+check('it reads is_pro back instead', /\.select\('is_pro'\)/.test(up));
+check('it polls for the webhook rather than failing on the race', /attempt<5/.test(up));
+check('signed-out payers are told what to do, not silently granted Pro',
+  /Sign in with the email you paid with/.test(up) && !/isPro=true;\s*\n\s*updateUserBadge\(\);\s*\n\s*window\.history/.test(up));
+check('the webhook still verifies the Stripe signature',
+  /verifyStripeSignature\(req\.body\.toString\('utf8'\), sig, secret\)/.test(fs.readFileSync(path.join(__dirname,'..','server.js'),'utf8')));
+
 console.log(`\n──────────────\n${pass} passed, ${fail} failed\n`);
 process.exit(fail?1:0);
