@@ -135,5 +135,17 @@ check('signed-out payers are told what to do, not silently granted Pro',
 check('the webhook still verifies the Stripe signature',
   /verifyStripeSignature\(req\.body\.toString\('utf8'\), sig, secret\)/.test(fs.readFileSync(path.join(__dirname,'..','server.js'),'utf8')));
 
+
+
+console.log('\n=== Upload caps are enforced on intake, not just on send ===');
+check('one shared constant for the cap', /const MAX_IMAGES=10, MAX_DOCS=3;/.test(html));
+check('images are capped when they arrive', /const imgs=allImgs\.slice\(0,MAX_IMAGES\)/.test(html));
+check('PDFs are capped when they arrive', /const docs=allDocs\.slice\(0,MAX_DOCS\)/.test(html));
+check('the send path uses the same constant, not a second number',
+  /uploadedImages\.slice\(0,MAX_IMAGES\)/.test(html) && !/uploadedImages\.slice\(0,10\)/.test(html));
+check('dropped files are disclosed, not silently discarded', /not included\./.test(html));
+check('the screen no longer promises 20 images', !/Up to 20 images/.test(html));
+check('screen copy matches the real cap', /Up to 10 photos \+ 3 PDFs/.test(html));
+
 console.log(`\n──────────────\n${pass} passed, ${fail} failed\n`);
 process.exit(fail?1:0);
