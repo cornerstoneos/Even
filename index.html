@@ -934,7 +934,7 @@ body.has-gopro .topbar-brand{display:none}
             <input type="file" id="file-in" multiple accept="image/*,.pdf,.txt,.doc,.docx" style="display:none" onchange="handleFiles(this.files)">
             <span class="upload-icon"><i data-lucide="upload-cloud" style="width:34px;height:34px;stroke:var(--gold);display:block;margin:0 auto"></i></span>
             <div class="upload-title" data-en="Drop plans, photos, or PDF scopes" data-es="Sube planos, fotos o PDFs">Drop plans, photos, or PDF scopes</div>
-            <div class="upload-sub" data-en="Photographs of rolled-out plans work great • <span>Up to 20 images</span>" data-es="Fotos de planos funcionan bien • <span>Hasta 20 imágenes</span>">Photographs of rolled-out plans work great • <span>Up to 20 images</span></div>
+            <div class="upload-sub" data-en="Photographs of rolled-out plans work great • <span>Up to 10 photos + 3 PDFs</span>" data-es="Fotos de planos funcionan bien • <span>Hasta 10 fotos + 3 PDFs</span>">Photographs of rolled-out plans work great • <span>Up to 10 photos + 3 PDFs</span></div>
             <div class="img-strip" id="img-strip"></div>
           </div>
           <div class="or-divider" data-en="or type / paste scope below" data-es="o escribe / pega el alcance abajo">or type / paste scope below</div>
@@ -1789,6 +1789,9 @@ async function checkUpgradeReturn(){
 // ══════════════════════════
 let appLang='en', isLight=false, bidType='fixed', laborType='own';
 let uploadedImages=[], uploadedDocs=[], currentEstimate=null, pdfTarget='proposal';
+// What a job actually needs, and what the estimate can afford to send. Ten
+// photos is plenty for a scope; more mostly adds latency and vision tokens.
+const MAX_IMAGES=10, MAX_DOCS=3;
 const sliderVals={oh:12,profit:22,cushion:8};
 
 // ══════════════════════════
@@ -2010,14 +2013,29 @@ function handleFiles(files){
   uploadedImages=[];
   uploadedDocs=[];
   // Only accept image files (including HEIC/HEIF by extension)
-  const imgs=Array.from(files).filter(f=>
+  const allImgs=Array.from(files).filter(f=>
     f.type.startsWith('image/') ||
     f.name.toLowerCase().endsWith('.heic') ||
     f.name.toLowerCase().endsWith('.heif')
   );
-  const docs=Array.from(files).filter(f=>
+  const allDocs=Array.from(files).filter(f=>
     f.type==='application/pdf' || f.name.toLowerCase().endsWith('.pdf')
-  ).slice(0,3);
+  );
+  // Cap on intake, not just on send. Images were previously uncapped here while
+  // only the first 10 were ever used — so dropping 200 photos ground the phone
+  // decoding files that would be discarded. One constant, honoured everywhere,
+  // and the person is told when files are left out rather than silently losing them.
+  const imgs=allImgs.slice(0,MAX_IMAGES);
+  const docs=allDocs.slice(0,MAX_DOCS);
+  const droppedI=allImgs.length-imgs.length, droppedD=allDocs.length-docs.length;
+  if(droppedI>0||droppedD>0){
+    const parts=[];
+    if(droppedI>0) parts.push(appLang==='en'?`${droppedI} photo${droppedI>1?'s':''}`:`${droppedI} foto${droppedI>1?'s':''}`);
+    if(droppedD>0) parts.push(appLang==='en'?`${droppedD} PDF${droppedD>1?'s':''}`:`${droppedD} PDF${droppedD>1?'s':''}`);
+    showToast(appLang==='en'
+      ? `Using the first ${MAX_IMAGES} photos and ${MAX_DOCS} PDFs — ${parts.join(' and ')} not included.`
+      : `Usando las primeras ${MAX_IMAGES} fotos y ${MAX_DOCS} PDFs — ${parts.join(' y ')} no incluidos.`, 5000);
+  }
   let processed=0;
   imgs.forEach((file,i)=>{
     processImageFile(file).then(result=>{
@@ -2512,7 +2530,7 @@ async function startEstimate(){
     uploadedDocs.forEach(doc=>msgContent.push({type:'document',source:{type:'base64',media_type:doc.type,data:doc.data}}));
   }
   if(uploadedImages.length>0){
-    uploadedImages.slice(0,10).forEach(img=>msgContent.push({type:'image',source:{type:'base64',media_type:img.type,data:img.data}}));
+    uploadedImages.slice(0,MAX_IMAGES).forEach(img=>msgContent.push({type:'image',source:{type:'base64',media_type:img.type,data:img.data}}));
   }
   // Build context-rich prompt with construction primer for better OCR + scope extraction
   const attachedParts=[];
