@@ -21,9 +21,12 @@ import urllib.request
 
 BATCH = os.path.join(os.path.dirname(__file__), '..', 'data', 'batches', 'even_master_batch.json')
 
-# Rows that carry another city's prices under this city's name. The source
-# field says so outright; loading them would manufacture exactly the false
-# precision the generic-knowledge fallback exists to prevent.
+# Rows that carry another city's prices under this city's name. Loading them
+# would manufacture exactly the false precision the generic-knowledge fallback
+# exists to prevent. Newer batches tag this explicitly with a tier value; older
+# ones only said so in the source text — check both, since the tier field is
+# authoritative but nothing guarantees every future batch sets it correctly.
+INVALID_TIER = 'invalid_cross_market_copy'
 COPIED_MARKER = 'copied from miami-dade'
 
 # JSONB payload columns. Scalars (market/state/zone) and the two notes columns
@@ -70,7 +73,8 @@ def build_payload(market):
         values = market.get(col) or []
         if col == 'materials':
             kept = [r for r in values
-                    if COPIED_MARKER not in str(r.get('source', '')).lower()]
+                    if r.get('tier') != INVALID_TIER
+                    and COPIED_MARKER not in str(r.get('source', '')).lower()]
             dropped = len(values) - len(kept)
             values = kept
         if values:

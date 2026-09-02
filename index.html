@@ -2295,7 +2295,10 @@ function getConfidenceRange(data){ return CONFIDENCE_RANGE[data?.confidenceTier]
 // the same as quality of data: a retail Home Depot shelf price and a signed local
 // supply house quote both populate the same array, but only one of them earns a
 // tight bid range.
-const MATERIAL_TIER_RANK={retail:1,retail_adjusted:2,national_estimate:2,pro_distributor:3,local_supply_house:4};
+// supplier_direct (SupplyHouse.com — real SKU, brand, published distributor
+// price) sits alongside pro_distributor: professional catalog pricing, not a
+// retail shelf price, but not a hand-negotiated local counter quote either.
+const MATERIAL_TIER_RANK={retail:1,retail_adjusted:2,national_estimate:2,pro_distributor:3,supplier_direct:3,local_supply_house:4};
 
 // Which material categories a trade actually buys from. Matched as substrings so
 // the model's own trade names out of the scope breakdown ("Interior Painting",
@@ -2306,7 +2309,7 @@ const TRADE_MATERIALS={
   'general contractor':null,'remodel':null,'renovation':null,'residential':null,'commercial':null,
   'roof':['Roofing'],
   'electric':['Electrical'],
-  'plumb':['Plumbing'],
+  'plumb':['Plumbing'],'water heater':['Plumbing'],
   'hvac':['HVAC'],'mechanical':['HVAC'],'air condition':['HVAC'],
   'fram':['Framing'],'carpentry':['Framing'],'deck':['Framing'],
   'paint':['Paint'],
@@ -2354,9 +2357,21 @@ function materialSourceQuality(materials,categories){
 
 // Equipment rental is national and priced per-job, so it never speaks to how
 // well-grounded a market's material pricing is.
+// Categories grew a "Parent - Sub" convention once granular supply-house data
+// landed — "Electrical - Wire & Cable", "Plumbing - Water Heaters (Tankless)".
+// Exact-match membership against a Set of root names would make every one of
+// those rows invisible to confidence scoring: an electrician's job would read
+// as ungrounded while sitting on 187 real priced SKUs. Match root-or-prefix.
+function categoryInScope(category,roots){
+  if(!roots) return true;
+  for(const root of roots){
+    if(category===root||(category&&category.startsWith(root+' - '))) return true;
+  }
+  return false;
+}
 function inScopeMaterials(materials,categories){
   return (materials||[]).filter(r=>r&&r.category!=='Equipment Rental'
-    &&(!categories||categories.has(r.category)));
+    &&categoryInScope(r.category,categories));
 }
 
 function computeConfidenceTier(marketData,categories){
@@ -2765,6 +2780,14 @@ async function fetchMarketPricing(location){
     // Broward job still gets hurricane-zone treatment with an empty market row.
     window._hvhzResolved=(data&&data.market&&typeof data.hvhz==='boolean')?data.hvhz:null;
     if(!data||!data.market||(!data.materials?.length&&!data.labor?.length&&!data.permits?.length)) return null;
+    // A row tagged invalid_cross_market_copy is another city's price wearing this
+    // market's label — the exact false precision the tier system exists to catch.
+    // The batch loader is supposed to exclude these before they reach Supabase,
+    // but the prompt is the last place a mistake there can be caught before it
+    // becomes a number on someone's bid, so it's enforced here too, not only there.
+    if(Array.isArray(data.materials)){
+      data.materials=data.materials.filter(r=>r?.tier!=='invalid_cross_market_copy');
+    }
     return data;
   }catch(e){
     console.error('Market data fetch failed:',e.message);
@@ -2772,9 +2795,15 @@ async function fetchMarketPricing(location){
   }
 }
 
-function buildDynamicPricingBlock(md,adjMultiplier,adjLabel,hvhzNote){
+function buildDynamicPricingBlock(md,adjMultiplier,adjLabel,hvhzNote,scopeCats){
   const laborLines=(md.labor||[]).map(r=>`${r.trade||''}: $${r.low}/hr (low) $${r.mid}/hr (mid) $${r.high}/hr (high)`).join('\n');
-  const materialLines=(md.materials||[]).map(r=>`${r.item||''}${r.category?' ('+r.category+')':''}: $${r.low}/${r.unit||'unit'} (low) $${r.mid}/${r.unit||'unit'} (mid) $${r.high}/${r.unit||'unit'} (high)`).join('\n');
+  // Granular supply-house data made a market's full material list large enough
+  // (409 rows in tri-county, up from 14) that sending all of it into every
+  // estimate regardless of trade would dominate the prompt — a paint job has no
+  // use for 187 electrical SKUs. Scope to what this job buys; equipment rental
+  // stays in regardless since it's relevant across trades and small (~17 rows).
+  const promptMaterials=(md.materials||[]).filter(r=>r&&(r.category==='Equipment Rental'||categoryInScope(r.category,scopeCats)));
+  const materialLines=promptMaterials.map(r=>`${r.item||''}${r.category?' ('+r.category+')':''}: $${r.low}/${r.unit||'unit'} (low) $${r.mid}/${r.unit||'unit'} (mid) $${r.high}/${r.unit||'unit'} (high)`).join('\n');
   const permitLines=(md.permits||[]).map(r=>`${r.municipality||''} — ${r.work_type||''}: ${r.min_fee?'$'+r.min_fee+' min':''} ${r.rate||''} ${r.method||''}`.trim()).join('\n');
   // Permits are filtered server-side to the issuing jurisdiction. Say plainly which
   // scope these rows represent so the model doesn't present a county baseline as if
@@ -2968,9 +2997,11 @@ PROFIT STACKING — CORRECT METHOD:
 
 `;
 
-  const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote):GENERIC_RATES;
-  // Scored against what this job buys, not what the market happens to hold.
+  // Resolved once, used twice: which categories this job actually buys from
+  // decides both what gets priced into the estimate and how confident the app
+  // is in that pricing. Must exist before the pricing block is built.
   const scopeCats=scopeMaterialCategories(ctx.trade,window._scopeData?.tradeBreakdown);
+  const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote,scopeCats):GENERIC_RATES;
   const confidenceTier=computeConfidenceTier(marketData,scopeCats);
   // Kept separately from the estimate payload so the permit-scope disclosure can be
   // rendered deterministically rather than depending on the model to mention it.
