@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, animate } from 'framer-motion'
-import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
+import { ComposableMap, Geographies, Geography, Marker, useMapContext } from 'react-simple-maps'
 
 const US_GEO   = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'
 const CNTY_GEO = 'https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json'
@@ -9,7 +9,12 @@ const TRI_FIPS  = [12086, 12011, 12099]
 const HVHZ_FIPS = [12086, 12011]
 const isTri  = id => TRI_FIPS.includes(Number(id))
 const isHvhz = id => HVHZ_FIPS.includes(Number(id))
-const isPB   = id => Number(id) === 12099
+
+const COUNTY_META = {
+  12086: { label: 'MIAMI-DADE', center: [-80.38, 25.62], baseColor: 'rgba(212,100,40,0.07)',  hvhzColor: 'rgba(212,90,30,0.30)',  hvhzStroke: 'rgba(212,90,30,0.78)'  },
+  12011: { label: 'BROWARD',    center: [-80.27, 26.13], baseColor: 'rgba(212,155,40,0.07)',  hvhzColor: 'rgba(212,120,30,0.24)', hvhzStroke: 'rgba(212,130,30,0.68)' },
+  12099: { label: 'PALM BEACH', center: [-80.19, 26.68], baseColor: 'rgba(50,190,160,0.06)',  hvhzColor: 'rgba(40,190,155,0.20)', hvhzStroke: 'rgba(40,190,155,0.65)' },
+}
 
 const HIGH = new Set([
   'Miami','Miami Beach','Coral Gables','Miramar',
@@ -112,6 +117,73 @@ const MUNIS = [
 
 const LOOP = 43000
 
+// Gold mesh of connections between nearby municipalities
+function NetworkMesh({ active }) {
+  const ctx = useMapContext()
+  if (!active || !ctx?.projection) return null
+
+  const pts = MUNIS.map(m => {
+    try {
+      const p = ctx.projection(m.c)
+      return p ? { x: p[0], y: p[1] } : null
+    } catch { return null }
+  }).filter(Boolean)
+
+  const THRESH = 34
+  const lines = []
+  for (let i = 0; i < pts.length; i++) {
+    for (let j = i + 1; j < pts.length; j++) {
+      const dx = pts[j].x - pts[i].x
+      const dy = pts[j].y - pts[i].y
+      const d = Math.sqrt(dx * dx + dy * dy)
+      if (d < THRESH) {
+        lines.push({ x1: pts[i].x, y1: pts[i].y, x2: pts[j].x, y2: pts[j].y, a: (1 - d / THRESH) * 0.22 })
+      }
+    }
+  }
+
+  return (
+    <g>
+      {lines.map((l, i) => (
+        <line key={i} x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+          stroke={`rgba(212,175,55,${l.a.toFixed(3)})`} strokeWidth={0.45}
+        />
+      ))}
+    </g>
+  )
+}
+
+// Faint county name labels stamped into the map
+function CountyLabels() {
+  const ctx = useMapContext()
+  if (!ctx?.projection) return null
+  return (
+    <g>
+      {Object.entries(COUNTY_META).map(([fips, meta]) => {
+        try {
+          const p = ctx.projection(meta.center)
+          if (!p) return null
+          return (
+            <text key={fips} x={p[0]} y={p[1]}
+              textAnchor="middle"
+              style={{
+                fill: 'rgba(212,175,55,0.16)',
+                fontSize: '5.5px',
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '0.22em',
+                userSelect: 'none',
+              }}
+            >
+              {meta.label}
+            </text>
+          )
+        } catch { return null }
+      })}
+    </g>
+  )
+}
+
 function Counter({ target, running }) {
   const [val, setVal] = useState(0)
   useEffect(() => {
@@ -182,14 +254,23 @@ function SouthFloridaBase({ strings }) {
 
   return (
     <div style={{
-      width:'100vw', height:'100vh', background:'#080808',
-      overflow:'hidden', position:'relative',
-      display:'flex', alignItems:'center', justifyContent:'center',
+      width: '100vw', height: '100vh', background: '#0D0D0D',
+      overflow: 'hidden', position: 'relative',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
     }}>
+
+      {/* isometric gold grid */}
+      <div style={{
+        position: 'absolute', inset: 0, pointerEvents: 'none',
+        backgroundImage: [
+          'repeating-linear-gradient(60deg, rgba(212,175,55,0.04) 0px, rgba(212,175,55,0.04) 1px, transparent 1px, transparent 52px)',
+          'repeating-linear-gradient(-60deg, rgba(212,175,55,0.04) 0px, rgba(212,175,55,0.04) 1px, transparent 1px, transparent 52px)',
+        ].join(','),
+      }} />
 
       {/* ── NATIONAL MAP (scene 0) ── */}
       <motion.div
-        style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden' }}
+        style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}
         animate={{ opacity: scene >= 1 ? 0 : 1 }}
         transition={{ duration: 1.8 }}
       >
@@ -203,7 +284,7 @@ function SouthFloridaBase({ strings }) {
             projection="geoAlbersUsa"
             projectionConfig={{ scale: 950 }}
             width={960} height={560}
-            style={{ width:'96vw', height:'auto', overflow:'visible' }}
+            style={{ width: '96vw', height: 'auto', overflow: 'visible' }}
           >
             <Geographies geography={US_GEO}>
               {({ geographies }) =>
@@ -211,15 +292,16 @@ function SouthFloridaBase({ strings }) {
                   const fl = geo.properties.name === 'Florida'
                   return (
                     <Geography key={geo.rsmKey} geography={geo}
-                      fill={fl ? '#D4AF37' : '#171717'}
-                      stroke="#080808" strokeWidth={0.8}
+                      fill={fl ? '#D4AF37' : '#141414'}
+                      stroke="#0D0D0D" strokeWidth={0.8}
                       style={{
-                        default:{ outline:'none', cursor:'default',
-                          filter: fl ? 'drop-shadow(0 0 10px rgba(212,175,55,0.65))' : 'none',
-                          transition:'fill 0.9s',
+                        default: {
+                          outline: 'none', cursor: 'default',
+                          filter: fl ? 'drop-shadow(0 0 16px rgba(212,175,55,0.85))' : 'none',
+                          transition: 'fill 0.9s',
                         },
-                        hover:{ outline:'none', fill: fl ? '#dfc145' : '#1f1f1f' },
-                        pressed:{ outline:'none' },
+                        hover:   { outline: 'none', fill: fl ? '#dfc145' : '#1e1e1e' },
+                        pressed: { outline: 'none' },
                       }}
                     />
                   )
@@ -234,32 +316,29 @@ function SouthFloridaBase({ strings }) {
       <AnimatePresence>
         {scene >= 1 && scene < 5 && (
           <motion.div key="tri"
-            initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 1.8 }}
-            style={{ position:'absolute', inset:0, display:'flex', alignItems:'center', justifyContent:'center' }}
+            style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
             <ComposableMap
               projection="geoMercator"
-              projectionConfig={{ center:[-80.35, 26.2], scale:23000 }}
+              projectionConfig={{ center: [-80.35, 26.2], scale: 23000 }}
               width={960} height={560}
-              style={{ width:'96vw', height:'auto', overflow:'visible' }}
+              style={{ width: '96vw', height: 'auto', overflow: 'visible' }}
             >
               <Geographies geography={CNTY_GEO}>
                 {({ geographies }) =>
                   geographies.filter(g => isTri(g.id)).map(geo => {
-                    let fill   = 'rgba(212,175,55,0.06)'
-                    let stroke = 'rgba(212,175,55,0.35)'
-                    if (hvhz) {
-                      if (isHvhz(geo.id)) { fill='rgba(212,110,30,0.22)'; stroke='rgba(212,110,30,0.7)' }
-                      else                 { fill='rgba(90,150,220,0.14)'; stroke='rgba(90,150,220,0.55)' }
-                    }
+                    const meta = COUNTY_META[Number(geo.id)]
+                    const fill   = hvhz ? meta.hvhzColor   : meta.baseColor
+                    const stroke = hvhz ? meta.hvhzStroke  : 'rgba(212,175,55,0.45)'
                     return (
                       <Geography key={geo.rsmKey} geography={geo}
-                        fill={fill} stroke={stroke} strokeWidth={0.7}
+                        fill={fill} stroke={stroke} strokeWidth={1.0}
                         style={{
-                          default:{ outline:'none', cursor:'default', transition:'fill 1.2s ease, stroke 1.2s ease' },
-                          hover:{ outline:'none' },
-                          pressed:{ outline:'none' },
+                          default:  { outline: 'none', cursor: 'default', transition: 'fill 1.2s ease, stroke 1.2s ease' },
+                          hover:    { outline: 'none' },
+                          pressed:  { outline: 'none' },
                         }}
                       />
                     )
@@ -267,22 +346,44 @@ function SouthFloridaBase({ strings }) {
                 }
               </Geographies>
 
+              {/* gold network mesh connecting nearby cities */}
+              <NetworkMesh active={dots} />
+
+              {/* faint county name stamps */}
+              <CountyLabels />
+
+              {/* municipality markers */}
               {dots && MUNIS.map(m => {
                 const high   = HIGH.has(m.n)
                 const bright = scene >= 2 && high
                 return (
                   <Marker key={m.n} coordinates={m.c}>
-                    <circle
-                      r={bright ? 3.5 : 2}
-                      fill={bright ? '#D4AF37' : scene >= 2 ? 'rgba(212,175,55,0.18)' : 'rgba(212,175,55,0.45)'}
-                      style={bright ? { animation:'dotPulse 2s ease-in-out infinite' } : undefined}
-                    />
-                    {bright && (
-                      <text textAnchor="middle" y={-8}
-                        style={{ fill:'#D4AF37', fontSize:'4.5px', fontFamily:'Inter,sans-serif', fontWeight:700, letterSpacing:'0.05em' }}
-                      >
-                        {m.n}
-                      </text>
+                    {bright ? (
+                      <>
+                        {/* outer glow ring */}
+                        <circle r={13} fill="none" stroke="rgba(212,175,55,0.07)" strokeWidth={0.8}
+                          style={{ animation: 'dotPulse 2.6s ease-in-out infinite' }}
+                        />
+                        {/* mid ring */}
+                        <circle r={7.5} fill="none" stroke="rgba(212,175,55,0.18)" strokeWidth={0.7}
+                          style={{ animation: 'dotPulse 2.2s ease-in-out infinite', animationDelay: '0.35s' }}
+                        />
+                        {/* core beacon */}
+                        <circle r={3.5} fill="#D4AF37"
+                          style={{ filter: 'drop-shadow(0 0 4px rgba(212,175,55,0.95))', animation: 'dotPulse 1.8s ease-in-out infinite' }}
+                        />
+                        {/* label */}
+                        <text textAnchor="middle" y={-16}
+                          style={{ fill: '#D4AF37', fontSize: '4px', fontFamily: 'monospace', fontWeight: 800, letterSpacing: '0.1em' }}
+                        >
+                          {m.n.toUpperCase()}
+                        </text>
+                      </>
+                    ) : (
+                      <circle
+                        r={scene >= 2 ? 1.8 : 2.2}
+                        fill={scene >= 2 ? 'rgba(212,175,55,0.22)' : 'rgba(212,175,55,0.52)'}
+                      />
                     )}
                   </Marker>
                 )
@@ -296,11 +397,11 @@ function SouthFloridaBase({ strings }) {
       <AnimatePresence>
         {scene === 0 && (
           <motion.div key="h0"
-            initial={{ opacity:0, y:-8 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }}
-            transition={{ duration:1, ease:[0.16,1,0.3,1], delay:0.3 }}
-            style={{ position:'absolute', top:'1.25rem', left:0, right:0, textAlign:'center' }}
+            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            style={{ position: 'absolute', top: '1.25rem', left: 0, right: 0, textAlign: 'center' }}
           >
-            <div style={{ color:'#D4AF37', fontSize:'0.6rem', fontWeight:700, letterSpacing:'0.45em', textTransform:'uppercase' }}>
+            <div style={{ color: '#D4AF37', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.45em', textTransform: 'uppercase', textShadow: '0 0 20px rgba(212,175,55,0.5)' }}>
               {strings.headline}
             </div>
           </motion.div>
@@ -312,31 +413,31 @@ function SouthFloridaBase({ strings }) {
 
         {scene === 1 && dots && (
           <motion.div key="cap1"
-            initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-8 }}
-            transition={{ duration:0.9, ease:[0.16,1,0.3,1], delay:0.5 }}
-            style={{ position:'absolute', bottom:'6.5rem', left:'1rem', right:'1rem', textAlign:'center' }}
+            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+            style={{ position: 'absolute', bottom: '6.5rem', left: '1rem', right: '1rem', textAlign: 'center' }}
           >
-            <div style={{ color:'#D4AF37', fontSize:'clamp(2rem,7vw,4.5rem)', fontWeight:900, lineHeight:1, letterSpacing:'-0.02em', fontVariantNumeric:'tabular-nums' }}>
+            <div style={{ color: '#D4AF37', fontSize: 'clamp(2rem,7vw,4.5rem)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums', fontFamily: 'monospace', textShadow: '0 0 40px rgba(212,175,55,0.35)' }}>
               <Counter target={86} running={scene === 1 && dots} />
             </div>
-            <div style={{ color:'rgba(255,255,255,0.35)', fontSize:'0.6rem', letterSpacing:'0.35em', textTransform:'uppercase', fontWeight:600, marginTop:'0.55rem' }}>
+            <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.6rem', letterSpacing: '0.35em', textTransform: 'uppercase', fontWeight: 700, marginTop: '0.55rem', fontFamily: 'monospace' }}>
               {strings.cap1label}
             </div>
-            <div style={{ color:'rgba(212,175,55,0.45)', fontSize:'0.6rem', marginTop:'0.5rem', letterSpacing:'0.1em' }}>
+            <div style={{ color: 'rgba(212,175,55,0.4)', fontSize: '0.58rem', marginTop: '0.5rem', letterSpacing: '0.1em', fontFamily: 'monospace' }}>
               {strings.cap1aliases}
             </div>
             <AnimatePresence>
               {showAlias && (
                 <motion.div key="alias-row"
-                  initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
-                  transition={{ duration:0.4 }}
-                  style={{ marginTop:'0.5rem', height:'1.2rem', display:'flex', alignItems:'center', justifyContent:'center' }}
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4 }}
+                  style={{ marginTop: '0.5rem', height: '1.2rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 >
                   <AnimatePresence mode="wait">
                     <motion.span key={aliasIdx}
-                      initial={{ opacity:0, y:4 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-4 }}
-                      transition={{ duration:0.25 }}
-                      style={{ color:'rgba(255,255,255,0.8)', fontSize:'0.85rem', fontWeight:700, letterSpacing:'0.12em' }}
+                      initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.25 }}
+                      style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.12em', fontFamily: 'monospace' }}
                     >
                       {ALIAS_CYCLE[aliasIdx]}
                     </motion.span>
@@ -349,17 +450,17 @@ function SouthFloridaBase({ strings }) {
 
         {scene === 2 && (
           <motion.div key="cap2"
-            initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-8 }}
-            transition={{ duration:0.9, ease:[0.16,1,0.3,1], delay:0.4 }}
-            style={{ position:'absolute', bottom:'6.5rem', left:'1rem', right:'1rem', textAlign:'center' }}
+            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+            style={{ position: 'absolute', bottom: '6.5rem', left: '1rem', right: '1rem', textAlign: 'center' }}
           >
-            <div style={{ color:'#D4AF37', fontSize:'clamp(2rem,7vw,4.5rem)', fontWeight:900, lineHeight:1, letterSpacing:'-0.02em' }}>
+            <div style={{ color: '#D4AF37', fontSize: 'clamp(2rem,7vw,4.5rem)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.02em', fontFamily: 'monospace', textShadow: '0 0 40px rgba(212,175,55,0.35)' }}>
               8
             </div>
-            <div style={{ color:'rgba(255,255,255,0.35)', fontSize:'0.6rem', letterSpacing:'0.35em', textTransform:'uppercase', fontWeight:600, marginTop:'0.55rem' }}>
+            <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: '0.6rem', letterSpacing: '0.35em', textTransform: 'uppercase', fontWeight: 700, marginTop: '0.55rem', fontFamily: 'monospace' }}>
               {strings.cap2label}
             </div>
-            <div style={{ color:'rgba(255,255,255,0.22)', fontSize:'0.6rem', marginTop:'0.4rem', letterSpacing:'0.06em' }}>
+            <div style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.58rem', marginTop: '0.4rem', letterSpacing: '0.06em' }}>
               {strings.cap2expanding}
             </div>
           </motion.div>
@@ -367,17 +468,17 @@ function SouthFloridaBase({ strings }) {
 
         {scene === 3 && (
           <motion.div key="cap3"
-            initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-8 }}
-            transition={{ duration:0.9, ease:[0.16,1,0.3,1], delay:0.5 }}
-            style={{ position:'absolute', bottom:'6.5rem', left:'1rem', right:'1rem', textAlign:'center' }}
+            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
+            style={{ position: 'absolute', bottom: '6.5rem', left: '1rem', right: '1rem', textAlign: 'center' }}
           >
-            <div style={{ color:'rgba(212,110,30,0.95)', fontSize:'0.52rem', fontWeight:800, letterSpacing:'0.5em', textTransform:'uppercase', marginBottom:'0.5rem' }}>
+            <div style={{ color: 'rgba(212,90,30,0.95)', fontSize: '0.52rem', fontWeight: 800, letterSpacing: '0.5em', textTransform: 'uppercase', marginBottom: '0.5rem', fontFamily: 'monospace', textShadow: '0 0 16px rgba(212,90,30,0.5)' }}>
               HVHZ
             </div>
-            <div style={{ color:'rgba(255,255,255,0.72)', fontSize:'clamp(0.85rem,2.5vw,1.1rem)', fontWeight:600, lineHeight:1.45, maxWidth:'480px', margin:'0 auto' }}>
+            <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: 'clamp(0.85rem,2.5vw,1.1rem)', fontWeight: 600, lineHeight: 1.45, maxWidth: '480px', margin: '0 auto' }}>
               {strings.cap3main}
             </div>
-            <div style={{ color:'rgba(255,255,255,0.28)', fontSize:'0.65rem', marginTop:'0.55rem', lineHeight:1.5 }}>
+            <div style={{ color: 'rgba(255,255,255,0.28)', fontSize: '0.65rem', marginTop: '0.55rem', lineHeight: 1.5 }}>
               {strings.cap3sub}
             </div>
           </motion.div>
@@ -385,17 +486,17 @@ function SouthFloridaBase({ strings }) {
 
         {scene === 4 && (
           <motion.div key="cap4"
-            initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-8 }}
-            transition={{ duration:0.9, ease:[0.16,1,0.3,1], delay:0.4 }}
-            style={{ position:'absolute', bottom:'6.5rem', left:'1rem', right:'1rem', textAlign:'center' }}
+            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+            style={{ position: 'absolute', bottom: '6.5rem', left: '1rem', right: '1rem', textAlign: 'center' }}
           >
-            <div style={{ color:'#D4AF37', fontSize:'0.5rem', fontWeight:700, letterSpacing:'0.45em', textTransform:'uppercase', marginBottom:'0.7rem' }}>
+            <div style={{ color: '#D4AF37', fontSize: '0.5rem', fontWeight: 700, letterSpacing: '0.45em', textTransform: 'uppercase', marginBottom: '0.7rem', fontFamily: 'monospace', textShadow: '0 0 14px rgba(212,175,55,0.4)' }}>
               {strings.cap4eyebrow}
             </div>
-            <div style={{ color:'rgba(255,255,255,0.75)', fontSize:'clamp(0.9rem,2.5vw,1.2rem)', fontWeight:600, lineHeight:1.4 }}>
+            <div style={{ color: 'rgba(255,255,255,0.78)', fontSize: 'clamp(0.9rem,2.5vw,1.2rem)', fontWeight: 600, lineHeight: 1.4 }}>
               {strings.cap4main}
             </div>
-            <div style={{ color:'rgba(255,255,255,0.28)', fontSize:'0.65rem', marginTop:'0.5rem', letterSpacing:'0.1em' }}>
+            <div style={{ color: 'rgba(255,255,255,0.28)', fontSize: '0.65rem', marginTop: '0.5rem', letterSpacing: '0.1em' }}>
               {strings.cap4sub}
             </div>
           </motion.div>
@@ -407,11 +508,11 @@ function SouthFloridaBase({ strings }) {
       <AnimatePresence>
         {scene === 5 && (
           <motion.div key="h5"
-            initial={{ opacity:0, y:-8 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }}
-            transition={{ duration:1, delay:0.3 }}
-            style={{ position:'absolute', top:'1.25rem', left:0, right:0, textAlign:'center' }}
+            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            style={{ position: 'absolute', top: '1.25rem', left: 0, right: 0, textAlign: 'center' }}
           >
-            <div style={{ color:'#D4AF37', fontSize:'0.6rem', fontWeight:700, letterSpacing:'0.45em', textTransform:'uppercase' }}>
+            <div style={{ color: '#D4AF37', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.45em', textTransform: 'uppercase', textShadow: '0 0 20px rgba(212,175,55,0.5)' }}>
               {strings.headline}
             </div>
           </motion.div>
@@ -422,21 +523,24 @@ function SouthFloridaBase({ strings }) {
       <AnimatePresence>
         {logo && (
           <motion.div key="logo"
-            initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
-            transition={{ duration:1.2 }}
-            style={{ position:'absolute', bottom:'1.75rem', left:0, right:0, display:'flex', flexDirection:'column', alignItems:'center', gap:'0.5rem' }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 1.2 }}
+            style={{ position: 'absolute', bottom: '1.75rem', left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}
           >
-            <img src="/logo.png" alt="Even" style={{ height:'1.6rem', objectFit:'contain' }}
-              onError={e => { e.target.style.display='none' }} />
-            <span style={{ color:'#D4AF37', fontSize:'0.55rem', letterSpacing:'0.35em', textTransform:'uppercase', fontWeight:600 }}>
+            <img src="/logo.png" alt="Even" style={{ height: '1.6rem', objectFit: 'contain' }}
+              onError={e => { e.target.style.display = 'none' }} />
+            <span style={{ color: '#D4AF37', fontSize: '0.55rem', letterSpacing: '0.35em', textTransform: 'uppercase', fontWeight: 700, fontFamily: 'monospace', textShadow: '0 0 14px rgba(212,175,55,0.45)' }}>
               {strings.url}
             </span>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── VIGNETTE ── */}
-      <div style={{ position:'absolute', inset:0, background:'radial-gradient(ellipse at center,transparent 40%,#080808 100%)', pointerEvents:'none' }} />
+      {/* vignette */}
+      <div style={{
+        position: 'absolute', inset: 0, pointerEvents: 'none',
+        background: 'radial-gradient(ellipse 85% 80% at 50% 55%, transparent 20%, rgba(13,13,13,0.65) 68%, #0D0D0D 100%)',
+      }} />
 
     </div>
   )
