@@ -283,16 +283,24 @@ function SouthFloridaBase({ strings }) {
           >
             {/* Pulsing gold bloom */}
             <motion.div
-              animate={{ opacity: [0.18, 0.32, 0.18], scale: [1, 1.06, 1] }}
+              animate={{ opacity: [0.22, 0.38, 0.22], scale: [1, 1.08, 1] }}
               transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
               style={{
                 position: 'absolute', inset: 0, pointerEvents: 'none',
-                background: 'radial-gradient(ellipse 50% 55% at 58% 52%, rgba(212,175,55,0.55) 0%, transparent 70%)',
+                background: 'radial-gradient(ellipse 60% 65% at 58% 52%, rgba(212,175,55,0.6) 0%, transparent 70%)',
               }}
             />
+            {/* slow cinematic zoom in */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1.08, opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 4.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+            >
             <ComposableMap
               projection="geoMercator"
-              projectionConfig={{ center: [-82.5, 27.5], scale: 4400 }}
+              projectionConfig={{ center: [-82.5, 27.4], scale: 7200 }}
               width={960} height={560}
               style={{ width: '96vw', height: 'auto', overflow: 'visible' }}
             >
@@ -316,6 +324,7 @@ function SouthFloridaBase({ strings }) {
                 }
               </Geographies>
             </ComposableMap>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -330,7 +339,7 @@ function SouthFloridaBase({ strings }) {
           >
             <ComposableMap
               projection="geoMercator"
-              projectionConfig={{ center: [-80.35, 26.2], scale: 23000 }}
+              projectionConfig={{ center: [-80.35, 26.2], scale: 34000 }}
               width={960} height={560}
               style={{ width: '96vw', height: 'auto', overflow: 'visible' }}
             >
@@ -365,13 +374,14 @@ function SouthFloridaBase({ strings }) {
                 <Marker key={fips} coordinates={c.labelCoords}>
                   <text textAnchor="middle"
                     style={{
-                      fill: hvhz ? 'rgba(255,255,255,0.35)' : 'rgba(212,175,55,0.28)',
-                      fontSize: '6px',
+                      fill: hvhz ? 'rgba(255,255,255,0.45)' : 'rgba(212,175,55,0.42)',
+                      fontSize: '9px',
                       fontFamily: 'monospace',
                       fontWeight: 800,
-                      letterSpacing: '0.22em',
+                      letterSpacing: '0.2em',
                       userSelect: 'none',
                       transition: 'fill 1s ease',
+                      textShadow: '0 2px 6px rgba(0,0,0,0.9)',
                     }}
                   >
                     {c.label}
@@ -388,20 +398,20 @@ function SouthFloridaBase({ strings }) {
                     {bright ? (
                       <>
                         {/* outer pulse ring */}
-                        <circle r={14} fill="none" stroke="rgba(212,175,55,0.06)" strokeWidth={0.7}
+                        <circle r={18} fill="none" stroke="rgba(212,175,55,0.07)" strokeWidth={0.8}
                           style={{ animation: 'dotPulse 2.8s ease-in-out infinite' }}
                         />
                         {/* mid ring */}
-                        <circle r={8} fill="none" stroke="rgba(212,175,55,0.18)" strokeWidth={0.8}
+                        <circle r={10} fill="none" stroke="rgba(212,175,55,0.2)" strokeWidth={0.9}
                           style={{ animation: 'dotPulse 2.2s ease-in-out infinite', animationDelay: '0.4s' }}
                         />
                         {/* core */}
-                        <circle r={3.8} fill="#D4AF37"
+                        <circle r={4.5} fill="#D4AF37"
                           style={{ filter: 'drop-shadow(0 0 5px rgba(212,175,55,1))', animation: 'dotPulse 1.8s ease-in-out infinite' }}
                         />
                         {/* label */}
-                        <text textAnchor="middle" y={-16}
-                          style={{ fill: '#D4AF37', fontSize: '3.8px', fontFamily: 'monospace', fontWeight: 900, letterSpacing: '0.12em' }}
+                        <text textAnchor="middle" y={-20}
+                          style={{ fill: '#D4AF37', fontSize: '6.5px', fontFamily: 'monospace', fontWeight: 900, letterSpacing: '0.1em' }}
                         >
                           {m.n.toUpperCase()}
                         </text>
@@ -428,7 +438,7 @@ function SouthFloridaBase({ strings }) {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
             style={{ position: 'absolute', top: '1.25rem', left: 0, right: 0, textAlign: 'center' }}
           >
-            <div style={{ color: '#D4AF37', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.48em', textTransform: 'uppercase', fontFamily: 'monospace', textShadow: '0 0 24px rgba(212,175,55,0.6)' }}>
+            <div style={{ color: '#D4AF37', fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.45em', textTransform: 'uppercase', fontFamily: 'monospace', textShadow: '0 0 28px rgba(212,175,55,0.65)' }}>
               {strings.headline}
             </div>
           </motion.div>
@@ -444,10 +454,10 @@ function SouthFloridaBase({ strings }) {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
             style={{ position: 'absolute', bottom: '6rem', left: '1rem', right: '1rem', textAlign: 'center' }}
           >
-            <div style={{ color: '#D4AF37', fontSize: 'clamp(2.2rem,8vw,5rem)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em', fontVariantNumeric: 'tabular-nums', fontFamily: 'monospace', textShadow: '0 0 50px rgba(212,175,55,0.3)' }}>
+            <div style={{ color: '#D4AF37', fontSize: 'clamp(3.5rem,13vw,9rem)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em', fontVariantNumeric: 'tabular-nums', fontFamily: 'monospace', textShadow: '0 0 60px rgba(212,175,55,0.45)' }}>
               <Counter target={86} running={scene === 1 && dots} />
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.32)', fontSize: '0.58rem', letterSpacing: '0.38em', textTransform: 'uppercase', fontWeight: 700, marginTop: '0.6rem', fontFamily: 'monospace' }}>
+            <div style={{ color: 'rgba(255,255,255,0.38)', fontSize: '0.75rem', letterSpacing: '0.38em', textTransform: 'uppercase', fontWeight: 700, marginTop: '0.7rem', fontFamily: 'monospace' }}>
               {strings.cap1label}
             </div>
           </motion.div>
@@ -459,13 +469,13 @@ function SouthFloridaBase({ strings }) {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
             style={{ position: 'absolute', bottom: '6rem', left: '1rem', right: '1rem', textAlign: 'center' }}
           >
-            <div style={{ color: '#D4AF37', fontSize: 'clamp(2.2rem,8vw,5rem)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em', fontFamily: 'monospace', textShadow: '0 0 50px rgba(212,175,55,0.3)' }}>
+            <div style={{ color: '#D4AF37', fontSize: 'clamp(3.5rem,13vw,9rem)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em', fontFamily: 'monospace', textShadow: '0 0 60px rgba(212,175,55,0.45)' }}>
               8
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.32)', fontSize: '0.58rem', letterSpacing: '0.38em', textTransform: 'uppercase', fontWeight: 700, marginTop: '0.6rem', fontFamily: 'monospace' }}>
+            <div style={{ color: 'rgba(255,255,255,0.38)', fontSize: '0.75rem', letterSpacing: '0.38em', textTransform: 'uppercase', fontWeight: 700, marginTop: '0.7rem', fontFamily: 'monospace' }}>
               {strings.cap2label}
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.18)', fontSize: '0.57rem', marginTop: '0.35rem', letterSpacing: '0.04em' }}>
+            <div style={{ color: 'rgba(255,255,255,0.22)', fontSize: '0.65rem', marginTop: '0.4rem', letterSpacing: '0.04em' }}>
               {strings.cap2expanding}
             </div>
           </motion.div>
@@ -477,13 +487,13 @@ function SouthFloridaBase({ strings }) {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
             style={{ position: 'absolute', bottom: '6rem', left: '1rem', right: '1rem', textAlign: 'center' }}
           >
-            <div style={{ color: 'rgba(220,80,20,0.95)', fontSize: '0.52rem', fontWeight: 800, letterSpacing: '0.5em', textTransform: 'uppercase', marginBottom: '0.5rem', fontFamily: 'monospace', textShadow: '0 0 18px rgba(220,80,20,0.55)' }}>
+            <div style={{ color: 'rgba(220,80,20,0.95)', fontSize: '0.68rem', fontWeight: 800, letterSpacing: '0.5em', textTransform: 'uppercase', marginBottom: '0.6rem', fontFamily: 'monospace', textShadow: '0 0 22px rgba(220,80,20,0.6)' }}>
               HVHZ
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: 'clamp(0.85rem,2.5vw,1.1rem)', fontWeight: 600, lineHeight: 1.45, maxWidth: '480px', margin: '0 auto' }}>
+            <div style={{ color: 'rgba(255,255,255,0.82)', fontSize: 'clamp(1rem,3vw,1.4rem)', fontWeight: 600, lineHeight: 1.4, maxWidth: '520px', margin: '0 auto' }}>
               {strings.cap3main}
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.26)', fontSize: '0.65rem', marginTop: '0.55rem', lineHeight: 1.5 }}>
+            <div style={{ color: 'rgba(255,255,255,0.32)', fontSize: '0.72rem', marginTop: '0.55rem', lineHeight: 1.5 }}>
               {strings.cap3sub}
             </div>
           </motion.div>
@@ -495,13 +505,13 @@ function SouthFloridaBase({ strings }) {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
             style={{ position: 'absolute', bottom: '6rem', left: '1rem', right: '1rem', textAlign: 'center' }}
           >
-            <div style={{ color: '#D4AF37', fontSize: '0.5rem', fontWeight: 700, letterSpacing: '0.48em', textTransform: 'uppercase', marginBottom: '0.7rem', fontFamily: 'monospace', textShadow: '0 0 16px rgba(212,175,55,0.45)' }}>
+            <div style={{ color: '#D4AF37', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.48em', textTransform: 'uppercase', marginBottom: '0.8rem', fontFamily: 'monospace', textShadow: '0 0 18px rgba(212,175,55,0.5)' }}>
               {strings.cap4eyebrow}
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: 'clamp(0.9rem,2.5vw,1.2rem)', fontWeight: 600, lineHeight: 1.4 }}>
+            <div style={{ color: 'rgba(255,255,255,0.85)', fontSize: 'clamp(1.1rem,3vw,1.5rem)', fontWeight: 600, lineHeight: 1.4 }}>
               {strings.cap4main}
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.26)', fontSize: '0.65rem', marginTop: '0.5rem', letterSpacing: '0.1em' }}>
+            <div style={{ color: 'rgba(255,255,255,0.32)', fontSize: '0.72rem', marginTop: '0.5rem', letterSpacing: '0.1em' }}>
               {strings.cap4sub}
             </div>
           </motion.div>
