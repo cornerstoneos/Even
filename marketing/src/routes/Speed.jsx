@@ -240,6 +240,8 @@ function SpeedBase({ strings }) {
   return (
     <div style={{
       width: '100vw', height: '100vh', background: '#080808',
+      backgroundImage: "repeating-linear-gradient(60deg,rgba(212,175,55,0.032) 0,rgba(212,175,55,0.032) 1px,transparent 0,transparent 50%),repeating-linear-gradient(-60deg,rgba(212,175,55,0.032) 0,rgba(212,175,55,0.032) 1px,transparent 0,transparent 50%)",
+      backgroundSize: '28px 48px',
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
       fontFamily: 'Inter, sans-serif', position: 'relative', overflow: 'hidden',
     }}>
@@ -256,7 +258,7 @@ function SpeedBase({ strings }) {
               transition={{ duration: 0.4, ease: [0.4, 0, 1, 1] }}
               style={{
                 position: 'absolute', inset: 0,
-                background: 'linear-gradient(160deg, #0e1420 0%, #080808 60%)',
+                background: '#080808',
                 display: 'flex', flexDirection: 'column', alignItems: 'center',
                 padding: '2.5rem 2rem 2rem',
               }}

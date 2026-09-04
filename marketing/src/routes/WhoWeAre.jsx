@@ -94,6 +94,8 @@ export default function WhoWeAre() {
     <div
       style={{
         width: '100vw', height: '100vh', background: '#080808',
+        backgroundImage: "repeating-linear-gradient(60deg,rgba(212,175,55,0.032) 0,rgba(212,175,55,0.032) 1px,transparent 0,transparent 50%),repeating-linear-gradient(-60deg,rgba(212,175,55,0.032) 0,rgba(212,175,55,0.032) 1px,transparent 0,transparent 50%)",
+        backgroundSize: '28px 48px',
         display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
         fontFamily: 'Inter, sans-serif', overflow: 'hidden', position: 'relative',
       }}
