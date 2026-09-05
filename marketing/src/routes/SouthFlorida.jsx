@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, animate } from 'framer-motion'
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
 
+const US_GEO   = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'
 const CNTY_GEO = 'https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json'
 
 const TRI_FIPS = [12086, 12011, 12099]
@@ -126,46 +127,34 @@ const MUNIS = [
 
 const LOOP = 43000
 
-// Florida SVG coordinate system: x=(87.6-|lon|)*50, y=(31.0-lat)*77, viewBox="0 0 400 530"
-const FL_POLY =
-  'M 0,0 L 310,0 L 305,25 L 297,52 ' +
-  'L 312,82 L 328,135 L 344,192 L 349,226 L 362,272 ' +
-  'L 374,308 L 377,330 L 375,355 L 373,376 L 371,403 ' +
-  'L 360,422 L 340,448 L 326,444 ' +
-  'L 297,391 L 290,373 L 287,335 ' +
-  'L 269,311 L 258,300 L 248,269 ' +
-  'L 243,253 L 240,236 L 241,221 ' +
-  'L 228,143 L 222,128 L 201,68 ' +
-  'L 172,65 L 161,74 L 147,88 ' +
-  'L 131,97 L 115,91 L 96,64 ' +
-  'L 55,37 L 19,45 L 0,54 Z'
-
-const FL_KEYS =
-  'M 360,422 C 356,438 348,452 336,463 C 322,475 307,484 291,496 ' +
-  'L 291,500 C 308,488 323,479 337,467 C 349,456 357,443 362,426 Z'
-
-// All highway paths — drawn with motion.path pathLength (JavaScript-driven, no CSS keyframes)
-const HW_PATHS = [
-  { key:'i10',   d:'M 19,45 L 55,49 L 96,50 L 131,50 L 172,51 L 201,51 L 240,51 L 270,51 L 297,52', color:'#D4AF37', w:1.2, dur:1.4, delay:0    },
-  { key:'i75n',  d:'M 283,42 L 278,68 L 270,100 L 260,150 L 250,200 L 240,236',                       color:'#C8A030', w:1.2, dur:1.3, delay:0.35 },
-  { key:'i95',   d:'M 297,52 L 310,82 L 328,135 L 344,192 L 349,226 L 360,272 L 372,328 L 373,376 L 371,403', color:'#FCF6BA', w:2.0, dur:2.0, delay:0.65 },
-  { key:'tpk',   d:'M 310,195 L 308,220 L 316,258 L 330,300 L 346,345 L 358,378 L 362,402',           color:'#D4AF37', w:1.4, dur:1.5, delay:1.0  },
-  { key:'i4',    d:'M 240,236 L 258,225 L 280,215 L 298,208 L 312,200 L 326,195 L 329,183',           color:'#B89030', w:1.2, dur:0.9, delay:1.35 },
-  { key:'alley', d:'M 287,335 L 300,374 L 325,373 L 350,374 L 362,379',                               color:'#C8A030', w:1.2, dur:0.8, delay:1.65 },
+// Highway pixel coordinates pre-computed for:
+// geoMercator center=[-83.8, 27.75], scale=4800, width=960, height=560
+// Verified against d3-geo Mercator projection formula
+const HW = [
+  // I-10: Pensacola → Tallahassee → Jacksonville (panhandle, east-west)
+  { key:'i10',  d:'M 194,45 L 440,41 L 659,62',                                                                         color:'#D4AF37', w:1.4, dur:1.4, delay:0    },
+  // I-95: Jacksonville → east coast → Miami (the main east-coast spine)
+  { key:'i95',  d:'M 681,63 L 689,122 L 713,155 L 748,184 L 771,270 L 793,350 L 787,420 L 783,457',                    color:'#FCF6BA', w:2.2, dur:2.2, delay:0.55 },
+  // I-75: Georgia border → Gainesville → Tampa → Naples + Alligator Alley to Ft. Lauderdale
+  { key:'i75',  d:'M 547,21 L 604,117 L 592,261 L 585,306 L 642,358 L 648,420 L 787,420',                              color:'#C8A030', w:1.4, dur:2.0, delay:1.0  },
+  // Florida's Turnpike: Wildwood → Orlando → Ft. Pierce → Miami
+  { key:'tpk',  d:'M 627,144 L 679,204 L 767,312 L 781,444',                                                            color:'#D4AF37', w:1.3, dur:1.6, delay:1.4  },
+  // I-4: Tampa → Orlando → Daytona (diagonal)
+  { key:'i4',   d:'M 592,261 L 650,255 L 683,175 L 713,155',                                                            color:'#B89030', w:1.2, dur:1.0, delay:1.75 },
 ]
 
-// City labels on full-Florida SVG — appear staggered as highways ignite past each region
-const FL_CITY_LABELS = [
-  { name:'JACKSONVILLE',   x:272, y:50,  labelDelay:0.8,  size:9  },
-  { name:'TAMPA',          x:196, y:232, labelDelay:1.1,  size:9  },
-  { name:'ORLANDO',        x:283, y:187, labelDelay:1.4,  size:9  },
-  { name:'PALM BEACH',     x:265, y:328, labelDelay:1.8,  size:13 },
-  { name:'FT. LAUDERDALE', x:248, y:374, labelDelay:2.1,  size:13 },
-  { name:'MIAMI',          x:258, y:401, labelDelay:2.3,  size:15 },
+// City labels — use Marker (lat/lon) so react-simple-maps projects them correctly
+const FL_LABELS = [
+  { name:'JACKSONVILLE',   coords:[-81.55, 30.33], anchor:'start',  dx:8,   dy:-4,  size:10, delay:0.6  },
+  { name:'ORLANDO',        coords:[-81.38, 28.54], anchor:'start',  dx:8,   dy:-4,  size:9,  delay:1.85 },
+  { name:'TAMPA',          coords:[-82.46, 27.95], anchor:'end',    dx:-8,  dy:-4,  size:9,  delay:1.5  },
+  { name:'PALM BEACH',     coords:[-80.08, 26.71], anchor:'end',    dx:-8,  dy:-4,  size:12, delay:2.2  },
+  { name:'FT. LAUDERDALE', coords:[-80.14, 26.12], anchor:'end',    dx:-8,  dy:-4,  size:12, delay:2.5  },
+  { name:'MIAMI',          coords:[-80.19, 25.77], anchor:'end',    dx:-8,  dy:-4,  size:14, delay:2.7  },
 ]
 
-// Large city labels on tri-county map
-const TRI_CITY_LABELS = [
+// Large labels for tri-county zoom scene
+const TRI_LABELS = [
   { name:'PALM BEACH',     coords:[-80.54, 26.68], delay:0    },
   { name:'FT. LAUDERDALE', coords:[-80.56, 26.12], delay:0.35 },
   { name:'MIAMI',          coords:[-80.55, 25.90], delay:0.65 },
@@ -187,11 +176,6 @@ function Counter({ target, running }) {
 function MapDefs() {
   return (
     <defs>
-      <linearGradient id="goldEdge" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%"   stopColor="#FCF6BA" stopOpacity="0.95" />
-        <stop offset="45%"  stopColor="#D4AF37" stopOpacity="0.85" />
-        <stop offset="100%" stopColor="#7A4F0A" stopOpacity="0.50" />
-      </linearGradient>
       <filter id="county-raised" x="-18%" y="-18%" width="136%" height="136%">
         <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="ab" />
         <feOffset in="ab" dx="1" dy="7" result="so" />
@@ -211,21 +195,27 @@ function MapDefs() {
   )
 }
 
-// Isolated component so motion.path pathLength animations restart clean on each loop
+// FloridaCircuit uses react-simple-maps for accurate Florida shape,
+// overlays hand-computed highway paths as motion.path with pathLength animation.
+// Keyed externally so it remounts cleanly each loop.
 function FloridaCircuit({ showLabels, show86 }) {
   return (
     <div style={{
-      transform: 'perspective(1000px) rotateX(12deg) rotateY(-5deg)',
+      transform: 'perspective(1000px) rotateX(10deg) rotateY(-4deg)',
       transformOrigin: 'center center',
       width: '100%',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
     }}>
-      <svg
-        viewBox="0 0 400 530"
-        style={{ width: '90vw', height: 'auto', maxHeight: '88vh', overflow: 'visible' }}
+      <ComposableMap
+        projection="geoMercator"
+        projectionConfig={{ center: [-83.8, 27.75], scale: 4800 }}
+        width={960}
+        height={560}
+        style={{ width: '92vw', height: 'auto', overflow: 'visible' }}
       >
+        {/* SVG defs for glow filters */}
         <defs>
-          <filter id="sfGlow" x="-30%" y="-30%" width="160%" height="160%">
+          <filter id="hwGlow" x="-30%" y="-30%" width="160%" height="160%">
             <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="b" />
             <feMerge>
               <feMergeNode in="b" />
@@ -233,7 +223,7 @@ function FloridaCircuit({ showLabels, show86 }) {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <filter id="sfGlowBright" x="-40%" y="-40%" width="180%" height="180%">
+          <filter id="hwGlowBright" x="-40%" y="-40%" width="180%" height="180%">
             <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b" />
             <feMerge>
               <feMergeNode in="b" />
@@ -242,32 +232,40 @@ function FloridaCircuit({ showLabels, show86 }) {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <radialGradient id="sfOcean" cx="100%" cy="60%" r="80%">
-            <stop offset="0%"   stopColor="#0A3028" />
-            <stop offset="60%"  stopColor="#071A14" />
+          <radialGradient id="oceanBg" cx="85%" cy="55%" r="70%">
+            <stop offset="0%"   stopColor="#0D3528" />
+            <stop offset="55%"  stopColor="#071A14" />
             <stop offset="100%" stopColor="#040E0B" />
           </radialGradient>
         </defs>
 
         {/* Ocean background */}
-        <rect width="400" height="530" fill="url(#sfOcean)" />
+        <rect width="960" height="560" fill="url(#oceanBg)" />
 
-        {/* Subtle grid on ocean */}
-        <g opacity="0.035" stroke="#D4AF37" strokeWidth="0.5">
-          {[50,100,150,200,250,300,350].map(x => (
-            <line key={`vg${x}`} x1={x} y1="0" x2={x} y2="530" />
-          ))}
-          {[60,120,180,240,300,360,420,480].map(y => (
-            <line key={`hg${y}`} x1="0" y1={y} x2="400" y2={y} />
-          ))}
-        </g>
+        {/* Accurate Florida silhouette from TopoJSON — dark fill, gold outline */}
+        <Geographies geography={US_GEO}>
+          {({ geographies }) =>
+            geographies
+              .filter(g => g.properties.name === 'Florida')
+              .map(geo => (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  fill="#111111"
+                  stroke="rgba(212,175,55,0.22)"
+                  strokeWidth={0.8}
+                  style={{
+                    default: { outline: 'none' },
+                    hover:   { outline: 'none' },
+                    pressed: { outline: 'none' },
+                  }}
+                />
+              ))
+          }
+        </Geographies>
 
-        {/* Florida silhouette — dark with subtle gold outline */}
-        <path d={FL_POLY} fill="#0E0E0E" stroke="rgba(212,175,55,0.20)" strokeWidth="0.8" />
-        <path d={FL_KEYS} fill="#0E0E0E" stroke="rgba(212,175,55,0.14)" strokeWidth="0.6" />
-
-        {/* Highway glow halos — wider, dimmer, drawn first */}
-        {HW_PATHS.map(hw => (
+        {/* Highway glow halos — wider, dimmer pass drawn first */}
+        {HW.map(hw => (
           <motion.path
             key={`${hw.key}-halo`}
             d={hw.d}
@@ -276,7 +274,7 @@ function FloridaCircuit({ showLabels, show86 }) {
             strokeWidth={hw.w + 4}
             strokeLinecap="round"
             strokeLinejoin="round"
-            opacity={0.18}
+            opacity={0.15}
             initial={{ pathLength: 0 }}
             animate={{ pathLength: 1 }}
             transition={{ duration: hw.dur, delay: hw.delay, ease: 'easeInOut' }}
@@ -284,7 +282,7 @@ function FloridaCircuit({ showLabels, show86 }) {
         ))}
 
         {/* Highway main lines — motion.path pathLength, JavaScript-driven */}
-        {HW_PATHS.map(hw => (
+        {HW.map(hw => (
           <motion.path
             key={hw.key}
             d={hw.d}
@@ -293,7 +291,7 @@ function FloridaCircuit({ showLabels, show86 }) {
             strokeWidth={hw.w}
             strokeLinecap="round"
             strokeLinejoin="round"
-            filter="url(#sfGlow)"
+            filter="url(#hwGlow)"
             initial={{ pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: 1 }}
             transition={{
@@ -303,103 +301,87 @@ function FloridaCircuit({ showLabels, show86 }) {
           />
         ))}
 
-        {/* Shooting flare — bright segment that races slightly ahead of ignition */}
-        {HW_PATHS.filter(hw => ['i95', 'i75n', 'tpk', 'i10'].includes(hw.key)).map(hw => (
+        {/* Shooting flare — bright leading edge racing ahead of ignition */}
+        {HW.filter(hw => ['i95', 'i75', 'i10'].includes(hw.key)).map(hw => (
           <motion.path
             key={`flare-${hw.key}`}
             d={hw.d}
             fill="none"
-            stroke="rgba(255,252,220,0.9)"
-            strokeWidth={hw.key === 'i95' ? 2.8 : 2.0}
+            stroke="rgba(255,252,220,0.85)"
+            strokeWidth={hw.key === 'i95' ? 2.8 : 1.8}
             strokeLinecap="round"
-            filter="url(#sfGlowBright)"
+            filter="url(#hwGlowBright)"
             initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: [0, 1, 0.6, 0] }}
+            animate={{ pathLength: 1, opacity: [0, 1, 0.5, 0] }}
             transition={{
-              pathLength: { duration: hw.dur * 0.75, delay: hw.delay, ease: 'easeOut' },
-              opacity:    { duration: hw.dur,         delay: hw.delay, times: [0, 0.1, 0.7, 1] },
+              pathLength: { duration: hw.dur * 0.7, delay: hw.delay, ease: 'easeOut' },
+              opacity:    { duration: hw.dur,        delay: hw.delay, times: [0, 0.08, 0.7, 1] },
             }}
           />
         ))}
 
-        {/* City labels — rise as highway ignition passes through their region */}
-        {FL_CITY_LABELS.map(c => (
-          <AnimatePresence key={c.name}>
-            {showLabels && (
-              <motion.text
-                x={c.x} y={c.y}
-                textAnchor="start"
-                initial={{ opacity: 0, translateY: 10 }}
-                animate={{ opacity: 1, translateY: -8 }}
-                transition={{ duration: 0.7, delay: c.labelDelay, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  fill: '#ffffff',
-                  fontSize: c.size,
-                  fontWeight: 800,
-                  fontFamily: 'Inter, sans-serif',
-                  letterSpacing: '0.12em',
-                  filter: 'drop-shadow(0 0 5px rgba(0,0,0,1)) drop-shadow(0 2px 10px rgba(0,0,0,0.95))',
-                }}
-              >
-                {c.name}
-              </motion.text>
-            )}
-          </AnimatePresence>
-        ))}
-
-        {/* City dots */}
-        {FL_CITY_LABELS.map(c => (
-          <AnimatePresence key={`dot-${c.name}`}>
-            {showLabels && (
-              <motion.circle
-                cx={c.x - 5} cy={c.y - 2}
-                r={c.size > 10 ? 2.5 : 1.6}
-                fill="#D4AF37"
-                filter="url(#sfGlow)"
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.35, delay: c.labelDelay + 0.05 }}
-              />
-            )}
-          </AnimatePresence>
-        ))}
-
-        {/* "86 cities. Zero guesswork." — appears after highway animation completes */}
-        <AnimatePresence>
-          {show86 && (
+        {/* City labels — Marker positions them via geoMercator projection */}
+        {showLabels && FL_LABELS.map(c => (
+          <Marker key={c.name} coordinates={c.coords}>
+            <motion.circle
+              r={c.size > 11 ? 3 : 2}
+              fill="#D4AF37"
+              filter="url(#hwGlow)"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: c.delay - FL_LABELS[0].delay }}
+            />
             <motion.text
-              x="200" y="518"
-              textAnchor="middle"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.75 }}
-              transition={{ duration: 1.0 }}
+              x={c.dx} y={c.dy}
+              textAnchor={c.anchor}
+              initial={{ opacity: 0, translateY: 6 }}
+              animate={{ opacity: 1, translateY: -4 }}
+              transition={{ duration: 0.65, delay: c.delay - FL_LABELS[0].delay + 0.05, ease: [0.16, 1, 0.3, 1] }}
               style={{
-                fill: '#D4AF37',
-                fontSize: 8,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '0.42em',
+                fill: '#ffffff',
+                fontSize: c.size,
+                fontWeight: 800,
+                fontFamily: 'Inter, sans-serif',
+                letterSpacing: '0.10em',
+                filter: 'drop-shadow(0 0 5px rgba(0,0,0,1)) drop-shadow(0 2px 8px rgba(0,0,0,0.95))',
               }}
             >
-              86 CITIES · ZERO GUESSWORK
+              {c.name}
             </motion.text>
-          )}
-        </AnimatePresence>
-      </svg>
+          </Marker>
+        ))}
+
+        {/* "86 cities. Zero guesswork." — appears after highway animation */}
+        {show86 && (
+          <motion.text
+            x="480" y="544"
+            textAnchor="middle"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.75 }}
+            transition={{ duration: 1.0 }}
+            style={{
+              fill: '#D4AF37', fontSize: 9,
+              fontFamily: 'monospace', fontWeight: 700, letterSpacing: '0.42em',
+            }}
+          >
+            86 CITIES · ZERO GUESSWORK
+          </motion.text>
+        )}
+      </ComposableMap>
     </div>
   )
 }
 
 function SouthFloridaBase({ strings }) {
-  const [scene, setScene]                 = useState('fl')
-  const [showFlLabels, setShowFlLabels]   = useState(false)
-  const [show86, setShow86]               = useState(false)
-  const [zooming, setZooming]             = useState(false)
-  const [dots, setDots]                   = useState(false)
-  const [showTriLabels, setShowTriLabels] = useState(false)
-  const [hvhz, setHvhz]                   = useState(false)
-  const [logo, setLogo]                   = useState(false)
-  const [flKey, setFlKey]                 = useState(0)
+  const [scene, setScene]                   = useState('fl')
+  const [showFlLabels, setShowFlLabels]     = useState(false)
+  const [show86, setShow86]                 = useState(false)
+  const [zooming, setZooming]               = useState(false)
+  const [dots, setDots]                     = useState(false)
+  const [showTriLabels, setShowTriLabels]   = useState(false)
+  const [hvhz, setHvhz]                     = useState(false)
+  const [logo, setLogo]                     = useState(false)
+  const [flKey, setFlKey]                   = useState(0)
   const timers = useRef([])
 
   function cleanup() { timers.current.forEach(clearTimeout); timers.current = [] }
@@ -411,27 +393,18 @@ function SouthFloridaBase({ strings }) {
     setShowFlLabels(false); setShow86(false); setZooming(false)
     setDots(false); setShowTriLabels(false); setHvhz(false); setLogo(false)
 
-    // 0–5.5s: Florida circuit animates in (pathLength draws from north→south)
-    t(() => setShowFlLabels(true),  5500)
-    // 7s: "86 cities" text appears after animation is complete
-    t(() => setShow86(true),        7000)
-    // 8.2s: zoom into black begins
-    t(() => setZooming(true),       8200)
-    // 9.8s: tri-county takes over
+    t(() => setShowFlLabels(true), 5500)
+    t(() => setShow86(true),       7000)
+    t(() => setZooming(true),      8200)
     t(() => { setScene('tri'); setZooming(false); setDots(true) }, 9800)
     t(() => setShowTriLabels(true), 10600)
 
-    // 18s: HVHZ — unchanged
     t(() => { setScene('hvhz'); setShowTriLabels(false) }, 18000)
-    t(() => setHvhz(true),          18400)
+    t(() => setHvhz(true), 18400)
 
-    // 31s: Materials — unchanged
     t(() => { setScene('mat'); setHvhz(false) }, 31000)
-
-    // 38s: End card — unchanged
-    t(() => setScene('end'),        38000)
-    t(() => setLogo(true),          38300)
-
+    t(() => setScene('end'),  38000)
+    t(() => setLogo(true),    38300)
     t(run, LOOP)
   }
 
@@ -444,7 +417,6 @@ function SouthFloridaBase({ strings }) {
       width: '100vw', height: '100vh', background: '#080808',
       overflow: 'hidden', position: 'relative', fontFamily: 'Inter, sans-serif',
     }}>
-      {/* Isometric grid */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
         backgroundImage: [
@@ -468,14 +440,10 @@ function SouthFloridaBase({ strings }) {
             style={{
               position: 'absolute', inset: 0,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              transformOrigin: '72% 75%',
+              transformOrigin: '78% 78%',
             }}
           >
-            <FloridaCircuit
-              key={flKey}
-              showLabels={showFlLabels}
-              show86={show86}
-            />
+            <FloridaCircuit key={flKey} showLabels={showFlLabels} show86={show86} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -485,13 +453,10 @@ function SouthFloridaBase({ strings }) {
         {isMap && (
           <motion.div
             key="tri"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 1.4 }}
             style={{
-              position: 'absolute',
-              top: 0, left: 0, right: 0, bottom: '10rem',
+              position: 'absolute', top: 0, left: 0, right: 0, bottom: '10rem',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
@@ -525,7 +490,6 @@ function SouthFloridaBase({ strings }) {
                 }
               </Geographies>
 
-              {/* County name labels */}
               {Object.entries(COUNTY).map(([fips, c]) => (
                 <Marker key={fips} coordinates={c.labelCoords}>
                   <text textAnchor="middle" style={{
@@ -538,7 +502,6 @@ function SouthFloridaBase({ strings }) {
                 </Marker>
               ))}
 
-              {/* Municipality dots */}
               {dots && MUNIS.map(m => {
                 const coastal = COASTAL.has(m.n) && hvhz
                 return (
@@ -557,8 +520,7 @@ function SouthFloridaBase({ strings }) {
                 )
               })}
 
-              {/* Large floating city labels — tri-county scene only */}
-              {scene === 'tri' && TRI_CITY_LABELS.map((c, i) => (
+              {scene === 'tri' && TRI_LABELS.map((c, i) => (
                 <Marker key={c.name} coordinates={c.coords}>
                   <motion.text
                     textAnchor="start"
@@ -568,16 +530,13 @@ function SouthFloridaBase({ strings }) {
                     style={{
                       fill: '#ffffff',
                       fontSize: i === 2 ? '26px' : i === 1 ? '22px' : '20px',
-                      fontWeight: 900,
-                      fontFamily: 'Inter, sans-serif',
-                      letterSpacing: '0.08em',
+                      fontWeight: 900, fontFamily: 'Inter, sans-serif', letterSpacing: '0.08em',
                       filter: 'drop-shadow(0 0 6px rgba(0,0,0,1)) drop-shadow(0 3px 12px rgba(0,0,0,0.95))',
                     }}
                   >
                     {c.name}
                   </motion.text>
-                  <motion.circle
-                    r={3.5} fill="#D4AF37"
+                  <motion.circle r={3.5} fill="#D4AF37"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: showTriLabels ? 1 : 0 }}
                     transition={{ duration: 0.4, delay: showTriLabels ? c.delay + 0.2 : 0 }}
@@ -586,7 +545,6 @@ function SouthFloridaBase({ strings }) {
                 </Marker>
               ))}
 
-              {/* "86 cities" caption — tri-county scene */}
               {scene === 'tri' && (
                 <Marker coordinates={[-80.60, 25.60]}>
                   <motion.text
@@ -594,10 +552,7 @@ function SouthFloridaBase({ strings }) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: showTriLabels ? 0.6 : 0 }}
                     transition={{ duration: 0.8, delay: 1.0 }}
-                    style={{
-                      fill: '#D4AF37', fontSize: '7px',
-                      fontFamily: 'monospace', fontWeight: 700, letterSpacing: '0.35em',
-                    }}
+                    style={{ fill: '#D4AF37', fontSize: '7px', fontFamily: 'monospace', fontWeight: 700, letterSpacing: '0.35em' }}
                   >
                     86 CITIES · ZERO GUESSWORK
                   </motion.text>
@@ -611,7 +566,6 @@ function SouthFloridaBase({ strings }) {
       {/* ── SCENE CAPTIONS ── */}
       <AnimatePresence mode="wait">
 
-        {/* Tri-county: 86 counter */}
         {scene === 'tri' && dots && (
           <motion.div key="cap1"
             initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
@@ -623,8 +577,7 @@ function SouthFloridaBase({ strings }) {
             }}
           >
             <div style={{
-              color: '#D4AF37',
-              fontSize: 'clamp(3.2rem,12vw,7.5rem)',
+              color: '#D4AF37', fontSize: 'clamp(3.2rem,12vw,7.5rem)',
               fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em',
               fontVariantNumeric: 'tabular-nums', fontFamily: 'monospace',
               textShadow: '0 0 55px rgba(212,175,55,0.4)',
@@ -632,16 +585,14 @@ function SouthFloridaBase({ strings }) {
               <Counter target={86} running={scene === 'tri' && dots} />
             </div>
             <div style={{
-              color: 'rgba(255,255,255,0.4)',
-              fontSize: '0.72rem', letterSpacing: '0.4em', textTransform: 'uppercase',
-              fontWeight: 700, marginTop: '0.55rem', fontFamily: 'monospace',
+              color: 'rgba(255,255,255,0.4)', fontSize: '0.72rem', letterSpacing: '0.4em',
+              textTransform: 'uppercase', fontWeight: 700, marginTop: '0.55rem', fontFamily: 'monospace',
             }}>
               {strings.cap1label}
             </div>
           </motion.div>
         )}
 
-        {/* HVHZ */}
         {scene === 'hvhz' && (
           <motion.div key="cap2"
             initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
@@ -669,7 +620,6 @@ function SouthFloridaBase({ strings }) {
           </motion.div>
         )}
 
-        {/* Materials */}
         {scene === 'mat' && (
           <motion.div key="cap3"
             initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
@@ -694,7 +644,6 @@ function SouthFloridaBase({ strings }) {
 
       </AnimatePresence>
 
-      {/* ── END CARD HEADLINE ── */}
       <AnimatePresence>
         {scene === 'end' && (
           <motion.div key="h-end"
@@ -709,7 +658,6 @@ function SouthFloridaBase({ strings }) {
         )}
       </AnimatePresence>
 
-      {/* ── LOGO ── */}
       <AnimatePresence>
         {logo && (
           <motion.div key="logo"
@@ -726,7 +674,6 @@ function SouthFloridaBase({ strings }) {
         )}
       </AnimatePresence>
 
-      {/* Vignette */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
         background: 'radial-gradient(ellipse 90% 80% at 50% 45%, transparent 30%, rgba(8,8,8,0.5) 68%, #080808 100%)',
