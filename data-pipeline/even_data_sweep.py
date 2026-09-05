@@ -842,37 +842,57 @@ TX_PERMIT_DATA = [
 ]
 
 # ── Labor ─────────────────────────────────────────────────────────────────────
+# BLS OEWS series ID: OE + U(unadjusted) + M(metro) + area(7, zero-padded)
+#   + industry(6, "000000"=all industries) + occupation(6, no dash) + datatype(2)
+# e.g. OEUM003310000000047206103 = Miami metro, all industries, Construction
+# Laborers, hourly mean wage. Datatype codes: 03=hourly mean, 06=hourly 10th
+# pct, 10=hourly 90th pct. (Previously this used a malformed series ID —
+# missing the industry segment, a 5-digit area code, the occupation code's
+# dash left in, and single-digit datatype codes — so BLS matched zero real
+# series, every single call came back empty, and each occupation was a
+# separate request against BLS's 25/day unregistered quota — 12 calls/market
+# means every run started failing after ~2 markets regardless of the format.)
+BLS_DATATYPE = {"mean": "03", "low": "06", "high": "10"}
+
 def fetch_bls_labor(market):
     area_code = market["bls_area_code"]
     area_name = market["bls_area_name"]
-    results   = []
+    padded_area = area_code.zfill(7)
+    results = []
     print(f"  Pulling BLS labor: {area_name}")
+
+    series_map = {}  # series id -> (occ_name, "low"/"mid"/"high")
     for occ_code, occ_name in BLS_OCCUPATIONS:
-        try:
-            resp = requests.post(
-                "https://api.bls.gov/publicAPI/v2/timeseries/data/",
-                json={
-                    "seriesid": [
-                        f"OEUM{area_code}{occ_code}1",  # mean
-                        f"OEUM{area_code}{occ_code}4",  # p10
-                        f"OEUM{area_code}{occ_code}8",  # p90
-                    ],
-                    "startyear": "2023", "endyear": "2025", "latest": True,
-                },
-                headers={"Content-Type": "application/json"},
-                timeout=15,
-            )
-            vals = {}
-            for series in resp.json().get("Results", {}).get("series", []):
-                sid = series["seriesID"]
-                for d in series.get("data", []):
-                    try:
-                        v = float(d["value"])
-                        if   sid.endswith("1"): vals["mid"]  = v
-                        elif sid.endswith("4"): vals["low"]  = v
-                        elif sid.endswith("8"): vals["high"] = v
-                    except (ValueError, KeyError):
-                        pass
+        occ_nodash = occ_code.replace("-", "")
+        for kind, dt in (("mid", "mean"), ("low", "low"), ("high", "high")):
+            sid = f"OEUM{padded_area}000000{occ_nodash}{BLS_DATATYPE[dt]}"
+            series_map[sid] = (occ_name, kind)
+
+    try:
+        api_key = os.environ.get("BLS_API_KEY")
+        payload = {
+            "seriesid": list(series_map.keys()),  # 36 series — well under BLS's 50/request cap
+            "startyear": "2023", "endyear": "2025", "latest": True,
+        }
+        if api_key:
+            payload["registrationkey"] = api_key
+        resp = requests.post(
+            "https://api.bls.gov/publicAPI/v2/timeseries/data/",
+            json=payload, headers={"Content-Type": "application/json"}, timeout=30,
+        )
+        by_occ = {}
+        for series in resp.json().get("Results", {}).get("series", []):
+            sid = series["seriesID"]
+            if sid not in series_map:
+                continue
+            occ_name, kind = series_map[sid]
+            for d in series.get("data", []):
+                try:
+                    by_occ.setdefault(occ_name, {})[kind] = float(d["value"])
+                except (ValueError, KeyError):
+                    pass
+        for occ_code, occ_name in BLS_OCCUPATIONS:
+            vals = by_occ.get(occ_name)
             if vals:
                 results.append({
                     "trade": occ_name,
@@ -882,9 +902,8 @@ def fetch_bls_labor(market):
             else:
                 flag(market["market"], "Labor", occ_name,
                      f"BLS no data for {area_name} — pull manually from bls.gov/oes")
-            time.sleep(0.3)
-        except Exception as e:
-            flag(market["market"], "Labor", occ_name, f"BLS API error: {e}")
+    except Exception as e:
+        flag(market["market"], "Labor", "ALL OCCUPATIONS", f"BLS API error: {e}")
     return results
 
 # ── Materials ─────────────────────────────────────────────────────────────────
@@ -919,7 +938,7 @@ Return ONLY a JSON array:
     print(f"  Pulling materials: {market_name} (zip {zip_code})")
     try:
         resp = AI.messages.create(
-            model="claude-sonnet-4-6", max_tokens=2000,
+            model="claude-sonnet-4-6", max_tokens=4096,
             tools=[{"type": "web_search_20250305", "name": "web_search"}],
             messages=[{"role": "user", "content": prompt}],
         )
@@ -961,7 +980,7 @@ Skip commercial-only types."""
         print(f"  Scraping permits: {city}")
         try:
             resp = AI.messages.create(
-                model="claude-sonnet-4-6", max_tokens=2000,
+                model="claude-sonnet-4-6", max_tokens=4096,
                 tools=[{"type": "web_search_20250305", "name": "web_search"}],
                 messages=[{"role": "user", "content": prompt}],
             )
@@ -1047,9 +1066,14 @@ def supabase_upsert_market(market, state, zone, materials, labor, permits):
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
+    markets = MARKETS
+    limit = os.environ.get("MARKET_LIMIT", "").strip()
+    if limit:
+        markets = MARKETS[:int(limit)]
+
     print("=" * 55)
     print("EVEN DATA SWEEP — Black Lab Holdings / Cornerstone OS")
-    print(f"Date: {TODAY}  |  Markets: {len(MARKETS)}")
+    print(f"Date: {TODAY}  |  Markets: {len(markets)}" + (f" (limited from {len(MARKETS)})" if limit else ""))
     print("=" * 55)
 
     svc = get_sheets_service()
@@ -1057,7 +1081,7 @@ def main():
     ensure_tabs(svc)
     print()
 
-    for market in MARKETS:
+    for market in markets:
         name = market["market"]
         print(f"\n── {name}, {market['state']} ──")
 
