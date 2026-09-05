@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Map, { MapES } from './routes/Map'
+import SouthFlorida, { SouthFloridaES } from './routes/SouthFlorida'
 import Explainer, { ExplainerES } from './routes/Explainer'
 import PainPoint from './routes/PainPoint'
 import WhoWeAre from './routes/WhoWeAre'
@@ -11,6 +12,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/south-florida" element={<SouthFlorida />} />
+        <Route path="/south-florida-es" element={<SouthFloridaES />} />
         <Route path="/map" element={<Map />} />
         <Route path="/map-es" element={<MapES />} />
         <Route path="/explainer" element={<Explainer />} />
@@ -27,6 +30,8 @@ export default function App() {
 }
 
 const ASSETS = [
+  { path: '/south-florida',    label: 'South Florida',      meta: '43s loop · tri-county · HVHZ · 86 municipalities' },
+  { path: '/south-florida-es', label: 'South Florida (ES)',  meta: '43s loop · Spanish version' },
   { path: '/map', label: 'US Market Map', meta: '30s loop · state activation · landscape' },
   { path: '/map-es', label: 'US Market Map (ES)', meta: '30s loop · Spanish version' },
   { path: '/explainer', label: 'App Explainer', meta: '30s loop · phone mockup' },
