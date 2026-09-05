@@ -2,14 +2,12 @@ import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, animate } from 'framer-motion'
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps'
 
-const US_GEO   = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'
 const CNTY_GEO = 'https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json'
 
-const TRI_FIPS  = [12086, 12011, 12099]
+const TRI_FIPS = [12086, 12011, 12099]
 const isTri  = id => TRI_FIPS.includes(Number(id))
 const isHvhz = id => [12086, 12011].includes(Number(id))
 
-// Coastal municipalities with 40-year recertification requirement
 const COASTAL = new Set([
   'Miami Beach','Sunny Isles Beach','Aventura','Bal Harbour','Bay Harbor Islands',
   'Surfside','Golden Beach','Indian Creek','North Bay Village','Key Biscayne',
@@ -19,31 +17,21 @@ const COASTAL = new Set([
   'Lake Park','Riviera Beach',
 ])
 
-// Per-county visual config — warm colors on by default
 const COUNTY = {
   12086: {
-    label: 'MIAMI-DADE',
-    labelCoords: [-80.43, 25.60],
-    baseFill:   'rgba(185,65,15,0.28)',
-    baseStroke: 'rgba(220,90,20,0.7)',
-    hvhzFill:   'rgba(205,68,12,0.62)',
-    hvhzStroke: 'rgba(230,90,20,0.98)',
+    label: 'MIAMI-DADE', labelCoords: [-80.43, 25.60],
+    baseFill: 'rgba(185,65,15,0.28)', baseStroke: 'rgba(220,90,20,0.7)',
+    hvhzFill: 'rgba(205,68,12,0.62)', hvhzStroke: 'rgba(230,90,20,0.98)',
   },
   12011: {
-    label: 'BROWARD',
-    labelCoords: [-80.33, 26.11],
-    baseFill:   'rgba(175,115,12,0.24)',
-    baseStroke: 'rgba(210,140,20,0.65)',
-    hvhzFill:   'rgba(190,112,8,0.55)',
-    hvhzStroke: 'rgba(215,138,15,0.95)',
+    label: 'BROWARD', labelCoords: [-80.33, 26.11],
+    baseFill: 'rgba(175,115,12,0.24)', baseStroke: 'rgba(210,140,20,0.65)',
+    hvhzFill: 'rgba(190,112,8,0.55)', hvhzStroke: 'rgba(215,138,15,0.95)',
   },
   12099: {
-    label: 'PALM BEACH',
-    labelCoords: [-80.21, 26.65],
-    baseFill:   'rgba(25,155,125,0.20)',
-    baseStroke: 'rgba(35,185,148,0.60)',
-    hvhzFill:   'rgba(28,178,142,0.40)',
-    hvhzStroke: 'rgba(38,198,158,0.92)',
+    label: 'PALM BEACH', labelCoords: [-80.21, 26.65],
+    baseFill: 'rgba(25,155,125,0.20)', baseStroke: 'rgba(35,185,148,0.60)',
+    hvhzFill: 'rgba(28,178,142,0.40)', hvhzStroke: 'rgba(38,198,158,0.92)',
   },
 }
 
@@ -139,16 +127,56 @@ const MUNIS = [
   {n:'Palm Beach Shores',  c:[-80.036,26.776]},
 ]
 
-// 4 scenes after Florida intro
-const LOOP = 43000
+const LOOP = 46000
+
+// Florida SVG: x=(87.6-|lon|)*50, y=(31.0-lat)*77, viewBox="0 0 400 530"
+const FL_POLY =
+  'M 0,0 L 310,0 L 305,25 L 297,52 ' +
+  'L 312,82 L 328,135 L 344,192 L 349,226 L 362,272 ' +
+  'L 374,308 L 377,330 L 375,355 L 373,376 L 371,403 ' +
+  'L 360,422 L 340,448 L 326,444 ' +
+  'L 297,391 L 290,373 L 287,335 ' +
+  'L 269,311 L 258,300 L 248,269 ' +
+  'L 243,253 L 240,236 L 241,221 ' +
+  'L 228,143 L 222,128 L 201,68 ' +
+  'L 172,65 L 161,74 L 147,88 ' +
+  'L 131,97 L 115,91 L 96,64 ' +
+  'L 55,37 L 19,45 L 0,54 Z'
+
+const FL_KEYS =
+  'M 360,422 C 356,438 348,452 336,463 C 322,475 307,484 291,496 ' +
+  'L 291,500 C 308,488 323,479 337,467 C 349,456 357,443 362,426 Z'
+
+const HW_PATHS = [
+  { key:'i10',    d:'M 19,45 L 55,49 L 96,50 L 131,50 L 172,51 L 201,51 L 240,51 L 270,51 L 297,52', color:'#D4AF37', w:1.2, delay:0 },
+  { key:'i75n',   d:'M 283,42 L 278,68 L 270,100 L 260,150 L 250,200 L 240,236', color:'#C8A030', w:1.2, delay:0.3 },
+  { key:'i95',    d:'M 297,52 L 310,82 L 328,135 L 344,192 L 349,226 L 360,272 L 372,328 L 373,376 L 371,403', color:'#FCF6BA', w:2.0, delay:0.6 },
+  { key:'tpk',    d:'M 310,195 L 308,220 L 316,258 L 330,300 L 346,345 L 358,378 L 362,402', color:'#D4AF37', w:1.4, delay:0.95 },
+  { key:'i4',     d:'M 240,236 L 258,225 L 280,215 L 298,208 L 312,200 L 326,195 L 329,183', color:'#B89030', w:1.2, delay:1.3 },
+  { key:'alley',  d:'M 287,335 L 300,374 L 325,373 L 350,374 L 362,379', color:'#C8A030', w:1.2, delay:1.6 },
+]
+
+const FL_CITY_LABELS = [
+  { name:'JACKSONVILLE', x:272, y:52,  delay:0.7,  size:9  },
+  { name:'TAMPA',        x:196, y:235, delay:1.05, size:9  },
+  { name:'ORLANDO',      x:283, y:189, delay:1.35, size:9  },
+  { name:'PALM BEACH',   x:265, y:330, delay:1.75, size:13 },
+  { name:'FT. LAUDERDALE', x:248, y:376, delay:2.05, size:13 },
+  { name:'MIAMI',        x:258, y:403, delay:2.25, size:15 },
+]
+
+const TRI_CITY_LABELS = [
+  { name:'PALM BEACH',    coords:[-80.54, 26.68], delay:0    },
+  { name:'FT. LAUDERDALE', coords:[-80.56, 26.12], delay:0.35 },
+  { name:'MIAMI',          coords:[-80.55, 25.90], delay:0.65 },
+]
 
 function Counter({ target, running }) {
   const [val, setVal] = useState(0)
   useEffect(() => {
     if (!running) { setVal(0); return }
     const ctrl = animate(0, target, {
-      duration: 1.6,
-      ease: [0.16, 1, 0.3, 1],
+      duration: 1.6, ease: [0.16, 1, 0.3, 1],
       onUpdate: v => setVal(Math.floor(v)),
     })
     return () => ctrl.stop()
@@ -156,192 +184,350 @@ function Counter({ target, running }) {
   return <>{val}</>
 }
 
-// SVG defs shared across both maps
 function MapDefs() {
   return (
     <defs>
-      {/* Directional gold gradient for county borders */}
       <linearGradient id="goldEdge" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%"   stopColor="#FCF6BA" stopOpacity="0.95" />
         <stop offset="45%"  stopColor="#D4AF37" stopOpacity="0.85" />
         <stop offset="100%" stopColor="#7A4F0A" stopOpacity="0.50" />
       </linearGradient>
-
-      {/* Raised slab: shadow below, source on top */}
       <filter id="county-raised" x="-18%" y="-18%" width="136%" height="136%">
         <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="ab" />
         <feOffset in="ab" dx="1" dy="7" result="so" />
         <feFlood floodColor="#000" floodOpacity="1" result="blk" />
         <feComposite in="blk" in2="so" operator="in" result="shadow" />
-        <feMerge>
-          <feMergeNode in="shadow" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
+        <feMerge><feMergeNode in="shadow" /><feMergeNode in="SourceGraphic" /></feMerge>
       </filter>
-
-      {/* HVHZ: slab shadow + outer color glow */}
       <filter id="county-hvhz" x="-28%" y="-28%" width="156%" height="156%">
         <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="ab" />
         <feOffset in="ab" dx="1" dy="7" result="so" />
         <feFlood floodColor="#000" floodOpacity="1" result="blk" />
         <feComposite in="blk" in2="so" operator="in" result="shadow" />
         <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="glow" />
-        <feMerge>
-          <feMergeNode in="shadow" />
-          <feMergeNode in="glow" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
+        <feMerge><feMergeNode in="shadow" /><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
       </filter>
-
-      {/* Florida silhouette: specular highlight + deep shadow */}
-      <filter id="fl-raised" x="-12%" y="-12%" width="124%" height="124%">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="ab" />
-        <feOffset in="ab" dx="0" dy="10" result="so" />
-        <feFlood floodColor="#000" floodOpacity="1" result="blk" />
-        <feComposite in="blk" in2="so" operator="in" result="shadow" />
-        <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="sb" />
-        <feSpecularLighting in="sb" surfaceScale="5" specularConstant="0.55" specularExponent="22" result="spec">
-          <feDistantLight azimuth="315" elevation="50" lightColor="#FCF6BA" />
-        </feSpecularLighting>
-        <feComposite in="spec" in2="SourceAlpha" operator="in" result="sc" />
-        <feBlend in="SourceGraphic" in2="sc" mode="screen" result="lit" />
-        <feMerge>
-          <feMergeNode in="shadow" />
-          <feMergeNode in="lit" />
-        </feMerge>
-      </filter>
-
-      {/* Florida fill gradient */}
-      <linearGradient id="flGold" x1="20%" y1="0%" x2="80%" y2="100%">
-        <stop offset="0%"   stopColor="#E8D080" />
-        <stop offset="35%"  stopColor="#D4AF37" />
-        <stop offset="70%"  stopColor="#A07820" />
-        <stop offset="100%" stopColor="#6A4C10" />
-      </linearGradient>
     </defs>
   )
 }
 
 function SouthFloridaBase({ strings }) {
-  const [scene, setScene] = useState(0)
-  const [dots,  setDots]  = useState(false)
-  const [hvhz,  setHvhz]  = useState(false)
-  const [logo,  setLogo]  = useState(false)
+  const [scene, setScene]               = useState('cold')
+  const [zooming, setZooming]           = useState(false)
+  const [dots, setDots]                 = useState(false)
+  const [showFlLabels, setShowFlLabels] = useState(false)
+  const [showTriLabels, setShowTriLabels] = useState(false)
+  const [hvhz, setHvhz]                 = useState(false)
+  const [logo, setLogo]                 = useState(false)
   const timers = useRef([])
 
-  function cleanup() {
-    timers.current.forEach(clearTimeout)
-    timers.current = []
-  }
-
+  function cleanup() { timers.current.forEach(clearTimeout); timers.current = [] }
   function t(fn, ms) { timers.current.push(setTimeout(fn, ms)) }
 
   function run() {
     cleanup()
-    setScene(0); setDots(false); setHvhz(false); setLogo(false)
+    setScene('cold'); setZooming(false); setDots(false)
+    setShowFlLabels(false); setShowTriLabels(false); setHvhz(false); setLogo(false)
 
-    // 0–4.8s  Florida alone
-    // 4.8–18s Tri-county + 86 dots
-    // 18–31s  HVHZ feature moment
-    // 31–38s  Materials beat
-    // 38–43s  End card
-    t(() => setScene(1),      4800)
-    t(() => setDots(true),    5200)
+    t(() => setScene('fl'),                       2800)
+    t(() => setShowFlLabels(true),               6200)
+    t(() => setZooming(true),                    9400)
+    t(() => { setScene('tri'); setZooming(false); setDots(true) }, 11000)
+    t(() => setShowTriLabels(true),              11800)
 
-    t(() => setScene(2),      18000)
-    t(() => setHvhz(true),    18400)
+    t(() => { setScene('hvhz'); setShowTriLabels(false) }, 18000)
+    t(() => setHvhz(true),                       18400)
 
-    t(() => { setScene(3); setHvhz(false) }, 31000)
-
-    t(() => setScene(4),      38000)
-    t(() => setLogo(true),    38300)
-
+    t(() => { setScene('mat'); setHvhz(false) },  31000)
+    t(() => setScene('end'),                      38000)
+    t(() => setLogo(true),                        38300)
     t(run, LOOP)
   }
 
   useEffect(() => { run(); return cleanup }, [])
 
+  const isMap = scene === 'tri' || scene === 'hvhz' || scene === 'mat'
+
   return (
     <div style={{
       width: '100vw', height: '100vh', background: '#080808',
-      overflow: 'hidden', position: 'relative',
-      fontFamily: 'Inter, sans-serif',
+      overflow: 'hidden', position: 'relative', fontFamily: 'Inter, sans-serif',
     }}>
-
       {/* Isometric grid */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
         backgroundImage: [
-          'repeating-linear-gradient(60deg,  rgba(212,175,55,0.032) 0px, rgba(212,175,55,0.032) 1px, transparent 1px, transparent 56px)',
-          'repeating-linear-gradient(-60deg, rgba(212,175,55,0.032) 0px, rgba(212,175,55,0.032) 1px, transparent 1px, transparent 56px)',
+          'repeating-linear-gradient(60deg,rgba(212,175,55,0.032) 0px,rgba(212,175,55,0.032) 1px,transparent 1px,transparent 56px)',
+          'repeating-linear-gradient(-60deg,rgba(212,175,55,0.032) 0px,rgba(212,175,55,0.032) 1px,transparent 1px,transparent 56px)',
         ].join(','),
       }} />
 
-      {/* ── SCENE 0: FLORIDA ALONE ── */}
+      {/* ── COLD OPEN ── */}
       <AnimatePresence>
-        {scene === 0 && (
-          <motion.div key="florida"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            transition={{ duration: 1.4 }}
-            style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        {scene === 'cold' && (
+          <motion.div
+            key="cold"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 0.94, filter: 'blur(4px)' }}
+            transition={{ duration: 0.6 }}
+            style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'center',
+              gap: '0.5rem',
+            }}
           >
             <motion.div
-              animate={{ opacity: [0.22, 0.38, 0.22], scale: [1, 1.06, 1] }}
-              transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+              initial={{ opacity: 0, scale: 1.15 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               style={{
-                position: 'absolute', inset: 0, pointerEvents: 'none',
-                background: 'radial-gradient(ellipse 60% 65% at 58% 52%, rgba(212,175,55,0.6) 0%, transparent 70%)',
+                color: '#ffffff',
+                fontSize: 'clamp(2.8rem, 10vw, 6rem)',
+                fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1,
+                textAlign: 'center',
               }}
-            />
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1.08, opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 4.8, ease: [0.16, 1, 0.3, 1] }}
-              style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
             >
-              <ComposableMap
-                projection="geoMercator"
-                projectionConfig={{ center: [-82.5, 27.4], scale: 7200 }}
-                width={960} height={560}
-                style={{ width: '96vw', height: 'auto', overflow: 'visible' }}
-              >
-                <MapDefs />
-                <Geographies geography={US_GEO}>
-                  {({ geographies }) =>
-                    geographies
-                      .filter(g => g.properties.name === 'Florida')
-                      .map(geo => (
-                        <Geography key={geo.rsmKey} geography={geo}
-                          fill="url(#flGold)"
-                          stroke="rgba(252,246,186,0.22)"
-                          strokeWidth={0.5}
-                          style={{
-                            default:  { outline: 'none', filter: 'url(#fl-raised)' },
-                            hover:    { outline: 'none' },
-                            pressed:  { outline: 'none' },
-                          }}
-                        />
-                      ))
-                  }
-                </Geographies>
-              </ComposableMap>
+              86 cities.
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 1.15 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                color: '#D4AF37',
+                fontSize: 'clamp(2.8rem, 10vw, 6rem)',
+                fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1,
+                textAlign: 'center',
+                textShadow: '0 0 60px rgba(212,175,55,0.5)',
+              }}
+            >
+              Zero guesswork.
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── TRI-COUNTY MAP (scenes 1–3) ── */}
+      {/* ── FLORIDA CIRCUIT ── */}
       <AnimatePresence>
-        {scene >= 1 && scene < 4 && (
-          <motion.div key="tri"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            transition={{ duration: 1.6 }}
+        {scene === 'fl' && (
+          <motion.div
+            key="fl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: zooming ? 0 : 1, scale: zooming ? 3 : 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              opacity: { duration: zooming ? 1.4 : 1.0, ease: 'easeInOut' },
+              scale:   { duration: zooming ? 1.5, ease: [0.4, 0, 0.6, 1] },
+            }}
+            style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transformOrigin: '72% 75%',
+            }}
+          >
+            <style>{`
+              @keyframes sfHwIgnite {
+                from { stroke-dashoffset: 2200; opacity: 0.2; }
+                to   { stroke-dashoffset: 0;    opacity: 1;   }
+              }
+              @keyframes sfHwFlare {
+                from { stroke-dashoffset: 0; }
+                to   { stroke-dashoffset: -700; }
+              }
+            `}</style>
+            <div style={{
+              transform: 'perspective(1000px) rotateX(12deg) rotateY(-5deg)',
+              transformOrigin: 'center center',
+              width: '100%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <svg
+                viewBox="0 0 400 530"
+                style={{ width: '90vw', height: 'auto', maxHeight: '88vh', overflow: 'visible' }}
+              >
+                <defs>
+                  <filter id="sfGlow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="b" />
+                    <feMerge>
+                      <feMergeNode in="b" />
+                      <feMergeNode in="b" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <filter id="sfGlowBright" x="-40%" y="-40%" width="180%" height="180%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b" />
+                    <feMerge>
+                      <feMergeNode in="b" />
+                      <feMergeNode in="b" />
+                      <feMergeNode in="b" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <filter id="sfLabelGlow">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b" />
+                    <feMerge>
+                      <feMergeNode in="b" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                  <radialGradient id="sfOcean" cx="100%" cy="60%" r="80%">
+                    <stop offset="0%"  stopColor="#0A3028" />
+                    <stop offset="60%" stopColor="#071A14" />
+                    <stop offset="100%" stopColor="#040E0B" />
+                  </radialGradient>
+                </defs>
+
+                {/* Ocean background */}
+                <rect width="400" height="530" fill="url(#sfOcean)" />
+
+                {/* Subtle grid lines on ocean */}
+                <g opacity="0.04" stroke="#D4AF37" strokeWidth="0.5">
+                  {[50,100,150,200,250,300,350,400].map(x => (
+                    <line key={`vg${x}`} x1={x} y1="0" x2={x} y2="530" />
+                  ))}
+                  {[50,100,150,200,250,300,350,400,450,500].map(y => (
+                    <line key={`hg${y}`} x1="0" y1={y} x2="400" y2={y} />
+                  ))}
+                </g>
+
+                {/* Florida silhouette */}
+                <path d={FL_POLY} fill="#0E0E0E" stroke="rgba(212,175,55,0.18)" strokeWidth="0.8" />
+                <path d={FL_KEYS} fill="#0E0E0E" stroke="rgba(212,175,55,0.12)" strokeWidth="0.6" />
+
+                {/* Highway glow base layer (wider, dimmer) */}
+                {HW_PATHS.map(hw => (
+                  <path
+                    key={`${hw.key}-base`}
+                    d={hw.d}
+                    fill="none"
+                    stroke={hw.color}
+                    strokeWidth={hw.w + 2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    opacity="0.25"
+                    style={{
+                      strokeDasharray: 2200,
+                      strokeDashoffset: 2200,
+                      animation: `sfHwIgnite ${hw.key === 'i95' ? 2.0 : 1.6}s ease forwards`,
+                      animationDelay: `${hw.delay}s`,
+                    }}
+                  />
+                ))}
+
+                {/* Highway main lines */}
+                {HW_PATHS.map(hw => (
+                  <path
+                    key={hw.key}
+                    d={hw.d}
+                    fill="none"
+                    stroke={hw.color}
+                    strokeWidth={hw.w}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    filter="url(#sfGlow)"
+                    style={{
+                      strokeDasharray: 2200,
+                      strokeDashoffset: 2200,
+                      animation: `sfHwIgnite ${hw.key === 'i95' ? 2.0 : 1.6}s ease forwards`,
+                      animationDelay: `${hw.delay}s`,
+                    }}
+                  />
+                ))}
+
+                {/* Shooting light flares — move along highway paths */}
+                {HW_PATHS.filter(hw => ['i95', 'i75n', 'tpk', 'i10'].includes(hw.key)).map(hw => (
+                  <path
+                    key={`flare-${hw.key}`}
+                    d={hw.d}
+                    fill="none"
+                    stroke="#FFFCE8"
+                    strokeWidth={hw.key === 'i95' ? 3 : 2}
+                    strokeLinecap="round"
+                    filter="url(#sfGlowBright)"
+                    style={{
+                      strokeDasharray: '25 550',
+                      animation: `sfHwFlare 1.3s linear infinite`,
+                      animationDelay: `${hw.delay + 1.9}s`,
+                    }}
+                  />
+                ))}
+
+                {/* City labels */}
+                {showFlLabels && FL_CITY_LABELS.map(c => (
+                  <motion.text
+                    key={c.name}
+                    x={c.x}
+                    y={c.y}
+                    textAnchor="start"
+                    initial={{ opacity: 0, translateY: 10 }}
+                    animate={{ opacity: 1, translateY: -8 }}
+                    transition={{ duration: 0.7, delay: c.delay - (FL_CITY_LABELS[0].delay), ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      fill: '#ffffff',
+                      fontSize: c.size,
+                      fontWeight: 800,
+                      fontFamily: 'Inter, sans-serif',
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      filter: 'drop-shadow(0 0 4px rgba(0,0,0,1)) drop-shadow(0 2px 8px rgba(0,0,0,0.9))',
+                    }}
+                  >
+                    {c.name}
+                  </motion.text>
+                ))}
+
+                {/* Dot at each labeled city */}
+                {showFlLabels && FL_CITY_LABELS.map(c => (
+                  <motion.circle
+                    key={`dot-${c.name}`}
+                    cx={c.x - 4}
+                    cy={c.y - 2}
+                    r={c.size > 10 ? 2.5 : 1.8}
+                    fill="#D4AF37"
+                    filter="url(#sfGlow)"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4, delay: c.delay - (FL_CITY_LABELS[0].delay) + 0.1 }}
+                  />
+                ))}
+
+                {/* "86 cities · zero guesswork" — bottom of SVG */}
+                <motion.text
+                  x="200" y="518"
+                  textAnchor="middle"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: showFlLabels ? 0.65 : 0 }}
+                  transition={{ duration: 0.9, delay: 0 }}
+                  style={{
+                    fill: '#D4AF37',
+                    fontSize: 8,
+                    fontFamily: 'monospace',
+                    fontWeight: 700,
+                    letterSpacing: '0.4em',
+                  }}
+                >
+                  86 CITIES · ZERO GUESSWORK
+                </motion.text>
+              </svg>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── TRI-COUNTY MAP ── */}
+      <AnimatePresence>
+        {isMap && (
+          <motion.div
+            key="tri"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.4 }}
             style={{
               position: 'absolute',
-              top: 0, left: 0, right: 0,
-              /* reserve bottom space for caption */
-              bottom: '10rem',
+              top: 0, left: 0, right: 0, bottom: '10rem',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
@@ -356,8 +542,8 @@ function SouthFloridaBase({ strings }) {
               <Geographies geography={CNTY_GEO}>
                 {({ geographies }) =>
                   geographies.filter(g => isTri(g.id)).map(geo => {
-                    const c   = COUNTY[Number(geo.id)]
-                    const hv  = hvhz && isHvhz(geo.id)
+                    const c    = COUNTY[Number(geo.id)]
+                    const hv   = hvhz && isHvhz(geo.id)
                     const fill   = hv ? c.hvhzFill   : c.baseFill
                     const stroke = hv ? c.hvhzStroke : c.baseStroke
                     const filt   = hvhz ? 'url(#county-hvhz)' : 'url(#county-raised)'
@@ -375,36 +561,27 @@ function SouthFloridaBase({ strings }) {
                 }
               </Geographies>
 
-              {/* County name labels */}
+              {/* County labels */}
               {Object.entries(COUNTY).map(([fips, c]) => (
                 <Marker key={fips} coordinates={c.labelCoords}>
-                  <text textAnchor="middle"
-                    style={{
-                      fill: hvhz ? 'rgba(255,255,255,0.45)' : 'rgba(212,175,55,0.38)',
-                      fontSize: '9px',
-                      fontFamily: 'monospace',
-                      fontWeight: 800,
-                      letterSpacing: '0.22em',
-                      userSelect: 'none',
-                      transition: 'fill 1.1s ease',
-                    }}
-                  >
+                  <text textAnchor="middle" style={{
+                    fill: hvhz ? 'rgba(255,255,255,0.45)' : 'rgba(212,175,55,0.38)',
+                    fontSize: '9px', fontFamily: 'monospace', fontWeight: 800,
+                    letterSpacing: '0.22em', userSelect: 'none', transition: 'fill 1.1s ease',
+                  }}>
                     {c.label}
                   </text>
                 </Marker>
               ))}
 
-              {/* All 86 municipality dots — equal weight */}
+              {/* Municipality dots */}
               {dots && MUNIS.map(m => {
                 const coastal = COASTAL.has(m.n) && hvhz
                 return (
                   <Marker key={m.n} coordinates={m.c}>
                     {coastal ? (
                       <>
-                        {/* ring marks 40-year recert coastal municipalities in HVHZ scene */}
-                        <circle r={5} fill="none" stroke="rgba(212,175,55,0.55)" strokeWidth={0.8}
-                          style={{ animation: 'dotPulse 2.4s ease-in-out infinite' }}
-                        />
+                        <circle r={5} fill="none" stroke="rgba(212,175,55,0.55)" strokeWidth={0.8} />
                         <circle r={2.2} fill="#D4AF37" style={{ filter: 'drop-shadow(0 0 3px rgba(212,175,55,0.9))' }} />
                       </>
                     ) : (
@@ -415,37 +592,73 @@ function SouthFloridaBase({ strings }) {
                   </Marker>
                 )
               })}
+
+              {/* Large floating city labels — tri-county */}
+              {scene === 'tri' && TRI_CITY_LABELS.map((c, i) => (
+                <Marker key={c.name} coordinates={c.coords}>
+                  <motion.text
+                    textAnchor="start"
+                    initial={{ opacity: 0, translateY: 10 }}
+                    animate={{ opacity: showTriLabels ? 1 : 0, translateY: showTriLabels ? -8 : 10 }}
+                    transition={{ duration: 0.75, delay: showTriLabels ? c.delay : 0, ease: [0.16, 1, 0.3, 1] }}
+                    style={{
+                      fill: '#ffffff',
+                      fontSize: i === 2 ? '26px' : i === 1 ? '22px' : '20px',
+                      fontWeight: 900,
+                      fontFamily: 'Inter, sans-serif',
+                      letterSpacing: '0.08em',
+                      filter: 'drop-shadow(0 0 6px rgba(0,0,0,1)) drop-shadow(0 3px 12px rgba(0,0,0,0.95))',
+                    }}
+                  >
+                    {c.name}
+                  </motion.text>
+                  {/* Small gold dot + line */}
+                  <motion.circle
+                    r={3.5}
+                    fill="#D4AF37"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: showTriLabels ? 1 : 0 }}
+                    transition={{ duration: 0.4, delay: showTriLabels ? c.delay + 0.2 : 0 }}
+                    style={{ filter: 'drop-shadow(0 0 4px rgba(212,175,55,0.9))' }}
+                  />
+                </Marker>
+              ))}
+
+              {/* "86 cities" in tri-county scene */}
+              {scene === 'tri' && (
+                <Marker coordinates={[-80.60, 25.60]}>
+                  <motion.text
+                    textAnchor="start"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: showTriLabels ? 0.6 : 0 }}
+                    transition={{ duration: 0.8, delay: 1.0 }}
+                    style={{
+                      fill: '#D4AF37',
+                      fontSize: '7px',
+                      fontFamily: 'monospace',
+                      fontWeight: 700,
+                      letterSpacing: '0.35em',
+                    }}
+                  >
+                    86 CITIES · ZERO GUESSWORK
+                  </motion.text>
+                </Marker>
+              )}
             </ComposableMap>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── SCENE 0 EYEBROW ── */}
-      <AnimatePresence>
-        {scene === 0 && (
-          <motion.div key="h0"
-            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-            style={{ position: 'absolute', top: '1.5rem', left: 0, right: 0, textAlign: 'center' }}
-          >
-            <div style={{ color: '#D4AF37', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.5em', textTransform: 'uppercase', fontFamily: 'monospace', textShadow: '0 0 28px rgba(212,175,55,0.65)' }}>
-              {strings.headline}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── SCENE CAPTIONS — below the map ── */}
+      {/* ── SCENE CAPTIONS ── */}
       <AnimatePresence mode="wait">
 
-        {/* Scene 1: 86 Municipalities */}
-        {scene === 1 && dots && (
+        {/* Tri-county: 86 counter */}
+        {scene === 'tri' && dots && (
           <motion.div key="cap1"
             initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
             style={{
-              position: 'absolute', bottom: 0, left: 0, right: 0,
-              height: '9.5rem',
+              position: 'absolute', bottom: 0, left: 0, right: 0, height: '9.5rem',
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               padding: '0 2rem',
             }}
@@ -457,7 +670,7 @@ function SouthFloridaBase({ strings }) {
               fontVariantNumeric: 'tabular-nums', fontFamily: 'monospace',
               textShadow: '0 0 55px rgba(212,175,55,0.4)',
             }}>
-              <Counter target={86} running={scene === 1 && dots} />
+              <Counter target={86} running={scene === 'tri' && dots} />
             </div>
             <div style={{
               color: 'rgba(255,255,255,0.4)',
@@ -469,19 +682,17 @@ function SouthFloridaBase({ strings }) {
           </motion.div>
         )}
 
-        {/* Scene 2: HVHZ Feature Moment */}
-        {scene === 2 && (
+        {/* HVHZ */}
+        {scene === 'hvhz' && (
           <motion.div key="cap2"
             initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
             style={{
-              position: 'absolute', bottom: 0, left: 0, right: 0,
-              height: '9.5rem',
+              position: 'absolute', bottom: 0, left: 0, right: 0, height: '9.5rem',
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               padding: '0 2rem', textAlign: 'center',
             }}
           >
-            {/* Gold rule */}
             <motion.div
               initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -499,14 +710,13 @@ function SouthFloridaBase({ strings }) {
           </motion.div>
         )}
 
-        {/* Scene 3: Materials */}
-        {scene === 3 && (
+        {/* Materials */}
+        {scene === 'mat' && (
           <motion.div key="cap3"
             initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
             style={{
-              position: 'absolute', bottom: 0, left: 0, right: 0,
-              height: '9.5rem',
+              position: 'absolute', bottom: 0, left: 0, right: 0, height: '9.5rem',
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               padding: '0 2rem', textAlign: 'center',
             }}
@@ -525,10 +735,10 @@ function SouthFloridaBase({ strings }) {
 
       </AnimatePresence>
 
-      {/* ── END CARD ── */}
+      {/* ── END CARD HEADLINE ── */}
       <AnimatePresence>
-        {scene === 4 && (
-          <motion.div key="h4"
+        {scene === 'end' && (
+          <motion.div key="h-end"
             initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
             style={{ position: 'absolute', top: '1.5rem', left: 0, right: 0, textAlign: 'center' }}
@@ -562,33 +772,32 @@ function SouthFloridaBase({ strings }) {
         position: 'absolute', inset: 0, pointerEvents: 'none',
         background: 'radial-gradient(ellipse 90% 80% at 50% 45%, transparent 30%, rgba(8,8,8,0.5) 68%, #080808 100%)',
       }} />
-
     </div>
   )
 }
 
 const EN = {
-  headline:     'South Florida',
-  cap1label:    'Municipalities Indexed',
-  hvhzLine1:    'HVHZ · Miami-Dade & Broward',
-  hvhzLine2:    '40-Year Recertification · Miami-Dade & Broward, Coastal Municipalities Following Suit',
-  hvhzTagline:  'We price to the code that actually applies to your job.',
-  cap3eyebrow:  'Materials Pricing',
-  cap3main:     'Electrical · Plumbing · HVAC · Painting',
-  cap3sub:      'Pro-tier pricing — tri-county wide.',
-  url:          'even-os.com',
+  headline:    'South Florida',
+  cap1label:   'Municipalities Indexed',
+  hvhzLine1:   'HVHZ · Miami-Dade & Broward',
+  hvhzLine2:   '40-Year Recertification · Miami-Dade & Broward, Coastal Municipalities Following Suit',
+  hvhzTagline: 'We price to the code that actually applies to your job.',
+  cap3eyebrow: 'Materials Pricing',
+  cap3main:    'Electrical · Plumbing · HVAC · Painting',
+  cap3sub:     'Pro-tier pricing — tri-county wide.',
+  url:         'even-os.com',
 }
 
 const ES = {
-  headline:     'Sur de Florida',
-  cap1label:    'Municipios Indexados',
-  hvhzLine1:    'HVHZ · Miami-Dade y Broward',
-  hvhzLine2:    'Recertificación de 40 Años · Miami-Dade y Broward, Municipios Costeros en Seguimiento',
-  hvhzTagline:  'Cotizamos según el código que aplica a tu trabajo.',
-  cap3eyebrow:  'Precios de Materiales',
-  cap3main:     'Eléctrico · Plomería · HVAC · Pintura',
-  cap3sub:      'Precio de nivel profesional — tri-condado.',
-  url:          'even-os.com',
+  headline:    'Sur de Florida',
+  cap1label:   'Municipios Indexados',
+  hvhzLine1:   'HVHZ · Miami-Dade y Broward',
+  hvhzLine2:   'Recertificación de 40 Años · Miami-Dade y Broward, Municipios Costeros en Seguimiento',
+  hvhzTagline: 'Cotizamos según el código que aplica a tu trabajo.',
+  cap3eyebrow: 'Precios de Materiales',
+  cap3main:    'Eléctrico · Plomería · HVAC · Pintura',
+  cap3sub:     'Precio de nivel profesional — tri-condado.',
+  url:         'even-os.com',
 }
 
 export default function SouthFlorida() {
