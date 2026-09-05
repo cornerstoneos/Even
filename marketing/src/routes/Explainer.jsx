@@ -218,18 +218,13 @@ const STRINGS_ES = {
 // ── PHONE FRAME ─────────────────────────────────────────────────────────────────
 function PhoneFrame({ children }) {
   return (
-    <motion.div
-      initial={{ rotateX: 8, rotateY: -18 }}
-      animate={{ rotateX: 2, rotateY: -4 }}
-      transition={{ duration: 2.8, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-      style={{
+    <div style={{
       position: 'relative',
       width: 'min(360px, 90vw)',
       flexShrink: 0,
       background: 'linear-gradient(155deg, #282828 0%, #181818 50%, #0e0e0e 100%)',
       borderRadius: '50px',
       padding: '11px',
-      transformPerspective: 1200,
       boxShadow: `
         0 0 0 1px rgba(212,175,55,0.22),
         0 2px 0 2px rgba(0,0,0,0.95),
@@ -275,7 +270,7 @@ function PhoneFrame({ children }) {
         <div key={i} style={{ position: 'absolute', left: -3, top, width: 3, height: i === 0 ? 30 : 56, background: '#2a2a2a', borderRadius: '2px 0 0 2px' }} />
       ))}
       <div style={{ position: 'absolute', right: -3, top: 160, width: 3, height: 75, background: '#2a2a2a', borderRadius: '0 2px 2px 0' }} />
-    </motion.div>
+    </div>
   )
 }
 
