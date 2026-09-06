@@ -529,20 +529,6 @@ function ExplainerBase({ strings }) {
         background: 'radial-gradient(ellipse 70% 65% at 50% 50%, transparent 0%, #0A0A0A 100%)',
       }} />
 
-      {/* Eyebrow — cycles with active step */}
-      {p.nav && (
-        <AnimatePresence mode="wait">
-          <motion.div key={activeStep}
-            initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 5 }}
-            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            style={{ position: 'absolute', top: '1.5rem', left: 0, right: 0, textAlign: 'center', zIndex: 10 }}
-          >
-            <span style={{ color: '#D4AF37', fontSize: '0.52rem', fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', fontFamily: 'monospace', textShadow: '0 0 20px rgba(212,175,55,0.35)' }}>
-              {['SCOPE', 'REFINE', 'ESTIMATE'][activeStep - 1]}
-            </span>
-          </motion.div>
-        </AnimatePresence>
-      )}
 
       <PhoneFrame>
         {/* Nav bar */}
@@ -594,6 +580,19 @@ function ExplainerBase({ strings }) {
                 transition={{ duration: 0.45, ease: [0.4, 0, 1, 1] }}
                 style={{ flex: 1, overflowY: 'auto', padding: '0.75rem 1rem', display: 'flex', flexDirection: 'column', gap: '1.1rem' }}
               >
+
+                {/* Step eyebrow — inside phone, part of the UI flow */}
+                <AnimatePresence mode="wait">
+                  <motion.div key={activeStep}
+                    initial={{ opacity: 0, y: -3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ textAlign: 'center', marginBottom: '-0.4rem' }}
+                  >
+                    <span style={{ color: 'rgba(212,175,55,0.6)', fontSize: '0.44rem', fontWeight: 800, letterSpacing: '0.38em', textTransform: 'uppercase', fontFamily: 'monospace' }}>
+                      {['SCOPE', 'REFINE', 'ESTIMATE'][activeStep - 1]}
+                    </span>
+                  </motion.div>
+                </AnimatePresence>
 
                 {/* Blueprint / upload */}
                 <AnimatePresence>
