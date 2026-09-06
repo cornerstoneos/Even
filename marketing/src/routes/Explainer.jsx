@@ -1,42 +1,39 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, animate } from 'framer-motion'
 
-const LOOP = 37000
+const LOOP = 50000
 
 const PHASES = {
-  nav:            400,
-  locOpen:        900,
-  locSelect:      1900,
-  locDone:        2800,
-  cameraRoll:     3300,
-  select:         4600,
-  uploadStart:    5300,
-  scanLine:       5500,
-  uploadDone:     7000,
-  marginCard:     7900,
-  marginOH:       8400,
-  marginPT:       9200,
-  marginRC:       9900,
-  marginLock:    10800,
-  formSection:   11600,
-  jobType:       11900,
-  location:      12700,
-  size:          13400,
-  runBtn:        14100,
-  runTap:        14900,
-  permitLabel:   15400,
-  permitLoading: 15700,
-  permitRows:    17100,
-  estimateLabel: 19300,
-  estimateRows:  19800,
-  total:         21800,
-  bid:           23000,
-  exportBtn:     24100,
-  internalDoc:   25400,
-  proposalDoc:   28600,
-  badge:         30200,
-  addHome:       32000,
-  logo:          33500,
+  nav:            500,
+  cameraRoll:     1800,
+  select:         3200,
+  uploadStart:    4200,
+  scanLine:       4500,
+  uploadDone:     8200,
+  marginCard:     9400,
+  marginOH:      10400,
+  marginPT:      11400,
+  marginRC:      12400,
+  marginLock:    13600,
+  formSection:   14800,
+  jobType:       15300,
+  location:      16400,
+  size:          17500,
+  runBtn:        18400,
+  runTap:        19500,
+  permitLabel:   20300,
+  permitLoading: 20700,
+  permitRows:    24000,
+  estimateLabel: 26500,
+  estimateRows:  27200,
+  total:         29800,
+  bid:           31500,
+  exportBtn:     33000,
+  internalDoc:   35000,
+  proposalDoc:   39000,
+  badge:         41500,
+  addHome:       44000,
+  logo:          46000,
 }
 
 const STRINGS_EN = {
@@ -473,7 +470,7 @@ function ExplainerBase({ strings }) {
       timers.current.push(setTimeout(() => setP(prev => ({ ...prev, [key]: true })), delay))
     })
     timers.current.push(setTimeout(() => {
-      const ctrl = animate(0, 100, { duration: 1.2, ease: 'easeInOut', onUpdate: v => setUploadPct(Math.floor(v)) })
+      const ctrl = animate(0, 100, { duration: 3.5, ease: 'easeInOut', onUpdate: v => setUploadPct(Math.floor(v)) })
       timers.current.push(() => ctrl.stop())
     }, PHASES.uploadStart))
     timers.current.push(setTimeout(run, LOOP))
@@ -528,79 +525,17 @@ function ExplainerBase({ strings }) {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.7rem 1rem 0.6rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                 <img src="/logo.png" alt="Even" style={{ height: '1rem', objectFit: 'contain' }} onError={e => { e.target.style.display = 'none' }} />
-                {/* Market chip */}
-                <motion.div
-                  animate={{ borderColor: p.locDone ? 'rgba(212,175,55,0.5)' : 'rgba(255,255,255,0.08)' }}
-                  transition={{ duration: 0.4 }}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '4px', padding: '0.22rem 0.5rem', cursor: 'default' }}
-                >
+                {/* Market chip — city pre-selected */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', border: '1px solid rgba(212,175,55,0.5)', borderRadius: '4px', padding: '0.22rem 0.5rem', cursor: 'default' }}>
                   <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#D4AF37', boxShadow: '0 0 6px rgba(212,175,55,0.7)' }} />
-                  <span style={{ color: p.locDone ? 'rgba(212,175,55,0.9)' : 'rgba(255,255,255,0.25)', fontSize: '0.54rem', letterSpacing: '0.06em', fontFamily: 'monospace', transition: 'color 0.4s' }}>
-                    {p.locDone ? strings.targetCity : strings.selectMarket}
+                  <span style={{ color: 'rgba(212,175,55,0.9)', fontSize: '0.54rem', letterSpacing: '0.06em', fontFamily: 'monospace' }}>
+                    {strings.targetCity}
                   </span>
                   <svg width="7" height="5" viewBox="0 0 7 5" fill="none" style={{ opacity: 0.35 }}>
                     <path d="M1 1L3.5 4L6 1" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                </motion.div>
+                </div>
               </div>
-
-              {/* Location dropdown */}
-              <AnimatePresence>
-                {p.locOpen && !p.locDone && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -6, scaleY: 0.88 }}
-                    animate={{ opacity: 1, y: 0, scaleY: 1 }}
-                    exit={{ opacity: 0, y: -4, scaleY: 0.92 }}
-                    transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                    style={{
-                      position: 'absolute', top: '100%', right: '0.75rem', width: '200px',
-                      background: '#141414', border: '1px solid rgba(212,175,55,0.22)',
-                      borderRadius: '6px', zIndex: 100, overflow: 'hidden', transformOrigin: 'top right',
-                      boxShadow: '0 8px 32px rgba(0,0,0,0.8)',
-                    }}
-                  >
-                    <div style={{ padding: '0.35rem 0.65rem 0.3rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                      <span style={{ color: 'rgba(212,175,55,0.6)', fontSize: '0.46rem', letterSpacing: '0.3em', textTransform: 'uppercase', fontFamily: 'monospace' }}>
-                        {strings.markets[0].region}
-                      </span>
-                    </div>
-                    {strings.markets[0].cities.map((city, i) => {
-                      const isTarget = city === strings.targetCity
-                      const isSelected = isTarget && p.locSelect
-                      return (
-                        <motion.div
-                          key={city}
-                          animate={{ background: isSelected ? 'rgba(212,175,55,0.1)' : 'transparent' }}
-                          transition={{ duration: 0.3 }}
-                          style={{
-                            padding: '0.42rem 0.65rem',
-                            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                            borderBottom: i < 2 ? '1px solid rgba(255,255,255,0.04)' : 'none',
-                          }}
-                        >
-                          <span style={{
-                            color: isSelected ? '#D4AF37' : 'rgba(255,255,255,0.55)',
-                            fontSize: '0.65rem', fontFamily: 'monospace',
-                            transition: 'color 0.3s',
-                          }}>{city}</span>
-                          {isSelected && (
-                            <motion.div
-                              initial={{ opacity: 0, scale: 0.5 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                              style={{ width: 14, height: 14, borderRadius: '50%', background: '#D4AF37', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
-                            >
-                              <svg width="7" height="5" viewBox="0 0 7 5" fill="none">
-                                <path d="M1 2.5L3 4.5L6 1" stroke="#0A0A0A" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-                              </svg>
-                            </motion.div>
-                          )}
-                        </motion.div>
-                      )
-                    })}
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </motion.div>
           )}
         </AnimatePresence>
