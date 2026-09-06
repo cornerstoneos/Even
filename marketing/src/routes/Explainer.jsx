@@ -529,20 +529,20 @@ function ExplainerBase({ strings }) {
         background: 'radial-gradient(ellipse 70% 65% at 50% 50%, transparent 0%, #0A0A0A 100%)',
       }} />
 
-      {/* Eyebrow */}
-      <AnimatePresence>
-        {p.nav && (
-          <motion.div key="eyebrow"
-            initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      {/* Eyebrow — cycles with active step */}
+      {p.nav && (
+        <AnimatePresence mode="wait">
+          <motion.div key={activeStep}
+            initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 5 }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             style={{ position: 'absolute', top: '1.5rem', left: 0, right: 0, textAlign: 'center', zIndex: 10 }}
           >
             <span style={{ color: '#D4AF37', fontSize: '0.52rem', fontWeight: 800, letterSpacing: '0.45em', textTransform: 'uppercase', fontFamily: 'monospace', textShadow: '0 0 20px rgba(212,175,55,0.35)' }}>
-              {strings.eyebrow}
+              {['SCOPE', 'REFINE', 'ESTIMATE'][activeStep - 1]}
             </span>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </AnimatePresence>
+      )}
 
       <PhoneFrame>
         {/* Nav bar */}
@@ -554,16 +554,6 @@ function ExplainerBase({ strings }) {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.7rem 1rem 0.6rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                 <img src="/logo.png" alt="Even" style={{ height: '1rem', objectFit: 'contain' }} onError={e => { e.target.style.display = 'none' }} />
-                {/* Market chip — city pre-selected */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', border: '1px solid rgba(212,175,55,0.5)', borderRadius: '4px', padding: '0.22rem 0.5rem', cursor: 'default' }}>
-                  <div style={{ width: 4, height: 4, borderRadius: '50%', background: '#D4AF37', boxShadow: '0 0 6px rgba(212,175,55,0.7)' }} />
-                  <span style={{ color: 'rgba(212,175,55,0.9)', fontSize: '0.54rem', letterSpacing: '0.06em', fontFamily: 'monospace' }}>
-                    {strings.targetCity}
-                  </span>
-                  <svg width="7" height="5" viewBox="0 0 7 5" fill="none" style={{ opacity: 0.35 }}>
-                    <path d="M1 1L3.5 4L6 1" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
               </div>
             </motion.div>
           )}
