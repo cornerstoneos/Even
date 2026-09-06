@@ -1,39 +1,39 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, animate } from 'framer-motion'
 
-const LOOP = 50000
+const LOOP = 52000
 
 const PHASES = {
   nav:            500,
-  cameraRoll:     1800,
-  select:         3200,
-  uploadStart:    4200,
-  scanLine:       4500,
-  uploadDone:     8200,
-  marginCard:     9400,
-  marginOH:      10400,
-  marginPT:      11400,
-  marginRC:      12400,
-  marginLock:    13600,
-  formSection:   14800,
-  jobType:       15300,
-  location:      16400,
-  size:          17500,
-  runBtn:        18400,
-  runTap:        19500,
-  permitLabel:   20300,
-  permitLoading: 20700,
-  permitRows:    24000,
-  estimateLabel: 26500,
-  estimateRows:  27200,
-  total:         29800,
-  bid:           31500,
-  exportBtn:     33000,
-  internalDoc:   35000,
-  proposalDoc:   39000,
-  badge:         41500,
-  addHome:       44000,
-  logo:          46000,
+  cameraRoll:     3500,
+  select:         4900,
+  uploadStart:    5900,
+  scanLine:       6200,
+  uploadDone:     9900,
+  marginCard:     11100,
+  marginOH:       12100,
+  marginPT:       13100,
+  marginRC:       14100,
+  marginLock:     15300,
+  formSection:    16500,
+  jobType:        17000,
+  location:       18100,
+  size:           19200,
+  runBtn:         20100,
+  runTap:         21200,
+  permitLabel:    22000,
+  permitLoading:  22400,
+  permitRows:     25700,
+  estimateLabel:  28200,
+  estimateRows:   28900,
+  total:          31500,
+  bid:            33200,
+  exportBtn:      34700,
+  internalDoc:    36700,
+  proposalDoc:    40700,
+  badge:          43200,
+  addHome:        45700,
+  logo:           47700,
 }
 
 const STRINGS_EN = {
@@ -213,6 +213,35 @@ const STRINGS_ES = {
 }
 
 // ── PHONE FRAME ─────────────────────────────────────────────────────────────────
+function StepNode({ n, label, active }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem', flexShrink: 0 }}>
+      <motion.div
+        animate={{ background: active ? '#D4AF37' : 'rgba(255,255,255,0.07)', color: active ? '#0A0A0A' : 'rgba(255,255,255,0.3)' }}
+        transition={{ duration: 0.45 }}
+        style={{ width: 26, height: 26, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: active ? 'none' : '1.5px solid rgba(255,255,255,0.15)', fontSize: '0.62rem', fontWeight: 900, fontFamily: 'monospace' }}
+      >{n}</motion.div>
+      <motion.span
+        animate={{ color: active ? '#D4AF37' : 'rgba(255,255,255,0.3)' }}
+        transition={{ duration: 0.45 }}
+        style={{ fontSize: '0.37rem', letterSpacing: '0.18em', fontFamily: 'monospace', textTransform: 'uppercase' }}
+      >{label}</motion.span>
+    </div>
+  )
+}
+
+function StepProgress({ activeStep }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', padding: '0.55rem 1.4rem 0.35rem', borderBottom: '1px solid rgba(255,255,255,0.05)', flexShrink: 0 }}>
+      <StepNode n={1} label="SCOPE"    active={activeStep >= 1} />
+      <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)', margin: '0 0.35rem 0.7rem' }} />
+      <StepNode n={2} label="REFINE"   active={activeStep >= 2} />
+      <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)', margin: '0 0.35rem 0.7rem' }} />
+      <StepNode n={3} label="ESTIMATE" active={activeStep >= 3} />
+    </div>
+  )
+}
+
 function PhoneFrame({ children }) {
   return (
     <div style={{
@@ -480,8 +509,8 @@ function ExplainerBase({ strings }) {
 
   // Scene resolver — doc overlay takes priority over scrollable content
   const docScene = p.proposalDoc ? 'proposal' : p.internalDoc ? 'internal' : null
-
   const showApp = !docScene
+  const activeStep = p.permitLabel ? 3 : p.marginCard ? 2 : 1
 
   return (
     <div style={{
@@ -540,8 +569,32 @@ function ExplainerBase({ strings }) {
           )}
         </AnimatePresence>
 
+        {/* Step progress — persists, activeStep updates as sequence advances */}
+        {p.nav && <StepProgress activeStep={activeStep} />}
+
         {/* Main content area — switches between scrollable app and doc overlays */}
         <div style={{ flex: 1, overflow: 'hidden', position: 'relative', display: 'flex', flexDirection: 'column' }}>
+
+          {/* Intro / onboarding screen — matches real app entry state */}
+          <AnimatePresence>
+            {p.nav && !p.cameraRoll && (
+              <motion.div key="intro-screen"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '1.5rem', gap: '0.85rem', textAlign: 'center', zIndex: 5 }}
+              >
+                <img src="/logo.png" alt="Even" style={{ height: '2.8rem', objectFit: 'contain' }}
+                  onError={e => { e.target.style.display = 'none' }} />
+                <span style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: 900, letterSpacing: '-0.02em', lineHeight: 1 }}>
+                  even<span style={{ color: '#D4AF37' }}>.</span>
+                </span>
+                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.64rem', lineHeight: 1.6, margin: 0, maxWidth: '190px' }}>
+                  Scope in. Winning bid out.<br />Built for contractors.
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <AnimatePresence mode="wait">
 
             {/* ── APP CONTENT (scrollable) ── */}
