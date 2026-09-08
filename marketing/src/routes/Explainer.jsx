@@ -36,7 +36,7 @@ const PHASES = {
   logo:           47700,
 }
 
-const LOOP_ES = 46000
+const LOOP_ES = 48000
 
 const PHASES_ES = {
   nav:            300,
@@ -50,25 +50,25 @@ const PHASES_ES = {
   marginPT:       17000,
   marginRC:       19000,
   marginLock:     23500,
-  formSection:    24800,
-  jobType:        25200,
-  location:       25700,
-  size:           26200,
-  runBtn:         26700,
-  runTap:         27000,
-  permitLabel:    27500,
-  permitLoading:  27800,
-  permitRows:     30500,
-  estimateLabel:  31000,
-  estimateRows:   31700,
-  total:          33000,
-  bid:            34500,
-  exportBtn:      36000,
-  internalDoc:    38000,
-  proposalDoc:    40500,
-  badge:          41500,
-  addHome:        43000,
-  logo:           44000,
+  formSection:    26800,  // +2s: give protection badge more screen time
+  jobType:        27200,
+  location:       27700,
+  size:           28200,
+  runBtn:         28700,
+  runTap:         29000,
+  permitLabel:    29500,
+  permitLoading:  29800,
+  permitRows:     32500,
+  estimateLabel:  33000,
+  estimateRows:   33700,
+  total:          35000,
+  bid:            36500,
+  exportBtn:      38000,
+  internalDoc:    40000,
+  proposalDoc:    42500,
+  badge:          43500,
+  addHome:        45000,
+  logo:           46000,
 }
 
 const STRINGS_EN = {
@@ -549,7 +549,7 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
   useEffect(() => {
     if (!started) return
     // Give audio a 1s head start before animation begins
-    const t = setTimeout(run, audioSrc ? 1000 : 0)
+    const t = setTimeout(run, audioSrc ? 1500 : 0)
     return () => { clearTimeout(t); reset() }
   }, [started])
 
