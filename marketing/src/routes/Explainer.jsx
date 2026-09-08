@@ -36,8 +36,45 @@ const PHASES = {
   logo:           47700,
 }
 
+const LOOP_ES = 46000
+
+const PHASES_ES = {
+  nav:            300,
+  cameraRoll:     4500,
+  select:         5500,
+  uploadStart:    6100,
+  scanLine:       6500,
+  uploadDone:     9800,
+  marginCard:     11200,
+  marginOH:       15000,
+  marginPT:       17000,
+  marginRC:       19000,
+  marginLock:     23500,
+  formSection:    24800,
+  jobType:        25200,
+  location:       25700,
+  size:           26200,
+  runBtn:         26700,
+  runTap:         27000,
+  permitLabel:    27500,
+  permitLoading:  27800,
+  permitRows:     30500,
+  estimateLabel:  31000,
+  estimateRows:   31700,
+  total:          33000,
+  bid:            34500,
+  exportBtn:      36000,
+  internalDoc:    38000,
+  proposalDoc:    40500,
+  badge:          41500,
+  addHome:        43000,
+  logo:           44000,
+}
+
 const STRINGS_EN = {
   eyebrow: 'Blueprint → Estimate',
+  steps: ['SCOPE', 'REFINE', 'ESTIMATE'],
+  tagline: 'Scope in. Winning bid out.\nBuilt for contractors.',
   market: 'Market',
   selectMarket: 'Select Market',
   markets: [
@@ -126,6 +163,8 @@ const STRINGS_EN = {
 
 const STRINGS_ES = {
   eyebrow: 'Plano → Estimado',
+  steps: ['ALCANCE', 'REFINAR', 'ESTIMADO'],
+  tagline: 'Alcance adentro. Oferta ganadora afuera.\nHecho para contratistas.',
   market: 'Mercado',
   selectMarket: 'Seleccionar Mercado',
   markets: [
@@ -230,14 +269,14 @@ function StepNode({ n, label, active }) {
   )
 }
 
-function StepProgress({ activeStep }) {
+function StepProgress({ activeStep, steps }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', padding: '0.55rem 1.4rem 0.35rem', borderBottom: '1px solid rgba(255,255,255,0.05)', flexShrink: 0 }}>
-      <StepNode n={1} label="SCOPE"    active={activeStep >= 1} />
+      <StepNode n={1} label={steps[0]} active={activeStep >= 1} />
       <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)', margin: '0 0.35rem 0.7rem' }} />
-      <StepNode n={2} label="REFINE"   active={activeStep >= 2} />
+      <StepNode n={2} label={steps[1]} active={activeStep >= 2} />
       <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)', margin: '0 0.35rem 0.7rem' }} />
-      <StepNode n={3} label="ESTIMATE" active={activeStep >= 3} />
+      <StepNode n={3} label={steps[2]} active={activeStep >= 3} />
     </div>
   )
 }
@@ -481,7 +520,7 @@ function SectionLabel({ children, visible }) {
 }
 
 // ── MAIN COMPONENT ─────────────────────────────────────────────────────────────
-function ExplainerBase({ strings }) {
+function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null }) {
   const [p, setP] = useState({})
   const timers = useRef([])
   const [uploadPct, setUploadPct] = useState(0)
@@ -495,14 +534,14 @@ function ExplainerBase({ strings }) {
 
   function run() {
     reset()
-    Object.entries(PHASES).forEach(([key, delay]) => {
+    Object.entries(phases).forEach(([key, delay]) => {
       timers.current.push(setTimeout(() => setP(prev => ({ ...prev, [key]: true })), delay))
     })
     timers.current.push(setTimeout(() => {
       const ctrl = animate(0, 100, { duration: 3.5, ease: 'easeInOut', onUpdate: v => setUploadPct(Math.floor(v)) })
       timers.current.push(() => ctrl.stop())
-    }, PHASES.uploadStart))
-    timers.current.push(setTimeout(run, LOOP))
+    }, phases.uploadStart))
+    timers.current.push(setTimeout(run, loop))
   }
 
   useEffect(() => { run(); return reset }, [])
@@ -522,6 +561,8 @@ function ExplainerBase({ strings }) {
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
       fontFamily: 'Inter, system-ui, sans-serif', position: 'relative', overflow: 'hidden',
     }}>
+
+      {audioSrc && <audio src={audioSrc} autoPlay loop style={{ display: 'none' }} />}
 
       {/* Vignette */}
       <div style={{
@@ -546,7 +587,7 @@ function ExplainerBase({ strings }) {
         </AnimatePresence>
 
         {/* Step progress — persists, activeStep updates as sequence advances */}
-        {p.nav && <StepProgress activeStep={activeStep} />}
+        {p.nav && <StepProgress activeStep={activeStep} steps={strings.steps} />}
 
         {/* Main content area — switches between scrollable app and doc overlays */}
         <div style={{ flex: 1, overflow: 'hidden', position: 'relative', display: 'flex', flexDirection: 'column' }}>
@@ -565,7 +606,9 @@ function ExplainerBase({ strings }) {
                   even<span style={{ color: '#D4AF37' }}>.</span>
                 </span>
                 <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.64rem', lineHeight: 1.6, margin: 0, maxWidth: '190px' }}>
-                  Scope in. Winning bid out.<br />Built for contractors.
+                  {strings.tagline.split('\n').map((line, i, arr) => (
+                    <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+                  ))}
                 </p>
               </motion.div>
             )}
@@ -589,7 +632,7 @@ function ExplainerBase({ strings }) {
                     style={{ textAlign: 'center', marginBottom: '-0.4rem' }}
                   >
                     <span style={{ color: 'rgba(212,175,55,0.6)', fontSize: '0.44rem', fontWeight: 800, letterSpacing: '0.38em', textTransform: 'uppercase', fontFamily: 'monospace' }}>
-                      {['SCOPE', 'REFINE', 'ESTIMATE'][activeStep - 1]}
+                      {strings.steps[activeStep - 1]}
                     </span>
                   </motion.div>
                 </AnimatePresence>
@@ -1009,5 +1052,5 @@ export default function Explainer() {
 }
 
 export function ExplainerES() {
-  return <ExplainerBase strings={STRINGS_ES} />
+  return <ExplainerBase strings={STRINGS_ES} phases={PHASES_ES} loop={LOOP_ES} audioSrc="/es-voiceover.mp3" />
 }
