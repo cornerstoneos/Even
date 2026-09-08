@@ -524,6 +524,7 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
   const [p, setP] = useState({})
   const timers = useRef([])
   const [uploadPct, setUploadPct] = useState(0)
+  const audioRef = useRef(null)
 
   function reset() {
     timers.current.forEach(t => typeof t === 'function' ? t() : clearTimeout(t))
@@ -546,6 +547,18 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
 
   useEffect(() => { run(); return reset }, [])
 
+  useEffect(() => {
+    if (!audioSrc || !audioRef.current) return
+    const audio = audioRef.current
+    audio.currentTime = 0
+    const tryPlay = () => audio.play().catch(() => {})
+    tryPlay()
+    const onInteraction = () => { tryPlay(); document.removeEventListener('click', onInteraction); document.removeEventListener('touchstart', onInteraction) }
+    document.addEventListener('click', onInteraction)
+    document.addEventListener('touchstart', onInteraction)
+    return () => { document.removeEventListener('click', onInteraction); document.removeEventListener('touchstart', onInteraction) }
+  }, [audioSrc])
+
   // Scene resolver — doc overlay takes priority over scrollable content
   const docScene = p.proposalDoc ? 'proposal' : p.internalDoc ? 'internal' : null
   const showApp = !docScene
@@ -562,7 +575,7 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
       fontFamily: 'Inter, system-ui, sans-serif', position: 'relative', overflow: 'hidden',
     }}>
 
-      {audioSrc && <audio src={audioSrc} autoPlay loop style={{ display: 'none' }} />}
+      {audioSrc && <audio ref={audioRef} src={audioSrc} loop style={{ display: 'none' }} />}
 
       {/* Vignette */}
       <div style={{
