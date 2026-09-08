@@ -6,6 +6,7 @@ import PainPoint from './routes/PainPoint'
 import WhoWeAre from './routes/WhoWeAre'
 import Speed, { SpeedES } from './routes/Speed'
 import TwoOutputs, { TwoOutputsES } from './routes/TwoOutputs'
+import Foundation from './routes/Foundation'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/speed-es" element={<SpeedES />} />
         <Route path="/two-outputs" element={<TwoOutputs />} />
         <Route path="/two-outputs-es" element={<TwoOutputsES />} />
+        <Route path="/foundation" element={<Foundation />} />
       </Routes>
     </BrowserRouter>
   )
@@ -42,6 +44,7 @@ const ASSETS = [
   { path: '/speed-es', label: 'Speed (ES)', meta: '25s loop · Spanish version' },
   { path: '/two-outputs', label: 'Two Outputs', meta: '27s loop · proposal + internal sheet' },
   { path: '/two-outputs-es', label: 'Two Outputs (ES)', meta: '27s loop · Spanish version' },
+  { path: '/foundation', label: 'Foundation — Stage 01', meta: '28s loop · house sequence · locked iso camera' },
 ]
 
 function Home() {
