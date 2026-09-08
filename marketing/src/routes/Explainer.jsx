@@ -525,6 +525,7 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
   const timers = useRef([])
   const [uploadPct, setUploadPct] = useState(0)
   const audioRef = useRef(null)
+  const loopStartRef = useRef(Date.now())
   const [audioUnlocked, setAudioUnlocked] = useState(false)
   const [showTapPrompt, setShowTapPrompt] = useState(!!audioSrc)
 
@@ -536,6 +537,7 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
   }
 
   function run() {
+    loopStartRef.current = Date.now()
     reset()
     Object.entries(phases).forEach(([key, delay]) => {
       timers.current.push(setTimeout(() => setP(prev => ({ ...prev, [key]: true })), delay))
@@ -551,6 +553,8 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
 
   function unlockAudio() {
     if (!audioRef.current) return
+    const elapsedMs = (Date.now() - loopStartRef.current) % loop
+    audioRef.current.currentTime = elapsedMs / 1000
     audioRef.current.play().then(() => {
       setAudioUnlocked(true)
       setShowTapPrompt(false)
@@ -559,6 +563,7 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
 
   useEffect(() => {
     if (!audioSrc || !audioRef.current) return
+    audioRef.current.currentTime = 0
     audioRef.current.play().then(() => {
       setAudioUnlocked(true)
       setShowTapPrompt(false)
