@@ -548,8 +548,9 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
 
   useEffect(() => {
     if (!started) return
-    run()
-    return reset
+    // Give audio a 1s head start before animation begins
+    const t = setTimeout(run, audioSrc ? 1000 : 0)
+    return () => { clearTimeout(t); reset() }
   }, [started])
 
   function handlePlay() {
