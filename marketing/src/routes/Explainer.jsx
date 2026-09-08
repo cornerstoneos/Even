@@ -525,9 +525,7 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
   const timers = useRef([])
   const [uploadPct, setUploadPct] = useState(0)
   const audioRef = useRef(null)
-  const loopStartRef = useRef(Date.now())
-  const [audioUnlocked, setAudioUnlocked] = useState(false)
-  const [showTapPrompt, setShowTapPrompt] = useState(!!audioSrc)
+  const [started, setStarted] = useState(!audioSrc)
 
   function reset() {
     timers.current.forEach(t => typeof t === 'function' ? t() : clearTimeout(t))
@@ -537,7 +535,6 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
   }
 
   function run() {
-    loopStartRef.current = Date.now()
     reset()
     Object.entries(phases).forEach(([key, delay]) => {
       timers.current.push(setTimeout(() => setP(prev => ({ ...prev, [key]: true })), delay))
@@ -549,26 +546,19 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
     timers.current.push(setTimeout(run, loop))
   }
 
-  useEffect(() => { run(); return reset }, [])
-
-  function unlockAudio() {
-    if (!audioRef.current) return
-    const elapsedMs = (Date.now() - loopStartRef.current) % loop
-    audioRef.current.currentTime = elapsedMs / 1000
-    audioRef.current.play().then(() => {
-      setAudioUnlocked(true)
-      setShowTapPrompt(false)
-    }).catch(() => {})
-  }
-
   useEffect(() => {
-    if (!audioSrc || !audioRef.current) return
-    audioRef.current.currentTime = 0
-    audioRef.current.play().then(() => {
-      setAudioUnlocked(true)
-      setShowTapPrompt(false)
-    }).catch(() => {})
-  }, [audioSrc])
+    if (!started) return
+    run()
+    return reset
+  }, [started])
+
+  function handlePlay() {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0
+      audioRef.current.play().catch(() => {})
+    }
+    setStarted(true)
+  }
 
   // Scene resolver — doc overlay takes priority over scrollable content
   const docScene = p.proposalDoc ? 'proposal' : p.internalDoc ? 'internal' : null
@@ -588,24 +578,33 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
 
       {audioSrc && <audio ref={audioRef} src={audioSrc} loop style={{ display: 'none' }} />}
 
-      {/* Tap-to-hear prompt — needed for in-app browsers (WebView) that block autoplay */}
+      {/* Play gate — shown before animation starts when audio is present */}
       <AnimatePresence>
-        {showTapPrompt && (
-          <motion.button
-            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.4, delay: 0.8 }}
-            onClick={unlockAudio}
-            style={{
-              position: 'absolute', top: '1rem', right: '1rem', zIndex: 100,
-              background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.35)',
-              borderRadius: '999px', padding: '0.35rem 0.75rem',
-              display: 'flex', alignItems: 'center', gap: '0.4rem',
-              cursor: 'pointer', outline: 'none',
-            }}
+        {!started && (
+          <motion.div
+            key="play-gate"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{ position: 'absolute', inset: 0, zIndex: 200, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.5rem' }}
           >
-            <span style={{ fontSize: '0.75rem' }}>🔈</span>
-            <span style={{ color: 'rgba(212,175,55,0.8)', fontSize: '0.52rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'monospace', fontWeight: 700 }}>Tap to hear</span>
-          </motion.button>
+            <img src="/logo.png" alt="Even" style={{ height: '1.4rem', objectFit: 'contain' }} onError={e => { e.target.style.display = 'none' }} />
+            <motion.button
+              whileTap={{ scale: 0.94 }}
+              onClick={handlePlay}
+              style={{
+                width: 72, height: 72, borderRadius: '50%',
+                background: 'linear-gradient(135deg, #BF953F, #D4AF37)',
+                border: 'none', cursor: 'pointer', outline: 'none',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 0 40px rgba(212,175,55,0.35)',
+              }}
+            >
+              <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                <path d="M9 6.5L20 13L9 19.5V6.5Z" fill="#0A0A0A" />
+              </svg>
+            </motion.button>
+            <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.52rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'monospace' }}>Toca para reproducir</span>
+          </motion.div>
         )}
       </AnimatePresence>
 
