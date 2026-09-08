@@ -525,6 +525,8 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
   const timers = useRef([])
   const [uploadPct, setUploadPct] = useState(0)
   const audioRef = useRef(null)
+  const [audioUnlocked, setAudioUnlocked] = useState(false)
+  const [showTapPrompt, setShowTapPrompt] = useState(!!audioSrc)
 
   function reset() {
     timers.current.forEach(t => typeof t === 'function' ? t() : clearTimeout(t))
@@ -547,16 +549,20 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
 
   useEffect(() => { run(); return reset }, [])
 
+  function unlockAudio() {
+    if (!audioRef.current) return
+    audioRef.current.play().then(() => {
+      setAudioUnlocked(true)
+      setShowTapPrompt(false)
+    }).catch(() => {})
+  }
+
   useEffect(() => {
     if (!audioSrc || !audioRef.current) return
-    const audio = audioRef.current
-    audio.currentTime = 0
-    const tryPlay = () => audio.play().catch(() => {})
-    tryPlay()
-    const onInteraction = () => { tryPlay(); document.removeEventListener('click', onInteraction); document.removeEventListener('touchstart', onInteraction) }
-    document.addEventListener('click', onInteraction)
-    document.addEventListener('touchstart', onInteraction)
-    return () => { document.removeEventListener('click', onInteraction); document.removeEventListener('touchstart', onInteraction) }
+    audioRef.current.play().then(() => {
+      setAudioUnlocked(true)
+      setShowTapPrompt(false)
+    }).catch(() => {})
   }, [audioSrc])
 
   // Scene resolver — doc overlay takes priority over scrollable content
@@ -576,6 +582,27 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
     }}>
 
       {audioSrc && <audio ref={audioRef} src={audioSrc} loop style={{ display: 'none' }} />}
+
+      {/* Tap-to-hear prompt — needed for in-app browsers (WebView) that block autoplay */}
+      <AnimatePresence>
+        {showTapPrompt && (
+          <motion.button
+            initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.4, delay: 0.8 }}
+            onClick={unlockAudio}
+            style={{
+              position: 'absolute', top: '1rem', right: '1rem', zIndex: 100,
+              background: 'rgba(212,175,55,0.1)', border: '1px solid rgba(212,175,55,0.35)',
+              borderRadius: '999px', padding: '0.35rem 0.75rem',
+              display: 'flex', alignItems: 'center', gap: '0.4rem',
+              cursor: 'pointer', outline: 'none',
+            }}
+          >
+            <span style={{ fontSize: '0.75rem' }}>🔈</span>
+            <span style={{ color: 'rgba(212,175,55,0.8)', fontSize: '0.52rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'monospace', fontWeight: 700 }}>Tap to hear</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Vignette */}
       <div style={{
