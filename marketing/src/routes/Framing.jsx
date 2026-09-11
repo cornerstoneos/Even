@@ -4,6 +4,7 @@ import {
   VB, P, pts, path, rectPlan, silhouette,
   GOLD, GOLD_HI, BG, EASE, HEAVY, ORIGIN,
   SLAB, FOOT, FOOT_Z, SLAB_Z, Volume,
+  SILL_Z, STUD_Z, PLATE_Z, WALL_X, WALL_Y, studRight, studLeft,
 } from '../house/camera'
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -28,20 +29,9 @@ import {
      traces the frame once it's standing.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── FRAMING GEOMETRY — sits directly on the stage-01 slab (SLAB_Z[1]) ── */
-const SILL_Z  = [SLAB_Z[1], SLAB_Z[1] + 6]   // [60, 66]
-const STUD_Z  = [66, 170]
-const PLATE_Z = [170, 179]
-
-const POST_HW = 4   // stud half-width, plan units
-
-/* Two visible exterior walls — same two faces Volume() ever draws:
-   the y1 wall (varying x) and the x1 wall (varying y). */
-const WALL_X = [-190, -135.7, -81.4, -27.1, 27.1, 81.4, 135.7, 190]
-const WALL_Y = [-125, -89.3, -53.6, -17.9, 17.9, 53.6, 89.3, 125]
-
-const studRight = y => ({ x0: SLAB.x1 - POST_HW, x1: SLAB.x1 + POST_HW, y0: y - POST_HW, y1: y + POST_HW })
-const studLeft  = x => ({ x0: x - POST_HW, x1: x + POST_HW, y0: SLAB.y1 - POST_HW, y1: SLAB.y1 + POST_HW })
+/* Frame geometry (SILL_Z/STUD_Z/PLATE_Z/WALL_X/WALL_Y/studRight/studLeft)
+   comes from ../house/camera — locked there so stage 03 (walls) can hold
+   this exact shape static and build on top of it without redefining it. */
 
 /* Ceiling joists spanning the two long walls, resting on the stud tops
    under the plate — the calculation lattice, echoing stage 01's data

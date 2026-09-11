@@ -64,6 +64,22 @@ export const FOOT   = { x0: -204, x1: 204, y0: -139, y1: 139 }
 export const FOOT_Z = [0, 22]
 export const SLAB_Z = [22, 60]
 
+/* ── FRAME GEOMETRY — locked. Stage 02 builds this on the slab; stage 03
+   (walls) and beyond hold it static and build further on top of it. ─── */
+export const SILL_Z  = [SLAB_Z[1], SLAB_Z[1] + 6]   // [60, 66]
+export const STUD_Z  = [66, 170]
+export const PLATE_Z = [170, 179]
+
+export const POST_HW = 4   // stud half-width, plan units
+
+/* Two visible exterior walls — same two faces Volume() ever draws:
+   the y1 wall (varying x) and the x1 wall (varying y). */
+export const WALL_X = [-190, -135.7, -81.4, -27.1, 27.1, 81.4, 135.7, 190]
+export const WALL_Y = [-125, -89.3, -53.6, -17.9, 17.9, 53.6, 89.3, 125]
+
+export const studRight = y => ({ x0: SLAB.x1 - POST_HW, x1: SLAB.x1 + POST_HW, y0: y - POST_HW, y1: y + POST_HW })
+export const studLeft  = x => ({ x0: x - POST_HW, x1: x + POST_HW, y0: SLAB.y1 - POST_HW, y1: SLAB.y1 + POST_HW })
+
 /** One solid volume: top face, two visible side faces, ambient occlusion.
     Grow it over time by animating `zt` — since z maps to screen y as a
     flat additive offset (see P above), a box growing from a fixed zb is a
