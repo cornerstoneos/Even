@@ -9,6 +9,7 @@ import TwoOutputs, { TwoOutputsES } from './routes/TwoOutputs'
 import Foundation from './routes/Foundation'
 import Framing from './routes/Framing'
 import Walls from './routes/Walls'
+import Finish from './routes/Finish'
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/foundation" element={<Foundation />} />
         <Route path="/framing" element={<Framing />} />
         <Route path="/walls" element={<Walls />} />
+        <Route path="/finish" element={<Finish />} />
       </Routes>
     </BrowserRouter>
   )
@@ -39,6 +41,7 @@ const ASSETS = [
   { path: '/foundation', label: 'Foundation — Stage 01', meta: '28s loop · house sequence · locked iso camera' },
   { path: '/framing', label: 'Framing — Stage 02', meta: '25.6s loop · house sequence · cost-code structure' },
   { path: '/walls', label: 'Walls — Stage 03', meta: '22.8s loop · house sequence · two outputs' },
+  { path: '/finish', label: 'Finish — Stage 04', meta: '21.5s loop · house sequence · brand finale' },
   { path: '/south-florida',    label: 'South Florida',      meta: '43s loop · tri-county · HVHZ · 86 municipalities' },
   { path: '/south-florida-es', label: 'South Florida (ES)',  meta: '43s loop · Spanish version' },
   { path: '/map', label: 'US Market Map', meta: '30s loop · state activation · landscape' },

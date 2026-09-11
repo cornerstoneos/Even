@@ -80,6 +80,13 @@ export const WALL_Y = [-125, -89.3, -53.6, -17.9, 17.9, 53.6, 89.3, 125]
 export const studRight = y => ({ x0: SLAB.x1 - POST_HW, x1: SLAB.x1 + POST_HW, y0: y - POST_HW, y1: y + POST_HW })
 export const studLeft  = x => ({ x0: x - POST_HW, x1: x + POST_HW, y0: SLAB.y1 - POST_HW, y1: SLAB.y1 + POST_HW })
 
+/* ── WALL GEOMETRY — locked. Stage 03 sheathes the frame with this exact
+   pair of panels; stage 04 (finish) holds them static and roofs over
+   them. ─────────────────────────────────────────────────────────────── */
+export const RIGHT_PANEL = { x0: SLAB.x1 - 6, x1: SLAB.x1 + 6, y0: SLAB.y0, y1: SLAB.y1 }
+export const LEFT_PANEL  = { x0: SLAB.x0, x1: SLAB.x1, y0: SLAB.y1 - 6, y1: SLAB.y1 + 6 }
+export const PANEL_Z = [SLAB_Z[1], PLATE_Z[1]]   // [60, 179] — full wall height
+
 /** One solid volume: top face, two visible side faces, ambient occlusion.
     Grow it over time by animating `zt` — since z maps to screen y as a
     flat additive offset (see P above), a box growing from a fixed zb is a
