@@ -34,6 +34,8 @@ export default function App() {
 }
 
 const ASSETS = [
+  { path: '/foundation', label: 'Foundation — Stage 01', meta: '28s loop · house sequence · locked iso camera' },
+  { path: '/framing', label: 'Framing — Stage 02', meta: '25.6s loop · house sequence · cost-code structure' },
   { path: '/south-florida',    label: 'South Florida',      meta: '43s loop · tri-county · HVHZ · 86 municipalities' },
   { path: '/south-florida-es', label: 'South Florida (ES)',  meta: '43s loop · Spanish version' },
   { path: '/map', label: 'US Market Map', meta: '30s loop · state activation · landscape' },
@@ -46,8 +48,6 @@ const ASSETS = [
   { path: '/speed-es', label: 'Speed (ES)', meta: '25s loop · Spanish version' },
   { path: '/two-outputs', label: 'Two Outputs', meta: '27s loop · proposal + internal sheet' },
   { path: '/two-outputs-es', label: 'Two Outputs (ES)', meta: '27s loop · Spanish version' },
-  { path: '/foundation', label: 'Foundation — Stage 01', meta: '28s loop · house sequence · locked iso camera' },
-  { path: '/framing', label: 'Framing — Stage 02', meta: '25.6s loop · house sequence · cost-code structure' },
 ]
 
 function Home() {
