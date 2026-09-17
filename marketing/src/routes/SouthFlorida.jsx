@@ -224,13 +224,14 @@ const SWEEP_S = 7.0            // seconds for the full south→north cascade
 const SWEEP_Y0 = 470           // sweep line starting y (south / bottom)
 const SWEEP_Y1 = 70             // sweep line ending y (north / top)
 
-function Counter({ target, running }) {
+function Counter({ target, running, onDone }) {
   const [val, setVal] = useState(0)
   useEffect(() => {
     if (!running) { setVal(0); return }
     const ctrl = animate(0, target, {
       duration: 1.6, ease: [0.16, 1, 0.3, 1],
       onUpdate: v => setVal(Math.floor(v)),
+      onComplete: onDone,
     })
     return () => ctrl.stop()
   }, [running, target])
@@ -259,11 +260,19 @@ function MapDefs() {
         <feGaussianBlur stdDeviation="2.2" result="b" />
         <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
       </filter>
+      {/* directional trail — bright at the leading edge (0%, north side),
+          fading out behind it (100%, south / already-lit side), so the
+          sweep reads as light moving north with a comet trail, not a
+          static symmetric band */}
       <linearGradient id="sweepGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stopColor="#F2D782" stopOpacity="0" />
-        <stop offset="50%"  stopColor="#F2D782" stopOpacity="0.9" />
-        <stop offset="100%" stopColor="#F2D782" stopOpacity="0" />
+        <stop offset="0%"   stopColor="#F2D782" stopOpacity="0.85" />
+        <stop offset="35%"  stopColor="#D4AF37" stopOpacity="0.35" />
+        <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
       </linearGradient>
+      <filter id="sweepGlow" x="-60%" y="-200%" width="220%" height="500%">
+        <feGaussianBlur stdDeviation="4" result="b" />
+        <feMerge><feMergeNode in="b" /><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+      </filter>
     </defs>
   )
 }
@@ -315,6 +324,7 @@ function SouthFloridaBase({ strings }) {
   const [countyIdx, setCountyIdx] = useState(-1)
   const [coreMsg, setCoreMsg]     = useState(false)
   const [payoff, setPayoff]       = useState(false)
+  const [landed, setLanded]       = useState(false)   // brief flash once the counter finishes
   const [hvhz, setHvhz]           = useState(false)
   const [cta, setCta]             = useState(false)
   const [logo, setLogo]           = useState(false)
@@ -331,7 +341,7 @@ function SouthFloridaBase({ strings }) {
     cleanup()
     setScene('hook')
     setSweeping(false); setLitCount(0); setCountyIdx(-1)
-    setCoreMsg(false); setPayoff(false); setHvhz(false); setCta(false); setLogo(false)
+    setCoreMsg(false); setPayoff(false); setLanded(false); setHvhz(false); setCta(false); setLogo(false)
 
     t(() => setScene('tri'), T.triIn)
     t(() => {
@@ -460,28 +470,37 @@ function SouthFloridaBase({ strings }) {
               {Object.entries(COUNTY_STYLE).map(([fips, c]) => (
                 <Marker key={fips} coordinates={c.labelCoords}>
                   <text textAnchor="middle" style={{
-                    fill: hvhz ? 'rgba(255,255,255,0.45)' : 'rgba(212,175,55,0.38)',
-                    fontSize: '9px', fontFamily: 'monospace', fontWeight: 800,
-                    letterSpacing: '0.22em', userSelect: 'none', transition: 'fill 1.1s ease',
+                    fill: hvhz ? 'rgba(255,255,255,0.65)' : 'rgba(212,175,55,0.62)',
+                    fontSize: '15px', fontFamily: 'monospace', fontWeight: 800,
+                    letterSpacing: '0.18em', userSelect: 'none', transition: 'fill 1.1s ease',
+                    filter: 'drop-shadow(0 0 6px rgba(212,175,55,0.35))',
                   }}>
                     {COUNTIES.find(co => co.fips === Number(fips)).name}
                   </text>
                 </Marker>
               ))}
 
-              {/* ── directional sweep — the through-line tying the county
-                   cascades into one continuous "coming alive" motion ── */}
-              {sweeping && (
-                <motion.rect
-                  x={0} width={960} height={54}
-                  y={SWEEP_Y0 + (SWEEP_Y1 - SWEEP_Y0) * (litCount / TOTAL_CITIES) - 27}
-                  fill="url(#sweepGrad)"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 0.9, 0.9, 0] }}
-                  transition={{ duration: SWEEP_S + 0.6, times: [0, 0.06, 0.9, 1] }}
-                  style={{ mixBlendMode: 'screen' }}
-                />
-              )}
+              {/* ── directional sweep — a scanner, not a static band: a
+                   sharp bright leading edge with a comet trail fading
+                   out behind it, so the motion itself reads as light
+                   traveling north, not just a bar that happens to move ── */}
+              {sweeping && (() => {
+                const lineY = SWEEP_Y0 + (SWEEP_Y1 - SWEEP_Y0) * (litCount / TOTAL_CITIES)
+                return (
+                  <motion.g
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 1, 1, 0] }}
+                    transition={{ duration: SWEEP_S + 0.6, times: [0, 0.06, 0.9, 1] }}
+                    style={{ mixBlendMode: 'screen' }}
+                  >
+                    {/* trailing glow — bright at the line, fading south */}
+                    <rect x={0} y={lineY} width={960} height={130} fill="url(#sweepGrad)" />
+                    {/* sharp leading edge */}
+                    <rect x={0} y={lineY - 1.6} width={960} height={3.2}
+                      fill="#F2D782" filter="url(#sweepGlow)" />
+                  </motion.g>
+                )
+              })()}
 
               {/* ── city dots — each mounts (and so ignites) the instant
                    the sweep reaches it; nothing north of the line exists
@@ -498,14 +517,15 @@ function SouthFloridaBase({ strings }) {
                   <Marker key={countyIdx} coordinates={[-80.62, 26.55]}>
                     <motion.text
                       textAnchor="middle"
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 0.9, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                      initial={{ opacity: 0, y: 10, scale: 0.85 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.55, ease: [0.34, 1.4, 0.64, 1] }}
                       style={{
-                        fill: '#F2D782', fontSize: '13px', fontWeight: 900,
-                        fontFamily: 'Inter, sans-serif', letterSpacing: '0.1em',
-                        filter: 'drop-shadow(0 0 10px rgba(212,175,55,0.5))',
+                        fill: '#F2D782', fontSize: '25px', fontWeight: 900,
+                        fontFamily: 'Inter, sans-serif', letterSpacing: '0.06em',
+                        filter: 'drop-shadow(0 0 18px rgba(212,175,55,0.7)) drop-shadow(0 2px 6px rgba(0,0,0,0.8))',
+                        transformOrigin: 'center',
                       }}
                     >
                       {COUNTIES[countyIdx].name}
@@ -540,14 +560,22 @@ function SouthFloridaBase({ strings }) {
                         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                         style={{ marginBottom: '1.3rem' }}
                       >
-                        <div style={{
-                          color: '#D4AF37', fontSize: 'clamp(3.2rem,9vw,5.6rem)',
-                          fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em',
-                          fontVariantNumeric: 'tabular-nums', fontFamily: 'monospace',
-                          textShadow: '0 0 55px rgba(212,175,55,0.45)',
-                        }}>
-                          <Counter target={TOTAL_CITIES} running={payoff} />
-                        </div>
+                        <motion.div
+                          animate={landed ? { scale: [1, 1.14, 1] } : {}}
+                          transition={{ duration: 0.55, ease: [0.34, 1.56, 0.64, 1] }}
+                          style={{
+                            color: '#D4AF37', fontSize: 'clamp(3.2rem,9vw,5.6rem)',
+                            fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em',
+                            fontVariantNumeric: 'tabular-nums', fontFamily: 'monospace',
+                            textShadow: landed
+                              ? '0 0 80px rgba(242,215,130,0.9), 0 0 30px rgba(255,255,255,0.5)'
+                              : '0 0 55px rgba(212,175,55,0.45)',
+                            transformOrigin: 'left center',
+                            transition: 'text-shadow 0.4s ease',
+                          }}
+                        >
+                          <Counter target={TOTAL_CITIES} running={payoff} onDone={() => setLanded(true)} />
+                        </motion.div>
                         <div style={{
                           color: '#F2D782', fontSize: 'clamp(0.7rem,1.8vw,0.92rem)', letterSpacing: '0.22em',
                           textTransform: 'uppercase', fontWeight: 800, marginTop: '0.5rem', fontFamily: 'monospace',
