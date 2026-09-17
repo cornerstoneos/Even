@@ -7,12 +7,12 @@ const html=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
 let pass=0,fail=0;
 const check=(n,c,d)=>{c?(pass++,console.log(`  PASS  ${n}`)):(fail++,console.log(`  FAIL  ${n}\n         ${d}`))};
 
-// Tight, contiguous line range (2292-2394) so nothing DOM-touching from
+// Tight, contiguous line range (2292-2401) so nothing DOM-touching from
 // elsewhere in the file gets pulled into the eval'd module.
 const lines=html.split('\n');
-const src=lines.slice(2291,2394).join('\n');
-const api=new Function(src+'\n;return {materialSourceQuality,computeConfidenceTier,scopeMaterialCategories,inScopeMaterials,categoryInScope,MATERIAL_TIER_RANK};')();
-const {materialSourceQuality,computeConfidenceTier,scopeMaterialCategories,categoryInScope,MATERIAL_TIER_RANK}=api;
+const src=lines.slice(2291,2401).join('\n');
+const api=new Function(src+'\n;return {materialSourceQuality,computeConfidenceTier,scopeMaterialCategories,inScopeMaterials,categoryInScope,isEquipmentRental,MATERIAL_TIER_RANK};')();
+const {materialSourceQuality,computeConfidenceTier,scopeMaterialCategories,inScopeMaterials,categoryInScope,isEquipmentRental,MATERIAL_TIER_RANK}=api;
 
 console.log('\n=== New tier: supplier_direct ===');
 check('supplier_direct is ranked, not falling to the ||1 default',
@@ -74,14 +74,14 @@ console.log('\n=== The prompt is scoped to the job\'s trade, not the whole marke
 check('buildDynamicPricingBlock takes scopeCats and filters by it',
   /function buildDynamicPricingBlock\(md,adjMultiplier,adjLabel,hvhzNote,scopeCats\)/.test(html));
 check('equipment rental is always included regardless of scope',
-  /r\.category==='Equipment Rental'\|\|categoryInScope\(r\.category,scopeCats\)/.test(html));
+  /isEquipmentRental\(r\.category\)\|\|categoryInScope\(r\.category,scopeCats\)/.test(html));
 check('scopeCats is computed before the pricing block is built (order matters)',
   html.indexOf('const scopeCats=scopeMaterialCategories')<html.indexOf('buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote,scopeCats)'));
 
 // Simulate what actually gets built for a painting job vs an electrical job on
 // the real 409-row Miami-Dade data, counting rows the way buildDynamicPricingBlock does.
 function promptRowCount(materials,cats){
-  return materials.filter(r=>r&&(r.category==='Equipment Rental'||categoryInScope(r.category,cats))).length;
+  return materials.filter(r=>r&&(isEquipmentRental(r.category)||categoryInScope(r.category,cats))).length;
 }
 const paintCats=scopeMaterialCategories('Painting',null);
 const paintRows=promptRowCount(mia.materials,paintCats);
@@ -95,6 +95,27 @@ check('an electrical job gets meaningfully fewer rows than the full market too',
   elecRows<allRows, `${elecRows} of ${allRows}`);
 check('but a painting job still gets its own paint row + equipment rental',
   paintRows>=2);
+
+console.log('\n=== Equipment Rental splitting into a category family ("Equipment Rental - X") ===');
+check('isEquipmentRental still matches the bare legacy category',
+  isEquipmentRental('Equipment Rental')===true);
+for(const sub of ['Excavators','Trenchers','Skid Steers'])
+  check(`isEquipmentRental matches "Equipment Rental - ${sub}"`,
+    isEquipmentRental(`Equipment Rental - ${sub}`)===true);
+check('does not false-positive on an unrelated category',
+  isEquipmentRental('Electrical')===false&&isEquipmentRental(undefined)===false);
+check('a split equipment-rental row still gets forced into the prompt for a scoped (non-broad) trade',
+  promptRowCount([{category:'Equipment Rental - Excavators'}],new Set(['Electrical']))===1);
+check('a split equipment-rental row is still excluded from confidence-tier grounding',
+  inScopeMaterials([{category:'Equipment Rental - Excavators',tier:'market_rate'},
+                     {category:'Electrical',tier:'supplier_direct'}],null).length===1);
+
+console.log('\n=== New tier: market_rate (aggregator-blended equipment rental) ===');
+check('market_rate is ranked, not falling to the ||1 default',
+  MATERIAL_TIER_RANK.market_rate===2, `got ${MATERIAL_TIER_RANK.market_rate}`);
+check('ranked with retail_adjusted/national_estimate, below the real-vendor tiers',
+  MATERIAL_TIER_RANK.market_rate===MATERIAL_TIER_RANK.national_estimate
+  && MATERIAL_TIER_RANK.market_rate<MATERIAL_TIER_RANK.supplier_direct);
 
 console.log(`\n──────────────\n${pass} passed, ${fail} failed\n`);
 process.exit(fail?1:0);

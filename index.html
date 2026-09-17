@@ -2372,8 +2372,15 @@ function categoryInScope(category,roots){
   }
   return false;
 }
+// Same root-or-prefix rule as categoryInScope, for the one category family that
+// isn't trade-scoped at all: "Equipment Rental" split into "Equipment Rental -
+// Excavators" / "...Trenchers" / etc must still read as equipment rental, not
+// as an unmatched category that starts counting toward material-tier grounding.
+function isEquipmentRental(category){
+  return category==='Equipment Rental'||!!(category&&category.startsWith('Equipment Rental - '));
+}
 function inScopeMaterials(materials,categories){
-  return (materials||[]).filter(r=>r&&r.category!=='Equipment Rental'
+  return (materials||[]).filter(r=>r&&!isEquipmentRental(r.category)
     &&categoryInScope(r.category,categories));
 }
 
@@ -2805,7 +2812,7 @@ function buildDynamicPricingBlock(md,adjMultiplier,adjLabel,hvhzNote,scopeCats){
   // estimate regardless of trade would dominate the prompt — a paint job has no
   // use for 187 electrical SKUs. Scope to what this job buys; equipment rental
   // stays in regardless since it's relevant across trades and small (~17 rows).
-  const promptMaterials=(md.materials||[]).filter(r=>r&&(r.category==='Equipment Rental'||categoryInScope(r.category,scopeCats)));
+  const promptMaterials=(md.materials||[]).filter(r=>r&&(isEquipmentRental(r.category)||categoryInScope(r.category,scopeCats)));
   const materialLines=promptMaterials.map(r=>`${r.item||''}${r.category?' ('+r.category+')':''}: $${r.low}/${r.unit||'unit'} (low) $${r.mid}/${r.unit||'unit'} (mid) $${r.high}/${r.unit||'unit'} (high)`).join('\n');
   const permitLines=(md.permits||[]).map(r=>`${r.municipality||''} — ${r.work_type||''}: ${r.min_fee?'$'+r.min_fee+' min':''} ${r.rate||''} ${r.method||''}`.trim()).join('\n');
   // Permits are filtered server-side to the issuing jurisdiction. Say plainly which
