@@ -2298,7 +2298,10 @@ function getConfidenceRange(data){ return CONFIDENCE_RANGE[data?.confidenceTier]
 // supplier_direct (SupplyHouse.com — real SKU, brand, published distributor
 // price) sits alongside pro_distributor: professional catalog pricing, not a
 // retail shelf price, but not a hand-negotiated local counter quote either.
-const MATERIAL_TIER_RANK={retail:1,retail_adjusted:2,national_estimate:2,pro_distributor:3,supplier_direct:3,local_supply_house:4};
+// market_rate (equipment rental — BigRentz/DOZR aggregator data blended across
+// yards) sits with retail_adjusted/national_estimate: real and current, but an
+// aggregate across vendors rather than one identifiable, citable quote.
+const MATERIAL_TIER_RANK={retail:1,retail_adjusted:2,national_estimate:2,market_rate:2,pro_distributor:3,supplier_direct:3,local_supply_house:4};
 
 // Which material categories a trade actually buys from. Matched as substrings so
 // the model's own trade names out of the scope breakdown ("Interior Painting",

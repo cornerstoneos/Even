@@ -7,10 +7,10 @@ const html=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
 let pass=0,fail=0;
 const check=(n,c,d)=>{c?(pass++,console.log(`  PASS  ${n}`)):(fail++,console.log(`  FAIL  ${n}\n         ${d}`))};
 
-// Tight, contiguous line range (2292-2391) so nothing DOM-touching from
+// Tight, contiguous line range (2292-2394) so nothing DOM-touching from
 // elsewhere in the file gets pulled into the eval'd module.
 const lines=html.split('\n');
-const src=lines.slice(2291,2391).join('\n');
+const src=lines.slice(2291,2394).join('\n');
 const api=new Function(src+'\n;return {materialSourceQuality,computeConfidenceTier,scopeMaterialCategories,inScopeMaterials,categoryInScope,MATERIAL_TIER_RANK};')();
 const {materialSourceQuality,computeConfidenceTier,scopeMaterialCategories,categoryInScope,MATERIAL_TIER_RANK}=api;
 
@@ -34,7 +34,7 @@ for(const [cat,root,want] of [
 check('null roots (broad trade) matches anything', categoryInScope('Electrical - Wire & Cable',null)===true);
 
 console.log('\n=== Real data: does an electrician now see the new rows? ===');
-const batch=require('/tmp/claude-0/-home-user-Even/bf6bc1be-83b9-5741-8a18-57741c0209b4/scratchpad/new_batch.json');
+const batch=require(path.join(__dirname,'..','data','batches','even_master_batch.json'));
 const mia=batch.find(m=>m.market==='Miami-Dade');
 const elecCats=scopeMaterialCategories('Electrical',null);
 check('Electrical trade resolves to a category set', elecCats&&elecCats.has('Electrical'));
