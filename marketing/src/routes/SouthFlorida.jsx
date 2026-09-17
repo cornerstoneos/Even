@@ -28,6 +28,23 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
         city list, hook line, core message, payoff number — is grouped
         at the top of the file as one block, so this file is the pattern
         to copy for the next regional map rather than a one-off.
+     9. The directional sweep in point 1 is itself the connective motion
+        tying the county cascades into one continuous reveal, rather
+        than three disconnected phases.
+    10. Conversion polish, applied directly to structure/copy:
+          - the payoff (86 · zero guesswork) lands the instant the
+            cascade finishes and gets the biggest type in the piece —
+            everything after it (HVHZ, materials) stays smaller so
+            nothing competes with that hit
+          - every stat is paired with what it means for the contractor
+            ("86" + "never guess a permit fee again"), not left bare
+          - closes on a specific, benefit-loaded, micro-commitment CTA
+            ("Get your first estimate free" / "no sales call") instead
+            of a generic sign-off
+          - the gold/orange palette and marker style here are the
+            house "proof" signature — reuse them as-is on future
+            market maps and other proof-based pieces rather than
+            reinventing per asset (see COUNTY_STYLE / CityDot below)
 
    PACING
      Same discipline as the rest of the library: nothing snaps in. The
@@ -51,6 +68,10 @@ const COASTAL = new Set([
   'Lake Park','Riviera Beach',
 ])
 
+// This orange/gold palette (and CityDot's marker style below) is Even's
+// house "proof" signature — the visual language for showing coverage and
+// precision. Reuse it as-is on future market maps and other proof-based
+// pieces rather than picking new colors per asset.
 const COUNTY_STYLE = {
   12086: {
     baseFill: 'rgba(185,65,15,0.28)', baseStroke: 'rgba(220,90,20,0.7)',
@@ -180,19 +201,22 @@ const COUNTIES = [
 const ALL_CITIES = COUNTIES.flatMap(co => co.cities.map(city => ({ ...city, fips: co.fips })))
 const TOTAL_CITIES = ALL_CITIES.length   // 86
 
-const LOOP = 44500
+const LOOP = 47000
 
 /* ── TIMELINE (ms) ────────────────────────────────────────────────────── */
 const T = {
   hookIn:     300,
   triIn:      3600,
   sweepStart: 4200,
-  coreMsgIn:  12000,
-  payoffIn:   13400,
+  // payoff lands the instant the cascade finishes — the loudest moment
+  // in the piece gets the cascade's own momentum, not a delayed beat
+  payoffIn:   11600,
+  coreMsgIn:  14200,
   hvhzIn:     20500,
   matIn:      32500,
   endIn:      39500,
-  logoIn:     39800,
+  ctaIn:      40000,
+  logoIn:     44500,
   loop:       LOOP,
 }
 
@@ -292,6 +316,7 @@ function SouthFloridaBase({ strings }) {
   const [coreMsg, setCoreMsg]     = useState(false)
   const [payoff, setPayoff]       = useState(false)
   const [hvhz, setHvhz]           = useState(false)
+  const [cta, setCta]             = useState(false)
   const [logo, setLogo]           = useState(false)
   const timers = useRef([])
   const anims  = useRef([])
@@ -306,7 +331,7 @@ function SouthFloridaBase({ strings }) {
     cleanup()
     setScene('hook')
     setSweeping(false); setLitCount(0); setCountyIdx(-1)
-    setCoreMsg(false); setPayoff(false); setHvhz(false); setLogo(false)
+    setCoreMsg(false); setPayoff(false); setHvhz(false); setCta(false); setLogo(false)
 
     t(() => setScene('tri'), T.triIn)
     t(() => {
@@ -329,15 +354,18 @@ function SouthFloridaBase({ strings }) {
       cum += co.cities.length
     })
 
-    t(() => setCoreMsg(true), T.coreMsgIn)
+    // payoff lands first — right as the cascade finishes, biggest beat
+    // in the piece — core message follows as smaller supporting copy
     t(() => setPayoff(true),  T.payoffIn)
+    t(() => setCoreMsg(true), T.coreMsgIn)
 
     t(() => { setScene('hvhz'); setCoreMsg(false); setPayoff(false) }, T.hvhzIn)
     t(() => setHvhz(true), T.hvhzIn + 400)
 
     t(() => { setScene('mat'); setHvhz(false) }, T.matIn)
     t(() => setScene('end'), T.endIn)
-    t(() => setLogo(true),   T.logoIn)
+    t(() => setCta(true),  T.ctaIn)
+    t(() => setLogo(true), T.logoIn)
     t(run, T.loop)
   }
 
@@ -500,48 +528,63 @@ function SouthFloridaBase({ strings }) {
                     initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
                     transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                   >
+                    {/* ── PAYOFF — the loudest moment in the piece. Lands
+                         the instant the cascade finishes, and gets the
+                         biggest type of anything on screen so nothing
+                         after it competes for the hit. The count is
+                         paired with what it means for the contractor,
+                         not left as a bare stat. ── */}
                     {payoff && (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                        style={{ marginBottom: '1.1rem' }}
+                        style={{ marginBottom: '1.3rem' }}
                       >
                         <div style={{
-                          color: '#D4AF37', fontSize: 'clamp(2.6rem,7.5vw,4.6rem)',
+                          color: '#D4AF37', fontSize: 'clamp(3.2rem,9vw,5.6rem)',
                           fontWeight: 900, lineHeight: 1, letterSpacing: '-0.03em',
                           fontVariantNumeric: 'tabular-nums', fontFamily: 'monospace',
-                          textShadow: '0 0 45px rgba(212,175,55,0.4)',
+                          textShadow: '0 0 55px rgba(212,175,55,0.45)',
                         }}>
                           <Counter target={TOTAL_CITIES} running={payoff} />
                         </div>
                         <div style={{
-                          color: 'rgba(255,255,255,0.4)', fontSize: '0.62rem', letterSpacing: '0.3em',
-                          textTransform: 'uppercase', fontWeight: 700, marginTop: '0.4rem', fontFamily: 'monospace',
+                          color: '#F2D782', fontSize: 'clamp(0.7rem,1.8vw,0.92rem)', letterSpacing: '0.22em',
+                          textTransform: 'uppercase', fontWeight: 800, marginTop: '0.5rem', fontFamily: 'monospace',
                         }}>
                           {strings.cap1label}
                         </div>
+                        <div style={{
+                          color: 'rgba(255,255,255,0.6)', fontSize: '0.72rem', marginTop: '0.55rem',
+                          lineHeight: 1.4, maxWidth: '17rem',
+                        }}>
+                          {strings.payoffBenefit}
+                        </div>
                       </motion.div>
                     )}
+                    {/* ── core message — supporting copy, deliberately
+                         smaller than the payoff above so it doesn't
+                         compete with it ── */}
                     {coreMsg && (
                       <motion.div
                         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                       >
                         <div style={{
-                          color: '#D4AF37', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.32em',
-                          textTransform: 'uppercase', marginBottom: '0.6rem', fontFamily: 'monospace',
+                          color: '#D4AF37', fontSize: '0.56rem', fontWeight: 700, letterSpacing: '0.3em',
+                          textTransform: 'uppercase', marginBottom: '0.55rem', fontFamily: 'monospace',
                         }}>
                           {strings.coreEyebrow}
                         </div>
                         <div style={{
-                          color: 'rgba(255,255,255,0.92)', fontSize: 'clamp(1rem,2.6vw,1.35rem)',
-                          fontWeight: 700, lineHeight: 1.35, maxWidth: '19rem',
+                          color: 'rgba(255,255,255,0.88)', fontSize: 'clamp(0.88rem,2.2vw,1.15rem)',
+                          fontWeight: 700, lineHeight: 1.35, maxWidth: '18rem',
                         }}>
                           {strings.coreMain}
                         </div>
                         <div style={{
-                          color: 'rgba(255,255,255,0.45)', fontSize: '0.7rem', marginTop: '0.6rem',
-                          lineHeight: 1.4, maxWidth: '18rem',
+                          color: 'rgba(255,255,255,0.42)', fontSize: '0.66rem', marginTop: '0.55rem',
+                          lineHeight: 1.4, maxWidth: '17rem',
                         }}>
                           {strings.coreSub}
                         </div>
@@ -616,6 +659,43 @@ function SouthFloridaBase({ strings }) {
         )}
       </AnimatePresence>
 
+      {/* ── CTA — specific and benefit-loaded, not a generic "learn
+           more." Framed as one small, easy first step (the free
+           estimate credit), not a sales pitch. ── */}
+      <AnimatePresence>
+        {cta && (
+          <motion.div key="cta"
+            initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+              padding: '0 2rem', textAlign: 'center',
+            }}
+          >
+            <div style={{
+              color: '#F2D782', fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.32em',
+              textTransform: 'uppercase', marginBottom: '0.9rem', fontFamily: 'monospace',
+            }}>
+              {strings.ctaMicro}
+            </div>
+            <div style={{
+              color: '#ffffff', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.15,
+              fontSize: 'clamp(1.5rem,4.6vw,2.7rem)', textShadow: '0 0 40px rgba(212,175,55,0.2)',
+              maxWidth: '30rem',
+            }}>
+              {strings.ctaMain}
+            </div>
+            <div style={{
+              color: 'rgba(255,255,255,0.45)', fontSize: 'clamp(0.7rem,1.8vw,0.88rem)',
+              marginTop: '0.9rem', maxWidth: '22rem', lineHeight: 1.45,
+            }}>
+              {strings.ctaSub}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {logo && (
           <motion.div key="logo"
@@ -641,37 +721,45 @@ function SouthFloridaBase({ strings }) {
 }
 
 const EN = {
-  hookLine1:   "South Florida's best contractors don't guess.",
-  hookLine2:   'Are you one of them?',
-  cap1label:   'Municipalities Indexed',
-  coreEyebrow: 'Built City By City',
-  coreMain:    "Generic tools lump Fort Lauderdale into “Broward.” We don't.",
-  coreSub:     "Every municipality priced on its own — never averaged into the county.",
-  hvhzLine1:   'HVHZ · Miami-Dade & Broward',
-  hvhzLine2:   '40-Year Recertification · Miami-Dade & Broward, Coastal Municipalities Following Suit',
-  hvhzTagline: 'We price to the code that actually applies to your job.',
-  cap3eyebrow: 'Materials Pricing',
-  cap3main:    'Electrical · Plumbing · HVAC · Painting',
-  cap3sub:     'Pro-tier pricing — tri-county wide.',
-  headline:    'South Florida',
-  url:         'even-os.com',
+  hookLine1:     "South Florida's best contractors don't guess.",
+  hookLine2:     'Are you one of them?',
+  cap1label:     'Cities · Zero Guesswork',
+  payoffBenefit: 'Never guess a permit fee again.',
+  coreEyebrow:   'Built City By City',
+  coreMain:      "Generic tools lump Fort Lauderdale into “Broward.” We don't.",
+  coreSub:       "Every municipality priced on its own — never averaged into the county.",
+  hvhzLine1:     'HVHZ · Miami-Dade & Broward',
+  hvhzLine2:     '40-Year Recertification · Miami-Dade & Broward, Coastal Municipalities Following Suit',
+  hvhzTagline:   'We price to the code that actually applies to your job.',
+  cap3eyebrow:   'Materials Pricing',
+  cap3main:      'Electrical · Plumbing · HVAC · Painting',
+  cap3sub:       'Pro-tier pricing — tri-county wide.',
+  headline:      'South Florida',
+  ctaMicro:      'One Estimate · No Sales Call',
+  ctaMain:       'Get Your First Estimate Free',
+  ctaSub:        "See your city's real numbers — not a county average.",
+  url:           'even-os.com',
 }
 
 const ES = {
-  hookLine1:   'Los mejores contratistas del Sur de Florida no adivinan.',
-  hookLine2:   '¿Eres uno de ellos?',
-  cap1label:   'Municipios Indexados',
-  coreEyebrow: 'Ciudad Por Ciudad',
-  coreMain:    'Las herramientas genéricas meten Fort Lauderdale en "Broward." Nosotros no.',
-  coreSub:     'Cada municipio con su propio precio — nunca promediado por condado.',
-  hvhzLine1:   'HVHZ · Miami-Dade y Broward',
-  hvhzLine2:   'Recertificación de 40 Años · Miami-Dade y Broward, Municipios Costeros en Seguimiento',
-  hvhzTagline: 'Cotizamos según el código que aplica a tu trabajo.',
-  cap3eyebrow: 'Precios de Materiales',
-  cap3main:    'Eléctrico · Plomería · HVAC · Pintura',
-  cap3sub:     'Precio de nivel profesional — tri-condado.',
-  headline:    'Sur de Florida',
-  url:         'even-os.com',
+  hookLine1:     'Los mejores contratistas del Sur de Florida no adivinan.',
+  hookLine2:     '¿Eres uno de ellos?',
+  cap1label:     'Ciudades · Cero Adivinanzas',
+  payoffBenefit: 'Nunca más adivines una tarifa de permiso.',
+  coreEyebrow:   'Ciudad Por Ciudad',
+  coreMain:      'Las herramientas genéricas meten Fort Lauderdale en "Broward." Nosotros no.',
+  coreSub:       'Cada municipio con su propio precio — nunca promediado por condado.',
+  hvhzLine1:     'HVHZ · Miami-Dade y Broward',
+  hvhzLine2:     'Recertificación de 40 Años · Miami-Dade y Broward, Municipios Costeros en Seguimiento',
+  hvhzTagline:   'Cotizamos según el código que aplica a tu trabajo.',
+  cap3eyebrow:   'Precios de Materiales',
+  cap3main:      'Eléctrico · Plomería · HVAC · Pintura',
+  cap3sub:       'Precio de nivel profesional — tri-condado.',
+  headline:      'Sur de Florida',
+  ctaMicro:      'Un Estimado · Sin Llamada de Ventas',
+  ctaMain:       'Obtén Tu Primer Estimado Gratis',
+  ctaSub:        'Mira los números reales de tu ciudad — no un promedio del condado.',
+  url:           'even-os.com',
 }
 
 export default function SouthFlorida() {
