@@ -54,6 +54,7 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const CNTY_GEO = 'https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json'
+const US_GEO   = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'
 
 const TRI_FIPS = [12086, 12011, 12099]
 const isTri  = id => TRI_FIPS.includes(Number(id))
@@ -317,6 +318,42 @@ function CityDot({ coastal }) {
   )
 }
 
+/** Full-state Florida outline, ghosted in as ambient negative-space
+    context behind the tri-county map — a nod to "this sits inside the
+    whole state" without competing with the actual data. Deliberately
+    not aligned to the tri-county projection below it; it's atmosphere,
+    not a second data layer. */
+function FloridaGhost() {
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+    }}>
+      <ComposableMap
+        projection="geoMercator"
+        projectionConfig={{ center: [-83.2, 28.2], scale: 3500 }}
+        width={960} height={560}
+        style={{ width: '78vw', height: 'auto', overflow: 'visible' }}
+      >
+        <Geographies geography={US_GEO}>
+          {({ geographies }) =>
+            geographies.filter(g => g.properties.name === 'Florida').map(geo => (
+              <Geography key={geo.rsmKey} geography={geo}
+                fill="rgba(212,175,55,0.025)" stroke="rgba(212,175,55,0.14)" strokeWidth={1}
+                style={{
+                  default: { outline: 'none' },
+                  hover:   { outline: 'none' },
+                  pressed: { outline: 'none' },
+                }}
+              />
+            ))
+          }
+        </Geographies>
+      </ComposableMap>
+    </div>
+  )
+}
+
 function SouthFloridaBase({ strings }) {
   const [scene, setScene]         = useState('hook')   // hook | tri | hvhz | mat | end
   const [sweeping, setSweeping]   = useState(false)
@@ -437,11 +474,13 @@ function SouthFloridaBase({ strings }) {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
+            <FloridaGhost />
+
             <ComposableMap
               projection="geoMercator"
               projectionConfig={{ center: [-80.35, 26.25], scale: 26000 }}
               width={960} height={560}
-              style={{ width: '96vw', height: 'auto', overflow: 'visible' }}
+              style={{ width: '96vw', height: 'auto', overflow: 'visible', position: 'relative', zIndex: 1 }}
             >
               <MapDefs />
 
