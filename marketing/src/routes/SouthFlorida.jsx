@@ -331,15 +331,15 @@ function FloridaGhost() {
     }}>
       <ComposableMap
         projection="geoMercator"
-        projectionConfig={{ center: [-83.2, 28.2], scale: 3500 }}
+        projectionConfig={{ center: [-83.2, 28.2], scale: 4600 }}
         width={960} height={560}
-        style={{ width: '78vw', height: 'auto', overflow: 'visible' }}
+        style={{ width: '96vw', height: 'auto', overflow: 'visible' }}
       >
         <Geographies geography={US_GEO}>
           {({ geographies }) =>
             geographies.filter(g => g.properties.name === 'Florida').map(geo => (
               <Geography key={geo.rsmKey} geography={geo}
-                fill="rgba(212,175,55,0.025)" stroke="rgba(212,175,55,0.14)" strokeWidth={1}
+                fill="rgba(212,175,55,0.04)" stroke="rgba(212,175,55,0.2)" strokeWidth={1.2}
                 style={{
                   default: { outline: 'none' },
                   hover:   { outline: 'none' },
@@ -526,18 +526,37 @@ function SouthFloridaBase({ strings }) {
               {sweeping && (() => {
                 const lineY = SWEEP_Y0 + (SWEEP_Y1 - SWEEP_Y0) * (litCount / TOTAL_CITIES)
                 return (
-                  <motion.g
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: [0, 1, 1, 0] }}
-                    transition={{ duration: SWEEP_S + 0.6, times: [0, 0.06, 0.9, 1] }}
-                    style={{ mixBlendMode: 'screen' }}
-                  >
-                    {/* trailing glow — bright at the line, fading south */}
-                    <rect x={0} y={lineY} width={960} height={130} fill="url(#sweepGrad)" />
-                    {/* sharp leading edge */}
-                    <rect x={0} y={lineY - 1.6} width={960} height={3.2}
-                      fill="#F2D782" filter="url(#sweepGlow)" />
-                  </motion.g>
+                  <>
+                    <motion.g
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: [0, 1, 1, 0] }}
+                      transition={{ duration: SWEEP_S + 0.6, times: [0, 0.06, 0.9, 1] }}
+                      style={{ mixBlendMode: 'screen' }}
+                    >
+                      {/* trailing glow — bright at the line, fading south */}
+                      <rect x={0} y={lineY} width={960} height={130} fill="url(#sweepGrad)" />
+                      {/* sharp leading edge */}
+                      <rect x={0} y={lineY - 1.6} width={960} height={3.2}
+                        fill="#F2D782" filter="url(#sweepGlow)" />
+                    </motion.g>
+                    {/* the mark itself — what's actually dragging the light
+                        north, not an anonymous line. Kept out of the
+                        screen-blend group above so its own gold shading
+                        reads normally rather than blowing out. */}
+                    <motion.g
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: [0, 1, 1, 0] }}
+                      transition={{ duration: SWEEP_S + 0.6, times: [0, 0.06, 0.9, 1] }}
+                    >
+                      <motion.image
+                        href="/logo.png"
+                        x={480 - 15} y={lineY - 15} width={30} height={30}
+                        animate={{ opacity: [0.85, 1, 0.85] }}
+                        transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
+                        style={{ filter: 'drop-shadow(0 0 8px rgba(242,215,130,0.9)) drop-shadow(0 0 20px rgba(212,175,55,0.55))' }}
+                      />
+                    </motion.g>
+                  </>
                 )
               })()}
 
