@@ -45,7 +45,7 @@ const ASSETS = [
   { path: '/walls', label: 'Walls — Stage 03', meta: '22.8s loop · house sequence · two outputs' },
   { path: '/finish', label: 'Finish — Stage 04', meta: '21.5s loop · house sequence · brand finale' },
   { path: '/full-cut', label: 'House Sequence — Full Cut (Alt)', meta: '~96s · all 4 stages, back to back' },
-  { path: '/south-florida',    label: 'South Florida',      meta: '47s loop · directional sweep · county-by-county · CTA' },
+  { path: '/south-florida',    label: 'South Florida',      meta: '47s loop · county-by-county cascade · CTA' },
   { path: '/south-florida-es', label: 'South Florida (ES)',  meta: '47s loop · Spanish version' },
   { path: '/map', label: 'US Market Map', meta: '30s loop · state activation · landscape' },
   { path: '/map-es', label: 'US Market Map (ES)', meta: '30s loop · Spanish version' },

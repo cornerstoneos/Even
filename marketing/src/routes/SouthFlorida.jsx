@@ -6,10 +6,11 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
    EVEN — SOUTH FLORIDA MARKET MAP · REVISION 2
 
    Reworked against the Sep 2026 brief. What changed from rev 1:
-     1. County-by-county reveal is now one continuous directional sweep
-        (south → north, Miami-Dade → Broward → Palm Beach) rather than a
-        single 86-dot pop. A traveling glow line drives it; each county's
-        name crossfades in as the sweep enters that county's cities.
+     1. County-by-county reveal is one continuous south → north cascade
+        (Miami-Dade → Broward → Palm Beach) rather than a single 86-dot
+        pop, timed by a progress value (no visible sweep bar — see the
+        REV 3 note below); each county's name crossfades in on its own
+        even, readable timer as the cascade moves through its cities.
      2. Bolder markers — halo + ignition ping + larger core, sized to read
         on a phone screen, not just a desktop preview.
      3. Crosshatch background removed. Clean dark ground.
@@ -28,9 +29,9 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
         city list, hook line, core message, payoff number — is grouped
         at the top of the file as one block, so this file is the pattern
         to copy for the next regional map rather than a one-off.
-     9. The directional sweep in point 1 is itself the connective motion
-        tying the county cascades into one continuous reveal, rather
-        than three disconnected phases.
+     9. The cascade in point 1 is itself the connective motion tying the
+        county reveals into one continuous sequence, rather than three
+        disconnected phases.
     10. Conversion polish, applied directly to structure/copy:
           - the payoff (86 · zero guesswork) lands the instant the
             cascade finishes and gets the biggest type in the piece —
@@ -47,14 +48,28 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
             reinventing per asset (see COUNTY_STYLE / CityDot below)
 
    PACING
-     Same discipline as the rest of the library: nothing snaps in. The
-     sweep is the one continuous through-line tying the whole reveal
-     together — every dot's ignition is driven by where that line is,
-     not an independent timer.
+     Same discipline as the rest of the library: nothing snaps in. A
+     single progress value driven over SWEEP_S seconds is the one
+     continuous through-line tying the whole reveal together — every
+     dot's ignition is driven by that progress, not an independent timer.
+
+   REVISION 3 (per live phone feedback)
+     - Removed the visible sweep bar (trailing glow + leading edge +
+       logo riding it) entirely. The underlying progress value that
+       drives the dot cascade is unchanged — only its on-screen line
+       and logo mark are gone.
+     - Removed the faint full-state Florida ghost outline that sat
+       behind the tri-county map.
+     - The big crossfade county-name label now uses each county's own
+       COUNTY_STYLE labelCoords instead of one fixed coordinate, so it
+       sits over the county it's naming.
+     - Each county's name now gets an equal, generous slice of the
+       pre-HVHZ window to display (see countySlot below) instead of a
+       duration proportional to its city count, which used to leave
+       Miami-Dade and Broward flashing by unreadably fast.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const CNTY_GEO = 'https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json'
-const US_GEO   = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json'
 
 const TRI_FIPS = [12086, 12011, 12099]
 const isTri  = id => TRI_FIPS.includes(Number(id))
@@ -222,8 +237,6 @@ const T = {
 }
 
 const SWEEP_S = 7.0            // seconds for the full south→north cascade
-const SWEEP_Y0 = 470           // sweep line starting y (south / bottom)
-const SWEEP_Y1 = 70             // sweep line ending y (north / top)
 
 function Counter({ target, running, onDone }) {
   const [val, setVal] = useState(0)
@@ -260,19 +273,6 @@ function MapDefs() {
       <filter id="dotGlow" x="-140%" y="-140%" width="380%" height="380%">
         <feGaussianBlur stdDeviation="2.2" result="b" />
         <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-      </filter>
-      {/* directional trail — bright at the leading edge (0%, north side),
-          fading out behind it (100%, south / already-lit side), so the
-          sweep reads as light moving north with a comet trail, not a
-          static symmetric band */}
-      <linearGradient id="sweepGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stopColor="#F2D782" stopOpacity="0.85" />
-        <stop offset="35%"  stopColor="#D4AF37" stopOpacity="0.35" />
-        <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
-      </linearGradient>
-      <filter id="sweepGlow" x="-60%" y="-200%" width="220%" height="500%">
-        <feGaussianBlur stdDeviation="4" result="b" />
-        <feMerge><feMergeNode in="b" /><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
       </filter>
     </defs>
   )
@@ -318,45 +318,8 @@ function CityDot({ coastal }) {
   )
 }
 
-/** Full-state Florida outline, ghosted in as ambient negative-space
-    context behind the tri-county map — a nod to "this sits inside the
-    whole state" without competing with the actual data. Deliberately
-    not aligned to the tri-county projection below it; it's atmosphere,
-    not a second data layer. */
-function FloridaGhost() {
-  return (
-    <div style={{
-      position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-    }}>
-      <ComposableMap
-        projection="geoMercator"
-        projectionConfig={{ center: [-83.2, 28.2], scale: 4600 }}
-        width={960} height={560}
-        style={{ width: '96vw', height: 'auto', overflow: 'visible' }}
-      >
-        <Geographies geography={US_GEO}>
-          {({ geographies }) =>
-            geographies.filter(g => g.properties.name === 'Florida').map(geo => (
-              <Geography key={geo.rsmKey} geography={geo}
-                fill="rgba(212,175,55,0.04)" stroke="rgba(212,175,55,0.2)" strokeWidth={1.2}
-                style={{
-                  default: { outline: 'none' },
-                  hover:   { outline: 'none' },
-                  pressed: { outline: 'none' },
-                }}
-              />
-            ))
-          }
-        </Geographies>
-      </ComposableMap>
-    </div>
-  )
-}
-
 function SouthFloridaBase({ strings }) {
   const [scene, setScene]         = useState('hook')   // hook | tri | hvhz | mat | end
-  const [sweeping, setSweeping]   = useState(false)
   const [litCount, setLitCount]   = useState(0)         // how many cities (south→north) have mounted
   const [countyIdx, setCountyIdx] = useState(-1)
   const [coreMsg, setCoreMsg]     = useState(false)
@@ -377,28 +340,29 @@ function SouthFloridaBase({ strings }) {
   function run() {
     cleanup()
     setScene('hook')
-    setSweeping(false); setLitCount(0); setCountyIdx(-1)
+    setLitCount(0); setCountyIdx(-1)
     setCoreMsg(false); setPayoff(false); setLanded(false); setHvhz(false); setCta(false); setLogo(false)
 
     t(() => setScene('tri'), T.triIn)
     t(() => {
-      setSweeping(true)
-      // single progress value drives both the sweep line's position and
-      // how many cities (south→north) have mounted — a dot that hasn't
-      // been reached yet simply isn't in the DOM.
+      // progress value drives how many cities (south→north) have
+      // mounted — a dot that hasn't been reached yet simply isn't in
+      // the DOM.
       anims.current.push(animate(0, 1, {
         duration: SWEEP_S, ease: 'linear',
         onUpdate: v => setLitCount(Math.floor(v * TOTAL_CITIES)),
       }))
     }, T.sweepStart)
 
-    // county-name crossfade fires the moment the sweep reaches that
-    // county's first (southernmost) city
-    let cum = 0
+    // county-name crossfade: each county gets an equal, comfortably
+    // readable slice of the window between the cascade starting and the
+    // HVHZ scene taking over — not a duration proportional to how many
+    // cities that county has, which used to leave Miami-Dade and Broward
+    // flashing by while Palm Beach (last, holding until hvhzIn) got most
+    // of the time.
+    const countySlot = (T.hvhzIn - T.sweepStart) / COUNTIES.length
     COUNTIES.forEach((co, i) => {
-      const cityDelay = (cum / TOTAL_CITIES) * SWEEP_S * 1000
-      t(() => setCountyIdx(i), T.sweepStart + cityDelay)
-      cum += co.cities.length
+      t(() => setCountyIdx(i), T.sweepStart + i * countySlot)
     })
 
     // payoff lands first — right as the cascade finishes, biggest beat
@@ -474,13 +438,11 @@ function SouthFloridaBase({ strings }) {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
-            <FloridaGhost />
-
             <ComposableMap
               projection="geoMercator"
               projectionConfig={{ center: [-80.35, 26.25], scale: 26000 }}
               width={960} height={560}
-              style={{ width: '96vw', height: 'auto', overflow: 'visible', position: 'relative', zIndex: 1 }}
+              style={{ width: '96vw', height: 'auto', overflow: 'visible' }}
             >
               <MapDefs />
 
@@ -519,47 +481,6 @@ function SouthFloridaBase({ strings }) {
                 </Marker>
               ))}
 
-              {/* ── directional sweep — a scanner, not a static band: a
-                   sharp bright leading edge with a comet trail fading
-                   out behind it, so the motion itself reads as light
-                   traveling north, not just a bar that happens to move ── */}
-              {sweeping && (() => {
-                const lineY = SWEEP_Y0 + (SWEEP_Y1 - SWEEP_Y0) * (litCount / TOTAL_CITIES)
-                return (
-                  <>
-                    <motion.g
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0, 1, 1, 0] }}
-                      transition={{ duration: SWEEP_S + 0.6, times: [0, 0.06, 0.9, 1] }}
-                      style={{ mixBlendMode: 'screen' }}
-                    >
-                      {/* trailing glow — bright at the line, fading south */}
-                      <rect x={0} y={lineY} width={960} height={130} fill="url(#sweepGrad)" />
-                      {/* sharp leading edge */}
-                      <rect x={0} y={lineY - 1.6} width={960} height={3.2}
-                        fill="#F2D782" filter="url(#sweepGlow)" />
-                    </motion.g>
-                    {/* the mark itself — what's actually dragging the light
-                        north, not an anonymous line. Kept out of the
-                        screen-blend group above so its own gold shading
-                        reads normally rather than blowing out. */}
-                    <motion.g
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0, 1, 1, 0] }}
-                      transition={{ duration: SWEEP_S + 0.6, times: [0, 0.06, 0.9, 1] }}
-                    >
-                      <motion.image
-                        href="/logo.png"
-                        x={480 - 15} y={lineY - 15} width={30} height={30}
-                        animate={{ opacity: [0.85, 1, 0.85] }}
-                        transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
-                        style={{ filter: 'drop-shadow(0 0 8px rgba(242,215,130,0.9)) drop-shadow(0 0 20px rgba(212,175,55,0.55))' }}
-                      />
-                    </motion.g>
-                  </>
-                )
-              })()}
-
               {/* ── city dots — each mounts (and so ignites) the instant
                    the sweep reaches it; nothing north of the line exists
                    in the DOM yet ── */}
@@ -572,7 +493,7 @@ function SouthFloridaBase({ strings }) {
               {/* ── current-county crossfade label ── */}
               <AnimatePresence mode="wait">
                 {countyIdx >= 0 && scene === 'tri' && (
-                  <Marker key={countyIdx} coordinates={[-80.62, 26.55]}>
+                  <Marker key={countyIdx} coordinates={COUNTY_STYLE[COUNTIES[countyIdx].fips].labelCoords}>
                     <motion.text
                       textAnchor="middle"
                       initial={{ opacity: 0, y: 10, scale: 0.85 }}
