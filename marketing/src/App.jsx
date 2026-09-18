@@ -11,12 +11,14 @@ import Framing from './routes/Framing'
 import Walls from './routes/Walls'
 import Finish from './routes/Finish'
 import Sequence from './routes/Sequence'
+import Manual from './routes/Manual'
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/manual" element={<Manual />} />
         <Route path="/south-florida" element={<SouthFlorida />} />
         <Route path="/south-florida-es" element={<SouthFloridaES />} />
         <Route path="/map" element={<Map />} />

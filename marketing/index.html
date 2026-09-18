@@ -10,6 +10,22 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!--
+      Hidden static mirror of the "job-upload" form in src/routes/Manual.jsx.
+      Netlify's form detection scans the built HTML at deploy time — it
+      can't see a form that only ever exists inside a client-rendered React
+      tree, so this duplicate (never shown, never submitted) is what makes
+      Netlify register the form and its fields. Keep the name and field
+      names here in sync with the real form.
+    -->
+    <form name="job-upload" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="bot-field" />
+      <input type="email" name="email" />
+      <input type="file" name="job-file" />
+      <textarea name="notes"></textarea>
+    </form>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
