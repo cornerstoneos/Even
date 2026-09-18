@@ -8,6 +8,19 @@
 
    Spanish: not decided yet (toggle vs. separate page, and whether the
    embedded video itself should swap language) — flagged, not built.
+
+   OPEN, as of this page's last working session — not blocking, just
+   not forgotten:
+     - Screen recordings for the roadmap below. Likely more than the 3
+       steps currently stubbed out — closer to 5-6, covering: type in a
+       job → cities pop up → click a city → enter job details → choose
+       time-vs-materials → estimate generates → view/download the
+       outputs. Split into that many separate short clips rather than
+       one long recording per step. The `breakdown` array below scales
+       to any number of steps with no code change — just add entries.
+     - Webinar video (`video.embedUrl` below) — format/hosting not
+       decided yet, separate from the roadmap recordings above.
+     - Final copy pass across the page.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export const MANUAL = {
