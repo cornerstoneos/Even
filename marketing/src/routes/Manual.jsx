@@ -197,12 +197,36 @@ function Webinar() {
 }
 
 /* ── SECTION 3 — WHAT JUST HAPPENED ──────────────────────────────────── */
-/* Screenshot-and-arrow roadmap: each step is a real screenshot from the
-   job (annotated or not — we draw the connecting arrow either way) with
-   its label underneath, chained left-to-right on desktop and top-to-
-   bottom on phone, ending at the two outputs. Falls back to a plain
-   "screenshot coming" placeholder per step until real ones are dropped
-   into src/content/manual.js. */
+const VIDEO_EXT = /\.(mp4|webm|mov)$/i
+
+/* Small phone bezel for a step's media — same visual language as the
+   full-size PhoneFrame elsewhere in the library (App Explainer, Speed),
+   scaled down to sit inside a roadmap card. */
+function MiniPhoneFrame({ children }) {
+  return (
+    <div style={{
+      width: '9rem', flexShrink: 0,
+      background: 'linear-gradient(155deg, #282828 0%, #181818 50%, #0e0e0e 100%)',
+      borderRadius: '18px', padding: '5px',
+      boxShadow: '0 0 0 1px rgba(212,175,55,0.25), 0 16px 34px rgba(0,0,0,0.55)',
+    }}>
+      <div style={{
+        borderRadius: '14px', overflow: 'hidden', aspectRatio: '9/19.5',
+        background: '#050505', position: 'relative',
+      }}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+/* Screenshot/screen-recording-and-arrow roadmap: each step is real
+   footage from the job (a short silent looping screen recording, or a
+   static screenshot — either works, auto-detected by file extension),
+   framed like it's actually on a phone, chained together with an arrow,
+   left-to-right on desktop and top-to-bottom on phone, ending at the
+   two outputs. Falls back to a plain "coming" placeholder per step
+   until real media is dropped into src/content/manual.js. */
 function Breakdown() {
   return (
     <section style={{ padding: '2rem 0 5rem' }}>
@@ -232,22 +256,35 @@ function Breakdown() {
             <Fragment key={s.step}>
               <Reveal delay={i * 0.1} style={{ flex: '1 1 240px', minWidth: 0 }}>
                 <GhostPanel style={{ height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                  {s.screenshot ? (
-                    <img
-                      src={s.screenshot}
-                      alt={s.title}
-                      style={{ display: 'block', width: '100%', aspectRatio: '4/3', objectFit: 'cover', borderBottom: '1px solid rgba(212,175,55,0.18)' }}
-                    />
-                  ) : (
-                    <div style={{
-                      aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      borderBottom: '1px solid rgba(212,175,55,0.14)',
-                      color: 'rgba(255,255,255,0.18)', fontSize: '0.68rem', letterSpacing: '0.1em',
-                      textTransform: 'uppercase', fontFamily: 'monospace',
-                    }}>
-                      Screenshot coming
-                    </div>
-                  )}
+                  <div style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    padding: '1.8rem 0', borderBottom: '1px solid rgba(212,175,55,0.14)',
+                    background: 'radial-gradient(ellipse at center, rgba(212,175,55,0.05), transparent 70%)',
+                  }}>
+                    <MiniPhoneFrame>
+                      {s.media ? (
+                        VIDEO_EXT.test(s.media) ? (
+                          <video
+                            src={s.media} autoPlay muted loop playsInline
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                          />
+                        ) : (
+                          <img
+                            src={s.media} alt={s.title}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                          />
+                        )
+                      ) : (
+                        <div style={{
+                          width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          color: 'rgba(255,255,255,0.18)', fontSize: '0.52rem', letterSpacing: '0.08em',
+                          textTransform: 'uppercase', fontFamily: 'monospace', textAlign: 'center', padding: '0 0.6rem',
+                        }}>
+                          Coming soon
+                        </div>
+                      )}
+                    </MiniPhoneFrame>
+                  </div>
                   <div style={{ padding: '1.5rem 1.5rem 1.7rem', flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', marginBottom: '1rem' }}>
                       <div style={{

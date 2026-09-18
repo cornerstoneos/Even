@@ -24,33 +24,42 @@ export const MANUAL = {
   // Mirrors the App Explainer's own step labels (SCOPE → REFINE →
   // ESTIMATE) so this page and the app read as the same product.
   //
-  // This is the "roadmap" — three real screenshots from this week's job,
-  // chained left-to-right (top-to-bottom on phone) with an arrow between
-  // each, ending at the two outputs. Drop the screenshot for each step
-  // in marketing/public/manual/ and point `screenshot` at it below; a
-  // step with no screenshot set just shows a "Screenshot coming"
+  // This is the "roadmap" — three real phone screens from this week's
+  // job, each shown in a little phone frame, chained left-to-right
+  // (top-to-bottom on phone) with an arrow between each, ending at the
+  // two outputs.
+  //
+  // `media` takes either a short silent screen recording (.mp4/.webm/
+  // .mov — plays muted, looping, like a GIF) or a static screenshot
+  // (.png/.jpg) — which one it is gets auto-detected from the file
+  // extension. Recordings read better here than stills; keep each one
+  // short (5–10s) and compressed before committing — these load on
+  // every visitor's phone, so a couple MB per clip, not tens.
+  //
+  // Drop the file in marketing/public/manual/ and point `media` at it
+  // below. A step with no `media` set just shows a "coming soon"
   // placeholder in its place, so this is safe to fill in one step at a
-  // time. Annotate the images themselves (arrows/circles pointing at the
-  // relevant part of the screen) before dropping them in if you want
-  // that detail — the page doesn't draw on top of them.
+  // time. If you want callouts (arrows/circles on the screen itself),
+  // bake those into the recording/screenshot before dropping it in —
+  // the page doesn't draw on top of it.
   breakdown: [
     {
       step: 'SCOPE',
       title: 'Even read the plans.',
       body: 'Every trade, every quantity, pulled straight off the plan set — no manual takeoff.',
-      screenshot: '', // e.g. '/manual/step-1-scope.png'
+      media: '', // e.g. '/manual/step-1-scope.mp4'
     },
     {
       step: 'REFINE',
       title: 'We changed the job, live.',
       body: 'Adjust anything by voice or text and Even reprices the whole estimate instantly.',
-      screenshot: '', // e.g. '/manual/step-2-refine.png'
+      media: '', // e.g. '/manual/step-2-refine.mp4'
     },
     {
       step: 'ESTIMATE',
       title: 'Two outputs, one job.',
       body: 'A client-ready proposal and your internal cost sheet — same numbers, built for two audiences.',
-      screenshot: '', // e.g. '/manual/step-3-estimate.png'
+      media: '', // e.g. '/manual/step-3-estimate.mp4'
     },
   ],
 
