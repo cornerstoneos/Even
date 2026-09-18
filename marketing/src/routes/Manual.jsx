@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, Fragment } from 'react'
 import { motion } from 'framer-motion'
 import { MANUAL } from '../content/manual'
 
@@ -197,9 +197,21 @@ function Webinar() {
 }
 
 /* ── SECTION 3 — WHAT JUST HAPPENED ──────────────────────────────────── */
+/* Screenshot-and-arrow roadmap: each step is a real screenshot from the
+   job (annotated or not — we draw the connecting arrow either way) with
+   its label underneath, chained left-to-right on desktop and top-to-
+   bottom on phone, ending at the two outputs. Falls back to a plain
+   "screenshot coming" placeholder per step until real ones are dropped
+   into src/content/manual.js. */
 function Breakdown() {
   return (
     <section style={{ padding: '2rem 0 5rem' }}>
+      <style>{`
+        @media (max-width: 760px) {
+          .manual-roadmap { flex-direction: column; }
+          .manual-roadmap-arrow { width: 100% !important; height: 2.2rem; transform: rotate(90deg); }
+        }
+      `}</style>
       <div style={container}>
         <Reveal>
           <Eyebrow>The Manual</Eyebrow>
@@ -209,42 +221,69 @@ function Breakdown() {
           }}>
             What just happened
           </h2>
-          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.92rem', maxWidth: '28rem', marginBottom: '2.6rem' }}>
-            Didn't watch the whole thing? Here's the short version.
+          <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.92rem', maxWidth: '30rem', marginBottom: '2.6rem' }}>
+            Didn't watch the whole thing? Here's the roadmap — same job,
+            three screens, straight through to both outputs.
           </p>
         </Reveal>
 
-        <div style={{
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: '1.5rem',
-        }}>
+        <div className="manual-roadmap" style={{ display: 'flex', alignItems: 'stretch', gap: 0 }}>
           {MANUAL.breakdown.map((s, i) => (
-            <Reveal key={s.step} delay={i * 0.1}>
-              <GhostPanel style={{ padding: '1.8rem 1.6rem', height: '100%' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', marginBottom: '1rem' }}>
-                  <div style={{
-                    width: '1.9rem', height: '1.9rem', borderRadius: '50%', flexShrink: 0,
-                    background: 'rgba(212,175,55,0.12)', border: `1px solid ${GOLD}`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: GOLD, fontFamily: 'monospace', fontWeight: 900, fontSize: '0.78rem',
-                  }}>
-                    {i + 1}
+            <Fragment key={s.step}>
+              <Reveal delay={i * 0.1} style={{ flex: '1 1 240px', minWidth: 0 }}>
+                <GhostPanel style={{ height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                  {s.screenshot ? (
+                    <img
+                      src={s.screenshot}
+                      alt={s.title}
+                      style={{ display: 'block', width: '100%', aspectRatio: '4/3', objectFit: 'cover', borderBottom: '1px solid rgba(212,175,55,0.18)' }}
+                    />
+                  ) : (
+                    <div style={{
+                      aspectRatio: '4/3', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      borderBottom: '1px solid rgba(212,175,55,0.14)',
+                      color: 'rgba(255,255,255,0.18)', fontSize: '0.68rem', letterSpacing: '0.1em',
+                      textTransform: 'uppercase', fontFamily: 'monospace',
+                    }}>
+                      Screenshot coming
+                    </div>
+                  )}
+                  <div style={{ padding: '1.5rem 1.5rem 1.7rem', flex: 1 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', marginBottom: '1rem' }}>
+                      <div style={{
+                        width: '1.9rem', height: '1.9rem', borderRadius: '50%', flexShrink: 0,
+                        background: 'rgba(212,175,55,0.12)', border: `1px solid ${GOLD}`,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        color: GOLD, fontFamily: 'monospace', fontWeight: 900, fontSize: '0.78rem',
+                      }}>
+                        {i + 1}
+                      </div>
+                      <div style={{
+                        color: GOLD, fontFamily: 'monospace', fontWeight: 800,
+                        fontSize: '0.72rem', letterSpacing: '0.28em',
+                      }}>
+                        {s.step}
+                      </div>
+                    </div>
+                    <div style={{ color: '#fff', fontWeight: 700, fontSize: '1.02rem', marginBottom: '0.5rem', lineHeight: 1.35 }}>
+                      {s.title}
+                    </div>
+                    <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.86rem', lineHeight: 1.55 }}>
+                      {s.body}
+                    </div>
                   </div>
-                  <div style={{
-                    color: GOLD, fontFamily: 'monospace', fontWeight: 800,
-                    fontSize: '0.72rem', letterSpacing: '0.28em',
-                  }}>
-                    {s.step}
-                  </div>
+                </GhostPanel>
+              </Reveal>
+
+              {i < MANUAL.breakdown.length - 1 && (
+                <div className="manual-roadmap-arrow" style={{
+                  flex: '0 0 auto', width: '2.6rem', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: GOLD, fontSize: '1.3rem', textShadow: '0 0 14px rgba(212,175,55,0.5)',
+                }}>
+                  →
                 </div>
-                <div style={{ color: '#fff', fontWeight: 700, fontSize: '1.02rem', marginBottom: '0.5rem', lineHeight: 1.35 }}>
-                  {s.title}
-                </div>
-                <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.86rem', lineHeight: 1.55 }}>
-                  {s.body}
-                </div>
-              </GhostPanel>
-            </Reveal>
+              )}
+            </Fragment>
           ))}
         </div>
       </div>

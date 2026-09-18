@@ -42,6 +42,7 @@ export default function App() {
 }
 
 const ASSETS = [
+  { path: '/manual', label: 'User Manual', meta: 'live landing page · weekly webinar · not a loop' },
   { path: '/foundation', label: 'Foundation — Stage 01', meta: '28s loop · house sequence · locked iso camera' },
   { path: '/framing', label: 'Framing — Stage 02', meta: '25.6s loop · house sequence · cost-code structure' },
   { path: '/walls', label: 'Walls — Stage 03', meta: '22.8s loop · house sequence · two outputs' },
