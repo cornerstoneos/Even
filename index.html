@@ -1231,6 +1231,15 @@ body.has-gopro .topbar-brand{display:none}
         </div>
       </div>
 
+      <!-- Even's Assumptions — "show your work" so a misread scope gets caught
+           and fixed here, not discovered by the client reading the PDF. This
+           already existed in every estimate response; it just never surfaced
+           anywhere but the downloaded documents until now. -->
+      <div class="gc" id="assumptions-card" style="display:none">
+        <div class="gc-head"><div class="gc-title" data-en="Even's Assumptions" data-es="Supuestos de Even">Even's Assumptions</div><div class="gc-tag" data-en="Check this before you price it" data-es="Revisa esto antes de cotizar">Check this before you price it</div></div>
+        <div class="gc-body" id="assumptions-body" style="padding:10px 12px"></div>
+      </div>
+
       <!-- Bid summary -->
       <div class="gc">
         <div class="gc-head"><div class="gc-title" data-en="Bid Summary" data-es="Resumen de Oferta">Bid Summary</div></div>
@@ -1864,6 +1873,7 @@ function navigate(scr){
     const _ma=document.getElementById('margin-alerts');if(_ma)_ma.style.display='none';
     const _sr=document.getElementById('similar-recall');if(_sr)_sr.style.display='none';
     const _cr=document.getElementById('calibration-recall');if(_cr)_cr.style.display='none';
+    const _ac=document.getElementById('assumptions-card');if(_ac)_ac.style.display='none';
     window._costCalibration=null;
     document.getElementById('var-body').innerHTML='';
     window._finalBid=null;window._proposalDetail='full';window._rangeLow=null;window._rangeHigh=null;
@@ -3381,6 +3391,7 @@ function renderEstimate(data){
 
   window._lines=[...(data.lineItems||[]).map(i=>({...i}))];
   renderTotals(data);
+  renderAssumptions(data);
   renderMarginAlerts(data);
   if(isPro) { const br=document.getElementById('beautify-row'); if(br) br.style.display='block'; }
   setTimeout(()=>renderEvenSuggests(data), 800);
@@ -3608,6 +3619,19 @@ function updateBidHeadline(){
   rangeEl.style.animation='none';
   void rangeEl.offsetWidth;
   rangeEl.style.animation='popIn .4s cubic-bezier(.2,.9,.3,1.3) both';
+}
+
+// "Show your work" — the same assumptions array that's been going into every
+// PDF's Assumptions section, now shown on the working page itself so a wrong
+// read of the scope gets caught here instead of by the client.
+function renderAssumptions(data){
+  const card=document.getElementById('assumptions-card');
+  const body=document.getElementById('assumptions-body');
+  if(!card||!body) return;
+  const list=(data.assumptions||[]).filter(Boolean);
+  if(!list.length){ card.style.display='none'; return; }
+  body.innerHTML=list.map(a=>`<div style="display:flex;gap:7px;padding:5px 0;font-size:12px;color:var(--white2);line-height:1.4"><span style="color:var(--text-accent);flex-shrink:0">•</span><span>${escapeHtml(a)}</span></div>`).join('');
+  card.style.display='block';
 }
 
 function renderTotals(data){
