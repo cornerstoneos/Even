@@ -7,10 +7,16 @@ const html=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
 let pass=0,fail=0;
 const check=(n,c,d)=>{c?(pass++,console.log(`  PASS  ${n}`)):(fail++,console.log(`  FAIL  ${n}\n         ${d}`))};
 
-// Tight, contiguous line range (2292-2401) so nothing DOM-touching from
-// elsewhere in the file gets pulled into the eval'd module.
-const lines=html.split('\n');
-const src=lines.slice(2291,2401).join('\n');
+// Extracted by stable anchor strings, not hardcoded line numbers -- this file
+// moves every time unrelated code earlier in index.html changes, and a fixed
+// line range silently drifted three times this session already.
+const startMark='const CONFIDENCE_RANGE=';
+const endMark='function computeConfidenceTier(marketData,categories){';
+const start=html.indexOf(startMark);
+const endFnStart=html.indexOf(endMark,start);
+const endFnClose=html.indexOf('\n}',endFnStart)+2;
+if(start<0||endFnStart<0) throw new Error('Anchor strings not found in index.html -- the source moved, update startMark/endMark in this test.');
+const src=html.slice(start,endFnClose);
 const api=new Function(src+'\n;return {materialSourceQuality,computeConfidenceTier,scopeMaterialCategories,inScopeMaterials,categoryInScope,isEquipmentRental,MATERIAL_TIER_RANK};')();
 const {materialSourceQuality,computeConfidenceTier,scopeMaterialCategories,inScopeMaterials,categoryInScope,isEquipmentRental,MATERIAL_TIER_RANK}=api;
 

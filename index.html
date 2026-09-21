@@ -1207,10 +1207,14 @@ body.has-gopro .topbar-brand{display:none}
       <!-- Line items -->
       <div class="gc">
         <div class="gc-head">
-          <div class="gc-title" data-en="Line Item Estimate" data-es="Estimado por Partidas">Line Item Estimate</div>
+          <div class="gc-title" style="display:flex;align-items:center;gap:6px;cursor:pointer" onclick="toggleLineItems()">
+            <i data-lucide="chevron-down" id="li-collapse-chevron" style="width:14px;height:14px;stroke:currentColor;transition:transform .15s"></i>
+            <span data-en="Line Item Estimate" data-es="Estimado por Partidas">Line Item Estimate</span>
+            <span id="li-collapsed-summary" style="display:none;font-weight:400;color:var(--muted);font-size:11px;font-family:'DM Mono',monospace"></span>
+          </div>
           <button onclick="addLineGated()" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--text-accent);cursor:pointer;font-family:'DM Sans',sans-serif" data-en="+ Add" data-es="+ Agregar">+ Add</button>
         </div>
-        <div style="padding:10px 12px">
+        <div style="padding:10px 12px" id="li-collapsible">
           <div id="similar-recall" style="display:none;margin-bottom:8px"></div>
           <div id="calibration-recall" style="display:none;margin-bottom:8px"></div>
           <div id="permit-scope-note" style="display:none;margin-bottom:8px"></div>
@@ -1234,9 +1238,9 @@ body.has-gopro .topbar-brand{display:none}
           <div id="totals-body"></div>
           <div class="bid-box" style="flex-direction:column;align-items:flex-start;gap:8px">
             <div style="width:100%">
-              <div class="bid-lbl" data-en="Estimated Project Investment" data-es="Inversión Estimada del Proyecto">Estimated Project Investment</div>
+              <div class="bid-lbl" id="bid-headline-lbl" data-en="Estimated Project Investment" data-es="Inversión Estimada del Proyecto">Estimated Project Investment</div>
               <div class="bid-val" id="bid-range-display" style="font-size:22px">—</div>
-              <div style="font-size:10px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:5px"><span data-en="Bid range · confidence-adjusted" data-es="Rango de oferta · ajustado por confianza">Bid range · confidence-adjusted</span><button class="sub-info" id="bid-intel-btn" style="display:none" onclick="document.getElementById('bid-intel').classList.toggle('open')" title="What sets this range"><i data-lucide="info" style="width:12px;height:12px;stroke:currentColor;pointer-events:none"></i></button></div>
+              <div style="font-size:10px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:5px"><span id="bid-headline-caption" data-en="Bid range · confidence-adjusted" data-es="Rango de oferta · ajustado por confianza">Bid range · confidence-adjusted</span><button class="sub-info" id="bid-intel-btn" style="display:none" onclick="document.getElementById('bid-intel').classList.toggle('open')" title="What sets this range"><i data-lucide="info" style="width:12px;height:12px;stroke:currentColor;pointer-events:none"></i></button></div>
               <!-- The receipts behind the range width. Collapsed by default — the label
                    stays quiet, the depth is one tap away for whoever wants the back end. -->
               <div class="bid-intel" id="bid-intel"></div>
@@ -1267,10 +1271,15 @@ body.has-gopro .topbar-brand{display:none}
             <button onclick="handleUpgrade('monthly')" style="background:var(--gold);border:none;color:#000;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Mono',monospace">Go Pro →</button>
           </div>
 
-          <!-- EVEN SUGGESTS -->
+          <!-- EVEN SUGGESTS — collapsed by default; three full cards up front was
+               the single biggest chunk of the "crammed" page. -->
           <div class="even-suggests" id="even-suggests" style="display:none">
-            <div class="even-suggests-label"><img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;"> <span data-en="Even Suggests" data-es="Even Sugiere">Even Suggests</span></div>
-            <div class="tier-cards" id="tier-cards"></div>
+            <div class="even-suggests-label" style="cursor:pointer" onclick="toggleEvenSuggests()">
+              <img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;"> <span data-en="Even Suggests" data-es="Even Sugiere">Even Suggests</span>
+              <span id="even-suggests-hint" style="text-transform:none;letter-spacing:0;color:var(--muted)" data-en="— Budget / Mid / Premium" data-es="— Económico / Medio / Premium">— Budget / Mid / Premium</span>
+              <i data-lucide="chevron-down" id="es-collapse-chevron" style="width:13px;height:13px;stroke:currentColor;transition:transform .15s"></i>
+            </div>
+            <div class="tier-cards" id="tier-cards" style="display:none"></div>
           </div>
           <!-- Your Final Bid — moved here so contractors set their number before downloading -->
           <div style="border-top:1px solid var(--rim);margin-top:8px;padding-top:12px">
@@ -1280,6 +1289,7 @@ body.has-gopro .topbar-brand{display:none}
               <input id="final-bid-input" type="number" min="0" step="100" placeholder="Override the bid — client sees this on PDF" oninput="onFinalBidChange(this.value)" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;padding:9px 10px 9px 22px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;-moz-appearance:textfield"/>
             </div>
             <div style="font-size:10px;color:var(--muted);margin-top:4px">Even's range stays in your dashboard · Client sees your number on PDF</div>
+            <div id="final-bid-confirm" style="display:none;margin-top:8px;font-family:'DM Mono',monospace;font-size:15px;font-weight:800;color:var(--text-accent)"></div>
           </div>
           <div class="pdf-grid">
             <div class="pdf-card" onclick="showEmailGate('internal')">
@@ -1820,6 +1830,10 @@ function setLang(lang,btn){
     if(el.tagName==='INPUT'||el.tagName==='TEXTAREA'){const ph=el.getAttribute('data-placeholder-'+lang);if(ph)el.placeholder=ph.replace(/\\n/g,'\n');}
     else el.innerHTML=v;
   });
+  // The bid headline swaps to a dynamically-built string once Your Final Bid
+  // is set, which the data-en/data-es sweep above doesn't know about — redo
+  // it in the language that was just switched to.
+  updateBidHeadline();
 }
 
 // ══════════════════════════
@@ -1850,8 +1864,9 @@ function navigate(scr){
     const _cr=document.getElementById('calibration-recall');if(_cr)_cr.style.display='none';
     window._costCalibration=null;
     document.getElementById('var-body').innerHTML='';
-    window._finalBid=null;window._proposalDetail='full';
+    window._finalBid=null;window._proposalDetail='full';window._rangeLow=null;window._rangeHigh=null;
     const _fbi=document.getElementById('final-bid-input');if(_fbi)_fbi.value='';
+    const _fbc=document.getElementById('final-bid-confirm');if(_fbc)_fbc.style.display='none';
     document.getElementById('loading-reveal').classList.remove('visible');
     // Clear all input fields for fresh estimate
     document.getElementById('scope-text').value='';
@@ -3316,6 +3331,10 @@ function renderEstimate(data){
     });
   });
   document.getElementById('li-body').innerHTML=html;
+  const liCount=(data.lineItems||[]).length;
+  const liTotal=(data.lineItems||[]).reduce((s,i)=>s+(+i.total||0),0);
+  const summaryEl=document.getElementById('li-collapsed-summary');
+  if(summaryEl) summaryEl.textContent=`${liCount} item${liCount===1?'':'s'} · ${fmt(liTotal)}`;
 
   // Variance rows — Pro only
   const sorted=(data.lineItems||[]).slice().sort((a,b)=>b.total-a.total);
@@ -3535,6 +3554,49 @@ function renderBidIntel(data,loMult,hiMult){
   el.classList.remove('open');
 }
 
+// Collapses the line-item rows to a one-line summary (count + total) so a
+// contractor who just wants the bottom line isn't scrolling past 15 editable
+// rows to get to it. Starts expanded — this only adds the option to close it.
+function toggleLineItems(){
+  const body=document.getElementById('li-collapsible');
+  const summary=document.getElementById('li-collapsed-summary');
+  const chevron=document.getElementById('li-collapse-chevron');
+  const collapsed=body.style.display==='none';
+  body.style.display=collapsed?'':'none';
+  summary.style.display=collapsed?'none':'inline';
+  chevron.style.transform=collapsed?'':'rotate(-90deg)';
+}
+
+// The one number a contractor scans for is whichever one the client will
+// actually see. Once Your Final Bid is set, that number takes over the
+// headline instead of sitting quietly in an input further down the page
+// while the headline keeps showing Even's range.
+function updateBidHeadline(){
+  if(window._rangeLow==null) return;
+  const rangeEl=document.getElementById('bid-range-display');
+  const lblEl=document.getElementById('bid-headline-lbl');
+  const capEl=document.getElementById('bid-headline-caption');
+  const confirmEl=document.getElementById('final-bid-confirm');
+  if(!rangeEl) return;
+  const L=appLang;
+  if(window._finalBid){
+    rangeEl.textContent=fmt(window._finalBid);
+    if(lblEl) lblEl.textContent=L==='en'?'Your Final Bid':'Tu Oferta Final';
+    if(capEl) capEl.textContent=(L==='en'?"Client-facing price · Even's range ":'Precio para el cliente · Rango Even ')+fmtK(window._rangeLow)+'–'+fmtK(window._rangeHigh);
+    if(confirmEl){confirmEl.style.display='block';confirmEl.textContent=(L==='en'?'Client sees: ':'El cliente ve: ')+fmt(window._finalBid);}
+  }else{
+    rangeEl.textContent=fmtK(window._rangeLow)+' — '+fmtK(window._rangeHigh);
+    if(lblEl) lblEl.textContent=L==='en'?'Estimated Project Investment':'Inversión Estimada del Proyecto';
+    if(capEl) capEl.textContent=L==='en'?'Bid range · confidence-adjusted':'Rango de oferta · ajustado por confianza';
+    if(confirmEl) confirmEl.style.display='none';
+  }
+  // Replay the reveal animation each time the number lands, so the headline
+  // figure always feels like a fresh result, not a static label.
+  rangeEl.style.animation='none';
+  void rangeEl.offsetWidth;
+  rangeEl.style.animation='popIn .4s cubic-bezier(.2,.9,.3,1.3) both';
+}
+
 function renderTotals(data){
   const pct=data.profit?.pct||22;
   const L=appLang;
@@ -3550,15 +3612,10 @@ function renderTotals(data){
   const [rangeLoMult,rangeHiMult]=getConfidenceRange(data);
   const rangeLow=Math.round(data.totalBid*rangeLoMult);
   const rangeHigh=Math.round(data.totalBid*rangeHiMult);
-  const rangeEl=document.getElementById('bid-range-display');
-  if(rangeEl){
-    rangeEl.textContent=fmtK(rangeLow)+' — '+fmtK(rangeHigh);
-    // Replay the reveal animation each time the number lands, so the headline
-    // figure always feels like a fresh result, not a static label.
-    rangeEl.style.animation='none';
-    void rangeEl.offsetWidth;
-    rangeEl.style.animation='popIn .4s cubic-bezier(.2,.9,.3,1.3) both';
-  }
+  // Stashed so the headline can re-render on a Final Bid edit or a language
+  // switch without needing the full estimate payload passed back in.
+  window._rangeLow=rangeLow;window._rangeHigh=rangeHigh;
+  updateBidHeadline();
   renderBidIntel(data,rangeLoMult,rangeHiMult);
   const fill=document.getElementById('meter-fill');
   const pctEl=document.getElementById('meter-pct');
@@ -4046,8 +4103,8 @@ function clampAncillaryToJobSize(data){
   const after=data.lineItems.filter(isAncillaryLine).reduce((s,i)=>s+(+i.total||0),0);
   // Say so. Silently rewriting the contractor's numbers is worse than the bug.
   const note=after>0
-    ? `Delivery, disposal and site protection scaled to job size (${money0(ancTotal)} → ${money0(after)}) — flat minimums don't apply at this scope.`
-    : `Delivery and disposal excluded — at this scope the materials go in the truck and the debris is bagged. Add them back if the job needs a supplier drop or a dumpster.`;
+    ? `Delivery, disposal and site protection scaled to job size (${money0(ancTotal)} to ${money0(after)}). Flat minimums don't apply at this scope.`
+    : `Delivery and disposal excluded. At this scope the materials go in the truck and the debris is bagged. Add them back if the job needs a supplier drop or a dumpster.`;
   data.assumptions=Array.isArray(data.assumptions)?data.assumptions:[];
   data.assumptions.unshift(note);
   return {before:ancTotal,after,workCost,dropped:dropped.length};
@@ -4103,8 +4160,20 @@ function renderEvenSuggests(data) {
       <div class="tier-card-best">${L==='en'?'Best for: luxury market, high-end clients':'Mejor para: mercado de lujo, clientes premium'}</div>
     </div>`;
 
+  // Reveal the section header, but leave the three cards collapsed — the
+  // contractor opts into the extra pricing tiers instead of scrolling past
+  // them on every single estimate. No forced scroll for the same reason.
   document.getElementById('even-suggests').style.display = 'block';
-  document.getElementById('even-suggests').scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById('tier-cards').style.display = 'none';
+  const chevron=document.getElementById('es-collapse-chevron');
+  if(chevron) chevron.style.transform='';
+}
+function toggleEvenSuggests(){
+  const cards=document.getElementById('tier-cards');
+  const chevron=document.getElementById('es-collapse-chevron');
+  const collapsed=cards.style.display==='none';
+  cards.style.display=collapsed?'flex':'none';
+  chevron.style.transform=collapsed?'rotate(-180deg)':'';
 }
 
 let selectedPaySched = '30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.';
@@ -4486,6 +4555,7 @@ async function proposalBeautify(){
 function onFinalBidChange(val){
   const n=parseFloat(val);
   window._finalBid=(val&&!isNaN(n)&&n>0)?n:null;
+  updateBidHeadline();
   liveProposalUpdate();
 }
 function liveProposalUpdate(){
