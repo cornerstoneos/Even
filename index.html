@@ -1250,6 +1250,18 @@ body.has-gopro .topbar-brand{display:none}
               <div style="font-size:13px;font-family:'DM Mono',monospace;color:var(--white2)" id="bid-val-display">—</div>
             </div>
           </div>
+          <!-- Your Final Bid — right under the price itself now, not five blocks
+               down past Even Suggests. This is the number that decides what the
+               client sees; it shouldn't be easy to scroll past without noticing. -->
+          <div id="final-bid-box" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--r);padding:12px 14px;margin-top:10px">
+            <div style="font-size:11px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px">YOUR FINAL BID <span style="color:var(--muted);font-size:9px;letter-spacing:.3px;font-weight:400">OPTIONAL — SETS WHAT THE CLIENT SEES</span></div>
+            <div style="position:relative">
+              <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none">$</span>
+              <input id="final-bid-input" type="number" min="0" step="100" placeholder="Override the bid — client sees this on PDF" oninput="onFinalBidChange(this.value)" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;padding:9px 10px 9px 22px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;-moz-appearance:textfield"/>
+            </div>
+            <div style="font-size:10px;color:var(--muted);margin-top:4px">Even's range stays in your dashboard · Client sees your number on PDF</div>
+            <div id="final-bid-confirm" style="display:none;margin-top:8px;font-family:'DM Mono',monospace;font-size:15px;font-weight:800;color:var(--text-accent)"></div>
+          </div>
           <div class="meter">
             <div class="meter-top">
               <span class="meter-lbl" data-en="Net Margin" data-es="Margen Neto">Net Margin</span>
@@ -1280,16 +1292,6 @@ body.has-gopro .topbar-brand{display:none}
               <i data-lucide="chevron-down" id="es-collapse-chevron" style="width:13px;height:13px;stroke:currentColor;transition:transform .15s"></i>
             </div>
             <div class="tier-cards" id="tier-cards" style="display:none"></div>
-          </div>
-          <!-- Your Final Bid — moved here so contractors set their number before downloading -->
-          <div style="border-top:1px solid var(--rim);margin-top:8px;padding-top:12px">
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px">YOUR FINAL BID <span style="color:var(--text-accent);font-size:9px;letter-spacing:.3px">OPTIONAL</span></div>
-            <div style="position:relative">
-              <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none">$</span>
-              <input id="final-bid-input" type="number" min="0" step="100" placeholder="Override the bid — client sees this on PDF" oninput="onFinalBidChange(this.value)" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;padding:9px 10px 9px 22px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;-moz-appearance:textfield"/>
-            </div>
-            <div style="font-size:10px;color:var(--muted);margin-top:4px">Even's range stays in your dashboard · Client sees your number on PDF</div>
-            <div id="final-bid-confirm" style="display:none;margin-top:8px;font-family:'DM Mono',monospace;font-size:15px;font-weight:800;color:var(--text-accent)"></div>
           </div>
           <div class="pdf-grid">
             <div class="pdf-card" onclick="showEmailGate('internal')">
