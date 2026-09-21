@@ -1208,13 +1208,13 @@ body.has-gopro .topbar-brand{display:none}
       <div class="gc">
         <div class="gc-head">
           <div class="gc-title" style="display:flex;align-items:center;gap:6px;cursor:pointer" onclick="toggleLineItems()">
-            <i data-lucide="chevron-down" id="li-collapse-chevron" style="width:14px;height:14px;stroke:currentColor;transition:transform .15s"></i>
+            <i data-lucide="chevron-down" id="li-collapse-chevron" style="width:14px;height:14px;stroke:currentColor;transition:transform .15s;transform:rotate(-90deg)"></i>
             <span data-en="Line Item Estimate" data-es="Estimado por Partidas">Line Item Estimate</span>
-            <span id="li-collapsed-summary" style="display:none;font-weight:400;color:var(--muted);font-size:11px;font-family:'DM Mono',monospace"></span>
+            <span id="li-collapsed-summary" style="font-weight:400;color:var(--muted);font-size:11px;font-family:'DM Mono',monospace"></span>
           </div>
           <button onclick="addLineGated()" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--text-accent);cursor:pointer;font-family:'DM Sans',sans-serif" data-en="+ Add" data-es="+ Agregar">+ Add</button>
         </div>
-        <div style="padding:10px 12px" id="li-collapsible">
+        <div style="padding:10px 12px;display:none" id="li-collapsible">
           <div id="similar-recall" style="display:none;margin-bottom:8px"></div>
           <div id="calibration-recall" style="display:none;margin-bottom:8px"></div>
           <div id="permit-scope-note" style="display:none;margin-bottom:8px"></div>
@@ -3337,6 +3337,17 @@ function renderEstimate(data){
   const liTotal=(data.lineItems||[]).reduce((s,i)=>s+(+i.total||0),0);
   const summaryEl=document.getElementById('li-collapsed-summary');
   if(summaryEl) summaryEl.textContent=`${liCount} item${liCount===1?'':'s'} · ${fmt(liTotal)}`;
+  // Starts collapsed on every fresh estimate -- this only runs when a whole new
+  // estimate lands (calculate, or load a saved one), never on an in-place edit
+  // (recalc/addLine/delLine touch the DOM directly), so it won't yank the list
+  // shut on someone mid-edit.
+  const liBodyWrap=document.getElementById('li-collapsible');
+  const liChevron=document.getElementById('li-collapse-chevron');
+  if(liBodyWrap && liBodyWrap.style.display!=='none'){
+    liBodyWrap.style.display='none';
+    if(summaryEl) summaryEl.style.display='inline';
+    if(liChevron) liChevron.style.transform='rotate(-90deg)';
+  }
 
   // Variance rows — Pro only
   const sorted=(data.lineItems||[]).slice().sort((a,b)=>b.total-a.total);
