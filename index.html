@@ -1114,19 +1114,19 @@ body.has-gopro .topbar-brand{display:none}
           <div class="gc-tag" data-en="Shows on proposal" data-es="Aparece en propuesta">Shows on proposal</div>
         </div>
         <div class="gc-body" style="padding:10px 12px;display:flex;flex-direction:column;gap:7px">
-          <div class="pay-opt selected" onclick="selectPaySched(this,'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.')">
+          <div class="pay-opt selected" data-sched="standard" onclick="selectPaySched(this,'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.')">
             <div class="pay-opt-name" data-en="Standard 30/40/30" data-es="Estándar 30/40/30">Standard 30/40/30</div>
             <div class="pay-opt-sub" data-en="30% deposit · 40% rough-in · 30% completion" data-es="30% depósito · 40% obra gruesa · 30% finalización">30% deposit · 40% rough-in · 30% completion</div>
           </div>
-          <div class="pay-opt" onclick="selectPaySched(this,'50% deposit required to schedule · 50% upon project completion. Price valid 30 days.')">
+          <div class="pay-opt" data-sched="simple" onclick="selectPaySched(this,'50% deposit required to schedule · 50% upon project completion. Price valid 30 days.')">
             <div class="pay-opt-name" data-en="Simple 50/50" data-es="Simple 50/50">Simple 50/50</div>
             <div class="pay-opt-sub" data-en="50% deposit · 50% on completion" data-es="50% depósito · 50% al finalizar">50% deposit · 50% on completion</div>
           </div>
-          <div class="pay-opt" onclick="selectPaySched(this,'25% deposit to schedule · 25% at material delivery · 25% at rough-in · 25% upon final walkthrough. Price valid 30 days.')">
+          <div class="pay-opt" data-sched="milestone" onclick="selectPaySched(this,'25% deposit to schedule · 25% at material delivery · 25% at rough-in · 25% upon final walkthrough. Price valid 30 days.')">
             <div class="pay-opt-name" data-en="Milestone 25/25/25/25" data-es="Hitos 25/25/25/25">Milestone 25/25/25/25</div>
             <div class="pay-opt-sub" data-en="4 equal draws at key milestones" data-es="4 pagos iguales en hitos clave">4 equal draws at key milestones</div>
           </div>
-          <div class="pay-opt" onclick="selectPaySched(this,'100% payment due upon project completion. Price valid 30 days.')">
+          <div class="pay-opt" data-sched="cod" onclick="selectPaySched(this,'100% payment due upon project completion. Price valid 30 days.')">
             <div class="pay-opt-name" data-en="COD — Pay on Completion" data-es="Pago al Finalizar">COD — Pay on Completion</div>
             <div class="pay-opt-sub" data-en="Full balance due at final walkthrough" data-es="Saldo completo al término del trabajo">Full balance due at final walkthrough</div>
           </div>
@@ -1315,16 +1315,16 @@ body.has-gopro .topbar-brand{display:none}
           <div class="gc-tag" data-en="Shows on proposal" data-es="Aparece en propuesta">Shows on proposal</div>
         </div>
         <div class="gc-body" style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:7px">
-          <div class="pay-opt selected" onclick="selectPaySched(this,'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.')">
+          <div class="pay-opt selected" data-sched="standard" onclick="selectPaySched(this,'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.')">
             <div class="pay-opt-name" data-en="Standard 30/40/30" data-es="Estándar 30/40/30">Standard 30/40/30</div>
           </div>
-          <div class="pay-opt" onclick="selectPaySched(this,'50% deposit required to schedule · 50% upon project completion. Price valid 30 days.')">
+          <div class="pay-opt" data-sched="simple" onclick="selectPaySched(this,'50% deposit required to schedule · 50% upon project completion. Price valid 30 days.')">
             <div class="pay-opt-name" data-en="Simple 50/50" data-es="Simple 50/50">Simple 50/50</div>
           </div>
-          <div class="pay-opt" onclick="selectPaySched(this,'25% deposit to schedule · 25% at material delivery · 25% at rough-in · 25% upon final walkthrough. Price valid 30 days.')">
+          <div class="pay-opt" data-sched="milestone" onclick="selectPaySched(this,'25% deposit to schedule · 25% at material delivery · 25% at rough-in · 25% upon final walkthrough. Price valid 30 days.')">
             <div class="pay-opt-name" data-en="Milestone 25/25/25/25" data-es="Hitos 25/25/25/25">Milestone 25/25/25/25</div>
           </div>
-          <div class="pay-opt" onclick="selectPaySched(this,'100% payment due upon project completion. Price valid 30 days.')">
+          <div class="pay-opt" data-sched="cod" onclick="selectPaySched(this,'100% payment due upon project completion. Price valid 30 days.')">
             <div class="pay-opt-name" data-en="COD" data-es="Pago al Finalizar">COD</div>
           </div>
         </div>
@@ -1867,6 +1867,7 @@ function navigate(scr){
     window._costCalibration=null;
     document.getElementById('var-body').innerHTML='';
     window._finalBid=null;window._proposalDetail='full';window._rangeLow=null;window._rangeHigh=null;
+    paySchedManual=false;
     const _fbi=document.getElementById('final-bid-input');if(_fbi)_fbi.value='';
     const _fbc=document.getElementById('final-bid-confirm');if(_fbc)_fbc.style.display='none';
     document.getElementById('loading-reveal').classList.remove('visible');
@@ -3057,11 +3058,11 @@ PROFIT STACKING — CORRECT METHOD:
   // from cache instead of being reprocessed. Previously the scope text sat inside
   // the cached block, so the key changed every time and nothing was ever reused.
   const RULES=`You are Even, expert estimating AI. Return ONLY JSON.
-BE GRANULAR — 14-22 line items for a full remodel; fewer for a small single-trade job. Do not pad.\nCLIENT-FACING TEXT (assumptions, exclusions, clientNote): plain short sentences a contractor would write by hand. No em dashes. Split into two sentences with a period instead of joining clauses with a dash.\nMARGIN PROTECTORS — include each one only when this scope actually calls for it, sized to this job: permits & inspections, debris removal, material delivery & logistics, drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting where the jurisdiction is slow.\nSIZING ANCILLARY LINES — these scale with the job or they discredit the whole bid:\n- Material delivery & logistics is a real supplier delivery charge, never a flat fee. Materials that fit in the contractor's own truck: omit it, or a $40-75 trip charge. A supplier drop (lumber, drywall, tile, roofing, multi-pallet): $150-350. $350-600 only when material cost exceeds $3,000 or the job needs multiple drops.\n- Debris removal scales to actual debris volume. Bagged debris from a small job is $0-75. A pull-off dumpster ($400-700) only when demo generates real volume.\n- Floor and surface protection applies only to occupied homes with a work path through finished space.\n- HARD RULE: when direct labor + material cost is under $5,000, delivery + disposal + protection combined must not exceed 15% of that direct cost. A $350 delivery line on a $300 paint job is the fastest way to lose a contractor's trust.\nSIZING LABOR HOURS — a padded hour count kills trust the same way a padded fee does:\n- Simple surface installs on a prepped, no-demo surface (turf, vinyl, carpet tile, laminate) run roughly 15-25 sqft per labor-hour for a competent crew. A 100 sqft no-prep turf job is 3-5 labor-hours total, not 10+.\n- HARD RULE: a separate General Contractor / site-verification line only belongs on jobs with real coordination overhead -- multiple trades, a permit, or a scheduled inspection. A single-trade job under $2,500 folds site verification into the install labor; don't add it as its own line.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":${ctx.cushion},"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}
+BE GRANULAR — 14-22 line items for a full remodel; fewer for a small single-trade job. Do not pad.\nCLIENT-FACING TEXT (assumptions, exclusions, clientNote): plain short sentences a contractor would write by hand. No em dashes. Split into two sentences with a period instead of joining clauses with a dash.\nMARGIN PROTECTORS — include each one only when this scope actually calls for it, sized to this job: permits & inspections, debris removal, material delivery & logistics, drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting where the jurisdiction is slow.\nSIZING ANCILLARY LINES — these scale with the job or they discredit the whole bid:\n- Material delivery & logistics is a real supplier delivery charge, never a flat fee. Materials that fit in the contractor's own truck: omit it, or a $40-75 trip charge. A supplier drop (lumber, drywall, tile, roofing, multi-pallet): $150-350. $350-600 only when material cost exceeds $3,000 or the job needs multiple drops.\n- Debris removal scales to actual debris volume. Bagged debris from a small job is $0-75. A pull-off dumpster ($400-700) only when demo generates real volume.\n- Floor and surface protection applies only to occupied homes with a work path through finished space.\n- HARD RULE: when direct labor + material cost is under $5,000, delivery + disposal + protection combined must not exceed 15% of that direct cost. A $350 delivery line on a $300 paint job is the fastest way to lose a contractor's trust.\nSIZING LABOR HOURS — a padded hour count kills trust the same way a padded fee does:\n- Simple surface installs on a prepped, no-demo surface (turf, vinyl, carpet tile, laminate) run roughly 15-25 sqft per labor-hour for a competent crew. A 100 sqft no-prep turf job is 3-5 labor-hours total, not 10+.\n- HARD RULE: a separate General Contractor / site-verification line only belongs on jobs with real coordination overhead -- multiple trades, a permit, or a scheduled inspection. A single-trade job under $2,500 folds site verification into the install labor; don't add it as its own line.\nCONTINGENCY (risk cushion) -- overhead % and profit % are the contractor's own business settings, always use them exactly as given. Contingency is different: it's pricing job-specific unknowns, not a business cost, so it's the one markup that should reflect THIS scope, not just echo the default.\n- The contractor's default (given above) is the ceiling, sized for jobs with real unknowns: unopened walls, unverified structural or electrical conditions, multi-trade sequencing, permit or inspection uncertainty.\n- HARD RULE: when the scope has none of that -- no permit needed, no demo, single trade, client confirms existing conditions are ready -- use 3-5% instead of the full default. The unknowns that percentage prices in don't exist for this scope.\n- Never exceed the contractor's default; only reduce it when the scope earns the reduction.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":0,"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}
 Compute all math correctly.`;
   const MARKET=`${pricingBlock}`;
   const JOB=`Trade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}
-Overhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion:${ctx.cushion}%|Client:${ctx.client}
+Overhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion default (ceiling, not a fixed value -- see CONTINGENCY rule):${ctx.cushion}%|Client:${ctx.client}
 Language:${appLang==='es'?'Spanish':'English'}${calibrationNote}
 ${getSupplierPromptContext()}${getSubPromptContext()}
 SCOPE:${scope}
@@ -3261,7 +3262,13 @@ Return the JSON for THIS job now.`;
     data.contingency=data.contingency||{pct:ctx.cushion};
     data.profit=data.profit||{pct:ctx.profit};
     if(data.overhead.pct==null) data.overhead.pct=ctx.oh;
-    if(data.contingency.pct==null) data.contingency.pct=ctx.cushion;
+    // 0 is the schema's generic numeric placeholder, not a real "no risk"
+    // answer -- the CONTINGENCY rule's floor is 3-5%, so a literal 0 means
+    // the model left it unfilled. Falsy catches null/0/undefined/NaN alike.
+    // Either way, clamp to the contractor's own ceiling: the rule only ever
+    // authorizes reducing it for a low-risk scope, never raising it.
+    if(!data.contingency.pct) data.contingency.pct=ctx.cushion;
+    else data.contingency.pct=Math.min(data.contingency.pct,ctx.cushion);
     if(data.profit.pct==null) data.profit.pct=ctx.profit;
     data.subtotal=(data.lineItems||[]).reduce((s,i)=>s+(i.total||0),0);
     data.overhead.amount=Math.round(data.subtotal*(data.overhead.pct/100));
@@ -3381,6 +3388,7 @@ function renderEstimate(data){
 
   window._lines=[...(data.lineItems||[]).map(i=>({...i}))];
   renderTotals(data);
+  applyDefaultPaySched(data);
   renderMarginAlerts(data);
   if(isPro) { const br=document.getElementById('beautify-row'); if(br) br.style.display='block'; }
   setTimeout(()=>renderEvenSuggests(data), 800);
@@ -4190,13 +4198,37 @@ function toggleEvenSuggests(){
 }
 
 let selectedPaySched = '30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.';
+// True the moment a contractor actually clicks a schedule option -- once
+// that's happened, a fresh estimate's auto-default must never override it.
+let paySchedManual = false;
 
 function selectPaySched(el, val){
   document.querySelectorAll('.pay-opt').forEach(o=>{o.classList.remove('selected');o.classList.remove('active');});
-  el.classList.add('selected');
+  document.querySelectorAll(`.pay-opt[data-sched="${el.dataset.sched}"]`).forEach(o=>o.classList.add('selected'));
   selectedPaySched = val;
+  paySchedManual = true;
   // Update currentEstimate so PDFs pick it up immediately
   if(currentEstimate) currentEstimate.paymentTerms = val;
+}
+
+// "30% at rough-in completion" reads as copy-pasted from a different job on
+// a same-day turf/handyman scope -- there's no rough-in phase to reference.
+// Small + no permit/inspection = same boundary the GC-oversight-line rule
+// already uses, so "small job" means one thing everywhere in this app, not
+// three different thresholds nobody could reason about together.
+const PAY_SCHED_SIMPLE = '50% deposit required to schedule · 50% upon project completion. Price valid 30 days.';
+const PAY_SCHED_STANDARD = '30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.';
+function applyDefaultPaySched(data){
+  if(paySchedManual) return;
+  const items=data.lineItems||[];
+  const hasPermit=items.some(i=>/(permit|inspection)/i.test(i.description));
+  const isSmallSimple=(data.subtotal||0)<2500&&!hasPermit;
+  const target=isSmallSimple?'simple':'standard';
+  const val=isSmallSimple?PAY_SCHED_SIMPLE:PAY_SCHED_STANDARD;
+  document.querySelectorAll('.pay-opt').forEach(o=>o.classList.remove('selected'));
+  document.querySelectorAll(`.pay-opt[data-sched="${target}"]`).forEach(o=>o.classList.add('selected'));
+  selectedPaySched=val;
+  if(currentEstimate) currentEstimate.paymentTerms=val;
 }
 
 function selectTier(tier, el) {
