@@ -15699,10 +15699,10 @@
         "min_fee": null,
         "rate": 0.5,
         "method": "percent_of_permit_fee_upfront",
-        "notes": "50% of building permit fee upfront FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "50% of building permit fee upfront",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15710,10 +15710,10 @@
         "min_fee": null,
         "rate": 0.25,
         "method": "percent_of_permit_fee_upfront",
-        "notes": "25% of building permit fee upfront FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "25% of building permit fee upfront",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15721,10 +15721,10 @@
         "min_fee": 100.0,
         "rate": null,
         "method": "flat_per_discipline",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15732,10 +15732,10 @@
         "min_fee": 0.15,
         "rate": null,
         "method": "per_sheet_side",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15743,10 +15743,10 @@
         "min_fee": 4.0,
         "rate": null,
         "method": "per_sheet_side",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15754,10 +15754,10 @@
         "min_fee": 0.15,
         "rate": 0.05,
         "method": "per_sheet_plus_double_sided",
-        "notes": "$0.15 plus $0.05 for double-sided copy FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$0.15 plus $0.05 for double-sided copy",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15765,10 +15765,10 @@
         "min_fee": 0.3,
         "rate": 0.1,
         "method": "per_sheet_plus_double_sided",
-        "notes": "$0.30 plus $0.10 for double-sided copy FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$0.30 plus $0.10 for double-sided copy",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15776,10 +15776,10 @@
         "min_fee": 6.0,
         "rate": null,
         "method": "per_sheet",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15787,10 +15787,10 @@
         "min_fee": 100.0,
         "rate": null,
         "method": "hourly_per_reviewer",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15798,10 +15798,10 @@
         "min_fee": 100.0,
         "rate": null,
         "method": "hourly",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15809,10 +15809,10 @@
         "min_fee": 100.0,
         "rate": null,
         "method": "hourly_per_reviewer",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15820,10 +15820,10 @@
         "min_fee": 420.0,
         "rate": 140.0,
         "method": "flat_3hr_plus_hourly",
-        "notes": "$420 for first three hours plus $140 per additional hour per reviewer FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$420 for first three hours plus $140 per additional hour per reviewer",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15831,10 +15831,10 @@
         "min_fee": 150.0,
         "rate": null,
         "method": "flat",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15842,10 +15842,10 @@
         "min_fee": 250.0,
         "rate": null,
         "method": "flat",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15853,10 +15853,10 @@
         "min_fee": 550.0,
         "rate": null,
         "method": "flat_per_unit",
-        "notes": "For each unit FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "For each unit",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15864,10 +15864,10 @@
         "min_fee": 550.0,
         "rate": null,
         "method": "flat_per_unit",
-        "notes": "For each unit FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "For each unit",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15875,10 +15875,10 @@
         "min_fee": 550.0,
         "rate": null,
         "method": "flat",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15886,10 +15886,10 @@
         "min_fee": 5.0,
         "rate": null,
         "method": "flat",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15897,10 +15897,10 @@
         "min_fee": 65.0,
         "rate": null,
         "method": "flat_minimum",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15908,10 +15908,10 @@
         "min_fee": 75.0,
         "rate": null,
         "method": "flat_minimum",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15919,10 +15919,10 @@
         "min_fee": null,
         "rate": 0.0275,
         "method": "percent_of_value",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15930,10 +15930,10 @@
         "min_fee": 6875.0,
         "rate": 0.0265,
         "method": "base_plus_percent_over",
-        "notes": "$6,875 plus 2.65% over $250,000 FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$6,875 plus 2.65% over $250,000",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15941,10 +15941,10 @@
         "min_fee": 13500.0,
         "rate": 0.0255,
         "method": "base_plus_percent_over",
-        "notes": "$13,500 plus 2.55% over $500,000 FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$13,500 plus 2.55% over $500,000",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15952,10 +15952,10 @@
         "min_fee": 26250.0,
         "rate": 0.0245,
         "method": "base_plus_percent_over",
-        "notes": "$26,250 plus 2.45% over $1,000,000 FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$26,250 plus 2.45% over $1,000,000",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15963,10 +15963,10 @@
         "min_fee": 124250.0,
         "rate": 0.0235,
         "method": "base_plus_percent_over",
-        "notes": "$124,250 plus 2.35% over $5,000,000 FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$124,250 plus 2.35% over $5,000,000",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15974,10 +15974,10 @@
         "min_fee": 241750.0,
         "rate": 0.0225,
         "method": "base_plus_percent_over",
-        "notes": "$241,750 plus 2.25% over $10,000,000 FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$241,750 plus 2.25% over $10,000,000",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15985,10 +15985,10 @@
         "min_fee": null,
         "rate": 0.0165,
         "method": "percent_of_value",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -15996,10 +15996,10 @@
         "min_fee": 4125.0,
         "rate": 0.0155,
         "method": "base_plus_percent_over",
-        "notes": "$4,125 plus 1.55% over $250,000 FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$4,125 plus 1.55% over $250,000",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16007,10 +16007,10 @@
         "min_fee": 8000.0,
         "rate": 0.0145,
         "method": "base_plus_percent_over",
-        "notes": "$8,000 plus 1.45% over $500,000 FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$8,000 plus 1.45% over $500,000",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16018,10 +16018,10 @@
         "min_fee": 15250.0,
         "rate": 0.0135,
         "method": "base_plus_percent_over",
-        "notes": "$15,250 plus 1.35% over $1,000,000 FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$15,250 plus 1.35% over $1,000,000",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16029,10 +16029,10 @@
         "min_fee": 69250.0,
         "rate": 0.0125,
         "method": "base_plus_percent_over",
-        "notes": "$69,250 plus 1.25% over $5,000,000 FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$69,250 plus 1.25% over $5,000,000",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16040,10 +16040,10 @@
         "min_fee": 131750.0,
         "rate": 0.0115,
         "method": "base_plus_percent_over",
-        "notes": "$131,750 plus 1.15% over $10,000,000 FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$131,750 plus 1.15% over $10,000,000",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16051,10 +16051,10 @@
         "min_fee": 65.0,
         "rate": null,
         "method": "flat",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16062,10 +16062,10 @@
         "min_fee": 65.0,
         "rate": null,
         "method": "flat",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16073,10 +16073,10 @@
         "min_fee": 65.0,
         "rate": 20.0,
         "method": "flat_up_to_4ton_plus_addl",
-        "notes": "$65 up to 4-ton system plus $20 each additional ton or fraction FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$65 up to 4-ton system plus $20 each additional ton or fraction",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16084,10 +16084,10 @@
         "min_fee": 70.0,
         "rate": 20.0,
         "method": "flat_up_to_4ton_plus_addl",
-        "notes": "$70 up to 4-ton system plus $20 each additional ton or fraction FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$70 up to 4-ton system plus $20 each additional ton or fraction",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16095,10 +16095,10 @@
         "min_fee": 400.0,
         "rate": null,
         "method": "flat_each",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16106,10 +16106,10 @@
         "min_fee": 260.0,
         "rate": null,
         "method": "flat_per_trade",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16117,10 +16117,10 @@
         "min_fee": 260.0,
         "rate": 10.0,
         "method": "flat_plus_per_kw_over",
-        "notes": "$260 plus $10 per kW over 10kW (or any portion) per trade FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$260 plus $10 per kW over 10kW (or any portion) per trade",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16128,10 +16128,10 @@
         "min_fee": 0.0,
         "rate": null,
         "method": "flat",
-        "notes": "No permit required FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "No permit required",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16139,10 +16139,10 @@
         "min_fee": 150.0,
         "rate": 20.0,
         "method": "flat_plus_per_addl_tent",
-        "notes": "$150 first tent, $20 per additional tent FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$150 first tent, $20 per additional tent",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16150,10 +16150,10 @@
         "min_fee": 250.0,
         "rate": 20.0,
         "method": "flat_plus_per_addl_tent",
-        "notes": "$250 first tent, $20 per additional tent FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$250 first tent, $20 per additional tent",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16161,10 +16161,10 @@
         "min_fee": null,
         "rate": 1.0,
         "method": "per_sqft",
-        "notes": "$1.00 per sq ft FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$1.00 per sq ft",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16172,10 +16172,10 @@
         "min_fee": null,
         "rate": 2.0,
         "method": "double_fee_or_official_discretion_max_100pct",
-        "notes": "Double permit fee or as determined by Building Official, not to exceed 100% FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "Double permit fee or as determined by Building Official, not to exceed 100%",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16183,10 +16183,10 @@
         "min_fee": 125.0,
         "rate": null,
         "method": "flat_or_base_fee_whichever_less",
-        "notes": "$125 or cost of base permit fee, whichever is less FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$125 or cost of base permit fee, whichever is less",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16194,10 +16194,10 @@
         "min_fee": 60.0,
         "rate": null,
         "method": "flat",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16205,10 +16205,10 @@
         "min_fee": 250.0,
         "rate": null,
         "method": "flat",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16216,10 +16216,10 @@
         "min_fee": 225.0,
         "rate": 75.0,
         "method": "flat_3hr_plus_hourly",
-        "notes": "$225 for first three hours and $75 per additional hour per inspector FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$225 for first three hours and $75 per additional hour per inspector",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16227,10 +16227,10 @@
         "min_fee": 270.0,
         "rate": 90.0,
         "method": "flat_3hr_plus_hourly",
-        "notes": "$270 for first three hours and $90 per additional hour per inspector FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$270 for first three hours and $90 per additional hour per inspector",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16238,10 +16238,10 @@
         "min_fee": 80.0,
         "rate": 60.0,
         "method": "flat_1hr_plus_hourly",
-        "notes": "$80 for the first hour plus $60 per each additional hour FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$80 for the first hour plus $60 per each additional hour",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16249,10 +16249,10 @@
         "min_fee": null,
         "rate": 20.0,
         "method": "per_quarter_hour",
-        "notes": "$20.00 per quarter hour FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "$20.00 per quarter hour",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16260,10 +16260,10 @@
         "min_fee": null,
         "rate": null,
         "method": "cost_plus_hourly",
-        "notes": "Cost plus staff hourly rate FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "Cost plus staff hourly rate",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16271,10 +16271,10 @@
         "min_fee": null,
         "rate": null,
         "method": "cost_plus_hourly",
-        "notes": "Cost plus staff hourly rate FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "Cost plus staff hourly rate",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       },
       {
         "municipality": "West Palm Beach",
@@ -16282,10 +16282,10 @@
         "min_fee": 20.0,
         "rate": null,
         "method": "flat_each",
-        "notes": " FLAG: this table conflicts with a previously-confirmed real data point from the permit-planner.wpb.org calculator ($791.75 fee on $680,000 project value, captured Sept 21) \u2014 this table predicts $10,610-$18,090 for the same value, off by more than 10x. Do not treat as reliable until reconciled: possible causes are that this page is a different fee category (e.g. non-building trade, or a different department), the calculator gives a partial/baseline number only, or this table is for a different jurisdiction entirely.",
+        "notes": "",
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
-        "flag": "conflicts_with_prior_calculator_data_point_needs_reconciliation"
+        "flag": "verified_against_live_wpb_calculator_2026_09_23"
       }
     ],
     "labor": [
