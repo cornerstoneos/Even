@@ -29,6 +29,14 @@ BATCH = os.path.join(os.path.dirname(__file__), '..', 'data', 'batches', 'even_m
 INVALID_TIER = 'invalid_cross_market_copy'
 COPIED_MARKER = 'copied from miami-dade'
 
+# A permit row can carry a research flag saying it isn't trustworthy yet --
+# e.g. a fee table that contradicts an already-confirmed real number by 10x,
+# pending reconciliation. Loading it would put an unverified, possibly very
+# wrong number in a city-verified (high-confidence) permit slot, which is
+# worse than having no row at all. Substring match, not an exact list: this
+# should also catch flag names a future batch invents for the same situation.
+UNRELIABLE_PERMIT_MARKERS = ('conflict', 'reconcil', 'unreliable', 'do_not_use', 'needs_review')
+
 # JSONB payload columns. Scalars (market/state/zone) and the two notes columns
 # are handled separately since they have different emptiness rules.
 LIST_COLUMNS = ('materials', 'labor', 'permits')
@@ -68,14 +76,20 @@ def build_payload(market):
         if market.get(scalar):
             row[scalar] = market[scalar]
 
-    dropped = 0
+    dropped_materials = 0
+    dropped_permits = 0
     for col in LIST_COLUMNS:
         values = market.get(col) or []
         if col == 'materials':
             kept = [r for r in values
                     if r.get('tier') != INVALID_TIER
                     and COPIED_MARKER not in str(r.get('source', '')).lower()]
-            dropped = len(values) - len(kept)
+            dropped_materials = len(values) - len(kept)
+            values = kept
+        elif col == 'permits':
+            kept = [r for r in values
+                    if not any(marker in str(r.get('flag', '')).lower() for marker in UNRELIABLE_PERMIT_MARKERS)]
+            dropped_permits = len(values) - len(kept)
             values = kept
         if values:
             row[col] = values
@@ -88,8 +102,13 @@ def build_payload(market):
         row['source_notes'] = market['source']
 
     counts = ' '.join(f'{c}={len(row.get(c, []))}' for c in LIST_COLUMNS)
-    note = f'  [{dropped} copied-from-Miami material rows excluded]' if dropped else ''
-    return row, f"{market['market']}, {market.get('state', '?')} — {counts}{note}", dropped
+    notes = []
+    if dropped_materials:
+        notes.append(f'{dropped_materials} copied-from-Miami material rows excluded')
+    if dropped_permits:
+        notes.append(f'{dropped_permits} unreliable/flagged permit rows excluded')
+    note = f"  [{'; '.join(notes)}]" if notes else ''
+    return row, f"{market['market']}, {market.get('state', '?')} — {counts}{note}", dropped_materials, dropped_permits
 
 
 def main():
@@ -115,10 +134,12 @@ def main():
     missing = set()
 
     payloads = []
-    total_dropped = 0
+    total_dropped_materials = 0
+    total_dropped_permits = 0
     for market in sorted(batch, key=lambda m: m['market']):
-        row, line, dropped = build_payload(market)
-        total_dropped += dropped
+        row, line, dropped_materials, dropped_permits = build_payload(market)
+        total_dropped_materials += dropped_materials
+        total_dropped_permits += dropped_permits
         if have is not None:
             for col in list(row):
                 if col not in have:
@@ -127,7 +148,8 @@ def main():
         payloads.append(row)
         print('  ' + line)
 
-    print(f'\n{total_dropped} material rows excluded in total.')
+    print(f'\n{total_dropped_materials} material rows excluded in total.')
+    print(f'{total_dropped_permits} permit rows excluded in total (unreliable/flagged).')
     if missing:
         print(f'\nWARNING: market_data has no {", ".join(sorted(missing))} column(s), '
               f'so those values were skipped. Everything else still loaded.\n'
