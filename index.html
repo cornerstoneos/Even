@@ -2319,7 +2319,12 @@ function getConfidenceRange(data){ return CONFIDENCE_RANGE[data?.confidenceTier]
 // market_rate (equipment rental — BigRentz/DOZR aggregator data blended across
 // yards) sits with retail_adjusted/national_estimate: real and current, but an
 // aggregate across vendors rather than one identifiable, citable quote.
-const MATERIAL_TIER_RANK={retail:1,retail_adjusted:2,national_estimate:2,market_rate:2,pro_distributor:3,supplier_direct:3,local_supply_house:4};
+// market_rate_national_fallback: same aggregator sourcing, but the researcher
+// found no local listings for this market and fell back to a national average
+// (labeled honestly in the source field rather than passed off as local) --
+// one notch below market_rate for that reason, grouped with the other
+// not-really-local tiers.
+const MATERIAL_TIER_RANK={retail:1,retail_adjusted:2,national_estimate:2,market_rate:2,market_rate_national_fallback:2,pro_distributor:3,supplier_direct:3,local_supply_house:4};
 
 // Which material categories a trade actually buys from. Matched as substrings so
 // the model's own trade names out of the scope breakdown ("Interior Painting",

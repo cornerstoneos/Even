@@ -48,6 +48,23 @@ const elecTier=materialSourceQuality(mia.materials,elecCats);
 check(`electrician material tier on real Miami-Dade data is pro-tier (got rank ${elecTier})`,
   elecTier>=3, 'all 187 electrical rows would be invisible under the old exact-match code');
 
+console.log('\n=== Real data: no un-prefixed category orphaned from every trade it should belong to ===');
+// A category that isn't the bare root itself (e.g. "HVAC") and isn't
+// "<root> - Sub" for any known root is invisible to that trade's scoping --
+// caught 129 real, paid-for rows in this exact state once already
+// (Thermostats, Refrigerant Line Sets, etc. missing their "HVAC - " prefix).
+const KNOWN_ROOTS=['Roofing','Electrical','Plumbing','HVAC','Framing','Paint','Flooring','Concrete','Drywall','Siding','Equipment Rental'];
+const orphaned=new Set();
+for(const r of mia.materials||[]){
+  const cat=r.category;
+  if(!cat) continue;
+  if(KNOWN_ROOTS.includes(cat)) continue;
+  if(KNOWN_ROOTS.some(root=>cat.startsWith(root+' - '))) continue;
+  orphaned.add(cat);
+}
+check(`no un-prefixed categories orphaned from every known trade root (found: ${[...orphaned].join(', ')||'none'})`,
+  orphaned.size===0);
+
 const hvacCats=scopeMaterialCategories('HVAC',null);
 const hvacTier=materialSourceQuality(mia.materials,hvacCats);
 check(`HVAC material tier on real data (got rank ${hvacTier})`, hvacTier>=3);
@@ -122,6 +139,8 @@ check('market_rate is ranked, not falling to the ||1 default',
 check('ranked with retail_adjusted/national_estimate, below the real-vendor tiers',
   MATERIAL_TIER_RANK.market_rate===MATERIAL_TIER_RANK.national_estimate
   && MATERIAL_TIER_RANK.market_rate<MATERIAL_TIER_RANK.supplier_direct);
+check('market_rate_national_fallback is ranked, not falling to the ||1 default',
+  MATERIAL_TIER_RANK.market_rate_national_fallback===2, `got ${MATERIAL_TIER_RANK.market_rate_national_fallback}`);
 
 console.log(`\n──────────────\n${pass} passed, ${fail} failed\n`);
 process.exit(fail?1:0);
