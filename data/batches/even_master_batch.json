@@ -56376,6 +56376,17 @@
         "source": "City of Hallandale Beach Master Fee Schedule (Aug 19, 2026), pp. 5-6 (screenshots)",
         "date": "2026-09-30",
         "flag": "verified_from_screenshots"
+      },
+      {
+        "municipality": "Hallandale Beach",
+        "work_type": "Unsafe Structures Enforcement - Posting of Notices",
+        "min_fee": 45,
+        "rate": null,
+        "method": "flat_each",
+        "notes": "Reso 2022-115",
+        "source": "City of Hallandale Beach Master Fee Schedule (Aug 19, 2026), p. 12 (hallandale_beach_permits.csv)",
+        "date": "2026-09-30",
+        "flag": "verified_from_screenshots"
       }
     ],
     "source": "Broward County Administrative Code, Chapter 43/Sections 40.27-40.33, General/Building/Electrical/Mechanical/Plumbing Permits Fee Schedule and Elevators, current per Ord. 2025-038, eff. 5/1/2025 (Municode)",
