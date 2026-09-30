@@ -289,6 +289,32 @@ function normalizeMuni(s) {
     .trim();
 }
 
+// A single city row used to count as city-level grounding, so a city with 4 rows
+// earned the same HIGH confidence as one with its full fee schedule on file. A city
+// now has to carry the core fees (a base permit fee, and electrical / plumbing /
+// mechanical / roofing — or one base fee that covers all trades) before its rows
+// count as the city's schedule. Definition lives in data/permit_core_fees.json so
+// the even-data checklist grades cities by exactly the same rule.
+const CORE = (() => {
+  const c = require('./data/permit_core_fees.json');
+  const rx = s => new RegExp(s, 'i');
+  return {
+    exclude: rx(c.exclude), base: rx(c.base), allTrades: rx(c.all_trades),
+    trades: Object.entries(c.trades).map(([name, s]) => [name, rx(s)])
+  };
+})();
+
+function missingCoreFees(cityRows) {
+  const rows = cityRows.filter(r => !CORE.exclude.test(r.work_type || ''));
+  const bases = rows.filter(r => CORE.base.test(r.work_type || ''));
+  const coversAll = bases.some(r => CORE.allTrades.test(`${r.work_type || ''} ${r.notes || ''}`));
+  const missing = bases.length ? [] : ['base permit fee'];
+  for (const [name, rx] of CORE.trades) {
+    if (!coversAll && !rows.some(r => rx.test(r.work_type || ''))) missing.push(name);
+  }
+  return missing;
+}
+
 function filterPermits(permits, municipality) {
   if (!Array.isArray(permits) || !permits.length) return { permits, scope: 'none' };
 
@@ -299,7 +325,13 @@ function filterPermits(permits, municipality) {
     const target = normalizeMuni(municipality);
     const cityRows = permits.filter(r => !isCounty(r) && normalizeMuni(r.municipality) === target);
     if (cityRows.length) {
-      return { permits: [...cityRows, ...countyRows], scope: 'municipality', municipality };
+      const missing = missingCoreFees(cityRows);
+      return {
+        permits: [...cityRows, ...countyRows],
+        scope: missing.length ? 'municipality-partial' : 'municipality',
+        municipality,
+        missing
+      };
     }
     // We know exactly where they are, we just haven't researched this city's fee
     // schedule yet. County rows are the honest stand-in — flagged, not passed off
@@ -326,8 +358,8 @@ app.get('/api/market-data', async (req, res) => {
   const hvhz = HVHZ_MARKETS.has(matched.market);
   const data = await getMarketData(matched.market);
   if (!data) return res.json({ market: matched.market, state: matched.state, zone: matched.zone, municipality: matched.municipality || null, hvhz, materials: null, labor: null, permits: null });
-  const { permits, scope, municipality } = filterPermits(data.permits, matched.municipality);
-  res.json({ ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, hvhz });
+  const { permits, scope, municipality, missing } = filterPermits(data.permits, matched.municipality);
+  res.json({ ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, permitMissing: missing || [], hvhz });
 });
 
 // ─── Anthropic proxy ──────────────────────────────────────────────────────────
