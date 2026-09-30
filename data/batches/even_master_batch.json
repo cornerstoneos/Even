@@ -76068,10 +76068,10 @@
         "min_fee": 80.0,
         "rate": "$80 minimum for work up to $1,000; plus cumulative 2.50% of value $1,000-$10,000, 2.25% $10,001-$1,000,000, 2.00% over $1,000,000",
         "method": "percent_cumulative_plus_min",
-        "notes": "Assessed separately per trade. Based on estimated in-place cost of construction.",
+        "notes": "Assessed separately per trade. Based on estimated in-place cost of construction. CONSOLIDATED 2026-09-30: merged from 4 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76101,10 +76101,10 @@
         "min_fee": 60.0,
         "rate": "$60 minimum for work up to $1,000; plus cumulative 1.0% of value $1,000-$10,000, 2.0% $10,001-$1,000,000, 1.5% $1,000,001-$2,000,000, 1.0% over $2,000,000",
         "method": "percent_cumulative_plus_min",
-        "notes": "Life safety systems only. Sprinkler heads, alarm devices and floor testing charged separately.",
+        "notes": "Life safety systems only. Sprinkler heads, alarm devices and floor testing charged separately. CONSOLIDATED 2026-09-30: merged from 5 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76156,10 +76156,10 @@
         "min_fee": 75.0,
         "rate": "$75 minimum for work up to $1,000; plus cumulative 1.5% of value $1,000-$10,000, 2.0% $10,001-$1,000,000, 1.5% $1,000,001-$2,000,000, 1.15% over $2,000,000",
         "method": "percent_cumulative_plus_min",
-        "notes": "Life safety systems only. Sprinkler heads, alarm devices and floor testing charged separately.",
+        "notes": "Life safety systems only. Sprinkler heads, alarm devices and floor testing charged separately. CONSOLIDATED 2026-09-30: merged from 5 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76222,10 +76222,10 @@
         "min_fee": 500.0,
         "rate": "$500 for work valued $25,000 and under; $1,000 over $25,000 up to $100,000; $1,500 over $100,000",
         "method": "tiered",
-        "notes": "Per request.",
+        "notes": "Per request. CONSOLIDATED 2026-09-30: merged from 3 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76310,10 +76310,10 @@
         "min_fee": 110.0,
         "rate": "$110 for cost under $1,000; +$55 each additional $1,000",
         "method": "base_plus_addl",
-        "notes": "Includes up to 2 reviews and 2 inspections",
+        "notes": "Includes up to 2 reviews and 2 inspections CONSOLIDATED 2026-09-30: merged from 2 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76321,10 +76321,10 @@
         "min_fee": 1100.0,
         "rate": "$1,100 for site construction under $100,000; +$550 each additional $100,000",
         "method": "base_plus_addl",
-        "notes": "Includes up to 4 reviews and 4 inspections",
+        "notes": "Includes up to 4 reviews and 4 inspections CONSOLIDATED 2026-09-30: merged from 2 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76343,10 +76343,10 @@
         "min_fee": 2200.0,
         "rate": "0.75% of first $1,000,000 of site work construction cost; 0.40% of all additional; $2,200 minimum",
         "method": "percent_of_cost_with_min",
-        "notes": "Includes up to 4 reviews and 4 inspections",
+        "notes": "Includes up to 4 reviews and 4 inspections CONSOLIDATED 2026-09-30: merged from 3 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76398,10 +76398,10 @@
         "min_fee": 110.0,
         "rate": "$110 includes up to 2 inspections; $66 each additional",
         "method": "first_plus_addl",
-        "notes": null,
+        "notes": "CONSOLIDATED 2026-09-30: merged from 2 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76409,10 +76409,10 @@
         "min_fee": 110.0,
         "rate": "$110 includes up to 2 inspections; $66 each additional",
         "method": "first_plus_addl",
-        "notes": null,
+        "notes": "CONSOLIDATED 2026-09-30: merged from 2 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76420,10 +76420,10 @@
         "min_fee": 42.0,
         "rate": "$42 minimum for new sign; $15 each additional sign; plus 1.5% of job cost over first $1,000",
         "method": "base_plus_percent_over_1000",
-        "notes": null,
+        "notes": "CONSOLIDATED 2026-09-30: merged from 2 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76431,10 +76431,10 @@
         "min_fee": 70.0,
         "rate": "$70 first 14 days; $70 each additional day after 14",
         "method": "flat_plus_per_addl",
-        "notes": null,
+        "notes": "CONSOLIDATED 2026-09-30: merged from 2 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
@@ -76574,10 +76574,10 @@
         "min_fee": 35.0,
         "rate": "$35 per conversion plus $0.15 per sheet side (+$0.05 double-sided) up to 11x17; $6 per sheet side larger than 11x17",
         "method": "per_sheet",
-        "notes": null,
+        "notes": "CONSOLIDATED 2026-09-30: merged from 3 split tier rows into one row; amounts unchanged.",
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
-        "flag": "verified_from_screenshots"
+        "flag": "verified_from_screenshots; consolidated_split_tiers"
       },
       {
         "municipality": "Hallandale Beach",
