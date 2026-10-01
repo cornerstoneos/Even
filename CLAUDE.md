@@ -1,6 +1,6 @@
 # Even — session rules
 
-Even is a contractor estimating tool (even-os.com). This repo is PUBLIC: app at the root (`index.html`, `server.js`, `data-pipeline/`, `tests/`), marketing site in `marketing/`, permits/materials/labor master batch at `data/batches/even_master_batch.json`.
+Even is a contractor estimating tool (even-os.com). This repo is PUBLIC: app at the root (`index.html`, `server.js`, `data-pipeline/`, `tests/`), marketing engine site in `marketing/` (live at https://lambent-kataifi-0885b7.netlify.app/), permits/materials/labor master batch at `data/batches/even_master_batch.json`.
 
 **The master rules, decisions and task lists live in the PRIVATE repo `cornerstoneos/even-data`.** At the start of every session:
 1. Attach `cornerstoneos/even-data` (add_repo) and read its `CLAUDE.md` (the CEO master file). It wins over anything here.
