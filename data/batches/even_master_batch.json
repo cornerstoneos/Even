@@ -16861,6 +16861,136 @@
         "notes": null,
         "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
         "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Building Permit - New Construction",
+        "min_fee": 150,
+        "rate": "$150 minimum or 3% of job cost (copy of contract required)",
+        "method": "percent_of_cost_with_min",
+        "notes": "Master building permit fee is based on estimated cost of construction including all systems.",
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Building Permit - Addition and/or Alteration to Existing Structure",
+        "min_fee": 150,
+        "rate": "$150 minimum or 2% of job cost (copy of contract required)",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Electrical Permit Fees",
+        "min_fee": 150,
+        "rate": "$150 minimum or 3% of job cost (sub-trade value)",
+        "method": "percent_of_cost_with_min",
+        "notes": "Sub-trade values based on a verifiable contract amount or RS Means, whichever is greater.",
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Plumbing Permit Fees",
+        "min_fee": 150,
+        "rate": "$150 minimum or 3% of job cost (sub-trade value)",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Mechanical Permit Fees",
+        "min_fee": 150,
+        "rate": "$150 minimum or 3% of job cost (sub-trade value)",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Up Front Processing Fee (non-refundable)",
+        "min_fee": 250,
+        "rate": "Single family $250; multi-family/commercial $1,000; 30% of permit fee; processing fee $100 minimum, $10 per $1,000 of job cost for $5,001 or more",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Demolition of Buildings",
+        "min_fee": 1500,
+        "rate": "Single family $1,500; multi-family/commercial $5,000",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Structural Plan Review",
+        "min_fee": 150,
+        "rate": "$150 per hour; civil plan review $105 per hour",
+        "method": "hourly",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Change of Contractor",
+        "min_fee": 200,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Reinspection Fee",
+        "min_fee": 75,
+        "rate": "First $75; 2nd reinspection $150; 3rd $300",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "After-Hours / Weekend Inspection",
+        "min_fee": 300,
+        "rate": "$300 per inspection",
+        "method": "flat_each",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Certificate of Completion (single family, townhouse, commercial shell)",
+        "min_fee": 50,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bay Harbor Islands",
+        "work_type": "Certificate of Use and Occupancy",
+        "min_fee": 750,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
+        "date": "2026-10-02"
       }
     ],
     "flag": " MIAMI-DADE COUNTY ROWS ADDED 2026-07-25 from official RER Fee Schedule (Implementing Order 4-63, effective 2025-10-01, first increase in 17+ years). IMPORTANT SCOPE NOTE: RER issues permits ONLY for unincorporated Miami-Dade. All 34 incorporated municipalities run their own building departments and set their own fees \u2014 so county rows serve as the FALLBACK approximation for those cities, not their actual schedule, and any estimate using them should disclose that. Timeline not published in the fee schedule; a third-party permit expediter reports 1-10 business days for initial plan review, which is NOT an official county figure and was deliberately not recorded as timeline_days. TIMELINE ADDED 2026-07-25: official Miami-Dade RER Plan Review page (miamidade.gov/global/economy/building/plan-review.page) states 24 hours to 10 business days for initial review, applied to all Miami-Dade County rows as timeline_days=5 (midpoint) with the full range preserved in timeline_note. Miramar and North Palm Beach checked but NOT added \u2014 only third-party sources found (permit expediters, contractor blogs), contradicting each other by 4x (5 to 21 business days) with no source claiming to quote the city's own stated policy. Omitted rather than guessed."
@@ -81956,6 +82086,146 @@
         "method": "percent_of_value",
         "notes": null,
         "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Building Permit Fee (per structure per trade; sub permit fees on job value of that permit)",
+        "min_fee": 75,
+        "rate": "$75 up to $5,000 per structure per trade; 2.5% of construction cost over $5,000 to $2,000,000; 2% over $2,000,000 to $5,000,000; 1.5% over $5,000,000",
+        "method": "tiered",
+        "notes": "Initial permit fee is on total cost of construction; all additional sub permit fees (electrical, plumbing, mechanical, gas) are based on the job value of the work covered by that permit. First inspection included. The $75 application fee is applied against the final permit cost.",
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "A/C Change Out (Residential)",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Water Heater Change Out (Residential)",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Single Family High Velocity Installations for Windows, Doors and Roofs",
+        "min_fee": 125,
+        "rate": "1.5% of construction cost, $125 minimum",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Certificate of Occupancy / Completion",
+        "min_fee": 75,
+        "rate": "Residential $75; non-residential $125",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Re-Inspection Fee",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Change of Contractor",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Revision After Issuance",
+        "min_fee": 75,
+        "rate": "$75 minimum plus $75 per hour",
+        "method": "hourly",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Expired Permit Renewal",
+        "min_fee": null,
+        "rate": "50% of the original permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Overtime Inspections / Plan Review",
+        "min_fee": 55,
+        "rate": "3 hour minimum; $55 per hour inspections, $65 per hour plan review",
+        "method": "hourly_3hr_min",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "3rd and Subsequent Plan Review Fee",
+        "min_fee": 75,
+        "rate": "$75 minimum per discipline",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Work Without a Permit",
+        "min_fee": null,
+        "rate": "Double the permit fee",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Private Provider Administrative Fee",
+        "min_fee": null,
+        "rate": "25% reduction of permit fee (plan review and inspection); 15% (inspection only)",
+        "method": "percent_discount",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Deerfield Beach",
+        "work_type": "Required State and County Fees",
+        "min_fee": 2,
+        "rate": "BORA $0.52 per $1,000 of total cost; DBPR 1.5% and BCAI 1.0% of permit fee, $2 minimum each",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule",
         "date": "2026-10-02"
       }
     ],
