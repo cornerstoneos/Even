@@ -70647,7 +70647,8 @@
         "rate": null,
         "method": "percent_of_value_tiered",
         "notes": "Up to $250,000: 1.65% of value; $250,001-$500,000: $4,125 plus 1.55% over $250,000; $500,001-$1,000,000: $8,000 plus 1.45% over $500,000; $1,000,000-$5,000,000: $15,250 plus 1.35% over $1,000,000; $5,000,000-$10,000,000: $69,250 plus 1.25% over $5,000,000; Over $10,000,000: $131,750 plus 1.15% over $10,000,000",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70656,7 +70657,8 @@
         "rate": null,
         "method": "percent_of_value_tiered",
         "notes": "Up to $250,000: 2.75% of value; $250,001-$500,000: $6,875 plus 2.65% over $250,000; $500,001-$1,000,000: $13,500 plus 2.55% over $500,000; $1,000,000-$5,000,000: $26,250 plus 2.45% over $1,000,000; $5,000,000-$10,000,000: $124,250 plus 2.35% over $5,000,000; Over $10,000,000: $241,750 plus 2.25% over $10,000,000",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70665,7 +70667,8 @@
         "rate": null,
         "method": "flat_minimum",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70674,7 +70677,8 @@
         "rate": null,
         "method": "flat_minimum",
         "notes": "Roofing permits only",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70683,7 +70687,8 @@
         "rate": 1.0,
         "method": "flat",
         "notes": "$1.00 per sq. ft.",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70692,7 +70697,8 @@
         "rate": null,
         "method": "percent_surcharge_doubles_fee",
         "notes": "Double permit fee, or as determined by the Building Official (not to exceed 100%)",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70701,7 +70707,8 @@
         "rate": 125.0,
         "method": "flat",
         "notes": "$125.00 or cost of base permit fee, whichever is less",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70710,7 +70717,8 @@
         "rate": null,
         "method": "flat",
         "notes": "Included in permit fees",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70719,7 +70727,8 @@
         "rate": 60.0,
         "method": "flat",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70728,7 +70737,8 @@
         "rate": 250.0,
         "method": "flat",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70737,7 +70747,8 @@
         "rate": 225.0,
         "method": "hourly_3hr_min",
         "notes": "$225 for first three hours and $75 per additional hour per inspector",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70746,7 +70757,8 @@
         "rate": 270.0,
         "method": "hourly_3hr_min",
         "notes": "$270 for first three hours and $90 per additional hour per inspector",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70755,7 +70767,8 @@
         "rate": 80.0,
         "method": "hourly",
         "notes": "$80.00 for the first hour plus $60.00 per each additional hour",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70764,7 +70777,8 @@
         "rate": 20.0,
         "method": "hourly",
         "notes": "$20.00 per quarter hour",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70773,7 +70787,8 @@
         "rate": 65.0,
         "method": "flat",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70782,7 +70797,8 @@
         "rate": 65.0,
         "method": "flat",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70791,7 +70807,8 @@
         "rate": 65.0,
         "method": "flat_addl",
         "notes": "$65 up to 4-ton system plus $20 each additional ton or fraction",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70800,7 +70817,8 @@
         "rate": 70.0,
         "method": "flat_addl",
         "notes": "$70 up to 4-ton system plus $20 each additional ton or fraction",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70809,7 +70827,8 @@
         "rate": 400.0,
         "method": "flat_each",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70818,7 +70837,8 @@
         "rate": 260.0,
         "method": "flat",
         "notes": "Per trade",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70827,7 +70847,8 @@
         "rate": 260.0,
         "method": "flat_addl",
         "notes": "$260 plus $10 per kW over 10kW (or any portion thereof) per trade",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70836,7 +70857,8 @@
         "rate": 0.0,
         "method": "flat",
         "notes": "No permit required",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70845,7 +70867,8 @@
         "rate": 150.0,
         "method": "flat_plus_per_addl",
         "notes": "$150 for the first tent, $20 per tent for each additional tent",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70854,7 +70877,8 @@
         "rate": 250.0,
         "method": "flat_plus_per_addl",
         "notes": "$250 for the first tent, $20 per tent for each additional tent",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70863,7 +70887,8 @@
         "rate": null,
         "method": "hourly",
         "notes": "Cost plus Staff Hourly Rate",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70872,7 +70897,8 @@
         "rate": null,
         "method": "hourly",
         "notes": "Cost plus Staff Hourly Rate",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70881,7 +70907,8 @@
         "rate": 20.0,
         "method": "flat_each",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70890,7 +70917,8 @@
         "rate": 0.15,
         "method": "per_sheet",
         "notes": "Plus $0.05 double sided",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70899,7 +70927,8 @@
         "rate": 0.3,
         "method": "per_sheet",
         "notes": "Plus $0.10 double sided",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70908,7 +70937,8 @@
         "rate": 6.0,
         "method": "per_sheet",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70917,7 +70947,8 @@
         "rate": 350.0,
         "method": "flat_each",
         "notes": "Per building or structure",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70926,7 +70957,8 @@
         "rate": 100.0,
         "method": "hourly",
         "notes": "Per hour per plan reviewer",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70935,7 +70967,8 @@
         "rate": 100.0,
         "method": "hourly",
         "notes": "More than 15 minutes, per hour",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70944,7 +70977,8 @@
         "rate": 100.0,
         "method": "hourly",
         "notes": "Per hour per reviewer",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70953,7 +70987,8 @@
         "rate": 420.0,
         "method": "hourly_3hr_min",
         "notes": "$420 for the first three hours plus $140 per additional hour per reviewer",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70962,7 +70997,8 @@
         "rate": 150.0,
         "method": "flat",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70971,7 +71007,8 @@
         "rate": 250.0,
         "method": "flat",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70980,7 +71017,8 @@
         "rate": 550.0,
         "method": "flat_each",
         "notes": "For each unit",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70989,7 +71027,8 @@
         "rate": 550.0,
         "method": "flat_each",
         "notes": "For each unit",
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -70998,7 +71037,8 @@
         "rate": 550.0,
         "method": "flat",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Pompano Beach",
@@ -71007,7 +71047,8 @@
         "rate": 5.0,
         "method": "flat",
         "notes": null,
-        "date": "2026-09-17"
+        "date": "2026-09-17",
+        "source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
       },
       {
         "municipality": "Sunrise",
