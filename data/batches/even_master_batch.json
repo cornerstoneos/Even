@@ -16031,6 +16031,176 @@
         "notes": null,
         "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
         "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Base Permit Fee - New Construction and Renovations Based on Area (all trades: building, electrical, plumbing, mechanical, roofing)",
+        "min_fee": 100,
+        "rate": "$1.43 per total sq ft of floor area; minimum $100 per applicable discipline; $150 minimum for just one trade",
+        "method": "per_sqft_with_min",
+        "notes": "The base permit fee is the primary permit fee and includes the fees for sub-permits (electrical, plumbing, HVAC/mechanical, roofing and building). Master building permit is by conditioned square footage; each sub-permit is a percent of cost of work.",
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Base Permit Fee - All Other Permit Types and Renovations Not Based on Area",
+        "min_fee": 100,
+        "rate": "2.53% of value of construction; minimum $100 per applicable discipline ($150 for just one trade); maximum $27,500",
+        "method": "percent_of_cost_with_min",
+        "notes": "Includes sub-permits (electrical, plumbing, mechanical, roofing).",
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Processing Fee",
+        "min_fee": 33,
+        "rate": "Per application, shop drawing or revision; non-refundable; not credited to permit fee",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Submittal Fee",
+        "min_fee": null,
+        "rate": "50% of base permit fee at application for additions, alterations, new construction; credited toward the permit",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Plan Review Fee (master permit, revisions, shop drawings)",
+        "min_fee": 27.5,
+        "rate": "$27.50 per quarter hour; expedited $44 per quarter hour; plan review after second review per discipline charged by time",
+        "method": "hourly",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Dry-Run / Courtesy Review Processing Fee",
+        "min_fee": 330,
+        "rate": "Plus plan review time at $27.50 per quarter hour; expedited processing fee $110",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Early Start Authorization",
+        "min_fee": 275,
+        "rate": "$275 (job value up to $25,000); $550 ($25,001-$100,000); $825 (over $100,000)",
+        "method": "tiered",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Early Commencement Penalty (work without permit)",
+        "min_fee": 137.5,
+        "rate": "100% of base permit fee plus fine $137.50 first, $275 second, $550 each subsequent",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Permit Extension (prior to expiration)",
+        "min_fee": 66,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Permit Renewal",
+        "min_fee": 110,
+        "rate": "$110 plus 13.75% of the original base permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Re-inspection Fee (per discipline, beyond first)",
+        "min_fee": 82.5,
+        "rate": "$82.50 each; cancellation inspection for expired permit $82.50",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "After-Hours or Weekend Inspection",
+        "min_fee": 330,
+        "rate": "$330 minimum (two hours), then $110 per hour",
+        "method": "hourly",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Certificate of Occupancy or Completion - One/Two Family, Townhouse",
+        "min_fee": 82.5,
+        "rate": "Per unit $82.50; apartment/condo unit $110; commercial $0.06 per sq ft with $110 minimum; TCO equals the CO fee",
+        "method": "flat_each",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Change of Contractor or Sub-Contractor",
+        "min_fee": 110,
+        "rate": "$110 or base permit fee, whichever is less",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Miami-Dade County Surcharge",
+        "min_fee": null,
+        "rate": "$0.60 per $1,000 of construction value (valued at $81.25 per sq ft or contract value)",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "State of Florida Surcharges (DBPR 1.0%, BCAI 1.5%)",
+        "min_fee": null,
+        "rate": "1.0% and 1.5% of base permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Key Biscayne",
+        "work_type": "Concurrency Review and Permit Document Archive Fee",
+        "min_fee": null,
+        "rate": "Concurrency review 6% of total permit fee; archive fee 10% of base permit fee, $1,000 maximum",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
+        "date": "2026-10-02"
       }
     ],
     "flag": " MIAMI-DADE COUNTY ROWS ADDED 2026-07-25 from official RER Fee Schedule (Implementing Order 4-63, effective 2025-10-01, first increase in 17+ years). IMPORTANT SCOPE NOTE: RER issues permits ONLY for unincorporated Miami-Dade. All 34 incorporated municipalities run their own building departments and set their own fees \u2014 so county rows serve as the FALLBACK approximation for those cities, not their actual schedule, and any estimate using them should disclose that. Timeline not published in the fee schedule; a third-party permit expediter reports 1-10 business days for initial plan review, which is NOT an official county figure and was deliberately not recorded as timeline_days. TIMELINE ADDED 2026-07-25: official Miami-Dade RER Plan Review page (miamidade.gov/global/economy/building/plan-review.page) states 24 hours to 10 business days for initial review, applied to all Miami-Dade County rows as timeline_days=5 (midpoint) with the full range preserved in timeline_note. Miramar and North Palm Beach checked but NOT added \u2014 only third-party sources found (permit expediters, contractor blogs), contradicting each other by 4x (5 to 21 business days) with no source claiming to quote the city's own stated policy. Omitted rather than guessed."
@@ -18445,6 +18615,136 @@
         "method": "flat",
         "notes": null,
         "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Building Permit Fee - Tiered by Valuation (master permit includes all sub-permits)",
+        "min_fee": 75,
+        "rate": "$75 minimum up to $1,000; $100 for the first $2,500 (over $1,000); then 2.5% of $2,500-$10,000; 2.25% of $10,000-$100,000; 2% of $100,000-$500,000; 1.5% of $500,000-$1,000,000; 1.25% of $1,000,000-$10,000,000; 1% above $10,000,000 (cumulative)",
+        "method": "tiered",
+        "notes": "Valuation uses ICC building valuation data. Primary or master permits include the cost of all sub-permits (electrical, plumbing, mechanical, roofing) when detailed on the plans and included in the estimated value.",
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Fire Plan Review and Inspection",
+        "min_fee": 30,
+        "rate": "0.003 of total valuation of work, $30 minimum",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Engineer Plan Review and Inspection",
+        "min_fee": 50,
+        "rate": "0.0025 of total valuation of work, $50 minimum",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Training Surcharge and State Surcharges (DBPR, BCAIB)",
+        "min_fee": 2,
+        "rate": "Training 1% of permit fee; DBPR 1%; BCAIB 1.5%; $2 minimum each",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Plan Revision",
+        "min_fee": 50,
+        "rate": "$10 per page, $50 minimum",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Work Done Without Permit",
+        "min_fee": null,
+        "rate": "Up to 3 times the permit fee penalty plus permit fee; no-fee sub-permits $75",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Permit Re-activation",
+        "min_fee": 50,
+        "rate": "Under 6 months expired: $50 minimum; over 6 months: up to half the original permit fee ($40 minimum); over 1 year: up to full permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Temporary Certificate of Occupancy",
+        "min_fee": 200,
+        "rate": "Single family $200; multi-family $150 per unit; commercial $500; renewal $100",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Permit Extension (requested before expiration)",
+        "min_fee": 25,
+        "rate": "1st 90-day extension free; 2nd and thereafter $25",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Change of Contractor / Owner",
+        "min_fee": 25,
+        "rate": "$25 each (primary and sub permits)",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "After Hours Inspection",
+        "min_fee": 75,
+        "rate": "$75 per hour, 3 hours minimum ($225)",
+        "method": "hourly_3hr_min",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Re-inspection Fee",
+        "min_fee": 50,
+        "rate": "1st $50, 2nd $100, 3rd and each thereafter $200",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Riviera Beach",
+        "work_type": "Early Power Release",
+        "min_fee": 125,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist",
         "date": "2026-10-02"
       }
     ],
@@ -80746,6 +81046,256 @@
         "method": "percent_discount",
         "notes": null,
         "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Building Permit - Construction Fees (by construction cost, per structure per trade)",
+        "min_fee": 150,
+        "rate": "$150 up to $1,000 per structure per trade; over $1,000 to $1,250,000: $150 plus 2% of cost over $1,000; $1,250,000-$3,000,000: $21,000 plus 1.6% of cost over $1,250,000; over $3,000,000: $48,000 plus 1.5% of cost over $3,000,000",
+        "method": "tiered",
+        "notes": "Applies to all trades (building, electrical, plumbing, mechanical): the schedule states the minimum 'per structure per trade'. Roofing is not listed separately. Cost of construction as attested by the applicant; Building Official may use contract or RS Means.",
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Private Provider Discount",
+        "min_fee": null,
+        "rate": "1% of the building permit fee for inspections only; 2% for plan review and inspections",
+        "method": "percent_discount",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Demolition of Entire Buildings",
+        "min_fee": 550,
+        "rate": "Single-family residential $550; all other $825 per floor",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Shutters",
+        "min_fee": 150,
+        "rate": "First opening $150; each additional $25",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Swimming Pools, Spas, Hot Tubs (includes all trades)",
+        "min_fee": 910,
+        "rate": "Single-family $910; all other $1,760",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Hourly Services (plan review, inspections, other)",
+        "min_fee": 175,
+        "rate": "$175 per hour per trade in normal hours; $200 outside normal hours; engineering $150 per hour",
+        "method": "hourly",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Change of Contractor / Qualifier",
+        "min_fee": 175,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Extension of Permit (prior to expiration)",
+        "min_fee": 150,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Renewal of Expired Permit (within six months)",
+        "min_fee": 125,
+        "rate": "Minimum $125 or 50% of original construction fee, whichever is greater",
+        "method": "greater_of_percent_or_flat",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Re-inspection",
+        "min_fee": 125,
+        "rate": "First occurrence per trade $125; second occurrence per trade $150",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Early Start Administrative Fee",
+        "min_fee": 200,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Expedited Plan Review (per discipline)",
+        "min_fee": 100,
+        "rate": "Permit technician $100; each plan reviewer $200 (structural, mechanical, electrical, plumbing, zoning, etc.)",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Board of Rules and Appeals Fee",
+        "min_fee": 2,
+        "rate": "Greater of $2 or $0.52 per $1,000 of total construction cost",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wilton Manors",
+        "work_type": "Education, Technology and State Surcharges",
+        "min_fee": null,
+        "rate": "Education 0.03% of cost of construction; technology access $25 per permit; BCAIF 1.5% and DBPR 1% of permit fees, $2 minimum",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Building Permit Fee (by construction cost, applies to each trade)",
+        "min_fee": 125,
+        "rate": "$125 for construction cost up to $5,000 per trade, plus 1.35% of construction cost above $5,000 per trade; $125 minimum permit fee",
+        "method": "percent_of_cost_with_min",
+        "notes": "A permit application is required for each trade, so this fee applies to all trades (building, electrical, plumbing, mechanical, roofing). Includes first plan review and standard inspections.",
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Residential Water Heater or Air Conditioner Replacement",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Building Permit Application Fee",
+        "min_fee": 1000,
+        "rate": "New commercial or new residential $1,000; remodel and additions $200; permits requiring drainage $300; all other permits $100",
+        "method": "flat_by_class",
+        "notes": "Credited against the final permit cost.",
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Plan Review Fee (rejected, revised, as-built, duplicate or pre-submittal plans)",
+        "min_fee": 95,
+        "rate": "$95 per hour, 1/4 hour minimum, per discipline",
+        "method": "hourly",
+        "notes": null,
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Re-inspection",
+        "min_fee": 95,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Change of Contractor",
+        "min_fee": 100,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Certificate of Occupancy / Completion",
+        "min_fee": 125,
+        "rate": "Temporary CO 90 days $1,000",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Work Without Permit",
+        "min_fee": null,
+        "rate": "200% of standard permit fee",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Overtime Inspections / Plan Review",
+        "min_fee": 142.5,
+        "rate": "$142.50 per hour, 3 hour minimum",
+        "method": "hourly_3hr_min",
+        "notes": null,
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Expired Permit Renewal",
+        "min_fee": null,
+        "rate": "50% of original permit fee within 180 days of expiration; 150% after the second 180-day period",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lighthouse Point",
+        "work_type": "Construction in the Right-of-Way (including restoration)",
+        "min_fee": null,
+        "rate": "3% of construction value",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since",
         "date": "2026-10-02"
       }
     ],
