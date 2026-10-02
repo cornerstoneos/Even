@@ -71988,36 +71988,33 @@
       },
       {
         "municipality": "Davie",
-        "work_type": "Plan Review - Minimum Fee",
-        "min_fee": 25.0,
+        "work_type": "Permit Fee - Construction Value (each permit)",
+        "min_fee": 70.0,
+        "rate": 0.016,
+        "method": "percent_of_construction_value",
+        "notes": "Applied to each building permit separately. Construction value up to $7,500: $70.00; over $7,500 up to $15,000,000: 1.6% of construction value; over $15,000,000: $240,000 + 1.25% of value over $15,000,000. Valuation set by Building Official (contract or RS Means).",
+        "date": "2026-10-02",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule"
+      },
+      {
+        "municipality": "Davie",
+        "work_type": "Plan Review - Changes After Permit Issued",
+        "min_fee": 125.0,
         "rate": null,
-        "method": "flat",
-        "notes": "Minimum plan review fee. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
+        "method": "flat_per_discipline",
+        "notes": "$125 per discipline + revised permit fee; if changes add value, permit fee is recalculated on the new value.",
+        "date": "2026-10-02",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule"
       },
       {
         "municipality": "Davie",
-        "work_type": "Plan Review - Single Family Residential/Duplex/Townhouse",
+        "work_type": "Private Provider - Permit Fee Reduction",
         "min_fee": null,
-        "rate": 0.0075,
-        "method": "percent_of_construction_value",
-        "notes": "0.75% of construction value. Non-refundable once review commenced; up to 50% of application fee refundable at Building Official discretion if denied by outside agency/extenuating circumstances. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Plan Review - Construction Other Than SFR/Duplex/Townhouse",
-        "min_fee": null,
-        "rate": 0.0075,
-        "method": "percent_of_construction_value",
-        "notes": "0.75% of construction value. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
+        "rate": 0.5,
+        "method": "percent_discount",
+        "notes": "50% reduction of the permit fee when a private provider is used.",
+        "date": "2026-10-02",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule"
       },
       {
         "municipality": "Davie",
@@ -72025,20 +72022,9 @@
         "min_fee": 500.0,
         "rate": null,
         "method": "flat_per_discipline",
-        "notes": "$500 per required discipline. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Plan Review - Lost Plans Review",
-        "min_fee": 10.0,
-        "rate": null,
-        "method": "flat_per_page",
-        "notes": "$10.00 per page. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "$500 per required discipline. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72047,9 +72033,9 @@
         "min_fee": null,
         "rate": null,
         "method": "greater_of_flat_options",
-        "notes": "$50.00 per discipline or $15.00 a sheet, whichever is greater. Not credited toward permit fee; paid at 3rd submittal and all subsequent submittals when previous comments unaddressed. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "$50.00 per discipline or $15.00 a sheet, whichever is greater. Not credited toward permit fee; paid at 3rd submittal and all subsequent submittals when previous comments unaddressed. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72058,31 +72044,9 @@
         "min_fee": 50.0,
         "rate": null,
         "method": "flat_per_item",
-        "notes": "$50 per item, for plans submitted after permit issued. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Plan Review - Minor Changes After Permit Issued",
-        "min_fee": null,
-        "rate": null,
-        "method": "hourly",
-        "notes": "$75.00/hour, for <1 hour review time per discipline. If changes add value, permit fee is recalculated using new value and additional fee added to revision fee. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Plan Review - Major Changes After Permit Issued",
-        "min_fee": null,
-        "rate": null,
-        "method": "new_permit_plus_half_original",
-        "notes": "New permit fee + 1/2 of original fee may apply to new permit if change represents major alteration requiring extensive reexamination; original permit voided. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "$50 per item, for plans submitted after permit issued. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72091,64 +72055,9 @@
         "min_fee": 500.0,
         "rate": null,
         "method": "flat_per_discipline",
-        "notes": "$500.00 per discipline. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Permit Fee - Minimum Fee",
-        "min_fee": 55.0,
-        "rate": null,
-        "method": "flat",
-        "notes": "Applied to each building permit separately. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Permit Fee - Construction Value $1 to $15,000,000",
-        "min_fee": null,
-        "rate": 0.0095,
-        "method": "percent_of_construction_value",
-        "notes": "0.95% of construction value. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Permit Fee - Construction Value $15,000,000.01 to $30,000,000",
-        "min_fee": 142500.0,
-        "rate": 0.0075,
-        "method": "percent_of_value_plus_base",
-        "notes": "0.75% of construction value + $142,500.00 base. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Permit Fee - Construction Value $30,000,000.01 to $45,000,000",
-        "min_fee": 255000.0,
-        "rate": 0.005,
-        "method": "percent_of_value_plus_base",
-        "notes": "0.5% of construction value + $255,000.00 base. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Permit Fee - Construction Value Over $45,000,000",
-        "min_fee": 330000.0,
-        "rate": 0.0025,
-        "method": "percent_of_value_plus_base",
-        "notes": "0.25% of construction value + $330,000.00 base. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "$500.00 per discipline. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72157,9 +72066,9 @@
         "min_fee": 28.0,
         "rate": null,
         "method": "flat",
-        "notes": "$28.00. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "$28.00. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72168,9 +72077,9 @@
         "min_fee": null,
         "rate": 0.5,
         "method": "percent_of_permit_fee",
-        "notes": "50% of permit fee refunded. No refunds if: review commenced/completed, inspections scheduled/logged, permit expired prior to request, or fees collected for State/County. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "50% of permit fee refunded. No refunds if: review commenced/completed, inspections scheduled/logged, permit expired prior to request, or fees collected for State/County. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72179,9 +72088,9 @@
         "min_fee": null,
         "rate": 0.5,
         "method": "percent_of_original_fee",
-        "notes": "50% of original fee. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "50% of original fee. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72190,9 +72099,9 @@
         "min_fee": null,
         "rate": 1.0,
         "method": "percent_of_original_fee",
-        "notes": "100% of original fee. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "100% of original fee. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72201,9 +72110,9 @@
         "min_fee": 75.0,
         "rate": null,
         "method": "flat",
-        "notes": "$75.00. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "$75.00. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72212,9 +72121,9 @@
         "min_fee": 75.0,
         "rate": null,
         "method": "flat",
-        "notes": "$75.00. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "$75.00. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72223,9 +72132,9 @@
         "min_fee": 100.0,
         "rate": null,
         "method": "flat",
-        "notes": "$100.00. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "$100.00. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72234,53 +72143,53 @@
         "min_fee": null,
         "rate": null,
         "method": "county_rate_variable",
-        "notes": "Rate calculated based on current BORA rate per Broward County Code Chapter 43, Section 43.1. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "Rate calculated based on current BORA rate per Broward County Code Chapter 43, Section 43.1. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
         "municipality": "Davie",
         "work_type": "Surcharge - Training and Education",
         "min_fee": 2.0,
-        "rate": null,
+        "rate": 0.25,
         "method": "per_1000_construction_value",
-        "notes": "$0.25 per $1,000 of construction value ($2.00 min). Funds Building Division personnel training only. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "$0.25 per $1,000 of construction value ($2.00 min).",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
         "municipality": "Davie",
         "work_type": "Surcharge - Technology Fee",
-        "min_fee": null,
-        "rate": 0.06,
-        "method": "percent_of_permit_fee",
-        "notes": "6% of the permit fee. Offsets Building Division computer/tech expenditures. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "min_fee": 2.0,
+        "rate": 0.5,
+        "method": "per_1000_construction_value",
+        "notes": "$0.50 per $1,000 of construction value ($2.00 min). Building Division technology fund.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
         "municipality": "Davie",
         "work_type": "Surcharge - Fire Prevention Training and Education",
-        "min_fee": null,
-        "rate": null,
+        "min_fee": 2.0,
+        "rate": 0.25,
         "method": "per_1000_construction_value",
-        "notes": "$0.25 per $1,000 of construction value, for permits requiring Fire Dept review/inspection. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "$0.25 per $1,000 of construction value ($2.00 min), for permits requiring Fire Department review.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
         "municipality": "Davie",
         "work_type": "Surcharge - Fire Prevention Technology Fee",
-        "min_fee": null,
-        "rate": 0.06,
-        "method": "percent_of_permit_fee",
-        "notes": "6% of the permit fee, for permits requiring Fire Dept review/inspection. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "min_fee": 2.0,
+        "rate": 0.5,
+        "method": "per_1000_construction_value",
+        "notes": "$0.50 per $1,000 of construction value ($2.00 min), for permits requiring Fire Department review.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72289,9 +72198,9 @@
         "min_fee": 2.0,
         "rate": 0.01,
         "method": "percent_of_permit_fee",
-        "notes": "1% of the permit fee ($2.00 min). Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "1% of the permit fee ($2.00 min). with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72300,9 +72209,9 @@
         "min_fee": 2.0,
         "rate": 0.015,
         "method": "percent_of_permit_fee",
-        "notes": "1.5% of the permit fee ($2.00 min). Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "1.5% of the permit fee ($2.00 min). with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -72311,9 +72220,9 @@
         "min_fee": 2.0,
         "rate": 0.0295,
         "method": "percent_of_total_plus_min",
-        "notes": "2.95% of total amount, $2.00 minimum, when available. Confirmed complete: page 2 of 2 received, sections run continuously 1-13 with no gaps.",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "notes": "2.95% of total amount, $2.00 minimum, when available. with no gaps.",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73170,8 +73079,8 @@
         "rate": null,
         "method": "flat",
         "notes": "Qualifier must meet inspection on job for re-inspection",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73181,8 +73090,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73192,8 +73101,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73203,8 +73112,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73214,8 +73123,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73225,8 +73134,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73236,8 +73145,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73247,8 +73156,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73258,8 +73167,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73269,8 +73178,8 @@
         "rate": null,
         "method": "per_town_council_resolution",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73280,8 +73189,8 @@
         "rate": null,
         "method": "flat_per_building",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73291,8 +73200,8 @@
         "rate": null,
         "method": "flat",
         "notes": "Building Official authorization to work up to the first inspection before permit is issued",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73302,8 +73211,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73313,8 +73222,8 @@
         "rate": 2.0,
         "method": "double_permit_fee",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73324,8 +73233,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73335,8 +73244,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73346,8 +73255,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73357,8 +73266,8 @@
         "rate": null,
         "method": "flat",
         "notes": "Permit review and inspection",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73368,8 +73277,8 @@
         "rate": 10.0,
         "method": "flat_plus_per_addl",
         "notes": "Plus $10 each additional tree",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73379,8 +73288,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73390,8 +73299,8 @@
         "rate": 10.0,
         "method": "flat_plus_per_addl",
         "notes": "Plus $10 each additional tree",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73401,8 +73310,8 @@
         "rate": null,
         "method": "flat",
         "notes": "No fee",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73412,8 +73321,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73423,8 +73332,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73434,8 +73343,8 @@
         "rate": 35.0,
         "method": "base_plus_per_10k_sf",
         "notes": "$100 + $35 per 10,000 SF gross area of property or defined project area",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73445,8 +73354,8 @@
         "rate": 30.0,
         "method": "base_plus_per_10k_sf",
         "notes": "$250 + $30 per 10,000 SF gross area",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73456,8 +73365,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73467,8 +73376,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73478,8 +73387,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73489,8 +73398,8 @@
         "rate": null,
         "method": "flat",
         "notes": "Seasonal sales and carnivals",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73500,8 +73409,8 @@
         "rate": null,
         "method": "flat_each",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73511,8 +73420,8 @@
         "rate": null,
         "method": "flat",
         "notes": "Based on availability",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73522,8 +73431,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
@@ -73533,41 +73442,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Private Provider Discount - Plan Review Only",
-        "min_fee": null,
-        "rate": 0.2,
-        "method": "percent_discount",
-        "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Private Provider Discount - Inspection Only (Permit Fee)",
-        "min_fee": null,
-        "rate": 0.2,
-        "method": "percent_discount",
-        "notes": null,
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
-        "flag": "verified_from_source_pdf"
-      },
-      {
-        "municipality": "Davie",
-        "work_type": "Private Provider Discount - Plan Review and Inspection (Permit Fee)",
-        "min_fee": null,
-        "rate": 0.4,
-        "method": "percent_discount",
-        "notes": "Private Providers discounts relate to Parts 4 and 5 of the Fee Schedule; does not include local/administrative/impact fees or Engineering/Floodplain/Zoning/Landscaping reviews",
-        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A page 2 of 2, Modified Fees Effective 10/1/2025",
-        "date": "2026-09-23",
+        "source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule",
+        "date": "2026-10-02",
         "flag": "verified_from_source_pdf"
       },
       {
