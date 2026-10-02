@@ -17016,6 +17016,196 @@
         "source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026",
         "date": "2026-09-23",
         "flag": "verified_against_live_wpb_calculator_2026_09_23"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Building Permit Fee - Percentage of Valuation",
+        "min_fee": 75,
+        "rate": "1.80% of the first $100,000 (minimum $75), plus 1.30% of the remainder over $100,000, plus 0.98% of the remainder over $1,000,000",
+        "method": "tiered",
+        "notes": "Based on fair market value or cost of construction as set by the Building Official. Fire, CPTED, engineering, impact and processing fees are additional. The schedule gives one valuation-based fee for building permits and does not list electrical, plumbing, mechanical or roofing separately; trade work is issued as sub-permits (see Sub-Permit row). That trade coverage is inferred from the schedule's structure, not stated outright.",
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Sub-Permit Administrative Fee (electrical, plumbing, mechanical and other sub-permits issued over the counter without independent review)",
+        "min_fee": 30,
+        "rate": null,
+        "method": "flat",
+        "notes": "Applies to all sub-permits issued over the counter that do not require independent review.",
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Plan Review Surcharge",
+        "min_fee": 25,
+        "rate": "10% of permit fee (contract over $500); contract under $500: 10% of permit fee, $25 minimum",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Expedited or Out-of-Sequence Review Fee",
+        "min_fee": 100,
+        "rate": "10% of Building Permit Fee and/or revision fee, $100 minimum",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Penalty for Work Without Permit",
+        "min_fee": null,
+        "rate": "100% of the usual permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Inspection by Special Request, Same Day, After Hours or Weekend",
+        "min_fee": 75,
+        "rate": "$75 per hour, 3-hour minimum",
+        "method": "hourly_3hr_min",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Re-inspection Fee",
+        "min_fee": 75,
+        "rate": "$75 first re-inspection, $300 each subsequent re-inspection",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Revision Fee - Major (after plan review)",
+        "min_fee": 75,
+        "rate": "$75 plus $10 per sheet reviewed; no charge before plan review is complete",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Revision Fee - Minor (after plan review)",
+        "min_fee": 25,
+        "rate": "$25 plus $10 per sheet reviewed; no charge before plan review is complete",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Shop Drawings",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Permit Extension or Renewal Fee",
+        "min_fee": 50,
+        "rate": "1st extension $50, 2nd $75, 3rd $100; each extension is 90 days",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Permit Reissuance Fee (after 180 days from expiration)",
+        "min_fee": 100,
+        "rate": "30% of original Building Permit Fee, $100 minimum, plus plan review fee as determined",
+        "method": "greater_of_percent_or_flat",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Change of Contractor After Permit Issuance",
+        "min_fee": 50,
+        "rate": "$50 regardless of permit type",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Temporary Structure Permit",
+        "min_fee": 75,
+        "rate": "Plus plan review and Fire Department fees",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Annual Facility Permit",
+        "min_fee": 150,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Building Code Administrators and Inspectors Fund Surcharge (as printed, F.S. 468.631)",
+        "min_fee": 2,
+        "rate": "1% of Building Permit Fee, $2 minimum (as printed)",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "DBPR Surcharge (as printed)",
+        "min_fee": 2,
+        "rate": "1.5% of Building Permit Fee, $2 minimum (as printed)",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Training Surcharge",
+        "min_fee": 2,
+        "rate": "1% of Building Permit Fee and/or revision fee, $2 minimum",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Palm Beach Gardens",
+        "work_type": "Private Provider Discount",
+        "min_fee": null,
+        "rate": "15% for plan review OR inspections; 30% for both",
+        "method": "percent_discount",
+        "notes": null,
+        "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
       }
     ],
     "labor": [
@@ -77986,6 +78176,926 @@
         "method": "percent_of_permit_fee",
         "notes": null,
         "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Nonrefundable Application Fee",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": "Credited toward permit fee.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Plans Examination Fee - 1st Review",
+        "min_fee": 75,
+        "rate": "$75 each discipline; $90 each review after 2nd submittal; $100 pre plan review",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Minimum Permit Fee",
+        "min_fee": 75,
+        "rate": "$75 for the first $1,000 of valuation",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - New Residential Construction - Structural",
+        "min_fee": null,
+        "rate": "1.60% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - New Residential Construction - Electrical",
+        "min_fee": null,
+        "rate": "0.25% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - New Residential Construction - Plumbing",
+        "min_fee": null,
+        "rate": "0.20% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - New Residential Construction - Mechanical",
+        "min_fee": null,
+        "rate": "0.20% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - Residential Additions/Alterations - Structural",
+        "min_fee": null,
+        "rate": "3.60% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - Residential Additions/Alterations - Electrical",
+        "min_fee": null,
+        "rate": "1.20% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - Residential Additions/Alterations - Plumbing",
+        "min_fee": null,
+        "rate": "1.00% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - Residential Additions/Alterations - Mechanical",
+        "min_fee": null,
+        "rate": "1.00% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - New Commercial Construction - Structural",
+        "min_fee": null,
+        "rate": "1.60% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - New Commercial Construction - Electrical",
+        "min_fee": null,
+        "rate": "0.30% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - New Commercial Construction - Plumbing",
+        "min_fee": null,
+        "rate": "0.25% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - New Commercial Construction - Mechanical",
+        "min_fee": null,
+        "rate": "0.25% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - Commercial Additions/Alterations - Structural",
+        "min_fee": null,
+        "rate": "3.00% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - Commercial Additions/Alterations - Electrical",
+        "min_fee": null,
+        "rate": "1.65% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - Commercial Additions/Alterations - Plumbing",
+        "min_fee": null,
+        "rate": "1.35% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Fee - Commercial Additions/Alterations - Mechanical",
+        "min_fee": null,
+        "rate": "1.35% of total cost of construction",
+        "method": "percent_of_value",
+        "notes": "Percent of total cost of construction for this discipline.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Roof Permit - Shingle/Flat up to 3,000 sq ft",
+        "min_fee": 225,
+        "rate": null,
+        "method": "flat",
+        "notes": "Commercial and residential.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Roof Permit - Tile up to 3,000 sq ft",
+        "min_fee": 300,
+        "rate": null,
+        "method": "flat",
+        "notes": "Commercial and residential.",
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Roof Permit - Over 3,000 sq ft",
+        "min_fee": null,
+        "rate": "$0.20 per sq ft",
+        "method": "per_sqft",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Mechanical Permit - AC Equipment and Ductwork (Residential)",
+        "min_fee": 150,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Mechanical Permit - AC Equipment and Ductwork (Commercial up to 10 tons)",
+        "min_fee": 250,
+        "rate": "Above 10 tons: $300",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Mechanical Permit - Duct Work Replacement (Residential)",
+        "min_fee": 100,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Plumbing Permit - Water Heater Change Out",
+        "min_fee": 75,
+        "rate": "Tankless with electric: $150",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Plumbing Permit - Pool Heater / Solar / Gas Heater (Residential)",
+        "min_fee": 100,
+        "rate": "Commercial: $150",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Electric Permit - Residential Service Change",
+        "min_fee": 125,
+        "rate": "Commercial service change $250; residential panel change $75, commercial $150",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Electric Permit - Low Voltage (Residential)",
+        "min_fee": 100,
+        "rate": "Commercial: total cost of construction or $150 minimum",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Swimming Pool - Residential (includes structural, electric, plumbing)",
+        "min_fee": 1000,
+        "rate": "Commercial: $1,500",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Kitchen or Bath Remodel (Residential, includes structural, electrical, plumbing, mechanical)",
+        "min_fee": 500,
+        "rate": "Kitchen plus one bath $600; each additional bath $200",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Generator - Residential (includes structural, electrical, plumbing, mechanical)",
+        "min_fee": 300,
+        "rate": "Commercial: based on total cost of construction",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Windows, Doors and Garage Doors",
+        "min_fee": 75,
+        "rate": "Based on total cost of construction or $75 minimum, whichever is greater",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Shutters - Panels or Accordion, per floor",
+        "min_fee": 125,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Fence - Residential Wall or Fence",
+        "min_fee": 100,
+        "rate": "Commercial $1.15 per linear ft; temporary construction fence $150",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Shed - Residential",
+        "min_fee": 75,
+        "rate": "Commercial: $150",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Demolition per Discipline - Residential",
+        "min_fee": 100,
+        "rate": "Commercial/multistory: $150",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Solar / Photovoltaic Systems (includes structural and electrical)",
+        "min_fee": 300,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Changes / Revisions to Permit After Issued",
+        "min_fee": 75,
+        "rate": "$75 each discipline; change of contractor $75; change of plans $75 plus additional job value",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Renew Expired Permit",
+        "min_fee": 75,
+        "rate": "$75 or 50% of permit cost, whichever is greater",
+        "method": "greater_of_percent_or_flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Permit Extension Prior to Expiration",
+        "min_fee": 100,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Certificate of Occupancy - Residential",
+        "min_fee": 125,
+        "rate": "Commercial $200; Temporary CO $500 each; Certificate of Completion $100",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Inspection Fee (each, after allowed)",
+        "min_fee": 75,
+        "rate": "Residential $75 each; commercial $100 each",
+        "method": "flat_each",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Work Started Without a Permit",
+        "min_fee": 200,
+        "rate": "$200 or double the fee, whichever is greater",
+        "method": "greater_of_min_or_double_fee",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Early Start Request",
+        "min_fee": 300,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Record Maintenance Fee and Technology Fee",
+        "min_fee": 5,
+        "rate": "$5 record maintenance plus $5 technology",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "State/County/Education/Code Updates Fees",
+        "min_fee": null,
+        "rate": "Based on current State and County fees",
+        "method": "percentage",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Margate",
+        "work_type": "Private Provider Reduction",
+        "min_fee": null,
+        "rate": "Plan review + inspections by provider: main permit fee reduced 15% residential / 50% commercial; inspections only: 10% / 25%",
+        "method": "percent_discount",
+        "notes": null,
+        "source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Base Building Permit Application Fee",
+        "min_fee": 150,
+        "rate": null,
+        "method": "flat",
+        "notes": "Table shows $150; the text paragraph above the table says $120. Use $150 (table) until confirmed.",
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Permit Fee - Building Permits (percent of total job value)",
+        "min_fee": null,
+        "rate": "2.50% of total job value",
+        "method": "percent_of_value",
+        "notes": "Building permit fees consist of the base application fee plus 2.5% of total construction value, plus plan review, surcharges and service fees (unless otherwise noted). Booklet states one permit fee for building permits; electrical, plumbing, mechanical and roofing permits are not listed separately and plan review is charged per trade. Trade coverage is inferred from this structure, not stated outright.",
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Second Plan Review (per trade, by job value)",
+        "min_fee": 30,
+        "rate": "$30 (up to $2,500); $72; $114; $162; $210; $258; $312; $480; $588; $774; $1,872; $3,036 (above $1,000,000), per trade",
+        "method": "tiered",
+        "notes": "Initial plan review is included in the permit fee.",
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Third Plan Review (per trade, by job value)",
+        "min_fee": 30,
+        "rate": "$30 (up to $2,500) rising to $2,580 (above $1,000,000), per trade",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Each Additional Plan Review (per trade, by job value)",
+        "min_fee": 36,
+        "rate": "$36 (up to $2,500) rising to $1,668 (above $1,000,000), per trade",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Dry Run / Courtesy Plan Review (per trade, by job value)",
+        "min_fee": 24,
+        "rate": "$24 (up to $2,500) rising to $1,674 (above $1,000,000), per trade",
+        "method": "tiered",
+        "notes": "Jobs over $200,000 require a non-refundable deposit credited to the permit.",
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Expedited Plan Review Fee",
+        "min_fee": null,
+        "rate": "2 times the dry run fee, per trade",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Certificate of Occupancy (partial/temporary per 30 days, or final)",
+        "min_fee": 200,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Certificate of Completion",
+        "min_fee": 30,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Change of Contractor",
+        "min_fee": 140,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Extension of Permit Time Frame",
+        "min_fee": 120,
+        "rate": "One time, 180 days; permit application extension $120 (60 days)",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Expired Permit Renewal",
+        "min_fee": 120,
+        "rate": "25% of original permit fee (under 30 days), 50% (30-59), 75% (60-89), 100% (over 90 days); $120 minimum",
+        "method": "greater_of_percent_or_flat",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Demolition Permit",
+        "min_fee": 145,
+        "rate": "$145 for the first 500 sq ft plus plan review; $30 each additional 1,000 sq ft; $90 per inspection",
+        "method": "base_plus_per_sqft",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Re-inspection Fee",
+        "min_fee": 90,
+        "rate": "$90 first re-inspection; $320 each subsequent for the same violation",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Overtime Inspection",
+        "min_fee": 180,
+        "rate": "$180 per hour, 3-hour minimum per trade",
+        "method": "hourly_3hr_min",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Revision / Shop Drawing Processing",
+        "min_fee": 50,
+        "rate": "$150 per hour plus $50 minimum",
+        "method": "hourly",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Work Without Permit",
+        "min_fee": null,
+        "rate": "Double the permit fee",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Solar Permit",
+        "min_fee": 0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Building Code Surcharges (BCAIF 1.5%, DBPR 1.0%)",
+        "min_fee": 2,
+        "rate": "BCAIF 1.5% of permit fee, DBPR 1.0% of permit fee, $2 minimum each",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Broward County Surcharge",
+        "min_fee": 2,
+        "rate": "$0.52 per $1,000, $2 minimum",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Training and Certification Fee",
+        "min_fee": null,
+        "rate": "$0.25 per $1,000 of total construction value",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Oakland Park",
+        "work_type": "Private Provider Fee Reduction",
+        "min_fee": null,
+        "rate": "-12.50% for plan review and -12.50% for inspections, per trade",
+        "method": "percent_discount",
+        "notes": null,
+        "source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Single-Family New Construction (includes ALL disciplines, not roof)",
+        "min_fee": 4845,
+        "rate": "$4,845 (1-1,500 sq ft); $6,139 (1,501-3,000); $7,443 (3,001-4,500); $8,768 (4,501-6,000); $10,788 (over 6,000)",
+        "method": "flat_by_class",
+        "notes": "Flat fee by size band. Roof permit is separate.",
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Single-Family Addition (includes ALL disciplines, not roof)",
+        "min_fee": 1211,
+        "rate": "$1,211 (1-1,500 sq ft); $1,535 (1,501 sq ft or greater)",
+        "method": "flat_by_class",
+        "notes": "Roof permit is separate.",
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Single-Family Remodel / Alteration (includes ALL disciplines)",
+        "min_fee": 2995,
+        "rate": "$2,995 (job value $0-$25,000); $4,119 ($25,001-$50,000); $4,930 ($50,001-$100,000); $5,931 (over $100,000)",
+        "method": "flat_by_class",
+        "notes": "Flat fee by job value band.",
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Multi-Family / Condo / Townhouse Remodel / Alteration (includes ALL disciplines)",
+        "min_fee": 2995,
+        "rate": "$2,995 ($0-$25,000); $4,119 ($25,001-$50,000); $4,930 ($50,001-$100,000); $5,931 (over $100,000)",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Multi-Family New Construction (includes ALL disciplines, not roof)",
+        "min_fee": 122,
+        "rate": "$122 plus $2.77 per sq ft up to 10,000 sq ft; $13,972.18 for first 10,000 plus $0.88 per additional sq ft to 25,000; then $0.92, $0.48, $0.31 per sq ft in higher bands",
+        "method": "base_plus_per_sqft",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Office/Retail New Construction (includes ALL disciplines, not roof)",
+        "min_fee": 122,
+        "rate": "$122 plus $1.21 per sq ft up to 10,000 sq ft; $12,201.56 for first 10,000 plus $0.41 per additional sq ft to 25,000; then $0.40, $0.12, $0.08",
+        "method": "base_plus_per_sqft",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Office/Retail Remodel / Tenant Improvement (includes ALL disciplines)",
+        "min_fee": 122,
+        "rate": "$122 plus $2.18 per sq ft up to 5,000 sq ft; $11,043.51 for first 5,000 plus $1.09 per additional sq ft to 10,000; then $1.78, $1.05, $0.68",
+        "method": "base_plus_per_sqft",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Roofing and Re-roofing",
+        "min_fee": 234,
+        "rate": "$234 up to 1,000 sq ft, plus $33 each additional 500 sq ft or fraction",
+        "method": "base_plus_per_sqft",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Roof Repairs",
+        "min_fee": 190,
+        "rate": "$190 (1-25,000 sq ft); $240 (25,001-50,000); $290 (50,001-100,000)",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Demolition - Interior/Exterior Alteration (each discipline)",
+        "min_fee": 122,
+        "rate": "$122 each for structural, electrical, mechanical, plumbing; entire building demolition $570",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Fence",
+        "min_fee": 190,
+        "rate": "$190 up to 150 linear ft, plus $33 each additional 50 LF",
+        "method": "base_plus_per_sqft",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Expedited Plan Review",
+        "min_fee": 366,
+        "rate": "$366 per discipline",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Plan Review - Revisions/Resubmittal (each discipline)",
+        "min_fee": 100,
+        "rate": "$100 each for structural, electrical, mechanical, plumbing",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Re-inspection Fee (all disciplines)",
+        "min_fee": 122,
+        "rate": "$122 each",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Permit Extension Prior to Expiration",
+        "min_fee": 122,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Change of Contractor",
+        "min_fee": 122,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Certificate of Occupancy",
+        "min_fee": 86,
+        "rate": "Single family: no additional charge; multi-family $105; commercial $86 plus $3.00 per 1,000 sq ft; Temporary CO $254 per 90 days; Certificate of Completion $122",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Penalty for Work Without Permit",
+        "min_fee": 285,
+        "rate": "Contractors $285 or double the permit fee, whichever is greater; homeowners $190 or double",
+        "method": "greater_of_min_or_double_fee",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Broward County BORA Fee",
+        "min_fee": 2,
+        "rate": "$0.52 per $1,000 of construction cost, $2 minimum",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "State Surcharges (FBC and DBPR)",
+        "min_fee": 2,
+        "rate": "FBC 1.0% and DBPR 1.5% of permit cost, $2 minimum each",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Training and Education Fee",
+        "min_fee": null,
+        "rate": "$0.30 per $1,000 of estimated cost on permits for new construction",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tamarac",
+        "work_type": "Private Provider Price Reduction",
+        "min_fee": null,
+        "rate": "Permit fee reduced 5% (inspections only) or 10% (plan review and inspections)",
+        "method": "percent_discount",
+        "notes": null,
+        "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
         "date": "2026-10-02"
       }
     ],
