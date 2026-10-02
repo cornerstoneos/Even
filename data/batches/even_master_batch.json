@@ -15101,6 +15101,536 @@
         "source": "City of Hialeah Building Permit Fee Schedule, hialeahfl.gov, Rev March 20, 2026",
         "date": "2026-09-23",
         "flag": "verified_from_source_pdf"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Building Permit & Inspection - Renovation, Alteration, Remodel",
+        "min_fee": null,
+        "rate": "3.0% of the value",
+        "method": "percent_of_value",
+        "notes": "Sec. 6-52, section 11.",
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Building Permit & Inspection - New Residential Construction",
+        "min_fee": null,
+        "rate": "2.0% of the value",
+        "method": "percent_of_value",
+        "notes": "Sec. 6-52, section 9.",
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Building Permit & Inspection - Commercial/Industrial and Multi-Family New Construction",
+        "min_fee": null,
+        "rate": "2.28% of the value",
+        "method": "percent_of_value",
+        "notes": "Sec. 6-52, section 10.",
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Trade Permits - Electrical, Plumbing, Mechanical",
+        "min_fee": null,
+        "rate": "2.0% of value of work",
+        "method": "percent_of_value",
+        "notes": "Same rate for each trade permit. A/C changeout, water heater replacement, shed, generator: minimum permit fee.",
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Reroof Permit",
+        "min_fee": null,
+        "rate": "2.0% of value of work",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Demolition Permit",
+        "min_fee": null,
+        "rate": "2.0% of value of work",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Swimming Pool Permit",
+        "min_fee": null,
+        "rate": "2.0% of value of work",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Application Fee - New Construction Single Family or Duplex (up to 2,000 sq ft)",
+        "min_fee": 288,
+        "rate": null,
+        "method": "flat",
+        "notes": "Non-refundable, credited toward the final building permit fee.",
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Application Fee - New Commercial (up to 1,500 sq ft)",
+        "min_fee": 575,
+        "rate": null,
+        "method": "flat",
+        "notes": "Non-refundable, credited toward the final building permit fee.",
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Application Fee - All Other Scope of Work",
+        "min_fee": 125,
+        "rate": "$125 minimum plus 1.5% of value of construction",
+        "method": "percentage",
+        "notes": "Non-refundable, credited toward the final building permit fee.",
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Dry Run / Up-Front Fee",
+        "min_fee": null,
+        "rate": "$2.80 per $1,000 of estimated construction value",
+        "method": "per_1000_value",
+        "notes": "80% credited toward the building permit when issued; not refundable.",
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Plan Review Fee per Cycle - Building, Mechanical, Electrical, Plumbing, Flood, Zoning",
+        "min_fee": 116,
+        "rate": null,
+        "method": "flat_each",
+        "notes": "Per review cycle, each discipline. Structural review $140 per cycle.",
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Rework Fee (cycle two and subsequent reviews)",
+        "min_fee": 58,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Re-inspection Fee - First",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Re-inspection Fee - Second and Subsequent",
+        "min_fee": 150,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "After-Hours Inspection Fee",
+        "min_fee": 110,
+        "rate": "$110 per hour, 4 hour minimum",
+        "method": "hourly",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Permit Extension Fee (before expiration)",
+        "min_fee": 100,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Permit Extension - Up to 180 Days After Expiration",
+        "min_fee": null,
+        "rate": "50% of original permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Permit Extension - Over 180 Days After Expiration",
+        "min_fee": null,
+        "rate": "100% of original permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Revision to Open Permit",
+        "min_fee": 100,
+        "rate": "Base fee plus 10% of permit fees, $100 minimum",
+        "method": "percentage",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Work Without Permit - Homestead Property",
+        "min_fee": 110,
+        "rate": "$110 plus 2x the permit fee",
+        "method": "flat",
+        "notes": "Non-Homestead/commercial: $110 plus 4x the permit fee.",
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Certificate of Occupancy / Completion - Residential",
+        "min_fee": 105,
+        "rate": "$105 per unit",
+        "method": "flat_each",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Certificate of Occupancy - Commercial",
+        "min_fee": 250,
+        "rate": "$0.10 per sq ft of space, $250 minimum (C.C. $150 minimum)",
+        "method": "per_sqft_with_min",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Change of Contractor / Add Contractor (post issuance)",
+        "min_fee": 100,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Florida Building Code Surcharges (F.S. 553.721 + 468.631)",
+        "min_fee": 2,
+        "rate": "1.0% + 1.5% of permit fee, $2 minimum",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Miami-Dade County Code Compliance Surcharge",
+        "min_fee": null,
+        "rate": "$0.60 per $1,000 of work valuation",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Homestead",
+        "work_type": "Private Provider - Permit Fee Reduction",
+        "min_fee": null,
+        "rate": "Permit and plan review fees reduced by 10% (admin fee = 90%)",
+        "method": "percent_discount",
+        "notes": null,
+        "source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Building Base Permit Fee - Residential Existing Building (alteration, repair, replacement)",
+        "min_fee": 250,
+        "rate": "1.60 per sq ft of proposed work area (printed '1.60 cents')",
+        "method": "per_sqft_with_min",
+        "notes": "Mechanical, electrical and plumbing sub permits included in the permit; minimum base fee $120 (printed). Minimum fee $250. UNIT AS PRINTED: schedule says 'cents per square foot'; likely dollars per sq ft (check with the city) so not used as a hard number until confirmed.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Building Base Permit Fee - Residential Addition",
+        "min_fee": 650,
+        "rate": "1.70 per sq ft of added area (printed '1.70 cents')",
+        "method": "per_sqft_with_min",
+        "notes": "Mechanical, electrical and plumbing sub permits included. Minimum fee $650. UNIT AS PRINTED: schedule says 'cents per square foot'; likely dollars per sq ft (check with the city) so not used as a hard number until confirmed.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Building Base Permit Fee - New Residential Construction",
+        "min_fee": 6500,
+        "rate": "1.75 per sq ft (printed '1.75 cents')",
+        "method": "per_sqft_with_min",
+        "notes": "Mechanical, electrical and plumbing sub permits included. Minimum fee $6,500. UNIT AS PRINTED: schedule says 'cents per square foot'; likely dollars per sq ft (check with the city) so not used as a hard number until confirmed.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Building Base Permit Fee - New Commercial Construction",
+        "min_fee": 7500,
+        "rate": "1.85 per sq ft (printed '1.85 cents')",
+        "method": "per_sqft_with_min",
+        "notes": "Mechanical, electrical and plumbing sub permits included. Roof, window/door, pool, driveway, fence need separate permits. Minimum fee $7,500. UNIT AS PRINTED: schedule says 'cents per square foot'; likely dollars per sq ft (check with the city) so not used as a hard number until confirmed.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Building Base Permit Fee - Commercial Addition/Alteration/Repair",
+        "min_fee": 6500,
+        "rate": "1.75 per sq ft (printed '1.75 cents')",
+        "method": "per_sqft_with_min",
+        "notes": "Mechanical, electrical and plumbing sub permits included. Minimum fee $6,500. UNIT AS PRINTED: schedule says 'cents per square foot'; likely dollars per sq ft (check with the city) so not used as a hard number until confirmed.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Roofing and Re-roofing - Shingle, Flat, Metal",
+        "min_fee": 120,
+        "rate": "$0.16 per sq ft (printed '$0.16 cents')",
+        "method": "per_sqft_with_min",
+        "notes": "$120 minimum. Also used for waterproofing of any non-roof area.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Roofing and Re-roofing - Tile",
+        "min_fee": 120,
+        "rate": "$0.21 per sq ft (printed '$0.21 cents')",
+        "method": "per_sqft_with_min",
+        "notes": "$120 minimum.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Stand-alone Electrical Permit (not part of a master permit)",
+        "min_fee": 150,
+        "rate": "Residential $150 flat; Commercial $250 flat",
+        "method": "flat",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Stand-alone Plumbing Permit (not part of a master permit)",
+        "min_fee": 150,
+        "rate": "Residential $150 flat; Commercial $250 flat",
+        "method": "flat",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Stand-alone Mechanical Permit (not part of a master permit)",
+        "min_fee": 150,
+        "rate": "Residential $150 flat; Commercial $250 flat",
+        "method": "flat",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Window, Door and Shutter Permit - Residential",
+        "min_fee": 262,
+        "rate": "$262 up to 10 openings; $350 over 10 openings",
+        "method": "flat",
+        "notes": "Commercial: $650 up to 10 openings, $810 over 10. May have structural review fees.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Swimming Pool, Whirlpool, Hot Tub (includes electrical and plumbing)",
+        "min_fee": 640,
+        "rate": "Residential $640; Commercial $1,280",
+        "method": "flat",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Demolition (includes mechanical, electrical, plumbing)",
+        "min_fee": 325,
+        "rate": "$325 per structure",
+        "method": "flat_each",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Fence / Fence Wall (permanent)",
+        "min_fee": 120,
+        "rate": "$0.92 per linear ft (metal, wood, chain-link, PVC); $1.64 per linear ft concrete wall; $120 minimum",
+        "method": "per_linear_ft",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Concrete Slab, Asphalt, Paver, Driveway, Sidewalk",
+        "min_fee": 120,
+        "rate": "$0.25 per sq ft, $120 minimum",
+        "method": "per_sqft_with_min",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Upfront Fee (credited toward permit fee)",
+        "min_fee": 45,
+        "rate": "$45 per review discipline",
+        "method": "flat_per_discipline",
+        "notes": "Plus structural and floodplain review as applicable.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Structural Plan Review",
+        "min_fee": null,
+        "rate": "$112.75 per hour",
+        "method": "hourly",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Rework Fee",
+        "min_fee": 140.43,
+        "rate": "$140.43 every two denials per discipline",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Penalty and Double Fee (work without permit)",
+        "min_fee": 112.75,
+        "rate": "$112.75 one-time penalty plus double the base permit fee",
+        "method": "flat",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Certificate of Occupancy - Single Family, Duplex, Triplex",
+        "min_fee": 147,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Certificate of Occupancy - Commercial, Multi-family",
+        "min_fee": 300,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Certificate of Completion - Single Family, Duplex, Triplex",
+        "min_fee": 12,
+        "rate": "$12 per discipline",
+        "method": "flat_per_discipline",
+        "notes": "Commercial/multi-family: $26.25 per permit.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Miami-Dade County (BCCO) Surcharge",
+        "min_fee": null,
+        "rate": "5% of base permit fee (effective June 26, 2026)",
+        "method": "percent_of_permit_fee",
+        "notes": "Res. R-535-26.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "DBPR and BCAI Surcharges (F.S. 553.721, 468.631)",
+        "min_fee": 2,
+        "rate": "Schedule prints 1.5% base permit fee each for DBPR and BCAI, $2 minimum (statute rates are 1.0% and 1.5%)",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "North Miami Training and Technology Fee",
+        "min_fee": 6,
+        "rate": "$0.06 per $1.00 of base permit fee, $6 minimum",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Miami",
+        "work_type": "Change of Contractor / Renewal / Extension",
+        "min_fee": 102.35,
+        "rate": "$102.35 each, per trade",
+        "method": "flat_per_discipline",
+        "notes": "Renewal of expired permit after six months: 50% of original base permit fee if greater.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-02"
       }
     ],
     "flag": " MIAMI-DADE COUNTY ROWS ADDED 2026-07-25 from official RER Fee Schedule (Implementing Order 4-63, effective 2025-10-01, first increase in 17+ years). IMPORTANT SCOPE NOTE: RER issues permits ONLY for unincorporated Miami-Dade. All 34 incorporated municipalities run their own building departments and set their own fees \u2014 so county rows serve as the FALLBACK approximation for those cities, not their actual schedule, and any estimate using them should disclose that. Timeline not published in the fee schedule; a third-party permit expediter reports 1-10 business days for initial plan review, which is NOT an official county figure and was deliberately not recorded as timeline_days. TIMELINE ADDED 2026-07-25: official Miami-Dade RER Plan Review page (miamidade.gov/global/economy/building/plan-review.page) states 24 hours to 10 business days for initial review, applied to all Miami-Dade County rows as timeline_days=5 (midpoint) with the full range preserved in timeline_note. Miramar and North Palm Beach checked but NOT added \u2014 only third-party sources found (permit expediters, contractor blogs), contradicting each other by 4x (5 to 21 business days) with no source claiming to quote the city's own stated policy. Omitted rather than guessed."
@@ -77267,6 +77797,196 @@
         "source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)",
         "date": "2026-09-30",
         "flag": "verified_from_screenshots"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Minimum Permit Fee",
+        "min_fee": 85,
+        "rate": null,
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Building Permit Fee - New Construction",
+        "min_fee": null,
+        "rate": "2% of total construction cost",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Building Permit Fee - Additions or Alterations",
+        "min_fee": null,
+        "rate": "3% of total construction cost",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Roofing Permit Fee",
+        "min_fee": 85,
+        "rate": "1.5% of total construction cost",
+        "method": "percent_of_value",
+        "notes": "$85 minimum permit fee applies.",
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Swimming Pool Permit Fee",
+        "min_fee": null,
+        "rate": "5% of total construction cost",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Miscellaneous Permit Fee (doors, windows, shutters, fences, sheds, slabs, driveways, and miscellaneous electrical, plumbing, mechanical permits)",
+        "min_fee": 85,
+        "rate": "2% of total construction cost",
+        "method": "percent_of_value",
+        "notes": "Includes any miscellaneous electrical, plumbing or mechanical permit covered by the Florida Building Code.",
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Demolition of Buildings",
+        "min_fee": null,
+        "rate": "1% of total cost of demolition",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Additional Discipline Review Fee (incl. zoning)",
+        "min_fee": 85,
+        "rate": "$85 for each additional discipline",
+        "method": "flat_per_discipline",
+        "notes": "Building permit fee includes review by one discipline.",
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Plan Revisions After Permit Issued",
+        "min_fee": 85,
+        "rate": "$85 per discipline plus additional permit fees on added cost",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Change of Contractor",
+        "min_fee": 85,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Product Approval / Shop Drawing Review After Permit Issued",
+        "min_fee": 85,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Plan Reviewer - Technical Consultation",
+        "min_fee": 125,
+        "rate": "$125 per hour",
+        "method": "hourly",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Engineer - Technical Consultation",
+        "min_fee": 210,
+        "rate": "$210 per hour",
+        "method": "hourly",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Permit Extension (prior to expiration)",
+        "min_fee": 85,
+        "rate": "5% of permit fee or $85, whichever is greater",
+        "method": "greater_of_percent_or_flat",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Certificate of Occupancy - Residential",
+        "min_fee": 150,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Certificate of Occupancy - Commercial",
+        "min_fee": 250,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Broward County Board of Rules and Appeals Surcharge",
+        "min_fee": 2,
+        "rate": "Greater of $2 or $0.68 per $1,000 of total construction cost",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "State Surcharges (F.S. 553.721 + 468.631)",
+        "min_fee": 2,
+        "rate": "1.0% + 1.5% of permit fee, $2 minimum each",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale-by-the-Sea",
+        "work_type": "Education Fee",
+        "min_fee": null,
+        "rate": "0.2% of permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since.",
+        "date": "2026-10-02"
       }
     ],
     "source": "Broward County Administrative Code, Chapter 43/Sections 40.27-40.33, General/Building/Electrical/Mechanical/Plumbing Permits Fee Schedule and Elevators, current per Ord. 2025-038, eff. 5/1/2025 (Municode)",
