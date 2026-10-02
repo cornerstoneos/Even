@@ -15631,6 +15631,206 @@
         "notes": "Renewal of expired permit after six months: 50% of original base permit fee if greater.",
         "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
         "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Building Permit Up-Front Processing Fee",
+        "min_fee": null,
+        "rate": "30% of permit fee (non-refundable)",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Building Permit - Minimum Fee (Residential)",
+        "min_fee": 97.04,
+        "rate": null,
+        "method": "flat_minimum",
+        "notes": "Commercial minimum for building permit: $250 (alterations).",
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Building Permit - New Residential Buildings / Additions (includes general electrical, mechanical, plumbing)",
+        "min_fee": 628,
+        "rate": "$628 (0-300 sq ft); $780.03 (301-650); $1.30 per sq ft (651-15,000, max $16,801); $1.14 per sq ft over 15,000",
+        "method": "per_sqft_with_min",
+        "notes": "Includes permit fees for general electrical, general mechanical and general plumbing; other sub-permits requiring added review are charged per schedule.",
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Building Permit - Residential Alterations / Repairs",
+        "min_fee": 152.1,
+        "rate": "$0.17 per $1.00 of estimated cost (as printed; confirm unit, likely per $100), $152.10 minimum, $1,521 maximum",
+        "method": "percent_of_cost_with_min",
+        "notes": "Kitchen or bathrooms: $508.65; both combined $840.30. Copy of executed construction contract required.",
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Building Permit - New Commercial Construction / Additions (includes general electrical, mechanical, plumbing)",
+        "min_fee": 250,
+        "rate": "$1.81 per sq ft (0-10,000 sq ft, max $15,501); $1.57 per sq ft (10,001-30,000, max $41,401); $1.40 per sq ft (30,001 and above)",
+        "method": "per_sqft_with_min",
+        "notes": "Shell only: $1.10 / $0.93 / $0.73 per sq ft (max $9,201 / $21,601). Commercial alterations: $12.70 per $1,000 of estimated cost (includes general electrical, mechanical, plumbing); minimum $250. Other sub-permits needing added review are charged per schedule.",
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Roofing / Re-roofing / Roof Repair - Flat or Shingle",
+        "min_fee": 169,
+        "rate": "$0.19 per sq ft, $169 minimum",
+        "method": "per_sqft_with_min",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Roofing / Re-roofing / Roof Repair - Tile",
+        "min_fee": 169,
+        "rate": "$0.23 per sq ft, $169 minimum",
+        "method": "per_sqft_with_min",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Electrical Permit - Minimum Fee",
+        "min_fee": 97.04,
+        "rate": "Residential $97.04; commercial $140.20",
+        "method": "flat_minimum",
+        "notes": "Permanent service $11.94 per 100 amp; temporary service $97.04; feeders $30 each; fixture set on existing roughing $16.81 each.",
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Plumbing Permit - Minimum Fee",
+        "min_fee": 97.04,
+        "rate": "Residential $97.04; commercial $140.20",
+        "method": "flat_minimum",
+        "notes": "Fixture set on existing roughing $16.81 each; irrigation $28.44 per zone; water service connection $97.04; pool heater $97.04.",
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Mechanical Permit - Minimum Fee",
+        "min_fee": 97.04,
+        "rate": "Residential $97.04; commercial $140.20",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Mechanical Permit - A/C and Refrigeration (without master permit)",
+        "min_fee": null,
+        "rate": "$28.41 per ton, $5.64 per kW, $8.44 per drain",
+        "method": "per_unit",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Mechanical - Commercial Kitchen Hood",
+        "min_fee": 225.6,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Double Fee (work without permit)",
+        "min_fee": null,
+        "rate": "Permit fee times 2 plus $100 (first offense); plus $200 second offense; plus $500 each after",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Permit Extension Request",
+        "min_fee": 90,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Change of Contractor / Qualifier",
+        "min_fee": 126.34,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Re-inspection Fee (after initial and one re-inspection, same violation)",
+        "min_fee": 90,
+        "rate": "Plan review rejected 3+ times: $97.40 each review",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Zoning Review Fees",
+        "min_fee": 38.45,
+        "rate": "Residential plan review $38.45 and inspection $38.45; commercial plan review $76.90 and inspection $76.90",
+        "method": "flat_each",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Miami-Dade County Code Compliance Fee",
+        "min_fee": null,
+        "rate": "$0.60 per $1,000 of value of construction",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Florida Building Code and BCAI Surcharges",
+        "min_fee": 4,
+        "rate": "3% of permits, $4.00 minimum per permit",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Overtime Inspection / Plan Review (paid in advance)",
+        "min_fee": 447.1,
+        "rate": "$447.10 on a regular weekend; $701.50 on holiday weekends",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-02"
       }
     ],
     "flag": " MIAMI-DADE COUNTY ROWS ADDED 2026-07-25 from official RER Fee Schedule (Implementing Order 4-63, effective 2025-10-01, first increase in 17+ years). IMPORTANT SCOPE NOTE: RER issues permits ONLY for unincorporated Miami-Dade. All 34 incorporated municipalities run their own building departments and set their own fees \u2014 so county rows serve as the FALLBACK approximation for those cities, not their actual schedule, and any estimate using them should disclose that. Timeline not published in the fee schedule; a third-party permit expediter reports 1-10 business days for initial plan review, which is NOT an official county figure and was deliberately not recorded as timeline_days. TIMELINE ADDED 2026-07-25: official Miami-Dade RER Plan Review page (miamidade.gov/global/economy/building/plan-review.page) states 24 hours to 10 business days for initial review, applied to all Miami-Dade County rows as timeline_days=5 (midpoint) with the full range preserved in timeline_note. Miramar and North Palm Beach checked but NOT added \u2014 only third-party sources found (permit expediters, contractor blogs), contradicting each other by 4x (5 to 21 business days) with no source claiming to quote the city's own stated policy. Omitted rather than guessed."
@@ -17205,6 +17405,386 @@
         "method": "percent_discount",
         "notes": null,
         "source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Building Permit Fee (tiered, on total valuation)",
+        "min_fee": 150,
+        "rate": "$150 minimum for $0.01-$7,500; 2.00% of value $7,500.01-$100,000; 1.75% $100,000.01-$500,000; 1.50% $500,000.01-$1,500,000; 1.25% over $1,500,000",
+        "method": "tiered",
+        "notes": "Valuation is total replacement value and includes all systems (electric, mechanical, plumbing, structural, site work, overhead and profit). Final valuation set by the Building Official. Roofing is not listed separately.",
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Building Plan Review Fee",
+        "min_fee": 75,
+        "rate": "50% of total building permit fee, $75 minimum",
+        "method": "percent_of_permit_fee",
+        "notes": "Paid at application.",
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Standard Permit - HVAC Change Out (5 tons or less, per unit)",
+        "min_fee": 125,
+        "rate": "Over 5 tons: value per standard permit fee",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Standard Permit - Water Heater Replacement",
+        "min_fee": 80,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Standard Permit - Fence (under $10,000 value)",
+        "min_fee": 100,
+        "rate": "Over $10,000: value per standard permit fee",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Standard Permit - Backflow (per permit request)",
+        "min_fee": 200,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Demolition / Moving of Buildings",
+        "min_fee": 125,
+        "rate": "1% of full contract value, $125 minimum",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Re-inspection Fee",
+        "min_fee": 60,
+        "rate": "$60 first, $120 second, $180 third, $300 fourth (same type); partial inspection $60",
+        "method": "tiered",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Miscellaneous Inspection Fee",
+        "min_fee": 60,
+        "rate": "$60 per inspection",
+        "method": "flat_each",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Failure to Obtain Permit",
+        "min_fee": null,
+        "rate": "4 times the building permit fee, subject to review by the Building Official",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Plan Revision (post-permit)",
+        "min_fee": 90,
+        "rate": "$90 minimum per reviewing agency; no charge pre-permit",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Transfer of Permit (new contractor)",
+        "min_fee": 65,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Permit Renewal / Extension Request",
+        "min_fee": 75,
+        "rate": "30% of permit fee or $75 minimum",
+        "method": "greater_of_percent_or_flat",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Permit Reissuance Fee",
+        "min_fee": 90,
+        "rate": "$90 minimum plus plan review fee of 30% of original building permit fee",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Special / Expedited / Out-of-Sequence Plan Review",
+        "min_fee": 430,
+        "rate": "Residential $430; commercial under 5,000 SF $875; 5,000 SF or more $1,875",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Special Inspection (after hours / weekends)",
+        "min_fee": 250,
+        "rate": "$250 per 2-hour block",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Temporary / Conditional Certificate of Occupancy",
+        "min_fee": 900,
+        "rate": "Residential $900; commercial under 5,000 SF $1,200; 5,000 SF or more $2,000",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Zoning Review Fee for Building Permits",
+        "min_fee": 75,
+        "rate": "Single family $75 per unit; multiple family $150; commercial/industrial $200; other $50",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "Construction Debris Fee",
+        "min_fee": null,
+        "rate": "$0.028/sq ft single-family new; $0.042/sq ft remodel; $0.02 multi-family new; $0.015 non-residential new",
+        "method": "per_sqft",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Wellington",
+        "work_type": "DBPR and BCAIB Surcharges (F.S. 553.721, 468.631)",
+        "min_fee": 2,
+        "rate": "DBPR 1% and BCAIB 1.5% of permit cost, $2 minimum each",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Jupiter",
+        "work_type": "Master Construction Permit Fee (all trades)",
+        "min_fee": 75,
+        "rate": "2% of the value of the work being performed; 30% due at application",
+        "method": "percent_of_value",
+        "notes": "Master construction permits include all sub-contracting work (all trades). Minimum permit fee $75.",
+        "source": "Town of Jupiter Building Department Schedule of Permit Fees, jupiter.fl.us/DocumentCenter/View/23737 (posted version; last revision noted 1/17/18, so fees may be higher now)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Jupiter",
+        "work_type": "Demolition Permit",
+        "min_fee": 250,
+        "rate": "Greater of 2% of the permit valuation or $250",
+        "method": "greater_of_percent_or_flat",
+        "notes": null,
+        "source": "Town of Jupiter Building Department Schedule of Permit Fees, jupiter.fl.us/DocumentCenter/View/23737 (posted version; last revision noted 1/17/18, so fees may be higher now)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Jupiter",
+        "work_type": "Failure to Obtain a Permit",
+        "min_fee": null,
+        "rate": "Two times the fee",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "Town of Jupiter Building Department Schedule of Permit Fees, jupiter.fl.us/DocumentCenter/View/23737 (posted version; last revision noted 1/17/18, so fees may be higher now)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Jupiter",
+        "work_type": "Inspection Fee (re-inspection, occupancy, compliance, etc.)",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Jupiter Building Department Schedule of Permit Fees, jupiter.fl.us/DocumentCenter/View/23737 (posted version; last revision noted 1/17/18, so fees may be higher now)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Jupiter",
+        "work_type": "Revisions",
+        "min_fee": 75,
+        "rate": "$75 per hour (minimum $75)",
+        "method": "hourly",
+        "notes": null,
+        "source": "Town of Jupiter Building Department Schedule of Permit Fees, jupiter.fl.us/DocumentCenter/View/23737 (posted version; last revision noted 1/17/18, so fees may be higher now)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Jupiter",
+        "work_type": "Permit Renewal",
+        "min_fee": 75,
+        "rate": "30% of original permit fee, $75 minimum",
+        "method": "greater_of_percent_or_flat",
+        "notes": null,
+        "source": "Town of Jupiter Building Department Schedule of Permit Fees, jupiter.fl.us/DocumentCenter/View/23737 (posted version; last revision noted 1/17/18, so fees may be higher now)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Jupiter",
+        "work_type": "Change of Contractor",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Jupiter Building Department Schedule of Permit Fees, jupiter.fl.us/DocumentCenter/View/23737 (posted version; last revision noted 1/17/18, so fees may be higher now)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Jupiter",
+        "work_type": "Construction Board of Adjustments and Appeals Filing",
+        "min_fee": 200,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Jupiter Building Department Schedule of Permit Fees, jupiter.fl.us/DocumentCenter/View/23737 (posted version; last revision noted 1/17/18, so fees may be higher now)",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Royal Palm Beach",
+        "work_type": "Building Permit Fee (tiered by value)",
+        "min_fee": 75,
+        "rate": "$75 minimum for $0-$2,000; 2.25% of $2,001-$8,000 plus; 1.25% of $8,001-$90,000 plus; 0.60% of $90,001-$400,000 plus; 0.40% of $400,001 and up",
+        "method": "tiered",
+        "notes": "Palm Beach County impact fees may also apply to new construction and additions.",
+        "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Royal Palm Beach",
+        "work_type": "Mechanical, Plumbing and Electrical Permits",
+        "min_fee": null,
+        "rate": "Same as Building Permit Fees",
+        "method": "percent_of_value",
+        "notes": "Included under the Building Permit at no additional charge if applied for and initially reviewed with the Building Permit.",
+        "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Royal Palm Beach",
+        "work_type": "Plan Review Filing Fee",
+        "min_fee": null,
+        "rate": "30% of estimated permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": "Applied to permit fee when permit is issued.",
+        "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Royal Palm Beach",
+        "work_type": "Plan Revisions",
+        "min_fee": 100,
+        "rate": "Minor pre-permit: no charge; major pre-permit: 10% of permit fee or additional permit fee if value increases; minor post-permit $100; major post-permit 30% of permit fee or $500, whichever is greater",
+        "method": "tiered",
+        "notes": null,
+        "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Royal Palm Beach",
+        "work_type": "Change of Contractor",
+        "min_fee": 100,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Royal Palm Beach",
+        "work_type": "Permit Renewal Fee",
+        "min_fee": 37.5,
+        "rate": "50% of the current permit fee (currently $37.50 minimum), subject to Building Official approval",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Royal Palm Beach",
+        "work_type": "Re-Inspection Fee",
+        "min_fee": 50,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Royal Palm Beach",
+        "work_type": "Temporary Certificate of Occupancy / Completion",
+        "min_fee": 500,
+        "rate": "$500 or 20% of permit fee up to $2,000 maximum, whichever is greater",
+        "method": "greater_of_percent_or_flat",
+        "notes": null,
+        "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Royal Palm Beach",
+        "work_type": "State Education Fee and Radon Fee",
+        "min_fee": 2,
+        "rate": "1.5% of permit fee each, $2.00 minimum each",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Royal Palm Beach",
+        "work_type": "Private Provider Fee Reduction",
+        "min_fee": null,
+        "rate": "Permit fees reduced 25% if a private provider does plan review; MEP permit fees reduced 25% if a private provider does inspections",
+        "method": "percent_discount",
+        "notes": null,
+        "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
         "date": "2026-10-02"
       }
     ],
