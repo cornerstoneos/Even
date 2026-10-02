@@ -16201,6 +16201,666 @@
         "notes": null,
         "source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since",
         "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Residential Building and Trade Permit Fee",
+        "min_fee": 160,
+        "rate": "$160 minimum for job value up to $5,000; 3.15% of job value for the first $1,000,000 (exceeding $5,000); 2.15% of job value above $1,000,000",
+        "method": "tiered",
+        "notes": "Listed in the schedule's 'Building and Trade Permit Fees' group (PF004-PF006).",
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Commercial Building and Trade Permit Fee",
+        "min_fee": 325,
+        "rate": "$325 minimum for job value up to $8,000; 3.90% of job value for the first $1,000,000 (exceeding $8,000); 2.90% above $1,000,000",
+        "method": "tiered",
+        "notes": "Listed in the schedule's 'Building and Trade Permit Fees' group (PF007-PF009).",
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Flooring - Interior or Exterior (Waterproofing) Condominium Unit",
+        "min_fee": 300,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Temporary Construction Trailer (180 days) Tie Down Inspection",
+        "min_fee": 500,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Up-front Processing Fee",
+        "min_fee": null,
+        "rate": "50% of permit fee, non-refundable",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Revisions / Shop Drawings",
+        "min_fee": 250,
+        "rate": "$250 involving two trades; $100 each additional trade",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Rework of Plans (F.S. 553.80(2)(b))",
+        "min_fee": 100,
+        "rate": "$100 each additional review",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Reinspection Fee (F.S. 553.80(2)(c))",
+        "min_fee": 100,
+        "rate": "$100 each subsequent re-inspection",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Double Fees (work before permit)",
+        "min_fee": null,
+        "rate": "Permit fee times 2",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Change of Contractor",
+        "min_fee": 300,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Permit Extension / Permit Application Extension",
+        "min_fee": 150,
+        "rate": "$150 per extension",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Temporary Certificate of Occupancy / Completion",
+        "min_fee": 300,
+        "rate": "Initial $300; extension $300; occupying without CO/CC/TCO $500",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Overtime / After-Hours Inspection or Plan Review",
+        "min_fee": 400,
+        "rate": "$400 first 4 hours per permit (non-holiday), then $100 per hour; holidays $600 first 4 hours, $150 per hour",
+        "method": "flat_3hr_plus_hourly",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Construction Activity Fee (Security District)",
+        "min_fee": null,
+        "rate": "0.5% of total project value of $100,000 or greater",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Miami-Dade County Building Code Compliance Fee",
+        "min_fee": null,
+        "rate": "$0.60 per $1,000 of value of construction",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Bal Harbour",
+        "work_type": "Florida Building Code Surcharge and BCAI Fee",
+        "min_fee": 2,
+        "rate": "Percentage per Florida Statute, $2 minimum each",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Building Permit - Minimum Fee",
+        "min_fee": 175,
+        "rate": "Commercial $225; residential $175",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Building Permit - New Construction/Additions Commercial (includes general electrical, mechanical, plumbing)",
+        "min_fee": 225,
+        "rate": "2% of job value or $1.75 per sq ft, whichever is higher",
+        "method": "percent_of_cost_with_min",
+        "notes": "Includes permit fees for general electrical, general mechanical and general plumbing; other sub-permits needing added review are charged per schedule.",
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Building Permit - Alterations Commercial (includes general electrical, mechanical, plumbing)",
+        "min_fee": 225,
+        "rate": "3% of job value, $225 minimum",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Building Permit - New Buildings/Additions Residential (includes general electrical, mechanical, plumbing)",
+        "min_fee": 175,
+        "rate": "2% of job value or $1.71 per sq ft, whichever is higher; $175 minimum",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Building Permit - Repairs Due to Fire or Water Damage",
+        "min_fee": null,
+        "rate": "3% of job value",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Roofing / Re-roofing / Roof Repair",
+        "min_fee": null,
+        "rate": "2% of job value or $0.16 per sq ft, whichever is higher",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Demolition of Buildings",
+        "min_fee": 175,
+        "rate": "2% of job value, $175 minimum",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Windows and Doors (new construction and alteration)",
+        "min_fee": 125,
+        "rate": "$125 (1 unit); $175 (2-10); $220 (11-20); $250 (21-30); $275 (31-50)",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Fences and Walls",
+        "min_fee": 175,
+        "rate": "$175 (0-500 L/F); $225 (501-1000); $0.05 each additional L/F over 1000; CBS $0.85 per L/F",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Mechanical Permit - Minimum Fee",
+        "min_fee": 175,
+        "rate": "Alterations: commercial 3% of job value ($175 minimum); residential $125; new construction systems included in master permit",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Electrical Permit - Minimum Fee",
+        "min_fee": 175,
+        "rate": "New construction included in the master permit fee",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Plumbing Permit - Alteration (commercial and residential)",
+        "min_fee": 175,
+        "rate": "3% of job value, or $1.25 per sq ft (job value based on $1.19 per sq ft), whichever is higher; includes natural gas, sewer, water and gas main",
+        "method": "percent_of_cost_with_min",
+        "notes": "New construction included in master permit fee. Sewer, water pipe/irrigation zone, settling tanks, wells, gas tanks and water heater replacement: $125 each.",
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Zoning Review Fees",
+        "min_fee": 75,
+        "rate": "Residential plan review $75; commercial plan review $125",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Sign Permit",
+        "min_fee": 175,
+        "rate": "$175 per sign; electrical sign $175 per sign",
+        "method": "flat_each",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Building Permit Change of Contractor, Architect or Engineer",
+        "min_fee": 180,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "Building Permit Extension",
+        "min_fee": 180,
+        "rate": "One time, permit must not be expired",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Medley",
+        "work_type": "City Surcharge (technology fee)",
+        "min_fee": 125,
+        "rate": "15% of total building permit fee on each permit; administrative fee $125",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Building Permit - New Buildings and/or Additions (residential, mixed-use, institutional, hotels)",
+        "min_fee": null,
+        "rate": "2% of the value of a job (based on executed contract)",
+        "method": "percent_of_value",
+        "notes": "Plus additional fees for electrical, plumbing, mechanical and sign permits as listed. New commercial construction and other new construction also 2% of job value.",
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Building Permit - Sub-permits Associated With a Master Permit (new construction: electrical, mechanical, plumbing, windows, doors, roof)",
+        "min_fee": null,
+        "rate": "1% of the value of a job (based on executed contract)",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Building Permit - Alterations, Remodeling, Repairs (single-family, duplex, multifamily)",
+        "min_fee": null,
+        "rate": "Estimated value times 1.5 percent",
+        "method": "percent_of_value",
+        "notes": "Building permit only; does not include plumbing, electrical or mechanical.",
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Building Permit - Alterations, Remodeling, Repairs (commercial occupancy)",
+        "min_fee": null,
+        "rate": "Estimated value times 3 percent",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Roofs (including re-roofing)",
+        "min_fee": null,
+        "rate": "Estimated value times 5.0 percent; 3.0 percent if included in a master building permit",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Electrical Permits",
+        "min_fee": null,
+        "rate": "Estimated value times 5.0 percent; 3.0 percent if the building is included in a master building permit",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Plumbing Permits (including water, sewer, gas)",
+        "min_fee": null,
+        "rate": "Estimated value times 5.0 percent; 3.0 percent if the building is included in a master building permit",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Air Conditioning and Refrigeration Mechanical Permits (including relocation of equipment)",
+        "min_fee": null,
+        "rate": "Estimated value times 5.0 percent; 3.0 percent if included in a master building permit",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Windows, Doors and Storm Shutters",
+        "min_fee": null,
+        "rate": "Estimated value times 5.0 percent; windows/doors 3.0 percent if in a master building permit",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Fences and Walls on Private Property",
+        "min_fee": null,
+        "rate": "Estimated value times 5.0 percent; construction fence 3.0 percent",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Paving, Concrete Slabs and Drives",
+        "min_fee": null,
+        "rate": "Estimated value times 5.0 percent; 3.0 percent if included in a master building permit; asphalt resurfacing 3 percent",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Swimming Pools (in-ground, above-ground, spa)",
+        "min_fee": null,
+        "rate": "Estimated value times 3.0 percent",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Signs",
+        "min_fee": null,
+        "rate": "Estimated value times 3 percent; illuminated signs need an electrical sub-permit",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Demolition",
+        "min_fee": 125,
+        "rate": "Single family $125 flat; multi-family/commercial $250 flat",
+        "method": "flat",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Construction Trailer and Sales Model",
+        "min_fee": 250,
+        "rate": "$250 per trailer",
+        "method": "flat_each",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Fire Alarm and/or Suppression",
+        "min_fee": 125,
+        "rate": "$125 flat fee",
+        "method": "flat",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "North Bay Village",
+        "work_type": "Paint Color Compliance Review (zoning)",
+        "min_fee": 125,
+        "rate": "$125 flat fee",
+        "method": "flat",
+        "notes": null,
+        "source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Building Permit - Minimum Fee",
+        "min_fee": 162.5,
+        "rate": "$162.50 minimum for all building permits except as otherwise specified (alterations to single family/duplex minimum $275 building, $162.50 trades)",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Building Permit - New Construction Single Family and Duplex",
+        "min_fee": 162.5,
+        "rate": "$0.42 per sq ft",
+        "method": "per_sqft",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Building Permit - Alterations/Repairs Single Family Residence or Duplex",
+        "min_fee": 275,
+        "rate": "$1.30 per sq ft, or $0.06 per $1.00 of estimated cost (as printed); minimum $275 building, $162.50 trades",
+        "method": "per_sqft_with_min",
+        "notes": "Unit as printed in the schedule; confirm basis (per sq ft vs per $ of cost) with the city.",
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Building Permit - New Construction Other Than Group R3 (commercial/multifamily)",
+        "min_fee": 275,
+        "rate": "$10.00 per $1,000 of estimated cost; or per sq ft: $3.50 (to 100,000 SF), $3.00 (100,001-200,000), $2.50 (over 200,000)",
+        "method": "per_sqft_with_min",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Building Permit - Alterations and Repairs Other Than Group R3 (commercial)",
+        "min_fee": 275,
+        "rate": "$1.40 per $100 of estimated cost, $275 minimum; or per sq ft: $4.75 (to 2,500 SF), $4.25 (2,501-20,000), $3.75 (over 20,000)",
+        "method": "per_sqft_with_min",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Roofing (including re-roofing) - Shingle and Other Types",
+        "min_fee": 162.5,
+        "rate": "$0.12 per sq ft up to 30,000 sq ft, $0.07 thereafter; tile $0.16 then $0.09; metal $0.16 then $0.09",
+        "method": "per_sqft_with_min",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Bathrooms - Building, Electrical, Plumbing Included (Residential)",
+        "min_fee": 580,
+        "rate": "First bathroom $580; each additional $390; kitchens $675 (mechanical is extra)",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Plumbing Permit - Minimum Fee",
+        "min_fee": 162.5,
+        "rate": "Minimum plumbing or gas fee per permit, except as otherwise specified",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Electrical Permit - Minimum Fee",
+        "min_fee": 162.5,
+        "rate": "Minimum electrical permit fee including repair work per permit; other wiring and outlets $3.05 per outlet; residential wiring $13.50 per 100 sq ft",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Mechanical Permit - Minimum Fee",
+        "min_fee": 162.5,
+        "rate": "Minimum mechanical permit fee, except as otherwise specified",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Solar Panels",
+        "min_fee": 300,
+        "rate": "Residential $300; commercial $500",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Fences and Walls",
+        "min_fee": null,
+        "rate": "Chain link $0.80 per linear ft; metal $1.65 per linear ft (other types per schedule)",
+        "method": "per_linear_ft",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Double Fees (work before permit)",
+        "min_fee": 100,
+        "rate": "$100 plus a double permit fee; second offense twice the double fee plus $200; each after plus $500",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Reinspection Fees",
+        "min_fee": 75,
+        "rate": "$75 each re-inspection per trade; second re-inspection $100",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Major Plan Revision After Permit Issued",
+        "min_fee": null,
+        "rate": "50% of the original permit fee up to a maximum (see schedule)",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Aventura",
+        "work_type": "Lost Plans Recertification",
+        "min_fee": 75,
+        "rate": "30% of original building permit fee; minimum $75 for R3, $130 for all others",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually.",
+        "date": "2026-10-02"
       }
     ],
     "flag": " MIAMI-DADE COUNTY ROWS ADDED 2026-07-25 from official RER Fee Schedule (Implementing Order 4-63, effective 2025-10-01, first increase in 17+ years). IMPORTANT SCOPE NOTE: RER issues permits ONLY for unincorporated Miami-Dade. All 34 incorporated municipalities run their own building departments and set their own fees \u2014 so county rows serve as the FALLBACK approximation for those cities, not their actual schedule, and any estimate using them should disclose that. Timeline not published in the fee schedule; a third-party permit expediter reports 1-10 business days for initial plan review, which is NOT an official county figure and was deliberately not recorded as timeline_days. TIMELINE ADDED 2026-07-25: official Miami-Dade RER Plan Review page (miamidade.gov/global/economy/building/plan-review.page) states 24 hours to 10 business days for initial review, applied to all Miami-Dade County rows as timeline_days=5 (midpoint) with the full range preserved in timeline_note. Miramar and North Palm Beach checked but NOT added \u2014 only third-party sources found (permit expediters, contractor blogs), contradicting each other by 4x (5 to 21 business days) with no source claiming to quote the city's own stated policy. Omitted rather than guessed."
