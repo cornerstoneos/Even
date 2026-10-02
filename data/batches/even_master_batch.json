@@ -9209,7 +9209,8 @@
         "rate": "1.9% (\u2264$35M); + 1.0% ($35M-$100M); + 0.25% (>$100M)",
         "method": "Tiered % of construction cost",
         "notes": "Phase permit commercial new: $6598 flat; Planning add-on: 0.70% (min $75); Fire add-on: 0.70% (min $75)",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
       },
       {
         "municipality": "Miami Beach",
@@ -9218,7 +9219,8 @@
         "rate": "1.9% (\u2264$35M); + 1.0% ($35M-$100M); + 0.25% (>$100M)",
         "method": "Tiered % of construction cost",
         "notes": "Phase permit commercial alteration: $5277 flat",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
       },
       {
         "municipality": "Miami Beach",
@@ -9227,7 +9229,8 @@
         "rate": "1.7% (\u2264$1.5M); + 1.0% (>$1.5M)",
         "method": "Tiered % of construction cost",
         "notes": "Phase permit residential new SFR: $2640 flat; Planning add-on residential: 0.50% (min $75)",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
       },
       {
         "municipality": "Miami Beach",
@@ -9236,7 +9239,8 @@
         "rate": "1.7% (\u2264$1.5M); + 1.0% (>$1.5M)",
         "method": "Tiered % of construction cost",
         "notes": "Hurricane repair discount: 40% reduction for minor repairs under $20k (3-month window post-event)",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
       },
       {
         "municipality": "Miami Beach",
@@ -9245,7 +9249,8 @@
         "rate": "1.9% (\u2264$35M); + 1.0% ($35M-$100M); + 0.25% (>$100M)",
         "method": "Tiered % of construction cost",
         "notes": "Fire review add-on: 0.70% of cost (min $75)",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
       },
       {
         "municipality": "Miami Beach",
@@ -9254,7 +9259,8 @@
         "rate": "1.7% (\u2264$1.5M); + 1.0% (>$1.5M)",
         "method": "Tiered % of construction cost",
         "notes": "Planning add-on residential: 0.50% of cost (min $75)",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
       },
       {
         "municipality": "Miami Beach",
@@ -9263,7 +9269,8 @@
         "rate": "1.9% (\u2264$35M); + 1.0% ($35M-$100M); + 0.25% (>$100M)",
         "method": "Tiered % of construction cost",
         "notes": "Planning add-on commercial: 0.70% (min $75); Fire add-on: 0.70% (min $75)",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
       },
       {
         "municipality": "Miami Beach",
@@ -9272,7 +9279,8 @@
         "rate": "1.7% (\u2264$1.5M); + 1.0% (>$1.5M)",
         "method": "Tiered % of construction cost",
         "notes": "Planning add-on residential: 0.50% (min $75)",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
       },
       {
         "municipality": "Miami Beach",
@@ -9281,7 +9289,8 @@
         "rate": "1.9% (\u2264$35M); + 1.0% ($35M-$100M); + 0.25% (>$100M)",
         "method": "Tiered % of construction cost",
         "notes": "Fire review add-on: 0.70% commercial (min $75)",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
       },
       {
         "municipality": "Miami Beach",
@@ -9290,7 +9299,30 @@
         "rate": "1.7% (\u2264$1.5M); + 1.0% (>$1.5M)",
         "method": "Tiered % of construction cost",
         "notes": "",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
+      },
+      {
+        "municipality": "Miami Beach",
+        "work_type": "Roofing \u2013 Re-roof (Residential SFR/Duplex)",
+        "min_fee": 122,
+        "rate": "1.7% (\u2264$1.5M); + 1.0% (>$1.5M)",
+        "method": "Tiered % of construction cost",
+        "notes": "Same as residential building alteration: min $122, 1.7% (\u2264$1.5M); + 1.0% (>$1.5M). Fee guide has no separate roofing fee; a re-roof is a building alteration permit, so this mirrors the Alterations - Building row. Inferred from the guide's structure, not stated outright.",
+        "date": "2026-10-02",
+        "source": "Miami Beach Building Department Fee Guide (Oct 1, 2024, updated 3/3/2025), miamibeachfl.gov/wp-content/uploads/2025/03/Fee-Schedule-10.01.2024_Update-3.3.2025.pdf: sections are All/Building/Electrical/Mechanical/Plumbing only, no roofing section (checked 2026-10-02)",
+        "flag": "inferred_no_roof_section_in_fee_guide"
+      },
+      {
+        "municipality": "Miami Beach",
+        "work_type": "Roofing \u2013 Re-roof (Commercial)",
+        "min_fee": 136,
+        "rate": "1.9% (\u2264$35M); + 1.0% ($35M-$100M); + 0.25% (>$100M)",
+        "method": "Tiered % of construction cost",
+        "notes": "Same as commercial building alteration: min $136, 1.9% (\u2264$35M); + 1.0% ($35M-$100M); + 0.25% (>$100M). Fee guide has no separate roofing fee; a re-roof is a building alteration permit, so this mirrors the Alterations - Building row. Inferred from the guide's structure, not stated outright.",
+        "date": "2026-10-02",
+        "source": "Miami Beach Building Department Fee Guide (Oct 1, 2024, updated 3/3/2025), miamibeachfl.gov/wp-content/uploads/2025/03/Fee-Schedule-10.01.2024_Update-3.3.2025.pdf: sections are All/Building/Electrical/Mechanical/Plumbing only, no roofing section (checked 2026-10-02)",
+        "flag": "inferred_no_roof_section_in_fee_guide"
       },
       {
         "municipality": "Coral Gables",
@@ -9299,7 +9331,8 @@
         "rate": "2.00% (\u2264$250k); 2.25% (>$250k)",
         "method": "Tiered % of construction value",
         "notes": "Valuation set by Building Official; Upfront fee credited toward final permit fee",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
       },
       {
         "municipality": "Coral Gables",
@@ -9308,7 +9341,8 @@
         "rate": "2.50% (\u2264$250k); 2.75% (>$250k)",
         "method": "Tiered % of construction value",
         "notes": "Work without permit: $250 + double fee (1st offense); escalating thereafter",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
       },
       {
         "municipality": "Coral Gables",
@@ -9317,7 +9351,8 @@
         "rate": 600,
         "method": "Flat fee",
         "notes": "",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
       },
       {
         "municipality": "Coral Gables",
@@ -9326,7 +9361,8 @@
         "rate": "2.00% (\u2264$250k); 2.25% (>$250k)",
         "method": "Tiered % of construction value",
         "notes": "Temp service for construction: $200 flat",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
       },
       {
         "municipality": "Coral Gables",
@@ -9335,7 +9371,8 @@
         "rate": "2.50% (\u2264$250k); 2.75% (>$250k)",
         "method": "Tiered % of construction value",
         "notes": "",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
       },
       {
         "municipality": "Coral Gables",
@@ -9344,7 +9381,8 @@
         "rate": "2.00% (\u2264$250k); 2.25% (>$250k)",
         "method": "Tiered % of construction value",
         "notes": "Cap water/sewer demo only: $200 res / $400 commercial; Drainfield/septic abandonment: $200 res / $400 commercial",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
       },
       {
         "municipality": "Coral Gables",
@@ -9353,7 +9391,8 @@
         "rate": "2.50% (\u2264$250k); 2.75% (>$250k)",
         "method": "Tiered % of construction value",
         "notes": "",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
       },
       {
         "municipality": "Coral Gables",
@@ -9362,7 +9401,8 @@
         "rate": "2.00% (\u2264$250k); 2.25% (>$250k)",
         "method": "Tiered % of construction value",
         "notes": "",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
       },
       {
         "municipality": "Coral Gables",
@@ -9371,7 +9411,8 @@
         "rate": "2.50% (\u2264$250k); 2.75% (>$250k)",
         "method": "Tiered % of construction value",
         "notes": "Boiler inspections: $250 flat each type",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
       },
       {
         "municipality": "Coral Gables",
@@ -9380,7 +9421,8 @@
         "rate": 100,
         "method": "Flat fee",
         "notes": "After initial + follow-up mandatory inspections",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
       },
       {
         "municipality": "Coral Gables",
@@ -9389,7 +9431,28 @@
         "rate": "10% of permit fee",
         "method": "% of permit fee",
         "notes": "Temporary CO residential: $200; commercial: $500",
-        "date": "2026-07-17"
+        "date": "2026-07-17",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
+      },
+      {
+        "municipality": "Coral Gables",
+        "work_type": "Roofing \u2013 New or Re-roof (Residential)",
+        "min_fee": 200,
+        "rate": "2.00% (\u2264$250k); 2.25% (>$250k)",
+        "method": "Tiered % of construction value",
+        "notes": "No separate roofing schedule: roofs are permitted as FBC Residential - Roofing and charged the Building Permit Fee (Sec. 105-85). Minimum $200.",
+        "date": "2026-10-02",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483; roofing filed as FBC Building/Residential - Roofing per Development Services permit guide, coralgables.com/media/4228 (checked 2026-10-02)"
+      },
+      {
+        "municipality": "Coral Gables",
+        "work_type": "Roofing \u2013 New or Re-roof (Commercial / All Others)",
+        "min_fee": 350,
+        "rate": "2.5% (\u2264$250k); 2.75% (>$250k)",
+        "method": "Tiered % of construction value",
+        "notes": "No separate roofing schedule: roofs are permitted as FBC Building (Commercial) - Roofing and charged the Building Permit Fee (Sec. 105-85). Minimum $350.",
+        "date": "2026-10-02",
+        "source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483; roofing filed as FBC Building/Residential - Roofing per Development Services permit guide, coralgables.com/media/4228 (checked 2026-10-02)"
       },
       {
         "municipality": "Miami-Dade County",
