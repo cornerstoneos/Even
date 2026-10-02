@@ -9051,7 +9051,7 @@
         "trade": "Plasterers and Stucco Masons",
         "low": 17.03,
         "mid": 23.7,
-        "high": 28.26,
+        "high": 36.81,
         "unit": "hourly",
         "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
         "date": "2025-05"
@@ -9088,6 +9088,78 @@
         "low": 13.81,
         "mid": 23.22,
         "high": 35.66,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 19.0,
+        "mid": 27.9,
+        "high": 38.57,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 17.87,
+        "mid": 23.3,
+        "high": 34.43,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 13.0,
+        "mid": 21.36,
+        "high": 29.99,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 19.33,
+        "mid": 24.91,
+        "high": 34.23,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.7,
+        "mid": 19.0,
+        "high": 22.32,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 17.0,
+        "mid": 18.04,
+        "high": 23.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Roofers",
+        "low": 13.0,
+        "mid": 20.05,
+        "high": 24.28,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16.93,
+        "mid": 22.26,
+        "high": 34.91,
         "unit": "hourly",
         "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
         "date": "2025-05"
@@ -19606,7 +19678,7 @@
         "trade": "Plasterers and Stucco Masons",
         "low": 17.03,
         "mid": 23.7,
-        "high": 28.26,
+        "high": 36.81,
         "unit": "hourly",
         "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
         "date": "2025-05"
@@ -19643,6 +19715,78 @@
         "low": 13.81,
         "mid": 23.22,
         "high": 35.66,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 19.0,
+        "mid": 27.9,
+        "high": 38.57,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 17.87,
+        "mid": 23.3,
+        "high": 34.43,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 13.0,
+        "mid": 21.36,
+        "high": 29.99,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 19.33,
+        "mid": 24.91,
+        "high": 34.23,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.7,
+        "mid": 19.0,
+        "high": 22.32,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 17.0,
+        "mid": 18.04,
+        "high": 23.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Roofers",
+        "low": 13.0,
+        "mid": 20.05,
+        "high": 24.28,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16.93,
+        "mid": 22.26,
+        "high": 34.91,
         "unit": "hourly",
         "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
         "date": "2025-05"
@@ -72916,7 +73060,7 @@
         "trade": "Plasterers and Stucco Masons",
         "low": 17.03,
         "mid": 23.7,
-        "high": 28.26,
+        "high": 36.81,
         "unit": "hourly",
         "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
         "date": "2025-05"
@@ -72953,6 +73097,78 @@
         "low": 13.81,
         "mid": 23.22,
         "high": 35.66,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 19.0,
+        "mid": 27.9,
+        "high": 38.57,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 17.87,
+        "mid": 23.3,
+        "high": 34.43,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 13.0,
+        "mid": 21.36,
+        "high": 29.99,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 19.33,
+        "mid": 24.91,
+        "high": 34.23,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.7,
+        "mid": 19.0,
+        "high": 22.32,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 17.0,
+        "mid": 18.04,
+        "high": 23.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Roofers",
+        "low": 13.0,
+        "mid": 20.05,
+        "high": 24.28,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16.93,
+        "mid": 22.26,
+        "high": 34.91,
         "unit": "hourly",
         "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
         "date": "2025-05"
