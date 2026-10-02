@@ -47,7 +47,7 @@ check('one all-trades base fee covers every trade',
 check('no base fee is reported',
   missingCoreFees([{work_type:'Electrical'},{work_type:'Plumbing'},{work_type:'Mechanical'},{work_type:'Roof'}])[0]==='base permit fee');
 check('unresearched city still falls back to county',
-  filterPermits(market('Broward').permits,'Parkland').scope==='county-fallback');
+  filterPermits(market('Broward').permits,'Nowhereville').scope==='county-fallback');
 
 console.log('\n=== Confidence ===');
 const full={materials:[{category:'Electrical',tier:'supplier_direct'}],labor:[{}],permits:[{}]};

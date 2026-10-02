@@ -15831,6 +15831,206 @@
         "notes": null,
         "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
         "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Building Permit - Minimum Fee",
+        "min_fee": 150,
+        "rate": "Residential $150; commercial $150",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Building Permit - New Construction (Commercial)",
+        "min_fee": null,
+        "rate": "2% of value of construction",
+        "method": "percent_of_value",
+        "notes": "Everything covered under the Florida Building Code, Building (Commercial).",
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Building Permit - New Construction (Residential)",
+        "min_fee": null,
+        "rate": "1.5% of value of construction",
+        "method": "percent_of_value",
+        "notes": "Everything covered under the Florida Building Code, Residential.",
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Windows, Doors and Shutters - Installation, Alteration or Repair",
+        "min_fee": null,
+        "rate": "1.5% of value of construction, not to exceed $450",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Roofing / Re-Roofing - Residential",
+        "min_fee": null,
+        "rate": "$0.35 per sq ft",
+        "method": "per_sqft",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Roofing / Re-Roofing - Commercial",
+        "min_fee": null,
+        "rate": "2% of value of construction",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Swimming Pool - Residential",
+        "min_fee": 750,
+        "rate": "Commercial: 2% of value of construction",
+        "method": "flat",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Demolition",
+        "min_fee": 300,
+        "rate": "Residential and commercial",
+        "method": "flat",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Plumbing Permit (stand alone)",
+        "min_fee": null,
+        "rate": "Residential 1.5% of value of construction; commercial 2.0%",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Mechanical Permit (stand alone)",
+        "min_fee": null,
+        "rate": "Residential 1.5% of value of construction; commercial 2.0%",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Electrical Permit (stand alone)",
+        "min_fee": null,
+        "rate": "Residential 1.5% of value of construction; commercial 2.0%",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Upfront / Preliminary Plans Review Fee",
+        "min_fee": null,
+        "rate": "25% to 30% of permit fee at application (non-refundable, credited to permit; schedule lists 30% upfront and 25% preliminary plans review)",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Reinspection Fee (after second rejected inspection)",
+        "min_fee": 150,
+        "rate": "$150 each",
+        "method": "flat_each",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Minimum Fee for Items Not Specifically Listed",
+        "min_fee": 100,
+        "rate": "Residential $100; commercial $150",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Certificate of Occupancy - Residential",
+        "min_fee": 150,
+        "rate": "Commercial $250 per story; certificate of completion $200 per story; temporary CO $250 per story first 30 days",
+        "method": "flat",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Revisions to Approved Drawings",
+        "min_fee": 40,
+        "rate": "$40 per sheet",
+        "method": "flat_each",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Plan Review After Second Rejection",
+        "min_fee": 150,
+        "rate": "$150 per hour",
+        "method": "hourly",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Change of Contractor",
+        "min_fee": 100,
+        "rate": "30% of original permit fee, $100 minimum, $500 maximum",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Special Request After Hours Inspection",
+        "min_fee": 150,
+        "rate": "$150 per hour, minimum 3 hours",
+        "method": "hourly_3hr_min",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "South Miami",
+        "work_type": "Working Without a Permit - First Offense",
+        "min_fee": 150,
+        "rate": "$150 plus double permit fees",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25",
+        "date": "2026-10-02"
       }
     ],
     "flag": " MIAMI-DADE COUNTY ROWS ADDED 2026-07-25 from official RER Fee Schedule (Implementing Order 4-63, effective 2025-10-01, first increase in 17+ years). IMPORTANT SCOPE NOTE: RER issues permits ONLY for unincorporated Miami-Dade. All 34 incorporated municipalities run their own building departments and set their own fees \u2014 so county rows serve as the FALLBACK approximation for those cities, not their actual schedule, and any estimate using them should disclose that. Timeline not published in the fee schedule; a third-party permit expediter reports 1-10 business days for initial plan review, which is NOT an official county figure and was deliberately not recorded as timeline_days. TIMELINE ADDED 2026-07-25: official Miami-Dade RER Plan Review page (miamidade.gov/global/economy/building/plan-review.page) states 24 hours to 10 business days for initial review, applied to all Miami-Dade County rows as timeline_days=5 (midpoint) with the full range preserved in timeline_note. Miramar and North Palm Beach checked but NOT added \u2014 only third-party sources found (permit expediters, contractor blogs), contradicting each other by 4x (5 to 21 business days) with no source claiming to quote the city's own stated policy. Omitted rather than guessed."
@@ -17785,6 +17985,466 @@
         "method": "percent_discount",
         "notes": null,
         "source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Building Permit Fee - Construction Value (tiered)",
+        "min_fee": 75,
+        "rate": "2.5% of the first $100,000 (minimum $75); add 2% of $100,001-$300,000; add 1.25% of all value over $300,000",
+        "method": "tiered",
+        "notes": "Non-refundable $75 application fee at submittal, applied toward the permit fee. Schedule has one valuation-based fee for permits; trade work is issued as sub-permits whose value is included in the total construction value (see Sub Permit row). That trade coverage is inferred from the structure, not stated outright.",
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Sub Permit (value included in total construction value, no independent review)",
+        "min_fee": 30,
+        "rate": "$30; sub-permits needing separate review or whose value was not in the master permit are charged per the permit fee schedule",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Plan Review Fee - Multi-Family or PUD Single Family Master",
+        "min_fee": 300,
+        "rate": "New commercial/institutional: $550 (to 20,000 sq ft), $800 (20,001-100,000), $1,000 (over 100,000); commercial remodel: $75, $150, $300",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Work Without a Permit",
+        "min_fee": 100,
+        "rate": "4X permit fee plus $100 first offense, $200 second, $500 third or more; sub-contractor without permit $100",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Re-inspection Fee",
+        "min_fee": 50,
+        "rate": "$50 first, $100 second (same type), $200 third and subsequent",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Revisions After Initial Plan Review",
+        "min_fee": 50,
+        "rate": "$50 first page plus $10 each additional page, plus added valuation",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Change of Contractor After Permit Issuance",
+        "min_fee": 50,
+        "rate": "Primary permit $50; sub-contractor $25",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Permit Extension Before Expiration",
+        "min_fee": 50,
+        "rate": "1st extension (90 days) $50; 2nd $25",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Renewal of Expired Permit",
+        "min_fee": null,
+        "rate": "50% of permit fee if expired one year or less; 100% if over one year",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Temporary Certificate of Occupancy",
+        "min_fee": 800,
+        "rate": "Residential $800; commercial $1,500; renewals (60 days) $200 residential, $500 commercial",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "After Hours Inspection",
+        "min_fee": 60,
+        "rate": "$60 per hour; 2-hour minimum weekdays, 4-hour minimum weekends/holidays",
+        "method": "hourly",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Certificate of Completion (permits under $5,000 value)",
+        "min_fee": 25,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Right of Way Permit",
+        "min_fee": 75,
+        "rate": "2% of valuation, $75 minimum",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Greenacres",
+        "work_type": "Local Product Approval Fee",
+        "min_fee": 500,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Building Permit Fee",
+        "min_fee": null,
+        "rate": "3% of value for $0-$100,000; 2% of value for $100,001 or more; plus State of Florida surcharges",
+        "method": "tiered",
+        "notes": "Schedule has one valuation-based building permit fee; trade permits are subcontractor sub-permits at $30 each in addition to the building permit fee (see Sub-permit row). That trade coverage is inferred from the structure, not stated outright.",
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Sub-permit (Subcontractor Permit Fee, in addition to Building Permit Fee)",
+        "min_fee": 30,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Air Conditioning Exact Change Out",
+        "min_fee": 40,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Water Heater Exact Change Out",
+        "min_fee": 40,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Small Scale Solar Energy System Permit",
+        "min_fee": 400,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Complete Demolition Permit",
+        "min_fee": 300,
+        "rate": "Partial demolition: same as Building Permit",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Site Work Permit",
+        "min_fee": 250,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Sign Permit",
+        "min_fee": 30,
+        "rate": "$30 (valuation $0-$500); $35 ($501-$1,000); $5 for each additional $1,000 or fraction",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Emergency Permitting (in addition to regular permit fee)",
+        "min_fee": 25,
+        "rate": "Under $500 $25; $501-$2,500 $40; $2,501-$5,000 $55; over $5,000 $55 plus $10 per $1,000",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Failure to Obtain Permit",
+        "min_fee": null,
+        "rate": "Four times the permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Building Permit Extension",
+        "min_fee": 50,
+        "rate": "1st $50; 2nd $75; additional $100",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Revalidation of Expired Building Permit",
+        "min_fee": null,
+        "rate": "Equal to the original permit fee or a maximum of $150",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Revisions to Permitted Plan",
+        "min_fee": 35,
+        "rate": "$35 residential, $50 commercial/other, plus $10 per plan sheet; plus 3% of any added valuation",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Reinspection Fee",
+        "min_fee": 40,
+        "rate": "$40 first; $75 second; $300 third (F.S. 553.80)",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "After Hours Inspection (per visit)",
+        "min_fee": 150,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Temporary Certificate of Occupancy",
+        "min_fee": 200,
+        "rate": "Certificate/Letter of Completion $50",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Change of Contractor",
+        "min_fee": 25,
+        "rate": "$25 plus 1% of remaining valuation to complete permitted work",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lantana",
+        "work_type": "Private Inspector / Private Plan Review Reduction",
+        "min_fee": null,
+        "rate": "25% reduced fee for either; 50% reduced fee for both",
+        "method": "percent_discount",
+        "notes": null,
+        "source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Building Permit Fee (percent of construction valuation)",
+        "min_fee": 75,
+        "rate": "1% of the construction valuation; $75 application fee added to the permit fee",
+        "method": "percent_of_value",
+        "notes": "Applies to the work listed in the schedule's table of work requiring a building permit fee, which includes roofing (repairs and new roofs), windows/doors, hurricane protection, fences, pools, etc.",
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Roofing Permit (repairs and new roofs)",
+        "min_fee": 75,
+        "rate": "1% of the construction valuation (listed among work requiring the building permit fee)",
+        "method": "percent_of_value",
+        "notes": "Roofing has no separate rate; it is listed in the building permit fee work table.",
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Electrical, Mechanical, Plumbing, Heating and Air Conditioning Permit (finish work)",
+        "min_fee": 75,
+        "rate": "2% of the work valuation",
+        "method": "percent_of_value",
+        "notes": "Finish work including mechanical, electrical, plumbing, heating, air conditioning and other permanently installed equipment.",
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Building Permit Application Fee - New Commercial, Multi-family or Duplex",
+        "min_fee": 3000,
+        "rate": "Nonrefundable; single-family residence $1,500; modular home $750; modular office/commercial $1,500",
+        "method": "flat",
+        "notes": "Paid at filing.",
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "State Surcharges (F.S. 553.721 + 468.631)",
+        "min_fee": 4,
+        "rate": "1% plus 1.5% of each permit, $2 minimum each",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Plan Review and Shop Drawing Fee",
+        "min_fee": 50,
+        "rate": "$0.00125 times the valuation; $50 minimum application fee; pre-submittal plan review $150 plus $50 per hour",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Work Without Permit (after the fact)",
+        "min_fee": null,
+        "rate": "Triple the regular permit fee for each category (building, plumbing, electrical, mechanical, gas, roofing)",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Re-inspection Fee",
+        "min_fee": 100,
+        "rate": "$100 flat; each re-inspection after the first for same violation $400 (F.S. 553.80(2)(c)); partial inspection $50",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Permit Extension",
+        "min_fee": 75,
+        "rate": "$75 if no new codes; 1% of valuation if new codes are in effect",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Change of Contractor",
+        "min_fee": 75,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Plans Revision Fee",
+        "min_fee": 75,
+        "rate": "$75 substantially revised plans; $45 minor revisions",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Temporary Certificate of Occupancy",
+        "min_fee": 50,
+        "rate": "Residential $50; commercial and multi-family $150; CO/Completion included in permit price",
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "After Hours Inspection",
+        "min_fee": 75,
+        "rate": "$75 per hour, two-hour minimum",
+        "method": "hourly",
+        "notes": null,
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Temporary Electrical Service or Power Pole",
+        "min_fee": 125,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
         "date": "2026-10-02"
       }
     ],
@@ -79676,6 +80336,416 @@
         "method": "percent_discount",
         "notes": null,
         "source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since.",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Structural (Building) Permit Fee",
+        "min_fee": 105,
+        "rate": "$105 plus 2.08% of the value of the work (value over $1,000 to $1,000,000), plus minimum permit fee; $20,905 plus 1.6% of value ($1,000,000-$2,000,000); $36,905 plus 1.3% of value over $2,000,000",
+        "method": "tiered",
+        "notes": "Minimum permit fee $105. Permit fees include standard inspections; not plan review or re-inspection. Value may include all systems/sub trades; Building Official may require RS Means cost data. Roofing is not listed separately.",
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Electrical Permit Fee",
+        "min_fee": 105,
+        "rate": "$105 plus 2.08% of the value of the work (value over $1,000 to $1,000,000), plus minimum permit fee; $20,905 plus 1.6% of value ($1,000,000-$2,000,000); $36,905 plus 1.3% of value over $2,000,000",
+        "method": "tiered",
+        "notes": "Same formula as structural; minimum $105.",
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Plumbing Permit Fee",
+        "min_fee": 105,
+        "rate": "$105 plus 2.08% of the value of the work (value over $1,000 to $1,000,000), plus minimum permit fee; $20,905 plus 1.6% of value ($1,000,000-$2,000,000); $36,905 plus 1.3% of value over $2,000,000",
+        "method": "tiered",
+        "notes": "Same formula as structural; minimum $105.",
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Mechanical Permit Fee",
+        "min_fee": 105,
+        "rate": "$105 plus 2.08% of the value of the work (value over $1,000 to $1,000,000), plus minimum permit fee; $20,905 plus 1.6% of value ($1,000,000-$2,000,000); $36,905 plus 1.3% of value over $2,000,000",
+        "method": "tiered",
+        "notes": "Same formula as structural; minimum $105.",
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Plan Review Fee (by estimated value)",
+        "min_fee": 25,
+        "rate": "$25 (to $2,500); $50; $75; $100; $125; $160; $220; $275; $425; $515; $675; $1,645; $2,680 (over $5,000,000). Second/third/fourth review fees are lower, by value band",
+        "method": "tiered",
+        "notes": "Non-refundable, paid at application, in addition to the permit fee.",
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Permit Fee for Jobs With Small Values",
+        "min_fee": 55,
+        "rate": "$55 per inspection required, if the calculated fee does not cover inspection cost",
+        "method": "flat_each",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Reinspection Fee",
+        "min_fee": 110,
+        "rate": "Second $110; third $165; fourth $220",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Overtime Inspection (before 8:00 a.m., after 4:30 p.m., holidays)",
+        "min_fee": 125,
+        "rate": "$125 per hour for inspector; $125 per hour for plans examiner",
+        "method": "hourly",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Change of Plans After Permit Issued (minor)",
+        "min_fee": 80,
+        "rate": "$80 per hour",
+        "method": "hourly",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Change of Contractor",
+        "min_fee": 100,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Permit Extension",
+        "min_fee": 45,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Violations (work without permits)",
+        "min_fee": null,
+        "rate": "Double fee",
+        "method": "double_permit_fee",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Expired Permit Renewal (within 180 days)",
+        "min_fee": null,
+        "rate": "One-half of the original permit fee (minimum fee applies); small jobs per-inspection $95",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Certificate of Occupancy / Completion",
+        "min_fee": 135,
+        "rate": "$135 standard; temporary CO residential $135 per unit per 30 days; commercial $100 (days 1-30), $200 (31-60), $250 (61-90), $500 each 30 days after",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Temporary Electric Testing Power",
+        "min_fee": 50,
+        "rate": "$50 up to 2,000 sq ft; $100 over 2,000; $200 over 5,000",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Training and Education Fee",
+        "min_fee": null,
+        "rate": "$0.12 per $1,000 of estimated cost",
+        "method": "per_1000_of_value",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Technology Fee",
+        "min_fee": null,
+        "rate": "2.6% of plan review fee; 0.026% of estimated job cost on permits",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Lauderdale Lakes",
+        "work_type": "Radon Fee",
+        "min_fee": null,
+        "rate": "$0.01 per sq ft",
+        "method": "per_sqft",
+        "notes": null,
+        "source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Building Permit Fee - Residential (compensation to cover service costs)",
+        "min_fee": 100,
+        "rate": "$100 for the first $1,000, plus 1.5% of total construction cost",
+        "method": "percent_of_cost_with_min",
+        "notes": "Split by discipline: structural 50%, electrical 20%, plumbing 17%, mechanical 13%. Detailed valuation required at submittal; Building Official may use RS Means ($180/sf under air).",
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Building Permit Fee - Commercial (compensation to cover service costs)",
+        "min_fee": 100,
+        "rate": "$100 for the first $1,000, plus 2.5% of total construction cost",
+        "method": "percent_of_cost_with_min",
+        "notes": "Split by discipline: structural 40%, electrical 24%, plumbing 20%, mechanical 16%.",
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Electrical Permit - share of building permit fee (residential 20%, commercial 24%)",
+        "min_fee": null,
+        "rate": "Residential: 20% of the 1.5% fee; commercial: 24% of the 2.5% fee",
+        "method": "percent_of_permit_fee",
+        "notes": "Specialty electrical systems, service charges and similar: $85 per inspection plus $90 plan review.",
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Plumbing Permit - share of building permit fee (residential 17%, commercial 20%)",
+        "min_fee": null,
+        "rate": "Residential: 17% of the 1.5% fee; commercial: 20% of the 2.5% fee",
+        "method": "percent_of_permit_fee",
+        "notes": "Plumbing and mechanical systems: $90 plan review plus cost listed (fire sprinklers, irrigation, hoods, suppression).",
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Mechanical Permit - share of building permit fee (residential 13%, commercial 16%)",
+        "min_fee": null,
+        "rate": "Residential: 13% of the 1.5% fee; commercial: 16% of the 2.5% fee",
+        "method": "percent_of_permit_fee",
+        "notes": "A/C change-out: $90 plan review plus $85 per inspection, per system.",
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Processing and Initial Plan Review Fee (non-refundable)",
+        "min_fee": 90,
+        "rate": "Residential, multi-family: 1% of total construction cost; commercial: 1.33%; miscellaneous permits $90 per discipline",
+        "method": "percent_of_cost_with_min",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Roofing and Siding or Roof Replacement",
+        "min_fee": 345,
+        "rate": "$90 plan review plus: small roof under 500 sf or repair $345; flat $345; shingle $430; tile $515; metal $515",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Hurricane Opening Protection / Window, Door, Garage Door Replacement",
+        "min_fee": 152,
+        "rate": "$90 plan review plus: first three openings $152; 4-10 openings $278; over 10 $326; garage door $85; front door $85",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Swimming Pool / Spa",
+        "min_fee": null,
+        "rate": "1.5% of construction cost, plus plan review $90 per discipline (structural, plumbing, electrical); pool heaters or backflows $150",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Screen Enclosures",
+        "min_fee": 430,
+        "rate": "Patio screen room / pool enclosure $430; screen room under existing roof $255; plan review $270 total",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Fences / Walls / Paving",
+        "min_fee": 260,
+        "rate": "Wire, wood, metal, plastic $260; masonry up to 3 ft $345; over 3 ft $430; concrete slabs/pavers $345; plan review $270 total",
+        "method": "flat_by_class",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Demolition of Buildings",
+        "min_fee": null,
+        "rate": "1.5% of construction cost, per discipline, plus plan review $90 per discipline",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Generator",
+        "min_fee": 510,
+        "rate": "$360 minimum plan review plus $510 inspections",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Change of Contractor",
+        "min_fee": 80,
+        "rate": "$80 per discipline",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Revision After Issuance (change of plan)",
+        "min_fee": 90,
+        "rate": "$90 per discipline, or 1.5% of the change in cost (residential) / 2.5% (commercial)",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Subsequent Plan Review (after second failed review) / Pre Plan Review",
+        "min_fee": 95,
+        "rate": "$95 per discipline per cycle",
+        "method": "flat_per_discipline",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Re-Inspection Fee",
+        "min_fee": 85,
+        "rate": "$85 third inspection; $95 fourth; $105 fifth, per discipline",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "After-Hours Inspections",
+        "min_fee": 125,
+        "rate": "$125 per hour per trade, 3 hour minimum",
+        "method": "hourly_3hr_min",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Work Without a Permit",
+        "min_fee": 150,
+        "rate": "Contractor: $300 plus permit fee or double fee, whichever is greater; homeowner: $150 plus permit fee or double",
+        "method": "greater_of_min_or_double_fee",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Expired Permit",
+        "min_fee": 150,
+        "rate": "Per discipline: first extension $150; second $175; third $200; or half of original permit cost, whichever is greater",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Certificate of Occupancy",
+        "min_fee": 100,
+        "rate": "Certificate of Completion $75; TCO $300 initial, $450 / $600 / $1,000 extensions",
+        "method": "flat",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "County and State Surcharges",
+        "min_fee": 2,
+        "rate": "BORA greater of $2 or $0.52 per $1,000; document imaging $0.68 per $1,000; DCA 1.5% and BCAIF 1.0% of permit fee, $2 minimum",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Private Provider Reduction",
+        "min_fee": null,
+        "rate": "15% reduction from master permit fee for plan reviews and 15% for inspections",
+        "method": "percent_discount",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
         "date": "2026-10-02"
       }
     ],
