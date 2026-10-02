@@ -15284,26 +15284,26 @@
       {
         "municipality": "North Palm Beach",
         "work_type": "Building permit \u2014 all work (percentage of valuation)",
-        "min_fee": 75,
-        "rate": "3.68% of first $10,000 of valuation, plus 1.85% of $10,000.01 to $100,000, plus 0.95% of $100,000.01 and up",
+        "min_fee": 78,
+        "rate": "3.86% of first $10,000 of valuation, plus 1.94% of $10,000.01 to $100,000, plus 0.99% of $100,000.01 and up",
         "method": "tiered",
         "review_type": "plan review required",
-        "notes": "$75.00 minimum plus plan review fee if applicable.",
-        "source": "Village of North Palm Beach Building Permit Fee Schedule (village-npb.org Permit Fee Schedule)",
-        "date": "2026-07-25",
-        "last_verified": "2026-07-25"
+        "notes": "$78.00 minimum plus plan review fee if applicable. One valuation-based fee for the permit; trade work (electrical, plumbing, mechanical, roofing) is pulled as sub-permits, $20 each when no independent review is required (see Sub-Permit row). Trade-as-sub-permit reading inferred from the schedule, not stated outright.",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
       },
       {
         "municipality": "North Palm Beach",
         "work_type": "Building department plan review",
-        "min_fee": 25,
-        "rate": "25% of permit fee, $25.00 minimum",
+        "min_fee": 26,
+        "rate": "50% of permit fee, $26.00 minimum",
         "method": "percentage",
         "review_type": "plan review required",
-        "notes": "Not applicable to over-the-counter permits. Third rejection of plans for the same comment incurs a fee of four times the plan review portion of the permit fee, per F.S. 553.80(2)(b).",
-        "source": "Village of North Palm Beach Building Permit Fee Schedule (village-npb.org Permit Fee Schedule)",
-        "date": "2026-07-25",
-        "last_verified": "2026-07-25"
+        "notes": "Not applicable to over-the-counter permits. Third rejection of plans for the same comment: four times the plan review portion of the permit fee (F.S. 553.80(2)(b)). Not refundable.",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
       },
       {
         "municipality": "North Palm Beach",
@@ -15312,7 +15312,8 @@
         "method": "tiered",
         "source": "Village of North Palm Beach Building Permit Fee Schedule (village-npb.org Permit Fee Schedule)",
         "date": "2026-07-25",
-        "last_verified": "2026-07-25"
+        "last_verified": "2026-07-25",
+        "notes": " Current Building schedule refers to the separate Zoning / Fire Department fee schedules (not re-checked 2026-10-02)."
       },
       {
         "municipality": "North Palm Beach",
@@ -15321,7 +15322,143 @@
         "method": "valuation",
         "source": "Village of North Palm Beach Building Permit Fee Schedule (village-npb.org Permit Fee Schedule)",
         "date": "2026-07-25",
-        "last_verified": "2026-07-25"
+        "last_verified": "2026-07-25",
+        "notes": " Current Building schedule refers to the separate Zoning / Fire Department fee schedules (not re-checked 2026-10-02)."
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Sub-Permit (trade sub-permit, no independent review)",
+        "min_fee": 20,
+        "rate": null,
+        "method": "flat",
+        "notes": "$20.00, applicable to all sub-permits that do not require an independent review.",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "DBPR surcharge (F.S. 553.721)",
+        "min_fee": 2,
+        "rate": "1% of permit fee, $2 minimum",
+        "method": "percentage",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Building Code Administrators and Inspectors Fund (F.S. 468.631)",
+        "min_fee": 2,
+        "rate": "1.5% of permit fee, $2 minimum",
+        "method": "percentage",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Training surcharge",
+        "min_fee": 1.05,
+        "rate": "1.05% of permit fee and/or revision fee, $1.05 minimum",
+        "method": "percentage",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Re-inspection fee",
+        "min_fee": 78,
+        "rate": "$78 first, $105 second, then 4x the first re-inspection fee for each subsequent uncorrected violation",
+        "method": "tiered",
+        "notes": "F.S. 553.80(2)(c).",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Building demolition",
+        "min_fee": 304,
+        "rate": null,
+        "method": "flat",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Change of contractor - same location",
+        "min_fee": 78,
+        "rate": "$78 plus $26 per sub-contractor",
+        "method": "flat",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Residential revision fee",
+        "min_fee": 26,
+        "rate": "$26 plus $10.50 per page",
+        "method": "flat",
+        "notes": "After initial submittal, one and two family dwellings; plus fee on any added job valuation.",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Commercial revision fee",
+        "min_fee": 52,
+        "rate": "$52 plus $10.50 per page",
+        "method": "flat",
+        "notes": "After initial submittal, includes multi-family; plus fee on any added job valuation.",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Re-issuance fee (within 180 days of expiration)",
+        "min_fee": 100,
+        "rate": null,
+        "method": "flat",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Re-issuance fee (after 180 days of expiration)",
+        "min_fee": 78,
+        "rate": "35% of original permit fee, $78 minimum, plus plan review fee",
+        "method": "percentage",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Temporary Certificate of Occupancy",
+        "min_fee": 250,
+        "rate": null,
+        "method": "flat",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
+      },
+      {
+        "municipality": "North Palm Beach",
+        "work_type": "Penalty - work commenced without permit",
+        "min_fee": 105,
+        "rate": "4x the permit fee plus $105 administration fee",
+        "method": "percentage",
+        "notes": "At the discretion of the Building Official.",
+        "source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)",
+        "date": "2026-10-02",
+        "last_verified": "2026-10-02"
       },
       {
         "municipality": "Boynton Beach",

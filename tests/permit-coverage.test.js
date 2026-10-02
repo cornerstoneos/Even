@@ -31,10 +31,12 @@ for(const [mkt,city] of [['Broward','Hallandale Beach'],['Miami-Dade','Hialeah']
 
 console.log('\n=== Thin city schedules are partial, with the gaps named ===');
 {
-  const r=filterPermits(market('Palm Beach').permits,'North Palm Beach');
-  check('North Palm Beach (4 rows) → municipality-partial', r.scope==='municipality-partial', `got ${r.scope}`);
+  // Synthetic thin city on top of the real Palm Beach rows, so this test doesn't break each time a real city gets completed.
+  const thin=[{municipality:'Thinville',work_type:'Building permit (percentage of valuation)'},{municipality:'Thinville',work_type:'Building department plan review'}];
+  const r=filterPermits([...market('Palm Beach').permits,...thin],'Thinville');
+  check('thin city (base fee only) → municipality-partial', r.scope==='municipality-partial', `got ${r.scope}`);
   check('names the missing trades', ['electrical','plumbing','mechanical','roofing'].every(t=>r.missing.includes(t)), JSON.stringify(r.missing));
-  check('still sends the city rows plus county baseline', r.permits.some(p=>p.municipality==='North Palm Beach')&&r.permits.some(p=>/county/i.test(p.municipality)));
+  check('still sends the city rows plus county baseline', r.permits.some(p=>p.municipality==='Thinville')&&r.permits.some(p=>/county/i.test(p.municipality)));
 }
 
 console.log('\n=== Rule details ===');
