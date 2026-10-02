@@ -2,7 +2,7 @@
   "_about": "What a city needs before its permit data counts as complete. Used by server.js (a city only earns city-level permit grounding, and so HIGH confidence, when complete) and by even-data/tools/build_checklist.py. All patterns are case-insensitive regexes. 'base' and trade patterns match work_type only; rows matching 'exclude' never count. A base-fee row whose work_type or notes match 'all_trades' covers every trade on its own (e.g. one valuation-based fee for building/electrical/plumbing/mechanical).",
   "exclude": "registration|business tax|\\bBTR\\b|licen[cs]e|certificate of competency|unsafe|40.year|forty|recertif|safety inspection|fire extinguisher|penalty|without permit|renewal|extension|reinstatement|surcharge|private provider",
   "base": "building permit|\\bbuilding\\b.*(permit|fee)|all trade|all types|master permit|trade permit|construction permit|new construction|new (residential|residence|single|building)|alteration|addition|remodel|valuation|construction cost",
-  "all_trades": "all trade|all types|trade permit|master permit|building\\s*/\\s*electrical|electrical\\s*/\\s*plumbing|sub.?permit|includes all|all building types",
+  "all_trades": "all disciplines|all trade|all types|trade permit|master permit|building\\s*/\\s*electrical|electrical\\s*/\\s*plumbing|sub.?permit|includes all|all building types",
   "trades": {
     "electrical": "electric|wiring",
     "plumbing": "plumb",
