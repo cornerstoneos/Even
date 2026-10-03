@@ -10,7 +10,9 @@ const MUNICIPALITIES = require('./data/municipalities.json');
 const fetch = (...args) => (globalThis.fetch ? globalThis.fetch(...args) : nodeFetch(...args));
 
 const app = express();
-app.use(cors());
+// The cache headers are read by the app (and are how a bad scope's key is found).
+app.use(cors({ exposedHeaders: ['X-Even-Cache', 'X-Even-Cache-Key'] }));
+const STARTED_AT = new Date().toISOString();
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://klgofcqrncabfhskiijn.supabase.co';
 
@@ -258,7 +260,8 @@ app.get('/health', (req, res) => {
     ok: true,
     hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
     hasSupabaseKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
-    hasStripeSecret: !!process.env.STRIPE_WEBHOOK_SECRET
+    hasStripeSecret: !!process.env.STRIPE_WEBHOOK_SECRET,
+    startedAt: STARTED_AT
   });
 });
 
@@ -416,6 +419,79 @@ function scopeCacheSet(key, text) {
   while (scopeCache.size > SCOPE_CACHE_MAX) scopeCache.delete(scopeCache.keys().next().value);
 }
 
+// Second layer: Supabase table scope_cache, so a scope survives restarts and
+// deploys. Holds only the key (a hash) and the scope JSON the model returned,
+// never the prompt. Service role only (RLS on, no policies, anon/authenticated
+// revoked). Rows expire 30 days after they were written (our default, not
+// data-backed). A Load Market Batch changes the prompt, so it changes the key.
+const SCOPE_DB_TTL_DAYS = 30;
+const scopeDbHeaders = key => ({ 'Content-Type': 'application/json', apikey: key, Authorization: `Bearer ${key}` });
+const scopeDbCutoff = () => new Date(Date.now() - SCOPE_DB_TTL_DAYS * 86400000).toISOString();
+function parseScopeText(text) {
+  const t = String(text || '').replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+  try { return JSON.parse(t); } catch (e) {}
+  const m = t.match(/\{[\s\S]*\}/);
+  if (m) { try { return JSON.parse(m[0]); } catch (e) {} }
+  return null;
+}
+async function scopeDbGet(key) {
+  const sk = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!sk) return null;
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/scope_cache?key=eq.${key}&created_at=gt.${encodeURIComponent(scopeDbCutoff())}&select=scope,hits`,
+      { headers: scopeDbHeaders(sk), signal: AbortSignal.timeout(3000) });
+    if (!r.ok) return null;
+    const row = (await r.json())?.[0];
+    if (!row || !row.scope) return null;
+    // Fire-and-forget usage stats; never blocks the answer.
+    fetch(`${SUPABASE_URL}/rest/v1/scope_cache?key=eq.${key}`, {
+      method: 'PATCH', headers: { ...scopeDbHeaders(sk), Prefer: 'return=minimal' },
+      body: JSON.stringify({ last_used_at: new Date().toISOString(), hits: (row.hits || 0) + 1 })
+    }).catch(() => {});
+    return JSON.stringify(row.scope);
+  } catch (e) { console.error('scope_cache read failed:', e.message); return null; }
+}
+async function scopeDbPut(key, text) {
+  const sk = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const scope = parseScopeText(text);
+  if (!sk || !scope) return;
+  try {
+    // First answer wins: a later identical request never overwrites it.
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/scope_cache?on_conflict=key`, {
+      method: 'POST', headers: { ...scopeDbHeaders(sk), Prefer: 'resolution=ignore-duplicates,return=minimal' },
+      body: JSON.stringify({ key, scope })
+    });
+    if (!r.ok) console.error('scope_cache write failed:', r.status, await r.text());
+  } catch (e) { console.error('scope_cache write failed:', e.message); }
+}
+async function scopeDbPurgeExpired() {
+  const sk = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!sk) return;
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/scope_cache?created_at=lt.${encodeURIComponent(scopeDbCutoff())}`,
+      { method: 'DELETE', headers: { ...scopeDbHeaders(sk), Prefer: 'return=minimal' } });
+  } catch (e) { console.error('scope_cache purge failed:', e.message); }
+}
+setTimeout(scopeDbPurgeExpired, 10000);
+setInterval(scopeDbPurgeExpired, 6 * 3600 * 1000).unref();
+
+// Clear one bad scope: DELETE /api/scope-cache/<key> with
+// "Authorization: Bearer <SUPABASE_SERVICE_ROLE_KEY>". The key is in the
+// X-Even-Cache-Key response header and saved on the estimate as scopeKey.
+app.delete('/api/scope-cache/:key', async (req, res) => {
+  const sk = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const auth = req.get('authorization') || '';
+  const given = Buffer.from(auth.replace(/^Bearer\s+/i, ''));
+  const want = Buffer.from(sk || '');
+  if (!sk || given.length !== want.length || !crypto.timingSafeEqual(given, want)) return res.status(401).json({ error: 'unauthorized' });
+  const key = String(req.params.key || '');
+  if (!/^[a-f0-9]{64}$/.test(key)) return res.status(400).json({ error: 'key must be a 64-char hex hash' });
+  scopeCache.delete(key);
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/scope_cache?key=eq.${key}`, { method: 'DELETE', headers: { ...scopeDbHeaders(sk), Prefer: 'return=representation' } });
+  const rows = r.ok ? await r.json() : [];
+  res.json({ ok: r.ok, deleted: rows.length, note: 'Cleared here and in Supabase. Another running server instance keeps its in-memory copy until it restarts.' });
+});
+
 // ─── Anthropic proxy ──────────────────────────────────────────────────────────
 app.post('/api/estimate', async (req, res) => {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -427,15 +503,22 @@ app.post('/api/estimate', async (req, res) => {
   const cacheKey = req.get('x-even-cache') === '1' ? scopeCacheKey(req.body) : null;
   let finishInflight = () => {};
   if (cacheKey) {
-    let text = scopeCacheGet(cacheKey);
+    res.setHeader('X-Even-Cache-Key', cacheKey);
+    let text = scopeCacheGet(cacheKey), layer = 'memory';
     if (!text && scopeInflight.has(cacheKey)) {
       text = await Promise.race([scopeInflight.get(cacheKey), new Promise(r => setTimeout(() => r(null), 170000))]);
+      layer = 'inflight';
+    }
+    if (!text) {
+      text = await scopeDbGet(cacheKey); layer = 'db';
+      if (text) scopeCacheSet(cacheKey, text);
     }
     if (text) {
-      res.setHeader('X-Even-Cache', 'hit');
+      res.setHeader('X-Even-Cache', `hit-${layer}`);
       return res.json({ content: [{ type: 'text', text }], stop_reason: 'end_turn', cached: true });
     }
     finishInflight = scopeInflightStart(cacheKey);
+    res.setHeader('X-Even-Cache', 'miss');
   }
   try {
   const MAX_TRIES = 3;
@@ -496,7 +579,7 @@ app.post('/api/estimate', async (req, res) => {
               }
             }
           }
-          if (cacheKey && stopReason === 'end_turn') { scopeCacheSet(cacheKey, fullText); finishInflight(fullText); }
+          if (cacheKey && stopReason === 'end_turn') { scopeCacheSet(cacheKey, fullText); finishInflight(fullText); scopeDbPut(cacheKey, fullText); }
         } catch (streamErr) {
           console.error('Anthropic stream interrupted:', streamErr.message);
           logError('anthropic_proxy', streamErr.message, { stage: 'stream', model: req.body?.model });
@@ -507,7 +590,7 @@ app.post('/api/estimate', async (req, res) => {
       const data = await response.json();
       if (cacheKey && data?.stop_reason === 'end_turn' && Array.isArray(data.content)) {
         const text = data.content.map(b => b.text || '').join('');
-        scopeCacheSet(cacheKey, text); finishInflight(text);
+        scopeCacheSet(cacheKey, text); finishInflight(text); scopeDbPut(cacheKey, text);
       }
       return res.status(response.status).json(data);
     } catch (err) {

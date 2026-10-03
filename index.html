@@ -2188,6 +2188,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sam
         signal:ctrl.signal
       });
       clearTimeout(tid);
+      if(sameInSameOut) window._lastScopeKey=r.headers.get('X-Even-Cache-Key')||null;
       if(!r.ok){
         const e=await r.json().catch(()=>({}));
         // Prefer the server/Anthropic message when present; only fall back to a generic status line when there is none
@@ -2239,6 +2240,7 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
       body:JSON.stringify(body),signal:ctrl.signal
     });
   }catch(e){ clearTimeout(tid); throw e; }
+  if(opts.sameInSameOut) window._lastScopeKey=r.headers.get('X-Even-Cache-Key')||null;
   if(!r.ok){
     clearTimeout(tid);
     const e=await r.json().catch(()=>({}));
@@ -3517,6 +3519,9 @@ Return the JSON for THIS job now.`;
     });
     if(data.pricingNotes.length) data.assumptions=[...data.pricingNotes,...data.assumptions];
     data.labelAdj=adjLabel;
+    // The scope's cache key (a hash, nothing personal): saved with the estimate so
+    // a bad scope can be cleared on the server (DELETE /api/scope-cache/<key>).
+    data.scopeKey=window._lastScopeKey||null;
     data.confidenceTier=confidenceTier;
     currentEstimate=data;
 
