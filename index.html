@@ -339,6 +339,12 @@ body.has-gopro .topbar-brand{display:none}
 .li-del:hover{color:var(--red)}
 .cat-div{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:12px 12px 4px;display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace}
 .cat-div::after{content:'';flex:1;height:1px;background:var(--gold-border)}
+.cat-toggle{cursor:pointer;user-select:none}
+.cat-toggle:hover{color:var(--white2)}
+.cat-chev{transition:transform .15s;flex-shrink:0}
+.cat-toggle.closed .cat-chev{transform:rotate(-90deg)}
+.cat-sum{order:2;font-weight:500;letter-spacing:.3px;text-transform:none;color:var(--text-accent)}
+.cat-sum:empty{display:none}
 
 /* ── TOTALS ── */
 .tot-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--rim)}
@@ -3623,8 +3629,10 @@ function renderEstimate(data){
     cats[item.category].push({...item,_i:i});
   });
   let html='';
-  Object.entries(cats).forEach(([cat,items])=>{
-    html+=`<div class="cat-div">${getCatIcon(cat)} ${cat}</div>`;
+  Object.entries(cats).forEach(([cat,items],ci)=>{
+    // Each category folds on its own: tap the header to hide its rows and see
+    // just the count and subtotal. Starts open, like the list always has.
+    html+=`<div class="cat-div cat-toggle" onclick="toggleCategory(${ci})" id="catd-${ci}"><i data-lucide="chevron-down" class="cat-chev" style="width:12px;height:12px;stroke:currentColor"></i>${getCatIcon(cat)} ${escapeHtml(cat)}<span class="cat-sum" id="cats-${ci}"></span></div><div class="cat-group" id="catg-${ci}">`;
     items.forEach(item=>{
       const proClick=isPro?'':" onclick=\"openProModal('Edit Line Items','Upgrade to Even Pro to edit line items.');this.blur();\"";
       html+=`<div class="li-row" id="lr-${item._i}">
@@ -3636,8 +3644,10 @@ function renderEstimate(data){
         <button class="li-del" onclick="delLine(${item._i})">×</button>
       </div>${lineSourceNote(item,item._i)}`;
     });
+    html+='</div>';
   });
   document.getElementById('li-body').innerHTML=html;
+  updateCategorySums();
   const liCount=(data.lineItems||[]).length;
   const liTotal=(data.lineItems||[]).reduce((s,i)=>s+(+i.total||0),0);
   const summaryEl=document.getElementById('li-collapsed-summary');
@@ -3714,6 +3724,25 @@ function lineSourceNote(item,i){
   else if(item.priced==='your sub') t=es?'Tu tarifa de subcontratista':'Your sub rate';
   if(!t) return '';
   return `<div class="li-src${item.estimated?' est':''}" id="ls-${i}">${escapeHtml(t)}</div>`;
+}
+
+function toggleCategory(ci){
+  const g=document.getElementById('catg-'+ci), d=document.getElementById('catd-'+ci);
+  if(!g||!d) return;
+  const closed=g.style.display!=='none';
+  g.style.display=closed?'none':'';
+  d.classList.toggle('closed',closed);
+  updateCategorySums();
+}
+// Item count and subtotal next to each category name, shown while it is folded.
+function updateCategorySums(){
+  document.querySelectorAll('#li-body .cat-group').forEach(g=>{
+    const ci=g.id.slice(5), el=document.getElementById('cats-'+ci);
+    if(!el) return;
+    const rows=[...g.querySelectorAll('.li-row')];
+    const sum=rows.reduce((t,r)=>{const i=+r.id.slice(3);return t+(+(currentEstimate?.lineItems?.[i]?.total)||0);},0);
+    el.textContent=g.style.display==='none'?`${rows.length} · ${fmt(sum)}`:'';
+  });
 }
 
 function calcVar(input,estimated){
@@ -3809,6 +3838,7 @@ function recompute(){
   const oh=sub*(currentEstimate.overhead.pct/100);
   const cont=sub*(currentEstimate.contingency.pct/100);
   const prof=(sub+oh+cont)*(currentEstimate.profit.pct/100);
+  updateCategorySums();
   currentEstimate.subtotal=sub;currentEstimate.overhead.amount=oh;currentEstimate.contingency.amount=cont;currentEstimate.profit.amount=prof;currentEstimate.totalBid=sub+oh+cont+prof;
   renderTotals(currentEstimate);
 }
