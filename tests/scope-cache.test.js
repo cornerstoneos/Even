@@ -48,6 +48,13 @@ const anthropicCalls=()=>fs.readFileSync(LOG,'utf8').split('\n').filter(x=>x==='
   check('with the service key: cleared', ok.ok&&ok.deleted===1, JSON.stringify(ok));
   const d=await post(body,{'x-even-cache':'1'});
   check('next identical request asks the model again', d.cache==='miss'&&anthropicCalls()===3, JSON.stringify(d));
+  console.log('\n=== Old-format rows are replaced, not stuck ===');
+  { const db=JSON.parse(fs.readFileSync(DB,'utf8')); db[d.key]={scope:{projectName:'old-object'},hits:0}; fs.writeFileSync(DB,JSON.stringify(db)); }
+  await stop(srv); srv=await start();
+  const e=await post(body,{'x-even-cache':'1'});
+  await new Promise(r=>setTimeout(r,200));
+  const fixed=JSON.parse(fs.readFileSync(DB,'utf8'))[d.key];
+  check('an object row is ignored, deleted, and the fresh text stored', e.cache==='miss'&&fixed&&typeof fixed.scope==='string', JSON.stringify(fixed));
   await stop(srv);
   fs.rmSync(dir,{recursive:true,force:true});
   console.log(`\n${pass} passed, ${fail} failed`);

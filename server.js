@@ -445,7 +445,12 @@ async function scopeDbGet(key) {
     // Stored as the model's exact text (a jsonb string). jsonb objects reorder keys,
     // and the next prompt is built from this scope, so a re-serialized object
     // would change that prompt's key and break same-in-same-out after a restart.
-    if (!row || typeof row.scope !== 'string') return null;
+    if (!row) return null;
+    if (typeof row.scope !== 'string') {
+      // An older-format row (stored as an object): drop it so the fresh answer can be stored.
+      await fetch(`${SUPABASE_URL}/rest/v1/scope_cache?key=eq.${key}`, { method: 'DELETE', headers: { ...scopeDbHeaders(sk), Prefer: 'return=minimal' } }).catch(() => {});
+      return null;
+    }
     // Fire-and-forget usage stats; never blocks the answer.
     fetch(`${SUPABASE_URL}/rest/v1/scope_cache?key=eq.${key}`, {
       method: 'PATCH', headers: { ...scopeDbHeaders(sk), Prefer: 'return=minimal' },
