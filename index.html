@@ -674,6 +674,38 @@ body.has-gopro .topbar-brand{display:none}
   .pdf-grid{grid-template-columns:1fr}
 }
 
+
+/* Desktop estimate screen: full width, two columns. Only the estimate screen
+   drops the 1.3x zoom; every other screen keeps the scaled phone column. */
+.est-grid,.est-main,.est-side,.est-main2{display:contents}
+.est-labor-card{display:none}
+@media(min-width:900px){
+  .app:has(#s-estimate.active){zoom:1;max-width:none}
+  #s-estimate .sbody{overflow:visible;width:100%;max-width:1480px;margin:0 auto;padding:24px 28px 80px;box-sizing:border-box}
+  #s-estimate .est-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start}
+  #s-estimate .est-main,#s-estimate .est-main2{display:block;grid-column:1;min-width:0}
+  #s-estimate .est-side{display:block;grid-column:2;grid-row:1 / span 2;position:sticky;top:68px;max-height:calc(100vh - 80px);overflow-y:auto;scrollbar-width:thin}
+  #s-estimate .est-labor-card{display:block}
+  /* 900-1199px: the left column is too narrow for six columns, so rows stack the
+     way they do on a phone (description on its own line, numbers under it). */
+  #s-estimate .li-head{display:none}
+  #s-estimate .li-row{grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:auto auto;gap:4px 8px}
+  #s-estimate .li-row>*:nth-child(1){grid-column:1/-1}
+  #s-estimate .li-row input{font-size:13.5px}
+  #s-estimate .li-total{font-size:13.5px}
+  #s-estimate .pdf-grid{grid-template-columns:1fr 1fr}
+}
+@media(min-width:1200px){
+  #s-estimate .est-grid{grid-template-columns:minmax(0,1fr) 400px;gap:28px}
+  #s-estimate .li-head{display:grid;font-size:10px}
+  #s-estimate .li-head,#s-estimate .li-row{grid-template-columns:minmax(0,1fr) 72px 110px 120px 120px 30px;grid-template-rows:auto}
+  #s-estimate .li-row>*:nth-child(1){grid-column:auto}
+  #s-estimate .li-head>span:nth-child(2),#s-estimate .li-head>span:nth-child(3){text-align:center}
+  #s-estimate .li-head>span:nth-child(4),#s-estimate .li-head>span:nth-child(5){text-align:right}
+  #s-estimate .li-row input,#s-estimate .li-total{font-size:14.5px}
+  #s-estimate .li-row{padding:11px 14px}
+}
+
 @keyframes brickStack {
   0%   { opacity:0; transform:translateY(8px); }
   20%  { opacity:1; transform:translateY(0); }
@@ -1238,6 +1270,11 @@ body.has-gopro .topbar-brand{display:none}
         </div>
       </div>
 
+      <!-- Desktop (900px+): two columns, line items left, a sticky bid panel right.
+           These wrappers are display:contents below 900px, so the phone layout is
+           exactly the stacked column it always was. -->
+      <div class="est-grid">
+      <div class="est-main">
       <!-- Line items -->
       <div class="gc">
         <div class="gc-head">
@@ -1265,6 +1302,8 @@ body.has-gopro .topbar-brand{display:none}
         </div>
       </div>
 
+      </div>
+      <div class="est-side">
       <!-- Bid summary -->
       <div class="gc">
         <div class="gc-head"><div class="gc-title" data-en="Bid Summary" data-es="Resumen de Oferta">Bid Summary</div></div>
@@ -1327,7 +1366,7 @@ body.has-gopro .topbar-brand{display:none}
             </div>
             <div class="tier-cards" id="tier-cards" style="display:none"></div>
           </div>
-          <div class="pdf-grid">
+          <div class="pdf-grid" id="est-pdf-grid">
             <div class="pdf-card" onclick="showEmailGate('internal')">
               <div class="pdf-card-icon"><i data-lucide="file-text" style="width:22px;height:22px;stroke:var(--gold)"></i></div>
               <div class="pdf-card-title" data-en="Cost Sheet" data-es="Hoja de Costos">Cost Sheet</div>
@@ -1340,6 +1379,12 @@ body.has-gopro .topbar-brand{display:none}
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Labor cost: how labor was priced (desktop panel only; settings live on the scope screen) -->
+      <div class="gc est-labor-card" id="est-labor-card">
+        <div class="gc-head"><div class="gc-title" data-en="Labor Cost" data-es="Costo de Mano de Obra">Labor Cost</div></div>
+        <div class="gc-body" id="est-labor-body"></div>
       </div>
 
       <!-- Payment Schedule Selector -->
@@ -1364,6 +1409,11 @@ body.has-gopro .topbar-brand{display:none}
         </div>
       </div>
 
+      <!-- Desktop only: the Cost Sheet / Client Proposal cards are moved here so the
+           panel ends with the downloads (see placeEstimateDownloads). -->
+      <div id="est-side-downloads"></div>
+      </div>
+      <div class="est-main2">
       <!-- Proposal customizer -->
       <div class="gc" id="proposal-edit-card" style="display:none;margin-bottom:10px">
         <div class="gc-head">
@@ -1443,6 +1493,8 @@ body.has-gopro .topbar-brand{display:none}
         </div>
       </div>
 
+      </div>
+      </div>
       <div class="foot-nav">
         <button class="cta cta-ghost cta-sm" onclick="navigate('input')" data-en="↺ Start Over" data-es="↺ Empezar de Nuevo">↺ Start Over</button>
         <button class="cta cta-ghost cta-sm" onclick="navigate('refine')" data-en="← Edit Answers" data-es="← Editar Respuestas">← Edit Answers</button>
@@ -3596,7 +3648,11 @@ function renderEstimate(data){
   // shut on someone mid-edit.
   const liBodyWrap=document.getElementById('li-collapsible');
   const liChevron=document.getElementById('li-collapse-chevron');
-  if(liBodyWrap && liBodyWrap.style.display!=='none'){
+  // Desktop shows the table open in its own column; collapsing it there would
+  // leave the left half of the screen empty.
+  if(window.matchMedia&&window.matchMedia('(min-width:900px)').matches){
+    if(liBodyWrap){ liBodyWrap.style.display=''; if(summaryEl) summaryEl.style.display='none'; if(liChevron) liChevron.style.transform=''; }
+  }else if(liBodyWrap && liBodyWrap.style.display!=='none'){
     liBodyWrap.style.display='none';
     if(summaryEl) summaryEl.style.display='inline';
     if(liChevron) liChevron.style.transform='rotate(-90deg)';
@@ -3884,7 +3940,35 @@ function updateBidHeadline(){
   rangeEl.style.animation='popIn .4s cubic-bezier(.2,.9,.3,1.3) both';
 }
 
+// Desktop panel order: summary, range, final bid, margin, labor cost, payment
+// schedule, then downloads. On a phone the cards stay where they always were.
+function placeEstimateDownloads(){
+  const grid=document.getElementById('est-pdf-grid'), slot=document.getElementById('est-side-downloads'), home=document.getElementById('even-suggests');
+  if(!grid||!slot||!home) return;
+  if(window.matchMedia('(min-width:900px)').matches){ if(grid.parentElement!==slot) slot.appendChild(grid); }
+  else if(grid.parentElement===slot) home.after(grid);
+}
+if(window.matchMedia){ placeEstimateDownloads(); window.matchMedia('(min-width:900px)').addEventListener('change',placeEstimateDownloads); }
+
+function renderLaborCard(data){
+  const el=document.getElementById('est-labor-body');
+  if(!el) return;
+  const es=appLang==='es';
+  const labor=(data.lineItems||[]).filter(l=>l.category==='Labor'&&(+l.total||0)>0);
+  const hrs=labor.reduce((t,l)=>t+(+l.qty||0),0), amt=labor.reduce((t,l)=>t+(+l.total||0),0);
+  const lb=data.laborBasis;
+  const basis=!lb?(es?'Estimado guardado: base no registrada':'Saved estimate: basis not recorded')
+    :lb.mode==='own'?(es?`Tu costo: $${lb.rate}/hr`:`Your cost: $${lb.rate}/hr`)
+    :(es?`Salario medio BLS × ${(+lb.mult).toFixed(1)}`:`BLS median wage × ${(+lb.mult).toFixed(1)}`)+(Math.abs(lb.mult-LABOR_MULT_DEFAULT)<0.001?(es?' (valor de Even)':' (Even default)'):'');
+  const pct=data.subtotal>0?Math.round(amt/data.subtotal*100):0;
+  el.innerHTML=`<div class="tot-row"><span class="tot-lbl">${es?'Base':'Basis'}</span><span class="tot-val" style="font-size:12px">${escapeHtml(basis)}</span></div>
+    <div class="tot-row"><span class="tot-lbl">${es?'Horas':'Hours'}</span><span class="tot-val">${Math.round(hrs*10)/10}</span></div>
+    <div class="tot-row"><span class="tot-lbl">${es?'Mano de obra':'Labor'} (${pct}% ${es?'de costos directos':'of direct costs'})</span><span class="tot-val">${fmt(amt)}</span></div>
+    <div style="font-size:10px;color:var(--muted);margin-top:6px;font-family:'DM Mono',monospace;line-height:1.5">${es?'Cambia el multiplicador o tu tarifa en la pantalla de alcance antes del próximo estimado.':'Change the multiplier or your rate on the scope screen before your next estimate.'}</div>`;
+}
+
 function renderTotals(data){
+  renderLaborCard(data);
   const pct=data.profit?.pct||22;
   const L=appLang;
   document.getElementById('totals-body').innerHTML=`
