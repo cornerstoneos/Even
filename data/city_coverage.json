@@ -1,0 +1,802 @@
+{
+  "generated_by": "even-data tools/build_checklist.py",
+  "rule": "complete = core fees in data/permit_core_fees.json",
+  "counts": {
+    "complete": 40,
+    "not started": 38,
+    "partial": 6
+  },
+  "cities": [
+    {
+      "city": "Miami",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 12,
+      "last_entry_date": "2026-04-23",
+      "schedule_source": null
+    },
+    {
+      "city": "Miami Beach",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 12,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Miami Beach Building Department Fee Guide (edition newer than the Oct 1, 2024 guide; exact edition not recorded when filed 2026-07-17)"
+    },
+    {
+      "city": "Hialeah",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 231,
+      "last_entry_date": "2026-09-23",
+      "schedule_source": "City of Hialeah Building Permit Fee Schedule, hialeahfl.gov, Rev March 20, 2026"
+    },
+    {
+      "city": "Miami Gardens",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 220,
+      "last_entry_date": "2026-09-18",
+      "schedule_source": null
+    },
+    {
+      "city": "Coral Gables",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 13,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Coral Gables Fee Schedule (published March 10, 2026), Building Division, City Code Secs. 105-85 to 105-89, coralgables.com/media/483"
+    },
+    {
+      "city": "Doral",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Homestead",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 27,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Homestead Building Division Adopted Fee Schedule (Ord. 2025-09-25, adopted Sept 9, 2025), homesteadfl.gov/DocumentCenter/View/5861/Building-Division-Adopted-Fee-Schedule-092025"
+    },
+    {
+      "city": "North Miami",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 27,
+      "last_entry_date": "2026-10-03",
+      "schedule_source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097"
+    },
+    {
+      "city": "North Miami Beach",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Aventura",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 16,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Aventura Building Permit Fee Schedule, Community Development Department (revised/effective July 8, 2026), cityofaventura.com/DocumentCenter/View/60. City notes a 2026 Florida law now prohibits value-based permit fee systems, so it may adjust fees annually."
+    },
+    {
+      "city": "Cutler Bay",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Palmetto Bay",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Pinecrest",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Key Biscayne",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 17,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Village of Key Biscayne Building, Zoning and Planning Fee Schedule (adopted Jan 2022, effective March 1, 2022; posted in the village's 2025 forms folder), files.keybiscayne.fl.gov VKB Permit Fee Schedule.pdf; amounts may have been updated since"
+    },
+    {
+      "city": "Sunny Isles Beach",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Miami Lakes",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 23,
+      "last_entry_date": "2026-10-03",
+      "schedule_source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)"
+    },
+    {
+      "city": "Hialeah Gardens",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Opa-locka",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Sweetwater",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "South Miami",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 20,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of South Miami Schedule of Fees and Fines, Building Division (updated 12/8/2025), southmiamifl.gov/DocumentCenter/View/8667/Schedule-of-Fees-Updated-12-8-25"
+    },
+    {
+      "city": "West Miami",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Miami Springs",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Miami Shores",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Florida City",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Surfside",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Bal Harbour",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 16,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Village of Bal Harbour Permit Fee Schedule (effective July 1, 2022), Building and Trade Permit Fees (PF group), balharbourfl.gov/wp-content/uploads/2023/09/Building-Permits-Fee-Schedule-2022.pdf; may have been updated since"
+    },
+    {
+      "city": "Bay Harbor Islands",
+      "county": "Miami-Dade",
+      "status": "partial",
+      "missing_core_fees": [
+        "roofing"
+      ],
+      "rows": 13,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556"
+    },
+    {
+      "city": "North Bay Village",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 17,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "North Bay Village Resolution No. 2025-119 Approving Updated Fee Schedule, Exhibit A, Building and Permit Fees (December 16, 2025), northbayvillage-fl.gov/wp-content/uploads/2025/12/Resolution-No.-2025-119-Approving-Updated-Fee-Schedule.pdf"
+    },
+    {
+      "city": "Biscayne Park",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "El Portal",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Virginia Gardens",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Medley",
+      "county": "Miami-Dade",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 17,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Town of Medley Building & Zoning Licensing Department Fee Schedule (effective 09-03-25), townofmedley.com/forms/Fee Schedule Adopted.pdf"
+    },
+    {
+      "city": "Golden Beach",
+      "county": "Miami-Dade",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Kendall",
+      "county": "Miami-Dade",
+      "status": "county schedule (unincorporated)",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Fort Lauderdale",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 27,
+      "last_entry_date": "2026-09-23",
+      "schedule_source": "City of Fort Lauderdale Development Services Dept Building Permit Fees, Rev 9, Revision Date 8/28/2026, I.D. BPF"
+    },
+    {
+      "city": "Hollywood",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 69,
+      "last_entry_date": "2026-09-23",
+      "schedule_source": "City of Hollywood - Comprehensive Schedule of Fees, hollywoodfl.org (pages 3-6)"
+    },
+    {
+      "city": "Pembroke Pines",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 38,
+      "last_entry_date": "2026-09-23",
+      "schedule_source": "Pembroke Pines Building Fee Schedule Adopted October 1, 2025, Section 150.16"
+    },
+    {
+      "city": "Coral Springs",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 179,
+      "last_entry_date": "2026-09-23",
+      "schedule_source": "City of Coral Springs Fee Schedule and User Fees, coralsprings.gov (screenshots)"
+    },
+    {
+      "city": "Miramar",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 18,
+      "last_entry_date": "2026-07-25",
+      "schedule_source": "City of Miramar Schedule of User Fees for Programs, Facilities & Services FY2026, Building Planning & Zoning Department, as adopted Resolution R25-212, September 17, 2025"
+    },
+    {
+      "city": "Sunrise",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 97,
+      "last_entry_date": "2026-09-18",
+      "schedule_source": null
+    },
+    {
+      "city": "Plantation",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Davie",
+      "county": "Broward",
+      "status": "partial",
+      "missing_core_fees": [
+        "plumbing",
+        "mechanical",
+        "roofing"
+      ],
+      "rows": 56,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Town of Davie Building Permit Fee Schedule, Exhibit A, Modified Fees Effective October 1, 2026 (2-page PDF posted 9/30/2026), davie-fl.gov/1772/2025-Building-Fee-Schedule"
+    },
+    {
+      "city": "Pompano Beach",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 41,
+      "last_entry_date": "2026-09-17",
+      "schedule_source": "City of Pompano Beach Building Department Fee Schedule (updated 2/10/26), cdn.pompanobeachfl.gov/city/pages/building_inspections/FEE-SCHEDULE.pdf"
+    },
+    {
+      "city": "Deerfield Beach",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 14,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Deerfield Beach Building Permit Fee Schedule, Resolution No. 2024/202 (December 17, 2024), deerfield-beach.com/DocumentCenter/View/200/Building-Permit-Fee-Schedule"
+    },
+    {
+      "city": "Weston",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Tamarac",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 22,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Tamarac Building Department Schedule of Permit Fees, R-2021-137 Exhibit A (effective 01/01/22), tamarac.org/DocumentCenter/View/9569/2022-Permit-Fee-Schedule-Eff-01-01-22. This is the version the city posts; fees may have been raised since."
+    },
+    {
+      "city": "Margate",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 48,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Margate Building & Code Services Department Schedule of Fees and Penalties for Services and Permits (effective 7/1/2026), margatefl.com/DocumentCenter/View/196/Permit-Fee-Schedule-PDF"
+    },
+    {
+      "city": "Coconut Creek",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Lauderhill",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "North Lauderdale",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Oakland Park",
+      "county": "Broward",
+      "status": "partial",
+      "missing_core_fees": [
+        "electrical",
+        "plumbing",
+        "mechanical",
+        "roofing"
+      ],
+      "rows": 22,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Oakland Park Schedule of Fees and Charges, Building and Permitting, effective Oct 1, 2025 (FY26 Fee Booklet), oaklandparkfl.gov/DocumentCenter/View/13995/FY-26-Fee-Booklet-ADA"
+    },
+    {
+      "city": "Hallandale Beach",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 99,
+      "last_entry_date": "2026-09-30",
+      "schedule_source": "City of Hallandale Beach Master Fee Schedule (screenshots, pgs 5-16 of 62)"
+    },
+    {
+      "city": "Dania Beach",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Cooper City",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Parkland",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 26,
+      "last_entry_date": "2026-10-03",
+      "schedule_source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-"
+    },
+    {
+      "city": "Wilton Manors",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 14,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Wilton Manors Consolidated Fee Schedule, Community Development Services (effective Oct 1, 2024), wiltonmanors.gov/DocumentCenter/View/8749/Consolidated-Fee-Schedule-Effective-10-01-24; a newer one may exist"
+    },
+    {
+      "city": "Lauderdale Lakes",
+      "county": "Broward",
+      "status": "partial",
+      "missing_core_fees": [
+        "roofing"
+      ],
+      "rows": 18,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Lauderdale Lakes Community Development Fee Schedule, Secs. 1301-1306 (Municode print dated 2022-02-21; posted at lauderdalelakes.org/DocumentCenter/View/5490/Building-Fee-Schedule); amounts may have been updated since"
+    },
+    {
+      "city": "Lighthouse Point",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 11,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Lighthouse Point Building Permit Fee Schedule, Exhibit B (rev. 9/8/22), lighthousepointfl.gov/DocumentCenter/View/945/LHP-Revised-Fees-as-of-9-12-22-Final-PDF; may have been updated since"
+    },
+    {
+      "city": "West Park",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Southwest Ranches",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Pembroke Park",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Lauderdale-by-the-Sea",
+      "county": "Broward",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 19,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Town of Lauderdale-By-The-Sea Building Permit and Inspection Fee Schedule, Resolution 2017-45 (effective Nov 15, 2017), lauderdalebythesea-fl.gov/DocumentCenter/View/161. Newest posted by the town as of 2026-10-02; may have been updated since."
+    },
+    {
+      "city": "Hillsboro Beach",
+      "county": "Broward",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "West Palm Beach",
+      "county": "Palm Beach",
+      "status": "partial",
+      "missing_core_fees": [
+        "plumbing"
+      ],
+      "rows": 54,
+      "last_entry_date": "2026-09-23",
+      "schedule_source": "West Palm Beach Building Department fee page (wpb.org), full fee schedule captured Sept 23, 2026"
+    },
+    {
+      "city": "Boca Raton",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 4,
+      "last_entry_date": "2026-07-17",
+      "schedule_source": null
+    },
+    {
+      "city": "Boynton Beach",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 45,
+      "last_entry_date": "2026-07-26",
+      "schedule_source": "City of Boynton Beach Building Division, Schedule of Fees and Charges for Services (effective 03/16/2022, updated 12/06/2022)"
+    },
+    {
+      "city": "Delray Beach",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 6,
+      "last_entry_date": "2026-07-17",
+      "schedule_source": null
+    },
+    {
+      "city": "Jupiter",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 8,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Town of Jupiter Building Department Schedule of Permit Fees, jupiter.fl.us/DocumentCenter/View/23737 (posted version; last revision noted 1/17/18, so fees may be higher now)"
+    },
+    {
+      "city": "Palm Beach Gardens",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 19,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Palm Beach Gardens Master Fees and Charges Schedule, Building Division, FY 2026/2027 (effective Oct 1, 2026), pbgfl.gov/DocumentCenter/View/27/Fee-Schedule"
+    },
+    {
+      "city": "Wellington",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 20,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Village of Wellington Building Division Permit Fee Schedule (web page), wellingtonfl.gov/282/Permit-Fee-Schedule, captured 2026-10-02"
+    },
+    {
+      "city": "Lake Worth Beach",
+      "county": "Palm Beach",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Riviera Beach",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 13,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Riviera Beach Resolution 14-24, Schedule of Building Permit, Review and Other Related Fees (effective Feb 1, 2024), rivierabch.com Building_Fee_Schedule_2024.pdf; a newer one may exist"
+    },
+    {
+      "city": "Royal Palm Beach",
+      "county": "Palm Beach",
+      "status": "partial",
+      "missing_core_fees": [
+        "roofing"
+      ],
+      "rows": 10,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Village of Royal Palm Beach Schedule of Fees and Charges, Exhibit A (2-2025), Building Permits & Demolition Charges, royalpalmbeachfl.gov/DocumentCenter/View/913/Schedule-of-Fees-and-Charges-2-2025"
+    },
+    {
+      "city": "Greenacres",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 14,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "City of Greenacres Building Division Permit Fee Schedule, effective Oct 1, 2024 (Res. 2024-46), greenacresfl.gov/385/Building-Division-Permit-Fees"
+    },
+    {
+      "city": "Belle Glade",
+      "county": "Palm Beach",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Palm Springs",
+      "county": "Palm Beach",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "North Palm Beach",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 17,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Village of North Palm Beach Building Department Permit Fee Schedule, village-npb.org/DocumentCenter/View/12278/BUILDING-PERMIT-FEE-SCHEDULE (fetched 2026-10-02; no effective date printed)"
+    },
+    {
+      "city": "Tequesta",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 19,
+      "last_entry_date": "2026-10-03",
+      "schedule_source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2"
+    },
+    {
+      "city": "Juno Beach",
+      "county": "Palm Beach",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Lake Park",
+      "county": "Palm Beach",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Lantana",
+      "county": "Palm Beach",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 18,
+      "last_entry_date": "2026-10-02",
+      "schedule_source": "Town of Lantana Development Services Fee Schedule, effective Oct 1, 2024, lantana.org/176/Fees-Financial-Information"
+    },
+    {
+      "city": "Highland Beach",
+      "county": "Palm Beach",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Pahokee",
+      "county": "Palm Beach",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Loxahatchee Groves",
+      "county": "Palm Beach",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Westlake",
+      "county": "Palm Beach",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Jupiter Farms",
+      "county": "Palm Beach",
+      "status": "county schedule (unincorporated)",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    }
+  ]
+}
