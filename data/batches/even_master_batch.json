@@ -15705,6 +15705,16 @@
         "date": "2026-10-02"
       },
       {
+        "municipality": "North Miami",
+        "work_type": "Docks, Seawall and Boat Lift (includes electrical and plumbing sub permits)",
+        "min_fee": 305,
+        "rate": "$305 minimum (printed; no rate beyond the minimum shown in the schedule)",
+        "method": "flat_minimum",
+        "notes": "Seawall and dock work may also need county, state or federal approvals that are not city fees; not covered here.",
+        "source": "City of North Miami Building Department Permit Fee Schedule (effective May 2022, rev. June 2026), northmiamifl.gov/DocumentCenter/View/22097",
+        "date": "2026-10-03"
+      },
+      {
         "municipality": "Miami Lakes",
         "work_type": "Building Permit Up-Front Processing Fee",
         "min_fee": null,
@@ -15903,6 +15913,36 @@
         "notes": null,
         "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
         "date": "2026-10-02"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Plumbing Permit - Irrigation / Underground Sprinkler System",
+        "min_fee": null,
+        "rate": "$28.44 for each zone",
+        "method": "per_unit",
+        "notes": "Listed under plumbing, water piping.",
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-03"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Plumbing Permit - Swimming Pool Heater Replacement or Addition",
+        "min_fee": 97.04,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-03"
+      },
+      {
+        "municipality": "Miami Lakes",
+        "work_type": "Plumbing Permit - Swimming Pool Repair",
+        "min_fee": 97.04,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Miami Lakes Building Department Fee Schedule (dated 10/1/2020, posted at miamilakes-fl.gov/wp-content/uploads/2023/09/Building-Department-FEE-SCHEDULE.pdf); the town may have updated amounts since (Ord. 24-320 not checked)",
+        "date": "2026-10-03"
       },
       {
         "municipality": "South Miami",
@@ -19478,6 +19518,56 @@
         "notes": null,
         "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
         "date": "2026-10-02"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Fire Prevention Code Permit - Fire Suppression Sprinkler System",
+        "min_fee": 73.31,
+        "rate": "$1.47 per head; minimum fee $73.31",
+        "method": "per_unit",
+        "notes": "Listed under Other Required Permits Under Florida Fire Prevention Code.",
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-03"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Fire Prevention Code Permit - Fire Alarm System",
+        "min_fee": 73.31,
+        "rate": "$1.47 per device; minimum fee $73.31",
+        "method": "per_unit",
+        "notes": "Listed under Other Required Permits Under Florida Fire Prevention Code.",
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-03"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Fire Prevention Code Permit - Fire Pump Installation and Acceptance Test",
+        "min_fee": 143.91,
+        "rate": null,
+        "method": "flat",
+        "notes": "Listed under Other Required Permits Under Florida Fire Prevention Code.",
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-03"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Fire Prevention Code Permit - Stand Pipe System",
+        "min_fee": 73.31,
+        "rate": "$7.32 per hose outlet; minimum fee $73.31",
+        "method": "per_unit",
+        "notes": "Listed under Other Required Permits Under Florida Fire Prevention Code.",
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-03"
+      },
+      {
+        "municipality": "Tequesta",
+        "work_type": "Fire Prevention Code Permit - Hood Suppression System",
+        "min_fee": 73.31,
+        "rate": "$73.31 for the hood suppression; $2.96 per nozzle for the hood suppression system",
+        "method": "per_unit",
+        "notes": "Listed under Other Required Permits Under Florida Fire Prevention Code (Fire Suppression Hood $73.31; Hood Suppression System per nozzle $2.96).",
+        "source": "Village of Tequesta Master Fee Schedule, section 1.4 Building permit fees (April 2024 edition), tequesta.org/DocumentCenter/View/12774/VOT-Fee-Schedule_ADA-4-24-24_v2",
+        "date": "2026-10-03"
       },
       {
         "municipality": "Riviera Beach",
@@ -82053,6 +82143,36 @@
         "notes": null,
         "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
         "date": "2026-10-02"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Irrigation System",
+        "min_fee": 85,
+        "rate": "Residential: first 12 heads $85, each additional head $4, pump $50 each. Commercial: first 25 heads $170, each additional head $4, pump $50 each",
+        "method": "first_plus_addl",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-03"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Fire Sprinkler System",
+        "min_fee": 110,
+        "rate": "First 12 heads $110; each additional head $4; hose cabinets and Siamese connections $40",
+        "method": "first_plus_addl",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-03"
+      },
+      {
+        "municipality": "Parkland",
+        "work_type": "Fire Suppression Systems",
+        "min_fee": 85,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Parkland FY2025-2026 User Fee and Charge for Services Schedule, Building Department Fees (effective June 4, 2026), cityofparkland.org/DocumentCenter/View/20848/2025-2026-Fee-Schedule-",
+        "date": "2026-10-03"
       },
       {
         "municipality": "Wilton Manors",
