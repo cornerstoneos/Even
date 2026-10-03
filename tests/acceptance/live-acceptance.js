@@ -4,6 +4,8 @@
 // Each run is a fresh browser session; every question gets its first option. Prints totals,
 // the X-Even-Cache result per request, and whether every run matched. Requests are sent
 // through Node (fetch) because Chromium trips over some sandbox proxies.
+// Persistence check: run 1 of each test, restart the server (any deploy; /health startedAt
+// changes), then runs 2-5. After the restart the first request should log hit-db.
 // Usage: node acc.js <baseUrl> <A|B> <runs>
 let chromium;try{({chromium}=require('playwright'));}catch(e){({chromium}=require('/opt/node-tools/node_modules/playwright'));}
 const TESTS={
