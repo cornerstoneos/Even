@@ -2843,8 +2843,9 @@ function buildDynamicPricingBlock(md,adjMultiplier,adjLabel,hvhzNote,scopeCats){
   // it were the city's own adopted fee schedule.
   const loc=md.municipality?`${md.municipality}, ${md.state}`:`${md.market}, ${md.state}`;
   const permitHeader={
-    'municipality':`PERMIT FEES (${md.municipality} — issuing jurisdiction, plus ${md.market} county baseline):`,
-    'municipality-partial':`PERMIT FEES (${md.municipality} — PARTIAL city schedule, plus ${md.market} county baseline. The city's ${(md.permitMissing||[]).join(', ')||'core'} fees are not on file yet: where this job needs them, use the county baseline and state in the estimate that ${md.municipality}'s fee should be verified with the city):`,
+    'municipality':`PERMIT FEES (${md.municipality} — issuing jurisdiction; city schedule only, never add a county permit on top):`,
+    'municipality-partial':`PERMIT FEES (${md.municipality} — PARTIAL city schedule. The city's ${(md.permitMissing||[]).join(', ')||'core'} fees are not on file yet, so the county rows below stand in for those fees only. Never add a county permit on top of a city permit):`,
+    'unincorporated':`PERMIT FEES (${md.municipality} is unincorporated — the county issues the permit, so these are the county's own fees):`,
     'county-fallback':`PERMIT FEES (${md.market} COUNTY BASELINE ONLY — ${md.municipality}'s own fee schedule has not been researched yet. Use these as an approximation and state in the estimate that ${md.municipality} permit fees should be verified directly with the city):`,
     'county':`PERMIT FEES (${md.market} county baseline — specific municipality not identified from the address):`,
     'partial':`PERMIT FEES (${md.market} — PARTIAL LIST, not every municipality in this metro is shown):`
@@ -2930,6 +2931,8 @@ function renderPermitScopeNote(){
     msg=`Permit fees use ${escapeHtml(city||'this city')}'s schedule where we have it${gaps?` — its ${escapeHtml(gaps)} fees aren't in our database yet, so those are estimated from the ${county} schedule`:''}. Verify with the building department.`;
   }else if(meta.permitScope==='partial'){
     msg=`Permit fees drawn from a partial ${escapeHtml(meta.market)} schedule — not every municipality in this metro is covered yet. Verify with the issuing jurisdiction.`;
+  }else if(meta.permitScope==='unincorporated'){
+    msg=`${escapeHtml(city||'This area')} is unincorporated, so permit fees come from the ${county} schedule.`;
   }else if(meta.permitScope==='county'){
     msg=`Permit fees estimated from the ${county} schedule — a specific city wasn't identified from the address entered.`;
   }else{ el.style.display='none'; return; }
@@ -3563,7 +3566,7 @@ function renderBidIntel(data,loMult,hiMult){
   const tierLabel={high:'HIGH',medium:'MEDIUM',low:'LOW'}[tier]||'MEDIUM';
   const rows=[];
   if(meta&&meta.market){
-    const scopeWord={'municipality':`${meta.municipality||meta.market} city schedule`,'municipality-partial':`${meta.municipality||meta.market} city schedule, partial`,'county-fallback':`${meta.permitCounty||'county'} baseline`,'county':`${meta.permitCounty||'county'} schedule`,'partial':'partial metro list'}[meta.permitScope];
+    const scopeWord={'unincorporated':`${meta.permitCounty||'county'} schedule (unincorporated)`,'municipality':`${meta.municipality||meta.market} city schedule`,'municipality-partial':`${meta.municipality||meta.market} city schedule, partial`,'county-fallback':`${meta.permitCounty||'county'} baseline`,'county':`${meta.permitCounty||'county'} schedule`,'partial':'partial metro list'}[meta.permitScope];
     rows.push(meta.permitCount>0
       ?`<div class="bi-row on">✓ <span>Permits — ${escapeHtml(scopeWord||meta.market)} (${meta.permitCount} fees)</span></div>`
       :`<div class="bi-row">— <span>Permits — none local yet</span></div>`);

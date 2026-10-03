@@ -276,7 +276,7 @@ app.get('/api/markets', (req, res) => {
 // Permit rows are stored per-municipality, so a fully-researched metro can carry
 // hundreds of them. Sending all of them costs real tokens on every estimate and
 // buries the two lines that actually apply to this job. Narrow to the jurisdiction
-// that will issue the permit, plus the county baseline.
+// that will issue the permit (county rows only where the city has no fee on file).
 const UNKNOWN_MUNI_PERMIT_CAP = 40;
 
 function normalizeMuni(s) {
@@ -315,19 +315,31 @@ function missingCoreFees(cityRows) {
   return missing;
 }
 
-function filterPermits(permits, municipality) {
+// City-first (decided 2026-10-02): a city with its own rows gets ONLY its own rows.
+// The county schedule is never stacked on top of a city permit, which is how a
+// Fort Lauderdale water heater used to come back with a city permit plus a
+// Broward County one. County rows are used only as the labeled stand-in for a
+// core fee the city schedule is missing, for a city we have not researched, and
+// for unincorporated areas (Kendall, Jupiter Farms), where the county issues.
+function countyRowsForMissing(countyRows, missing) {
+  const tests = missing.map(m => m === 'base permit fee' ? CORE.base : (CORE.trades.find(([n]) => n === m) || [])[1]).filter(Boolean);
+  return countyRows.filter(r => !CORE.exclude.test(r.work_type || '') && tests.some(rx => rx.test(r.work_type || '')));
+}
+
+function filterPermits(permits, municipality, unincorporated) {
   if (!Array.isArray(permits) || !permits.length) return { permits, scope: 'none' };
 
   const isCounty = r => /\bcounty\b/i.test(r.municipality || '');
   const countyRows = permits.filter(isCounty);
 
   if (municipality) {
+    if (unincorporated) return { permits: countyRows, scope: 'unincorporated', municipality };
     const target = normalizeMuni(municipality);
     const cityRows = permits.filter(r => !isCounty(r) && normalizeMuni(r.municipality) === target);
     if (cityRows.length) {
       const missing = missingCoreFees(cityRows);
       return {
-        permits: [...cityRows, ...countyRows],
+        permits: missing.length ? [...cityRows, ...countyRowsForMissing(countyRows, missing)] : cityRows,
         scope: missing.length ? 'municipality-partial' : 'municipality',
         municipality,
         missing
@@ -358,7 +370,8 @@ app.get('/api/market-data', async (req, res) => {
   const hvhz = HVHZ_MARKETS.has(matched.market);
   const data = await getMarketData(matched.market);
   if (!data) return res.json({ market: matched.market, state: matched.state, zone: matched.zone, municipality: matched.municipality || null, hvhz, materials: null, labor: null, permits: null });
-  const { permits, scope, municipality, missing } = filterPermits(data.permits, matched.municipality);
+  const muniEntry = MUNICIPALITIES.find(m => m.name === matched.municipality && m.market === matched.market);
+  const { permits, scope, municipality, missing } = filterPermits(data.permits, matched.municipality, !!muniEntry?.unincorporated);
   res.json({ ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, permitMissing: missing || [], hvhz });
 });
 

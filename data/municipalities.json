@@ -288,7 +288,8 @@
     "state": "FL",
     "county": "Miami-Dade",
     "lat": 25.6793,
-    "lng": -80.3173
+    "lng": -80.3173,
+    "unincorporated": true
   },
   {
     "name": "Fort Lauderdale",
@@ -726,6 +727,7 @@
     "name": "Jupiter Farms",
     "market": "Palm Beach",
     "state": "FL",
-    "county": "Palm Beach"
+    "county": "Palm Beach",
+    "unincorporated": true
   }
 ]

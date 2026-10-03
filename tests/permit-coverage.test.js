@@ -36,7 +36,28 @@ console.log('\n=== Thin city schedules are partial, with the gaps named ===');
   const r=filterPermits([...market('Palm Beach').permits,...thin],'Thinville');
   check('thin city (base fee only) → municipality-partial', r.scope==='municipality-partial', `got ${r.scope}`);
   check('names the missing trades', ['electrical','plumbing','mechanical','roofing'].every(t=>r.missing.includes(t)), JSON.stringify(r.missing));
-  check('still sends the city rows plus county baseline', r.permits.some(p=>p.municipality==='Thinville')&&r.permits.some(p=>/county/i.test(p.municipality)));
+  check('sends the city rows plus county rows for the missing fees', r.permits.some(p=>p.municipality==='Thinville')&&r.permits.some(p=>/county/i.test(p.municipality)));
+  check('county stand-ins cover only missing core fees (no county surcharges, registrations)', r.permits.filter(p=>/county/i.test(p.municipality)).every(p=>/electric|wiring|plumb|mechanical|hvac|a\/?c|air condition|refrigeration|roof/i.test(p.work_type||'')));
+}
+
+console.log('\n=== City-first: a complete city never gets county permit rows ===');
+for(const mk of ['Miami-Dade','Broward','Palm Beach']){
+  const rows=market(mk).permits;
+  const cities=[...new Set(rows.map(r=>r.municipality).filter(n=>n&&!/county/i.test(n)))];
+  let complete=0,bad=[];
+  for(const c of cities){
+    const r=filterPermits(rows,c);
+    if(r.scope!=='municipality') continue;
+    complete++;
+    if(r.permits.some(p=>/county/i.test(p.municipality||''))||r.permits.some(p=>p.municipality!==c)) bad.push(c);
+  }
+  check(`${mk}: ${complete} complete cities, none returns county or other-city rows`, complete>0&&!bad.length, bad.join(', '));
+}
+{
+  const r=filterPermits(market('Broward').permits,'Fort Lauderdale');
+  check('Fort Lauderdale (Test A city) → only Fort Lauderdale rows', r.permits.length>0&&r.permits.every(p=>p.municipality==='Fort Lauderdale'), JSON.stringify([...new Set(r.permits.map(p=>p.municipality))]));
+  const u=filterPermits(market('Miami-Dade').permits,'Kendall',true);
+  check('unincorporated Kendall → county schedule, labeled unincorporated', u.scope==='unincorporated'&&u.permits.length>0&&u.permits.every(p=>/county/i.test(p.municipality)), u.scope);
 }
 
 console.log('\n=== Rule details ===');
