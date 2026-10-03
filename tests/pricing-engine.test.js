@@ -94,5 +94,9 @@ check('per sq ft falls back to the job sq ft', E.computePermitFee({rate:'0.1 per
 check('tiered rows show the minimum and say so', (r=>r.fee===50&&r.approx)(E.computePermitFee({rate:'see table',min_fee:50,method:'tiered'},10000)));
 check('add-on fees (percent of permit fee) are never stand-alone', E.permitBasis({method:'percent_of_permit_fees_or_min',rate:0.01})==='addon');
 
+console.log('\n=== HVAC benchmarks against HVAC mechanics, not sheet metal ===');
+check('SUB_TRADE_TO_BLS maps HVAC to the HVAC mechanics wage row', /'HVAC':'Heating, Air Conditioning, and Refrigeration Mechanics and Installers'/.test(html));
+check('that row exists in every tri-county market', ['Miami-Dade','Broward','Palm Beach'].every(m=>batch.find(x=>x.market===m).labor.some(r=>r.trade==='Heating, Air Conditioning, and Refrigeration Mechanics and Installers')));
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail?1:0);
