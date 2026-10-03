@@ -53,7 +53,7 @@ console.log('\n=== Real data: no un-prefixed category orphaned from every trade 
 // "<root> - Sub" for any known root is invisible to that trade's scoping --
 // caught 129 real, paid-for rows in this exact state once already
 // (Thermostats, Refrigerant Line Sets, etc. missing their "HVAC - " prefix).
-const KNOWN_ROOTS=['Roofing','Electrical','Plumbing','HVAC','Framing','Paint','Flooring','Concrete','Drywall','Siding','Equipment Rental'];
+const KNOWN_ROOTS=['Roofing','Electrical','Plumbing','HVAC','Framing','Paint','Flooring','Concrete','Drywall','Siding','Equipment Rental','Irrigation'];
 const orphaned=new Set();
 for(const r of mia.materials||[]){
   const cat=r.category;
