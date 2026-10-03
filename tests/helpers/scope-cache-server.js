@@ -6,6 +6,7 @@ const fs = require('fs');
 const DB = process.env.FAKE_DB, LOG = process.env.FAKE_LOG;
 process.env.ANTHROPIC_API_KEY = 'test';
 process.env.SUPABASE_SERVICE_ROLE_KEY = 'svc-test-key';
+process.env.STRIPE_WEBHOOK_SECRET = 'whsec_test';
 const load = () => (fs.existsSync(DB) ? JSON.parse(fs.readFileSync(DB, 'utf8')) : {});
 const save = d => fs.writeFileSync(DB, JSON.stringify(d));
 const log = l => fs.appendFileSync(LOG, l + '\n');
@@ -39,7 +40,7 @@ globalThis.fetch = async (url, opts = {}) => {
     log(`db ${m} ${svc}`);
     if (m === 'GET') return json(d[key] ? [{ scope: d[key].scope, hits: d[key].hits }] : []);
     if (m === 'POST') { const b = JSON.parse(opts.body); if (!d[b.key]) d[b.key] = { scope: b.scope, hits: 0, bodyKeys: Object.keys(b) }; save(d); return new Response('', { status: 201 }); }
-    if (m === 'PATCH') { if (d[key]) { d[key].hits = JSON.parse(opts.body).hits; save(d); } return new Response('', { status: 204 }); }
+    if (m === 'PATCH') { if (d[key]) { d[key].hits = JSON.parse(opts.body).hits; save(d); } return new Response(null, { status: 204 }); }
     if (m === 'DELETE') { const had = key && d[key] ? [d[key]] : []; if (key) delete d[key]; save(d); return json(had); }
   }
   if (url.includes('/rest/v1/app_usage')) {
@@ -55,7 +56,7 @@ globalThis.fetch = async (url, opts = {}) => {
     const id = (u.searchParams.get('id') || '').replace(/^eq\./, '');
     if (m === 'GET') return json(t[id] ? [t[id]] : []);
     if (m === 'POST') { const b = JSON.parse(opts.body); if (!t[b.id]) t[b.id] = { estimate_count: 0, is_pro: b.id === USERS['tok-pro'].id }; save(d); return new Response('', { status: 201 }); }
-    if (m === 'PATCH') { Object.assign(t[id] = t[id] || {}, JSON.parse(opts.body)); save(d); return new Response('', { status: 204 }); }
+    if (m === 'PATCH') { Object.assign(t[id] = t[id] || {}, JSON.parse(opts.body)); save(d); return new Response(null, { status: 204 }); }
   }
   if (url.includes('/rest/v1/app_events')) {
     const t = (d.__events = d.__events || []); t.push(JSON.parse(opts.body)); save(d); return new Response('', { status: 201 });

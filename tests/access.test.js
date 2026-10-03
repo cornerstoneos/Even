@@ -129,6 +129,22 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   const cachedAgain=await run(burst,est('burst 0'));
   check('a cached re-run is not throttled by that limit', cachedAgain.status===200&&/^hit/.test(cachedAgain.cache||''), JSON.stringify(cachedAgain));
 
+  console.log('\n=== Stripe webhook grants Pro and records pro_started ===');
+  {
+    await sleep(800); // let earlier fire-and-forget writes to the fake DB file finish (the mock file has no locking)
+    const crypto=require('crypto');
+    const uid='11111111-1111-1111-1111-111111111111';
+    const payload=JSON.stringify({type:'checkout.session.completed',data:{object:{client_reference_id:uid,customer:'cus_test'}}});
+    const ts=Math.floor(Date.now()/1000);
+    const sig=crypto.createHmac('sha256','whsec_test').update(`${ts}.${payload}`,'utf8').digest('hex');
+    const bad=await fetch(`http://localhost:${port}/webhook/stripe`,{method:'POST',headers:{'content-type':'application/json','stripe-signature':`t=${ts},v1=deadbeef`},body:payload});
+    check('an unsigned/forged webhook is refused', bad.status===400);
+    const good=await fetch(`http://localhost:${port}/webhook/stripe`,{method:'POST',headers:{'content-type':'application/json','stripe-signature':`t=${ts},v1=${sig}`},body:payload});
+    await sleep(200);
+    check('pro_started from a signed Stripe webhook', good.status===200&&(db().__events||[]).some(e=>e.event==='pro_started'&&e.user_id===uid), good.status+' '+JSON.stringify((db().__events||[]).slice(-3)));
+    check('and the account is Pro (set by the server, not the browser)', db().__users[uid].is_pro===true, JSON.stringify(db().__users[uid]));
+  }
+
   console.log('\n=== (8) funnel events ===');
   for(const e of ['signup','pdf_download','pro_modal_shown']) await fetch(`http://localhost:${port}/api/event`,{method:'POST',headers:hdrs(acct),body:JSON.stringify({event:e})});
   const bad=await fetch(`http://localhost:${port}/api/event`,{method:'POST',headers:hdrs(acct),body:JSON.stringify({event:'pro_started'})});
