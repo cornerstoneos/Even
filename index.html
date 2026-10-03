@@ -61,6 +61,13 @@ body{
 
 /* ── SHELL ── */
 .app{max-width:480px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative}
+/* Desktop: the same phone layout, scaled up instead of a 480px strip in the middle
+   of a wide screen. zoom keeps every proportion identical to the phone view;
+   phones never match this query, so their layout is untouched. */
+@media(min-width:900px){
+  .app{max-width:600px;zoom:1.3}
+  #pro-feature-modal,#data-trade-modal{zoom:1.3}
+}
 
 /* ── TOPBAR ── */
 .topbar{
