@@ -375,6 +375,34 @@ app.get('/api/market-data', async (req, res) => {
   res.json({ ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, permitMissing: missing || [], hvhz });
 });
 
+// ─── Scope cache: same job in = same scope out ───────────────────────────────
+// The model on this route (claude-sonnet-5) does not accept a temperature setting,
+// so two identical requests can still come back with different scopes. The client
+// marks the scope-reading calls (questions, estimate scope) with X-Even-Cache: 1;
+// an identical request body is then answered from the first result instead of a
+// second roll of the dice. Prices are computed in the browser from the scope, so
+// an identical scope means an identical number. In memory: a server restart (each
+// deploy) starts it empty.
+const SCOPE_CACHE_MAX = 500;
+const SCOPE_CACHE_TTL_MS = 30 * 24 * 3600 * 1000;
+const scopeCache = new Map();
+function scopeCacheKey(body) {
+  const { stream, ...rest } = body || {};
+  return crypto.createHash('sha256').update(JSON.stringify(rest)).digest('hex');
+}
+function scopeCacheGet(key) {
+  const hit = scopeCache.get(key);
+  if (!hit) return null;
+  if (Date.now() - hit.at > SCOPE_CACHE_TTL_MS) { scopeCache.delete(key); return null; }
+  scopeCache.delete(key); scopeCache.set(key, hit); // refresh LRU position
+  return hit.text;
+}
+function scopeCacheSet(key, text) {
+  if (!text) return;
+  scopeCache.set(key, { text, at: Date.now() });
+  while (scopeCache.size > SCOPE_CACHE_MAX) scopeCache.delete(scopeCache.keys().next().value);
+}
+
 // ─── Anthropic proxy ──────────────────────────────────────────────────────────
 app.post('/api/estimate', async (req, res) => {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -383,6 +411,14 @@ app.post('/api/estimate', async (req, res) => {
     return res.status(500).json({ error: { message: 'Server misconfigured: ANTHROPIC_API_KEY missing' } });
   }
   const wantStream = req.body && req.body.stream === true;
+  const cacheKey = req.get('x-even-cache') === '1' ? scopeCacheKey(req.body) : null;
+  if (cacheKey) {
+    const text = scopeCacheGet(cacheKey);
+    if (text) {
+      res.setHeader('X-Even-Cache', 'hit');
+      return res.json({ content: [{ type: 'text', text }], stop_reason: 'end_turn', cached: true });
+    }
+  }
   const MAX_TRIES = 3;
   let lastErr;
   for (let attempt = 1; attempt <= MAX_TRIES; attempt++) {
@@ -416,12 +452,32 @@ app.post('/api/estimate', async (req, res) => {
         res.setHeader('X-Accel-Buffering', 'no');
         res.flushHeaders && res.flushHeaders();
         const reader = response.body.getReader();
+        // Read the text and stop reason off the stream as it passes, so a finished
+        // scope can be cached. Never cache a cut-off one.
+        const decoder = new TextDecoder();
+        let sseBuf = '', fullText = '', stopReason = null;
         try {
           for (;;) {
             const { done, value } = await reader.read();
             if (done) break;
             res.write(Buffer.from(value));
+            if (cacheKey) {
+              sseBuf += decoder.decode(value, { stream: true });
+              let idx;
+              while ((idx = sseBuf.indexOf('\n\n')) >= 0) {
+                const frame = sseBuf.slice(0, idx); sseBuf = sseBuf.slice(idx + 2);
+                for (const line of frame.split('\n')) {
+                  if (!line.startsWith('data:')) continue;
+                  try {
+                    const evt = JSON.parse(line.slice(5).trim());
+                    if (evt.type === 'content_block_delta' && evt.delta?.type === 'text_delta') fullText += evt.delta.text;
+                    else if (evt.type === 'message_delta' && evt.delta?.stop_reason) stopReason = evt.delta.stop_reason;
+                  } catch (e) { /* ping or partial frame */ }
+                }
+              }
+            }
           }
+          if (cacheKey && stopReason === 'end_turn') scopeCacheSet(cacheKey, fullText);
         } catch (streamErr) {
           console.error('Anthropic stream interrupted:', streamErr.message);
           logError('anthropic_proxy', streamErr.message, { stage: 'stream', model: req.body?.model });
@@ -430,6 +486,9 @@ app.post('/api/estimate', async (req, res) => {
       }
 
       const data = await response.json();
+      if (cacheKey && data?.stop_reason === 'end_turn' && Array.isArray(data.content)) {
+        scopeCacheSet(cacheKey, data.content.map(b => b.text || '').join(''));
+      }
       return res.status(response.status).json(data);
     } catch (err) {
       // Transient socket drops ("Premature close", ECONNRESET) during setup — retry with backoff

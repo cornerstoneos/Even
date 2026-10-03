@@ -42,16 +42,16 @@ check('empty messages is safe',body.messages===undefined);
 console.log('\n=== Prompt content survived the split ===');
 const src=html.slice(html.indexOf('  const RULES=`'),html.indexOf('  const promptBlocks=['));
 for(const frag of [
-  'HARD RULE: when direct labor + material cost is under $5,000',
-  'Material delivery & logistics is a real supplier delivery charge',
-  'Debris removal scales to actual debris volume',
+  'YOUR JOB IS THE SCOPE, NOT THE PRICE',
+  'Never write a price for a catalog item',
+  'Material delivery is a real supplier delivery charge',
+  'Debris removal scales to debris volume',
   'MARGIN PROTECTORS',
-  'Compute all math correctly',
   '"projectName":"string"',
-  'punch list & touch-up labor',
+  'punch list and touch-up labor',
 ]) check(`RULES still carries: "${frag.slice(0,44)}…"`, src.includes(frag));
-for(const frag of ['SCOPE:${scope}','ANSWERS:${ansText}','EXTRACTED:','Trade:${ctx.trade}','${calibrationNote}',
-                   'getSupplierPromptContext()','getSubPromptContext()'])
+check('RULES no longer hands the model business numbers (overhead/profit/cushion)', !/\$\{ctx\.(oh|profit|cushion)\}/.test(src));
+for(const frag of ['SCOPE:${scope}','ANSWERS:${ansText}','EXTRACTED:','Trade:${ctx.trade}'])
   check(`JOB still carries: ${frag}`, src.includes(frag));
 check('MARKET block is the pricing block', /const MARKET=`\$\{pricingBlock\}`/.test(src));
 
@@ -64,9 +64,11 @@ check('scope text is NOT inside the cached prefix',
 console.log('\n=== Request config ===');
 check("estimate runs at medium effort", /const ESTIMATE_EFFORT='medium'/.test(html));
 check('streaming call passes effort + onThinking',
-  /callClaudeStream\(\[\{role:'user',content:promptBlocks\}\],EST_TOKENS,onDelta,true,\{effort:ESTIMATE_EFFORT,onThinking\}\)/.test(html));
+  /callClaudeStream\(\[\{role:'user',content:promptBlocks\}\],EST_TOKENS,onDelta,true,\{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true\}\)/.test(html));
 check('non-streaming fallback passes effort too',
-  /callClaude\(\[\{role:'user',content:promptBlocks\}\],12000,true,ESTIMATE_EFFORT\)/.test(html));
+  /callClaude\(\[\{role:'user',content:promptBlocks\}\],12000,true,ESTIMATE_EFFORT,true\)/.test(html));
+check('scope extraction asks for the same-in-same-out cache', /callClaude\(\[\{role:'user',content:msgContent\}\],3000,false,'low',true\)/.test(html));
+check('server answers an identical marked request from the scope cache', /x-even-cache/.test(fs.readFileSync(path.join(__dirname,'..','server.js'),'utf8')));
 check('thinking summary requested only when a consumer exists',
   /if\(opts\.onThinking\) body\.thinking=\{type:'adaptive',display:'summarized'\}/.test(html));
 check('thinking_delta is consumed by the stream parser',
@@ -103,11 +105,11 @@ check('the contractor is told what is happening, not shown a generic error',
 
 console.log('\n=== The money math is deterministic — effort cannot move it ===');
 for(const [what,re_] of [
-  ['subtotal is recomputed from line items', /data\.subtotal=\(data\.lineItems\|\|\[\]\)\.reduce/],
-  ['overhead recomputed in code', /data\.overhead\.amount=Math\.round\(data\.subtotal\*/],
-  ['contingency recomputed in code', /data\.contingency\.amount=Math\.round\(data\.subtotal\*/],
-  ['profit stacked on base in code', /data\.profit\.amount=Math\.round\(base\*/],
-  ['total is a sum, never the model’s number', /data\.totalBid=data\.subtotal\+data\.overhead\.amount/],
+  ['the model output goes through the pricing engine', /const data=priceScope\(scoped,catalog,/],
+  ['subtotal is a sum of priced lines', /data\.subtotal=round2\(data\.lineItems\.reduce/],
+  ['overhead computed in code', /data\.overhead=\{pct:\+s\.oh\|\|0,amount:Math\.round\(data\.subtotal\*/],
+  ['profit stacked on base in code', /amount:Math\.round\(base\*\(\(\+s\.profit/],
+  ['total is a sum, never the model’s number', /data\.totalBid=round2\(data\.subtotal\+data\.overhead\.amount/],
   ['ancillary clamp runs on every estimate', /clampAncillaryToJobSize\(data\)/],
 ]) check(what, re_.test(html));
 

@@ -94,12 +94,12 @@ check('the filter runs on the ingestion path, not buried in an unrelated functio
   /window\._hvhzResolved=\(data&&data\.market&&typeof data\.hvhz==='boolean'\)\?data\.hvhz:null;[\s\S]{0,900}tier!=='invalid_cross_market_copy'/.test(html));
 
 console.log('\n=== The prompt is scoped to the job\'s trade, not the whole market ===');
-check('buildDynamicPricingBlock takes scopeCats and filters by it',
-  /function buildDynamicPricingBlock\(md,adjMultiplier,adjLabel,hvhzNote,scopeCats\)/.test(html));
+check('the catalog takes scopeCats and filters by it',
+  /function buildCatalog\(md,scopeCats,own\)/.test(html));
 check('equipment rental is always included regardless of scope',
   /isEquipmentRental\(r\.category\)\|\|categoryInScope\(r\.category,scopeCats\)/.test(html));
 check('scopeCats is computed before the pricing block is built (order matters)',
-  html.indexOf('const scopeCats=scopeMaterialCategories')<html.indexOf('buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote,scopeCats)'));
+  html.indexOf('const scopeCats=scopeMaterialCategories')<html.indexOf('buildCatalog(marketData,scopeCats,'));
 
 // Simulate what actually gets built for a painting job vs an electrical job on
 // the real 409-row Miami-Dade data, counting rows the way buildDynamicPricingBlock does.

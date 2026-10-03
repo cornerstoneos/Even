@@ -326,6 +326,8 @@ body.has-gopro .topbar-brand{display:none}
 .li-row input{background:transparent;border:none;border-bottom:1px solid transparent;color:var(--white);font-size:12.5px;font-family:'DM Sans',sans-serif;padding:2px 0;outline:none;width:100%;transition:border .15s}
 .li-row input:focus{border-bottom-color:var(--gold)}
 .li-total{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-accent);text-align:right;font-weight:500}
+.li-src{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin:-2px 0 6px 2px;line-height:1.4}
+.li-src.est{color:var(--gold)}
 .li-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;text-align:center;transition:color .15s;padding:0;width:26px}
 .li-del:hover{color:var(--red)}
 .cat-div{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:12px 12px 4px;display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace}
@@ -1105,6 +1107,31 @@ body.has-gopro .topbar-brand{display:none}
         </div>
       </div>
 
+      <!-- Labor cost: a contractor setting, never chosen by the AI -->
+      <div class="gc">
+        <div class="gc-head">
+          <div class="gc-title" data-en="Labor Cost" data-es="Costo de Mano de Obra">Labor Cost</div>
+          <div class="gc-tag" id="labor-tag">Even default</div>
+        </div>
+        <div class="gc-body">
+          <div class="slider-wrap">
+            <div class="slider-meta">
+              <div class="slider-name" data-en="Labor Multiplier (on BLS wage)" data-es="Multiplicador (sobre salario BLS)">Labor Multiplier (on BLS wage)</div>
+              <div class="slider-badge" id="lv-lmult">2.2×</div>
+            </div>
+            <div class="slider-track" id="st-lmult" onmousedown="startMultSlide(event)" ontouchstart="startMultSlide(event)">
+              <div class="slider-fill" id="sf-lmult" style="width:48%"></div>
+              <div class="slider-thumb" id="sh-lmult" style="left:calc(48% - 11px)"></div>
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <div class="flabel" data-en="Your labor cost per hour (optional, before overhead and profit)" data-es="Tu costo de mano de obra por hora (opcional, antes de gastos y ganancia)">Your labor cost per hour (optional, before overhead and profit)</div>
+            <input id="labor-rate" type="number" min="0" step="0.5" class="finput" placeholder="e.g. 45" oninput="setLaborRate(this.value)" onfocus="laborRateGate(this)">
+            <div style="font-size:10px;color:var(--muted);margin-top:4px;padding-left:4px;font-family:'DM Mono',monospace;line-height:1.5" id="labor-hint"></div>
+          </div>
+        </div>
+      </div>
+
       <div id="free-count-display" style="text-align:center;font-size:11px;font-family:'DM Mono',monospace;letter-spacing:1px;color:var(--muted);margin-bottom:8px;display:none"></div>
 
       <!-- Payment Schedule (input screen) -->
@@ -1836,6 +1863,7 @@ function setLang(lang,btn){
   // is set, which the data-en/data-es sweep above doesn't know about — redo
   // it in the language that was just switched to.
   updateBidHeadline();
+  if(typeof renderLaborSettings==='function') renderLaborSettings();
 }
 
 // ══════════════════════════
@@ -2134,7 +2162,7 @@ function applyCacheBreakpoint(body,messages,useCache){
   body.messages=[{role:'user',content:cached},...messages.slice(1)];
 }
 
-async function callClaude(messages,maxTokens=2500,useCache=false,effort=null){
+async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sameInSameOut=false){
   // Sonnet 5: adaptive thinking is on by default — the model reasons through the
   // math before writing. max_tokens caps thinking + response together, so callers
   // pass larger budgets than the visible output alone would need.
@@ -2148,7 +2176,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null){
       const tid=setTimeout(()=>ctrl.abort(),100000);
       const r=await fetch(`${API_ORIGIN}/api/estimate`,{
         method:'POST',
-        headers:{'Content-Type':'application/json'},
+        headers:sameInSameOut?{'Content-Type':'application/json','X-Even-Cache':'1'}:{'Content-Type':'application/json'},
         body:JSON.stringify(body),
         signal:ctrl.signal
       });
@@ -2200,7 +2228,7 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
   let r;
   try{
     r=await fetch(`${API_ORIGIN}/api/estimate`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
+      method:'POST',headers:opts.sameInSameOut?{'Content-Type':'application/json','X-Even-Cache':'1'}:{'Content-Type':'application/json'},
       body:JSON.stringify(body),signal:ctrl.signal
     });
   }catch(e){ clearTimeout(tid); throw e; }
@@ -2566,7 +2594,7 @@ async function startEstimate(){
   const projtype=document.getElementById('est-projtype').value;
   const sqft=document.getElementById('est-sqft').value||'not specified';
   const client=document.getElementById('est-client').value.trim();
-  window._ctx={trade,location,projtype,sqft,client,bidType,laborType,oh:sliderVals.oh,profit:sliderVals.profit,cushion:sliderVals.cushion,projectLabel:document.getElementById('est-project-label')?.value||''};
+  window._ctx={trade,location,projtype,sqft,client,bidType,laborType,oh:sliderVals.oh,profit:sliderVals.profit,cushion:sliderVals.cushion,laborMult:laborSettings.mult,laborRate:isPro?laborSettings.rate:null,projectLabel:document.getElementById('est-project-label')?.value||''};
 
   navigate('refine');
   const stopStatus=startThinkingStatus('ai-summary-text',appLang==='en'
@@ -2588,7 +2616,7 @@ async function startEstimate(){
   msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.`});
 
   try{
-    const res=await callClaude([{role:'user',content:msgContent}],3000,false,'low');
+    const res=await callClaude([{role:'user',content:msgContent}],3000,false,'low',true);
     let data;
     try{
       data=parseJ(res);
@@ -2828,49 +2856,24 @@ async function fetchMarketPricing(location){
   }
 }
 
-function buildDynamicPricingBlock(md,adjMultiplier,adjLabel,hvhzNote,scopeCats){
-  const laborLines=(md.labor||[]).map(r=>`${r.trade||''}: $${r.low}/hr (low) $${r.mid}/hr (mid) $${r.high}/hr (high)`).join('\n');
-  // Granular supply-house data made a market's full material list large enough
-  // (409 rows in tri-county, up from 14) that sending all of it into every
-  // estimate regardless of trade would dominate the prompt — a paint job has no
-  // use for 187 electrical SKUs. Scope to what this job buys; equipment rental
-  // stays in regardless since it's relevant across trades and small (~17 rows).
-  const promptMaterials=(md.materials||[]).filter(r=>r&&(isEquipmentRental(r.category)||categoryInScope(r.category,scopeCats)));
-  const materialLines=promptMaterials.map(r=>`${r.item||''}${r.category?' ('+r.category+')':''}: $${r.low}/${r.unit||'unit'} (low) $${r.mid}/${r.unit||'unit'} (mid) $${r.high}/${r.unit||'unit'} (high)`).join('\n');
-  const permitLines=(md.permits||[]).map(r=>`${r.municipality||''} — ${r.work_type||''}: ${r.min_fee?'$'+r.min_fee+' min':''} ${r.rate||''} ${r.method||''}`.trim()).join('\n');
-  // Permits are filtered server-side to the issuing jurisdiction. Say plainly which
-  // scope these rows represent so the model doesn't present a county baseline as if
-  // it were the city's own adopted fee schedule.
+function buildDynamicPricingBlock(md,hvhzNote,catalog){
+  // Permits are filtered server-side to the issuing jurisdiction (city-first). Say
+  // plainly which scope these rows represent so the model picks the right row.
   const loc=md.municipality?`${md.municipality}, ${md.state}`:`${md.market}, ${md.state}`;
   const permitHeader={
-    'municipality':`PERMIT FEES (${md.municipality} — issuing jurisdiction; city schedule only, never add a county permit on top):`,
-    'municipality-partial':`PERMIT FEES (${md.municipality} — PARTIAL city schedule. The city's ${(md.permitMissing||[]).join(', ')||'core'} fees are not on file yet, so the county rows below stand in for those fees only. Never add a county permit on top of a city permit):`,
-    'unincorporated':`PERMIT FEES (${md.municipality} is unincorporated — the county issues the permit, so these are the county's own fees):`,
-    'county-fallback':`PERMIT FEES (${md.market} COUNTY BASELINE ONLY — ${md.municipality}'s own fee schedule has not been researched yet. Use these as an approximation and state in the estimate that ${md.municipality} permit fees should be verified directly with the city):`,
-    'county':`PERMIT FEES (${md.market} county baseline — specific municipality not identified from the address):`,
-    'partial':`PERMIT FEES (${md.market} — PARTIAL LIST, not every municipality in this metro is shown):`
-  }[md.permitScope]||`PERMIT FEES (${md.market}):`;
-  return `LOCAL MARKET PRICING — ${loc} (apply ${adjLabel} multiplier of ${adjMultiplier}):${hvhzNote}
-
-LABOR RATES (BLS, ${md.market} metro):
-${laborLines||'No labor data available for this market yet — use general knowledge.'}
-
-MATERIAL COSTS (${md.market}):
-${materialLines||'No material cost data available for this market yet — use general knowledge.'}
-
+    'municipality':`Permit rows below are ${md.municipality}'s own schedule (the issuing city). There are no county rows: never add a county permit.`,
+    'municipality-partial':`Permit rows below are ${md.municipality}'s PARTIAL schedule. Its ${(md.permitMissing||[]).join(', ')||'core'} fees are not on file, so county rows stand in for those fees only. Never pick a county row when a city row covers the same permit, and say in assumptions that ${md.municipality}'s fee should be verified with the city.`,
+    'unincorporated':`${md.municipality} is unincorporated: the county issues the permit, so the rows below are the county's own fees.`,
+    'county-fallback':`${md.municipality}'s own fee schedule is not on file yet. The rows below are the ${md.market} county schedule as a stand-in; say in assumptions that ${md.municipality}'s permit fees should be verified with the city.`,
+    'county':`Permit rows below are the ${md.market} county schedule (city not identified from the address).`,
+    'partial':`Permit rows below are a PARTIAL ${md.market} list; pick the issuing jurisdiction's row when present.`
+  }[md.permitScope]||'';
+  return `LOCAL DATA CATALOG — ${loc}.${hvhzNote}
 ${permitHeader}
-${permitLines||'No permit fee data available for this market yet — use general knowledge.'}
+The app prices every catalog line in code (local material prices, BLS wages times the contractor's labor setting, the city's permit schedule). You never see or write those prices.
 
-NOTE: These are base wage rates. Contractor billing rates (what they charge clients) are typically 2.0-2.8x the labor wage to account for burden, insurance, overhead, and profit. Use billing rates when calculating labor line items.
-
-IMPORTANT PRICING INSTRUCTIONS:
-- Use MID rates as your default for standard residential work
-- Use LOW rates for budget/competitive bids or simple jobs
-- Use HIGH rates for premium finishes, luxury homes, complex scopes
-- Apply the market multiplier (${adjMultiplier}) to all costs
-- Always add 10-15% material waste factor for cuts and damage
-- SUBCONTRACTOR RATES vs LABOR RATES: When a contractor is hiring subs (not direct labor), sub billing rates run 15-40% higher than direct labor. Always ask if work is self-performed or subcontracted — this moves the number significantly
-- CONTRACTOR TIME: Always include project management labor — GC managing subs typically bills 10-15% of total project cost or 8-16 hours per week of project duration
+${catalogPromptText(catalog)||'No catalog rows for this market.'}
+${catalog.materials.length?'':'\nNo local material rows for this trade: use "other" lines for materials.'}${catalog.labor.length?'':'\nNo local wage rows: use "other" lines with hours as qty and your billing estimate as unitCost.'}${catalog.permits.length?'':'\nNo permit rows on file: if a permit is needed, add an "other" line in category Permits with your estimate.'}
 `;
 }
 
@@ -2950,6 +2953,223 @@ function renderCalibrationBanner(){
   el.style.display='block';
 }
 
+// ══════════════════════════
+//  PRICING ENGINE — code prices, the AI only scopes (decided 2026-10-02)
+// ══════════════════════════
+// The model used to read the price lists and write every dollar figure itself,
+// so the same water heater came back at a different price on every run, and a
+// county permit could ride along on top of the city's. Now the model returns
+// catalog references with quantities and hours, and everything below turns that
+// into money the same way every time: same scope in, same number out.
+
+// Today's effective billing multiplier (the old prompt let the model pick 2.0-2.8x
+// and it landed around 2.2x). A contractor setting now, never chosen by the AI.
+const LABOR_MULT_DEFAULT=2.2;
+const LABOR_MULT_MIN=1.0, LABOR_MULT_MAX=3.5;
+// Cuts and breakage on bulk goods. Counted items (a water heater, a breaker, a
+// fixture) carry none. The old prompt let the model pick 10-15% on everything.
+const WASTE_RULES=[
+  [/^drywall/i,0.12],
+  [/^(flooring|tile)/i,0.10],[/^framing/i,0.10],[/^roofing/i,0.10],[/^siding/i,0.10],
+  [/^paint/i,0.10],[/insulation/i,0.10],[/^concrete/i,0.05],
+  [/wire|cable|pipe|tubing|conduit|duct/i,0.10]
+];
+// Exterior work in the High Velocity Hurricane Zone carries NOA-approved product
+// cost. The old prompt told the model to add 8-12%; the midpoint is applied here.
+const HVHZ_EXTERIOR_RE=/^(roofing|siding|window|door|shutter|stucco)/i;
+const HVHZ_UPLIFT=0.10;
+// When the scope has no permit, no demo and one trade, the unknowns the risk
+// cushion prices in don't exist. Same rule the prompt used to hand the model.
+const LOW_RISK_CUSHION=4;
+
+const round2=n=>Math.round((Number(n)||0)*100)/100;
+const catRoot=c=>String(c||'').split(' - ')[0].trim()||'Materials';
+
+function wasteFor(category,unit){
+  if(/^\s*(ea|each|unit|kit|set|pc|piece|pair|box of 1)\b/i.test(String(unit||''))&&!/wire|cable|pipe|tubing|conduit|duct/i.test(category||'')) return 0;
+  for(const [rx,w] of WASTE_RULES) if(rx.test(category||'')) return w;
+  return 0;
+}
+
+function permitNum(v){
+  if(v==null||v==='') return null;
+  if(typeof v==='number') return isFinite(v)?v:null;
+  const m=String(v).replace(/,/g,'').match(/-?\d*\.?\d+/);
+  return m?parseFloat(m[0]):null;
+}
+
+// How a permit row's fee is figured. Rows store the city's own rule in `method`
+// and `rate`; the method strings are free text from many schedules, so this reads
+// them conservatively and says "approx" whenever it can't follow the full rule.
+function permitBasis(row){
+  const t=`${row.method||''} ${typeof row.rate==='string'?row.rate:''}`.toLowerCase();
+  if(/permit.?fee|base.?fee|double/.test(t)) return 'addon';
+  if(/tier/.test(t)) return 'tiered';
+  if(/hour/.test(t)) return 'hourly';
+  if(/1,?000\b|thousand/.test(t)&&!/1000\s*sf|1,000\s*s(q|f)/.test(t)) return 'per1000';
+  if(/percent|percentage|%|per \$1\b|per_dollar|valuation|value|cost/.test(t)) return 'value';
+  if(/1000\s*sf|per_1000sf/.test(t)) return 'per1000sqft';
+  if(/100\s*sf|per_100sf/.test(t)) return 'per100sqft';
+  if(/sq\.?\s*ft|sqft|square/.test(t)) return 'sqft';
+  if(/each|fixture|ton|\blf\b|linear|opening|outlet|circuit|per_|per /.test(t)) return 'unit';
+  if(/flat|minimum|fee/.test(t)||row.rate==null||row.rate==='') return 'flat';
+  return 'unknown';
+}
+
+// value = the job's price before permit fees (what goes on the application as
+// construction cost); qty = sqft / fixtures / tons when the fee is per unit.
+function computePermitFee(row,value,qty,sqft){
+  const basis=permitBasis(row);
+  const r=permitNum(row.rate);
+  const min=permitNum(row.min_fee)||0;
+  let fee=null;
+  if(basis==='value'&&r!=null){
+    const frac=(/%/.test(String(row.rate))||r>=1)?r/100:r;
+    fee=value*frac;
+  }else if(basis==='per1000'&&r!=null) fee=r*value/1000;
+  else if((basis==='sqft'||basis==='per1000sqft'||basis==='per100sqft')&&r!=null){
+    const area=+qty>0?+qty:(+sqft>0?+sqft:0);
+    const div=basis==='per1000sqft'?1000:basis==='per100sqft'?100:1;
+    fee=area?r*area/div:null;
+  }
+  else if(basis==='unit'&&r!=null) fee=r*(+qty>0?+qty:1);
+  else if(basis==='flat') fee=min||r;
+  if(fee!=null&&isFinite(fee)) return {fee:round2(Math.max(fee,min)),basis,approx:false};
+  if(min) return {fee:round2(min),basis,approx:true};
+  return {fee:null,basis,approx:true};
+}
+
+// The menu the model scopes from. Refs are positional in a deterministic list, so
+// the same market data always produces the same refs (and the same cache key).
+function buildCatalog(md,scopeCats,own){
+  const cat={materials:[],labor:[],permits:[],suppliers:[],subs:[],byRef:{}};
+  if(md){
+    (md.materials||[]).filter(r=>r&&r.mid!=null&&(isEquipmentRental(r.category)||categoryInScope(r.category,scopeCats)))
+      .forEach((row,i)=>{const e={ref:'M'+(i+1),kind:'material',row};cat.materials.push(e);cat.byRef[e.ref]=e;});
+    (md.labor||[]).filter(r=>r&&r.mid!=null)
+      .forEach((row,i)=>{const e={ref:'L'+(i+1),kind:'labor',row};cat.labor.push(e);cat.byRef[e.ref]=e;});
+    (md.permits||[]).forEach((row,i)=>{const e={ref:'P'+(i+1),kind:'permit',row};cat.permits.push(e);cat.byRef[e.ref]=e;});
+  }
+  ((own&&own.suppliers)||[]).filter(s=>(s.product_name||s.material)&&parseFloat(s.price)>0)
+    .forEach((row,i)=>{const e={ref:'S'+(i+1),kind:'supplier',row};cat.suppliers.push(e);cat.byRef[e.ref]=e;});
+  ((own&&own.subs)||[]).filter(s=>s.trade&&parseFloat(s.rate)>0&&['hour','day','sqft','lump'].includes(s.rate_type))
+    .forEach((row,i)=>{const e={ref:'B'+(i+1),kind:'sub',row};cat.subs.push(e);cat.byRef[e.ref]=e;});
+  return cat;
+}
+
+function permitBasisLabel(b){
+  return {value:'% of job value',per1000:'per $1,000 of job value',sqft:'per sq ft',per1000sqft:'per 1,000 sq ft',per100sqft:'per 100 sq ft',unit:'per unit (give qty)',flat:'flat fee',tiered:'tiered',hourly:'hourly',addon:'add-on to another permit fee (do not pick)',unknown:'see schedule'}[b]||'see schedule';
+}
+
+// Names only: the model has no prices to copy, so it can't invent one.
+function catalogPromptText(cat){
+  const out=[];
+  if(cat.labor.length) out.push('LABOR (pick the trade doing the work; give hours):\n'+cat.labor.map(e=>`${e.ref} ${e.row.trade}`).join('\n'));
+  if(cat.materials.length) out.push('MATERIALS (qty in the unit shown, before waste):\n'+cat.materials.map(e=>`${e.ref} [${e.row.category||''}] ${e.row.item||''} | ${e.row.unit||'unit'}`).join('\n'));
+  if(cat.suppliers.length) out.push("CONTRACTOR'S OWN SUPPLIER PRICES (prefer these over MATERIALS when the item matches):\n"+cat.suppliers.map(e=>`${e.ref} ${e.row.category?'['+e.row.category+'] ':''}${e.row.product_name||e.row.material}${e.row.manufacturer?' by '+e.row.manufacturer:''} | ${e.row.unit||'unit'}`).join('\n'));
+  if(cat.subs.length) out.push("CONTRACTOR'S OWN SUBS (use when this trade is subbed out; qty in the unit shown):\n"+cat.subs.map(e=>`${e.ref} ${e.row.trade}${e.row.company?' ('+e.row.company+')':''} | per ${e.row.rate_type==='lump'?'job (qty 1)':e.row.rate_type}`).join('\n'));
+  if(cat.permits.length) out.push('PERMIT FEES (pick the row for each permit actually pulled):\n'+cat.permits.map(e=>`${e.ref} ${e.row.municipality||''} — ${e.row.work_type||''} (${permitBasisLabel(permitBasis(e.row))})`).join('\n'));
+  return out.join('\n\n');
+}
+
+// scope = the model's JSON. s = {marketAdj, laborMult, laborRate, oh, profit,
+// cushion, sqft, hvhz, calibration}. Returns the estimate object the rest of the
+// app already renders (lineItems with qty/unitCost/total, overhead, contingency,
+// profit, totalBid), plus pricing notes that say what the code did.
+function priceScope(scope,cat,s){
+  const adj=+s.marketAdj||1;
+  const mult=Math.min(LABOR_MULT_MAX,Math.max(LABOR_MULT_MIN,+s.laborMult||LABOR_MULT_DEFAULT));
+  const ownRate=+s.laborRate>0?+s.laborRate:null;
+  const lines=[],permitPicks=[],notes=[];
+  const calib={};
+  (s.calibration||[]).forEach(c=>{calib[c.category]=1+(c.avgVariancePct/100);});
+  const estLabel='not in our data, estimated';
+  for(const it of (scope&&scope.lineItems)||[]){
+    if(!it) continue;
+    const ref=String(it.ref||'').trim().toUpperCase();
+    const e=cat.byRef[ref];
+    const type=String(it.type||'').toLowerCase();
+    if(type==='permit'){ if(e&&e.kind==='permit') permitPicks.push({it,e}); else notes.push(`A permit the scope called for (${it.description||ref||'unnamed'}) is not in this city's schedule on file. Verify the fee with the building department.`); continue; }
+    if(e&&e.kind==='material'){
+      const q=Math.max(0,+it.qty||0); if(!q) continue;
+      const w=wasteFor(e.row.category,e.row.unit);
+      let unitCost=round2(e.row.mid*adj);
+      let desc=e.row.item;
+      if(s.hvhz&&HVHZ_EXTERIOR_RE.test(e.row.category||'')){ unitCost=round2(unitCost*(1+HVHZ_UPLIFT)); desc+=' (HVHZ)'; }
+      const qty=round2(q*(1+w));
+      lines.push({category:catRoot(e.row.category),description:desc+(w?` (incl. ${Math.round(w*100)}% waste)`:''),qty,unit:e.row.unit||'ea',unitCost,total:round2(qty*unitCost),ref,priced:'catalog',source:e.row.source||''});
+    }else if(e&&e.kind==='supplier'){
+      const q=Math.max(0,+it.qty||0); if(!q) continue;
+      const unitCost=round2(parseFloat(e.row.price));
+      lines.push({category:catRoot(e.row.category||'Materials'),description:`${e.row.product_name||e.row.material}${e.row.supplier?' ('+e.row.supplier+')':''}`,qty:round2(q),unit:e.row.unit||'ea',unitCost,total:round2(q*unitCost),ref,priced:'your supplier'});
+    }else if(e&&e.kind==='labor'){
+      const h=Math.max(0,+(it.hours??it.qty)||0); if(!h) continue;
+      const base=ownRate!=null?ownRate:e.row.mid*mult;
+      const unitCost=round2(base*adj);
+      lines.push({category:'Labor',description:it.description||e.row.trade,qty:round2(h),unit:'hr',unitCost,total:round2(h*unitCost),ref,priced:ownRate!=null?'your labor rate':'bls x multiplier',laborTrade:e.row.trade,wage:e.row.mid});
+    }else if(e&&e.kind==='sub'){
+      const q=Math.max(0,+it.qty||(e.row.rate_type==='lump'?1:0)); if(!q) continue;
+      const unitCost=round2(parseFloat(e.row.rate));
+      lines.push({category:'Subcontractor',description:it.description||`${e.row.trade} sub`,qty:round2(q),unit:e.row.rate_type==='lump'?'job':e.row.rate_type==='hour'?'hr':e.row.rate_type,unitCost,total:round2(q*unitCost),ref,priced:'your sub'});
+    }else{
+      // Not in the catalog (or an unknown ref): the model's number, said out loud.
+      const q=Math.max(0,+it.qty||1);
+      if(type==='labor'&&ownRate!=null){
+        const unitCost=round2(ownRate*adj);
+        lines.push({category:'Labor',description:it.description||'Labor',qty:round2(+it.hours||q),unit:'hr',unitCost,total:round2((+it.hours||q)*unitCost),priced:'your labor rate'});
+        continue;
+      }
+      const unitCost=round2((+it.unitCost||0)*adj);
+      if(!unitCost) continue;
+      lines.push({category:it.category||(type==='labor'?'Labor':'Other'),description:it.description||'Item',qty:round2(type==='labor'?(+it.hours||q):q),unit:it.unit||(type==='labor'?'hr':'ea'),unitCost,total:round2((type==='labor'?(+it.hours||q):q)*unitCost),priced:'estimated',estimated:true,estLabel});
+    }
+  }
+  // Contractor's logged actuals (Pro): same per-category adjustment the prompt used
+  // to ask the model for, applied by code so it is the same every run.
+  for(const l of lines){ const f=calib[l.category]; if(f&&f>0&&f!==1){ l.unitCost=round2(l.unitCost*f); l.total=round2(l.qty*l.unitCost); } }
+
+  const data={projectName:scope?.projectName||'Estimate',lineItems:lines,assumptions:Array.isArray(scope?.assumptions)?scope.assumptions.slice():[],exclusions:Array.isArray(scope?.exclusions)?scope.exclusions.slice():[],estimatedDays:scope?.estimatedDays||'',paymentTerms:scope?.paymentTerms||''};
+  clampAncillaryToJobSize(data);
+
+  // Risk cushion: the contractor's setting, lowered only when the scope has none
+  // of the unknowns it exists for. Decided by the line items, not by the model.
+  const isHelper=t=>/helper|laborers|supervisor|maintenance/i.test(t||'');
+  const trades=new Set(data.lineItems.filter(l=>l.laborTrade&&!isHelper(l.laborTrade)).map(l=>l.laborTrade));
+  const matRoots=new Set(data.lineItems.filter(l=>l.priced==='catalog').map(l=>l.category));
+  const hasDemo=data.lineItems.some(l=>/\b(demo|demolition|tear|gut)\b/i.test(l.description||''));
+  const lowRisk=!permitPicks.length&&!hasDemo&&trades.size<=1&&matRoots.size<=1;
+  const cushion=lowRisk?Math.min(+s.cushion||0,LOW_RISK_CUSHION):(+s.cushion||0);
+
+  // Permits last: most city fees are a share of the job's value, so the rest of
+  // the job has to be priced first. Value = price before permit fees.
+  const direct=data.lineItems.reduce((t,l)=>t+l.total,0);
+  const jobValue=round2(direct*(1+(+s.oh||0)/100+cushion/100)*(1+(+s.profit||0)/100));
+  const seen=new Set();let valueBased=0;
+  for(const {it,e} of permitPicks){
+    if(seen.has(e.ref)) continue; seen.add(e.ref);
+    const basis=permitBasis(e.row);
+    if(basis==='addon') continue;
+    // Two base permits both charged on the job's value would bill the same work twice.
+    if(basis==='value'||basis==='per1000'){ if(valueBased++) continue; }
+    const r=computePermitFee(e.row,jobValue,it.qty,s.sqft);
+    const name=`${e.row.municipality||''} ${e.row.work_type||'permit'}`.trim();
+    if(r.fee==null){ notes.push(`${name}: the fee could not be figured from the schedule on file. Verify with the building department.`); continue; }
+    if(r.approx) notes.push(`${name}: shown at the schedule's minimum fee; the full rule is ${r.basis}. Verify with the building department.`);
+    data.lineItems.push({category:'Permits',description:`Permit: ${name}`,qty:1,unit:'permit',unitCost:r.fee,total:r.fee,ref:e.ref,priced:'permit schedule',permitRow:{municipality:e.row.municipality,work_type:e.row.work_type,rate:e.row.rate,min_fee:e.row.min_fee,method:e.row.method,source:e.row.source||'',date:e.row.date||''},jobValue});
+  }
+
+  data.subtotal=round2(data.lineItems.reduce((t,l)=>t+l.total,0));
+  data.overhead={pct:+s.oh||0,amount:Math.round(data.subtotal*((+s.oh||0)/100))};
+  data.contingency={pct:cushion,amount:Math.round(data.subtotal*(cushion/100)),lowRisk};
+  const base=data.subtotal+data.overhead.amount+data.contingency.amount;
+  data.profit={pct:+s.profit||0,amount:Math.round(base*((+s.profit||0)/100))};
+  data.totalBid=round2(data.subtotal+data.overhead.amount+data.contingency.amount+data.profit.amount);
+  data.pricingNotes=notes;
+  data.laborBasis=ownRate!=null?{mode:'own',rate:ownRate}:{mode:'multiplier',mult};
+  return data;
+}
+// ══ END PRICING ENGINE ══
+
 async function calculateEstimate(){
   const btn=document.getElementById('calc-btn');
   btn.disabled=true;
@@ -2966,7 +3186,10 @@ async function calculateEstimate(){
     showToast('Session expired — please go back and re-enter your scope.',4000);
     return;
   }
-  const ansText=Object.entries(answers).map(([q,a])=>`Q: ${q}\nA: ${a}`).join('\n\n');
+  // Question order, not click order: the same answers must make the same prompt
+  // (and hit the same cached scope) however the contractor tapped through them.
+  const ansText=(window._allQuestions||[]).map(q=>q.question).filter(q=>answers[q]!=null&&answers[q]!=='')
+    .map(q=>`Q: ${q}\nA: ${answers[q]}`).join('\n\n');
 
   // HVHZ detection. Florida Building Code R202 defines the High Velocity Hurricane
   // Zone as exactly two counties — Miami-Dade and Broward. Palm Beach is Wind-Borne
@@ -2987,7 +3210,7 @@ async function calculateEstimate(){
   const looksFlorida=/\b(fl|florida)\b/i.test(cityInput);
   const isHVHZ=serverHVHZ!==null?serverHVHZ
     :(looksFlorida&&HVHZ_FALLBACK.some(c=>new RegExp(`\\b${c.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\b`,'i').test(cityInput)));
-  const hvhzNote=isHVHZ?'\n\nHVHZ COMPLIANCE REQUIRED: This job is in a High Velocity Hurricane Zone. AUTOMATICALLY ADD these line items:\n- HVHZ-compliant materials (Miami-Dade NOA approved)\n- Enhanced fasteners (6d ring shank, 6-inch spacing)\n- Notice of Commencement for jobs over $2,500\n- Special inspector may be required — add $400-800\n- Add 8-12% to all exterior scope items for HVHZ compliance':'';
+  const hvhzNote=isHVHZ?'\n\nHVHZ COMPLIANCE REQUIRED: This job is in a High Velocity Hurricane Zone. Scope for it:\n- HVHZ-compliant (Miami-Dade NOA approved) products on exterior work (the app adds the HVHZ cost uplift to exterior catalog items itself)\n- Enhanced fasteners (6d ring shank, 6-inch spacing) on exterior work\n- Notice of Commencement for jobs over $2,500\n- Special inspector only when this scope requires one (an "other" line, $400-800)':'';
   if(isHVHZ) console.log('HVHZ market detected:', cityInput);
 
   // Apply market adjuster multiplier
@@ -2998,13 +3221,11 @@ async function calculateEstimate(){
   // instead of handing the model specific-but-wrong numbers borrowed from an
   // unrelated market. General estimating knowledge, calibrated to the actual
   // stated location, beats false precision from a city that isn't this one.
-  const GENERIC_RATES=`No verified local labor, material, or permit data exists yet for ${ctx.location||'this location'} — apply ${adjLabel} multiplier of ${adjMultiplier}.${hvhzNote}
+  const GENERIC_RATES=`No verified local labor, material, or permit data exists yet for ${ctx.location||'this location'}.${hvhzNote}
 
 PRICING MODE — GENERAL KNOWLEDGE (no local market data grounding this estimate):
 - Use your own general construction-estimating knowledge, calibrated realistically to ${ctx.location||'the stated location'} and current national trends. Do not borrow specific wage, material, or permit numbers from any other city or region — reason about this location on its own merits (regional cost of living, typical labor market, climate) instead.
-- Contractor billing rates (what they charge clients) are typically 2.0-2.8x direct labor wage cost to account for burden, insurance, overhead, and profit.
-- Apply the market multiplier (${adjMultiplier}) to all costs.
-- Always add 10-15% material waste factor for cuts and damage.
+- With no local catalog, every line is an "other" line with your own unitCost (labor: hours as qty, your all-in hourly billing estimate as unitCost). Include material waste in the quantity. The app labels these lines as estimated and applies the market level, overhead, risk cushion and profit itself.
 - SUBCONTRACTOR RATES vs LABOR RATES: When a contractor is hiring subs (not direct labor), sub billing rates run 15-40% higher than direct labor. Always ask if work is self-performed or subcontracted — this moves the number significantly.
 - CONTRACTOR TIME: Always include project management labor — GC managing subs typically bills 10-15% of total project cost or 8-16 hours per week of project duration.
 - ACTUAL MATERIAL COST: Flag when contractor may have supplier pricing below retail. Prompt to adjust if they have trade accounts at ABC Supply, Beacon, or local suppliers.
@@ -3030,18 +3251,15 @@ FLOOR AND SURFACE PROTECTION — MINIMUM STANDARDS:
 - 2nd floor work: Always include stair protection — minimum 2 rolls Ram Board ($180) + tape ($40) + 2 hours labor ($160) = $380 floor protection floor
 - Add carpet protection film for carpeted areas: $0.25-0.35/sf
 
-PROFIT STACKING — CORRECT METHOD:
-- Stack in this order: Direct costs → Overhead % → Risk Cushion % → then apply Profit %
-- Profit % should always be calculated on the final number AFTER overhead and cushion are added
-- This preserves the true margin — never calculate profit on raw direct costs only
-
 `;
 
   // Resolved once, used twice: which categories this job actually buys from
   // decides both what gets priced into the estimate and how confident the app
   // is in that pricing. Must exist before the pricing block is built.
   const scopeCats=scopeMaterialCategories(ctx.trade,window._scopeData?.tradeBreakdown);
-  const pricingBlock=marketData?buildDynamicPricingBlock(marketData,adjMultiplier,adjLabel,hvhzNote,scopeCats):GENERIC_RATES;
+  const catalog=buildCatalog(marketData,scopeCats,{suppliers:window._mySuppliers,subs:window._mySubs});
+  const ownCatalog=catalogPromptText({materials:[],labor:[],permits:[],suppliers:catalog.suppliers,subs:catalog.subs});
+  const pricingBlock=marketData?buildDynamicPricingBlock(marketData,hvhzNote,catalog):GENERIC_RATES+(ownCatalog?'\n'+ownCatalog+'\n':'');
   const confidenceTier=computeConfidenceTier(marketData,scopeCats);
   // Kept separately from the estimate payload so the permit-scope disclosure can be
   // rendered deterministically rather than depending on the model to mention it.
@@ -3062,7 +3280,6 @@ PROFIT STACKING — CORRECT METHOD:
   }:null;
   const costCalibration=await getCostCalibration(ctx.trade);
   window._costCalibration=costCalibration;
-  const calibrationNote=costCalibration?.length?`\n\nCOST CALIBRATION FROM THIS CONTRACTOR'S LOGGED ACTUALS — apply these adjustments:\n${costCalibration.map(c=>`${c.category}: actuals have run ${c.avgVariancePct>0?'+':''}${c.avgVariancePct}% vs. estimate across ${c.n} logged job${c.n>1?'s':''} — ${c.avgVariancePct>0?'price this category higher':'price this category lower'} to match.`).join('\n')}`:'';
 
   // Three blocks, ordered stable → volatile, because caching is a prefix match.
   // RULES never change; MARKET changes only when the contractor switches city; the
@@ -3071,13 +3288,28 @@ PROFIT STACKING — CORRECT METHOD:
   // from cache instead of being reprocessed. Previously the scope text sat inside
   // the cached block, so the key changed every time and nothing was ever reused.
   const RULES=`You are Even, expert estimating AI. Return ONLY JSON.
-BE GRANULAR — 14-22 line items for a full remodel; fewer for a small single-trade job. Do not pad.\nCLIENT-FACING TEXT (assumptions, exclusions, clientNote): plain short sentences a contractor would write by hand. No em dashes. Split into two sentences with a period instead of joining clauses with a dash.\nMARGIN PROTECTORS — include each one only when this scope actually calls for it, sized to this job: permits & inspections, debris removal, material delivery & logistics, drywall repair after trades, punch list & touch-up labor (2-4% of labor), permit expediting where the jurisdiction is slow.\nSIZING ANCILLARY LINES — these scale with the job or they discredit the whole bid:\n- Material delivery & logistics is a real supplier delivery charge, never a flat fee. Materials that fit in the contractor's own truck: omit it, or a $40-75 trip charge. A supplier drop (lumber, drywall, tile, roofing, multi-pallet): $150-350. $350-600 only when material cost exceeds $3,000 or the job needs multiple drops.\n- Debris removal scales to actual debris volume. Bagged debris from a small job is $0-75. A pull-off dumpster ($400-700) only when demo generates real volume.\n- Floor and surface protection applies only to occupied homes with a work path through finished space.\n- HARD RULE: when direct labor + material cost is under $5,000, delivery + disposal + protection combined must not exceed 15% of that direct cost. A $350 delivery line on a $300 paint job is the fastest way to lose a contractor's trust.\nSIZING LABOR HOURS — a padded hour count kills trust the same way a padded fee does:\n- Simple surface installs on a prepped, no-demo surface (turf, vinyl, carpet tile, laminate) run roughly 15-25 sqft per labor-hour for a competent crew. A 100 sqft no-prep turf job is 3-5 labor-hours total, not 10+.\n- HARD RULE: a separate General Contractor / site-verification line only belongs on jobs with real coordination overhead -- multiple trades, a permit, or a scheduled inspection. A single-trade job under $2,500 folds site verification into the install labor; don't add it as its own line.\nCONTINGENCY (risk cushion) -- overhead % and profit % are the contractor's own business settings, always use them exactly as given. Contingency is different: it's pricing job-specific unknowns, not a business cost, so it's the one markup that should reflect THIS scope, not just echo the default.\n- The contractor's default (given above) is the ceiling, sized for jobs with real unknowns: unopened walls, unverified structural or electrical conditions, multi-trade sequencing, permit or inspection uncertainty.\n- HARD RULE: when the scope has none of that -- no permit needed, no demo, single trade, client confirms existing conditions are ready -- use 3-5% instead of the full default. The unknowns that percentage prices in don't exist for this scope.\n- Never exceed the contractor's default; only reduce it when the scope earns the reduction.\n{"projectName":"string","lineItems":[{"category":"string","description":"string","qty":0,"unit":"string","unitCost":0,"total":0}],"subtotal":0,"overhead":{"pct":${ctx.oh},"amount":0},"contingency":{"pct":0,"amount":0},"profit":{"pct":${ctx.profit},"amount":0},"totalBid":0,"assumptions":["max 5 short assumptions — key pricing decisions only"],"exclusions":["string"],"paymentTerms":"30% deposit to schedule, 40% at rough-in, 30% on completion","estimatedDays":"string e.g. 6-8 weeks"}
-Compute all math correctly.`;
+YOUR JOB IS THE SCOPE, NOT THE PRICE. The app prices every catalog line in code and adds overhead, risk cushion and profit itself. You decide which items this job needs, how many, and how many labor hours. Never write a price for a catalog item. The same job must always get the same scope: pick the single most standard item for each need, and size quantities and hours by the rules below, not by feel.
+LINE TYPES (each lineItems entry is one of these):
+- {"type":"material","ref":"M12","qty":2,"description":"short"} ref from MATERIALS, or S# from the contractor's own supplier list (prefer S# when it matches). qty in the catalog unit, before waste (the app adds waste).
+- {"type":"labor","ref":"L3","hours":6,"description":"Install and connect water heater"} ref from LABOR = the trade doing that work. hours = total crew hours for that task.
+- {"type":"sub","ref":"B1","qty":1,"description":"short"} the contractor's own sub at their own rate, qty in that sub's unit.
+- {"type":"permit","ref":"P4","qty":0,"description":"short"} ref from PERMIT FEES. One row per permit actually pulled: a single-trade job pulls one permit (pick the trade or master permit row that covers it). qty only for per-unit fees (sq ft, fixtures, tons), else 0. Never pick surcharges, renewals, reinspections, certificates or private-provider rows.
+- {"type":"other","category":"Disposal","description":"short","qty":1,"unit":"ea","unitCost":50} ONLY for something the catalog does not have (a dumpster, a supplier delivery charge, an item not listed). You write unitCost; the app labels the line "not in our data, estimated". Use a catalog item only when it IS the item the job needs (same product or a direct equivalent, e.g. a 50 gal tank for a 40 gal tank); never stand in an unrelated product just because it is in the list.
+BE GRANULAR: 14-22 line items for a full remodel; fewer for a small single-trade job. Do not pad.
+CLIENT-FACING TEXT (assumptions, exclusions, descriptions): plain short sentences a contractor would write by hand. No em dashes. Split into two sentences with a period instead of joining clauses with a dash.
+MARGIN PROTECTORS: include each one only when this scope actually calls for it: permit, debris removal, material delivery, drywall repair after trades, punch list and touch-up labor (2-4% of labor hours), project management hours when the contractor manages subs or a multi-trade job (First-Line Supervisors row, 8-16 hours per week of duration).
+SIZING ANCILLARY LINES (these scale with the job or they discredit the whole bid):
+- Material delivery is a real supplier delivery charge. Materials that fit in the contractor's truck: omit it, or a $40-75 trip charge. A supplier drop (lumber, drywall, tile, roofing, multi-pallet): $150-350.
+- Debris removal scales to debris volume. Bagged debris from a small job is $0-75. A dumpster ($400-700) only when demo generates real volume.
+- Floor and surface protection only for occupied homes with a work path through finished space.
+SIZING LABOR HOURS (a padded hour count kills trust the same way a padded fee does):
+- Like-for-like tank water heater swap (same fuel, same location): 4-6 plumber hours including drain, disconnect, set, connect, fill and test.
+- Simple surface installs on a prepped, no-demo surface (turf, vinyl, carpet tile, laminate) run roughly 15-25 sqft per labor-hour.
+- A separate supervision / site-verification line only on jobs with real coordination: multiple trades, a permit, or a scheduled inspection.
+{"projectName":"string","lineItems":[],"assumptions":["max 5 short assumptions, key scope decisions only"],"exclusions":["string"],"estimatedDays":"string e.g. 6-8 weeks"}`;
   const MARKET=`${pricingBlock}`;
   const JOB=`Trade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}
-Overhead:${ctx.oh}%|Profit:${ctx.profit}%|Cushion default (ceiling, not a fixed value -- see CONTINGENCY rule):${ctx.cushion}%|Client:${ctx.client}
-Language:${appLang==='es'?'Spanish':'English'}${calibrationNote}
-${getSupplierPromptContext()}${getSubPromptContext()}
+Language:${appLang==='es'?'Spanish':'English'}
 SCOPE:${scope}
 ANSWERS:${ansText}
 EXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}
@@ -3218,7 +3450,7 @@ Return the JSON for THIS job now.`;
       }
       for(let k=rendered;k<items.length;k++){
         const it=items[k]||{};
-        const cat=(it.category||'Scope').toString().slice(0,40);
+        const cat=(it.category||({material:'Materials',labor:'Labor',permit:'Permits',sub:'Subcontractor'})[it.type]||'Scope').toString().slice(0,40);
         if(!seenCats.has(cat)){
           seenCats.add(cat);
           const row=document.createElement('div');
@@ -3242,7 +3474,7 @@ Return the JSON for THIS job now.`;
     let guard=makeStallGuard();
     try{
       try{
-        res=await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],EST_TOKENS,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking}),guard.promise]);
+        res=await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],EST_TOKENS,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true}),guard.promise]);
         guard.cancel();
       }catch(streamErr){
         guard.cancel();
@@ -3258,8 +3490,8 @@ Return the JSON for THIS job now.`;
           // dropping to non-streaming — the ceiling was the problem, not the
           // transport, and the contractor keeps seeing line items arrive.
           res=truncated
-            ? await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],EST_TOKENS_RETRY,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking}),guard.promise])
-            : await Promise.race([callClaude([{role:'user',content:promptBlocks}],12000,true,ESTIMATE_EFFORT),guard.promise]);
+            ? await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],EST_TOKENS_RETRY,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true}),guard.promise])
+            : await Promise.race([callClaude([{role:'user',content:promptBlocks}],12000,true,ESTIMATE_EFFORT,true),guard.promise]);
         }finally{ guard.cancel(); }
       }
     }finally{
@@ -3268,27 +3500,16 @@ Return the JSON for THIS job now.`;
     }
     setProg(100,appLang==='en'?'Complete ✓':'Completo ✓');
 
-    const data=parseJ(res);
-    clampAncillaryToJobSize(data);
-    // Accurate math — defend against a valid response that omits these objects
-    data.overhead=data.overhead||{pct:ctx.oh};
-    data.contingency=data.contingency||{pct:ctx.cushion};
-    data.profit=data.profit||{pct:ctx.profit};
-    if(data.overhead.pct==null) data.overhead.pct=ctx.oh;
-    // 0 is the schema's generic numeric placeholder, not a real "no risk"
-    // answer -- the CONTINGENCY rule's floor is 3-5%, so a literal 0 means
-    // the model left it unfilled. Falsy catches null/0/undefined/NaN alike.
-    // Either way, clamp to the contractor's own ceiling: the rule only ever
-    // authorizes reducing it for a low-risk scope, never raising it.
-    if(!data.contingency.pct) data.contingency.pct=ctx.cushion;
-    else data.contingency.pct=Math.min(data.contingency.pct,ctx.cushion);
-    if(data.profit.pct==null) data.profit.pct=ctx.profit;
-    data.subtotal=(data.lineItems||[]).reduce((s,i)=>s+(i.total||0),0);
-    data.overhead.amount=Math.round(data.subtotal*(data.overhead.pct/100));
-    data.contingency.amount=Math.round(data.subtotal*(data.contingency.pct/100));
-    const base=data.subtotal+data.overhead.amount+data.contingency.amount;
-    data.profit.amount=Math.round(base*(data.profit.pct/100));
-    data.totalBid=data.subtotal+data.overhead.amount+data.contingency.amount+data.profit.amount;
+    const scoped=parseJ(res);
+    // Every dollar from here on is computed in code from the catalog and the
+    // contractor's own settings, so the same scope always prices the same.
+    const data=priceScope(scoped,catalog,{
+      marketAdj:adjMultiplier,laborMult:ctx.laborMult,laborRate:ctx.laborRate,
+      oh:ctx.oh,profit:ctx.profit,cushion:ctx.cushion,
+      sqft:parseFloat(String(ctx.sqft).replace(/,/g,''))||0,hvhz:isHVHZ,calibration:costCalibration
+    });
+    if(data.pricingNotes.length) data.assumptions=[...data.pricingNotes,...data.assumptions];
+    data.labelAdj=adjLabel;
     data.confidenceTier=confidenceTier;
     currentEstimate=data;
 
@@ -3349,7 +3570,7 @@ function renderEstimate(data){
         <input type="number" value="${item.unitCost}" id="uc-${item._i}" onchange="recalc(${item._i})"${proClick} style="text-align:right">
         <div class="li-total" id="lt-${item._i}">${fmt(item.total)}</div>
         <button class="li-del" onclick="delLine(${item._i})">×</button>
-      </div>`;
+      </div>${lineSourceNote(item,item._i)}`;
     });
   });
   document.getElementById('li-body').innerHTML=html;
@@ -3410,6 +3631,23 @@ function renderEstimate(data){
   renderPermitScopeNote();
 }
 
+// Where each number came from, under its row. App only, never on the client PDF.
+function lineSourceNote(item,i){
+  const es=appLang==='es';
+  let t='';
+  if(item.estimated) t=es?'No está en nuestros datos, estimado':'Not in our data, estimated';
+  else if(item.permitRow){
+    const p=item.permitRow;
+    t=(es?'Tarifa de la ciudad: ':'City schedule: ')+`${p.municipality} ${p.work_type}`+(p.date?` (${p.date})`:'')+(es?'. Puede cambiar bajo la ley HB 803 de Florida.':'. May change under Florida HB 803.');
+  }
+  else if(item.priced==='bls x multiplier') t=es?`Salario BLS $${item.wage}/hr × tu multiplicador`:`BLS wage $${item.wage}/hr × your labor multiplier`;
+  else if(item.priced==='your labor rate') t=(es?'Tu costo por hora':'Your labor cost per hour')+(item.wage?(es?` (salario medio BLS $${item.wage}/hr)`:` (BLS median wage $${item.wage}/hr)`):'');
+  else if(item.priced==='your supplier') t=es?'Tu precio de proveedor':'Your supplier price';
+  else if(item.priced==='your sub') t=es?'Tu tarifa de subcontratista':'Your sub rate';
+  if(!t) return '';
+  return `<div class="li-src${item.estimated?' est':''}" id="ls-${i}">${escapeHtml(t)}</div>`;
+}
+
 function calcVar(input,estimated){
   const actual=parseFloat(input.value.replace(/[$,]/g,''));
   if(isNaN(actual)) return;
@@ -3459,6 +3697,7 @@ function recalc(idx){
 
 function delLine(idx){
   document.getElementById('lr-'+idx)?.remove();
+  document.getElementById('ls-'+idx)?.remove();
   if(window._lines?.[idx]) window._lines[idx].total=0;
   if(currentEstimate?.lineItems?.[idx]) currentEstimate.lineItems[idx].total=0;
   recompute();
@@ -3576,8 +3815,10 @@ function renderBidIntel(data,loMult,hiMult){
     rows.push(meta.materialCount>0
       ?`<div class="bi-row on">✓ <span>Materials — ${meta.materialCount} local price${meta.materialCount===1?'':'s'}${matFor}${meta.proMaterials?' · pro-tier':' · retail-based'}</span></div>`
       :`<div class="bi-row">— <span>Materials — no local pricing${matFor} yet</span></div>`);
+    const lb=data.laborBasis;
+    const lbTxt=lb?(lb.mode==='own'?` · your $${lb.rate}/hr`:` · wage × ${(+lb.mult).toFixed(1)}${Math.abs(lb.mult-LABOR_MULT_DEFAULT)<0.001?' (Even default)':''}`):'';
     rows.push(meta.laborCount>0
-      ?`<div class="bi-row on">✓ <span>Labor — ${meta.laborCount} trades, BLS ${escapeHtml(meta.market)} metro</span></div>`
+      ?`<div class="bi-row on">✓ <span>Labor — ${meta.laborCount} trades, BLS ${escapeHtml(meta.market)} metro${lbTxt}</span></div>`
       :`<div class="bi-row">— <span>Labor — no local wage data yet</span></div>`);
   }else{
     // Saved estimates don't carry the data snapshot — say only what's true.
@@ -4250,6 +4491,73 @@ function selectTier(tier, el) {
   // Could regenerate estimate at selected tier in future version
 }
 
+// ══════════════════════════
+//  LABOR COST SETTINGS
+// ══════════════════════════
+// The billing multiplier on the BLS wage is the contractor's number, like overhead
+// and profit: Even supplies a default and the code applies it the same way every
+// run. A contractor who knows what an hour of labor costs them enters it instead,
+// and every labor line uses it. Overhead and profit are added once, by the margin
+// settings, either way.
+const laborSettings=(()=>{
+  let v={mult:LABOR_MULT_DEFAULT,rate:null};
+  try{ const j=JSON.parse(localStorage.getItem('even_labor')||'null'); if(j){ if(+j.mult>0) v.mult=+j.mult; if(+j.rate>0) v.rate=+j.rate; } }catch(e){}
+  return v;
+})();
+function saveLaborSettings(){
+  try{ localStorage.setItem('even_labor',JSON.stringify(laborSettings)); }catch(e){}
+  clearTimeout(window._laborSaveT); window._laborSaveT=setTimeout(savePrefs,1200);
+}
+function renderLaborSettings(){
+  const m=laborSettings.mult;
+  const pct=(m-LABOR_MULT_MIN)/(LABOR_MULT_MAX-LABOR_MULT_MIN)*100;
+  const f=document.getElementById('sf-lmult'),t=document.getElementById('sh-lmult'),b=document.getElementById('lv-lmult');
+  if(f) f.style.width=pct+'%'; if(t) t.style.left=`calc(${pct}% - 11px)`; if(b) b.textContent=m.toFixed(1)+'×';
+  const inp=document.getElementById('labor-rate');
+  if(inp&&document.activeElement!==inp) inp.value=laborSettings.rate||'';
+  const tag=document.getElementById('labor-tag');
+  const hint=document.getElementById('labor-hint');
+  const es=appLang==='es';
+  if(laborSettings.rate){
+    if(tag) tag.textContent=es?'Tu tarifa':'Your rate';
+    if(hint) hint.textContent=es?`Todas las líneas de mano de obra usan tu $${laborSettings.rate}/hr. El multiplicador no se usa.`:`Every labor line uses your $${laborSettings.rate}/hr. The multiplier is not used.`;
+  }else{
+    const isDef=Math.abs(m-LABOR_MULT_DEFAULT)<0.001;
+    if(tag) tag.textContent=isDef?(es?'Valor de Even':'Even default'):(es?'Tu ajuste':'Your setting');
+    if(hint) hint.textContent=es
+      ?`Mano de obra = salario medio BLS × ${m.toFixed(1)}${isDef?'. Valor de Even: mantiene los precios de hoy, aún sin datos de contratistas locales detrás. Cámbialo a lo que te cuesta tu equipo':''}. Gastos y ganancia se suman una vez, con tus ajustes de margen.`
+      :`Labor = BLS median wage × ${m.toFixed(1)}${isDef?'. Even default: keeps today\'s prices, not yet backed by local contractor data. Set it to what your crew really costs you':''}. Overhead and profit are added once, by your margin settings.`;
+  }
+}
+function startMultSlide(e){
+  e.preventDefault();
+  const track=document.getElementById('st-lmult');
+  const isTouch=e.type==='touchstart';
+  const calc=ev=>{
+    const r=track.getBoundingClientRect();
+    const x=isTouch?ev.touches[0].clientX:ev.clientX;
+    const p=Math.max(0,Math.min(1,(x-r.left)/r.width));
+    laborSettings.mult=Math.round((LABOR_MULT_MIN+(LABOR_MULT_MAX-LABOR_MULT_MIN)*p)*10)/10;
+    renderLaborSettings();
+  };
+  calc(e);
+  const up=isTouch?'touchend':'mouseup', mv=isTouch?'touchmove':'mousemove';
+  document.addEventListener(mv,calc);
+  document.addEventListener(up,()=>{document.removeEventListener(mv,calc);saveLaborSettings();},{once:true});
+}
+function laborRateGate(el){
+  if(isPro) return;
+  el.blur();
+  openProModal(appLang==='es'?'Tu Tarifa de Mano de Obra':'Your Labor Rate',appLang==='es'?'Actualiza a Even Pro para usar tu propio costo por hora en cada estimado.':'Upgrade to Even Pro to price every estimate with your own labor cost per hour.');
+}
+function setLaborRate(v){
+  if(!isPro) return;
+  const n=parseFloat(v);
+  laborSettings.rate=n>0?Math.round(n*100)/100:null;
+  saveLaborSettings(); renderLaborSettings();
+}
+renderLaborSettings();
+
 // Init
 updateCombined();
 initSupabase();
@@ -4665,7 +4973,9 @@ function savePrefs(){
     location: document.getElementById('est-location')?.value||'',
     suppliers: window._mySuppliers||[],
     subs: window._mySubs||[],
-    accentColor: window._accentColor||'#FFB300'
+    accentColor: window._accentColor||'#FFB300',
+    laborMult: laborSettings.mult,
+    laborRate: laborSettings.rate
   };
   sbClient.from('users').update({prefs}).eq('id',currentUser.id)
     .then(({error})=>{ if(error) console.error('Save prefs error:',error); });
@@ -5077,6 +5387,9 @@ function applyPrefs(prefs){
     window._accentColor = prefs.accentColor;
     renderAccentSwatches();
   }
+  if(+prefs.laborMult>0) laborSettings.mult=+prefs.laborMult;
+  if(prefs.laborRate!==undefined) laborSettings.rate=+prefs.laborRate>0?+prefs.laborRate:null;
+  renderLaborSettings();
 }
 
 async function loadDashboard(){
