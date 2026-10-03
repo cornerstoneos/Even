@@ -27,12 +27,13 @@ const anthropicCalls=()=>fs.readFileSync(LOG,'utf8').split('\n').filter(x=>x==='
   check('first request is a miss and asks the model once', a.cache==='miss'&&anthropicCalls()===1, JSON.stringify(a));
   await new Promise(r=>setTimeout(r,200));
   const row=Object.values(JSON.parse(fs.readFileSync(DB,'utf8')))[0];
-  check('the scope was written to scope_cache', !!row&&row.scope.projectName==='run1');
+  check('the scope was written to scope_cache', !!row&&JSON.parse(row.scope).projectName==='run1');
   check('only key + scope are stored (no prompt, no names)', row&&JSON.stringify(row.bodyKeys)==='["key","scope"]'&&!fs.readFileSync(DB,'utf8').includes('SECRET-CLIENT-NAME'), JSON.stringify(row&&row.bodyKeys));
   check('the key is a 64-char hash', /^[a-f0-9]{64}$/.test(a.key||''), a.key);
   check('the server used the service key for Supabase', !fs.readFileSync(LOG,'utf8').includes('NOKEY'));
   await stop(srv); srv=await start();
   const b=await post({...body,stream:false,max_tokens:999},{'x-even-cache':'1'});
+  check('after a restart the text is byte-for-byte the first answer (key order kept: the next prompt is built from it)', b.text===a.text, b.text+' vs '+a.text);
   check('after a restart: same scope, from Supabase, no new model call', b.cache==='hit-db'&&JSON.parse(b.text).projectName==='run1'&&anthropicCalls()===1, JSON.stringify(b));
   const c=await post(body,{'x-even-cache':'1'});
   check('then served from memory', c.cache==='hit-memory'&&anthropicCalls()===1, c.cache);

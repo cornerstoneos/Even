@@ -14,7 +14,7 @@ globalThis.fetch = async (url, opts = {}) => {
   if (url.includes('api.anthropic.com')) {
     log('anthropic');
     const n = fs.readFileSync(LOG, 'utf8').split('\n').filter(x => x === 'anthropic').length;
-    return new Response(JSON.stringify({ content: [{ type: 'text', text: `{"projectName":"run${n}","lineItems":[]}` }], stop_reason: 'end_turn' }), { status: 200, headers: { 'content-type': 'application/json' } });
+    return new Response(JSON.stringify({ content: [{ type: 'text', text: `{"projectName":"run${n}","tradeBreakdown":[{"trade":"Plumbing","icon":"x","items":[]}],"lineItems":[]}` }], stop_reason: 'end_turn' }), { status: 200, headers: { 'content-type': 'application/json' } });
   }
   if (url.includes('/rest/v1/scope_cache')) {
     const u = new URL(url), d = load(), m = opts.method || 'GET';

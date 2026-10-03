@@ -442,24 +442,26 @@ async function scopeDbGet(key) {
       { headers: scopeDbHeaders(sk), signal: AbortSignal.timeout(3000) });
     if (!r.ok) return null;
     const row = (await r.json())?.[0];
-    if (!row || !row.scope) return null;
+    // Stored as the model's exact text (a jsonb string). jsonb objects reorder keys,
+    // and the next prompt is built from this scope, so a re-serialized object
+    // would change that prompt's key and break same-in-same-out after a restart.
+    if (!row || typeof row.scope !== 'string') return null;
     // Fire-and-forget usage stats; never blocks the answer.
     fetch(`${SUPABASE_URL}/rest/v1/scope_cache?key=eq.${key}`, {
       method: 'PATCH', headers: { ...scopeDbHeaders(sk), Prefer: 'return=minimal' },
       body: JSON.stringify({ last_used_at: new Date().toISOString(), hits: (row.hits || 0) + 1 })
     }).catch(() => {});
-    return JSON.stringify(row.scope);
+    return row.scope;
   } catch (e) { console.error('scope_cache read failed:', e.message); return null; }
 }
 async function scopeDbPut(key, text) {
   const sk = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const scope = parseScopeText(text);
-  if (!sk || !scope) return;
+  if (!sk || !parseScopeText(text)) return;   // only finished, parseable scopes
   try {
     // First answer wins: a later identical request never overwrites it.
     const r = await fetch(`${SUPABASE_URL}/rest/v1/scope_cache?on_conflict=key`, {
       method: 'POST', headers: { ...scopeDbHeaders(sk), Prefer: 'resolution=ignore-duplicates,return=minimal' },
-      body: JSON.stringify({ key, scope })
+      body: JSON.stringify({ key, scope: text })
     });
     if (!r.ok) console.error('scope_cache write failed:', r.status, await r.text());
   } catch (e) { console.error('scope_cache write failed:', e.message); }
