@@ -9954,6 +9954,72 @@
         "date": "2026-10-03",
         "brand": "Inline",
         "tier": "national_estimate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "St. Augustine sod, material only (Floratam, Palmetto, CitraBlue)",
+        "unit": "sq ft",
+        "low": 0.4,
+        "mid": 0.625,
+        "high": 0.85,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Bermuda sod, material only",
+        "unit": "sq ft",
+        "low": 0.35,
+        "mid": 0.5,
+        "high": 0.65,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Zoysia sod, material only",
+        "unit": "sq ft",
+        "low": 0.5,
+        "mid": 0.675,
+        "high": 0.85,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Bahia sod, material only",
+        "unit": "sq ft",
+        "low": 0.3,
+        "mid": 0.425,
+        "high": 0.55,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Sod pallet (about 450-500 sq ft), by variety and supplier",
+        "unit": "pallet",
+        "low": 150,
+        "mid": 300.0,
+        "high": 450,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Soil",
+        "item": "Topsoil",
+        "unit": "cubic yard",
+        "low": 30,
+        "mid": 40.0,
+        "high": 50,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
       }
     ],
     "labor": [
@@ -30761,6 +30827,72 @@
         "date": "2026-10-03",
         "brand": "Inline",
         "tier": "national_estimate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "St. Augustine sod, material only (Floratam, Palmetto, CitraBlue)",
+        "unit": "sq ft",
+        "low": 0.4,
+        "mid": 0.625,
+        "high": 0.85,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Bermuda sod, material only",
+        "unit": "sq ft",
+        "low": 0.35,
+        "mid": 0.5,
+        "high": 0.65,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Zoysia sod, material only",
+        "unit": "sq ft",
+        "low": 0.5,
+        "mid": 0.675,
+        "high": 0.85,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Bahia sod, material only",
+        "unit": "sq ft",
+        "low": 0.3,
+        "mid": 0.425,
+        "high": 0.55,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Sod pallet (about 450-500 sq ft), by variety and supplier",
+        "unit": "pallet",
+        "low": 150,
+        "mid": 300.0,
+        "high": 450,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Soil",
+        "item": "Topsoil",
+        "unit": "cubic yard",
+        "low": 30,
+        "mid": 40.0,
+        "high": 50,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
       }
     ],
     "flag": " HVHZ NOTE: Palm Beach County is NOT in the High Velocity Hurricane Zone (FBC R202 defines HVHZ as Broward and Miami-Dade counties only). Palm Beach is Wind-Borne Debris Region \u2014 impact-rated products required, but not Miami-Dade NOA tier, which runs 30-50% higher. The three roofing material rows (architectural shingles, roof underlayment, ridge cap) copied from the Miami-Dade baseline carried HVHZ pricing and were REMOVED rather than left as overstated placeholders. Non-roofing materials (drywall, studs, tile, paint, pipe, concrete) are not HVHZ-sensitive and were retained. When materials expand to windows/doors/shutters, those MUST be split HVHZ vs non-HVHZ \u2014 that is where the 30-50% NOA premium actually applies. Broward retains the full Miami-Dade roofing copy correctly, since Broward IS HVHZ."
@@ -75999,6 +76131,72 @@
         "date": "2026-10-03",
         "brand": "Inline",
         "tier": "national_estimate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "St. Augustine sod, material only (Floratam, Palmetto, CitraBlue)",
+        "unit": "sq ft",
+        "low": 0.4,
+        "mid": 0.625,
+        "high": 0.85,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Bermuda sod, material only",
+        "unit": "sq ft",
+        "low": 0.35,
+        "mid": 0.5,
+        "high": 0.65,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Zoysia sod, material only",
+        "unit": "sq ft",
+        "low": 0.5,
+        "mid": 0.675,
+        "high": 0.85,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Bahia sod, material only",
+        "unit": "sq ft",
+        "low": 0.3,
+        "mid": 0.425,
+        "high": 0.55,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Sod",
+        "item": "Sod pallet (about 450-500 sq ft), by variety and supplier",
+        "unit": "pallet",
+        "low": 150,
+        "mid": 300.0,
+        "high": 450,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
+      },
+      {
+        "category": "Landscaping - Soil",
+        "item": "Topsoil",
+        "unit": "cubic yard",
+        "low": 30,
+        "mid": 40.0,
+        "high": 50,
+        "source": "Floridist.com cost guide 'How Much Does Sod Installation Cost in South Florida in 2026' (Feb 20, 2026): published ranges compiled from HomeGuide, Angi, LawnStarter, Lawn Love, Homewyse and Florida installers; not a supplier quote; mid is the midpoint of the published range",
+        "date": "2026-10-03",
+        "tier": "market_rate"
       }
     ],
     "labor": [
