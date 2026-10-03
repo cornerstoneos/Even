@@ -386,9 +386,22 @@ app.get('/api/market-data', async (req, res) => {
 const SCOPE_CACHE_MAX = 500;
 const SCOPE_CACHE_TTL_MS = 30 * 24 * 3600 * 1000;
 const scopeCache = new Map();
+// Keyed on what decides the answer (model, prompt, effort), not on transport
+// details: the client's non-streaming fallback (after a stalled stream) and the
+// bigger-budget retry must land on the same entry as the stream they replace.
 function scopeCacheKey(body) {
-  const { stream, ...rest } = body || {};
-  return crypto.createHash('sha256').update(JSON.stringify(rest)).digest('hex');
+  const { model, messages, output_config } = body || {};
+  return crypto.createHash('sha256').update(JSON.stringify({ model, messages, output_config })).digest('hex');
+}
+// A request already running for the same key: a second identical request waits
+// for its answer instead of rolling the dice again (a stalled phone stream whose
+// fallback arrives while the first call is still finishing).
+const scopeInflight = new Map();
+function scopeInflightStart(key) {
+  let resolve;
+  const p = new Promise(r => { resolve = r; });
+  scopeInflight.set(key, p);
+  return text => { if (scopeInflight.get(key) === p) scopeInflight.delete(key); resolve(text || null); };
 }
 function scopeCacheGet(key) {
   const hit = scopeCache.get(key);
@@ -412,13 +425,19 @@ app.post('/api/estimate', async (req, res) => {
   }
   const wantStream = req.body && req.body.stream === true;
   const cacheKey = req.get('x-even-cache') === '1' ? scopeCacheKey(req.body) : null;
+  let finishInflight = () => {};
   if (cacheKey) {
-    const text = scopeCacheGet(cacheKey);
+    let text = scopeCacheGet(cacheKey);
+    if (!text && scopeInflight.has(cacheKey)) {
+      text = await Promise.race([scopeInflight.get(cacheKey), new Promise(r => setTimeout(() => r(null), 170000))]);
+    }
     if (text) {
       res.setHeader('X-Even-Cache', 'hit');
       return res.json({ content: [{ type: 'text', text }], stop_reason: 'end_turn', cached: true });
     }
+    finishInflight = scopeInflightStart(cacheKey);
   }
+  try {
   const MAX_TRIES = 3;
   let lastErr;
   for (let attempt = 1; attempt <= MAX_TRIES; attempt++) {
@@ -477,7 +496,7 @@ app.post('/api/estimate', async (req, res) => {
               }
             }
           }
-          if (cacheKey && stopReason === 'end_turn') scopeCacheSet(cacheKey, fullText);
+          if (cacheKey && stopReason === 'end_turn') { scopeCacheSet(cacheKey, fullText); finishInflight(fullText); }
         } catch (streamErr) {
           console.error('Anthropic stream interrupted:', streamErr.message);
           logError('anthropic_proxy', streamErr.message, { stage: 'stream', model: req.body?.model });
@@ -487,7 +506,8 @@ app.post('/api/estimate', async (req, res) => {
 
       const data = await response.json();
       if (cacheKey && data?.stop_reason === 'end_turn' && Array.isArray(data.content)) {
-        scopeCacheSet(cacheKey, data.content.map(b => b.text || '').join(''));
+        const text = data.content.map(b => b.text || '').join('');
+        scopeCacheSet(cacheKey, text); finishInflight(text);
       }
       return res.status(response.status).json(data);
     } catch (err) {
@@ -500,6 +520,10 @@ app.post('/api/estimate', async (req, res) => {
   }
   logError('anthropic_proxy', (lastErr && lastErr.message) || 'Upstream fetch failed after retries', { stage: 'exhausted', model: req.body?.model });
   res.status(502).json({ error: { message: (lastErr && lastErr.message) || 'Upstream fetch failed after retries' } });
+  } finally {
+    // Anything that ended without a cacheable answer (error, cut-off) releases waiters.
+    finishInflight(null);
+  }
 });
 
 // ─── Client-side error reporting ──────────────────────────────────────────────

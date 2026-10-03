@@ -69,6 +69,7 @@ check('non-streaming fallback passes effort too',
   /callClaude\(\[\{role:'user',content:promptBlocks\}\],12000,true,ESTIMATE_EFFORT,true\)/.test(html));
 check('scope extraction asks for the same-in-same-out cache', /callClaude\(\[\{role:'user',content:msgContent\}\],3000,false,'low',true\)/.test(html));
 check('server answers an identical marked request from the scope cache', /x-even-cache/.test(fs.readFileSync(path.join(__dirname,'..','server.js'),'utf8')));
+check('a stalled stream\'s fallback shares the cache key and waits for the in-flight call', /JSON\.stringify\(\{ model, messages, output_config \}\)/.test(fs.readFileSync(path.join(__dirname,'..','server.js'),'utf8'))&&/scopeInflight\.has\(cacheKey\)/.test(fs.readFileSync(path.join(__dirname,'..','server.js'),'utf8')));
 check('thinking summary requested only when a consumer exists',
   /if\(opts\.onThinking\) body\.thinking=\{type:'adaptive',display:'summarized'\}/.test(html));
 check('thinking_delta is consumed by the stream parser',
