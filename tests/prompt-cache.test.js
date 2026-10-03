@@ -64,11 +64,11 @@ check('scope text is NOT inside the cached prefix',
 console.log('\n=== Request config ===');
 check("estimate runs at medium effort", /const ESTIMATE_EFFORT='medium'/.test(html));
 check('streaming call passes effort + onThinking',
-  /callClaudeStream\(\[\{role:'user',content:promptBlocks\}\],EST_TOKENS,onDelta,true,\{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true\}\)/.test(html));
+  /callClaudeStream\(\[\{role:'user',content:promptBlocks\}\],EST_TOKENS,onDelta,true,\{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true,kind:'estimate'\}\)/.test(html));
 check('non-streaming fallback passes effort too',
   /callClaude\(\[\{role:'user',content:promptBlocks\}\],12000,true,ESTIMATE_EFFORT,true\)/.test(html));
-check('scope extraction asks for the same-in-same-out cache', /callClaude\(\[\{role:'user',content:msgContent\}\],3000,false,'low',true\)/.test(html));
-check('server answers an identical marked request from the scope cache', /x-even-cache/.test(fs.readFileSync(path.join(__dirname,'..','server.js'),'utf8')));
+check('scope extraction asks for the same-in-same-out cache', /callClaude\(\[\{role:'user',content:msgContent\}\],3000,false,'low',true,'scope'\)/.test(html));
+check('server caches scope and estimate requests', /built\.kind === 'scope' \|\| built\.kind === 'estimate'\) \? scopeCacheKey/.test(fs.readFileSync(path.join(__dirname,'..','server.js'),'utf8')));
 check('a stalled stream\'s fallback shares the cache key and waits for the in-flight call', /JSON\.stringify\(\{ model, messages, output_config \}\)/.test(fs.readFileSync(path.join(__dirname,'..','server.js'),'utf8'))&&/scopeInflight\.has\(cacheKey\)/.test(fs.readFileSync(path.join(__dirname,'..','server.js'),'utf8')));
 check('thinking summary requested only when a consumer exists',
   /if\(opts\.onThinking\) body\.thinking=\{type:'adaptive',display:'summarized'\}/.test(html));
@@ -96,7 +96,7 @@ check('streaming refuses to return a truncated body',
 check('non-streaming path checks stop_reason too',
   /if\(d\.stop_reason==='max_tokens'\) throw new Error\('truncated_output'\)/.test(html));
 check('truncation is not swallowed by the generic network retry',
-  /if\(e\.message==='truncated_output'\) throw e;/.test(html));
+  /if\(e\.message==='truncated_output'\|\|e\.noRetry\) throw e;/.test(html));
 check('truncation retries the STREAM with a bigger ceiling, not the fallback',
   /res=truncated\s*\n?\s*\? await Promise\.race\(\[callClaudeStream\(\[\{role:'user',content:promptBlocks\}\],EST_TOKENS_RETRY/.test(html));
 check('retry ceiling is larger than the first attempt',

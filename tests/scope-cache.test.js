@@ -16,8 +16,8 @@ const start=()=>new Promise((res,rej)=>{
   p.stderr.on('data',()=>{}); p.on('exit',c=>rej(new Error('server exited '+c)));
 });
 const stop=p=>new Promise(r=>{p.removeAllListeners('exit');p.on('exit',r);p.kill();});
-const body={model:'claude-sonnet-5',max_tokens:100,messages:[{role:'user',content:'SECRET-CLIENT-NAME Smith, 12 Ocean Dr'}],output_config:{effort:'medium'}};
-const post=(b,h={})=>fetch(`http://localhost:${port}/api/estimate`,{method:'POST',headers:{'content-type':'application/json',...h},body:JSON.stringify(b)})
+const body={even_kind:'scope',model:'claude-sonnet-5',max_tokens:100,messages:[{role:'user',content:[{type:'text',text:'Construction estimating. Trade:Plumbing|Location:Miami\nSCOPE: SECRET-CLIENT-NAME Smith, 12 Ocean Dr'}]}],output_config:{effort:'low'}};
+const post=(b,h={})=>fetch(`http://localhost:${port}/api/estimate`,{method:'POST',headers:{'content-type':'application/json',origin:'https://even-os.com','x-even-device':'test-device-0000000001',...h},body:JSON.stringify(b)})
   .then(async r=>({cache:r.headers.get('x-even-cache'),key:r.headers.get('x-even-cache-key'),text:(await r.json()).content[0].text}));
 const anthropicCalls=()=>fs.readFileSync(LOG,'utf8').split('\n').filter(x=>x==='anthropic').length;
 (async()=>{
@@ -37,8 +37,8 @@ const anthropicCalls=()=>fs.readFileSync(LOG,'utf8').split('\n').filter(x=>x==='
   check('after a restart: same scope, from Supabase, no new model call', b.cache==='hit-db'&&JSON.parse(b.text).projectName==='run1'&&anthropicCalls()===1, JSON.stringify(b));
   const c=await post(body,{'x-even-cache':'1'});
   check('then served from memory', c.cache==='hit-memory'&&anthropicCalls()===1, c.cache);
-  const u=await post(body);
-  check('a request without X-Even-Cache is never cached', !u.cache&&anthropicCalls()===2, JSON.stringify(u));
+  const u=await post({...body,even_kind:'scope_fix',messages:[body.messages[0],{role:'assistant',content:'not json'},{role:'user',content:'Your response was not valid JSON. Return ONLY the corrected JSON object, nothing else.'}]});
+  check('a JSON-fix follow-up is never cached', !u.cache&&anthropicCalls()===2, JSON.stringify(u));
 
   console.log('\n=== Clearing one bad scope ===');
   const del=(k,auth)=>fetch(`http://localhost:${port}/api/scope-cache/${k}`,{method:'DELETE',headers:auth?{authorization:'Bearer '+auth}:{}});

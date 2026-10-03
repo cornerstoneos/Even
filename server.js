@@ -10,11 +10,31 @@ const MUNICIPALITIES = require('./data/municipalities.json');
 const fetch = (...args) => (globalThis.fetch ? globalThis.fetch(...args) : nodeFetch(...args));
 
 const app = express();
-// The cache headers are read by the app (and are how a bad scope's key is found).
-app.use(cors({ exposedHeaders: ['X-Even-Cache', 'X-Even-Cache-Key'] }));
+// Only the app's own pages may call this server from a browser. The cache headers
+// are read by the app (and are how a bad scope's key is found).
+const ALLOWED_ORIGINS = [
+  'https://even-os.com', 'https://www.even-os.com',
+  ...String(process.env.EXTRA_ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean)
+];
+const originAllowed = o => !!o && (ALLOWED_ORIGINS.includes(o) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(o));
+app.use(cors({
+  origin: (o, cb) => cb(null, originAllowed(o)),
+  exposedHeaders: ['X-Even-Cache', 'X-Even-Cache-Key'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Even-Cache', 'X-Even-Device']
+}));
+const { buildRequest } = require('./lib/guard');
+const { makeUsage, LIMITS } = require('./lib/usage');
 const STARTED_AT = new Date().toISOString();
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://klgofcqrncabfhskiijn.supabase.co';
+// Lazily built: server.js reads env at call time so tests can set it after require.
+let _usage = null;
+const usage = () => _usage || (_usage = makeUsage({
+  supabaseUrl: SUPABASE_URL,
+  serviceKey: () => process.env.SUPABASE_SERVICE_ROLE_KEY,
+  secret: () => process.env.USAGE_HASH_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY || 'even-dev',
+  fetchImpl: (...a) => fetch(...a)
+}));
 
 // ─── Market resolution (zip/city → nearest covered market) ───────────────────
 function haversineMiles(lat1, lng1, lat2, lng2) {
@@ -227,6 +247,7 @@ app.post('/webhook/stripe', express.raw({ type: 'application/json' }), async (re
       if (userId && userId !== 'guest') {
         await supabaseUpdate('users', { id: userId }, { is_pro: true, stripe_customer_id: customerId });
         console.log(`Pro activated: user=${userId} customer=${customerId}`);
+        usage().event('pro_started', { user: { id: userId } });
       }
     } else if (event.type === 'customer.subscription.deleted') {
       const sub = event.data.object;
@@ -506,9 +527,32 @@ app.post('/api/estimate', async (req, res) => {
     logError('anthropic_proxy', 'ANTHROPIC_API_KEY missing', null);
     return res.status(500).json({ error: { message: 'Server misconfigured: ANTHROPIC_API_KEY missing' } });
   }
-  const wantStream = req.body && req.body.stream === true;
-  const cacheKey = req.get('x-even-cache') === '1' ? scopeCacheKey(req.body) : null;
+  // ── Lock: app origin only, a known request shape, rate limits, free limits ──
+  const origin = req.get('origin') || '';
+  if (!originAllowed(origin)) {
+    logError('proxy_reject', 'origin_not_allowed', { origin: origin.slice(0, 200) });
+    return res.status(403).json({ error: { code: 'origin_not_allowed', message: 'Not allowed' } });
+  }
+  const built = buildRequest(req.body);
+  if (built.error) {
+    logError('proxy_reject', built.error, { kind: String(req.body?.even_kind || '').slice(0, 40), model: String(req.body?.model || '').slice(0, 60) });
+    return res.status(400).json({ error: { code: 'request_not_allowed', message: 'Request not allowed' } });
+  }
+  const U = usage();
+  const ident = await U.identify(req);
+  const tooMany = () => {
+    logError('proxy_reject', 'rate_limited', { kind: built.kind });
+    return res.status(429).json({ error: { code: 'rate_limited', message: 'Too many requests. Wait a minute and try again.' } });
+  };
+  if (!U.rateOk(ident.ipHash, 'any')) return tooMany();
+  if (built.spec.pro) {
+    const st = await U.status(ident);
+    if (!st.isPro) return res.status(402).json({ error: { code: 'pro_required', message: 'Even Pro feature' } });
+  }
+  const wantStream = built.body.stream === true;
+  const cacheKey = (built.kind === 'scope' || built.kind === 'estimate') ? scopeCacheKey(built.body) : null;
   let finishInflight = () => {};
+  let onFresh = () => {}, release = () => {}, freshDone = false;
   if (cacheKey) {
     res.setHeader('X-Even-Cache-Key', cacheKey);
     let text = scopeCacheGet(cacheKey), layer = 'memory';
@@ -524,9 +568,26 @@ app.post('/api/estimate', async (req, res) => {
       res.setHeader('X-Even-Cache', `hit-${layer}`);
       return res.json({ content: [{ type: 'text', text }], stop_reason: 'end_turn', cached: true });
     }
+    // Not cached: this is a new AI call, so the free limit applies. A cached or
+    // re-opened identical job above never counts and is never blocked.
+    if (!built.spec.pro) {
+      const st = await U.status(ident);
+      if (!st.allowed) {
+        return res.status(402).json({ error: { code: st.reason || 'limit_reached', message: 'Free estimates used', used: st.used, limit: st.limit, signedIn: st.signedIn } });
+      }
+      if (built.spec.counts && !st.isPro) {
+        U.pend(st.pkey, 1);
+        let released = false;
+        release = () => { if (!released) { released = true; U.pend(st.pkey, -1); } };
+        onFresh = () => { freshDone = true; U.record(ident, st).catch(e => logError('usage', e.message, null)).finally(release); U.event('estimate_run', ident); };
+      } else if (built.spec.counts) {
+        onFresh = () => U.event('estimate_run', ident);
+      }
+    }
+    if (!U.rateOk(ident.ipHash, built.kind)) { release(); return tooMany(); }
     finishInflight = scopeInflightStart(cacheKey);
     res.setHeader('X-Even-Cache', 'miss');
-  }
+  } else if (!U.rateOk(ident.ipHash, built.kind)) return tooMany();
   try {
   const MAX_TRIES = 3;
   let lastErr;
@@ -540,7 +601,7 @@ app.post('/api/estimate', async (req, res) => {
           'anthropic-version': '2023-06-01',
           'anthropic-beta': 'prompt-caching-2024-07-31'
         },
-        body: JSON.stringify(req.body)
+        body: JSON.stringify(built.body)
       });
 
       // Errors always come back as a normal JSON body — read + forward it (never stream an error)
@@ -586,7 +647,7 @@ app.post('/api/estimate', async (req, res) => {
               }
             }
           }
-          if (cacheKey && stopReason === 'end_turn') { scopeCacheSet(cacheKey, fullText); finishInflight(fullText); scopeDbPut(cacheKey, fullText); }
+          if (cacheKey && stopReason === 'end_turn') { scopeCacheSet(cacheKey, fullText); finishInflight(fullText); scopeDbPut(cacheKey, fullText); onFresh(); }
         } catch (streamErr) {
           console.error('Anthropic stream interrupted:', streamErr.message);
           logError('anthropic_proxy', streamErr.message, { stage: 'stream', model: req.body?.model });
@@ -597,7 +658,7 @@ app.post('/api/estimate', async (req, res) => {
       const data = await response.json();
       if (cacheKey && data?.stop_reason === 'end_turn' && Array.isArray(data.content)) {
         const text = data.content.map(b => b.text || '').join('');
-        scopeCacheSet(cacheKey, text); finishInflight(text); scopeDbPut(cacheKey, text);
+        scopeCacheSet(cacheKey, text); finishInflight(text); scopeDbPut(cacheKey, text); onFresh();
       }
       return res.status(response.status).json(data);
     } catch (err) {
@@ -613,7 +674,40 @@ app.post('/api/estimate', async (req, res) => {
   } finally {
     // Anything that ended without a cacheable answer (error, cut-off) releases waiters.
     finishInflight(null);
+    // A finished estimate releases its reservation once it is recorded; anything
+    // else (error, cut-off stream) releases it now, so a retry isn't blocked by it.
+    if (!freshDone) release();
   }
+});
+
+// ─── Free-limit status, funnel events, data-trade credit ─────────────────────
+function appOnly(req, res) {
+  if (originAllowed(req.get('origin') || '')) return true;
+  res.status(403).json({ error: { code: 'origin_not_allowed' } });
+  return false;
+}
+app.get('/api/usage', async (req, res) => {
+  if (!appOnly(req, res)) return;
+  const U = usage(); const ident = await U.identify(req);
+  const st = await U.status(ident);
+  res.json({ signedIn: st.signedIn, isPro: st.isPro, used: st.used, limit: st.limit, remaining: st.remaining, allowed: st.allowed, reason: st.reason,
+    limits: { anon: LIMITS.ANON_ESTIMATES, freeAccount: LIMITS.FREE_ACCOUNT_ESTIMATES } });
+});
+const CLIENT_EVENTS = new Set(['signup', 'pdf_download', 'pro_modal_shown']);
+app.post('/api/event', async (req, res) => {
+  if (!appOnly(req, res)) return;
+  const name = String(req.body?.event || '');
+  if (!CLIENT_EVENTS.has(name)) return res.status(400).json({ error: { code: 'unknown_event' } });
+  const U = usage(); const ident = await U.identify(req);
+  if (!U.rateOk(ident.ipHash, 'event')) return res.status(429).json({ error: { code: 'rate_limited' } });
+  await U.event(name, ident);
+  res.json({ ok: true });
+});
+app.post('/api/data-trade-credit', async (req, res) => {
+  if (!appOnly(req, res)) return;
+  const U = usage(); const ident = await U.identify(req);
+  if (!U.rateOk(ident.ipHash, 'event')) return res.status(429).json({ error: { code: 'rate_limited' } });
+  try { res.json(await U.dataTradeCredit(ident)); } catch (e) { res.status(500).json({ ok: false }); }
 });
 
 // ─── Client-side error reporting ──────────────────────────────────────────────

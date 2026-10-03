@@ -1534,7 +1534,67 @@ const STRIPE_KEY          = 'pk_live_51TR3WJB41neZFjHYGsqXEHKIknMlCMHSujFXXN9y0J
 const STRIPE_PRICE_MONTHLY = 'price_1TR3XoB41neZFjHYzJRYKAhb';
 const STRIPE_PRICE_ANNUAL  = 'price_1TSTyNB41neZFjHYQgDzq8RR';
 const STRIPE_PRICE         = STRIPE_PRICE_MONTHLY; // default fallback
-const FREE_LIMIT   = 3;
+// Free limits are counted on the server now (lib/usage.js); this mirrors what
+// /api/usage last said, for display only. The server decides.
+let FREE_LIMIT   = 3;
+window._usage = null;
+// A random id for this browser, so signed-out estimates are counted per device on
+// the server. Clearing storage doesn't reset the count (the server also keys on
+// the IP + browser).
+const DEVICE_ID = (()=>{
+  try{
+    let id=localStorage.getItem('even_device');
+    if(!id||!/^[A-Za-z0-9-]{16,64}$/.test(id)){ id=(crypto.randomUUID?crypto.randomUUID():(Date.now().toString(36)+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2))); localStorage.setItem('even_device',id); }
+    return id;
+  }catch(e){ return 'nostore-'+Math.random().toString(36).slice(2)+Date.now().toString(36); }
+})();
+// Headers every call to our server carries: who this is (device, and the signed-in
+// session if there is one). The server reads Pro status and counts itself.
+async function apiHeaders(extra){
+  const h={'Content-Type':'application/json','X-Even-Device':DEVICE_ID,...(extra||{})};
+  try{ const t=(await sbClient?.auth.getSession())?.data?.session?.access_token; if(t) h.Authorization='Bearer '+t; }catch(e){}
+  return h;
+}
+async function refreshUsage(){
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/usage`,{headers:await apiHeaders()});
+    if(!r.ok) return null;
+    const u=await r.json();
+    window._usage=u;
+    if(typeof u.used==='number') estimateCount=u.used;
+    if(typeof u.limit==='number') FREE_LIMIT=u.limit;
+    if(u.isPro) isPro=true; else if(u.signedIn) isPro=false;
+    updateUserBadge();
+    return u;
+  }catch(e){ return null; }
+}
+function trackEvent(event){
+  apiHeaders().then(h=>fetch(`${API_ORIGIN}/api/event`,{method:'POST',headers:h,body:JSON.stringify({event})})).catch(()=>{});
+}
+// The server said no to a new estimate. Say why, and offer the next step.
+function showLimitReached(code){
+  const es=appLang==='es';
+  if(code==='signup_required'){
+    window._afterAuth='estimate';
+    openSignupPanel(es?`Usaste tus ${window._usage?.limits?.anon||3} estimados gratis. Crea una cuenta gratis para 2 más y descargas en PDF.`:`You've used your ${window._usage?.limits?.anon||3} free estimates. Create a free account for 2 more and PDF downloads.`);
+  }else if(code==='pro_required'||code==='limit_reached'){
+    openProModal(es?'Usaste tus estimados gratis':"You've used your free estimates", es?'Pasa a Even Pro para estimados ilimitados.':'Go Pro for unlimited estimates.', true);
+  }else if(code==='daily_cap'){
+    showToast(es?'Se alcanzó el límite diario de esta red. Inicia sesión o vuelve mañana.':'Daily limit for this network reached. Sign in or try again tomorrow.',6000);
+  }else if(code==='rate_limited'){
+    showToast(es?'Demasiadas solicitudes. Espera un minuto.':'Too many requests. Wait a minute and try again.',5000);
+  }else{
+    showToast(es?'No pudimos verificar tus estimados gratis. Intenta de nuevo.':"Couldn't check your free estimates. Try again.",5000);
+  }
+}
+function openSignupPanel(msg){
+  const panel=document.getElementById('topbar-auth-panel');
+  if(panel&&panel.style.display==='none') toggleAuthPanel();
+  switchAuthTab('signup');
+  const errEl=document.getElementById('auth-error');
+  if(errEl&&msg){ errEl.style.color='var(--gold)'; errEl.textContent=msg; }
+  document.getElementById('auth-email')?.focus();
+}
 
 let sbClient = null;
 let currentUser = null;
@@ -1595,47 +1655,27 @@ async function checkSession(){
       currentUser = session.user;
       await loadUserData();
     } else {
-      // No session — load local count
-      loadLocalCount();
+      isPro = false;
+      await refreshUsage();
     }
     updateUserBadge();
   } catch(e) {
     console.error('Session check error:', e);
-    loadLocalCount();
+    refreshUsage();
   }
-}
-
-function loadLocalCount(){
-  // Track estimates per session for non-logged-in users
-  // Use sessionStorage so it resets each browser session (fair 3 free per visit)
-  const stored = sessionStorage.getItem('even_count');
-  estimateCount = stored ? parseInt(stored) : 0;
-  isPro = false;
-}
-
-function saveLocalCount(){
-  sessionStorage.setItem('even_count', estimateCount);
 }
 
 async function loadUserData(){
   try {
-    const { data, error } = await sbClient
+    // The server creates the account's row on first sight and owns the count and
+    // Pro status; the browser only reads them (and may write prefs/logo).
+    await refreshUsage();
+    const { data } = await sbClient
       .from('users')
       .select('estimate_count, is_pro, prefs, logo_url, stripe_customer_id')
       .eq('id', currentUser.id)
-      .single();
-
-    if(error || !data){
-      await sbClient.from('users').upsert({
-        id: currentUser.id,
-        email: currentUser.email,
-        estimate_count: 0,
-        is_pro: false
-      });
-      estimateCount = 0;
-      isPro = false;
-    } else {
-      estimateCount = data.estimate_count || 0;
+      .maybeSingle();
+    if(data){
       isPro = data.is_pro || false;
       window._userLogoUrl = data.logo_url || null;
       if(data.prefs) applyPrefs(data.prefs);
@@ -1643,19 +1683,6 @@ async function loadUserData(){
     updateUserBadge();
   } catch(e) {
     console.error('Load user error:', e);
-  }
-}
-
-async function incrementEstimateCount(){
-  estimateCount++;
-  saveLocalCount();
-  updateUserBadge();
-  if(currentUser && sbClient){
-    try {
-      await sbClient.from('users')
-        .update({ estimate_count: estimateCount })
-        .eq('id', currentUser.id);
-    } catch(e) { console.error('Count update error:', e); }
   }
 }
 
@@ -1680,7 +1707,11 @@ function updateUserBadge(){
       if(dashBtn) dashBtn.style.display='none';
       if(badge){ badge.style.display='none'; }
       if(freeDisplay){
-        freeDisplay.textContent = rem === 2 ? '2 free estimates left' : rem === 1 ? 'Last free estimate — Go Pro to keep going' : 'Free estimates used — Go Pro to continue';
+        const es=appLang==='es';
+        freeDisplay.textContent = rem > 1 ? (es?`${rem} estimados gratis restantes`:`${rem} free estimates left`)
+          : rem === 1 ? (es?'Último estimado gratis':'Last free estimate')
+          : currentUser ? (es?'Estimados gratis usados. Pasa a Pro para seguir.':'Free estimates used. Go Pro to continue.')
+          : (es?'Estimados gratis usados. Crea una cuenta gratis para 2 más.':'Free estimates used. Create a free account for 2 more.');
         freeDisplay.style.color = rem===0?'#ff6b6b':rem===1?'#FFB300':'var(--muted)';
         freeDisplay.style.display='block';
       }
@@ -1697,7 +1728,7 @@ function updateUserBadge(){
   } else {
     if(badge){ badge.style.display='none'; }
     if(freeDisplay){
-      freeDisplay.textContent='3 free estimates';
+      freeDisplay.textContent=appLang==='es'?`${FREE_LIMIT} estimados gratis`:`${FREE_LIMIT} free estimates`;
       freeDisplay.style.color='var(--muted)';
       freeDisplay.style.display='block';
     }
@@ -1710,10 +1741,6 @@ function updateUserBadge(){
   updateAuthPanel();
 }
 
-function canRunEstimate(){
-  if(isPro) return true;
-  return estimateCount < FREE_LIMIT;
-}
 
 function showAuth(){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -1802,16 +1829,22 @@ async function handleAuth(){
     
     if(result.error){
       errEl.textContent = result.error.message;
+    } else if(authMode === 'signup' && !result.data.session){
+      // Email confirmation is on: no session until they click the link.
+      trackEvent('signup');
+      errEl.style.color='var(--gold)';
+      errEl.textContent=appLang==='es'?'Cuenta creada. Confirma tu correo y luego inicia sesión.':'Account created. Confirm your email, then sign in.';
     } else {
       currentUser = result.data.user;
       if(authMode === 'signup'){
+        trackEvent('signup');
         errEl.style.color='var(--gold)';
-        errEl.textContent='Account created! You have 3 free estimates.';
+        errEl.textContent=appLang==='es'?'Cuenta creada: 2 estimados gratis más y descargas en PDF.':'Account created: 2 more free estimates and PDF downloads.';
       }
       await loadUserData();
       closeAuthPanel();
       updateUserBadge();
-      setTimeout(()=>{}, 300);
+      resumeAfterAuth();
     }
   } catch(e) {
     errEl.textContent="Couldn't reach the sign-in service. Check your connection and try again.";
@@ -1820,10 +1853,19 @@ async function handleAuth(){
   btn.disabled=false;
 }
 
+// Pick up where the person was when we asked them to sign up.
+function resumeAfterAuth(){
+  const next=window._afterAuth; window._afterAuth=null;
+  if(next==='pdf_internal'||next==='pdf_proposal'){ if(currentEstimate) showEmailGate(next==='pdf_proposal'?'proposal':'internal'); }
+  else if(next==='estimate'){ showToast(appLang==='es'?'Listo. Ya puedes correr tu estimado.':'All set. You can run your estimate now.',4000); }
+}
+
 async function handleSignOut(){
   if(sbClient) await sbClient.auth.signOut();
-  currentUser=null; estimateCount=0; isPro=false;
-  showAuth();
+  currentUser=null; isPro=false;
+  await refreshUsage();
+  closeAuthPanel();
+  updateUserBadge();
 }
 
 function handleUpgrade(plan){
@@ -1875,8 +1917,7 @@ async function checkUpgradeReturn(){
     const {data} = await sbClient.from('users').select('is_pro').eq('id',currentUser.id).maybeSingle();
     if(data?.is_pro){
       isPro=true;
-      estimateCount=0;
-      saveLocalCount();
+      refreshUsage();
       updateUserBadge();
       showToast('✦ Welcome to Even Pro — unlimited estimates unlocked.');
       return;
@@ -2227,11 +2268,11 @@ function applyCacheBreakpoint(body,messages,useCache){
   body.messages=[{role:'user',content:cached},...messages.slice(1)];
 }
 
-async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sameInSameOut=false){
+async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sameInSameOut=false,kind='estimate'){
   // Sonnet 5: adaptive thinking is on by default — the model reasons through the
   // math before writing. max_tokens caps thinking + response together, so callers
   // pass larger budgets than the visible output alone would need.
-  const body={model:'claude-sonnet-5',max_tokens:maxTokens,messages};
+  const body={even_kind:kind,model:'claude-sonnet-5',max_tokens:maxTokens,messages};
   if(effort) body.output_config={effort};
   applyCacheBreakpoint(body,messages,useCache);
   const MAX_RETRIES=2;
@@ -2241,7 +2282,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sam
       const tid=setTimeout(()=>ctrl.abort(),100000);
       const r=await fetch(`${API_ORIGIN}/api/estimate`,{
         method:'POST',
-        headers:sameInSameOut?{'Content-Type':'application/json','X-Even-Cache':'1'}:{'Content-Type':'application/json'},
+        headers:await apiHeaders(sameInSameOut?{'X-Even-Cache':'1'}:{}),
         body:JSON.stringify(body),
         signal:ctrl.signal
       });
@@ -2251,6 +2292,8 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sam
         const e=await r.json().catch(()=>({}));
         // Prefer the server/Anthropic message when present; only fall back to a generic status line when there is none
         const detail=e.error?.message||'';
+        // Limits and rejections are answers, not network trouble: never retry them.
+        if([400,402,403,429].includes(r.status)){ const err=new Error(detail||('HTTP '+r.status)); err.code=e.error?.code||('http_'+r.status); err.noRetry=true; throw err; }
         let friendly;
         if(r.status===429) friendly='Rate limited — wait a few seconds and retry';
         else if(detail) friendly=`${detail} (${r.status})`;
@@ -2267,7 +2310,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sam
       return d.content.map(b=>b.text||'').join('');
     }catch(e){
       // Truncation is deterministic — retrying the same request reproduces it.
-      if(e.message==='truncated_output') throw e;
+      if(e.message==='truncated_output'||e.noRetry) throw e;
       // Give aborted/timeouts and network drops a readable message instead of a blank one
       if(e.name==='AbortError') e=new Error('Request timed out — check your connection and try again');
       else if(!e.message) e=new Error('Network error — could not reach the estimate service');
@@ -2281,7 +2324,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sam
 // as text arrives. Returns the full accumulated text. Falls back to callClaude on any
 // streaming failure so an estimate is never lost.
 async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}){
-  const body={model:'claude-sonnet-5',max_tokens:maxTokens,stream:true,messages};
+  const body={even_kind:opts.kind||'estimate',model:'claude-sonnet-5',max_tokens:maxTokens,stream:true,messages};
   if(opts.effort) body.output_config={effort:opts.effort};
   // Sonnet 5 thinks by default and returns thinking blocks with EMPTY text unless
   // asked for a summary. That empty stream is what the dead progress bar was made
@@ -2294,7 +2337,7 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
   let r;
   try{
     r=await fetch(`${API_ORIGIN}/api/estimate`,{
-      method:'POST',headers:opts.sameInSameOut?{'Content-Type':'application/json','X-Even-Cache':'1'}:{'Content-Type':'application/json'},
+      method:'POST',headers:await apiHeaders(opts.sameInSameOut?{'X-Even-Cache':'1'}:{}),
       body:JSON.stringify(body),signal:ctrl.signal
     });
   }catch(e){ clearTimeout(tid); throw e; }
@@ -2302,7 +2345,9 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
   if(!r.ok){
     clearTimeout(tid);
     const e=await r.json().catch(()=>({}));
-    throw new Error((e.error?.message||('HTTP '+r.status))+' ('+r.status+')');
+    const err=new Error((e.error?.message||('HTTP '+r.status))+' ('+r.status+')');
+    if([400,402,403,429].includes(r.status)){ err.code=e.error?.code||('http_'+r.status); err.noRetry=true; }
+    throw err;
   }
   // If the server didn't stream (older deploy), fall back to reading it as one JSON body
   const ctype=r.headers.get('content-type')||'';
@@ -2641,15 +2686,11 @@ function startThinkingStatus(elId,msgs){
 }
 
 async function startEstimate(){
-  // Gate at run time for free users — not at PDF download
-  if(!canRunEstimate()&&!isPro){
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    document.getElementById('screen-paywall').classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
-    return;
-  }
+  // The server decides whether a new estimate is allowed (and answers a re-run
+  // of the same job from cache without counting it). If it says no, the scope
+  // call comes back with the reason and showLimitReached takes over.
   // Last free estimate warning — show toast, don't block
-  if(!isPro && estimateCount === FREE_LIMIT - 1){
+  if(!isPro && window._usage && estimateCount === FREE_LIMIT - 1){
     showToast('Last free estimate — Go Pro to keep going', 5000);
   }
   const scope=document.getElementById('scope-text').value.trim();
@@ -2683,7 +2724,7 @@ async function startEstimate(){
   msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.`});
 
   try{
-    const res=await callClaude([{role:'user',content:msgContent}],3000,false,'low',true);
+    const res=await callClaude([{role:'user',content:msgContent}],3000,false,'low',true,'scope');
     let data;
     try{
       data=parseJ(res);
@@ -2692,7 +2733,7 @@ async function startEstimate(){
         {role:'user',content:msgContent},
         {role:'assistant',content:res},
         {role:'user',content:'Your response was not valid JSON. Return ONLY the corrected JSON object, nothing else.'}
-      ],1500,false,'low');
+      ],1500,false,'low',false,'scope_fix');
       data=parseJ(fixRes);
     }
     window._scopeData=data;
@@ -2705,6 +2746,12 @@ async function startEstimate(){
     document.getElementById('gen-btn').disabled=false;
   }catch(e){
     stopStatus();
+    if(e.noRetry&&['signup_required','pro_required','limit_reached','daily_cap','rate_limited','unavailable'].includes(e.code)){
+      document.getElementById('gen-btn').disabled=false;
+      navigate('input');
+      showLimitReached(e.code);
+      return;
+    }
     document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">${escapeHtml(e.message)||'Couldn\'t read that scope. Add a little more detail, or re-upload the file.'}</span>`;
     document.getElementById('gen-btn').disabled=false;
   }
@@ -3541,10 +3588,11 @@ Return the JSON for THIS job now.`;
     let guard=makeStallGuard();
     try{
       try{
-        res=await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],EST_TOKENS,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true}),guard.promise]);
+        res=await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],EST_TOKENS,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true,kind:'estimate'}),guard.promise]);
         guard.cancel();
       }catch(streamErr){
         guard.cancel();
+        if(streamErr.noRetry) throw streamErr;
         const truncated=streamErr.message==='truncated_output';
         console.warn(truncated?'Estimate hit the token ceiling — retrying with more headroom'
                               :'Stream failed, falling back to non-stream: '+streamErr.message);
@@ -3595,7 +3643,7 @@ Return the JSON for THIS job now.`;
     if(psEl) psEl.style.display='block';
     const peCard = document.getElementById('proposal-edit-card');
     if(peCard){ peCard.style.display='block'; populateProposalAssumptions(); }
-    incrementEstimateCount();
+    refreshUsage();
     if(isPro && currentUser) {
       saveEstimateToCloud(data);
       savePrefs();
@@ -3604,6 +3652,7 @@ Return the JSON for THIS job now.`;
   }catch(e){
     hideLoading();
     btn.disabled=false;
+    if(e.noRetry&&e.code){ refreshUsage(); showLimitReached(e.code); return; }
     const msg=e.message==='stall_timeout'?
       (appLang==='en'?'Taking too long — check your connection and try again.':'Está tardando demasiado — verifica tu conexión e intenta de nuevo.'):
       e.message&&e.message.toLowerCase().includes('load')?
@@ -3800,10 +3849,13 @@ function delLine(idx){
   recompute();
 }
 
-function openProModal(title, desc){
+function openProModal(title, desc, limitReached){
   document.getElementById('pro-modal-title').textContent = title || 'Pro Feature';
   document.getElementById('pro-modal-desc').textContent = desc || 'Upgrade to Even Pro to unlock this.';
+  const dt=document.getElementById('pro-modal-datatrade');
+  if(dt) dt.style.display=limitReached?'block':'none';
   document.getElementById('pro-feature-modal').classList.add('open');
+  trackEvent('pro_modal_shown');
 }
 function closeProModal(){
   document.getElementById('pro-feature-modal').classList.remove('open');
@@ -4032,18 +4084,19 @@ function renderTotals(data){
 // ══════════════════════════
 //  EMAIL + PDF
 // ══════════════════════════
+// PDFs need a free account (decided 2026-10-03). The on-screen estimate stays
+// open to everyone; the downloads are the reason to sign up.
 function showEmailGate(type){
   pdfTarget=type;
-  if(isPro && currentUser){
-    if(currentEstimate) currentEstimate.paymentTerms=selectedPaySched;
-    if(type==='proposal') renderProposalPreview();
-    else downloadCostSheet();
+  if(!currentUser){
+    window._afterAuth=type==='proposal'?'pdf_proposal':'pdf_internal';
+    openSignupPanel(appLang==='es'?'Crea una cuenta gratis para descargar el PDF.':'Create a free account to download the PDF.');
     return;
   }
-  const gate=document.getElementById('email-gate');
-  gate.style.display='block';
-  gate.scrollIntoView({behavior:'smooth',block:'center'});
-  document.getElementById('email-in').focus();
+  if(currentEstimate) currentEstimate.paymentTerms=selectedPaySched;
+  trackEvent('pdf_download');
+  if(type==='proposal') renderProposalPreview();
+  else downloadCostSheet();
 }
 
 function downloadPDF(){
@@ -4716,8 +4769,6 @@ function handleTradePhoto(input){
 function closeDataTrade(){
   const modal = document.getElementById('data-trade-modal');
   if(modal) modal.style.display='none';
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-paywall').classList.add('active');
 }
 
 async function submitDataTrade(){
@@ -4755,15 +4806,17 @@ async function submitDataTrade(){
     sessionStorage.setItem('even_trade_used','1');
   }
 
-  estimateCount = Math.max(0, estimateCount - 1);
-  saveLocalCount();
-  if(currentUser && sbClient){
-    sbClient.from('users').update({ estimate_count: estimateCount }).eq('id', currentUser.id).catch(()=>{});
-  }
+  // The extra estimate is granted by the server (once per account and per device).
+  let credit=null;
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/data-trade-credit`,{method:'POST',headers:await apiHeaders(),body:'{}'});
+    credit=await r.json();
+  }catch(e){}
+  await refreshUsage();
 
   const modal = document.getElementById('data-trade-modal');
   if(modal) modal.style.display='none';
-  alert('Thank you. 1 free estimate unlocked.');
+  alert(credit?.ok?'Thank you. 1 free estimate unlocked.':'Thank you. Your free data trade estimate was already used on this account or device.');
   navigate('input');
 }
 </script>
@@ -4794,6 +4847,7 @@ async function submitDataTrade(){
         <button onclick="closeProModal();handleUpgrade('annual')" style="width:100%;padding:11px 6px;background:transparent;border:1.5px solid var(--rim2);border-radius:9px;color:var(--white2);font-weight:600;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">Go Annual</button>
       </div>
     </div>
+    <button id="pro-modal-datatrade" onclick="closeProModal();openDataTrade()" style="display:none;margin:4px auto 0;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline" data-en="Or share one past job's cost for 1 more free estimate" data-es="O comparte el costo de un trabajo pasado por 1 estimado gratis más">Or share one past job's cost for 1 more free estimate</button>
     <button class="pro-modal-close" onclick="closeProModal()">Maybe later</button>
   </div>
 </div>
@@ -5018,9 +5072,9 @@ async function proposalBeautify(){
   const scope=document.getElementById('scope-text')?.value||currentEstimate.projectName||'';
   try{
     const r=await fetch(`${API_ORIGIN}/api/estimate`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
+      method:'POST',headers:await apiHeaders(),
       body:JSON.stringify({
-        model:'claude-haiku-4-5',max_tokens:500,
+        even_kind:'beautify',model:'claude-haiku-4-5',max_tokens:500,
         messages:[{role:'user',content:`You are a professional proposal writer for contractors. Rewrite the following project scope into clean, client-facing proposal language. Sound professional and confident. Keep it concise (2-3 sentences max). Do NOT use jargon. Do NOT mention specific prices. Return ONLY the rewritten text, no quotes, no intro.\n\nOriginal scope: "${scope}"\nWork items: ${items}`}]
       })
     });
@@ -5431,6 +5485,7 @@ async function extractPriceSheet(input){
       const mediaType = file.type || 'image/jpeg';
 
       const body = {
+        even_kind: 'price_sheet',
         model: 'claude-haiku-4-5',
         max_tokens: 1500,
         messages:[{
@@ -5445,7 +5500,7 @@ Include every distinct material/product with a price. If supplier name is visibl
         }]
       };
 
-      const resp = await fetch('/api/estimate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+      const resp = await fetch(`${API_ORIGIN}/api/estimate`,{method:'POST',headers:await apiHeaders(),body:JSON.stringify(body)});
       const data = await resp.json();
       const text = data.content?.[0]?.text||'';
       let extracted;
@@ -5704,8 +5759,9 @@ async function generateInsights(estimates){
   try{
     const r=await fetch(`${API_ORIGIN}/api/estimate`,{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:await apiHeaders(),
       body:JSON.stringify({
+        even_kind:'insights',
         model:'claude-haiku-4-5',
         max_tokens:400,
         messages:[{role:'user',content:`You are Even, a business intelligence AI for contractors. Analyze this contractor's estimate history. Return exactly 3 short, specific, actionable insights — each one sentence. Mention real numbers from their data. Focus on margin risk, pricing patterns, or win/loss trends. No generic advice.\n\nData:\n${summary}\n\nReturn ONLY valid JSON, no markdown: {"insights":["...","...","..."]}`}]
