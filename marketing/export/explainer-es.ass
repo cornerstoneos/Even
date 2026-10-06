@@ -1,0 +1,37 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Inter,62,&H00FFFFFF,&H00FFFFFF,&H260A0A0A,&H00000000,-1,0,0,0,100,100,0,0,3,16,0,2,150,150,330,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:01.50,Cap,,0,0,0,,{\c&H37AFD4&}Even{\c&HFFFFFF&}.
+Dialogue: 0,0:00:01.54,0:00:02.70,Cap,,0,0,0,,Alcance adentro,
+Dialogue: 0,0:00:02.74,0:00:05.00,Cap,,0,0,0,,oferta ganadora afuera.
+Dialogue: 0,0:00:05.32,0:00:06.30,Cap,,0,0,0,,Sube los planos,
+Dialogue: 0,0:00:06.38,0:00:07.80,Cap,,0,0,0,,eso es todo.
+Dialogue: 0,0:00:08.42,0:00:10.00,Cap,,0,0,0,,{\c&H37AFD4&}Even{\c&HFFFFFF&} ya está buscando
+Dialogue: 0,0:00:10.04,0:00:11.50,Cap,,0,0,0,,los datos de permisos de tu ciudad,
+Dialogue: 0,0:00:11.66,0:00:12.60,Cap,,0,0,0,,no del condado,
+Dialogue: 0,0:00:12.64,0:00:14.50,Cap,,0,0,0,,de tu ciudad.
+Dialogue: 0,0:00:14.86,0:00:16.10,Cap,,0,0,0,,Unos detalles más:
+Dialogue: 0,0:00:16.20,0:00:18.60,Cap,,0,0,0,,ubicación, oficio, metros cuadrados,
+Dialogue: 0,0:00:18.80,0:00:20.90,Cap,,0,0,0,,lo justo para hacerlo bien.
+Dialogue: 0,0:00:21.52,0:00:23.00,Cap,,0,0,0,,Ajusta tus gastos generales,
+Dialogue: 0,0:00:23.08,0:00:25.90,Cap,,0,0,0,,tu ganancia, tu margen de riesgo.
+Dialogue: 0,0:00:26.14,0:00:29.40,Cap,,0,0,0,,Mira tu protección asegurarse, en vivo.
+Dialogue: 0,0:00:29.78,0:00:31.60,Cap,,0,0,0,,Tarifas de permisos reales,
+Dialogue: 0,0:00:31.68,0:00:33.80,Cap,,0,0,0,,números reales.
+Dialogue: 0,0:00:33.92,0:00:34.95,Cap,,0,0,0,,Un número para ti,
+Dialogue: 0,0:00:35.04,0:00:36.85,Cap,,0,0,0,,una propuesta para el cliente,
+Dialogue: 0,0:00:36.92,0:00:39.90,Cap,,0,0,0,,construidos con los mismos datos reales.
+Dialogue: 0,0:00:40.50,0:00:42.10,Cap,,0,0,0,,Haz el trabajo,
+Dialogue: 0,0:00:42.24,0:00:44.90,Cap,,0,0,0,,nosotros manejamos la oferta.
+Dialogue: 0,0:00:45.12,0:00:46.05,Cap,,0,0,0,,{\c&H37AFD4&}Even{\c&HFFFFFF&}.
+Dialogue: 0,0:00:46.14,0:00:47.80,Cap,,0,0,0,,Inteligencia de estimación,
+Dialogue: 0,0:00:47.88,0:00:49.40,Cap,,0,0,0,,hecha para contratistas.
