@@ -333,6 +333,8 @@ body.has-gopro .topbar-brand{display:none}
 .li-row input{background:transparent;border:none;border-bottom:1px solid transparent;color:var(--white);font-size:12.5px;font-family:'DM Sans',sans-serif;padding:2px 0;outline:none;width:100%;transition:border .15s}
 .li-row input:focus{border-bottom-color:var(--gold)}
 .li-total{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-accent);text-align:right;font-weight:500}
+.biz-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.biz-grid .finput{font-size:12px;padding:8px 10px}
 .li-src{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin:-2px 0 6px 2px;line-height:1.4}
 .li-src.est{color:var(--gold)}
 .li-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;text-align:center;transition:color .15s;padding:0;width:26px}
@@ -919,7 +921,7 @@ body.has-gopro .topbar-brand{display:none}
         <span style="font-size:10px;color:var(--muted);white-space:nowrap">or</span>
         <div style="flex:1;height:1px;background:var(--rim)"></div>
       </div>
-      <button onclick="sbClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin}})" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-weight:600;font-size:13px;cursor:pointer;width:100%;box-sizing:border-box">
+      <button onclick="signInWithGoogle()" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-weight:600;font-size:13px;cursor:pointer;width:100%;box-sizing:border-box">
         <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
         Continue with Google
       </button>
@@ -1436,6 +1438,19 @@ body.has-gopro .topbar-brand{display:none}
             </div>
           </div>
           <div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px" data-en="YOUR BUSINESS (SHOWN ON THE PROPOSAL)" data-es="TU NEGOCIO (APARECE EN LA PROPUESTA)">YOUR BUSINESS (SHOWN ON THE PROPOSAL)</div>
+            <div class="biz-grid">
+              <input id="biz-company" data-en="1" data-es="1" class="finput" placeholder="Company name" data-placeholder-en="Company name" data-placeholder-es="Nombre de la empresa" oninput="setBiz('company',this.value)">
+              <input id="biz-license" data-en="1" data-es="1" class="finput" placeholder="License #" data-placeholder-en="License #" data-placeholder-es="Licencia n.º" oninput="setBiz('license',this.value)">
+              <input id="biz-phone" data-en="1" data-es="1" class="finput" type="tel" placeholder="Phone" data-placeholder-en="Phone" data-placeholder-es="Teléfono" oninput="setBiz('phone',this.value)">
+              <input id="biz-email" data-en="1" data-es="1" class="finput" type="email" placeholder="Email" data-placeholder-en="Email" data-placeholder-es="Correo" oninput="setBiz('email',this.value)">
+            </div>
+          </div>
+          <div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px" data-en="JOB ADDRESS" data-es="DIRECCIÓN DEL TRABAJO">JOB ADDRESS</div>
+            <input id="prop-job-address" data-en="1" data-es="1" class="finput" placeholder="Street, city" data-placeholder-en="Street, city" data-placeholder-es="Calle, ciudad" oninput="liveProposalUpdate()">
+          </div>
+          <div>
             <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px">NOTE TO CLIENT</div>
             <textarea id="prop-note" placeholder="e.g. Thank you for the opportunity — we look forward to working together." style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()"></textarea>
           </div>
@@ -1495,14 +1510,14 @@ body.has-gopro .topbar-brand{display:none}
         <div class="proposal-wrap" id="proposal-content"></div>
         <div style="display:flex;gap:8px;margin-top:12px">
           <button class="cta" onclick="downloadProposalPDF()" data-en="⬇ Download PDF" data-es="⬇ Descargar PDF">⬇ Download PDF</button>
-          <button class="cta cta-ghost" onclick="navigate('input')" data-en="New Estimate" data-es="Nuevo Estimado">New Estimate</button>
+          <button class="cta cta-ghost" onclick="startNewEstimate()" data-en="New Estimate" data-es="Nuevo Estimado">New Estimate</button>
         </div>
       </div>
 
       </div>
       </div>
       <div class="foot-nav">
-        <button class="cta cta-ghost cta-sm" onclick="navigate('input')" data-en="↺ Start Over" data-es="↺ Empezar de Nuevo">↺ Start Over</button>
+        <button class="cta cta-ghost cta-sm" onclick="startNewEstimate()" data-en="↺ Start Over" data-es="↺ Empezar de Nuevo">↺ Start Over</button>
         <button class="cta cta-ghost cta-sm" onclick="navigate('refine')" data-en="← Edit Answers" data-es="← Editar Respuestas">← Edit Answers</button>
       </div>
 
@@ -1557,7 +1572,7 @@ async function apiHeaders(extra){
 }
 async function refreshUsage(){
   try{
-    const r=await fetch(`${API_ORIGIN}/api/usage`,{headers:await apiHeaders()});
+    const r=await fetch(`${API_ORIGIN}/api/usage`,{headers:await apiHeaders(),signal:AbortSignal.timeout(10000)});
     if(!r.ok) return null;
     const u=await r.json();
     window._usage=u;
@@ -1653,7 +1668,7 @@ async function checkSession(){
     const { data: { session } } = await sbClient.auth.getSession();
     if(session?.user){
       currentUser = session.user;
-      await loadUserData();
+      await withTimeout(loadUserData(),15000).catch(()=>{});
     } else {
       isPro = false;
       await refreshUsage();
@@ -1663,6 +1678,8 @@ async function checkSession(){
     console.error('Session check error:', e);
     refreshUsage();
   }
+  restoreDraft();
+  restoreAfterOAuth();
 }
 
 async function loadUserData(){
@@ -1804,59 +1821,119 @@ function updateAuthPanel(){
   }
 }
 
+// Sign-in must never leave a frozen screen (bug 2, 2026-10-06): every step has a
+// time limit, the button always comes back, and the panel closes the moment the
+// account is signed in. Loading the account's settings happens after, in the
+// background.
+const AUTH_TIMEOUT_MS=20000;
+const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('auth_timeout')),ms))]);
+function resetAuthButton(){
+  const btn=document.getElementById('auth-submit-btn');
+  if(btn){ btn.textContent=authMode==='login'?'Sign In':'Create Account'; btn.disabled=false; }
+}
 async function handleAuth(){
   const email = document.getElementById('auth-email').value.trim();
   const password = document.getElementById('auth-password').value;
   const errEl = document.getElementById('auth-error');
   const btn = document.getElementById('auth-submit-btn');
-  
-  if(!email || !password){ errEl.textContent='Please enter email and password.'; return; }
-  if(password.length < 6){ errEl.textContent='Password must be at least 6 characters.'; return; }
-  
+  const es = appLang==='es';
+  errEl.style.color='#ff6b6b';
+  if(!email || !password){ errEl.textContent=es?'Escribe tu correo y contraseña.':'Please enter email and password.'; return; }
+  if(password.length < 6){ errEl.textContent=es?'La contraseña debe tener al menos 6 caracteres.':'Password must be at least 6 characters.'; return; }
+  if(!sbClient){ errEl.textContent=es?'El inicio de sesión no cargó. Actualiza la página.':"Sign-in didn't load. Refresh the page and try again."; return; }
   btn.textContent='...'; btn.disabled=true;
   errEl.textContent='';
-  
+  const mode=authMode;
   try {
-    let result;
-    if(authMode === 'login'){
-      result = await sbClient.auth.signInWithPassword({ email, password });
-    } else {
+    const result = mode==='login'
+      ? await withTimeout(sbClient.auth.signInWithPassword({ email, password }),AUTH_TIMEOUT_MS)
       // Without emailRedirectTo, the confirmation link falls back to Supabase's
-      // Site URL — the same setting that was sending Google sign-in to localhost.
-      // Send people back to the site they actually signed up on.
-      result = await sbClient.auth.signUp({ email, password, options:{ emailRedirectTo: window.location.origin } });
-    }
-    
+      // Site URL. Send people back to the site they actually signed up on.
+      : await withTimeout(sbClient.auth.signUp({ email, password, options:{ emailRedirectTo: window.location.origin } }),AUTH_TIMEOUT_MS);
     if(result.error){
       errEl.textContent = result.error.message;
-    } else if(authMode === 'signup' && !result.data.session){
+    } else if(mode === 'signup' && !result.data.session){
       // Email confirmation is on: no session until they click the link.
       trackEvent('signup');
       errEl.style.color='var(--gold)';
-      errEl.textContent=appLang==='es'?'Cuenta creada. Confirma tu correo y luego inicia sesión.':'Account created. Confirm your email, then sign in.';
+      errEl.textContent=es?'Cuenta creada. Confirma tu correo y luego inicia sesión.':'Account created. Confirm your email, then sign in.';
     } else {
       currentUser = result.data.user;
-      if(authMode === 'signup'){
-        trackEvent('signup');
-        errEl.style.color='var(--gold)';
-        errEl.textContent=appLang==='es'?'Cuenta creada: 2 estimados gratis más y descargas en PDF.':'Account created: 2 more free estimates and PDF downloads.';
-      }
-      await loadUserData();
+      if(mode === 'signup') trackEvent('signup');
       closeAuthPanel();
       updateUserBadge();
+      showToast(mode==='signup'
+        ?(es?'Cuenta creada. Tienes estimados gratis extra y descargas en PDF.':'Account created. You get extra free estimates and PDF downloads.')
+        :(es?'Sesión iniciada.':'Signed in.'),4000);
+      // Settings and counts load in the background; the screen stays usable.
+      withTimeout(loadUserData(),15000).catch(()=>{}).finally(()=>{ updateUserBadge(); });
       resumeAfterAuth();
     }
   } catch(e) {
-    errEl.textContent="Couldn't reach the sign-in service. Check your connection and try again.";
+    errEl.textContent = e.message==='auth_timeout'
+      ?(es?'El inicio de sesión está tardando demasiado. Revisa tu conexión e intenta de nuevo.':'Sign-in is taking too long. Check your connection and try again.')
+      :(es?'No pudimos conectar con el inicio de sesión. Revisa tu conexión e intenta de nuevo.':"Couldn't reach the sign-in service. Check your connection and try again.");
+  } finally {
+    resetAuthButton();
   }
-  btn.textContent = authMode === 'login' ? 'Sign In' : 'Create Account';
-  btn.disabled=false;
 }
+
+// Google sign-in leaves the page. Save the job and any finished estimate first,
+// so coming back (signed in, or after backing out of Google) lands on the same
+// estimate instead of an empty form.
+async function signInWithGoogle(){
+  const es=appLang==='es';
+  try{
+    sessionStorage.setItem('even_oauth_return',JSON.stringify({
+      at:Date.now(), afterAuth:window._afterAuth||null,
+      estimate:currentEstimate||null, ctx:window._ctx||null, marketMeta:window._marketMeta||null,
+      finalBid:window._finalBid||null, paySched:typeof selectedPaySched!=='undefined'?selectedPaySched:null
+    }));
+    saveDraft();
+  }catch(e){}
+  try{
+    const {error}=await withTimeout(sbClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin}}),AUTH_TIMEOUT_MS);
+    if(error) throw error;
+  }catch(e){
+    try{ sessionStorage.removeItem('even_oauth_return'); }catch(_){}
+    const errEl=document.getElementById('auth-error');
+    if(errEl){ errEl.style.color='#ff6b6b'; errEl.textContent=es?'No se pudo abrir Google. Intenta de nuevo o usa tu correo.':"Couldn't open Google sign-in. Try again, or use your email."; }
+  }
+}
+// After a reload from Google (signed in or cancelled): put the estimate back.
+function restoreAfterOAuth(){
+  let snap=null;
+  try{ snap=JSON.parse(sessionStorage.getItem('even_oauth_return')||'null'); sessionStorage.removeItem('even_oauth_return'); }catch(e){}
+  if(!snap||Date.now()-snap.at>30*60000) return;
+  const es=appLang==='es';
+  if(snap.estimate){
+    currentEstimate=snap.estimate; window._ctx=snap.ctx; window._marketMeta=snap.marketMeta;
+    navigate('estimate');
+    renderEstimate(currentEstimate);
+    if(snap.finalBid){ window._finalBid=snap.finalBid; const fb=document.getElementById('final-bid-input'); if(fb) fb.value=snap.finalBid; updateBidHeadline(); }
+    const ps=document.getElementById('pay-sched-section'); if(ps) ps.style.display='block';
+    const pe=document.getElementById('proposal-edit-card'); if(pe){ pe.style.display='block'; populateProposalAssumptions(); }
+  }
+  if(currentUser){
+    showToast(es?'Sesión iniciada con Google.':'Signed in with Google.',3500);
+    window._afterAuth=snap.afterAuth; resumeAfterAuth();
+  }else{
+    showToast(es?'No se completó el inicio con Google. Tu estimado sigue aquí.':"Google sign-in wasn't completed. Your estimate is still here.",5000);
+  }
+}
+// Back button from Google can restore this page from the browser's memory with
+// the sign-in button still showing "...". Put the controls back and re-check.
+window.addEventListener('pageshow',e=>{
+  if(!e.persisted) return;
+  resetAuthButton();
+  try{ sessionStorage.removeItem('even_oauth_return'); }catch(_){}
+  if(sbClient) checkSession();
+});
 
 // Pick up where the person was when we asked them to sign up.
 function resumeAfterAuth(){
   const next=window._afterAuth; window._afterAuth=null;
-  if(next==='pdf_internal'||next==='pdf_proposal'){ if(currentEstimate) showEmailGate(next==='pdf_proposal'?'proposal':'internal'); }
+  if(next==='pdf_internal'||next==='pdf_proposal'){ if(currentEstimate){ navigate('estimate'); showEmailGate(next==='pdf_proposal'?'proposal':'internal'); } }
   else if(next==='estimate'){ showToast(appLang==='es'?'Listo. Ya puedes correr tu estimado.':'All set. You can run your estimate now.',4000); }
 }
 
@@ -1876,18 +1953,7 @@ function handleUpgrade(plan){
   window.location.href = base + '?client_reference_id='+(currentUser?.id||'guest') + email;
 }
 
-function goHome(){
-  // Reset estimate state
-  uploadedImages=[];
-  uploadedDocs=[];
-  const imgStrip=document.getElementById('img-strip');
-  if(imgStrip) imgStrip.innerHTML='';
-  const scopeText=document.getElementById('scope-text');
-  if(scopeText) scopeText.value='';
-  const genBtn=document.getElementById('gen-btn');
-  if(genBtn) genBtn.disabled=false;
-  navigate('input');
-}
+function goHome(){ startNewEstimate(); }
 
 // Check upgrade success on load
 //
@@ -1975,12 +2041,32 @@ function setLang(lang,btn){
 // ══════════════════════════
 //  NAVIGATE
 // ══════════════════════════
-function navigate(scr){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('s-'+scr).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  if(scr==='dashboard'){ loadDashboard(); renderSupplierList(); renderSubList(); }
-  if(scr==='input'){
+// ── Never lose a job by accident (bug 1, 2026-10-06) ─────────────────────────
+// Only an explicit "new estimate" clears the job, never while a request is still
+// running, and a finished estimate asks first. A second tap that lands on the
+// next screen right after a screen change is ignored.
+let _lastNavAt=0;
+window._runBusy=0; window._jobVersion=0;
+document.addEventListener('click',e=>{
+  if(e.isTrusted&&Date.now()-_lastNavAt<450){ e.stopPropagation(); e.preventDefault(); }
+},true);
+// The job being typed survives a page reload (going to Google sign-in and back
+// reloads the page). Kept in this tab only (sessionStorage), cleared by Start Over.
+const DRAFT_FIELDS=['est-trade','est-location','est-projtype','est-sqft','scope-text','est-client','est-project-label'];
+function saveDraft(){
+  try{ const d={}; DRAFT_FIELDS.forEach(id=>{const el=document.getElementById(id); if(el) d[id]=el.value;}); sessionStorage.setItem('even_draft',JSON.stringify(d)); }catch(e){}
+}
+function restoreDraft(){
+  try{
+    const d=JSON.parse(sessionStorage.getItem('even_draft')||'null'); if(!d) return;
+    DRAFT_FIELDS.forEach(id=>{const el=document.getElementById(id); if(el&&!el.value&&d[id]) el.value=d[id];});
+  }catch(e){}
+}
+document.addEventListener('input',e=>{ if(DRAFT_FIELDS.includes(e.target?.id)) saveDraft(); });
+document.addEventListener('change',e=>{ if(DRAFT_FIELDS.includes(e.target?.id)) saveDraft(); });
+
+function clearJob(){
+  window._jobVersion++;
     currentEstimate=null;
     document.getElementById('li-body').innerHTML='';
     document.getElementById('totals-body').innerHTML='';
@@ -2005,9 +2091,10 @@ function navigate(scr){
     const _fbi=document.getElementById('final-bid-input');if(_fbi)_fbi.value='';
     const _fbc=document.getElementById('final-bid-confirm');if(_fbc)_fbc.style.display='none';
     document.getElementById('loading-reveal').classList.remove('visible');
-    // Clear all input fields for fresh estimate
+    // Clear this job's fields. Trade, city and project type stay: they are the
+    // contractor's usual answers, and a re-run without a city used to price the
+    // job from general AI knowledge instead of local data (bug 4, 2026-10-06).
     document.getElementById('scope-text').value='';
-    const _loc=document.getElementById('est-location');if(_loc)_loc.value='';
     const _cli=document.getElementById('est-client');if(_cli)_cli.value='';
     const projectLabel=document.getElementById('est-project-label');
     if(projectLabel) projectLabel.value='';
@@ -2022,7 +2109,22 @@ function navigate(scr){
     document.getElementById('q-list').innerHTML='';
     const calcBtn=document.getElementById('calc-btn');
     if(calcBtn) calcBtn.style.display='none';
-  }
+  saveDraft();
+}
+function startNewEstimate(){
+  const es=appLang==='es';
+  if(window._runBusy>0){ showToast(es?'Espera, tu estimado todavía se está calculando.':'Hold on, your estimate is still running.',3500); return; }
+  if(currentEstimate&&!confirm(es?'¿Empezar un estimado nuevo? Este se borrará de la pantalla.':'Start a new estimate? This one will be cleared from the screen.')) return;
+  clearJob();
+  navigate('input');
+}
+
+function navigate(scr){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-'+scr).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(scr==='dashboard'){ loadDashboard(); renderSupplierList(); renderSubList(); }
+  _lastNavAt=Date.now();
 }
 
 // ══════════════════════════
@@ -2695,7 +2797,18 @@ async function startEstimate(){
   }
   const scope=document.getElementById('scope-text').value.trim();
   if(!scope&&uploadedImages.length===0&&uploadedDocs.length===0){alert(appLang==='en'?'Please add a scope of work first.':'Por favor agrega un alcance de trabajo.');return}
+  // Local prices, labor and the city's permit fees all come from the job's city.
+  // Without it the estimate would quietly fall back to general AI pricing.
+  if(!document.getElementById('est-location').value.trim()){
+    alert(appLang==='en'?"Add the job's city or ZIP code first. Local prices and permit fees depend on it.":'Agrega primero la ciudad o código postal del trabajo. Los precios locales y los permisos dependen de eso.');
+    document.getElementById('est-location').focus();
+    return;
+  }
+  if(window._runBusy>0) return;
   document.getElementById('gen-btn').disabled=true;
+  window._runBusy++;
+  const jobAtStart=window._jobVersion;
+  saveDraft();
 
   const trade=document.getElementById('est-trade').value;
   const location=document.getElementById('est-location').value;
@@ -2725,6 +2838,7 @@ async function startEstimate(){
 
   try{
     const res=await callClaude([{role:'user',content:msgContent}],3000,false,'low',true,'scope');
+    if(jobAtStart!==window._jobVersion){ stopStatus(); return; } // that job was cleared meanwhile
     let data;
     try{
       data=parseJ(res);
@@ -2753,6 +2867,9 @@ async function startEstimate(){
       return;
     }
     document.getElementById('ai-summary-text').innerHTML=`<span style="color:var(--red)">${escapeHtml(e.message)||'Couldn\'t read that scope. Add a little more detail, or re-upload the file.'}</span>`;
+    document.getElementById('gen-btn').disabled=false;
+  }finally{
+    window._runBusy=Math.max(0,window._runBusy-1);
     document.getElementById('gen-btn').disabled=false;
   }
 }
@@ -2947,8 +3064,8 @@ async function fetchMarketPricing(location){
   window._hvhzResolved=null;
   if(!location) return null;
   try{
-    const r=await fetch(`${API_ORIGIN}/api/market-data?location=${encodeURIComponent(location)}`);
-    if(!r.ok) return null;
+    const r=await fetch(`${API_ORIGIN}/api/market-data?location=${encodeURIComponent(location)}`,{signal:AbortSignal.timeout(15000)});
+    if(!r.ok) return {fetchFailed:true};
     const data=await r.json();
     // HVHZ is a statutory property of the location, not of whether we happen to have
     // priced that market yet — stash it before the no-pricing-data bail-out so a
@@ -2966,7 +3083,7 @@ async function fetchMarketPricing(location){
     return data;
   }catch(e){
     console.error('Market data fetch failed:',e.message);
-    return null;
+    return {fetchFailed:true};   // network trouble is not "no data for this city"
   }
 }
 
@@ -3286,7 +3403,14 @@ function priceScope(scope,cat,s){
 
 async function calculateEstimate(){
   const btn=document.getElementById('calc-btn');
+  if(window._runBusy>0||btn.disabled) return;
   btn.disabled=true;
+  window._runBusy++;
+  const jobAtStart=window._jobVersion;
+  try{ return await _calculateEstimate(btn,jobAtStart); }
+  finally{ window._runBusy=Math.max(0,window._runBusy-1); }
+}
+async function _calculateEstimate(btn,jobAtStart){
   const answers=window._qAnswers||{};
   (window._allQuestions||[]).forEach((q,i)=>{
     const other=document.getElementById(`qother-${i}`);
@@ -3315,7 +3439,13 @@ async function calculateEstimate(){
   // the rest silently skipped NOA materials, enhanced fasteners, the special inspector
   // and the 8-12% exterior uplift — a systematic under-estimate on exterior work.
   const cityInput=(document.getElementById('est-location').value||'').toLowerCase();
-  const marketData=await fetchMarketPricing(ctx.location);
+  let marketData=await fetchMarketPricing(ctx.location);
+  if(marketData&&marketData.fetchFailed){ await new Promise(r=>setTimeout(r,1500)); marketData=await fetchMarketPricing(ctx.location); }
+  if(marketData&&marketData.fetchFailed){
+    btn.disabled=false;
+    showToast(appLang==='en'?"Couldn't load local prices for this city. Check your connection and tap Build Estimate again.":'No pudimos cargar los precios locales. Revisa tu conexión y vuelve a tocar Generar Estimado.',6000);
+    return;
+  }
   // Fallback list, used only if the market lookup itself failed. Gated on a Florida
   // signal because several of these names exist elsewhere — "Hollywood, CA" must not
   // be priced as a hurricane zone.
@@ -3615,6 +3745,7 @@ Return the JSON for THIS job now.`;
     }
     setProg(100,appLang==='en'?'Complete ✓':'Completo ✓');
 
+    if(jobAtStart!==window._jobVersion){ hideLoading(); return; }
     const scoped=parseJ(res);
     // Every dollar from here on is computed in code from the catalog and the
     // contractor's own settings, so the same scope always prices the same.
@@ -4133,49 +4264,132 @@ async function captureLead(email, pdfType){
   }
 }
 
+// ══════════════════════════
+//  CLIENT PROPOSAL (bug 8, 2026-10-06)
+// ══════════════════════════
+// The client proposal is the contractor's document to their customer. It shows
+// the contractor's business, the client and job, the scope, what's included and
+// excluded, ONE price, the payment schedule, a 30-day validity and signatures.
+// It never shows Even's range, the words Even / Even OS / AI, supplier notes,
+// overhead / profit / cushion, sizing logic or other internal assumptions. The
+// cost sheet (the contractor's own copy) keeps all of that.
+const CLIENT_BANNED_RE=/\beven\b|\bai\b|\bia\b|estimat(ed|ing) by|\brange\b|\brango\b|midpoint|referencia|catalog|cat[aá]logo|not in (our|the) (data|catalog)|no est[aá] en nuestros|supplier|proveedor|verify|verifica|overhead|gastos generales|profit|ganancia|margin|margen|cushion|colch[oó]n|contingenc|markup|waste|desperdicio|scaled|escalad|\bbls\b|wage|salario|multiplier|multiplicador|hvhz|noa\b|pricing|priced|precio(s)? (de|del) (mercado|cat)|market data|datos (del|de) mercado|regional|closest|equivalent|stand.?in|sub(contractor)? markup|self-performed|schedule.?s minimum|building department|departamento de construcci|crew hours|labor-hours|sqft per|per labor/i;
+function clientSafeText(t){ return !!t&&!CLIENT_BANNED_RE.test(String(t)); }
+// Client copy of a line description: no internal sizing notes.
+function clientLineText(d){
+  return String(d||'').replace(/\s*\(incl\. \d+% waste\)/gi,'').replace(/\s*\(HVHZ\)/gi,'').replace(/\s*\(not in our data, estimated\)/gi,'').trim();
+}
+// Spanish client copy: the payment schedules and the usual category names.
+const PAY_ES={
+  '30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough.':'30% de depósito para agendar · 40% al terminar la instalación inicial · 30% en la inspección final.',
+  '50% deposit required to schedule · 50% upon project completion.':'50% de depósito para agendar · 50% al terminar el proyecto.',
+  '25% deposit to schedule · 25% at material delivery · 25% at rough-in · 25% upon final walkthrough.':'25% de depósito para agendar · 25% al entregar materiales · 25% en la instalación inicial · 25% en la inspección final.',
+  '100% payment due upon project completion.':'100% del pago al terminar el proyecto.'
+};
+const CAT_ES={Plumbing:'Plomería',Labor:'Mano de obra',Materials:'Materiales',Material:'Materiales',Disposal:'Desechos',Permits:'Permisos',Electrical:'Eléctrico',HVAC:'Aire acondicionado',Drywall:'Tablaroca',Flooring:'Pisos',Tile:'Azulejos',Paint:'Pintura',Painting:'Pintura',Roofing:'Techo',Framing:'Estructura',Concrete:'Concreto',Demolition:'Demolición',Demo:'Demolición',Delivery:'Entrega',Protection:'Protección',Fixtures:'Accesorios',Subcontractor:'Subcontratista','Equipment Rental':'Alquiler de equipo',Equipment:'Equipo',Other:'Otros',Cleanup:'Limpieza'};
+function getBiz(){
+  let b={};
+  try{ b=JSON.parse(localStorage.getItem('even_biz')||'{}')||{}; }catch(e){}
+  if(!b.email&&currentUser?.email) b.email=currentUser.email;
+  return b;
+}
+function setBiz(field,val){
+  const b=getBiz(); b[field]=String(val||'').slice(0,120);
+  try{ localStorage.setItem('even_biz',JSON.stringify(b)); }catch(e){}
+  clearTimeout(window._bizSaveT); window._bizSaveT=setTimeout(()=>{ if(currentUser) savePrefs(); },1200);
+  liveProposalUpdate();
+}
+function proposalNumber(data){
+  if(!data.proposalNo){
+    const d=new Date(), pad=n=>String(n).padStart(2,'0');
+    data.proposalNo=`P-${String(d.getFullYear()).slice(2)}${pad(d.getMonth()+1)}${pad(d.getDate())}-${Math.floor(1000+Math.random()*9000)}`;
+  }
+  return data.proposalNo;
+}
+// Everything the client proposal says, in one place. Preview and PDF both draw this.
+function buildClientProposal(data,ctx,lang){
+  const es=lang==='es';
+  const biz=getBiz();
+  const issued=new Date();
+  const fmtDate=d=>d.toLocaleDateString(es?'es-US':'en-US',{month:'long',day:'numeric',year:'numeric'});
+  const validUntil=new Date(issued.getTime()+30*86400000);
+  const price=window._finalBid?+window._finalBid:Math.round(+data.totalBid||0);
+  const cats={};
+  (data.lineItems||[]).filter(i=>(+i.total||0)>0||i.category).forEach(i=>{const c=i.category||(es?'Trabajo':'Work'); const cn=es?(CAT_ES[c]||c):c; (cats[cn]=cats[cn]||[]).push(clientLineText(i.description));});
+  const detail=window._proposalDetail||'full';
+  const scopeRows=detail==='lump'?[]:Object.entries(cats).map(([cat,items])=>({category:cat,items:detail==='category'?[items.join(', ')]:items}));
+  const assumptions=(Array.isArray(data.clientAssumptions)?data.clientAssumptions:(data.assumptions||[]).filter(clientSafeText)).slice(0,6);
+  const exclusions=[...(data.exclusions||[]).filter(clientSafeText),...(data.clientSupply?[(es?'El cliente suministra: ':'Client to supply: ')+data.clientSupply]:[])];
+  let pay=String(data.paymentTerms||'').replace(/\s*Price valid 30 days\.?/i,'').replace(/\s*Precio válido 30 días\.?/i,'').trim();
+  if(es&&PAY_ES[pay]) pay=PAY_ES[pay];
+  pay=pay
+    ||(es?'30% de depósito para agendar, 40% al terminar la instalación inicial, 30% al terminar.':'30% deposit to schedule, 40% at rough-in completion, 30% upon final walkthrough.');
+  return {
+    lang,
+    title:es?'Propuesta':'Proposal',
+    company:biz.company||'', phone:biz.phone||'', email:biz.email||'', license:biz.license||'',
+    logo:!!window._userLogoUrl,
+    number:proposalNumber(data), date:fmtDate(issued), validUntil:fmtDate(validUntil),
+    client:(ctx?.client&&ctx.client!=='Client')?ctx.client:'',
+    jobAddress:data.jobAddress||ctx?.location||'',
+    project:ctx?.projectLabel||data.projectName||'',
+    note:data.clientNote||'',
+    scopeIntro:es?'Esta propuesta cubre el trabajo descrito a continuación.':'This proposal covers the work described below.',
+    scopeRows, lump:detail==='lump',
+    lumpText:es?'Todo el trabajo descrito en esta propuesta.':'All work as described in this proposal.',
+    exclusions, assumptions,
+    priceLabel:es?'Precio total':'Total price', price, priceText:fmt(price),
+    payment:pay,
+    validity:es?`Precio válido por 30 días, hasta el ${fmtDate(validUntil)}.`:`Price valid for 30 days, until ${fmtDate(validUntil)}.`,
+    labels:es?{prepared:'Preparado para',job:'Trabajo',scope:'Alcance del trabajo',included:'Incluido',excluded:'No incluido',assumptions:'Condiciones',payment:'Forma de pago',license:'Licencia',number:'Propuesta n.º',date:'Fecha',clientSig:'Firma del cliente y fecha',contractorSig:'Firma del contratista y fecha',accept:'Al firmar, el cliente acepta esta propuesta.'}
+                :{prepared:'Prepared for',job:'Job',scope:'Scope of work',included:'Included',excluded:'Not included',assumptions:'Conditions',payment:'Payment schedule',license:'License',number:'Proposal #',date:'Date',clientSig:'Client signature and date',contractorSig:'Contractor signature and date',accept:'By signing, the client accepts this proposal.'}
+  };
+}
+// All the words a client proposal shows, for the banned-words check.
+function clientProposalText(P){
+  return [P.title,P.company,P.phone,P.email,P.license,P.number,P.date,P.client,P.jobAddress,P.project,P.note,P.scopeIntro,
+    ...P.scopeRows.flatMap(r=>[r.category,...r.items]),P.lump?P.lumpText:'',...P.exclusions,...P.assumptions,P.priceLabel,P.priceText,P.payment,P.validity,...Object.values(P.labels)].filter(Boolean).join('\n');
+}
+
 function renderProposalPreview(){
   if(!currentEstimate) return;
-  const data=currentEstimate,ctx=window._ctx;
-  const now=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  const L=appLang;
-  const cats={};
-  (data.lineItems||[]).forEach(item=>{if(!cats[item.category])cats[item.category]=[];cats[item.category].push(item)});
-  const detail=window._proposalDetail||'full';
-  let rows='';
-  if(detail==='full'){
-    rows=Object.entries(cats).map(([cat,items])=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#C8920A">${escapeHtml(cat)}</td></tr>`+items.map(item=>`<tr><td>${escapeHtml(item.description)}</td><td style="text-align:right;color:#888;font-size:11px">${escapeHtml(item.qty)} ${escapeHtml(item.unit)}</td></tr>`).join('')).join('');
-  } else if(detail==='category'){
-    rows=Object.entries(cats).map(([cat,items])=>{
-      const sub=items.reduce((s,i)=>s+i.total,0);
-      return `<tr><td style="font-weight:600;color:#555">${escapeHtml(cat)}</td><td style="text-align:right;font-weight:600;color:#555">${fmtK(sub)}</td></tr>`;
-    }).join('');
-  } else {
-    rows=`<tr><td colspan="2" style="text-align:center;padding:10px;color:#666;font-size:13px">All work as described in this proposal</td></tr>`;
-  }
-  const clientNote=data.clientNote||'';
-  const clientSupply=data.clientSupply||'';
-  const allExclusions=[...(data.exclusions||[]),...(clientSupply?['Client to supply: '+clientSupply]:[])];
+  const P=buildClientProposal(currentEstimate,window._ctx,appLang);
+  const e=escapeHtml, Lb=P.labels;
+  const contact=[P.phone,P.email].filter(Boolean).map(e).join(' · ');
+  const scopeHtml=P.lump?`<p style="font-size:12px;color:#555">${e(P.lumpText)}</p>`
+    :`<table class="prop-tbl"><tbody>${P.scopeRows.map(r=>`<tr><td colspan="2" style="padding:8px 8px 4px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a7a5a">${e(r.category)}</td></tr>`+r.items.map(it=>`<tr><td colspan="2">${e(it)}</td></tr>`).join('')).join('')}</tbody></table>`;
+  const box=items=>`<div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#777">${items.map(x=>`• ${e(x)}`).join('<br>')}</div>`;
   document.getElementById('proposal-content').innerHTML=`
     <div class="prop-inner">
       <div class="prop-hdr">
-        <div><h1>${L==='en'?'Project Proposal':'Propuesta de Proyecto'}</h1><p>Even OS</p></div>
-        <div class="prop-meta"><strong>${escapeHtml(data.projectName||'Estimate')}</strong>${now}<br>${escapeHtml(ctx?.location||'')}<br>${L==='en'?'Client':'Cliente'}: ${escapeHtml(ctx?.client||'—')}</div>
+        <div>
+          ${P.logo?`<img src="${e(window._userLogoUrl)}" alt="" style="max-height:42px;max-width:160px;display:block;margin-bottom:6px">`:''}
+          <h1>${e(P.company||P.title)}</h1>
+          ${contact?`<p>${contact}</p>`:''}
+          ${P.license?`<p>${e(Lb.license)}: ${e(P.license)}</p>`:''}
+        </div>
+        <div class="prop-meta"><strong>${e(P.title)}</strong>${e(Lb.number)} ${e(P.number)}<br>${e(Lb.date)}: ${e(P.date)}</div>
       </div>
-      ${clientNote?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${escapeHtml(clientNote)}</p>`:''}
-      <div class="prop-sec">${L==='en'?'Scope of Work':'Alcance del Trabajo'}</div>
-      <p style="font-size:12px;color:#666;line-height:1.6;margin-bottom:10px">${L==='en'?'This proposal covers the complete scope of work as outlined below.':'Esta propuesta cubre el alcance completo del trabajo detallado a continuación.'}</p>
-      <div class="prop-sec">${L==='en'?'Inclusions':'Incluido'}</div>
-      <table class="prop-tbl"><thead><tr><th>${L==='en'?'Description':'Descripción'}</th><th style="text-align:right">${L==='en'?'Qty / Unit':'Cant. / Unidad'}</th></tr></thead><tbody>${rows}</tbody></table>
-      ${allExclusions.length?`<div class="prop-sec">${L==='en'?'Exclusions':'Exclusiones'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${allExclusions.map(e=>`• ${escapeHtml(e)}`).join('<br>')}</div>`:''}
-      ${data.assumptions?.length?`<div class="prop-sec">${L==='en'?'Assumptions':'Supuestos'}</div><div style="background:#fdf9f6;border-left:3px solid #e2ddd6;padding:9px 13px;border-radius:0 6px 6px 0;font-size:11px;color:#888">${data.assumptions.map(a=>`• ${escapeHtml(a)}`).join('<br>')}</div>`:''}
-      <div class="prop-sec">${L==='en'?'Investment':'Inversión'}</div>
-      <div class="prop-total-bar" style="flex-direction:column;align-items:flex-start;gap:6px"><div style="width:100%;display:flex;justify-content:space-between;align-items:center"><span class="pl">${L==='en'?'Total Project Investment':'Inversión Total del Proyecto'}</span><span class="pv">${window._finalBid?fmt(window._finalBid):fmtK(Math.round(data.totalBid*getConfidenceRange(data)[0]))+' — '+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[1]))}</span></div>${window._finalBid?`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Even range: '+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[0]))+'–'+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[1])):'Rango Even: '+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[0]))+'–'+fmtK(Math.round(data.totalBid*getConfidenceRange(data)[1]))}</div>`:`<div style="font-size:9px;opacity:.65;font-family:'DM Mono',monospace">${L==='en'?'Midpoint ref: '+fmt(data.totalBid):'Referencia: '+fmt(data.totalBid)}</div>`}</div>
-      <p style="font-size:10px;color:#aaa;margin-top:8px">${escapeHtml(data.paymentTerms)||(L==='en'?'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.':'50% de depósito requerido. Saldo al terminar. Precio válido 30 días.')}</p>
+      <div style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px">
+        ${P.client?`<div><b>${e(Lb.prepared)}:</b> ${e(P.client)}</div>`:''}
+        ${P.jobAddress?`<div><b>${e(Lb.job)}:</b> ${e(P.jobAddress)}${P.project?` · ${e(P.project)}`:''}</div>`:''}
+      </div>
+      ${P.note?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${e(P.note)}</p>`:''}
+      <div class="prop-sec">${e(Lb.scope)}</div>
+      <p style="font-size:12px;color:#666;line-height:1.6;margin-bottom:8px">${e(P.scopeIntro)}</p>
+      <div class="prop-sec">${e(Lb.included)}</div>
+      ${scopeHtml}
+      ${P.exclusions.length?`<div class="prop-sec">${e(Lb.excluded)}</div>${box(P.exclusions)}`:''}
+      ${P.assumptions.length?`<div class="prop-sec">${e(Lb.assumptions)}</div>${box(P.assumptions)}`:''}
+      <div class="prop-total-bar"><span class="pl">${e(P.priceLabel)}</span><span class="pv">${e(P.priceText)}</span></div>
+      <div class="prop-sec">${e(Lb.payment)}</div>
+      <p style="font-size:11px;color:#666;margin-top:2px">${e(P.payment)}</p>
+      <p style="font-size:11px;color:#666;margin-top:4px">${e(P.validity)}</p>
+      <p style="font-size:10px;color:#999;margin-top:10px">${e(Lb.accept)}</p>
       <div class="prop-sig">
-        <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Client Signature & Date':'Firma del Cliente y Fecha'}</div></div>
-        <div><div class="prop-sig-line" style="padding-top:32px">${L==='en'?'Contractor Signature & Date':'Firma del Contratista y Fecha'}</div></div>
+        <div><div class="prop-sig-line" style="padding-top:32px">${e(Lb.clientSig)}</div></div>
+        <div><div class="prop-sig-line" style="padding-top:32px">${e(Lb.contractorSig)}</div></div>
       </div>
-      <div class="prop-disclaimer">${L==='en'?'AI-estimated using regional market data. Verify material costs against current supplier quotes. Generated by Even OS.':'Estimado con IA usando datos regionales del mercado. Verifica costos con tu proveedor. Generado por Even OS.'}</div>
     </div>`;
   document.getElementById('proposal-section').style.display='block';
   document.getElementById('proposal-section').scrollIntoView({behavior:'smooth',block:'start'});
@@ -4235,123 +4449,92 @@ function drawPDFHeader(doc,W,barH,logo,accent,now){
 }
 
 async function downloadProposalPDF(){
-  if(!currentEstimate){alert('No estimate loaded. Run an estimate first.');return;}
+  if(!currentEstimate){alert(appLang==='es'?'Primero corre un estimado.':'No estimate loaded. Run an estimate first.');return;}
   const jsPDFLib=window.jspdf||window.jsPDF||{};
   const jsPDF=jsPDFLib.jsPDF||window.jsPDF;
-  if(!jsPDF){alert('PDF engine not loaded. Please refresh and try again.');return;}
-  const accent=hexToRgb(window._accentColor);
-  const mutedAccent=accent.map(c=>Math.round(c*0.75));
-  const logo=await loadLogoForPDF(window._userLogoUrl);
-  const doc=new jsPDF({unit:'pt',format:'letter'});
-  const data=currentEstimate;
-  const ctx=window._ctx||{trade:data.trade||'',location:data.location||'',client:data.client||''};
-  const W=612,M=52,L=appLang;
-  let y=0;
-  const now=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  drawPDFHeader(doc,W,60,logo,accent,now);
-  y=82;
-  doc.setFont('helvetica','bold');doc.setFontSize(14);doc.setTextColor(26,26,24);
-  doc.text(L==='en'?'PROJECT PROPOSAL':'PROPUESTA DE PROYECTO',M,y);y+=12;
-  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(130,130,130);
-  doc.text([data.projectName||'Estimate',ctx.client&&ctx.client!=='Client'?ctx.client:'',ctx.location].filter(Boolean).join(' · '),M,y);y+=22;
-  const pdfDetail=window._proposalDetail||'full';
-  const pdfCats={};
-  (data.lineItems||[]).forEach(item=>{if(!pdfCats[item.category])pdfCats[item.category]=[];pdfCats[item.category].push(item);});
-  if(pdfDetail==='lump'){
-    doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,24,'F');
-    doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(60,60,60);
-    doc.text(L==='en'?'All work as described in this proposal':'Todo el trabajo descrito en esta propuesta',M+8,y+15);y+=32;
-  } else if(pdfDetail==='category'){
-    doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,18,'F');
-    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
-    doc.text(L==='en'?'CATEGORY':'CATEGORÍA',M+6,y+12);doc.text(L==='en'?'SUBTOTAL':'SUBTOTAL',W-M-6,y+12,{align:'right'});
-    y+=20;
-    Object.entries(pdfCats).forEach(([cat,items],ci)=>{
-      if(y>700){doc.addPage();y=44;}
-      const sub=items.reduce((s,i)=>s+i.total,0);
-      if(ci%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,15,'F');}
-      doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(60,60,60);
-      doc.text(cat,M+6,y+10);
-      doc.setFont('helvetica','normal');doc.setTextColor(100,100,100);doc.text(fmt(sub),W-M-6,y+10,{align:'right'});y+=15;
-    });
-    y+=8;
-  } else {
-    doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,18,'F');
-    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
-    doc.text(L==='en'?'DESCRIPTION':'DESCRIPCIÓN',M+6,y+12);doc.text(L==='en'?'QTY / UNIT':'CANT. / UNIDAD',W-M-6,y+12,{align:'right'});
-    y+=20;
-    let lastCat='';let rowIdx=0;
-    (data.lineItems||[]).forEach(item=>{
-      // Measure before breaking so a multi-line row can't run off the bottom.
-      doc.setFont('helvetica','normal');doc.setFontSize(9);
-      const probe=doc.splitTextToSize(String(item.description||''),W-M*2-80);
-      const need=Math.max(15,probe.length*11+5)+(item.category!==lastCat?14:0);
-      if(y+need>752){doc.addPage();y=44;}
-      if(item.category!==lastCat){
-        lastCat=item.category;rowIdx=0;
-        doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...mutedAccent);
-        doc.text(String(item.category||'').toUpperCase(),M+6,y+9);y+=14;
-      }
-      doc.setFont('helvetica','normal');doc.setFontSize(9);
-      // Was rendering descLines[0] only — the wrap was computed and then thrown
-      // away, so anything past one line vanished from the client's copy.
-      const descLines=doc.splitTextToSize(String(item.description||''),W-M*2-80);
-      const rowH=Math.max(15,descLines.length*11+5);
-      if(rowIdx%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,rowH,'F');}
-      doc.setTextColor(60,60,60);
-      descLines.forEach((line,n)=>doc.text(line,M+6,y+10+n*11));
-      doc.setTextColor(140,140,140);doc.text(`${item.qty} ${item.unit}`,W-M-6,y+10,{align:'right'});
-      y+=rowH;rowIdx++;
-    });
-    y+=8;
-  }
-  // Client note
-  if(data.clientNote){if(y>680){doc.addPage();y=44}doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(100,100,100);const noteLines=doc.splitTextToSize(data.clientNote,W-M*2);noteLines.forEach(l=>{doc.text(l,M,y);y+=13});y+=6;}
-  // Merged exclusions (AI + client-supply)
-  const pdfExclusions=[...(data.exclusions||[]),...(data.clientSupply?['Client to supply: '+data.clientSupply]:[])];
-  // Exclusions are what the contractor is NOT doing — dropping them silently
-  // because the page ran short is the one thing this section must never do.
-  // Paginate instead of vanishing.
-  if(pdfExclusions.length){
-    if(y>700){doc.addPage();y=44}
-    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(180,80,60);
-    doc.text(L==='en'?'EXCLUSIONS':'EXCLUSIONES',M,y);y+=11;
-    doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140);
-    pdfExclusions.slice(0,6).forEach(ex=>{
-      doc.splitTextToSize('• '+ex,W-M*2-6).forEach(l=>{
-        if(y>752){doc.addPage();y=44;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(140,140,140)}
-        doc.text(l,M+6,y);y+=10;
-      });
-    });
-    y+=4;
-  }
-  if(y>710){doc.addPage();y=44}
-  doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,36,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...accent);
-  doc.text(L==='en'?'TOTAL PROJECT INVESTMENT':'INVERSIÓN TOTAL',M+10,y+21);
-  const [propLoMult,propHiMult]=getConfidenceRange(data);
-  const propRangeLow=Math.round(data.totalBid*propLoMult),propRangeHigh=Math.round(data.totalBid*propHiMult);
-  // Default headline is the range (matches the on-screen preview) — a manual
-  // final-bid override takes precedence and becomes the headline instead,
-  // with Even's range demoted to a small reference line underneath.
-  const pdfBidText=window._finalBid?fmt(window._finalBid):fmtK(propRangeLow)+' – '+fmtK(propRangeHigh);
-  doc.setFontSize(13);doc.text(pdfBidText,W-M-10,y+21,{align:'right'});y+=48;
-  doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...mutedAccent);
-  doc.text(window._finalBid?'Even estimated range: '+fmtK(propRangeLow)+'–'+fmtK(propRangeHigh):'Midpoint reference: '+fmt(data.totalBid),M,y);y+=12;
-  doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(160,160,160);
-  doc.text(data.paymentTerms||(L==='en'?'50% deposit to schedule. Balance due on completion. Price valid 30 days.':'50% depósito para agendar. Saldo al terminar. Precio válido 30 días.'),M,y);y+=32;
-  if(y>730){doc.addPage();y=44}
-  doc.setDrawColor(210,200,190);doc.line(M,y,M+170,y);doc.line(W-M-170,y,W-M,y);
-  doc.setFontSize(8);doc.setTextColor(180,180,180);
-  doc.text(L==='en'?'Client Signature & Date':'Firma del Cliente y Fecha',M,y+10);
-  doc.text(L==='en'?'Contractor Signature & Date':'Firma del Contratista y Fecha',W-M-170,y+10);
-  const pages=doc.getNumberOfPages();
-  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even OS · Client Proposal · Confidential',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
-  savePDF(doc,`Even-Proposal-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
+  if(!jsPDF){alert(appLang==='es'?'El PDF no cargó. Actualiza la página.':'PDF engine not loaded. Please refresh and try again.');return;}
+  const doc=await buildClientProposalPDF(jsPDF);
+  const P=window._lastProposal;
+  const safe=x=>String(x||'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  savePDF(doc,`${[safe(P.company),safe(P.project)||'Proposal',P.number].filter(Boolean).join('-')}.pdf`);
   if(isPro && currentUser && sbClient && window._currentEstimateId){
     sbClient.from('estimates').update({status:'sent',sent_at:new Date().toISOString()}).eq('id',window._currentEstimateId).then(()=>{});
-    showToast('Proposal downloaded — marked as Sent in your dashboard.');
+    showToast(appLang==='es'?'Propuesta descargada y marcada como enviada.':'Proposal downloaded. Marked as Sent in your dashboard.');
   }
+}
+// Draws the client proposal PDF from buildClientProposal (same content as the preview).
+async function buildClientProposalPDF(jsPDF){
+  const P=buildClientProposal(currentEstimate,window._ctx,appLang);
+  window._lastProposal=P;
+  const accent=hexToRgb(window._accentColor);
+  const logo=P.logo?await loadLogoForPDF(window._userLogoUrl):null;
+  const doc=new jsPDF({unit:'pt',format:'letter'});
+  const W=612,M=52,Lb=P.labels;
+  let y=0;
+  const need=h=>{ if(y+h>748){ doc.addPage(); y=48; } };
+  // Header: the contractor's business, never Even's.
+  doc.setFillColor(255,255,255);doc.rect(0,0,W,78,'F');
+  doc.setFillColor(...accent);doc.rect(0,78,W,3,'F');
+  let hx=M;
+  if(logo){
+    let w=logo.w,h=logo.h; const sc=Math.min(48/h,150/w,1); w*=sc; h*=sc;
+    doc.addImage(logo.dataUri,'PNG',M,(78-h)/2,w,h); hx=M+w+14;
+  }
+  doc.setFont('helvetica','bold');doc.setFontSize(15);doc.setTextColor(26,26,24);
+  doc.text(P.company||P.title,hx,32);
+  doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(110,110,110);
+  const contact=[P.phone,P.email].filter(Boolean).join('   ');
+  if(contact) doc.text(contact,hx,46);
+  if(P.license) doc.text(`${Lb.license}: ${P.license}`,hx,58);
+  doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(26,26,24);
+  doc.text(P.title.toUpperCase(),W-M,30,{align:'right'});
+  doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(110,110,110);
+  doc.text(`${Lb.number} ${P.number}`,W-M,44,{align:'right'});
+  doc.text(`${Lb.date}: ${P.date}`,W-M,56,{align:'right'});
+  y=104;
+  doc.setFontSize(9.5);doc.setTextColor(60,60,60);
+  if(P.client){ doc.setFont('helvetica','bold');doc.text(`${Lb.prepared}:`,M,y);doc.setFont('helvetica','normal');doc.text(P.client,M+90,y);y+=14; }
+  if(P.jobAddress){ doc.setFont('helvetica','bold');doc.text(`${Lb.job}:`,M,y);doc.setFont('helvetica','normal');doc.splitTextToSize(P.jobAddress+(P.project?'  ·  '+P.project:''),W-M*2-90).forEach(l=>{doc.text(l,M+90,y);y+=12;});y+=2; }
+  y+=6;
+  if(P.note){ doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(90,90,90);doc.splitTextToSize(P.note,W-M*2).forEach(l=>{need(12);doc.text(l,M,y);y+=12;});y+=6; }
+  const section=t=>{ need(26); doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...accent.map(c=>Math.round(c*0.7)));doc.text(t.toUpperCase(),M,y);y+=4;doc.setDrawColor(226,221,214);doc.line(M,y,W-M,y);y+=12; };
+  section(Lb.scope);
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(90,90,90);doc.text(P.scopeIntro,M,y);y+=16;
+  section(Lb.included);
+  if(P.lump){ doc.setFontSize(9.5);doc.setTextColor(60,60,60);doc.text(P.lumpText,M,y);y+=16; }
+  else P.scopeRows.forEach(r=>{
+    need(28);
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(120,110,90);doc.text(String(r.category).toUpperCase(),M,y);y+=12;
+    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(60,60,60);
+    r.items.forEach(it=>doc.splitTextToSize('• '+it,W-M*2-10).forEach((l,n)=>{need(12);doc.text(l,M+(n?14:6),y);y+=11.5;}));
+    y+=4;
+  });
+  const bullets=(title,arr)=>{ if(!arr.length) return; section(title); doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(100,100,100);
+    arr.forEach(x=>doc.splitTextToSize('• '+x,W-M*2-10).forEach((l,n)=>{need(11);doc.text(l,M+(n?14:6),y);y+=10.5;})); y+=6; };
+  bullets(Lb.excluded,P.exclusions);
+  bullets(Lb.assumptions,P.assumptions);
+  need(60);
+  doc.setFillColor(26,26,24);doc.rect(M,y,W-M*2,38,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(255,255,255);
+  doc.text(P.priceLabel.toUpperCase(),M+12,y+24);
+  doc.setFontSize(15);doc.setTextColor(...accent);doc.text(P.priceText,W-M-12,y+25,{align:'right'});
+  y+=54;
+  section(Lb.payment);
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(70,70,70);
+  doc.splitTextToSize(P.payment,W-M*2).forEach(l=>{need(12);doc.text(l,M,y);y+=12;});
+  doc.splitTextToSize(P.validity,W-M*2).forEach(l=>{need(12);doc.text(l,M,y);y+=12;});
+  y+=6; doc.setFontSize(8);doc.setTextColor(140,140,140); need(12); doc.text(Lb.accept,M,y); y+=34;
+  need(40);
+  doc.setDrawColor(190,180,170);doc.line(M,y,M+200,y);doc.line(W-M-200,y,W-M,y);
+  doc.setFontSize(8);doc.setTextColor(140,140,140);
+  doc.text(Lb.clientSig,M,y+11);doc.text(Lb.contractorSig,W-M-200,y+11);
+  const pages=doc.getNumberOfPages();
+  for(let p=1;p<=pages;p++){
+    doc.setPage(p);doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(150,150,150);
+    doc.text([P.company,`${Lb.number} ${P.number}`].filter(Boolean).join('  ·  '),M,776);
+    doc.text(appLang==='es'?`Página ${p} de ${pages}`:`Page ${p} of ${pages}`,W-M,776,{align:'right'});
+  }
+  return doc;
 }
 
 async function downloadCostSheet(){
@@ -5109,7 +5292,8 @@ function liveProposalUpdate(){
   currentEstimate.clientNote = document.getElementById('prop-note')?.value||'';
   currentEstimate.clientSupply = document.getElementById('prop-supply')?.value?.trim()||'';
   const inputs = document.querySelectorAll('#prop-assumptions .assumption-input');
-  currentEstimate.assumptions = Array.from(inputs).map(i=>i.value.trim()).filter(Boolean);
+  currentEstimate.clientAssumptions = Array.from(inputs).map(i=>i.value.trim()).filter(Boolean);
+  const ja=document.getElementById('prop-job-address'); if(ja) currentEstimate.jobAddress=ja.value.trim();
   const ps = document.getElementById('proposal-section');
   if(ps && ps.style.display!=='none') renderProposalPreview();
 }
@@ -5118,7 +5302,13 @@ function populateProposalAssumptions(){
   const list = document.getElementById('prop-assumptions');
   if(!list) return;
   list.innerHTML='';
-  const all = currentEstimate?.assumptions||[];
+  // The client sees only the plain-language conditions; internal pricing notes
+  // stay on the cost sheet. Edits here change the client copy only.
+  if(currentEstimate&&!Array.isArray(currentEstimate.clientAssumptions)) currentEstimate.clientAssumptions=(currentEstimate.assumptions||[]).filter(clientSafeText);
+  const all = currentEstimate?.clientAssumptions||[];
+  const b=getBiz();
+  [['biz-company','company'],['biz-phone','phone'],['biz-email','email'],['biz-license','license']].forEach(([id,k])=>{const el=document.getElementById(id); if(el&&!el.value) el.value=b[k]||'';});
+  const ja=document.getElementById('prop-job-address'); if(ja&&!ja.value) ja.value=currentEstimate?.jobAddress||window._ctx?.location||'';
   const SHOW = 4;
   all.slice(0, SHOW).forEach(a=>_addAssumptionRow(a));
   if(all.length > SHOW){
@@ -5155,7 +5345,8 @@ function savePrefs(){
     subs: window._mySubs||[],
     accentColor: window._accentColor||'#FFB300',
     laborMult: laborSettings.mult,
-    laborRate: laborSettings.rate
+    laborRate: laborSettings.rate,
+    biz: getBiz()
   };
   sbClient.from('users').update({prefs}).eq('id',currentUser.id)
     .then(({error})=>{ if(error) console.error('Save prefs error:',error); });
@@ -5568,6 +5759,7 @@ function applyPrefs(prefs){
     window._accentColor = prefs.accentColor;
     renderAccentSwatches();
   }
+  if(prefs.biz&&typeof prefs.biz==='object'){ try{ const cur=getBiz(); localStorage.setItem('even_biz',JSON.stringify({...prefs.biz,...Object.fromEntries(Object.entries(cur).filter(([,v])=>v))})); }catch(e){} }
   if(+prefs.laborMult>0) laborSettings.mult=+prefs.laborMult;
   if(prefs.laborRate!==undefined) laborSettings.rate=+prefs.laborRate>0?+prefs.laborRate:null;
   renderLaborSettings();
