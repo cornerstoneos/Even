@@ -28,7 +28,7 @@ const PHASES = {
 }
 
 const STRINGS_EN = {
-  jobLabel: 'Roofing Replacement · Aventura, FL',
+  jobLabel: 'Electrical Panel 200A · Aventura, FL',
   breakdown: { materials: 'Materials', labor: 'Labor', fees: 'Permits & Fees' },
   estimatedTotal: 'Estimated Total',
   exportBtn: 'Export ↗',
@@ -47,22 +47,23 @@ const STRINGS_EN = {
     clientName: 'J. Martinez',
     clientCity: 'Aventura, FL 33180',
     dateLabel: 'Date',
-    dateValue: 'June 28, 2026',
-    ref: 'Ref: AVE-2681',
-    jobDescription: 'Roofing Replacement — 3,200 sq ft',
+    dateValue: 'October 7, 2026',
+    ref: 'Ref: P-261007-5699',
+    jobDescription: '200A Panel and Meter Upgrade',
     scopeTitle: 'Scope of Work',
     scope: [
-      'Remove and dispose of existing roofing materials',
-      'Install premium 30-year architectural shingles',
-      'Replace underlayment and moisture barrier',
-      'All permit filing and fees included',
-      'Post-installation cleanup and final inspection',
+      '200A ringless meter main with emergency disconnect',
+      'Surge protection device, type 1',
+      '4 AWG THHN copper wire, ground rod and bonding',
+      'Remove old panel and haul away debris',
+      'City of Aventura permit included',
     ],
     totalLabel: 'Total',
     paymentTitle: 'Payment Terms',
     payments: [
-      ['Deposit due at signing', '$13,711'],
-      ['Balance due on completion', '$13,712'],
+      ['30% deposit to schedule', '$1,365'],
+      ['40% after rough-in', '$1,820'],
+      ['30% at final inspection', '$1,365'],
     ],
     signatures: ['Client Signature', 'Contractor Signature'],
     sigLine: 'Signature',
@@ -71,27 +72,29 @@ const STRINGS_EN = {
   },
   internal: {
     title: 'Internal Cost Breakdown',
-    subtitle: 'Roofing · Aventura, FL · June 28, 2026',
+    subtitle: 'Electrical · Aventura, FL · Oct 7, 2026',
     confidential: 'Confidential',
     headers: ['Item', 'Qty', 'Rate', 'Total'],
     lineItems: [
-      { label: 'Shingles (30yr arch)', qty: '80 sq', rate: '$130', total: '$10,400' },
-      { label: 'Underlayment + barrier', qty: '3,200 sf', rate: '$0.56', total: '$1,795' },
-      { label: 'Misc materials & nails', qty: '—', rate: '—', total: '$600' },
-      { label: 'Labor — tear-off', qty: '48 h', rate: '$48', total: '$2,304' },
-      { label: 'Labor — install', qty: '96 h', rate: '$60', total: '$5,760' },
-      { label: 'Labor — cleanup & PM', qty: '—', rate: '—', total: '$936' },
-      { label: 'Permit fees', qty: '—', rate: '—', total: '$384' },
-      { label: 'Overhead & G&A', qty: '—', rate: '12%', total: '$2,661' },
+      { label: '200A meter main w/ disconnect', qty: '1', rate: '$767.70', total: '$767.70' },
+      { label: 'Surge protection, SPD type 1', qty: '1', rate: '$202.23', total: '$202.23' },
+      { label: 'THHN copper 4 AWG (+10%)', qty: '1.1 spool', rate: '$647.78', total: '$712.56' },
+      { label: 'Wire connectors (+10%)', qty: '1.1 pack', rate: '$8.34', total: '$9.17' },
+      { label: 'Ground rod, clamp, bonding', qty: '1', rate: '$45.00', total: '$45.00' },
+      { label: 'Labor: swap panel and meter', qty: '12 h', rate: '$62.02', total: '$744.24' },
+      { label: 'Labor: helper', qty: '6 h', rate: '$41.80', total: '$250.80' },
+      { label: 'Labor: inspection coordination', qty: '2 h', rate: '$82.02', total: '$164.04' },
+      { label: 'Disposal', qty: '1', rate: '$50.00', total: '$50.00' },
+      { label: 'Aventura permit (minimum)', qty: '1', rate: '$162.50', total: '$162.50' },
     ],
-    totals: [['Direct Cost', '$24,840'], ['Markup (10.4%)', '$2,583']],
+    totals: [['Direct Cost', '$3,108.24'], ['Overhead 12% + Cushion 8%', '$622.00'], ['Profit (22%)', '$821.00']],
     clientTotalLabel: 'Client Total',
-    stats: [['Gross Margin', '9.4%'], ['Net Profit', '$2,583'], ['Job Ref', 'AVE-2681']],
+    stats: [['Gross Margin', '31.7%'], ['Net Profit', '$821'], ['Job Ref', 'P-261007-5699']],
   },
 }
 
 const STRINGS_ES = {
-  jobLabel: 'Reemplazo de Techo · Aventura, FL',
+  jobLabel: 'Panel Eléctrico 200A · Aventura, FL',
   breakdown: { materials: 'Materiales', labor: 'Mano de Obra', fees: 'Permisos y Tarifas' },
   estimatedTotal: 'Total Estimado',
   exportBtn: 'Exportar ↗',
@@ -110,22 +113,23 @@ const STRINGS_ES = {
     clientName: 'M. Reyes',
     clientCity: 'Aventura, FL 33180',
     dateLabel: 'Fecha',
-    dateValue: '28 de junio, 2026',
-    ref: 'Ref: AVE-2681',
-    jobDescription: 'Reemplazo de Techo — 3,200 pies²',
+    dateValue: '7 de octubre, 2026',
+    ref: 'Ref: P-261007-5699',
+    jobDescription: 'Panel y Medidor de 200A',
     scopeTitle: 'Alcance del Trabajo',
     scope: [
-      'Retirar y desechar los materiales del techo existente',
-      'Instalar tejas arquitectónicas premium de 30 años',
-      'Reemplazar la base y la barrera de humedad',
-      'Todos los permisos y tarifas incluidos',
-      'Limpieza post-instalación e inspección final',
+      'Medidor y main de 200A con desconexión de emergencia',
+      'Protector contra sobretensiones, tipo 1',
+      'Cable de cobre THHN 4 AWG, varilla y puente de tierra',
+      'Retiro del panel viejo y desechos',
+      'Permiso de la Ciudad de Aventura incluido',
     ],
     totalLabel: 'Total',
     paymentTitle: 'Términos de Pago',
     payments: [
-      ['Depósito al firmar', '$13,711'],
-      ['Balance al completar', '$13,712'],
+      ['30% para agendar', '$1,365'],
+      ['40% al terminar la instalación', '$1,820'],
+      ['30% en la inspección final', '$1,365'],
     ],
     signatures: ['Firma del Cliente', 'Firma del Contratista'],
     sigLine: 'Firma',
@@ -134,22 +138,24 @@ const STRINGS_ES = {
   },
   internal: {
     title: 'Desglose de Costos Internos',
-    subtitle: 'Techo · Aventura, FL · 28 jun, 2026',
+    subtitle: 'Eléctrico · Aventura, FL · 7 oct, 2026',
     confidential: 'Confidencial',
     headers: ['Artículo', 'Cant.', 'Precio', 'Total'],
     lineItems: [
-      { label: 'Tejas (30 años arq.)', qty: '80 sq', rate: '$130', total: '$10,400' },
-      { label: 'Base + barrera', qty: '3,200 sf', rate: '$0.56', total: '$1,795' },
-      { label: 'Mat. varios y clavos', qty: '—', rate: '—', total: '$600' },
-      { label: 'Mano de obra — retiro', qty: '48 h', rate: '$48', total: '$2,304' },
-      { label: 'Mano de obra — instalación', qty: '96 h', rate: '$60', total: '$5,760' },
-      { label: 'Mano de obra — limpieza', qty: '—', rate: '—', total: '$936' },
-      { label: 'Tarifas de permisos', qty: '—', rate: '—', total: '$384' },
-      { label: 'Gastos generales', qty: '—', rate: '12%', total: '$2,661' },
+      { label: 'Medidor y main 200A con desconexión', qty: '1', rate: '$767.70', total: '$767.70' },
+      { label: 'Protector de sobretensión, tipo 1', qty: '1', rate: '$202.23', total: '$202.23' },
+      { label: 'Cobre THHN 4 AWG (+10%)', qty: '1.1 rollo', rate: '$647.78', total: '$712.56' },
+      { label: 'Conectores (+10%)', qty: '1.1 paq.', rate: '$8.34', total: '$9.17' },
+      { label: 'Varilla, abrazadera y puente de tierra', qty: '1', rate: '$45.00', total: '$45.00' },
+      { label: 'Mano de obra: cambio de panel', qty: '12 h', rate: '$62.02', total: '$744.24' },
+      { label: 'Mano de obra: ayudante', qty: '6 h', rate: '$41.80', total: '$250.80' },
+      { label: 'Mano de obra: inspección', qty: '2 h', rate: '$82.02', total: '$164.04' },
+      { label: 'Desechos', qty: '1', rate: '$50.00', total: '$50.00' },
+      { label: 'Permiso de Aventura (mínimo)', qty: '1', rate: '$162.50', total: '$162.50' },
     ],
-    totals: [['Costo Directo', '$24,840'], ['Margen (10.4%)', '$2,583']],
+    totals: [['Costo Directo', '$3,108.24'], ['Gastos 12% + Colchón 8%', '$622.00'], ['Ganancia (22%)', '$821.00']],
     clientTotalLabel: 'Total del Cliente',
-    stats: [['Margen Bruto', '9.4%'], ['Utilidad Neta', '$2,583'], ['Ref. Trabajo', 'AVE-2681']],
+    stats: [['Margen Bruto', '31.7%'], ['Utilidad Neta', '$821'], ['Ref. Trabajo', 'P-261007-5699']],
   },
 }
 
@@ -204,7 +210,7 @@ function ProposalDoc({ s }) {
       <div style={{ padding: '1.1rem 1.5rem', background: '#080808', borderBottom: '2.5px solid #D4AF37' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', fontWeight: 600 }}>{s.totalLabel}</div>
-          <div style={{ color: '#D4AF37', fontSize: '1.7rem', fontWeight: 900, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>$27,423</div>
+          <div style={{ color: '#D4AF37', fontSize: '1.7rem', fontWeight: 900, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>$4,550</div>
         </div>
       </div>
 
@@ -300,7 +306,7 @@ function InternalDoc({ s, rowsVisible, instant }) {
         <motion.div initial={{ opacity: instant ? 1 : 0 }} animate={{ opacity: rowsVisible ? 1 : 0 }} transition={{ delay: instant ? 0 : 1.1 }}
           style={{ background: '#080808', margin: '0.6rem -1.5rem', padding: '0.8rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.52rem', letterSpacing: '0.24em', textTransform: 'uppercase' }}>{s.clientTotalLabel}</span>
-          <span style={{ color: '#D4AF37', fontSize: '1.3rem', fontWeight: 900, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>$27,423</span>
+          <span style={{ color: '#D4AF37', fontSize: '1.3rem', fontWeight: 900, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>$4,550</span>
         </motion.div>
 
         <motion.div initial={{ opacity: instant ? 1 : 0 }} animate={{ opacity: rowsVisible ? 1 : 0 }} transition={{ delay: instant ? 0 : 1.25 }}
@@ -400,9 +406,9 @@ function TwoOutputsBase({ strings: t }) {
                   style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0' }}
                 >
                   {[
-                    { label: t.breakdown.materials, value: '$12,795' },
-                    { label: t.breakdown.labor, value: '$9,000' },
-                    { label: t.breakdown.fees, value: '$3,045' },
+                    { label: t.breakdown.materials, value: '$1,736.66' },
+                    { label: t.breakdown.labor, value: '$1,159.08' },
+                    { label: t.breakdown.fees, value: '$212.50' },
                   ].map(({ label, value }, i) => (
                     <motion.div
                       key={label}
@@ -438,7 +444,7 @@ function TwoOutputsBase({ strings: t }) {
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.3rem' }}
             >
               <div style={{ color: '#D4AF37', fontSize: 'clamp(2.8rem, 13vw, 4.2rem)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
-                $27,423
+                $4,550
               </div>
               <div style={{ color: 'rgba(255,255,255,0.22)', fontSize: '0.57rem', letterSpacing: '0.22em', textTransform: 'uppercase' }}>
                 {t.estimatedTotal}

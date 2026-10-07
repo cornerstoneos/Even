@@ -43,16 +43,17 @@ const STRINGS_EN = {
   newEstimate: 'New Estimate',
   jobDetails: 'Job Details',
   jobTypeLabel: 'Job Type',
-  jobTypeValue: 'Roofing Replacement',
+  jobTypeValue: 'Electrical Panel 200A',
+  summaryRows: [['Direct Costs', '$3,108.24'], ['Overhead (12%)', '$373.00'], ['Risk Cushion (8%)', '$249.00'], ['Profit (22%)', '$821.00']],
   locationLabel: 'Location',
   locationValue: 'Aventura, FL',
   sizeLabel: 'Size',
-  sizeValue: '3,200 sq ft',
+  sizeValue: '2,400 sq ft',
   getEstimate: 'Get Estimate →',
   permitData: 'Permit Data',
   pullingPermit: 'Pulling the City of Aventura fee schedule...',
-  cityFee: 'Roofing Permit ($0.12/sq ft)',
-  cityFeeValue: '$384',
+  cityFee: 'Aventura Permit (minimum)',
+  cityFeeValue: '$162.50',
   stateFeeValue: 'Jul 8, 2026',
   inspectionsValue: 'City of Aventura',
   stateFee: 'Schedule Effective',
@@ -76,16 +77,17 @@ const STRINGS_ES = {
   newEstimate: 'Nuevo Estimado',
   jobDetails: 'Detalles del Trabajo',
   jobTypeLabel: 'Tipo de Trabajo',
-  jobTypeValue: 'Reemplazo de Techo',
+  jobTypeValue: 'Panel Eléctrico 200A',
+  summaryRows: [['Costos Directos', '$3,108.24'], ['Gastos (12%)', '$373.00'], ['Colchón (8%)', '$249.00'], ['Ganancia (22%)', '$821.00']],
   locationLabel: 'Ubicación',
   locationValue: 'Aventura, FL',
   sizeLabel: 'Tamaño',
-  sizeValue: '3,200 pies²',
+  sizeValue: '2,400 pies²',
   getEstimate: 'Obtener Estimado →',
   permitData: 'Datos de Permisos',
   pullingPermit: 'Buscando la tarifa de la Ciudad de Aventura...',
-  cityFee: 'Permiso de Techo ($0.12/pie²)',
-  cityFeeValue: '$384',
+  cityFee: 'Permiso de Aventura (mínimo)',
+  cityFeeValue: '$162.50',
   stateFeeValue: '8 jul 2026',
   inspectionsValue: 'Ciudad de Aventura',
   stateFee: 'Tarifa Vigente Desde',
@@ -450,7 +452,7 @@ function SpeedBase({ strings }) {
                       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }}
                         style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '0.4rem' }}>
                         <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.58rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{strings.totalFees}</span>
-                        <span style={{ color: '#D4AF37', fontWeight: 700, fontSize: '0.7rem' }}>$384</span>
+                        <span style={{ color: '#D4AF37', fontWeight: 700, fontSize: '0.7rem' }}>$162.50</span>
                       </motion.div>
                     </div>
                   )}
@@ -461,10 +463,9 @@ function SpeedBase({ strings }) {
                   <SectionLabel visible={p.estimateLabel}>{strings.estimate}</SectionLabel>
                   {p.estimateRows && (
                     <div>
-                      <Row label={strings.materials} value="$12,795" delay={0} visible={p.estimateRows} />
-                      <Row label={strings.labor} value="$9,000" delay={0.13} visible={p.estimateRows} />
-                      <Row label={strings.permitsLabel} value="$384" delay={0.26} visible={p.estimateRows} />
-                      <Row label={strings.overhead} value="$5,244" delay={0.39} visible={p.estimateRows} />
+                      {strings.summaryRows.map(([label, value], i) => (
+                        <Row key={label} label={label} value={value} delay={i * 0.13} visible={p.estimateRows} />
+                      ))}
                     </div>
                   )}
                   <AnimatePresence>
@@ -477,7 +478,7 @@ function SpeedBase({ strings }) {
                           transition={{ delay: 1.9, duration: 0.5 }}
                           style={{ fontSize: '1.6rem', fontWeight: 900, letterSpacing: '-0.03em', fontVariantNumeric: 'tabular-nums' }}
                         >
-                          $<CountUp to={27423} running={p.total} />
+                          $<CountUp to={4551} running={p.total} />
                         </motion.span>
                       </motion.div>
                     )}
