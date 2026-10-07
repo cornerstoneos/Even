@@ -45,21 +45,24 @@ const STRINGS_EN = {
   jobTypeLabel: 'Job Type',
   jobTypeValue: 'Roofing Replacement',
   locationLabel: 'Location',
-  locationValue: 'Houston, TX',
+  locationValue: 'Aventura, FL',
   sizeLabel: 'Size',
   sizeValue: '3,200 sq ft',
   getEstimate: 'Get Estimate →',
   permitData: 'Permit Data',
-  pullingPermit: 'Pulling Harris County permit data...',
-  cityFee: 'City Application Fee',
-  stateFee: 'State Filing Fee',
-  inspections: 'Required Inspections (×2)',
-  totalFees: 'Total Fees',
+  pullingPermit: 'Pulling the City of Aventura fee schedule...',
+  cityFee: 'Roofing Permit ($0.12/sq ft)',
+  cityFeeValue: '$384',
+  stateFeeValue: 'Jul 8, 2026',
+  inspectionsValue: 'City of Aventura',
+  stateFee: 'Schedule Effective',
+  inspections: 'Source',
+  totalFees: 'City Permit Fee',
   estimate: 'Estimate',
   materials: 'Materials',
   labor: 'Labor',
   permitsLabel: 'Permits & Fees',
-  overhead: 'Overhead (12%)',
+  overhead: 'Overhead + Profit',
   total: 'Total',
   tagline1: "Do the work. We'll handle the bid.",
   tagline2: "Focus on the job. Even's got the estimate.",
@@ -75,21 +78,24 @@ const STRINGS_ES = {
   jobTypeLabel: 'Tipo de Trabajo',
   jobTypeValue: 'Reemplazo de Techo',
   locationLabel: 'Ubicación',
-  locationValue: 'Houston, TX',
+  locationValue: 'Aventura, FL',
   sizeLabel: 'Tamaño',
   sizeValue: '3,200 pies²',
   getEstimate: 'Obtener Estimado →',
   permitData: 'Datos de Permisos',
-  pullingPermit: 'Obteniendo permisos de Harris County...',
-  cityFee: 'Tarifa de Solicitud',
-  stateFee: 'Tarifa Estatal',
-  inspections: 'Inspecciones Requeridas (×2)',
-  totalFees: 'Total de Tarifas',
+  pullingPermit: 'Buscando la tarifa de la Ciudad de Aventura...',
+  cityFee: 'Permiso de Techo ($0.12/pie²)',
+  cityFeeValue: '$384',
+  stateFeeValue: '8 jul 2026',
+  inspectionsValue: 'Ciudad de Aventura',
+  stateFee: 'Tarifa Vigente Desde',
+  inspections: 'Fuente',
+  totalFees: 'Permiso de la Ciudad',
   estimate: 'Estimado',
   materials: 'Materiales',
   labor: 'Mano de Obra',
   permitsLabel: 'Permisos y Tarifas',
-  overhead: 'Gastos Generales (12%)',
+  overhead: 'Gastos Generales y Ganancia',
   total: 'Total',
   tagline1: 'Haz el trabajo. Nosotros manejamos la oferta.',
   tagline2: 'Concéntrate en el trabajo. Even tiene el estimado.',
@@ -438,13 +444,13 @@ function SpeedBase({ strings }) {
                   </AnimatePresence>
                   {p.permitRows && (
                     <div>
-                      <Row label={strings.cityFee} value="$847" delay={0} visible={p.permitRows} />
-                      <Row label={strings.stateFee} value="$120" delay={0.14} visible={p.permitRows} />
-                      <Row label={strings.inspections} value="$250" delay={0.28} visible={p.permitRows} />
+                      <Row label={strings.cityFee} value={strings.cityFeeValue} delay={0} visible={p.permitRows} />
+                      <Row label={strings.stateFee} value={strings.stateFeeValue} delay={0.14} visible={p.permitRows} />
+                      <Row label={strings.inspections} value={strings.inspectionsValue} delay={0.28} visible={p.permitRows} />
                       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }}
                         style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '0.4rem' }}>
                         <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.58rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>{strings.totalFees}</span>
-                        <span style={{ color: '#D4AF37', fontWeight: 700, fontSize: '0.7rem' }}>$1,217</span>
+                        <span style={{ color: '#D4AF37', fontWeight: 700, fontSize: '0.7rem' }}>$384</span>
                       </motion.div>
                     </div>
                   )}
@@ -455,10 +461,10 @@ function SpeedBase({ strings }) {
                   <SectionLabel visible={p.estimateLabel}>{strings.estimate}</SectionLabel>
                   {p.estimateRows && (
                     <div>
-                      <Row label={strings.materials} value="$14,800" delay={0} visible={p.estimateRows} />
-                      <Row label={strings.labor} value="$9,400" delay={0.13} visible={p.estimateRows} />
-                      <Row label={strings.permitsLabel} value="$1,217" delay={0.26} visible={p.estimateRows} />
-                      <Row label={strings.overhead} value="$3,051" delay={0.39} visible={p.estimateRows} />
+                      <Row label={strings.materials} value="$12,795" delay={0} visible={p.estimateRows} />
+                      <Row label={strings.labor} value="$9,000" delay={0.13} visible={p.estimateRows} />
+                      <Row label={strings.permitsLabel} value="$384" delay={0.26} visible={p.estimateRows} />
+                      <Row label={strings.overhead} value="$5,244" delay={0.39} visible={p.estimateRows} />
                     </div>
                   )}
                   <AnimatePresence>
@@ -471,7 +477,7 @@ function SpeedBase({ strings }) {
                           transition={{ delay: 1.9, duration: 0.5 }}
                           style={{ fontSize: '1.6rem', fontWeight: 900, letterSpacing: '-0.03em', fontVariantNumeric: 'tabular-nums' }}
                         >
-                          $<CountUp to={28468} running={p.total} />
+                          $<CountUp to={27423} running={p.total} />
                         </motion.span>
                       </motion.div>
                     )}

@@ -28,7 +28,7 @@ const PHASES = {
 }
 
 const STRINGS_EN = {
-  jobLabel: 'Roofing Replacement · Houston, TX',
+  jobLabel: 'Roofing Replacement · Aventura, FL',
   breakdown: { materials: 'Materials', labor: 'Labor', fees: 'Permits & Fees' },
   estimatedTotal: 'Estimated Total',
   exportBtn: 'Export ↗',
@@ -45,10 +45,10 @@ const STRINGS_EN = {
     proposalLabel: 'Proposal',
     preparedFor: 'Prepared For',
     clientName: 'J. Martinez',
-    clientCity: 'Houston, TX 77001',
+    clientCity: 'Aventura, FL 33180',
     dateLabel: 'Date',
     dateValue: 'June 28, 2026',
-    ref: 'Ref: HTX-2681',
+    ref: 'Ref: AVE-2681',
     jobDescription: 'Roofing Replacement — 3,200 sq ft',
     scopeTitle: 'Scope of Work',
     scope: [
@@ -61,8 +61,8 @@ const STRINGS_EN = {
     totalLabel: 'Total',
     paymentTitle: 'Payment Terms',
     payments: [
-      ['Deposit due at signing', '$14,234'],
-      ['Balance due on completion', '$14,234'],
+      ['Deposit due at signing', '$13,711'],
+      ['Balance due on completion', '$13,712'],
     ],
     signatures: ['Client Signature', 'Contractor Signature'],
     sigLine: 'Signature',
@@ -71,7 +71,7 @@ const STRINGS_EN = {
   },
   internal: {
     title: 'Internal Cost Breakdown',
-    subtitle: 'Roofing · Houston, TX · June 28, 2026',
+    subtitle: 'Roofing · Aventura, FL · June 28, 2026',
     confidential: 'Confidential',
     headers: ['Item', 'Qty', 'Rate', 'Total'],
     lineItems: [
@@ -81,17 +81,17 @@ const STRINGS_EN = {
       { label: 'Labor — tear-off', qty: '48 h', rate: '$48', total: '$2,304' },
       { label: 'Labor — install', qty: '96 h', rate: '$60', total: '$5,760' },
       { label: 'Labor — cleanup & PM', qty: '—', rate: '—', total: '$936' },
-      { label: 'Permit fees', qty: '—', rate: '—', total: '$1,217' },
-      { label: 'Overhead & G&A', qty: '—', rate: '12%', total: '$2,776' },
+      { label: 'Permit fees', qty: '—', rate: '—', total: '$384' },
+      { label: 'Overhead & G&A', qty: '—', rate: '12%', total: '$2,661' },
     ],
-    totals: [['Direct Cost', '$25,788'], ['Markup (10.4%)', '$2,680']],
+    totals: [['Direct Cost', '$24,840'], ['Markup (10.4%)', '$2,583']],
     clientTotalLabel: 'Client Total',
-    stats: [['Gross Margin', '9.4%'], ['Net Profit', '$2,680'], ['Job Ref', 'HTX-2681']],
+    stats: [['Gross Margin', '9.4%'], ['Net Profit', '$2,583'], ['Job Ref', 'AVE-2681']],
   },
 }
 
 const STRINGS_ES = {
-  jobLabel: 'Reemplazo de Techo · Houston, TX',
+  jobLabel: 'Reemplazo de Techo · Aventura, FL',
   breakdown: { materials: 'Materiales', labor: 'Mano de Obra', fees: 'Permisos y Tarifas' },
   estimatedTotal: 'Total Estimado',
   exportBtn: 'Exportar ↗',
@@ -108,10 +108,10 @@ const STRINGS_ES = {
     proposalLabel: 'Propuesta',
     preparedFor: 'Preparado Para',
     clientName: 'M. Reyes',
-    clientCity: 'Houston, TX 77001',
+    clientCity: 'Aventura, FL 33180',
     dateLabel: 'Fecha',
     dateValue: '28 de junio, 2026',
-    ref: 'Ref: HTX-2681',
+    ref: 'Ref: AVE-2681',
     jobDescription: 'Reemplazo de Techo — 3,200 pies²',
     scopeTitle: 'Alcance del Trabajo',
     scope: [
@@ -124,8 +124,8 @@ const STRINGS_ES = {
     totalLabel: 'Total',
     paymentTitle: 'Términos de Pago',
     payments: [
-      ['Depósito al firmar', '$14,234'],
-      ['Balance al completar', '$14,234'],
+      ['Depósito al firmar', '$13,711'],
+      ['Balance al completar', '$13,712'],
     ],
     signatures: ['Firma del Cliente', 'Firma del Contratista'],
     sigLine: 'Firma',
@@ -134,7 +134,7 @@ const STRINGS_ES = {
   },
   internal: {
     title: 'Desglose de Costos Internos',
-    subtitle: 'Techo · Houston, TX · 28 jun, 2026',
+    subtitle: 'Techo · Aventura, FL · 28 jun, 2026',
     confidential: 'Confidencial',
     headers: ['Artículo', 'Cant.', 'Precio', 'Total'],
     lineItems: [
@@ -144,12 +144,12 @@ const STRINGS_ES = {
       { label: 'Mano de obra — retiro', qty: '48 h', rate: '$48', total: '$2,304' },
       { label: 'Mano de obra — instalación', qty: '96 h', rate: '$60', total: '$5,760' },
       { label: 'Mano de obra — limpieza', qty: '—', rate: '—', total: '$936' },
-      { label: 'Tarifas de permisos', qty: '—', rate: '—', total: '$1,217' },
-      { label: 'Gastos generales', qty: '—', rate: '12%', total: '$2,776' },
+      { label: 'Tarifas de permisos', qty: '—', rate: '—', total: '$384' },
+      { label: 'Gastos generales', qty: '—', rate: '12%', total: '$2,661' },
     ],
-    totals: [['Costo Directo', '$25,788'], ['Margen (10.4%)', '$2,680']],
+    totals: [['Costo Directo', '$24,840'], ['Margen (10.4%)', '$2,583']],
     clientTotalLabel: 'Total del Cliente',
-    stats: [['Margen Bruto', '9.4%'], ['Utilidad Neta', '$2,680'], ['Ref. Trabajo', 'HTX-2681']],
+    stats: [['Margen Bruto', '9.4%'], ['Utilidad Neta', '$2,583'], ['Ref. Trabajo', 'AVE-2681']],
   },
 }
 
@@ -204,7 +204,7 @@ function ProposalDoc({ s }) {
       <div style={{ padding: '1.1rem 1.5rem', background: '#080808', borderBottom: '2.5px solid #D4AF37' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.52rem', letterSpacing: '0.28em', textTransform: 'uppercase', fontWeight: 600 }}>{s.totalLabel}</div>
-          <div style={{ color: '#D4AF37', fontSize: '1.7rem', fontWeight: 900, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>$28,468</div>
+          <div style={{ color: '#D4AF37', fontSize: '1.7rem', fontWeight: 900, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>$27,423</div>
         </div>
       </div>
 
@@ -300,7 +300,7 @@ function InternalDoc({ s, rowsVisible, instant }) {
         <motion.div initial={{ opacity: instant ? 1 : 0 }} animate={{ opacity: rowsVisible ? 1 : 0 }} transition={{ delay: instant ? 0 : 1.1 }}
           style={{ background: '#080808', margin: '0.6rem -1.5rem', padding: '0.8rem 1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.52rem', letterSpacing: '0.24em', textTransform: 'uppercase' }}>{s.clientTotalLabel}</span>
-          <span style={{ color: '#D4AF37', fontSize: '1.3rem', fontWeight: 900, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>$28,468</span>
+          <span style={{ color: '#D4AF37', fontSize: '1.3rem', fontWeight: 900, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>$27,423</span>
         </motion.div>
 
         <motion.div initial={{ opacity: instant ? 1 : 0 }} animate={{ opacity: rowsVisible ? 1 : 0 }} transition={{ delay: instant ? 0 : 1.25 }}
@@ -402,7 +402,7 @@ function TwoOutputsBase({ strings: t }) {
                   {[
                     { label: t.breakdown.materials, value: '$12,795' },
                     { label: t.breakdown.labor, value: '$9,000' },
-                    { label: t.breakdown.fees, value: '$3,993' },
+                    { label: t.breakdown.fees, value: '$3,045' },
                   ].map(({ label, value }, i) => (
                     <motion.div
                       key={label}
@@ -438,7 +438,7 @@ function TwoOutputsBase({ strings: t }) {
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.3rem' }}
             >
               <div style={{ color: '#D4AF37', fontSize: 'clamp(2.8rem, 13vw, 4.2rem)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>
-                $28,468
+                $27,423
               </div>
               <div style={{ color: 'rgba(255,255,255,0.22)', fontSize: '0.57rem', letterSpacing: '0.22em', textTransform: 'uppercase' }}>
                 {t.estimatedTotal}
