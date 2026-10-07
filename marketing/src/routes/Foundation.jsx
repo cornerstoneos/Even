@@ -61,13 +61,13 @@ const CAPTIONS = [
    authored in screen space so they stay clear of the silhouette. */
 const CALLOUTS = [
   { k: 'permits', plan: [-135, -82], elbow: [512, 202], end: [238, 202], anchor: 'end',
-    label: 'PERMITS',              sub: 'Fees · timelines · jurisdictions' },
+    label: 'PERMITS',              sub: 'Fees · sources · city by city' },
   { k: 'labor',   plan: [-135,  82], elbow: [370, 424], end: [238, 424], anchor: 'end',
-    label: 'LABOR RATES',          sub: 'By trade · by zip · current' },
+    label: 'LABOR RATES',          sub: 'By trade · South Florida · BLS 2025' },
   { k: 'codes',   plan: [ 135, -82], elbow: [828, 306], end: [962, 306], anchor: 'start',
-    label: 'MUNICIPAL CODES',      sub: '86 municipalities indexed' },
+    label: 'CITY FEE SCHEDULES',   sub: '40 cities live · more every week' },
   { k: 'supply',  plan: [ 135,  82], elbow: [806, 486], end: [962, 486], anchor: 'start',
-    label: 'SUPPLY HOUSE PRICING', sub: 'Pro-tier counters · local' },
+    label: 'MATERIAL PRICES',      sub: 'Published supplier prices · sourced' },
 ]
 
 /* Reinforcing mesh inside the slab — the data lattice. */

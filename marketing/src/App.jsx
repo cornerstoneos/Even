@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Map, { MapES } from './routes/Map'
 import SouthFlorida, { SouthFloridaES } from './routes/SouthFlorida'
 import Explainer, { ExplainerES } from './routes/Explainer'
-import PainPoint from './routes/PainPoint'
-import WhoWeAre from './routes/WhoWeAre'
+import PainPoint, { PainPointES } from './routes/PainPoint'
+import WhoWeAre, { WhoWeAreES } from './routes/WhoWeAre'
 import Speed, { SpeedES } from './routes/Speed'
 import TwoOutputs, { TwoOutputsES } from './routes/TwoOutputs'
 import Foundation from './routes/Foundation'
@@ -26,7 +26,9 @@ export default function App() {
         <Route path="/explainer" element={<Explainer />} />
         <Route path="/explainer-es" element={<ExplainerES />} />
         <Route path="/pain-point" element={<PainPoint />} />
+        <Route path="/pain-point-es" element={<PainPointES />} />
         <Route path="/who-we-are" element={<WhoWeAre />} />
+        <Route path="/who-we-are-es" element={<WhoWeAreES />} />
         <Route path="/speed" element={<Speed />} />
         <Route path="/speed-es" element={<SpeedES />} />
         <Route path="/two-outputs" element={<TwoOutputs />} />
@@ -55,7 +57,9 @@ const ASSETS = [
   { path: '/explainer', label: 'App Explainer', meta: '30s loop · phone mockup' },
   { path: '/explainer-es', label: 'App Explainer (ES)', meta: '30s loop · Spanish version' },
   { path: '/pain-point', label: 'Pain Point', meta: '26s loop · who wins bids' },
+  { path: '/pain-point-es', label: 'Pain Point (ES)', meta: '26s loop · Spanish version' },
   { path: '/who-we-are', label: 'Who We Are', meta: '33s loop · brand statement' },
+  { path: '/who-we-are-es', label: 'Who We Are (ES)', meta: '33s loop · Spanish version' },
   { path: '/speed', label: 'Speed', meta: '25s loop · live estimate · phone call' },
   { path: '/speed-es', label: 'Speed (ES)', meta: '25s loop · Spanish version' },
   { path: '/two-outputs', label: 'Two Outputs', meta: '27s loop · proposal + internal sheet' },

@@ -85,7 +85,7 @@ const CAPTIONS = [
   { eyebrow: 'Trim',    line: 'Every piece, exactly measured.' },
   { eyebrow: 'Coat',    line: 'Nothing left half-finished.' },
   { eyebrow: 'Ready',   line: 'An estimate, not a rough guess.' },
-  { eyebrow: 'Minutes', line: 'Under two minutes, start to send.' },
+  { eyebrow: 'Minutes', line: 'Minutes, start to send.' },
 ]
 
 /* ── SCENE ────────────────────────────────────────────────────────────── */

@@ -74,11 +74,11 @@ const CAPTIONS = [
    stage 01's callouts, one level up. Same inputs, new shape. */
 const CALLOUTS = [
   { k: 'materials', plan: [-135, -82], elbow: [480, 110], end: [238, 110], anchor: 'end',
-    label: 'MATERIALS',       sub: 'Local supply pricing, applied' },
+    label: 'MATERIALS',       sub: 'Published supplier prices, applied' },
   { k: 'labor',     plan: [-135,  82], elbow: [320, 330], end: [238, 330], anchor: 'end',
     label: 'LABOR',           sub: 'Local labor rates, applied' },
   { k: 'fees',      plan: [ 135, -82], elbow: [880, 180], end: [962, 180], anchor: 'start',
-    label: 'PERMITS & FEES',  sub: 'Local permit costs, applied' },
+    label: 'PERMITS & FEES',  sub: 'City or county permit fees, applied' },
   { k: 'overhead',  plan: [ 135,  82], elbow: [830, 420], end: [962, 420], anchor: 'start',
     label: 'OVERHEAD',        sub: 'G&A, applied automatically' },
 ]

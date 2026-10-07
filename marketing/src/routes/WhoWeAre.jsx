@@ -1,33 +1,24 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const SECTIONS = [
-  {
-    label: 'The Tool',
-    body: "Knows what a permit costs in your city\nbefore you pull one.",
-    at: 800,
-  },
-  {
-    label: 'Right Now',
-    body: "Knows what labor runs in your zip code\nright now.",
-    at: 6000,
-  },
-  {
-    label: 'Under 2 Minutes',
-    body: "Prices your job with local data\nyou can't get anywhere else.",
-    at: 11200,
-  },
-  {
-    label: 'Not This',
-    body: "Not a spreadsheet.\nNot a guess. Not your cousin's number from 2022.",
-    at: 16400,
-  },
-  {
-    label: 'Already Knows You',
-    body: 'It already knows your market.',
-    at: 21600,
-  },
+const SECTIONS_EN = [
+  { label: 'The Tool', body: "Real permit fees,\nwith the source shown.", at: 800 },
+  { label: 'Local Labor', body: "Local labor rates\nfor South Florida.", at: 6000 },
+  { label: 'In Minutes', body: "Prices your job in minutes\nwith numbers you can check.", at: 11200 },
+  { label: 'Not This', body: "Not a spreadsheet.\nNot a guess. Not your cousin's number from 2022.", at: 16400 },
+  { label: 'Built For Here', body: 'It already knows South Florida.', at: 21600 },
 ]
+
+const SECTIONS_ES = [
+  { label: 'La Herramienta', body: "Tarifas de permisos reales,\ncon la fuente a la vista.", at: 800 },
+  { label: 'Mano de Obra Local', body: "Tarifas de mano de obra\ndel sur de la Florida.", at: 6000 },
+  { label: 'En Minutos', body: "Calcula tu trabajo en minutos\ncon números que puedes revisar.", at: 11200 },
+  { label: 'No Es Esto', body: "No es una hoja de cálculo.\nNo es una adivinanza. No es el número de tu primo en 2022.", at: 16400 },
+  { label: 'Hecho Para Aquí', body: 'Ya conoce el sur de la Florida.', at: 21600 },
+]
+
+const TAG_EN = { line1: 'You run the business.', line2: 'We run the numbers.' }
+const TAG_ES = { line1: 'Tú manejas el negocio.', line2: 'Nosotros manejamos los números.' }
 
 const BRAND_AT = 25500
 const TAGLINE_AT = 27200
@@ -61,7 +52,7 @@ function StaggerBody({ body }) {
   )
 }
 
-export default function WhoWeAre() {
+function WhoWeAreBase({ SECTIONS, TAG }) {
   const [activeIndex, setActiveIndex] = useState(-1)
   const [showBrand, setShowBrand] = useState(false)
   const [showTagline, setShowTagline] = useState(false)
@@ -200,7 +191,7 @@ export default function WhoWeAre() {
                   transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <div style={{ color: '#ffffff', fontSize: 'clamp(1.2rem, 3.5vw, 1.75rem)', fontWeight: 300, lineHeight: 1.3, letterSpacing: '-0.01em' }}>
-                    You run the business.
+                    {TAG.line1}
                   </div>
                   <motion.div
                     initial={{ scaleX: 0 }}
@@ -214,7 +205,7 @@ export default function WhoWeAre() {
                     transition={{ duration: 0.8, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
                     style={{ color: '#ffffff', fontSize: 'clamp(1.2rem, 3.5vw, 1.75rem)', fontWeight: 800, lineHeight: 1.3, letterSpacing: '-0.025em' }}
                   >
-                    We run the numbers.
+                    {TAG.line2}
                   </motion.div>
                 </motion.div>
               )}
@@ -245,4 +236,12 @@ export default function WhoWeAre() {
       </AnimatePresence>
     </div>
   )
+}
+
+export default function WhoWeAre() {
+  return <WhoWeAreBase SECTIONS={SECTIONS_EN} TAG={TAG_EN} />
+}
+
+export function WhoWeAreES() {
+  return <WhoWeAreBase SECTIONS={SECTIONS_ES} TAG={TAG_ES} />
 }

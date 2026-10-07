@@ -14,6 +14,26 @@ const PHASES = {
 }
 const LOOP = 26500
 
+const COPY_EN = {
+  b0: "The contractor who wins the bid\nisn't smarter than you.",
+  b1: "He's not faster.\nHe's not cheaper.",
+  b2: ['He', 'knows', 'his', 'numbers.'],
+  b3: "Permit fees. Local labor rates.\nReal material prices.",
+  b4: "Not guesses. Not last year's prices.\nNot what his cousin told him.",
+  b5: "The guys losing bids\nare pricing jobs blind.",
+  b6: "The guys winning them\naren't.",
+}
+
+const COPY_ES = {
+  b0: "El contratista que gana el trabajo\nno es más listo que tú.",
+  b1: "No es más rápido.\nNo es más barato.",
+  b2: ['Él', 'conoce', 'sus', 'números.'],
+  b3: "Tarifas de permisos. Mano de obra local.\nPrecios reales de materiales.",
+  b4: "No adivina. No usa precios del año pasado.\nNo usa lo que le dijo su primo.",
+  b5: "Los que pierden trabajos\ncotizan a ciegas.",
+  b6: "Los que los ganan...\nno.",
+}
+
 function Beat({ text, size, weight = 700, color = '#ffffff', lineHeight = 1.2, wordDelay = 0 }) {
   const lines = text.split('\n')
   let g = 0
@@ -45,7 +65,7 @@ function Beat({ text, size, weight = 700, color = '#ffffff', lineHeight = 1.2, w
   )
 }
 
-export default function PainPoint() {
+function PainPointBase({ COPY }) {
   const [p, setP] = useState({})
   const timers = useRef([])
 
@@ -92,7 +112,7 @@ export default function PainPoint() {
           {p.b0 && !p.b0x && (
             <Beat
               key="b0"
-              text={"The contractor who wins the bid\nisn't smarter than you."}
+              text={COPY.b0}
               size="clamp(1.45rem, 4.4vw, 2.2rem)"
               weight={700}
             />
@@ -102,7 +122,7 @@ export default function PainPoint() {
           {p.b1 && !p.b1x && (
             <Beat
               key="b1"
-              text={"He's not faster.\nHe's not cheaper."}
+              text={COPY.b1}
               size="clamp(1.25rem, 3.8vw, 1.9rem)"
               weight={600}
               color="rgba(255,255,255,0.78)"
@@ -129,7 +149,7 @@ export default function PainPoint() {
                 }}
               />
               <div style={{ fontSize: 'clamp(1.55rem, 4.8vw, 2.4rem)', fontWeight: 700, color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
-                {['He', 'knows', 'his', 'numbers.'].map((word, i) => (
+                {COPY.b2.map((word, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0, y: 12 }}
@@ -148,7 +168,7 @@ export default function PainPoint() {
           {p.b3 && !p.b3x && (
             <Beat
               key="b3"
-              text={"Permit fees. Local labor rates.\nReal material costs."}
+              text={COPY.b3}
               size="clamp(1.35rem, 4vw, 2rem)"
               weight={600}
             />
@@ -158,7 +178,7 @@ export default function PainPoint() {
           {p.b4 && !p.b4x && (
             <Beat
               key="b4"
-              text={"Not guesses. Not last year's prices.\nNot what his cousin told him."}
+              text={COPY.b4}
               size="clamp(1rem, 3vw, 1.5rem)"
               weight={400}
               color="rgba(255,255,255,0.4)"
@@ -170,7 +190,7 @@ export default function PainPoint() {
           {p.b5 && !p.b5x && (
             <Beat
               key="b5"
-              text={"The guys losing bids\nare pricing jobs blind."}
+              text={COPY.b5}
               size="clamp(1.45rem, 4.4vw, 2.2rem)"
               weight={700}
             />
@@ -180,7 +200,7 @@ export default function PainPoint() {
           {p.b6 && !p.b6x && (
             <Beat
               key="b6"
-              text={"The guys winning them\naren't."}
+              text={COPY.b6}
               size="clamp(1.45rem, 4.4vw, 2.2rem)"
               weight={700}
             />
@@ -230,4 +250,12 @@ export default function PainPoint() {
       </AnimatePresence>
     </div>
   )
+}
+
+export default function PainPoint() {
+  return <PainPointBase COPY={COPY_EN} />
+}
+
+export function PainPointES() {
+  return <PainPointBase COPY={COPY_ES} />
 }
