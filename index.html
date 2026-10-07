@@ -810,7 +810,7 @@ body.has-gopro .topbar-brand{display:none}
   </div>
 
   <div class="loading-phase-wrap">
-    <div class="loading-phase-label" id="loading-phase-label">Reading Scope</div>
+    <div class="loading-phase-label" id="loading-phase-label" data-es="Leyendo el alcance">Reading Scope</div>
     <div class="loading-terminal" id="loading-terminal"></div>
   </div>
 
@@ -827,7 +827,7 @@ body.has-gopro .topbar-brand{display:none}
   <div class="loading-live" id="loading-live-items"></div>
   <div class="loading-reveal" id="loading-reveal" style="display:none">
     <div class="loading-reveal-amount" id="loading-reveal-amount">—</div>
-    <div class="loading-reveal-label">ESTIMATED BID RANGE</div>
+    <div class="loading-reveal-label" data-es="RANGO ESTIMADO DE LA OFERTA">ESTIMATED BID RANGE</div>
   </div>
 
 
@@ -843,13 +843,13 @@ body.has-gopro .topbar-brand{display:none}
       <img src="assets/logo-hero.png" alt="Even" style="width:46px;height:46px;object-fit:contain;display:block">
       <div class="brand-lockup-word" style="font-size:20px">even<b>.</b></div>
     </div>
-    <h2 style="color:var(--white);margin-bottom:6px;font-size:22px">You've used your 3 free estimates</h2>
-    <p style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:8px">Upgrade to Even Pro — unlimited estimates, both PDFs, bilingual support.</p>
-    <p style="color:var(--text-accent);font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.3px;margin-bottom:16px;opacity:.85">Contractors using Even close bids 40% faster.</p>
+    <h2 style="color:var(--white);margin-bottom:6px;font-size:22px" data-es="Ya usaste tus 3 estimados gratis">You've used your 3 free estimates</h2>
+    <p style="color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:8px" data-es="Hazte Even Pro: estimados ilimitados, los dos PDF y soporte bilingüe.">Upgrade to Even Pro — unlimited estimates, both PDFs, bilingual support.</p>
+    <p style="color:var(--text-accent);font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.3px;margin-bottom:16px;opacity:.85" data-es="Los contratistas que usan Even cierran ofertas 40% más rápido.">Contractors using Even close bids 40% faster.</p>
 
     <!-- Feature list -->
     <div style="text-align:left;background:var(--panel);border-radius:12px;padding:14px 18px;margin-bottom:20px">
-      <div style="font-size:12px;color:var(--white2);line-height:2">✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Internal cost sheet + client proposal<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Regional market pricing</div>
+      <div style="font-size:12px;color:var(--white2);line-height:2" data-es="✓ Estimados ilimitados &nbsp;·&nbsp; ✓ Sube fotos y planos<br>✓ Hoja de costos interna + propuesta al cliente<br>✓ Inglés y español &nbsp;·&nbsp; ✓ Precios del mercado regional">✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Internal cost sheet + client proposal<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Regional market pricing</div>
     </div>
 
     <!-- Side by side pricing -->
@@ -858,12 +858,12 @@ body.has-gopro .topbar-brand{display:none}
       <div style="background:var(--panel);border:1px solid var(--rim);border-radius:14px;padding:18px 14px;position:relative">
         <div style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:1.5px;margin-bottom:6px;font-family:'DM Mono',monospace">MONTHLY</div>
         <div style="font-size:32px;font-weight:500;color:var(--white);line-height:1;font-family:'DM Mono',monospace;letter-spacing:-.5px">$49</div>
-        <div style="font-size:10px;color:var(--muted);margin-bottom:14px">/month</div>
-        <button onclick="handleUpgrade('monthly')" style="width:100%;padding:11px 6px;background:var(--gold);border:none;border-radius:9px;color:#000;font-weight:700;font-size:12px;cursor:pointer">Start Monthly</button>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:14px" data-es="/mes">/month</div>
+        <button onclick="handleUpgrade('monthly')" style="width:100%;padding:11px 6px;background:var(--gold);border:none;border-radius:9px;color:#000;font-weight:700;font-size:12px;cursor:pointer" data-es="Empezar mensual">Start Monthly</button>
       </div>
       <!-- Annual -->
       <div style="background:var(--panel);border:1px solid var(--rim2);border-radius:14px;padding:18px 14px;position:relative">
-        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:20px;white-space:nowrap;font-family:'DM Mono',monospace;">SAVE $98</div>
+        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 10px;border-radius:20px;white-space:nowrap;font-family:'DM Mono',monospace;" data-es="AHORRA $98">SAVE $98</div>
         <div style="font-size:9px;color:var(--muted);font-weight:700;letter-spacing:1.5px;margin-bottom:6px;font-family:'DM Mono',monospace">ANNUAL</div>
         <div style="font-size:32px;font-weight:500;color:var(--white);line-height:1;font-family:'DM Mono',monospace;letter-spacing:-.5px">$490</div>
         <div style="font-size:10px;color:var(--muted);margin-bottom:14px">/year</div>
@@ -871,10 +871,10 @@ body.has-gopro .topbar-brand{display:none}
       </div>
     </div>
 
-    <button onclick="openDataTrade()" style="background:var(--panel);border:1px solid var(--rim);color:var(--white2);padding:13px;border-radius:10px;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px;font-weight:600"><i data-lucide="building-2" style="width:14px;height:14px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>Share a job cost — get 1 free estimate</button>
+    <button onclick="openDataTrade()" style="background:var(--panel);border:1px solid var(--rim);color:var(--white2);padding:13px;border-radius:10px;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px;font-weight:600"><i data-lucide="building-2" style="width:14px;height:14px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Comparte el costo de un trabajo y recibe 1 estimado gratis">Share a job cost — get 1 free estimate</span></button>
     <button onclick="navigate('input')" style="background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;text-decoration:underline">Maybe later</button>
     <div style="margin-top:14px">
-      <button onclick="handleSignOut()" style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer">Sign out</button>
+      <button onclick="handleSignOut()" style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer" data-es="Cerrar sesión">Sign out</button>
     </div>
   </div>
 </div>
@@ -895,8 +895,8 @@ body.has-gopro .topbar-brand{display:none}
     <div class="topbar-right" style="display:flex;align-items:center;gap:10px">
       <span id="user-badge" style="display:none"></span>
       <button id="dashboard-topbar-btn" onclick="navigate('dashboard')" style="display:none;background:none;border:none;padding:5px;cursor:pointer;line-height:0" title="Saved Jobs"><i data-lucide="folder" style="width:17px;height:17px;stroke:var(--gold)"></i></button>
-      <button id="gopro-topbar-btn" onclick="handleUpgrade('monthly')" style="display:none;background:linear-gradient(135deg,#FFB300,#e09900);border:none;color:#000;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px"><img src="assets/logo-hero.png" width="16" height="16" alt="" style="object-fit:contain;vertical-align:middle;margin-right:3px"> GO PRO</button>
-      <button id="topbar-auth-btn" onclick="toggleAuthPanel()" style="background:var(--panel);border:1px solid var(--rim);color:var(--muted);padding:5px 10px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px">SIGN IN</button>
+      <button id="gopro-topbar-btn" onclick="handleUpgrade('monthly')" style="display:none;background:linear-gradient(135deg,#FFB300,#e09900);border:none;color:#000;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px"><img src="assets/logo-hero.png" width="16" height="16" alt="" style="object-fit:contain;vertical-align:middle;margin-right:3px"> <span data-es="HAZTE PRO">GO PRO</span></button>
+      <button id="topbar-auth-btn" onclick="toggleAuthPanel()" style="background:var(--panel);border:1px solid var(--rim);color:var(--muted);padding:5px 10px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px" data-es="INICIAR SESIÓN">SIGN IN</button>
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
         <button class="lang-btn" onclick="setLang('es',this)">ES</button>
@@ -908,11 +908,11 @@ body.has-gopro .topbar-brand{display:none}
 <div id="topbar-auth-panel" style="display:none;position:fixed;top:56px;right:0;width:280px;background:var(--panel);border:1px solid var(--rim);border-radius:0 0 12px 12px;padding:20px;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,.6)">
   <div id="auth-form-wrap">
     <div style="display:flex;background:var(--bg);border-radius:8px;padding:3px;margin-bottom:16px;gap:3px">
-      <button id="panel-tab-login" onclick="switchAuthTab('login')" style="flex:1;padding:8px;border:none;border-radius:6px;background:var(--gold);color:#000;font-weight:600;font-size:11px;cursor:pointer">Sign In</button>
-      <button id="panel-tab-signup" onclick="switchAuthTab('signup')" style="flex:1;padding:8px;border:none;border-radius:6px;background:transparent;color:var(--muted);font-weight:600;font-size:11px;cursor:pointer">Sign Up</button>
+      <button id="panel-tab-login" onclick="switchAuthTab('login')" style="flex:1;padding:8px;border:none;border-radius:6px;background:var(--gold);color:#000;font-weight:600;font-size:11px;cursor:pointer" data-es="Iniciar sesión">Sign In</button>
+      <button id="panel-tab-signup" onclick="switchAuthTab('signup')" style="flex:1;padding:8px;border:none;border-radius:6px;background:transparent;color:var(--muted);font-weight:600;font-size:11px;cursor:pointer" data-es="Crear cuenta">Sign Up</button>
     </div>
     <div style="display:flex;flex-direction:column;gap:10px">
-      <input id="auth-email" type="email" placeholder="Email" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
+      <input id="auth-email" type="email" placeholder="Email" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box" data-placeholder-es="Correo"/>
       <input id="auth-password" type="password" placeholder="Password" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
       <button id="auth-submit-btn" onclick="handleAuth()" style="padding:12px;background:var(--gold);border:none;border-radius:8px;color:#000;font-weight:700;font-size:13px;cursor:pointer">Sign In</button>
       <div id="auth-error" style="color:#ff6b6b;font-size:11px;text-align:center;min-height:14px"></div>
@@ -923,16 +923,16 @@ body.has-gopro .topbar-brand{display:none}
       </div>
       <button onclick="signInWithGoogle()" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-weight:600;font-size:13px;cursor:pointer;width:100%;box-sizing:border-box">
         <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Continue with Google
+        <span data-es="Continuar con Google">Continue with Google</span>
       </button>
     </div>
   </div>
   <div id="auth-signed-in" style="display:none;text-align:center">
     <div style="font-size:12px;color:var(--muted);margin-bottom:12px">Signed in as<br><span id="auth-user-email" style="color:var(--text-accent)"></span></div>
-    <button onclick="handleSignOut()" style="background:none;border:1px solid var(--rim);color:var(--muted);padding:8px 16px;border-radius:6px;font-size:11px;cursor:pointer">Sign Out</button>
+    <button onclick="handleSignOut()" style="background:none;border:1px solid var(--rim);color:var(--muted);padding:8px 16px;border-radius:6px;font-size:11px;cursor:pointer" data-es="Cerrar sesión">Sign Out</button>
   </div>
   <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--rim);font-size:11px;color:var(--muted);text-align:center;line-height:1.5">
-    Sign in to save &amp; sync across devices
+    <span data-es="Inicia sesión para guardar y sincronizar en tus dispositivos">Sign in to save &amp; sync across devices</span>
   </div>
 </div>
 <div id="auth-overlay" style="display:none;position:fixed;inset:0;z-index:998" onclick="closeAuthPanel()"></div>
@@ -1018,7 +1018,7 @@ body.has-gopro .topbar-brand{display:none}
           <div class="field">
             <div class="flabel"><i data-lucide="map-pin" class="ficon"></i><span data-en="City / Municipality" data-es="Ciudad / Municipio">City / Municipality</span></div>
             <div style="position:relative">
-              <input id="est-location" type="text" class="finput" placeholder="City, State or ZIP code" autocomplete="off" oninput="cityAutocomplete(this.value)" onkeydown="cityKeyNav(event)">
+              <input id="est-location" type="text" class="finput" placeholder="City, State or ZIP code" data-placeholder-es="Ciudad, estado o código postal" autocomplete="off" oninput="cityAutocomplete(this.value)" onkeydown="cityKeyNav(event)">
               <div id="city-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--panel);border:1.5px solid var(--gold);border-radius:10px;z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.4);margin-top:4px"></div>
             </div>
           </div>
@@ -1026,26 +1026,26 @@ body.has-gopro .topbar-brand{display:none}
             <div class="flabel"><i data-lucide="home" class="ficon"></i><span data-en="Project Type" data-es="Tipo de Proyecto">Project Type</span></div>
             <div class="fcontrol">
               <select id="est-projtype" style="background:transparent;border:none;outline:none;color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;width:100%;appearance:none">
-                <option>Residential — Single Family</option>
-                <option>Residential — Multi-Family</option>
-                <option>Light Commercial</option>
-                <option>Commercial</option>
+                <option value="Residential — Single Family" data-es="Residencial, unifamiliar">Residential — Single Family</option>
+                <option value="Residential — Multi-Family" data-es="Residencial, multifamiliar">Residential — Multi-Family</option>
+                <option value="Light Commercial" data-es="Comercial ligero">Light Commercial</option>
+                <option value="Commercial" data-es="Comercial">Commercial</option>
               </select>
               <span class="fchev">›</span>
             </div>
           </div>
           <div class="field">
             <div class="flabel"><i data-lucide="ruler" class="ficon"></i><span data-en="Sq. Footage" data-es="Pies Cuadrados">Sq. Footage</span></div>
-            <input id="est-sqft" type="number" class="finput" placeholder="e.g. 2281">
-            <div class="fhint" id="sqft-hint">Typical 2,200–2,800 sq ft for Miami residential</div>
+            <input id="est-sqft" type="number" class="finput" placeholder="e.g. 2281" data-placeholder-es="ej. 2281">
+            <div class="fhint" id="sqft-hint" data-es="Típico: 2,200–2,800 pies cuadrados en Miami">Typical 2,200–2,800 sq ft for Miami residential</div>
           </div>
           <div class="field">
             <div class="flabel"><i data-lucide="folder" class="ficon"></i><span data-en="Project Label" data-es="Nombre del Proyecto">Project Label</span></div>
-            <input id="est-project-label" type="text" class="finput" placeholder="e.g. Smith Kitchen Remodel, Unit 4B Roof…">
+            <input id="est-project-label" type="text" class="finput" placeholder="e.g. Smith Kitchen Remodel, Unit 4B Roof…" data-placeholder-es="ej. Remodelación de cocina Smith, techo Unidad 4B…">
           </div>
           <div class="field">
             <div class="flabel"><i data-lucide="user" class="ficon"></i><span data-en="Client Name" data-es="Nombre del Cliente">Client Name</span></div>
-            <input id="est-client" type="text" class="finput" placeholder="Client or company name">
+            <input id="est-client" type="text" class="finput" placeholder="Client or company name" data-placeholder-es="Nombre del cliente o empresa">
           </div>
           <div class="field">
             <div class="flabel" data-en="Market Pricing Level" data-es="Nivel de Precios del Mercado">Market Pricing Level</div>
@@ -1054,7 +1054,7 @@ body.has-gopro .topbar-brand{display:none}
               <button class="market-adj-opt active" onclick="setMarketAdj(this,'standard')" data-en="Standard" data-es="Estándar">Standard</button>
               <button class="market-adj-opt" onclick="setMarketAdj(this,'premium')" data-en="Premium" data-es="Premium">Premium</button>
             </div>
-            <div style="font-size:10px;color:var(--muted);margin-top:4px;padding-left:4px;font-family:'DM Mono',monospace" id="market-adj-hint">Standard market rates for your area</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:4px;padding-left:4px;font-family:'DM Mono',monospace" id="market-adj-hint" data-es="Tarifas estándar del mercado en tu zona">Standard market rates for your area</div>
           </div>
         </div>
       </div>
@@ -1125,17 +1125,17 @@ body.has-gopro .topbar-brand{display:none}
           <!-- Stacked bars -->
           <div class="bar-stack">
             <div class="bar-row">
-              <div class="bar-lbl" style="color:var(--orange)">Overhead</div>
+              <div class="bar-lbl" style="color:var(--orange)" data-es="Gastos generales">Overhead</div>
               <div class="bar-outer"><div class="bar-inner" id="bar-oh" style="width:29%;background:var(--orange)"></div></div>
               <div class="bar-pct" style="color:var(--orange)" id="bpct-oh">12%</div>
             </div>
             <div class="bar-row">
-              <div class="bar-lbl" style="color:var(--green)">Profit</div>
+              <div class="bar-lbl" style="color:var(--green)" data-es="Ganancia">Profit</div>
               <div class="bar-outer"><div class="bar-inner" id="bar-profit" style="width:52%;background:var(--green)"></div></div>
               <div class="bar-pct" style="color:var(--green)" id="bpct-profit">22%</div>
             </div>
             <div class="bar-row">
-              <div class="bar-lbl" style="color:var(--red)">Cushion</div>
+              <div class="bar-lbl" style="color:var(--red)" data-es="Colchón">Cushion</div>
               <div class="bar-outer"><div class="bar-inner" id="bar-cushion" style="width:19%;background:var(--red)"></div></div>
               <div class="bar-pct" style="color:var(--red)" id="bpct-cushion">8%</div>
             </div>
@@ -1173,7 +1173,7 @@ body.has-gopro .topbar-brand{display:none}
           </div>
           <div class="field" style="margin-bottom:0">
             <div class="flabel" data-en="Your labor cost per hour (optional, before overhead and profit)" data-es="Tu costo de mano de obra por hora (opcional, antes de gastos y ganancia)">Your labor cost per hour (optional, before overhead and profit)</div>
-            <input id="labor-rate" type="number" min="0" step="0.5" class="finput" placeholder="e.g. 45" oninput="setLaborRate(this.value)" onfocus="laborRateGate(this)">
+            <input id="labor-rate" type="number" min="0" step="0.5" class="finput" placeholder="e.g. 45" oninput="setLaborRate(this.value)" onfocus="laborRateGate(this)" data-placeholder-es="ej. 45">
             <div style="font-size:10px;color:var(--muted);margin-top:4px;padding-left:4px;font-family:'DM Mono',monospace;line-height:1.5" id="labor-hint"></div>
           </div>
         </div>
@@ -1270,9 +1270,9 @@ body.has-gopro .topbar-brand{display:none}
     <div class="sbody">
       <div class="stepper">
         <div style="display:flex;align-items:center;gap:0;flex:1;max-width:260px">
-          <div class="snode"><div class="scircle done">✓</div><div class="slbl done">Scope</div></div>
+          <div class="snode"><div class="scircle done">✓</div><div class="slbl done" data-es="Alcance">Scope</div></div>
           <div class="sline done"></div>
-          <div class="snode"><div class="scircle done">✓</div><div class="slbl done">Refine</div></div>
+          <div class="snode"><div class="scircle done">✓</div><div class="slbl done" data-es="Refinar">Refine</div></div>
           <div class="sline done"></div>
           <div class="snode"><div class="scircle active">3</div><div class="slbl active" data-en="Estimate" data-es="Estimado">Estimate</div></div>
         </div>
@@ -1335,12 +1335,12 @@ body.has-gopro .topbar-brand{display:none}
                down past Even Suggests. This is the number that decides what the
                client sees; it shouldn't be easy to scroll past without noticing. -->
           <div id="final-bid-box" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--r);padding:12px 14px;margin-top:10px">
-            <div style="font-size:11px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px">YOUR FINAL BID <span style="color:var(--muted);font-size:9px;letter-spacing:.3px;font-weight:400">OPTIONAL — SETS WHAT THE CLIENT SEES</span></div>
+            <div style="font-size:11px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px" data-es="TU OFERTA FINAL <span style=&quot;color:var(--muted);font-size:9px;letter-spacing:.3px;font-weight:400&quot;>OPCIONAL. ES LO QUE VE TU CLIENTE</span>">YOUR FINAL BID <span style="color:var(--muted);font-size:9px;letter-spacing:.3px;font-weight:400">OPTIONAL — SETS WHAT THE CLIENT SEES</span></div>
             <div style="position:relative">
               <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none">$</span>
-              <input id="final-bid-input" type="number" min="0" step="100" placeholder="Override the bid — client sees this on PDF" oninput="onFinalBidChange(this.value)" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;padding:9px 10px 9px 22px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;-moz-appearance:textfield"/>
+              <input id="final-bid-input" type="number" min="0" step="100" placeholder="Override the bid — client sees this on PDF" oninput="onFinalBidChange(this.value)" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;padding:9px 10px 9px 22px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;-moz-appearance:textfield" data-placeholder-es="Cambia el precio. Tu cliente ve este número en el PDF"/>
             </div>
-            <div style="font-size:10px;color:var(--muted);margin-top:4px">Even's range stays in your dashboard · Client sees your number on PDF</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:4px" data-es="El rango de Even se queda en tu panel · Tu cliente ve tu número en el PDF">Even's range stays in your dashboard · Client sees your number on PDF</div>
             <div id="final-bid-confirm" style="display:none;margin-top:8px;font-family:'DM Mono',monospace;font-size:15px;font-weight:800;color:var(--text-accent)"></div>
           </div>
           <div class="meter">
@@ -1358,10 +1358,10 @@ body.has-gopro .topbar-brand{display:none}
           <!-- Post-estimate Go Pro strip — hidden for Pro users -->
           <div id="post-estimate-upsell" style="display:none;margin:10px 0 2px 0;background:linear-gradient(135deg,rgba(255,179,0,.07),rgba(255,179,0,.03));border:1px solid rgba(255,179,0,.2);border-radius:10px;padding:11px 14px;align-items:center;justify-content:space-between;gap:10px">
             <div>
-              <div style="font-size:11px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.5px">MORE JOBS THIS WEEK?</div>
-              <div id="upsell-sub" style="font-size:11px;color:var(--muted);margin-top:2px">Unlimited estimates · $49/mo</div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.5px" data-es="¿MÁS TRABAJOS ESTA SEMANA?">MORE JOBS THIS WEEK?</div>
+              <div id="upsell-sub" style="font-size:11px;color:var(--muted);margin-top:2px" data-es="Estimados ilimitados · $49/mes">Unlimited estimates · $49/mo</div>
             </div>
-            <button onclick="handleUpgrade('monthly')" style="background:var(--gold);border:none;color:#000;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Mono',monospace">Go Pro →</button>
+            <button onclick="handleUpgrade('monthly')" style="background:var(--gold);border:none;color:#000;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Mono',monospace" data-es="Hazte Pro →">Go Pro →</button>
           </div>
 
           <!-- EVEN SUGGESTS — collapsed by default; three full cards up front was
@@ -1425,16 +1425,16 @@ body.has-gopro .topbar-brand{display:none}
       <!-- Proposal customizer -->
       <div class="gc" id="proposal-edit-card" style="display:none;margin-bottom:10px">
         <div class="gc-head">
-          <div class="gc-title"><i data-lucide="file-text" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>Customize Before Download</div>
-          <div class="gc-tag">Live preview</div>
+          <div class="gc-title"><i data-lucide="file-text" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Personaliza antes de descargar">Customize Before Download</span></div>
+          <div class="gc-tag" data-es="Vista previa">Live preview</div>
         </div>
         <div class="gc-body" style="padding:10px 12px;display:flex;flex-direction:column;gap:10px">
           <div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px">PRICING DETAIL</div>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px" data-es="DETALLE DE PRECIOS">PRICING DETAIL</div>
             <div class="detail-toggle">
-              <div class="detail-opt active" onclick="setDetailLevel('full',this)">Full Detail</div>
-              <div class="detail-opt" onclick="setDetailLevel('category',this)">By Category</div>
-              <div class="detail-opt" onclick="setDetailLevel('lump',this)">Lump Sum</div>
+              <div class="detail-opt active" onclick="setDetailLevel('full',this)" data-es="Detalle completo">Full Detail</div>
+              <div class="detail-opt" onclick="setDetailLevel('category',this)" data-es="Por categoría">By Category</div>
+              <div class="detail-opt" onclick="setDetailLevel('lump',this)" data-es="Precio global">Lump Sum</div>
             </div>
           </div>
           <div>
@@ -1451,22 +1451,22 @@ body.has-gopro .topbar-brand{display:none}
             <input id="prop-job-address" data-en="1" data-es="1" class="finput" placeholder="Street, city" data-placeholder-en="Street, city" data-placeholder-es="Calle, ciudad" oninput="liveProposalUpdate()">
           </div>
           <div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px">NOTE TO CLIENT</div>
-            <textarea id="prop-note" placeholder="e.g. Thank you for the opportunity — we look forward to working together." style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()"></textarea>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px" data-es="NOTA PARA EL CLIENTE">NOTE TO CLIENT</div>
+            <textarea id="prop-note" placeholder="e.g. Thank you for the opportunity — we look forward to working together." style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()" data-placeholder-es="ej. Gracias por la oportunidad. Esperamos trabajar contigo."></textarea>
           </div>
           <div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px">CLIENT WILL SUPPLY</div>
-            <textarea id="prop-supply" placeholder="e.g. Appliances, light fixtures, tile selection, cabinet hardware…" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()"></textarea>
+            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px" data-es="EL CLIENTE PROPORCIONA">CLIENT WILL SUPPLY</div>
+            <textarea id="prop-supply" placeholder="e.g. Appliances, light fixtures, tile selection, cabinet hardware…" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()" data-placeholder-es="ej. Electrodomésticos, lámparas, selección de azulejos, herrajes…"></textarea>
           </div>
           <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
-              <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px">ASSUMPTIONS</div>
-              <button onclick="addProposalAssumption()" style="background:none;border:none;color:var(--text-accent);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:0">+ ADD</button>
+              <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px" data-es="SUPUESTOS">ASSUMPTIONS</div>
+              <button onclick="addProposalAssumption()" style="background:none;border:none;color:var(--text-accent);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:0" data-es="+ AGREGAR">+ ADD</button>
             </div>
             <div id="prop-assumptions"></div>
           </div>
           <div id="beautify-row" style="display:none;padding-top:2px">
-            <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.25);border-radius:8px;color:var(--text-accent);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-hero.png" width="16" height="16" style="object-fit:contain;vertical-align:middle"> POLISH SCOPE WITH AI</button>
+            <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.25);border-radius:8px;color:var(--text-accent);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-hero.png" width="16" height="16" style="object-fit:contain;vertical-align:middle"> <span data-es="MEJORAR EL TEXTO">POLISH SCOPE WITH AI</span></button>
             <div id="beautify-status" style="font-size:10px;color:var(--muted);text-align:center;margin-top:5px;display:none"></div>
           </div>
         </div>
@@ -1495,7 +1495,7 @@ body.has-gopro .topbar-brand{display:none}
         <h3 data-en="Download Your Estimate" data-es="Descarga Tu Estimado">Download Your Estimate</h3>
         <p data-en="Enter your email to download. We'll save your estimate and settings — no password needed." data-es="Ingresa tu correo para descargar. Guardaremos tu estimado y configuración.">Enter your email to download. We'll save your estimate and settings — no password needed.</p>
         <div class="email-row">
-          <input type="email" id="email-in" class="email-input" placeholder="your@email.com">
+          <input type="email" id="email-in" class="email-input" placeholder="your@email.com" data-placeholder-es="tu@correo.com">
           <button class="cta cta-sm" onclick="downloadPDF()" data-en="Download" data-es="Descargar">Download</button>
         </div>
         <div class="email-note" data-en="No spam. Just your estimate." data-es="Sin spam. Solo tu estimado.">No spam. Just your estimate.</div>
@@ -1526,9 +1526,9 @@ body.has-gopro .topbar-brand{display:none}
       <!-- New Estimate Button -->
       <div style="padding:24px 0 8px 0;text-align:center">
         <button onclick="goHome()" style="background:var(--panel);border:1px solid var(--rim);color:var(--muted);padding:12px 28px;border-radius:10px;font-size:13px;cursor:pointer;font-weight:600;letter-spacing:.5px">
-          ＋ Start New Estimate
+          <span data-es="＋ Nuevo estimado">＋ Start New Estimate</span>
         </button>
-        <button onclick="handleSignOut()" style="background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;margin-left:16px;opacity:.6">Sign out</button>
+        <button onclick="handleSignOut()" style="background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;margin-left:16px;opacity:.6" data-es="Cerrar sesión">Sign out</button>
       </div>
 
   </div><!-- /s-estimate -->
@@ -1738,7 +1738,7 @@ function updateUserBadge(){
       // Show post-estimate upsell strip on estimate screen
       if(upsellStrip){
         const upsellSub = document.getElementById('upsell-sub');
-        if(rem === 1 && upsellSub){ upsellSub.textContent = "Last free estimate used — don't lose your momentum"; }
+        if(rem === 1 && upsellSub){ upsellSub.textContent = appLang==='es'?'Usaste tu último estimado gratis. No pierdas el ritmo.':"Last free estimate used — don't lose your momentum"; }
         upsellStrip.style.cssText = estimateCount > 0 ? 'display:flex;align-items:center;justify-content:space-between;gap:10px' : 'display:none';
       }
     }
@@ -1753,7 +1753,7 @@ function updateUserBadge(){
   if(currentUser){
     if(authBtn){ authBtn.textContent=currentUser.email.split('@')[0].substring(0,10).toUpperCase(); authBtn.style.color='var(--gold)'; authBtn.style.borderColor='var(--gold)'; }
   } else {
-    if(authBtn){ authBtn.textContent='SIGN IN'; authBtn.style.color='var(--white2)'; authBtn.style.borderColor='var(--rim2)'; }
+    if(authBtn){ authBtn.textContent=appLang==='es'?'INICIAR SESIÓN':'SIGN IN'; authBtn.style.color='var(--white2)'; authBtn.style.borderColor='var(--rim2)'; }
   }
   updateAuthPanel();
 }
@@ -1783,7 +1783,7 @@ function switchAuthTab(mode){
     if(el){ el.style.background=mode==='signup'?'var(--gold)':'transparent'; el.style.color=mode==='signup'?'#000':'var(--muted)'; }
   });
   const submitBtn = document.getElementById('auth-submit-btn');
-  if(submitBtn) submitBtn.textContent=mode==='login'?'Sign In':'Create Account';
+  if(submitBtn) submitBtn.textContent=authSubmitLabel(mode);
   const errEl=document.getElementById('auth-error');
   if(errEl) errEl.textContent='';
 }
@@ -1827,9 +1827,13 @@ function updateAuthPanel(){
 // background.
 const AUTH_TIMEOUT_MS=20000;
 const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('auth_timeout')),ms))]);
+function authSubmitLabel(mode){
+  const es=appLang==='es';
+  return mode==='login'?(es?'Iniciar sesión':'Sign In'):(es?'Crear cuenta':'Create Account');
+}
 function resetAuthButton(){
   const btn=document.getElementById('auth-submit-btn');
-  if(btn){ btn.textContent=authMode==='login'?'Sign In':'Create Account'; btn.disabled=false; }
+  if(btn){ btn.textContent=authSubmitLabel(authMode); btn.disabled=false; }
 }
 async function handleAuth(){
   const email = document.getElementById('auth-email').value.trim();
@@ -2025,6 +2029,14 @@ function setLang(lang,btn){
   appLang=lang;
   document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  // Elements tagged with only data-es keep their English as written in the page:
+  // remember it the first time so switching back works.
+  document.querySelectorAll('[data-es]:not([data-en])').forEach(el=>{
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') return;
+    el.setAttribute('data-en',el.innerHTML);
+  });
+  document.querySelectorAll('[data-placeholder-es]:not([data-placeholder-en])').forEach(el=>el.setAttribute('data-placeholder-en',el.placeholder));
+  document.querySelectorAll('[data-placeholder-'+lang+']').forEach(el=>{ el.placeholder=el.getAttribute('data-placeholder-'+lang).replace(/\\n/g,'\n'); });
   document.querySelectorAll('[data-en]').forEach(el=>{
     const v=el.getAttribute('data-'+lang);
     if(!v) return;
@@ -2036,6 +2048,10 @@ function setLang(lang,btn){
   // it in the language that was just switched to.
   updateBidHeadline();
   if(typeof renderLaborSettings==='function') renderLaborSettings();
+  // Text built in code (free-estimate count, upsell) is redrawn in the new language.
+  if(typeof updateUserBadge==='function') updateUserBadge();
+  const _asb=document.getElementById('auth-submit-btn'); if(_asb&&!_asb.disabled) _asb.textContent=authSubmitLabel(authMode);
+  const _mab=document.querySelector('.market-adj-opt.active'); if(_mab&&typeof setMarketAdj==='function') setMarketAdj(_mab,marketAdj);
 }
 
 // ══════════════════════════
@@ -2793,7 +2809,7 @@ async function startEstimate(){
   // call comes back with the reason and showLimitReached takes over.
   // Last free estimate warning — show toast, don't block
   if(!isPro && window._usage && estimateCount === FREE_LIMIT - 1){
-    showToast('Last free estimate — Go Pro to keep going', 5000);
+    showToast(appLang==='es'?'Último estimado gratis. Hazte Pro para seguir.':'Last free estimate — Go Pro to keep going', 5000);
   }
   const scope=document.getElementById('scope-text').value.trim();
   if(!scope&&uploadedImages.length===0&&uploadedDocs.length===0){alert(appLang==='en'?'Please add a scope of work first.':'Por favor agrega un alcance de trabajo.');return}
@@ -2815,7 +2831,7 @@ async function startEstimate(){
   const projtype=document.getElementById('est-projtype').value;
   const sqft=document.getElementById('est-sqft').value||'not specified';
   const client=document.getElementById('est-client').value.trim();
-  window._ctx={trade,location,projtype,sqft,client,bidType,laborType,oh:sliderVals.oh,profit:sliderVals.profit,cushion:sliderVals.cushion,laborMult:laborSettings.mult,laborRate:isPro?laborSettings.rate:null,projectLabel:document.getElementById('est-project-label')?.value||''};
+  window._ctx={trade,location,projtype,sqft,client,bidType,laborType,oh:sliderVals.oh,profit:sliderVals.profit,cushion:sliderVals.cushion,laborMult:laborSettings.mult,laborRate:isPro?laborSettings.rate:null,projectLabel:document.getElementById('est-project-label')?.value||'',lang:appLang};
 
   navigate('refine');
   const stopStatus=startThinkingStatus('ai-summary-text',appLang==='en'
@@ -2834,7 +2850,11 @@ async function startEstimate(){
   if(uploadedDocs.length>0) attachedParts.push(`${uploadedDocs.length} PDF plan/spec document(s)`);
   if(uploadedImages.length>0) attachedParts.push(`${uploadedImages.length} construction plan/photo(s)`);
   const imgContext=attachedParts.length>0?`\nATTACHED: ${attachedParts.join(' and ')}. Perform high-accuracy OCR on all text. Extract all dimensions, material callouts, notes, scope items, and quantities visible. Pay special attention to leader lines, revision clouds, and specification notes. Attachments may be multiple pages of the same scope — combine and reconcile all information across them before responding.`:'';
-  msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.`});
+    // The contractor reads every word of this in their language (founder ES test 2026-10-07).
+  const langRule=appLang==='es'
+    ?'\nLANGUAGE: Spanish. Write projectName, every trade name, item, keyFact, question and option in Spanish (Latin American, use tú). Keep brand names, product names and model numbers as written (Square D, NEMA 3R, THHN).'
+    :'';
+  msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${appLang==='es'?'|Language:Spanish':''}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.${langRule}`});
 
   try{
     const res=await callClaude([{role:'user',content:msgContent}],3000,false,'low',true,'scope');
@@ -3232,9 +3252,30 @@ function permitNum(v){
 // How a permit row's fee is figured. Rows store the city's own rule in `method`
 // and `rate`; the method strings are free text from many schedules, so this reads
 // them conservatively and says "approx" whenever it can't follow the full rule.
+// A row whose `method` says it is a flat fee is a flat fee: its rate text is the
+// city's wording ("Minimum electrical permit fee including repair work per
+// permit"), and reading that wording as the rule mislabeled Aventura's electrical
+// and plumbing permits as add-ons / per-unit fees, so the model was told not to
+// pick them (founder test 2026-10-07). Only a percent-of-another-fee rule or a
+// double fee still makes a flat-method row an add-on.
+const FLAT_PERMIT_METHOD_RE=/^(flat|flat fee|flat minimum|flat_minimum|flat_per_permit|per_permit|flat_nonrefundable)$/;
 function permitBasis(row){
+  const m=String(row.method||'').trim().toLowerCase();
   const t=`${row.method||''} ${typeof row.rate==='string'?row.rate:''}`.toLowerCase();
-  if(/permit.?fee|base.?fee|double/.test(t)) return 'addon';
+  // ...unless the fee's own first clause is a unit price ("$0.79 per linear foot",
+  // "$9.66 each", "$138.72 per hour"): then the method label is the data's slip.
+  const lead=(typeof row.rate==='string'?row.rate:'').split(/[;.](\s|$)/)[0].toLowerCase();
+  const unitLead=/\$\s?[\d.,]+\s*(\/|each\b|per\s+(?!permit\b|application\b))/.test(lead);
+  if(FLAT_PERMIT_METHOD_RE.test(m)&&!unitLead){
+    if(/(\d\s*%|percent)[^.;]*\b(permit|base|building)\s*fee|double/.test(t)) return 'addon';
+    return 'flat';
+  }
+  // An add-on is a fee figured from another fee ("50% of the permit fee", "double
+  // the permit fee", "same as building permit fees"). Merely mentioning a permit
+  // fee is not one: "1% of the construction valuation; $75 application fee added
+  // to the permit fee" is Tequesta's main building permit.
+  if(/permit_fee|base_fee|surcharge|x_permit|double|_of_dfi|percent_of_.*(fee|permit)/.test(m)) return 'addon';
+  if(/(\d\s*%|percent|times|\bx\s?\d|double)[^.;]*\b(permit|base|building)(\s+permit)?\s*fee|same as|double|base.?fee\s*x|plus[^.;]*\bpermit fees?\b|(\d\s*%|percent)[^.;]*\b(permit cost|original[^.;]*fee)|reduction|discount/.test(t)) return 'addon';
   if(/tier/.test(t)) return 'tiered';
   if(/hour/.test(t)) return 'hourly';
   if(/1,?000\b|thousand/.test(t)&&!/1000\s*sf|1,000\s*s(q|f)/.test(t)) return 'per1000';
@@ -3255,7 +3296,10 @@ function computePermitFee(row,value,qty,sqft){
   const min=permitNum(row.min_fee)||0;
   let fee=null;
   if(basis==='value'&&r!=null){
-    const frac=(/%/.test(String(row.rate))||r>=1)?r/100:r;
+    // "$125 up to $5,000, plus 1.35% of cost": the rate is the number marked %, not the first one.
+    const pm=typeof row.rate==='string'&&row.rate.replace(/,/g,'').match(/(\d*\.?\d+)\s*%/);
+    const pr=pm?parseFloat(pm[1]):r;
+    const frac=(pm||r>=1)?pr/100:pr;
     fee=value*frac;
   }else if(basis==='per1000'&&r!=null) fee=r*value/1000;
   else if((basis==='sqft'||basis==='per1000sqft'||basis==='per100sqft')&&r!=null){
@@ -3288,6 +3332,7 @@ function buildCatalog(md,scopeCats,own){
   return cat;
 }
 
+const PERMIT_BASIS_ES={value:'un porcentaje del valor del trabajo',per1000:'por cada $1,000 del valor',sqft:'por pie cuadrado',per1000sqft:'por cada 1,000 pies cuadrados',per100sqft:'por cada 100 pies cuadrados',unit:'por unidad',flat:'tarifa fija',tiered:'por escalas',hourly:'por hora',addon:'un recargo sobre otro permiso',unknown:'según la tabla'};
 function permitBasisLabel(b){
   return {value:'% of job value',per1000:'per $1,000 of job value',sqft:'per sq ft',per1000sqft:'per 1,000 sq ft',per100sqft:'per 100 sq ft',unit:'per unit (give qty)',flat:'flat fee',tiered:'tiered',hourly:'hourly',addon:'add-on to another permit fee (do not pick)',unknown:'see schedule'}[b]||'see schedule';
 }
@@ -3314,21 +3359,26 @@ function priceScope(scope,cat,s){
   const lines=[],permitPicks=[],notes=[];
   const calib={};
   (s.calibration||[]).forEach(c=>{calib[c.category]=1+(c.avgVariancePct/100);});
-  const estLabel='not in our data, estimated';
+  // Text the engine writes itself follows the language the estimate was run in
+  // (s.lang); categories and units stay English because the rules below read them.
+  const es=s.lang==='es';
+  const estLabel=es?'no está en nuestros datos, estimado':'not in our data, estimated';
   for(const it of (scope&&scope.lineItems)||[]){
     if(!it) continue;
     const ref=String(it.ref||'').trim().toUpperCase();
     const e=cat.byRef[ref];
     const type=String(it.type||'').toLowerCase();
-    if(type==='permit'){ if(e&&e.kind==='permit') permitPicks.push({it,e}); else notes.push(`A permit the scope called for (${it.description||ref||'unnamed'}) is not in this city's schedule on file. Verify the fee with the building department.`); continue; }
+    if(type==='permit'){ if(e&&e.kind==='permit') permitPicks.push({it,e}); else notes.push(es?`Un permiso que pide el alcance (${it.description||ref||'sin nombre'}) no está en la tabla de la ciudad que tenemos. Confirma la tarifa con el departamento de construcción.`:`A permit the scope called for (${it.description||ref||'unnamed'}) is not in this city's schedule on file. Verify the fee with the building department.`); continue; }
     if(e&&e.kind==='material'){
       const q=Math.max(0,+it.qty||0); if(!q) continue;
       const w=wasteFor(e.row.category,e.row.unit);
       let unitCost=round2(e.row.mid*adj);
-      let desc=e.row.item;
+      // Spanish runs show the model's Spanish name for the item; the catalog name
+      // (English, the supplier's) stays on the line as catalogItem.
+      let desc=(es&&it.description)?String(it.description):e.row.item;
       if(s.hvhz&&HVHZ_EXTERIOR_RE.test(e.row.category||'')){ unitCost=round2(unitCost*(1+HVHZ_UPLIFT)); desc+=' (HVHZ)'; }
       const qty=round2(q*(1+w));
-      lines.push({category:catRoot(e.row.category),description:desc+(w?` (incl. ${Math.round(w*100)}% waste)`:''),qty,unit:e.row.unit||'ea',unitCost,total:round2(qty*unitCost),ref,priced:'catalog',source:e.row.source||''});
+      lines.push({category:catRoot(e.row.category),description:desc+(w?(es?` (incl. ${Math.round(w*100)}% de desperdicio)`:` (incl. ${Math.round(w*100)}% waste)`):''),qty,unit:e.row.unit||'ea',unitCost,total:round2(qty*unitCost),ref,priced:'catalog',source:e.row.source||'',catalogItem:e.row.item});
     }else if(e&&e.kind==='supplier'){
       const q=Math.max(0,+it.qty||0); if(!q) continue;
       const unitCost=round2(parseFloat(e.row.price));
@@ -3337,22 +3387,22 @@ function priceScope(scope,cat,s){
       const h=Math.max(0,+(it.hours??it.qty)||0); if(!h) continue;
       const base=ownRate!=null?ownRate:e.row.mid*mult;
       const unitCost=round2(base*adj);
-      lines.push({category:'Labor',description:it.description||e.row.trade,qty:round2(h),unit:'hr',unitCost,total:round2(h*unitCost),ref,priced:ownRate!=null?'your labor rate':'bls x multiplier',laborTrade:e.row.trade,wage:e.row.mid});
+      lines.push({category:'Labor',description:it.description||(es?'Mano de obra':e.row.trade),qty:round2(h),unit:'hr',unitCost,total:round2(h*unitCost),ref,priced:ownRate!=null?'your labor rate':'bls x multiplier',laborTrade:e.row.trade,wage:e.row.mid});
     }else if(e&&e.kind==='sub'){
       const q=Math.max(0,+it.qty||(e.row.rate_type==='lump'?1:0)); if(!q) continue;
       const unitCost=round2(parseFloat(e.row.rate));
-      lines.push({category:'Subcontractor',description:it.description||`${e.row.trade} sub`,qty:round2(q),unit:e.row.rate_type==='lump'?'job':e.row.rate_type==='hour'?'hr':e.row.rate_type,unitCost,total:round2(q*unitCost),ref,priced:'your sub'});
+      lines.push({category:'Subcontractor',description:it.description||(es?`Subcontratista: ${e.row.trade}`:`${e.row.trade} sub`),qty:round2(q),unit:e.row.rate_type==='lump'?'job':e.row.rate_type==='hour'?'hr':e.row.rate_type,unitCost,total:round2(q*unitCost),ref,priced:'your sub'});
     }else{
       // Not in the catalog (or an unknown ref): the model's number, said out loud.
       const q=Math.max(0,+it.qty||1);
       if(type==='labor'&&ownRate!=null){
         const unitCost=round2(ownRate*adj);
-        lines.push({category:'Labor',description:it.description||'Labor',qty:round2(+it.hours||q),unit:'hr',unitCost,total:round2((+it.hours||q)*unitCost),priced:'your labor rate'});
+        lines.push({category:'Labor',description:it.description||(es?'Mano de obra':'Labor'),qty:round2(+it.hours||q),unit:'hr',unitCost,total:round2((+it.hours||q)*unitCost),priced:'your labor rate'});
         continue;
       }
       const unitCost=round2((+it.unitCost||0)*adj);
       if(!unitCost) continue;
-      lines.push({category:it.category||(type==='labor'?'Labor':'Other'),description:it.description||'Item',qty:round2(type==='labor'?(+it.hours||q):q),unit:it.unit||(type==='labor'?'hr':'ea'),unitCost,total:round2((type==='labor'?(+it.hours||q):q)*unitCost),priced:'estimated',estimated:true,estLabel});
+      lines.push({category:it.category||(type==='labor'?'Labor':'Other'),description:it.description||(es?'Partida':'Item'),qty:round2(type==='labor'?(+it.hours||q):q),unit:it.unit||(type==='labor'?'hr':'ea'),unitCost,total:round2((type==='labor'?(+it.hours||q):q)*unitCost),priced:'estimated',estimated:true,estLabel});
     }
   }
   // Contractor's logged actuals (Pro): same per-category adjustment the prompt used
@@ -3360,14 +3410,14 @@ function priceScope(scope,cat,s){
   for(const l of lines){ const f=calib[l.category]; if(f&&f>0&&f!==1){ l.unitCost=round2(l.unitCost*f); l.total=round2(l.qty*l.unitCost); } }
 
   const data={projectName:scope?.projectName||'Estimate',lineItems:lines,assumptions:Array.isArray(scope?.assumptions)?scope.assumptions.slice():[],exclusions:Array.isArray(scope?.exclusions)?scope.exclusions.slice():[],estimatedDays:scope?.estimatedDays||'',paymentTerms:scope?.paymentTerms||''};
-  clampAncillaryToJobSize(data);
+  clampAncillaryToJobSize(data,s.lang);
 
   // Risk cushion: the contractor's setting, lowered only when the scope has none
   // of the unknowns it exists for. Decided by the line items, not by the model.
   const isHelper=t=>/helper|laborers|supervisor|maintenance/i.test(t||'');
   const trades=new Set(data.lineItems.filter(l=>l.laborTrade&&!isHelper(l.laborTrade)).map(l=>l.laborTrade));
   const matRoots=new Set(data.lineItems.filter(l=>l.priced==='catalog').map(l=>l.category));
-  const hasDemo=data.lineItems.some(l=>/\b(demo|demolition|tear|gut)\b/i.test(l.description||''));
+  const hasDemo=data.lineItems.some(l=>/\b(demo|demolition|tear|gut|demolici[oó]n|demoler)\b/i.test(l.description||''));
   const lowRisk=!permitPicks.length&&!hasDemo&&trades.size<=1&&matRoots.size<=1;
   const cushion=lowRisk?Math.min(+s.cushion||0,LOW_RISK_CUSHION):(+s.cushion||0);
 
@@ -3384,9 +3434,11 @@ function priceScope(scope,cat,s){
     if(basis==='value'||basis==='per1000'){ if(valueBased++) continue; }
     const r=computePermitFee(e.row,jobValue,it.qty,s.sqft);
     const name=`${e.row.municipality||''} ${e.row.work_type||'permit'}`.trim();
-    if(r.fee==null){ notes.push(`${name}: the fee could not be figured from the schedule on file. Verify with the building department.`); continue; }
-    if(r.approx) notes.push(`${name}: shown at the schedule's minimum fee; the full rule is ${r.basis}. Verify with the building department.`);
-    data.lineItems.push({category:'Permits',description:`Permit: ${name}`,qty:1,unit:'permit',unitCost:r.fee,total:r.fee,ref:e.ref,priced:'permit schedule',permitRow:{municipality:e.row.municipality,work_type:e.row.work_type,rate:e.row.rate,min_fee:e.row.min_fee,method:e.row.method,source:e.row.source||'',date:e.row.date||''},jobValue});
+    // ES: the city's fee names are English-only, so the line uses the model's Spanish name plus the city.
+    const esName=`${it.description&&!/^permit\b/i.test(it.description)?it.description:'Permiso'} (${e.row.municipality||''})`;
+    if(r.fee==null){ notes.push(es?`${esName}: no se pudo calcular la tarifa con la tabla que tenemos. Confírmala con el departamento de construcción.`:`${name}: the fee could not be figured from the schedule on file. Verify with the building department.`); continue; }
+    if(r.approx) notes.push(es?`${esName}: se muestra la tarifa mínima de la tabla; la regla completa es ${PERMIT_BASIS_ES[r.basis]||r.basis}. Confírmala con el departamento de construcción.`:`${name}: shown at the schedule's minimum fee; the full rule is ${r.basis}. Verify with the building department.`);
+    data.lineItems.push({category:'Permits',description:es?esName:`Permit: ${name}`,qty:1,unit:'permit',unitCost:r.fee,total:r.fee,ref:e.ref,priced:'permit schedule',permitRow:{municipality:e.row.municipality,work_type:e.row.work_type,rate:e.row.rate,min_fee:e.row.min_fee,method:e.row.method,source:e.row.source||'',date:e.row.date||''},jobValue});
   }
 
   data.subtotal=round2(data.lineItems.reduce((t,l)=>t+l.total,0));
@@ -3421,7 +3473,7 @@ async function _calculateEstimate(btn,jobAtStart){
   const scope=document.getElementById('scope-text')?.value?.trim()||'';
   if(!ctx||!scope){
     btn.disabled=false;
-    showToast('Session expired — please go back and re-enter your scope.',4000);
+    showToast(appLang==='es'?'La sesión expiró. Regresa y vuelve a escribir tu alcance.':'Session expired — please go back and re-enter your scope.',4000);
     return;
   }
   // Question order, not click order: the same answers must make the same prompt
@@ -3537,9 +3589,10 @@ LINE TYPES (each lineItems entry is one of these):
 - {"type":"material","ref":"M12","qty":2,"description":"short"} ref from MATERIALS, or S# from the contractor's own supplier list (prefer S# when it matches). qty in the catalog unit, before waste (the app adds waste).
 - {"type":"labor","ref":"L3","hours":6,"description":"Install and connect water heater"} ref from LABOR = the trade doing that work. hours = total crew hours for that task.
 - {"type":"sub","ref":"B1","qty":1,"description":"short"} the contractor's own sub at their own rate, qty in that sub's unit.
-- {"type":"permit","ref":"P4","qty":0,"description":"short"} ref from PERMIT FEES. One row per permit actually pulled: a single-trade job pulls one permit (pick the trade or master permit row that covers it). qty only for per-unit fees (sq ft, fixtures, tons), else 0. Never pick surcharges, renewals, reinspections, certificates or private-provider rows.
-- {"type":"other","category":"Disposal","description":"short","qty":1,"unit":"ea","unitCost":50} ONLY for something the catalog does not have (a dumpster, a supplier delivery charge, an item not listed). You write unitCost; the app labels the line "not in our data, estimated". Use a catalog item only when it IS the item the job needs (same product or a direct equivalent, e.g. a 50 gal tank for a 40 gal tank); never stand in an unrelated product just because it is in the list. Only parts this scope actually installs: no parts for a fixture the job does not touch (no toilet wax ring on a water heater job).
+- {"type":"permit","ref":"P4","qty":0,"description":"short"} ref from PERMIT FEES. One row per permit actually pulled: a single-trade job pulls one permit. When the city lists a permit row for this job's own trade (Electrical, Plumbing, Mechanical, Roofing), use it; pick a general building or master permit row only when no trade row covers the work. qty only for per-unit fees (sq ft, fixtures, tons), else 0. Never pick surcharges, renewals, reinspections, certificates or private-provider rows.
+- {"type":"other","category":"Disposal","description":"short","qty":1,"unit":"ea","unitCost":50} category and unit always in English: category is one of Materials, Labor, Disposal, Delivery, Equipment Rental, Protection, Cleanup, Supervision, Utility, Inspection, Other, or a trade name (Electrical, Plumbing, HVAC, Roofing, Drywall, Flooring, Tile, Paint, Framing, Concrete); unit is ea, hr, ft, sqft, job or day. ONLY for something the catalog does not have (a dumpster, a supplier delivery charge, an item not listed). You write unitCost; the app labels the line "not in our data, estimated". Use a catalog item only when it IS the item the job needs (same product or a direct equivalent, e.g. a 50 gal tank for a 40 gal tank); never stand in an unrelated product just because it is in the list. Only parts this scope actually installs: no parts for a fixture the job does not touch (no toilet wax ring on a water heater job).
 BE GRANULAR: 14-22 line items for a full remodel; fewer for a small single-trade job. Do not pad.
+LANGUAGE: write projectName, every description, assumption, exclusion and estimatedDays in the Language given with the job. Spanish is Latin American and uses tú. Keep brand names, product names and model numbers as written (Square D, NEMA 3R, THHN). In Spanish, give every material line a short Spanish description of the item.
 CLIENT-FACING TEXT (assumptions, exclusions, descriptions): plain short sentences a contractor would write by hand. No em dashes. Split into two sentences with a period instead of joining clauses with a dash.
 MARGIN PROTECTORS: include each one only when this scope actually calls for it: permit, debris removal, material delivery, drywall repair after trades, punch list and touch-up labor (2-4% of labor hours), project management hours when the contractor manages subs or a multi-trade job (First-Line Supervisors row, 8-16 hours per week of duration).
 SIZING ANCILLARY LINES (these scale with the job or they discredit the whole bid):
@@ -3578,7 +3631,7 @@ Return the JSON for THIS job now.`;
   ]:[
     `Leyendo alcance de trabajo…`,
     `Ubicación: ${escapeHtml(ctx.location)} detectada`,
-    `Oficio: ${escapeHtml(ctx.trade)}`,
+    `Oficio: ${escapeHtml(tradeLabel(ctx.trade,'es'))}`,
     `${ctx.sqft!=='not specified'?ctx.sqft+' pies cuadrados confirmados':'Pies cuadrados: no especificado'}`,
     `Gastos: ${ctx.oh}% · Ganancia: ${ctx.profit}% · Colchón: ${ctx.cushion}%`,
     `Identificando oficios y alcance…`
@@ -3586,7 +3639,7 @@ Return the JSON for THIS job now.`;
 
   const tradeBreakdown=window._scopeData?.tradeBreakdown||[];
   const phase2=tradeBreakdown.length>0
-    ?tradeBreakdown.map(t=>`${escapeHtml(t.icon)} ${escapeHtml(t.trade)} scope identified — ${t.items?.length||0} items`)
+    ?tradeBreakdown.map(t=>appLang==='es'?`${escapeHtml(t.icon)} ${escapeHtml(t.trade)}: alcance identificado, ${t.items?.length||0} partidas`:`${escapeHtml(t.icon)} ${escapeHtml(t.trade)} scope identified — ${t.items?.length||0} items`)
     :(appLang==='en'?['General scope identified','Specialty work noted','Materials scope parsed']:['Alcance general identificado','Trabajo especializado anotado','Materiales identificados']);
 
     // Scripted intro (reading scope, analyzing trades), then stream phase 3 LIVE —
@@ -3612,31 +3665,21 @@ Return the JSON for THIS job now.`;
 
     const EXPECT=15; let rendered=0; const seenCats=new Set();
 
-    // Sonnet 5 reasons before it writes. That reasoning is the minute the bar used
-    // to spend frozen, so show it: `display:'summarized'` streams a readable
-    // summary, and it goes straight into the terminal the contractor is already
-    // watching. Real work, legible while it happens — not a spinner.
-    let thinkBuf='',thinkEl=null;
+    // Sonnet 5 reasons before it writes. The reasoning itself is never shown: it is
+    // raw English working notes ("P9 is add-on only, I'll use P1..."), not something
+    // a contractor should read (founder test 2026-10-07). It only proves the model
+    // is working, so it advances short status lines in the contractor's language.
+    let thinkBuf='',thinkIdx=0;
+    const THINK_STEPS=appLang==='es'
+      ?['Leyendo el alcance…','Buscando las tarifas de permisos…','Calculando materiales…','Calculando horas de mano de obra…','Revisando el estimado…']
+      :['Reading the scope…','Finding the permit fees…','Working out materials…','Working out labor hours…','Checking the estimate…'];
     const onThinking=(chunk)=>{
       if(!chunk) return;
+      const first=!thinkBuf;
       thinkBuf+=chunk;
-      if(!thinkEl&&liveEl){
-        liveEl.innerHTML='';
-        thinkEl=document.createElement('div');
-        thinkEl.className='loading-think';
-        liveEl.appendChild(thinkEl);
-        stepEl.textContent=appLang==='en'?'Working through the scope…':'Analizando el alcance…';
-      }
-      if(thinkEl){
-        // Tail only — the box is short and the newest sentence is the useful one.
-        const flat=thinkBuf.replace(/\s+/g,' ').trim();
-        let tail=flat.slice(-260);
-        // slice(-260) lands mid-word; step forward to the next space so the box
-        // never opens on a fragment like "nting only".
-        if(tail.length<flat.length){const sp=tail.indexOf(' ');if(sp>0&&sp<40) tail=tail.slice(sp+1);}
-        thinkEl.textContent=tail;
-        liveEl.scrollTop=liveEl.scrollHeight;
-      }
+      // One step per ~600 characters of reasoning, never past the last one.
+      const idx=Math.min(THINK_STEPS.length-1,Math.floor(thinkBuf.length/600));
+      if(first||idx!==thinkIdx){ thinkIdx=idx; stepEl.textContent=THINK_STEPS[idx]; }
       // Progress during thinking is driven by the timer below, not by delta
       // frequency — deltas arrive in bursts, and a burst-driven bar stutters.
     };
@@ -3690,7 +3733,6 @@ Return the JSON for THIS job now.`;
       const items=extractStreamLineItems(full);
       if(items.length>rendered&&liveEl){
         liveEl.querySelectorAll('.loading-skel-row,.loading-think').forEach(n=>n.remove());
-        thinkEl=null;
       }
       for(let k=rendered;k<items.length;k++){
         const it=items[k]||{};
@@ -3752,7 +3794,7 @@ Return the JSON for THIS job now.`;
     const data=priceScope(scoped,catalog,{
       marketAdj:adjMultiplier,laborMult:ctx.laborMult,laborRate:ctx.laborRate,
       oh:ctx.oh,profit:ctx.profit,cushion:ctx.cushion,
-      sqft:parseFloat(String(ctx.sqft).replace(/,/g,''))||0,hvhz:isHVHZ,calibration:costCalibration
+      sqft:parseFloat(String(ctx.sqft).replace(/,/g,''))||0,hvhz:isHVHZ,calibration:costCalibration,lang:ctx.lang||appLang
     });
     if(data.pricingNotes.length) data.assumptions=[...data.pricingNotes,...data.assumptions];
     data.labelAdj=adjLabel;
@@ -3812,13 +3854,13 @@ function renderEstimate(data){
   Object.entries(cats).forEach(([cat,items],ci)=>{
     // Each category folds on its own: tap the header to hide its rows and see
     // just the count and subtotal. Starts open, like the list always has.
-    html+=`<div class="cat-div cat-toggle" onclick="toggleCategory(${ci})" id="catd-${ci}"><i data-lucide="chevron-down" class="cat-chev" style="width:12px;height:12px;stroke:currentColor"></i>${getCatIcon(cat)} ${escapeHtml(cat)}<span class="cat-sum" id="cats-${ci}"></span></div><div class="cat-group" id="catg-${ci}">`;
+    html+=`<div class="cat-div cat-toggle" onclick="toggleCategory(${ci})" id="catd-${ci}"><i data-lucide="chevron-down" class="cat-chev" style="width:12px;height:12px;stroke:currentColor"></i>${getCatIcon(cat)} ${escapeHtml(catLabel(cat))}<span class="cat-sum" id="cats-${ci}"></span></div><div class="cat-group" id="catg-${ci}">`;
     items.forEach(item=>{
-      const proClick=isPro?'':" onclick=\"openProModal('Edit Line Items','Upgrade to Even Pro to edit line items.');this.blur();\"";
+      const proClick=isPro?'':(appLang==='es'?" onclick=\"openProModal('Editar partidas','Hazte Even Pro para editar las partidas.');this.blur();\"":" onclick=\"openProModal('Edit Line Items','Upgrade to Even Pro to edit line items.');this.blur();\"");
       html+=`<div class="li-row" id="lr-${item._i}">
         <input value="${esc(item.description)}" onchange="recalc(${item._i})"${proClick}>
         <input type="number" value="${item.qty}" id="qty-${item._i}" onchange="recalc(${item._i})"${proClick} style="text-align:center">
-        <input value="${esc(item.unit)}" id="unit-${item._i}"${proClick} style="text-align:center;color:var(--muted)">
+        <input value="${esc(unitLabel(item.unit))}" id="unit-${item._i}"${proClick} style="text-align:center;color:var(--muted)">
         <input type="number" value="${item.unitCost}" id="uc-${item._i}" onchange="recalc(${item._i})"${proClick} style="text-align:right">
         <div class="li-total" id="lt-${item._i}">${fmt(item.total)}</div>
         <button class="li-del" onclick="delLine(${item._i})">×</button>
@@ -3831,7 +3873,7 @@ function renderEstimate(data){
   const liCount=(data.lineItems||[]).length;
   const liTotal=(data.lineItems||[]).reduce((s,i)=>s+(+i.total||0),0);
   const summaryEl=document.getElementById('li-collapsed-summary');
-  if(summaryEl) summaryEl.textContent=`${liCount} item${liCount===1?'':'s'} · ${fmt(liTotal)}`;
+  if(summaryEl) summaryEl.textContent=appLang==='es'?`${liCount} partida${liCount===1?'':'s'} · ${fmt(liTotal)}`:`${liCount} item${liCount===1?'':'s'} · ${fmt(liTotal)}`;
   // Starts collapsed on every fresh estimate -- this only runs when a whole new
   // estimate lands (calculate, or load a saved one), never on an in-place edit
   // (recalc/addLine/delLine touch the DOM directly), so it won't yank the list
@@ -3871,9 +3913,9 @@ function renderEstimate(data){
         </div>`).join('')}
       </div>
       <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:rgba(10,10,10,.55);border-radius:8px;padding:12px">
-        <div style="font-size:10px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.8px">PRO FEATURE</div>
-        <div style="font-size:11px;color:var(--muted);text-align:center;line-height:1.4">Track actual costs on every job.<br>Even learns and sharpens your future estimates.</div>
-        <button onclick="openProModal('Cost Tracker','Upgrade to Even Pro to log actual job costs and improve every future estimate.')" style="background:var(--gold);border:none;color:#fff;padding:8px 18px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;margin-top:2px">Upgrade to Pro →</button>
+        <div style="font-size:10px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.8px">${appLang==='es'?'FUNCIÓN PRO':'PRO FEATURE'}</div>
+        <div style="font-size:11px;color:var(--muted);text-align:center;line-height:1.4">${appLang==='es'?'Registra los costos reales de cada trabajo.<br>Even aprende y afina tus próximos estimados.':'Track actual costs on every job.<br>Even learns and sharpens your future estimates.'}</div>
+        <button onclick="${appLang==='es'?"openProModal('Registro de costos','Hazte Even Pro para registrar los costos reales y mejorar cada estimado.')":"openProModal('Cost Tracker','Upgrade to Even Pro to log actual job costs and improve every future estimate.')"}" style="background:var(--gold);border:none;color:#fff;padding:8px 18px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;margin-top:2px">${appLang==='es'?'Hazte Pro →':'Upgrade to Pro →'}</button>
       </div>
     </div>`;
   }
@@ -3896,10 +3938,12 @@ function lineSourceNote(item,i){
   if(item.estimated) t=es?'No está en nuestros datos, estimado':'Not in our data, estimated';
   else if(item.permitRow){
     const p=item.permitRow;
-    t=(es?'Tarifa de la ciudad: ':'City schedule: ')+`${p.municipality} ${p.work_type}`+(p.date?` (${p.date})`:'')+(es?'. Puede cambiar bajo la ley HB 803 de Florida.':'. May change under Florida HB 803.');
+    // ES: the city's fee names are English-only text, so name the city and date, not the row.
+    t=es?`Tarifa publicada por ${p.municipality}`+(p.date?` (${p.date})`:'')+'. Puede cambiar bajo la ley HB 803 de Florida.'
+      :'City schedule: '+`${p.municipality} ${p.work_type}`+(p.date?` (${p.date})`:'')+'. May change under Florida HB 803.';
   }
-  else if(item.priced==='bls x multiplier') t=es?`Salario BLS $${item.wage}/hr × tu multiplicador`:`BLS wage $${item.wage}/hr × your labor multiplier`;
-  else if(item.priced==='your labor rate') t=(es?'Tu costo por hora':'Your labor cost per hour')+(item.wage?(es?` (salario medio BLS $${item.wage}/hr)`:` (BLS median wage $${item.wage}/hr)`):'');
+  else if(item.priced==='bls x multiplier') t=es?`Salario BLS $${item.wage}/h × tu multiplicador`:`BLS wage $${item.wage}/hr × your labor multiplier`;
+  else if(item.priced==='your labor rate') t=(es?'Tu costo por hora':'Your labor cost per hour')+(item.wage?(es?` (salario medio BLS $${item.wage}/h)`:` (BLS median wage $${item.wage}/hr)`):'');
   else if(item.priced==='your supplier') t=es?'Tu precio de proveedor':'Your supplier price';
   else if(item.priced==='your sub') t=es?'Tu tarifa de subcontratista':'Your sub rate';
   if(!t) return '';
@@ -4030,19 +4074,20 @@ function renderMarginAlerts(data){
   const el=document.getElementById('margin-alerts');
   if(!el) return;
   const alerts=[];
+  const es=appLang==='es';
   const items=data.lineItems||[];
-  const laborItems=items.filter(i=>/(labor|demo|crew|install|remove)/i.test(i.category+' '+i.description));
+  const laborItems=items.filter(i=>/(labor|demo|crew|install|remove|mano de obra|instal|retir|demol)/i.test(i.category+' '+i.description));
   const laborTotal=laborItems.reduce((s,i)=>s+i.total,0);
   const laborPct=data.subtotal>0?(laborTotal/data.subtotal)*100:0;
-  if(laborPct>0&&laborPct<22) alerts.push({t:'warn',m:`Labor is ${Math.round(laborPct)}% of direct costs — verify crew hours match the full scope.`});
-  const hasDemo=items.some(i=>/(demo|demolition|remove|tear)/i.test(i.category+' '+i.description));
-  const isRemodel=/(remodel|renovation|reno|replace|gut|redo|update)/i.test(data.projectName||'');
-  if(isRemodel&&!hasDemo) alerts.push({t:'warn',m:'No demo line item detected — confirm if removal is in scope or client-supplied.'});
-  if((data.contingency?.pct||0)<5) alerts.push({t:'warn',m:`Contingency at ${data.contingency?.pct||0}% — consider 8–10% for jobs with unknown conditions.`});
-  if((data.profit?.pct||0)<12) alerts.push({t:'danger',m:`Profit margin at ${data.profit?.pct||0}% — below sustainable threshold. Adjust your sliders before bidding.`});
-  const hasPermit=items.some(i=>/(permit|inspection)/i.test(i.description));
+  if(laborPct>0&&laborPct<22) alerts.push({t:'warn',m:es?`La mano de obra es ${Math.round(laborPct)}% de los costos directos. Revisa que las horas cubran todo el alcance.`:`Labor is ${Math.round(laborPct)}% of direct costs — verify crew hours match the full scope.`});
+  const hasDemo=items.some(i=>/(demo|demolition|remove|tear|demol|retir)/i.test(i.category+' '+i.description));
+  const isRemodel=/(remodel|renovation|reno|replace|gut|redo|update|remodela|renova|reemplaz|cambi)/i.test(data.projectName||'');
+  if(isRemodel&&!hasDemo) alerts.push({t:'warn',m:es?'No hay partida de demolición. Confirma si el retiro está en el alcance o lo hace el cliente.':'No demo line item detected — confirm if removal is in scope or client-supplied.'});
+  if((data.contingency?.pct||0)<5) alerts.push({t:'warn',m:es?`Colchón de ${data.contingency?.pct||0}%. Considera 8 a 10% en trabajos con condiciones desconocidas.`:`Contingency at ${data.contingency?.pct||0}% — consider 8–10% for jobs with unknown conditions.`});
+  if((data.profit?.pct||0)<12) alerts.push({t:'danger',m:es?`Margen de ganancia de ${data.profit?.pct||0}%, por debajo de un nivel sostenible. Ajusta tus controles antes de ofertar.`:`Profit margin at ${data.profit?.pct||0}% — below sustainable threshold. Adjust your sliders before bidding.`});
+  const hasPermit=items.some(i=>/(permit|inspection|permiso|inspecci)/i.test(i.description)||i.category==='Permits');
   const isLarge=data.totalBid>25000;
-  if(isLarge&&!hasPermit) alerts.push({t:'info',m:'No permit line item — confirm if permits are required for this scope and jurisdiction.'});
+  if(isLarge&&!hasPermit) alerts.push({t:'info',m:es?'No hay partida de permiso. Confirma si este trabajo necesita permisos en esta ciudad.':'No permit line item — confirm if permits are required for this scope and jurisdiction.'});
   if(!alerts.length){el.style.display='none';return;}
   el.innerHTML=alerts.map(a=>`<div class="margin-alert margin-alert-${a.t}"><i data-lucide="${a.t==='danger'?'alert-triangle':'alert-circle'}" style="width:13px;height:13px;stroke:currentColor;flex-shrink:0;margin-top:1px"></i><span>${a.m}</span></div>`).join('');
   el.style.display='block';
@@ -4277,7 +4322,7 @@ const CLIENT_BANNED_RE=/\beven\b|\bai\b|\bia\b|estimat(ed|ing) by|\brange\b|\bra
 function clientSafeText(t){ return !!t&&!CLIENT_BANNED_RE.test(String(t)); }
 // Client copy of a line description: no internal sizing notes.
 function clientLineText(d){
-  return String(d||'').replace(/\s*\(incl\. \d+% waste\)/gi,'').replace(/\s*\(HVHZ\)/gi,'').replace(/\s*\(not in our data, estimated\)/gi,'').trim();
+  return String(d||'').replace(/\s*\(incl\. \d+% (waste|de desperdicio)\)/gi,'').replace(/\s*\(HVHZ\)/gi,'').replace(/\s*\(not in our data, estimated\)/gi,'').trim();
 }
 // Spanish client copy: the payment schedules and the usual category names.
 const PAY_ES={
@@ -4286,7 +4331,18 @@ const PAY_ES={
   '25% deposit to schedule · 25% at material delivery · 25% at rough-in · 25% upon final walkthrough.':'25% de depósito para agendar · 25% al entregar materiales · 25% en la instalación inicial · 25% en la inspección final.',
   '100% payment due upon project completion.':'100% del pago al terminar el proyecto.'
 };
-const CAT_ES={Plumbing:'Plomería',Labor:'Mano de obra',Materials:'Materiales',Material:'Materiales',Disposal:'Desechos',Permits:'Permisos',Electrical:'Eléctrico',HVAC:'Aire acondicionado',Drywall:'Tablaroca',Flooring:'Pisos',Tile:'Azulejos',Paint:'Pintura',Painting:'Pintura',Roofing:'Techo',Framing:'Estructura',Concrete:'Concreto',Demolition:'Demolición',Demo:'Demolición',Delivery:'Entrega',Protection:'Protección',Fixtures:'Accesorios',Subcontractor:'Subcontratista','Equipment Rental':'Alquiler de equipo',Equipment:'Equipo',Other:'Otros',Cleanup:'Limpieza'};
+const CAT_ES={Utility:'Compañía eléctrica',Supervision:'Supervisión',Inspection:'Inspección',Insulation:'Aislamiento',Cabinets:'Gabinetes',Countertops:'Encimeras',Appliances:'Electrodomésticos',Windows:'Ventanas',Doors:'Puertas',Siding:'Revestimiento',Landscaping:'Jardinería',Pool:'Piscina',Cleaning:'Limpieza',Patch:'Reparaciones',Repair:'Reparaciones',Repairs:'Reparaciones',Plumbing:'Plomería',Labor:'Mano de obra',Materials:'Materiales',Material:'Materiales',Disposal:'Desechos',Permits:'Permisos',Electrical:'Eléctrico',HVAC:'Aire acondicionado',Drywall:'Tablaroca',Flooring:'Pisos',Tile:'Azulejos',Paint:'Pintura',Painting:'Pintura',Roofing:'Techo',Framing:'Estructura',Concrete:'Concreto',Demolition:'Demolición',Demo:'Demolición',Delivery:'Entrega',Protection:'Protección',Fixtures:'Accesorios',Subcontractor:'Subcontratista','Equipment Rental':'Alquiler de equipo',Equipment:'Equipo',Other:'Otros',Cleanup:'Limpieza'};
+// Categories and units are stored in English (the pricing rules read them) and
+// translated only where people read them.
+// The trade dropdown's own Spanish label (value stays English for the prompt).
+function tradeLabel(t,lang){
+  if((lang||appLang)!=='es'||!t) return t;
+  const o=[...document.querySelectorAll('#est-trade option')].find(x=>x.value===t);
+  return (o&&o.getAttribute('data-es'))||CAT_ES[t]||t;
+}
+function catLabel(c,lang){ return (lang||appLang)==='es'?(CAT_ES[c]||CAT_ES[String(c).replace(/s$/,'')]||c):c; }
+const UNIT_ES={each:'c/u',ea:'c/u',hr:'h',hour:'h',hours:'h',permit:'permiso','linear ft':'pie lineal',lf:'pie lineal',ft:'pie',sqft:'pie²','sq ft':'pie²',sf:'pie²',job:'trabajo',day:'día',days:'días',week:'semana',roll:'rollo',box:'caja',bag:'bolsa',gallon:'galón',gal:'galón',sheet:'hoja',piece:'pieza',pc:'pieza',pair:'par',set:'juego',kit:'kit',lot:'lote',ton:'tonelada',yd:'yarda','cu yd':'yarda³',bundle:'paquete',square:'cuadro',case:'caja',pack:'paquete',tube:'tubo',unit:'unidad',lump:'global',ls:'global',visit:'visita',trip:'viaje',load:'carga',month:'mes'};
+function unitLabel(u,lang){ if((lang||appLang)!=='es') return u; const k=String(u||'').trim().toLowerCase(); return UNIT_ES[k]||UNIT_ES[k.replace(/s$/,'')]||u; }
 function getBiz(){
   let b={};
   try{ b=JSON.parse(localStorage.getItem('even_biz')||'{}')||{}; }catch(e){}
@@ -4538,10 +4594,10 @@ async function buildClientProposalPDF(jsPDF){
 }
 
 async function downloadCostSheet(){
-  if(!currentEstimate){alert('No estimate loaded. Run an estimate first.');return;}
+  if(!currentEstimate){alert(appLang==='es'?'No hay un estimado. Corre un estimado primero.':'No estimate loaded. Run an estimate first.');return;}
   const jsPDFLib=window.jspdf||window.jsPDF||{};
   const jsPDF=jsPDFLib.jsPDF||window.jsPDF;
-  if(!jsPDF){alert('PDF engine not loaded. Please refresh and try again.');return;}
+  if(!jsPDF){alert(appLang==='es'?'No cargó el generador de PDF. Actualiza la página e intenta de nuevo.':'PDF engine not loaded. Please refresh and try again.');return;}
   const accent=hexToRgb(window._accentColor);
   const mutedAccent=accent.map(c=>Math.round(c*0.75));
   const paleAccent=accent.map(c=>Math.round(c+(255-c)*0.6));
@@ -4562,7 +4618,7 @@ async function downloadCostSheet(){
   };
   const W=612,M=48,L=appLang;
   let y=0;
-  const now=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  const now=new Date().toLocaleDateString(L==='es'?'es-US':'en-US',{month:'long',day:'numeric',year:'numeric'});
   if(logo){
     drawPDFHeader(doc,W,52,logo,accent,now);
     // The header layout is generic (shared with the client proposal) once a
@@ -4579,16 +4635,16 @@ async function downloadCostSheet(){
     doc.text(L==='en'?'CONFIDENTIAL — NOT FOR CLIENT DISTRIBUTION':'CONFIDENCIAL — NO DISTRIBUIR AL CLIENTE',M,46);doc.text(now,W-M,46,{align:'right'});
   }
   y=logo?84:72;
-  doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(26,26,24);doc.text(data.projectName||'Project',M,y);y+=12;
+  doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(26,26,24);doc.text(data.projectName||(L==='es'?'Proyecto':'Project'),M,y);y+=12;
   doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(130,130,130);
   // Join only what's actually filled in. `client` defaults to the literal string
   // "Client" when the field is blank, which printed the placeholder as if it were
   // the customer's name.
-  doc.text([ctx.trade,ctx.location,ctx.client&&ctx.client!=='Client'?ctx.client:''].filter(Boolean).join(' · '),M,y);y+=20;
+  doc.text([tradeLabel(ctx.trade,L),ctx.location,ctx.client&&ctx.client!=='Client'?ctx.client:''].filter(Boolean).join(' · '),M,y);y+=20;
   const cols=[M+4,248,310,378,446,W-M-4];
   doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,17,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
-  ['DESCRIPTION','QTY','UNIT','UNIT COST','TOTAL',''].forEach((h,i)=>{if(i<5)doc.text(h,i===0?cols[0]:cols[i],y+11,{align:i>=3?'right':'left'})});
+  (L==='es'?['DESCRIPCIÓN','CANT.','UNIDAD','COSTO UNIT.','TOTAL','']:['DESCRIPTION','QTY','UNIT','UNIT COST','TOTAL','']).forEach((h,i)=>{if(i<5)doc.text(h,i===0?cols[0]:cols[i],y+11,{align:i>=3?'right':'left'})});
   y+=19;
   let lc='';
   // Descriptions were cut at a fixed 52 characters, which is both too long for
@@ -4606,12 +4662,12 @@ async function downloadCostSheet(){
     // Break before drawing, measuring the row we are about to draw rather than
     // a fixed 14 — a three-line row used to run off the bottom of the page.
     if(y+headerH+rowH>752){doc.addPage();y=44}
-    if(item.category!==lc){lc=item.category;doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...mutedAccent);doc.text(String(item.category||'').toUpperCase(),M+4,y+8);y+=13}
+    if(item.category!==lc){lc=item.category;doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...mutedAccent);doc.text(String(catLabel(item.category||'',L)).toUpperCase(),M+4,y+8);y+=13}
     if(i%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,rowH,'F')}
     doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(50,50,50);
     descLines.forEach((line,n)=>doc.text(line,cols[0],y+9+n*LINE_H));
     // Numbers stay on the first line so the columns read straight across.
-    doc.setTextColor(120,120,120);doc.text(String(item.qty),cols[1],y+9);doc.text(String(item.unit),cols[2],y+9);
+    doc.setTextColor(120,120,120);doc.text(String(item.qty),cols[1],y+9);doc.text(String(unitLabel(item.unit,L)),cols[2],y+9);
     doc.text(fmt(item.unitCost),cols[3],y+9,{align:'right'});
     doc.setTextColor(...mutedAccent);doc.text(fmt(item.total),cols[4],y+9,{align:'right'});
     y+=rowH;
@@ -4628,7 +4684,9 @@ async function downloadCostSheet(){
   const [csLoMult,csHiMult]=getConfidenceRange(data);
   const csRangeLow=Math.round(data.totalBid*csLoMult),csRangeHigh=Math.round(data.totalBid*csHiMult);
   const csBidText=window._finalBid?fmt(window._finalBid):fmtK(csRangeLow)+' – '+fmtK(csRangeHigh);
-  const csSubText=window._finalBid?'Even estimated range: '+fmtK(csRangeLow)+'–'+fmtK(csRangeHigh):'Midpoint reference: '+fmt(data.totalBid);
+  const csSubText=L==='es'
+    ?(window._finalBid?'Rango estimado por Even: '+fmtK(csRangeLow)+'–'+fmtK(csRangeHigh):'Punto medio de referencia: '+fmt(data.totalBid))
+    :(window._finalBid?'Even estimated range: '+fmtK(csRangeLow)+'–'+fmtK(csRangeHigh):'Midpoint reference: '+fmt(data.totalBid));
   doc.setFillColor(10,10,10);doc.rect(M,y,W-M*2,44,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...accent);
   doc.text(L==='en'?'TOTAL BID':'OFERTA TOTAL',M+10,y+18);
@@ -4654,7 +4712,7 @@ async function downloadCostSheet(){
     });
   }
   const pages=doc.getNumberOfPages();
-  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text('Even OS · Internal Cost Sheet · CONFIDENTIAL',M,784);doc.text(`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
+  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setFillColor(10,10,10);doc.rect(0,772,W,20,'F');doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(100,100,100);doc.text(L==='es'?'Even OS · Hoja de costos interna · CONFIDENCIAL':'Even OS · Internal Cost Sheet · CONFIDENTIAL',M,784);doc.text(L==='es'?`Página ${p} de ${pages}`:`Page ${p} of ${pages}`,W-M,784,{align:'right'})}
   savePDF(doc,`Even-CostSheet-${(data.projectName||'Project').replace(/\s+/g,'-')}.pdf`);
 }
 
@@ -4668,7 +4726,9 @@ document.getElementById('est-location').addEventListener('change',function(){
     'Charleston, SC':'Typical 1,600–2,400 sq ft for Lowcountry residential',
     'Columbia, SC':'Typical 1,600–2,600 sq ft for Columbia metro',
   };
-  const hint=hints[this.value]||'Enter estimated square footage';
+  const es=appLang==='es';
+  let hint=hints[this.value]||(es?'Ingresa los pies cuadrados estimados':'Enter estimated square footage');
+  if(es&&hints[this.value]) hint=hint.replace(/^Typical (.*?) sq ft for (.*)$/,'Típico: $1 pies cuadrados en $2').replace(' residential','').replace(' metro','').replace(' area','');
   document.getElementById('sqft-hint').textContent=hint;
 });
 
@@ -4697,7 +4757,7 @@ function setMarketAdj(btn, val) {
 // produces things like a $350 material delivery on a $300 paint job: three times
 // the materials, more than half the direct cost. The prompt says not to; this
 // makes sure. A contractor who sees that line once stops trusting the tool.
-const ANCILLARY_RE=/deliver|logistic|freight|haul|disposal|debris|dumpster|trash removal|floor protection|surface protection|ram ?board/i;
+const ANCILLARY_RE=/deliver|logistic|freight|haul|disposal|debris|dumpster|trash removal|floor protection|surface protection|ram ?board|entrega|flete|acarreo|desecho|escombro|contenedor|retiro de basura|protecci[oó]n de (pisos|superficies)/i;
 // Only bites on small jobs — on a real remodel a dumpster and a lumber drop are
 // legitimately several hundred dollars and nothing here should touch them.
 const ANCILLARY_SMALL_JOB=5000;
@@ -4708,7 +4768,7 @@ function isAncillaryLine(item){
   return ANCILLARY_RE.test(`${item?.category||''} ${item?.description||''}`);
 }
 
-function clampAncillaryToJobSize(data){
+function clampAncillaryToJobSize(data,lang){
   const items=data?.lineItems;
   if(!Array.isArray(items)||!items.length) return null;
   const anc=items.filter(isAncillaryLine);
@@ -4739,7 +4799,10 @@ function clampAncillaryToJobSize(data){
 
   const after=data.lineItems.filter(isAncillaryLine).reduce((s,i)=>s+(+i.total||0),0);
   // Say so. Silently rewriting the contractor's numbers is worse than the bug.
-  const note=after>0
+  const note=lang==='es'
+    ? (after>0?`Entrega, desechos y protección ajustados al tamaño del trabajo (${money0(ancTotal)} a ${money0(after)}). Los mínimos fijos no aplican a este alcance.`
+      :'Entrega y desechos excluidos. En este alcance los materiales caben en la camioneta y los escombros van en bolsas. Agrégalos si el trabajo necesita entrega del proveedor o un contenedor.')
+    : after>0
     ? `Delivery, disposal and site protection scaled to job size (${money0(ancTotal)} to ${money0(after)}). Flat minimums don't apply at this scope.`
     : `Delivery and disposal excluded. At this scope the materials go in the truck and the debris is bagged. Add them back if the job needs a supplier drop or a dumpster.`;
   data.assumptions=Array.isArray(data.assumptions)?data.assumptions:[];
@@ -4963,17 +5026,17 @@ async function submitDataTrade(){
   const photoInput = document.getElementById('trade-photo');
   const hasPhoto = photoInput && photoInput.files && photoInput.files.length > 0;
 
-  if(!trade || !city || !cost){ alert('Please fill in trade, city, and actual cost.'); return; }
-  if(!hasPhoto){ alert('A photo is required — please upload a receipt, invoice, or job photo.'); return; }
+  if(!trade || !city || !cost){ alert(appLang==='es'?'Completa el oficio, la ciudad y el costo real.':'Please fill in trade, city, and actual cost.'); return; }
+  if(!hasPhoto){ alert(appLang==='es'?'Se necesita una foto. Sube un recibo, una factura o una foto del trabajo.':'A photo is required — please upload a receipt, invoice, or job photo.'); return; }
 
   const hasUsedTrade = currentUser ? (currentUser._tradeUsed||false) : (sessionStorage.getItem('even_trade_used')==='1');
-  if(hasUsedTrade){ alert('You have already used your free data trade estimate.'); return; }
+  if(hasUsedTrade){ alert(appLang==='es'?'Ya usaste tu estimado gratis por compartir datos.':'You have already used your free data trade estimate.'); return; }
 
   if(sbClient && currentUser){
     try {
       const { data: existing } = await sbClient.from('job_data').select('id').eq('user_id', currentUser.id).limit(1);
       if(existing && existing.length > 0){
-        alert('You have already used your free data trade estimate.');
+        alert(appLang==='es'?'Ya usaste tu estimado gratis por compartir datos.':'You have already used your free data trade estimate.');
         currentUser._tradeUsed = true;
         openDataTrade();
         return;
@@ -5009,21 +5072,21 @@ async function submitDataTrade(){
 <div id="pro-feature-modal">
   <div class="pro-modal-inner">
     <div class="pro-modal-icon"><img src="assets/logo-hero.png" width="38" height="38" alt="" style="object-fit:contain;"></div>
-    <div class="pro-modal-title" id="pro-modal-title">Pro Feature</div>
-    <div class="pro-modal-desc" id="pro-modal-desc">Upgrade to Even Pro to unlock this.</div>
-    <span class="pro-modal-tag">Contractors using Even close bids 40% faster.</span>
+    <div class="pro-modal-title" id="pro-modal-title" data-es="Función Pro">Pro Feature</div>
+    <div class="pro-modal-desc" id="pro-modal-desc" data-es="Hazte Even Pro para desbloquear esto.">Upgrade to Even Pro to unlock this.</div>
+    <span class="pro-modal-tag" data-es="Los contratistas que usan Even cierran ofertas 40% más rápido.">Contractors using Even close bids 40% faster.</span>
     <div class="pro-modal-features">
-      <div>✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Add &amp; edit line items<br>✓ Actual cost tracker<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Regional market pricing</div>
+      <div data-es="✓ Estimados ilimitados &nbsp;·&nbsp; ✓ Sube fotos y planos<br>✓ Agrega y edita partidas<br>✓ Registro de costos reales<br>✓ Inglés y español &nbsp;·&nbsp; ✓ Precios del mercado regional">✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Add &amp; edit line items<br>✓ Actual cost tracker<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Regional market pricing</div>
     </div>
     <div class="pro-modal-pricing">
       <div class="pro-modal-plan hero">
         <div class="pro-modal-plan-label">MONTHLY</div>
         <div class="pro-modal-plan-price">$49</div>
-        <div class="pro-modal-plan-period">/month</div>
-        <button onclick="closeProModal();handleUpgrade('monthly')" style="width:100%;padding:11px 6px;background:var(--gold);border:none;border-radius:9px;color:#000;font-weight:700;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif">Start Monthly</button>
+        <div class="pro-modal-plan-period" data-es="/mes">/month</div>
+        <button onclick="closeProModal();handleUpgrade('monthly')" style="width:100%;padding:11px 6px;background:var(--gold);border:none;border-radius:9px;color:#000;font-weight:700;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif" data-es="Empezar mensual">Start Monthly</button>
       </div>
       <div class="pro-modal-plan secondary">
-        <div class="pro-modal-save-badge">SAVE $98</div>
+        <div class="pro-modal-save-badge" data-es="AHORRA $98">SAVE $98</div>
         <div class="pro-modal-plan-label">ANNUAL</div>
         <div class="pro-modal-plan-price">$490</div>
         <div class="pro-modal-plan-period">/year</div>
@@ -5038,24 +5101,24 @@ async function submitDataTrade(){
 <div id="data-trade-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:24px">
   <div style="background:var(--panel);border:1px solid var(--gold);border-radius:16px;padding:28px;width:100%;max-width:360px">
     <div style="text-align:center;margin-bottom:12px"><i data-lucide="building-2" style="width:28px;height:28px;stroke:var(--gold)"></i></div>
-    <h3 style="color:var(--white);text-align:center;margin-bottom:8px;font-size:18px">Get a Free Estimate</h3>
-    <p style="color:var(--muted);font-size:13px;text-align:center;line-height:1.6;margin-bottom:20px">Share a real job cost and unlock 1 additional free estimate. Your data helps make Even more accurate for every contractor.</p>
-    <div id="trade-used-msg" style="display:none;background:rgba(255,91,91,0.1);border:1px solid rgba(255,91,91,0.3);border-radius:8px;padding:10px 12px;color:#FF5B5B;font-size:12px;text-align:center;margin-bottom:12px">You've already used your free data trade estimate. Upgrade to continue.</div>
+    <h3 style="color:var(--white);text-align:center;margin-bottom:8px;font-size:18px" data-es="Recibe un estimado gratis">Get a Free Estimate</h3>
+    <p style="color:var(--muted);font-size:13px;text-align:center;line-height:1.6;margin-bottom:20px" data-es="Comparte el costo real de un trabajo y desbloquea 1 estimado gratis más. Tus datos hacen que Even sea más preciso para todos los contratistas.">Share a real job cost and unlock 1 additional free estimate. Your data helps make Even more accurate for every contractor.</p>
+    <div id="trade-used-msg" style="display:none;background:rgba(255,91,91,0.1);border:1px solid rgba(255,91,91,0.3);border-radius:8px;padding:10px 12px;color:#FF5B5B;font-size:12px;text-align:center;margin-bottom:12px" data-es="Ya usaste tu estimado gratis por compartir datos. Hazte Pro para seguir.">You've already used your free data trade estimate. Upgrade to continue.</div>
     <div style="display:flex;flex-direction:column;gap:12px">
-      <input id="trade-trade" placeholder="Trade (e.g. Roofing)" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
+      <input id="trade-trade" placeholder="Trade (e.g. Roofing)" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box" data-placeholder-es="Oficio (ej. Techos)"/>
       <input id="trade-city" placeholder="City / Market" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
       <input id="trade-sqft" placeholder="Square footage or job size" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
-      <input id="trade-cost" placeholder="Your actual total cost ($)" type="number" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
+      <input id="trade-cost" placeholder="Your actual total cost ($)" type="number" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box" data-placeholder-es="Tu costo total real ($)"/>
       <textarea id="trade-notes" placeholder="Any notes — materials used, subs, what you'd do different" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box;min-height:70px;resize:none"></textarea>
       <div>
-        <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px;display:flex;align-items:center;gap:5px"><i data-lucide="camera" style="width:11px;height:11px;stroke:currentColor"></i> PHOTO REQUIRED — Receipt, invoice, or job photo</div>
+        <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px;display:flex;align-items:center;gap:5px"><i data-lucide="camera" style="width:11px;height:11px;stroke:currentColor"></i> <span data-es="FOTO REQUERIDA: recibo, factura o foto del trabajo">PHOTO REQUIRED — Receipt, invoice, or job photo</span></div>
         <label for="trade-photo" style="display:block;border:1.5px dashed rgba(255,179,0,0.35);border-radius:8px;padding:14px;text-align:center;cursor:pointer;background:rgba(255,179,0,0.03)">
           <input type="file" id="trade-photo" accept="image/*" style="display:none" onchange="handleTradePhoto(this)">
-          <span id="trade-photo-label" style="color:var(--muted);font-size:12px">Tap to upload photo</span>
+          <span id="trade-photo-label" style="color:var(--muted);font-size:12px" data-es="Toca para subir una foto">Tap to upload photo</span>
         </label>
       </div>
-      <button id="trade-submit-btn" onclick="submitDataTrade()" style="padding:14px;background:var(--gold);border:none;border-radius:8px;color:#000;font-weight:700;font-size:14px;cursor:pointer">Submit &amp; Unlock Estimate</button>
-      <button onclick="closeDataTrade()" style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer">No thanks — upgrade instead</button>
+      <button id="trade-submit-btn" onclick="submitDataTrade()" style="padding:14px;background:var(--gold);border:none;border-radius:8px;color:#000;font-weight:700;font-size:14px;cursor:pointer" data-es="Enviar y desbloquear estimado">Submit &amp; Unlock Estimate</button>
+      <button onclick="closeDataTrade()" style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer" data-es="No, gracias. Prefiero hacerme Pro">No thanks — upgrade instead</button>
     </div>
   </div>
 </div>
@@ -5250,7 +5313,7 @@ async function proposalBeautify(){
   const btn=document.getElementById('beautify-btn');
   const status=document.getElementById('beautify-status');
   if(btn) btn.disabled=true;
-  if(status){status.textContent='Polishing scope language…';status.style.display='block';}
+  if(status){status.textContent=appLang==='es'?'Mejorando el texto…':'Polishing scope language…';status.style.display='block';}
   const items=(currentEstimate.lineItems||[]).map(i=>i.description).join(', ');
   const scope=document.getElementById('scope-text')?.value||currentEstimate.projectName||'';
   try{
@@ -5273,7 +5336,7 @@ async function proposalBeautify(){
       if(ps&&ps.style.display!=='none') renderProposalPreview();
     }
   }catch(e){
-    if(status){status.textContent='Could not connect — try again.';}
+    if(status){status.textContent=appLang==='es'?'No se pudo conectar. Intenta de nuevo.':'Could not connect — try again.';}
     console.error('Beautify error:',e);
   }finally{
     if(btn) btn.disabled=false;

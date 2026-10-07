@@ -80,7 +80,8 @@ check('scripted phases now end at 20%, not 56%', /let progShown=20/.test(html));
 check('line items span 60→96%', /setProg\(60\+Math\.min\(rendered\/EXPECT,1\)\*36/.test(html));
 check('thinking creep is time-based, capped below the line-item floor',
   /if\(thinkBuf\)\{ setProg\(Math\.min\(progShown\+1\.6,58\)\); return; \}/.test(html));
-check('thinking text never opens mid-word', /if\(sp>0&&sp<40\) tail=tail\.slice\(sp\+1\)/.test(html));
+// Reasoning text is no longer shown at all (founder 2026-10-07): only fixed status lines.
+check('thinking text is never shown, only status lines', /stepEl\.textContent=THINK_STEPS\[idx\]/.test(html)&&!/thinkEl\.textContent/.test(html));
 check('scripted phase 1 ends at 10%, phase 2 at 20% — no rewind into phase 3',
   /phase1Lines\.length\*10/.test(html) && /10\+Math\.round\(\(i\+1\)\/phase2Lines\.length\*10\)/.test(html));
 check('backstop creep capped below the thinking band', /Math\.min\(progShown\+0\.8,44\)/.test(html));
@@ -111,7 +112,7 @@ for(const [what,re_] of [
   ['overhead computed in code', /data\.overhead=\{pct:\+s\.oh\|\|0,amount:Math\.round\(data\.subtotal\*/],
   ['profit stacked on base in code', /amount:Math\.round\(base\*\(\(\+s\.profit/],
   ['total is a sum, never the model’s number', /data\.totalBid=round2\(data\.subtotal\+data\.overhead\.amount/],
-  ['ancillary clamp runs on every estimate', /clampAncillaryToJobSize\(data\)/],
+  ['ancillary clamp runs on every estimate', /clampAncillaryToJobSize\(data,s\.lang\)/],
 ]) check(what, re_.test(html));
 
 
