@@ -2908,7 +2908,10 @@ function renderScopeExtracted(data){
 }
 
 function renderQuestions(questions){
-  window._allQuestions=questions||[];
+  // Only real questions: the model once put a stray "" in the list (live ES run
+  // 2026-10-07), which drew a blank question with made-up chips.
+  questions=(Array.isArray(questions)?questions:[]).filter(q=>q&&typeof q==='object'&&String(q.question||'').trim());
+  window._allQuestions=questions;
   window._qAnswers={};
   const container=document.getElementById('q-list');
   if(!questions||questions.length===0){
@@ -5376,7 +5379,7 @@ function populateProposalAssumptions(){
   all.slice(0, SHOW).forEach(a=>_addAssumptionRow(a));
   if(all.length > SHOW){
     const toggle = document.createElement('button');
-    toggle.textContent = `+ ${all.length - SHOW} more`;
+    toggle.textContent = appLang==='es'?`+ ${all.length - SHOW} más`:`+ ${all.length - SHOW} more`;
     toggle.style.cssText='background:none;border:none;color:var(--text-accent);font-size:11px;cursor:pointer;font-family:"DM Mono",monospace;padding:2px 0;margin-bottom:4px';
     toggle.onclick = ()=>{ all.slice(SHOW).forEach(a=>_addAssumptionRow(a)); toggle.remove(); liveProposalUpdate(); };
     list.appendChild(toggle);

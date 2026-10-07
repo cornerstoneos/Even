@@ -61,6 +61,7 @@ check('estimate rules require the job language', /LANGUAGE: write projectName, e
 check('categories and units stay English for the pricing rules', /category and unit always in English/.test(RULES));
 check('demo detection reads Spanish', /demolici\[oó\]n/.test(slice('const LABOR_MULT_DEFAULT=','// ══ END PRICING ENGINE ══')));
 
+check('a stray non-question in the model\'s list is skipped, not drawn blank', /questions=\(Array\.isArray\(questions\)\?questions:\[\]\)\.filter\(q=>q&&typeof q==='object'&&String\(q\.question\|\|''\)\.trim\(\)\)/.test(html));
 console.log('\n=== 2. Model reasoning never on screen ===');
 const onThink=slice('const onThinking=','};');
 check('onThinking writes only fixed status lines', !/thinkBuf[^;]*textContent|textContent\s*=\s*(tail|flat|thinkBuf)/.test(onThink)&&/THINK_STEPS\[idx\]/.test(onThink), onThink);
