@@ -73,8 +73,45 @@ const PHASES_ES = {
   logo:           43000,
 }
 
+const LOOP_EN_VO = 39200
+
+// Timed to en-voiceover.mp3 (Eleven v4, 2026-10-07, 39.2s): PHASES_ES warped sentence by sentence.
+const PHASES_EN_VO = {
+  nav:            100,
+  cameraRoll:     2350,
+  select:         3200,
+  uploadStart:    3750,
+  scanLine:       4100,
+  uploadDone:     7050,
+  marginCard:     8250,
+  marginOH:       11650,
+  marginPT:       13500,
+  marginRC:       15350,
+  marginLock:     18900,
+  formSection:    21650,
+  jobType:        22000,
+  location:       22400,
+  size:           22850,
+  runBtn:         23200,
+  runTap:         23450,
+  permitLabel:    23750,
+  permitLoading:  23950,
+  permitRows:     25900,
+  estimateLabel:  26400,
+  estimateRows:   27100,
+  total:          28350,
+  bid:            29550,
+  exportBtn:      30600,
+  internalDoc:    31850,
+  proposalDoc:    33300,
+  badge:          33850,
+  addHome:        35150,
+  logo:           36000,
+}
+
 const STRINGS_EN = {
   eyebrow: 'Blueprint → Estimate',
+  playLabel: 'Tap to play',
   steps: ['SCOPE', 'REFINE', 'ESTIMATE'],
   tagline: 'Scope in. Winning bid out.\nBuilt for contractors.',
   market: 'Market',
@@ -169,6 +206,7 @@ const STRINGS_EN = {
 
 const STRINGS_ES = {
   eyebrow: 'Plano → Estimado',
+  playLabel: 'Toca para reproducir',
   steps: ['ALCANCE', 'REFINAR', 'ESTIMADO'],
   tagline: 'Alcance adentro. Oferta ganadora afuera.\nHecho para contratistas.',
   market: 'Mercado',
@@ -617,7 +655,7 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
                 <path d="M9 6.5L20 13L9 19.5V6.5Z" fill="#0A0A0A" />
               </svg>
             </motion.button>
-            <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.52rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'monospace' }}>Toca para reproducir</span>
+            <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.52rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: 'monospace' }}>{strings.playLabel}</span>
           </motion.div>
         )}
       </AnimatePresence>
@@ -1105,7 +1143,7 @@ function ExplainerBase({ strings, phases = PHASES, loop = LOOP, audioSrc = null 
 }
 
 export default function Explainer() {
-  return <ExplainerBase strings={STRINGS_EN} />
+  return <ExplainerBase strings={STRINGS_EN} phases={PHASES_EN_VO} loop={LOOP_EN_VO} audioSrc="/en-voiceover.mp3" />
 }
 
 export function ExplainerES() {

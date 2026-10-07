@@ -1,0 +1,37 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Inter,62,&H00FFFFFF,&H00FFFFFF,&H260A0A0A,&H00000000,-1,0,0,0,100,100,0,0,3,16,0,2,150,150,330,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:00.90,Cap,,0,0,0,,{\c&H37AFD4&}Even{\c&HFFFFFF&}.
+Dialogue: 0,0:00:00.96,0:00:01.85,Cap,,0,0,0,,Scope in.
+Dialogue: 0,0:00:01.92,0:00:03.15,Cap,,0,0,0,,Winning bid out.
+Dialogue: 0,0:00:03.24,0:00:04.45,Cap,,0,0,0,,Upload your plans.
+Dialogue: 0,0:00:04.52,0:00:05.85,Cap,,0,0,0,,That's it.
+Dialogue: 0,0:00:05.98,0:00:08.50,Cap,,0,0,0,,{\c&H37AFD4&}Even{\c&HFFFFFF&} is already pulling your city's permit data.
+Dialogue: 0,0:00:08.60,0:00:09.70,Cap,,0,0,0,,Not the county's.
+Dialogue: 0,0:00:09.76,0:00:11.50,Cap,,0,0,0,,Your city's.
+Dialogue: 0,0:00:11.66,0:00:12.95,Cap,,0,0,0,,A few more details:
+Dialogue: 0,0:00:13.06,0:00:15.50,Cap,,0,0,0,,location, trade, square footage.
+Dialogue: 0,0:00:15.60,0:00:17.60,Cap,,0,0,0,,Just enough to get it right.
+Dialogue: 0,0:00:17.80,0:00:19.70,Cap,,0,0,0,,Set your overhead, your profit
+Dialogue: 0,0:00:19.74,0:00:21.10,Cap,,0,0,0,,and your risk cushion.
+Dialogue: 0,0:00:21.26,0:00:22.90,Cap,,0,0,0,,Watch your protection adjust.
+Dialogue: 0,0:00:23.02,0:00:24.30,Cap,,0,0,0,,Live.
+Dialogue: 0,0:00:24.42,0:00:25.85,Cap,,0,0,0,,Real permit fees.
+Dialogue: 0,0:00:25.92,0:00:27.20,Cap,,0,0,0,,Real numbers.
+Dialogue: 0,0:00:27.32,0:00:28.70,Cap,,0,0,0,,One number for you.
+Dialogue: 0,0:00:28.76,0:00:30.20,Cap,,0,0,0,,A proposal for your client.
+Dialogue: 0,0:00:30.30,0:00:32.65,Cap,,0,0,0,,Built from the same real data.
+Dialogue: 0,0:00:32.80,0:00:33.65,Cap,,0,0,0,,Do the work.
+Dialogue: 0,0:00:33.70,0:00:35.30,Cap,,0,0,0,,We'll handle the bid.
+Dialogue: 0,0:00:35.42,0:00:36.20,Cap,,0,0,0,,{\c&H37AFD4&}Even{\c&HFFFFFF&}.
+Dialogue: 0,0:00:36.28,0:00:37.65,Cap,,0,0,0,,Estimating Intelligence.
+Dialogue: 0,0:00:37.72,0:00:39.15,Cap,,0,0,0,,Built for contractors.
