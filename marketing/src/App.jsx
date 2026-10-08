@@ -12,6 +12,7 @@ import Walls from './routes/Walls'
 import Finish from './routes/Finish'
 import Sequence from './routes/Sequence'
 import Manual from './routes/Manual'
+import Library from './routes/Library'
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/manual" element={<Manual />} />
+        <Route path="/library" element={<Library />} />
         <Route path="/south-florida" element={<SouthFlorida />} />
         <Route path="/south-florida-es" element={<SouthFloridaES />} />
         <Route path="/map" element={<Map />} />
@@ -44,6 +46,7 @@ export default function App() {
 }
 
 const ASSETS = [
+  { path: '/library', label: 'Post Library', meta: 'finished videos, stories and carousels · save + copy caption' },
   { path: '/manual', label: 'User Manual', meta: 'live landing page · weekly webinar · not a loop' },
   { path: '/foundation', label: 'Foundation — Stage 01', meta: '28s loop · house sequence · locked iso camera' },
   { path: '/framing', label: 'Framing — Stage 02', meta: '25.6s loop · house sequence · cost-code structure' },
