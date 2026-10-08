@@ -33,7 +33,7 @@ def grid_bg():
 
 BG_IMG = grid_bg()
 try:
-    LOGO_IMG = Image.open(LOGO).convert('RGBA'); r = 64 / LOGO_IMG.height; LOGO_IMG = LOGO_IMG.resize((int(LOGO_IMG.width * r), 64))
+    LOGO_IMG = Image.open(LOGO).convert('RGBA'); r = 170 / LOGO_IMG.height; LOGO_IMG = LOGO_IMG.resize((int(LOGO_IMG.width * r), 170))
 except Exception:
     LOGO_IMG = None
 
@@ -57,26 +57,35 @@ def wrap(d, text, font, maxw):
     if cur: lines.append(cur)
     return lines
 
-def chrome(img, d, t):
+def chrome(img, d, t, cta=True, lang='en'):
+    k = ease(t / 0.5)
     if LOGO_IMG is not None:
-        k = ease(t / 0.5); tmp = LOGO_IMG.copy(); tmp.putalpha(tmp.getchannel('A').point(lambda v: int(v * k)))
-        img.paste(tmp, ((W - tmp.width) // 2, 130), tmp)
-    else:
-        fade_text(img, d, (0, 130), 'even.', F('Bold', 64), GOLD, t, 0, center=True)
+        tmp = LOGO_IMG.copy(); tmp.putalpha(tmp.getchannel('A').point(lambda v: int(v * k)))
+        img.paste(tmp, ((W - tmp.width) // 2, 120), tmp)
+    fw = F('Bold', 72)
+    wx = (W - d.textlength('even.', font=fw)) / 2
+    col = lambda c: tuple(int(v * k + BG[i] * (1 - k)) for i, v in enumerate(c))
+    d.text((wx, 305), 'even', font=fw, fill=col(WHITE))
+    d.text((wx + d.textlength('even', font=fw), 305), '.', font=fw, fill=col(GOLD))
+    if cta:
+        bob = int(8 * math.sin(t * 5))
+        fade_text(img, d, (0, 1470 + bob), ('Toca el link  ↓' if lang == 'es' else 'Tap the link  ↓'), F('SemiBold', 46), WHITE, t, 1.0, center=True)
     fade_text(img, d, (0, 1560), 'even-os.com', F('SemiBold', 44), GOLD, t, 0.6, center=True)
 
 # ---------- generic text story ----------
 def text_story(lang, spec, t):
     img = BG_IMG.copy(); d = ImageDraw.Draw(img)
-    chrome(img, d, t)
-    y = 560
+    chrome(img, d, t, cta=spec.get('cta', True), lang=lang)
+    y = 620
     beat = 0.35
     if spec.get('eyebrow'):
         fade_text(img, d, (0, y), spec['eyebrow'].upper(), F('SemiBold', 42), GOLD, t, beat, center=True); y += 100; beat += 0.25
     if spec.get('big'):
         fade_text(img, d, (0, y), spec['big'], F('Bold', spec.get('bigsize', 230)), GOLD, t, beat, center=True); y += spec.get('bigsize', 230) + 40; beat += 0.3
+    tsize = 88
+    while tsize > 52 and max((d.textlength(l, font=F('Bold', tsize)) for l in spec.get('title', [''])), default=0) > W - 130: tsize -= 4
     for ln in spec.get('title', []):
-        fade_text(img, d, (0, y), ln, F('Bold', 88), WHITE, t, beat, center=True); y += 108; beat += 0.2
+        fade_text(img, d, (0, y), ln, F('Bold', tsize), WHITE, t, beat, center=True); y += int(tsize * 1.22); beat += 0.2
     y += 24
     for ln in spec.get('sub', []):
         fade_text(img, d, (0, y), ln, F('Medium', 50), GRAY, t, beat, center=True); y += 66; beat += 0.2
@@ -90,29 +99,37 @@ def text_story(lang, spec, t):
             d.line((140, y + 82, W - 140, y + 82), fill=tuple(int(40 * k) for _ in range(3)), width=2)
         y += 104; beat += 0.25
     if spec.get('src'):
-        fade_text(img, d, (0, 1440), spec['src'], F('Regular', 32), (120, 120, 120), t, beat + 0.2, center=True)
+        fade_text(img, d, (0, 1385), spec['src'], F('Regular', 32), (120, 120, 120), t, beat + 0.2, center=True)
     return img
 
 STORIES = {
  'permit': {
-  'en': dict(eyebrow='Real fee. Real source.', big='$162.50', bigsize=210, title=['Aventura electrical', 'permit minimum'], sub=[], src='City of Aventura fee schedule, effective Jul 8, 2026'),
-  'es': dict(eyebrow='Tarifa real. Fuente real.', big='$162.50', bigsize=210, title=['Permiso eléctrico', 'mínimo en Aventura'], sub=[], src='Tarifa de la Ciudad de Aventura, vigente desde el 8 jul 2026'),
+  'en': dict(eyebrow='Permit fact', big='$162.50', bigsize=210, title=['Aventura electrical', 'permit minimum'], sub=['What would you have guessed?'], src='City of Aventura fee schedule, effective Jul 8, 2026'),
+  'es': dict(eyebrow='Dato de permisos', big='$162.50', bigsize=210, title=['Permiso eléctrico', 'mínimo en Aventura'], sub=['¿Cuánto habrías adivinado?'], src='Tarifa de la Ciudad de Aventura, vigente desde el 8 jul 2026'),
  },
  'howlong': {
-  'en': dict(eyebrow='Quick question', title=['How long does your', 'estimate take?'], sub=['Vote below']),
-  'es': dict(eyebrow='Pregunta rápida', title=['¿Cuánto tarda', 'tu estimado?'], sub=['Vota abajo']),
+  'en': dict(eyebrow='Be honest', title=['How long does your', 'estimate take?'], sub=['Vote below'], cta=False),
+  'es': dict(eyebrow='Sé honesto', title=['¿Cuánto tarda', 'tu estimado?'], sub=['Vota abajo'], cta=False),
  },
  'three': {
-  'en': dict(big='3', bigsize=360, title=['free estimates.'], sub=['No credit card.', 'Try it on your next bid.']),
-  'es': dict(big='3', bigsize=360, title=['estimados gratis.'], sub=['Sin tarjeta de crédito.', 'Pruébalo en tu próximo presupuesto.']),
+  'en': dict(eyebrow='Try it free', big='3', bigsize=360, title=['free estimates.'], sub=['No credit card.', 'Run your next bid through it.']),
+  'es': dict(eyebrow='Pruébalo gratis', big='3', bigsize=360, title=['estimados gratis.'], sub=['Sin tarjeta de crédito.', 'Pasa tu próximo presupuesto por aquí.']),
  },
  'bid': {
-  'en': dict(eyebrow='One real job', title=['200A panel upgrade', 'Aventura, FL'], rows=[('Materials', '$1,736.66'), ('Labor', '$1,159.08'), ('Permit', '$162.50'), ('Bid', '$4,550')], hl='Bid', src='Real run, Oct 7, 2026. Every line shows its source.'),
-  'es': dict(eyebrow='Un trabajo real', title=['Cambio de panel 200A', 'Aventura, FL'], rows=[('Materiales', '$1,736.66'), ('Mano de obra', '$1,159.08'), ('Permiso', '$162.50'), ('Oferta', '$4,550')], hl='Oferta', src='Corrida real, 7 oct 2026. Cada línea muestra su fuente.'),
+  'en': dict(eyebrow='Would you bid this?', title=['200A panel upgrade', 'Aventura, FL'], rows=[('Materials', '$1,736.66'), ('Labor', '$1,159.08'), ('Permit', '$162.50'), ('Bid', '$4,550')], hl='Bid', src='One real run, Oct 7, 2026. Every line shows its source.'),
+  'es': dict(eyebrow='¿Lo cotizarías así?', title=['Cambio de panel 200A', 'Aventura, FL'], rows=[('Materiales', '$1,736.66'), ('Mano de obra', '$1,159.08'), ('Permiso', '$162.50'), ('Oferta', '$4,550')], hl='Oferta', src='Una corrida real, 7 oct 2026. Cada línea muestra su fuente.'),
  },
  'margins': {
   'en': dict(eyebrow='Your numbers', big='You', bigsize=200, title=['set the margins.'], sub=['Overhead. Profit. Risk.', 'Even never picks them for you.']),
   'es': dict(eyebrow='Tus números', big='Tú', bigsize=200, title=['pones los márgenes.'], sub=['Gastos. Ganancia. Riesgo.', 'Even nunca los decide por ti.']),
+ },
+ 'cement': {
+  'en': dict(eyebrow='Remember', title=['A bad estimate is', 'cement in your shoes.'], sub=['You drag it through the whole job.']),
+  'es': dict(eyebrow='Recuerda', title=['Un mal estimado es', 'cemento en los zapatos.'], sub=['Lo arrastras todo el trabajo.']),
+ },
+ 'underbid': {
+  'en': dict(eyebrow='Real talk', title=["What's the last job", 'you underbid?'], sub=['Tell me below. No judgment.'], cta=False),
+  'es': dict(eyebrow='Sin rodeos', title=['¿Cuál fue el último', 'trabajo que cotizaste bajo?'], sub=['Cuéntame abajo. Sin juicios.'], cta=False),
  },
 }
 
@@ -126,10 +143,10 @@ KEYS = typing_times(); ENTER = KEYS[-1] + 0.45
 
 def typing_frame(lang, t):
     img = BG_IMG.copy(); d = ImageDraw.Draw(img)
-    chrome(img, d, t)
+    chrome(img, d, t, cta=False, lang=lang)
     f = F('Bold', 140)
     typed = sum(1 for k in KEYS if t >= k); text = URL[:typed]
-    full_w = d.textlength(URL, font=f); x0 = (W - full_w) / 2; y = 860
+    full_w = d.textlength(URL, font=f); x0 = (W - full_w) / 2; y = 880
     d.text((x0, y), text, font=f, fill=WHITE)
     if t < ENTER and (int(t * 2.4) % 2 == 0 or (typed and t - KEYS[typed - 1] < 0.18)):
         cx = x0 + d.textlength(text, font=f) + 8
@@ -163,7 +180,7 @@ def render(name, lang, fn, dur, audio=None):
 
 if __name__ == '__main__':
     os.makedirs(OUT, exist_ok=True)
-    for lang in ('en', 'es'):
+    for lang in os.environ.get('LANGS', 'en,es').split(','):
         render('typing', lang, lambda t, l=lang: typing_frame(l, t), 6.0, audio=True)
         for name, v in STORIES.items():
             render(name, lang, lambda t, s=v[lang], l=lang: text_story(l, s, t), 6.0)
