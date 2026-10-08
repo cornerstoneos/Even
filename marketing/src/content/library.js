@@ -31,8 +31,18 @@ export const LIBRARY = {
     },
   ],
   stories: [
-    { id: 'story-en', title: 'Daily story: typing even-os.com (English)', meta: '6s · vertical · keyboard sound · add the Link sticker', file: '/library/stories/even-story-typing-en.mp4', caption: '' },
-    { id: 'story-es', title: 'Daily story: typing even-os.com (Spanish)', meta: '6s · vertical · keyboard sound · add the Link sticker', file: '/library/stories/even-story-typing-es.mp4', caption: '' },
+    { id: 'st-typing-en', title: '1. Typing even-os.com (English)', meta: '6s · keyboard sound · add the Link sticker', file: '/library/stories/even-story-typing-en.mp4', caption: '' },
+    { id: 'st-typing-es', title: '1. Typing even-os.com (Spanish)', meta: '6s · keyboard sound · add the Link sticker', file: '/library/stories/even-story-typing-es.mp4', caption: '' },
+    { id: 'st-permit-en', title: '2. Permit fact: Aventura $162.50 (English)', meta: '6s · real fee, source shown · Link sticker', file: '/library/stories/even-story-permit-en.mp4', caption: '' },
+    { id: 'st-permit-es', title: '2. Permit fact: Aventura $162.50 (Spanish)', meta: '6s · real fee, source shown · Link sticker', file: '/library/stories/even-story-permit-es.mp4', caption: '' },
+    { id: 'st-howlong-en', title: '3. How long does your estimate take? (English)', meta: '6s · add a Poll sticker: 10 min / 1 hour / 1 day', file: '/library/stories/even-story-howlong-en.mp4', caption: '' },
+    { id: 'st-howlong-es', title: '3. How long does your estimate take? (Spanish)', meta: '6s · add a Poll sticker: 10 min / 1 hora / 1 día', file: '/library/stories/even-story-howlong-es.mp4', caption: '' },
+    { id: 'st-three-en', title: '4. 3 free estimates (English)', meta: '6s · Link sticker', file: '/library/stories/even-story-three-en.mp4', caption: '' },
+    { id: 'st-three-es', title: '4. 3 estimados gratis (Spanish)', meta: '6s · Link sticker', file: '/library/stories/even-story-three-es.mp4', caption: '' },
+    { id: 'st-bid-en', title: '5. One real job: $4,550 (English)', meta: '6s · real run, example job · Link sticker', file: '/library/stories/even-story-bid-en.mp4', caption: '' },
+    { id: 'st-bid-es', title: '5. One real job: $4,550 (Spanish)', meta: '6s · real run, example job · Link sticker', file: '/library/stories/even-story-bid-es.mp4', caption: '' },
+    { id: 'st-margins-en', title: '6. You set the margins (English)', meta: '6s · Link sticker', file: '/library/stories/even-story-margins-en.mp4', caption: '' },
+    { id: 'st-margins-es', title: '6. Tú pones los márgenes (Spanish)', meta: '6s · Link sticker', file: '/library/stories/even-story-margins-es.mp4', caption: '' },
   ],
   carousels: [
     {
