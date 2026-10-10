@@ -686,14 +686,46 @@ body.has-gopro .topbar-brand{display:none}
 /* Desktop estimate screen: full width, two columns. Only the estimate screen
    drops the 1.3x zoom; every other screen keeps the scaled phone column. */
 .est-grid,.est-main,.est-side,.est-main2{display:contents}
-.est-labor-card{display:none}
+/* ── Layout D (user 2026-10-07/10) ── */
+.d-card{background:var(--panel);border:1px solid var(--rim);border-radius:18px;padding:18px;margin-bottom:12px}
+.d-price{background:linear-gradient(160deg,rgba(255,179,0,.08),var(--panel) 55%)}
+.d-k{font:700 11px 'DM Mono',monospace;letter-spacing:1.1px;color:var(--muted);text-transform:uppercase}
+.d-price-row{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-top:6px}
+.d-big{font:800 40px 'DM Mono',monospace;color:var(--text-accent);line-height:1;letter-spacing:-1px}
+.d-margin{text-align:right}.d-margin b{display:block;color:var(--green);font:700 18px 'DM Mono',monospace}.d-margin span{font-size:11px;color:var(--muted)}
+.d-sub{font-size:12.5px;color:var(--muted);margin-top:8px}
+.d-lbl{font-size:12px;font-weight:600;color:var(--white2);margin-bottom:6px}
+.d-info-link{background:none;border:none;color:var(--text-accent);font-size:12px;cursor:pointer;padding:8px 0 2px;text-decoration:underline;text-underline-offset:3px;font-family:'DM Sans',sans-serif}
+.d-info{font-size:12.5px;line-height:1.55;color:var(--white2);background:var(--l2);border:1px solid var(--rim);border-radius:10px;padding:10px 12px;margin-top:6px}
+.d-row-link{display:flex;justify-content:space-between;align-items:center;width:100%;background:none;border:none;border-top:1px solid var(--rim);margin-top:12px;padding:12px 2px 2px;color:var(--muted);font-size:13px;cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;gap:10px}
+.d-chev{transition:transform .15s;flex:none}.d-row-link.open .d-chev{transform:rotate(90deg)}
+#price-details{margin-top:10px}
+/* Column headings only when a category is open. */
+#li-collapsible:not(:has(.cat-group:not([style*="none"]))) .li-head{display:none!important}
+.d-head-sub{font-size:12px;color:var(--muted);margin-top:3px;font-weight:400;letter-spacing:0;text-transform:none;font-family:'DM Sans',sans-serif}
+.d-work>.d-head-sub,.d-work>.d-info-wrap{padding:0 18px}
+.d-work .cat-div{font-size:12px;padding:14px 12px;border-bottom:1px solid var(--rim);color:var(--white2)}
+.d-work .cat-div .cat-sum{margin-left:auto;font-size:13px}
+.d-finish{border-color:var(--gold-border)}
+.d-finish-head{display:flex;gap:10px;align-items:flex-start;padding:16px 18px 2px}
+.d-check{width:22px;height:22px;border-radius:50%;background:var(--gold);color:#000;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex:none;margin-top:1px}
+.d-labor .gc-body{padding:12px 18px}
+.d-labor-line{display:flex;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--white2);align-items:baseline}
+.d-labor-k{font-weight:700;color:var(--white)}
+.pdf-grid.d-dl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin:6px 0 16px}
+.d-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:none;border-radius:18px;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:center;aspect-ratio:1/0.82;padding:14px 10px;min-width:0;width:100%;transition:transform .08s,box-shadow .08s}
+.d-btn b{font-size:18px;font-weight:800;line-height:1.15}.d-btn small{font-size:12.5px;font-weight:500;opacity:.85}
+.d-dl-ic{font-size:28px;line-height:1;font-weight:700}
+.d-btn.gold{background:linear-gradient(#ffcd45,#ffb300);color:#000;box-shadow:0 6px 0 #b37d00,0 12px 26px rgba(255,179,0,.25)}
+.d-btn.dark{background:linear-gradient(#3a3a3a,#242424);color:#fff;border:1px solid #444;box-shadow:0 6px 0 #0d0d0d}
+.d-btn:active{transform:translateY(4px)}.d-btn.gold:active{box-shadow:0 2px 0 #b37d00}.d-btn.dark:active{box-shadow:0 2px 0 #0d0d0d}
 @media(min-width:900px){
   .app:has(#s-estimate.active){zoom:1;max-width:none}
   #s-estimate .sbody{overflow:visible;width:100%;max-width:1480px;margin:0 auto;padding:24px 28px 80px;box-sizing:border-box}
   #s-estimate .est-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:22px;align-items:start}
   #s-estimate .est-main,#s-estimate .est-main2{display:block;grid-column:1;min-width:0}
+  #s-estimate .est-main{grid-row:1}#s-estimate .est-main2{grid-row:2}
   #s-estimate .est-side{display:block;grid-column:2;grid-row:1 / span 2;position:sticky;top:68px;max-height:calc(100vh - 80px);overflow-y:auto;scrollbar-width:thin}
-  #s-estimate .est-labor-card{display:block}
   /* 900-1199px: the left column is too narrow for six columns, so rows stack the
      way they do on a phone (description on its own line, numbers under it). */
   #s-estimate .li-head{display:none}
@@ -1281,19 +1313,94 @@ body.has-gopro .topbar-brand{display:none}
       <!-- Desktop (900px+): two columns, line items left, a sticky bid panel right.
            These wrappers are display:contents below 900px, so the phone layout is
            exactly the stacked column it always was. -->
+      <!-- Layout D (user 2026-10-07/10): price card on top, the work folded by
+           category, "Finish your proposal", then the two big download buttons.
+           Desktop: price card + labor + downloads in the sticky right panel. Phone:
+           one column in this order, downloads after the proposal fields. -->
       <div class="est-grid">
+      <div class="est-side">
+      <div class="d-card d-price" id="price-card">
+        <div class="d-k" id="pc-label"></div>
+        <div class="d-price-row"><div class="d-big" id="pc-price">—</div><div class="d-margin"><b id="pc-margin">—</b><span data-es="margen">margin</span></div></div>
+        <div class="d-sub" id="pc-sub"></div>
+        <div class="d-lbl" style="margin-top:12px"><span data-es="Pon tu propio precio">Set your own price</span> <span style="font-weight:400;color:var(--muted)" data-es="(opcional)">(optional)</span></div>
+        <div style="position:relative">
+              <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none">$</span>
+              <input id="final-bid-input" type="number" min="0" step="100" placeholder="Override the bid — client sees this on PDF" oninput="onFinalBidChange(this.value)" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;padding:9px 10px 9px 22px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;-moz-appearance:textfield" data-placeholder-es="Cambia el precio. Tu cliente ve este número en el PDF"/>
+            </div>
+        <div id="final-bid-confirm" style="display:none;margin-top:8px;font-family:'DM Mono',monospace;font-size:15px;font-weight:800;color:var(--text-accent)"></div>
+        <div class="d-info-wrap"><button class="d-info-link" onclick="toggleInfo('info-price',this)" data-es="ⓘ Qué significa">ⓘ What this means</button>
+          <div class="d-info" id="info-price" hidden data-es="Este es el precio que tu cliente ve en la propuesta. Even lo calcula con los precios de materiales de nuestra lista, la mano de obra a tu tarifa, los permisos de tu ciudad, y tus gastos, colchón y ganancia. El rango muestra qué tan seguros son los datos. Escribe tu propio precio para reemplazarlo.">This is the price your client sees on the proposal. Even figures it from our material price list, labor at your rate, your city's permit fees, and your overhead, cushion and profit. The range shows how sure the data is. Type your own price to replace it.</div></div>
+        <button class="d-row-link" onclick="togglePriceDetails(this)"><span data-es="Desglose del precio y fuentes">Price breakdown and sources</span><span class="d-chev">›</span></button>
+        <div id="price-details" hidden>
+          <div id="totals-body"></div>
+          <div class="meter">
+            <div class="meter-top">
+              <span class="meter-lbl" data-en="Net Margin" data-es="Margen Neto">Net Margin</span>
+              <span class="meter-pct" id="meter-pct">—</span>
+            </div>
+            <div class="meter-bar"><div class="meter-fill" id="meter-fill" style="width:0%"></div></div>
+            <div class="meter-verdict" id="meter-verdict"></div>
+          </div>
+          <div class="bid-intel" id="bid-intel"></div>
+          <div class="even-suggests" id="even-suggests" style="display:none">
+            <div class="even-suggests-label" style="cursor:pointer" onclick="toggleEvenSuggests()">
+              <img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;"> <span data-en="Even Suggests" data-es="Even Sugiere">Even Suggests</span>
+              <span id="even-suggests-hint" style="text-transform:none;letter-spacing:0;color:var(--muted)" data-en="— Budget / Mid / Premium" data-es="— Económico / Medio / Premium">— Budget / Mid / Premium</span>
+              <i data-lucide="chevron-down" id="es-collapse-chevron" style="width:13px;height:13px;stroke:currentColor;transition:transform .15s"></i>
+            </div>
+            <div class="tier-cards" id="tier-cards" style="display:none"></div>
+          </div>
+          <div class="disclaimer">
+            <span style="flex-shrink:0"><i data-lucide="zap" style="width:13px;height:13px;stroke:var(--gold);vertical-align:middle"></i></span>
+            <span data-en="AI-estimated using regional market data. Verify material costs against current supplier quotes before submitting." data-es="Estimado con IA usando datos regionales del mercado. Verifica costos con tu proveedor antes de enviar.">AI-estimated using regional market data. Verify material costs against current supplier quotes before submitting.</span>
+          </div>
+          <div style="display:none"><div class="bid-box" style="flex-direction:column;align-items:flex-start;gap:8px">
+            <div style="width:100%">
+              <div class="bid-lbl" id="bid-headline-lbl" data-en="Estimated Project Investment" data-es="Inversión Estimada del Proyecto">Estimated Project Investment</div>
+              <div class="bid-val" id="bid-range-display" style="font-size:22px">—</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:5px"><span id="bid-headline-caption" data-en="Bid range · confidence-adjusted" data-es="Rango de oferta · ajustado por confianza">Bid range · confidence-adjusted</span><button class="sub-info" id="bid-intel-btn" style="display:none" onclick="document.getElementById('bid-intel').classList.toggle('open')" title="What sets this range"><i data-lucide="info" style="width:12px;height:12px;stroke:currentColor;pointer-events:none"></i></button></div>
+              <!-- The receipts behind the range width. Collapsed by default — the label
+                   stays quiet, the depth is one tap away for whoever wants the back end. -->
+              
+            </div>
+            <div style="border-top:1px solid var(--rim);padding-top:8px;width:100%;display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace" data-en="Midpoint reference" data-es="Referencia central">Midpoint reference</div>
+              <div style="font-size:13px;font-family:'DM Mono',monospace;color:var(--white2)" id="bid-val-display">—</div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <div class="gc est-labor-card d-labor" id="est-labor-card">
+        <div class="gc-body" id="est-labor-body"></div>
+      </div>
+
+      <div id="post-estimate-upsell" style="display:none;margin:10px 0 2px 0;background:linear-gradient(135deg,rgba(255,179,0,.07),rgba(255,179,0,.03));border:1px solid rgba(255,179,0,.2);border-radius:10px;padding:11px 14px;align-items:center;justify-content:space-between;gap:10px">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.5px" data-es="¿MÁS TRABAJOS ESTA SEMANA?">MORE JOBS THIS WEEK?</div>
+              <div id="upsell-sub" style="font-size:11px;color:var(--muted);margin-top:2px" data-es="Estimados ilimitados · $49/mes">Unlimited estimates · $49/mo</div>
+            </div>
+            <button onclick="handleUpgrade('monthly')" style="background:var(--gold);border:none;color:#000;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Mono',monospace" data-es="Hazte Pro →">Go Pro →</button>
+          </div>
+
+      <!-- Desktop only: the download buttons move here (see placeEstimateDownloads). -->
+      <div id="est-side-downloads"></div>
+      </div>
       <div class="est-main">
-      <!-- Line items -->
-      <div class="gc">
+      <div class="gc d-work" id="work-card">
         <div class="gc-head">
-          <div class="gc-title" style="display:flex;align-items:center;gap:6px;cursor:pointer" onclick="toggleLineItems()">
-            <i data-lucide="chevron-down" id="li-collapse-chevron" style="width:14px;height:14px;stroke:currentColor;transition:transform .15s;transform:rotate(-90deg)"></i>
-            <span data-en="Line Item Estimate" data-es="Estimado por Partidas">Line Item Estimate</span>
-            <span id="li-collapsed-summary" style="font-weight:400;color:var(--muted);font-size:11px;font-family:'DM Mono',monospace"></span>
+          <div class="gc-title" style="display:flex;align-items:center;gap:6px;cursor:pointer" >
+            <i id="li-collapse-chevron" style="display:none"></i>
+            <span data-en="The work" data-es="El trabajo">The work</span>
+            <span id="li-collapsed-summary" style="display:none"></span>
           </div>
           <button onclick="addLineGated()" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--text-accent);cursor:pointer;font-family:'DM Sans',sans-serif" data-en="+ Add" data-es="+ Agregar">+ Add</button>
         </div>
-        <div style="padding:10px 12px;display:none" id="li-collapsible">
+        <div class="d-head-sub" id="work-sub"></div>
+        <div class="d-info-wrap"><button class="d-info-link" onclick="toggleInfo('info-work',this)" data-es="ⓘ Qué significa">ⓘ What this means</button>
+          <div class="d-info" id="info-work" hidden data-es="Tus costos antes de tu margen: materiales, mano de obra, permisos y lo que estimamos. Toca un grupo para ver sus partidas. Las partidas marcadas &quot;no está en nuestros datos, estimado&quot; las estimó la IA: revísalas primero.">Your costs before your markup: materials, labor, permits and anything we estimated. Tap a group to see its lines. Lines marked "not in our data, estimated" are AI estimates, so check those first.</div></div>
+        <div style="padding:6px 12px 10px" id="li-collapsible">
           <div id="similar-recall" style="display:none;margin-bottom:8px"></div>
           <div id="calibration-recall" style="display:none;margin-bottom:8px"></div>
           <div id="permit-scope-note" style="display:none;margin-bottom:8px"></div>
@@ -1309,99 +1416,30 @@ body.has-gopro .topbar-brand{display:none}
           <div id="li-body"></div>
         </div>
       </div>
-
       </div>
-      <div class="est-side">
-      <!-- Bid summary -->
-      <div class="gc">
-        <div class="gc-head"><div class="gc-title" data-en="Bid Summary" data-es="Resumen de Oferta">Bid Summary</div></div>
-        <div class="gc-body">
-          <div id="totals-body"></div>
-          <div class="bid-box" style="flex-direction:column;align-items:flex-start;gap:8px">
-            <div style="width:100%">
-              <div class="bid-lbl" id="bid-headline-lbl" data-en="Estimated Project Investment" data-es="Inversión Estimada del Proyecto">Estimated Project Investment</div>
-              <div class="bid-val" id="bid-range-display" style="font-size:22px">—</div>
-              <div style="font-size:10px;color:var(--muted);margin-top:3px;display:flex;align-items:center;gap:5px"><span id="bid-headline-caption" data-en="Bid range · confidence-adjusted" data-es="Rango de oferta · ajustado por confianza">Bid range · confidence-adjusted</span><button class="sub-info" id="bid-intel-btn" style="display:none" onclick="document.getElementById('bid-intel').classList.toggle('open')" title="What sets this range"><i data-lucide="info" style="width:12px;height:12px;stroke:currentColor;pointer-events:none"></i></button></div>
-              <!-- The receipts behind the range width. Collapsed by default — the label
-                   stays quiet, the depth is one tap away for whoever wants the back end. -->
-              <div class="bid-intel" id="bid-intel"></div>
-            </div>
-            <div style="border-top:1px solid var(--rim);padding-top:8px;width:100%;display:flex;justify-content:space-between;align-items:center">
-              <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace" data-en="Midpoint reference" data-es="Referencia central">Midpoint reference</div>
-              <div style="font-size:13px;font-family:'DM Mono',monospace;color:var(--white2)" id="bid-val-display">—</div>
+      <div class="est-main2">
+      <div class="gc d-finish" id="proposal-edit-card" style="display:none">
+        <div class="d-finish-head"><span class="d-check">✓</span><div><div class="gc-title" data-es="Termina tu propuesta">Finish your proposal</div><div class="d-head-sub" data-es="Esto es lo que ve tu cliente.">This is what your client sees.</div></div></div>
+        <div class="d-info-wrap" style="padding:0 18px"><button class="d-info-link" onclick="toggleInfo('info-finish',this)" data-es="ⓘ Qué significa">ⓘ What this means</button>
+          <div class="d-info" id="info-finish" hidden data-es="Tu negocio, el cliente, la dirección, la forma de pago y la nota van en la Propuesta al Cliente. Los datos de tu negocio se guardan para la próxima vez.">Your business, the client, the job address, the payment schedule and the note go on the Client Proposal. Your business info is saved for next time.</div></div>
+        <div class="gc-body" style="padding:10px 18px 14px;display:flex;flex-direction:column;gap:12px">
+          <div><div class="d-lbl" data-es="Tu negocio">Your business</div>
+            <div class="biz-grid">
+              <input id="biz-company" data-en="1" data-es="1" class="finput" placeholder="Company name" data-placeholder-en="Company name" data-placeholder-es="Nombre de la empresa" oninput="setBiz('company',this.value)">
+              <input id="biz-license" data-en="1" data-es="1" class="finput" placeholder="License #" data-placeholder-en="License #" data-placeholder-es="Licencia n.º" oninput="setBiz('license',this.value)">
+              <input id="biz-phone" data-en="1" data-es="1" class="finput" type="tel" placeholder="Phone" data-placeholder-en="Phone" data-placeholder-es="Teléfono" oninput="setBiz('phone',this.value)">
+              <input id="biz-email" data-en="1" data-es="1" class="finput" type="email" placeholder="Email" data-placeholder-en="Email" data-placeholder-es="Correo" oninput="setBiz('email',this.value)">
             </div>
           </div>
-          <!-- Your Final Bid — right under the price itself now, not five blocks
-               down past Even Suggests. This is the number that decides what the
-               client sees; it shouldn't be easy to scroll past without noticing. -->
-          <div id="final-bid-box" style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--r);padding:12px 14px;margin-top:10px">
-            <div style="font-size:11px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px" data-es="TU OFERTA FINAL <span style=&quot;color:var(--muted);font-size:9px;letter-spacing:.3px;font-weight:400&quot;>OPCIONAL. ES LO QUE VE TU CLIENTE</span>">YOUR FINAL BID <span style="color:var(--muted);font-size:9px;letter-spacing:.3px;font-weight:400">OPTIONAL — SETS WHAT THE CLIENT SEES</span></div>
-            <div style="position:relative">
-              <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none">$</span>
-              <input id="final-bid-input" type="number" min="0" step="100" placeholder="Override the bid — client sees this on PDF" oninput="onFinalBidChange(this.value)" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;padding:9px 10px 9px 22px;font-family:'DM Sans',sans-serif;outline:none;box-sizing:border-box;-moz-appearance:textfield" data-placeholder-es="Cambia el precio. Tu cliente ve este número en el PDF"/>
-            </div>
-            <div style="font-size:10px;color:var(--muted);margin-top:4px" data-es="El rango de Even se queda en tu panel · Tu cliente ve tu número en el PDF">Even's range stays in your dashboard · Client sees your number on PDF</div>
-            <div id="final-bid-confirm" style="display:none;margin-top:8px;font-family:'DM Mono',monospace;font-size:15px;font-weight:800;color:var(--text-accent)"></div>
-          </div>
-          <div class="meter">
-            <div class="meter-top">
-              <span class="meter-lbl" data-en="Net Margin" data-es="Margen Neto">Net Margin</span>
-              <span class="meter-pct" id="meter-pct">—</span>
-            </div>
-            <div class="meter-bar"><div class="meter-fill" id="meter-fill" style="width:0%"></div></div>
-            <div class="meter-verdict" id="meter-verdict"></div>
-          </div>
-          <div class="disclaimer">
-            <span style="flex-shrink:0"><i data-lucide="zap" style="width:13px;height:13px;stroke:var(--gold);vertical-align:middle"></i></span>
-            <span data-en="AI-estimated using regional market data. Verify material costs against current supplier quotes before submitting." data-es="Estimado con IA usando datos regionales del mercado. Verifica costos con tu proveedor antes de enviar.">AI-estimated using regional market data. Verify material costs against current supplier quotes before submitting.</span>
-          </div>
-          <!-- Post-estimate Go Pro strip — hidden for Pro users -->
-          <div id="post-estimate-upsell" style="display:none;margin:10px 0 2px 0;background:linear-gradient(135deg,rgba(255,179,0,.07),rgba(255,179,0,.03));border:1px solid rgba(255,179,0,.2);border-radius:10px;padding:11px 14px;align-items:center;justify-content:space-between;gap:10px">
-            <div>
-              <div style="font-size:11px;font-weight:700;color:var(--text-accent);font-family:'DM Mono',monospace;letter-spacing:.5px" data-es="¿MÁS TRABAJOS ESTA SEMANA?">MORE JOBS THIS WEEK?</div>
-              <div id="upsell-sub" style="font-size:11px;color:var(--muted);margin-top:2px" data-es="Estimados ilimitados · $49/mes">Unlimited estimates · $49/mo</div>
-            </div>
-            <button onclick="handleUpgrade('monthly')" style="background:var(--gold);border:none;color:#000;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'DM Mono',monospace" data-es="Hazte Pro →">Go Pro →</button>
-          </div>
-
-          <!-- EVEN SUGGESTS — collapsed by default; three full cards up front was
-               the single biggest chunk of the "crammed" page. -->
-          <div class="even-suggests" id="even-suggests" style="display:none">
-            <div class="even-suggests-label" style="cursor:pointer" onclick="toggleEvenSuggests()">
-              <img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;"> <span data-en="Even Suggests" data-es="Even Sugiere">Even Suggests</span>
-              <span id="even-suggests-hint" style="text-transform:none;letter-spacing:0;color:var(--muted)" data-en="— Budget / Mid / Premium" data-es="— Económico / Medio / Premium">— Budget / Mid / Premium</span>
-              <i data-lucide="chevron-down" id="es-collapse-chevron" style="width:13px;height:13px;stroke:currentColor;transition:transform .15s"></i>
-            </div>
-            <div class="tier-cards" id="tier-cards" style="display:none"></div>
-          </div>
-          <div class="pdf-grid" id="est-pdf-grid">
-            <div class="pdf-card" onclick="showEmailGate('internal')">
-              <div class="pdf-card-icon"><i data-lucide="file-text" style="width:22px;height:22px;stroke:var(--gold)"></i></div>
-              <div class="pdf-card-title" data-en="Cost Sheet" data-es="Hoja de Costos">Cost Sheet</div>
-              <div class="pdf-card-sub" data-en="Full breakdown — your eyes only" data-es="Desglose completo — solo para ti">Full breakdown — your eyes only</div>
-            </div>
-            <div class="pdf-card" onclick="showEmailGate('proposal')">
-              <div class="pdf-card-icon"><i data-lucide="file-bar-chart" style="width:22px;height:22px;stroke:var(--gold)"></i></div>
-              <div class="pdf-card-title" data-en="Client Proposal" data-es="Propuesta al Cliente">Client Proposal</div>
-              <div class="pdf-card-sub" data-en="Clean bid — total price only" data-es="Oferta limpia — solo precio total">Clean bid — total price only</div>
+          <div><div class="d-lbl" data-es="Cliente">Client</div>
+            <div class="biz-grid">
+              <input id="prop-client" class="finput" placeholder="Client name" data-placeholder-es="Nombre del cliente" oninput="setProposalClient(this.value)">
+              <input id="prop-job-address" data-en="1" data-es="1" class="finput" placeholder="Street, city" data-placeholder-en="Street, city" data-placeholder-es="Calle, ciudad" oninput="liveProposalUpdate()">
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Labor cost: how labor was priced (desktop panel only; settings live on the scope screen) -->
-      <div class="gc est-labor-card" id="est-labor-card">
-        <div class="gc-head"><div class="gc-title" data-en="Labor Cost" data-es="Costo de Mano de Obra">Labor Cost</div></div>
-        <div class="gc-body" id="est-labor-body"></div>
-      </div>
-
-      <!-- Payment Schedule Selector -->
-      <div class="gc" id="pay-sched-section" style="display:none">
-        <div class="gc-head">
-          <div class="gc-title"><i data-lucide="credit-card" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-en="Payment Schedule" data-es="Calendario de Pagos">Payment Schedule</span></div>
-          <div class="gc-tag" data-en="Shows on proposal" data-es="Aparece en propuesta">Shows on proposal</div>
-        </div>
-        <div class="gc-body" style="padding:10px 12px;display:flex;flex-wrap:wrap;gap:7px">
+          <div id="pay-sched-section" class="d-pay" style="display:none">
+        <div class="d-lbl" data-es="Forma de pago">Payment schedule</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px">
           <div class="pay-opt selected" data-sched="standard" onclick="selectPaySched(this,'30% deposit to schedule · 40% at rough-in completion · 30% upon final walkthrough. Price valid 30 days.')">
             <div class="pay-opt-name" data-en="Standard 30/40/30" data-es="Estándar 30/40/30">Standard 30/40/30</div>
           </div>
@@ -1416,20 +1454,12 @@ body.has-gopro .topbar-brand{display:none}
           </div>
         </div>
       </div>
-
-      <!-- Desktop only: the Cost Sheet / Client Proposal cards are moved here so the
-           panel ends with the downloads (see placeEstimateDownloads). -->
-      <div id="est-side-downloads"></div>
-      </div>
-      <div class="est-main2">
-      <!-- Proposal customizer -->
-      <div class="gc" id="proposal-edit-card" style="display:none;margin-bottom:10px">
-        <div class="gc-head">
-          <div class="gc-title"><i data-lucide="file-text" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Personaliza antes de descargar">Customize Before Download</span></div>
-          <div class="gc-tag" data-es="Vista previa">Live preview</div>
-        </div>
-        <div class="gc-body" style="padding:10px 12px;display:flex;flex-direction:column;gap:10px">
-          <div>
+          <div><div class="d-lbl"><span data-es="Nota para el cliente">Note to client</span> <span style="font-weight:400;color:var(--muted)" data-es="(opcional)">(optional)</span></div>
+            <textarea id="prop-note" placeholder="e.g. Thank you for the opportunity. We look forward to working together." style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()" data-placeholder-es="ej. Gracias por la oportunidad. Esperamos trabajar contigo."></textarea>
+          </div>
+          <button class="d-row-link" onclick="toggleMoreOptions(this)" style="border-top:1px solid var(--rim)"><span data-es="Más opciones: condiciones, lo que proporciona el cliente, nivel de detalle">More options: conditions, what the client supplies, detail level</span><span class="d-chev">›</span></button>
+          <div id="more-options" hidden style="flex-direction:column;gap:12px">
+            <div>
             <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px" data-es="DETALLE DE PRECIOS">PRICING DETAIL</div>
             <div class="detail-toggle">
               <div class="detail-opt active" onclick="setDetailLevel('full',this)" data-es="Detalle completo">Full Detail</div>
@@ -1437,42 +1467,31 @@ body.has-gopro .topbar-brand{display:none}
               <div class="detail-opt" onclick="setDetailLevel('lump',this)" data-es="Precio global">Lump Sum</div>
             </div>
           </div>
-          <div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px" data-en="YOUR BUSINESS (SHOWN ON THE PROPOSAL)" data-es="TU NEGOCIO (APARECE EN LA PROPUESTA)">YOUR BUSINESS (SHOWN ON THE PROPOSAL)</div>
-            <div class="biz-grid">
-              <input id="biz-company" data-en="1" data-es="1" class="finput" placeholder="Company name" data-placeholder-en="Company name" data-placeholder-es="Nombre de la empresa" oninput="setBiz('company',this.value)">
-              <input id="biz-license" data-en="1" data-es="1" class="finput" placeholder="License #" data-placeholder-en="License #" data-placeholder-es="Licencia n.º" oninput="setBiz('license',this.value)">
-              <input id="biz-phone" data-en="1" data-es="1" class="finput" type="tel" placeholder="Phone" data-placeholder-en="Phone" data-placeholder-es="Teléfono" oninput="setBiz('phone',this.value)">
-              <input id="biz-email" data-en="1" data-es="1" class="finput" type="email" placeholder="Email" data-placeholder-en="Email" data-placeholder-es="Correo" oninput="setBiz('email',this.value)">
-            </div>
-          </div>
-          <div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px" data-en="JOB ADDRESS" data-es="DIRECCIÓN DEL TRABAJO">JOB ADDRESS</div>
-            <input id="prop-job-address" data-en="1" data-es="1" class="finput" placeholder="Street, city" data-placeholder-en="Street, city" data-placeholder-es="Calle, ciudad" oninput="liveProposalUpdate()">
-          </div>
-          <div>
-            <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px" data-es="NOTA PARA EL CLIENTE">NOTE TO CLIENT</div>
-            <textarea id="prop-note" placeholder="e.g. Thank you for the opportunity — we look forward to working together." style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()" data-placeholder-es="ej. Gracias por la oportunidad. Esperamos trabajar contigo."></textarea>
-          </div>
-          <div>
+            <div>
             <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:5px" data-es="EL CLIENTE PROPORCIONA">CLIENT WILL SUPPLY</div>
             <textarea id="prop-supply" placeholder="e.g. Appliances, light fixtures, tile selection, cabinet hardware…" style="width:100%;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white2);font-size:12px;padding:9px 10px;font-family:'DM Sans',sans-serif;resize:none;outline:none;min-height:54px;box-sizing:border-box;line-height:1.5" oninput="liveProposalUpdate()" data-placeholder-es="ej. Electrodomésticos, lámparas, selección de azulejos, herrajes…"></textarea>
           </div>
-          <div>
+            <div>
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
               <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px" data-es="SUPUESTOS">ASSUMPTIONS</div>
               <button onclick="addProposalAssumption()" style="background:none;border:none;color:var(--text-accent);font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;padding:0" data-es="+ AGREGAR">+ ADD</button>
             </div>
             <div id="prop-assumptions"></div>
           </div>
-          <div id="beautify-row" style="display:none;padding-top:2px">
+            <div id="beautify-row" style="display:none;padding-top:2px">
             <button onclick="proposalBeautify()" id="beautify-btn" style="width:100%;padding:10px;background:rgba(255,179,0,.08);border:1px solid rgba(255,179,0,.25);border-radius:8px;color:var(--text-accent);font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px;display:flex;align-items:center;justify-content:center;gap:7px"><img src="assets/logo-hero.png" width="16" height="16" style="object-fit:contain;vertical-align:middle"> <span data-es="MEJORAR EL TEXTO">POLISH SCOPE WITH AI</span></button>
             <div id="beautify-status" style="font-size:10px;color:var(--muted);text-align:center;margin-top:5px;display:none"></div>
+          </div>
           </div>
         </div>
       </div>
 
-      <!-- Cost tracker — Pro feature, shown at bottom so it doesn't interrupt the estimate flow -->
+      <div id="dl-home"></div>
+      <div class="pdf-grid d-dl" id="est-pdf-grid">
+            <button class="d-btn gold" onclick="showEmailGate('proposal')"><span class="d-dl-ic">⤓</span><b data-es="Propuesta<br>al Cliente">Client<br>Proposal</b><small data-es="Para tu cliente">For your client</small></button>
+            <button class="d-btn dark" onclick="showEmailGate('internal')"><span class="d-dl-ic">⤓</span><b data-es="Hoja de<br>Costos">Cost<br>Sheet</b><small data-es="Tus números">Your numbers</small></button>
+          </div>
+
       <div class="gc" id="cost-tracker-section">
         <div class="gc-head">
           <div class="gc-title" data-en="Actual Cost Tracker" data-es="Seguimiento de Costos">Actual Cost Tracker</div>
@@ -1489,7 +1508,6 @@ body.has-gopro .topbar-brand{display:none}
         </div>
       </div>
 
-      <!-- Email gate -->
       <div class="email-gate" id="email-gate" style="display:none">
         <div style="margin-bottom:10px"><i data-lucide="inbox" style="width:26px;height:26px;stroke:var(--muted)"></i></div>
         <h3 data-en="Download Your Estimate" data-es="Descarga Tu Estimado">Download Your Estimate</h3>
@@ -1501,7 +1519,6 @@ body.has-gopro .topbar-brand{display:none}
         <div class="email-note" data-en="No spam. Just your estimate." data-es="Sin spam. Solo tu estimado.">No spam. Just your estimate.</div>
       </div>
 
-      <!-- Proposal preview -->
       <div id="proposal-section" style="display:none">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
           <div style="font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--white2);font-family:'DM Mono',monospace" data-en="Client Proposal" data-es="Propuesta al Cliente">Client Proposal</div>
@@ -2048,6 +2065,7 @@ function setLang(lang,btn){
   // it in the language that was just switched to.
   updateBidHeadline();
   if(typeof renderLaborSettings==='function') renderLaborSettings();
+  if(currentEstimate){ renderPriceCard(); renderLaborCard(currentEstimate); }
   // Text built in code (free-estimate count, upsell) is redrawn in the new language.
   if(typeof updateUserBadge==='function') updateUserBadge();
   const _asb=document.getElementById('auth-submit-btn'); if(_asb&&!_asb.disabled) _asb.textContent=authSubmitLabel(authMode);
@@ -3882,7 +3900,7 @@ function renderEstimate(data){
   Object.entries(cats).forEach(([cat,items],ci)=>{
     // Each category folds on its own: tap the header to hide its rows and see
     // just the count and subtotal. Starts open, like the list always has.
-    html+=`<div class="cat-div cat-toggle" onclick="toggleCategory(${ci})" id="catd-${ci}"><i data-lucide="chevron-down" class="cat-chev" style="width:12px;height:12px;stroke:currentColor"></i>${getCatIcon(cat)} ${escapeHtml(catLabel(cat))}<span class="cat-sum" id="cats-${ci}"></span></div><div class="cat-group" id="catg-${ci}">`;
+    html+=`<div class="cat-div cat-toggle closed" onclick="toggleCategory(${ci})" id="catd-${ci}"><i data-lucide="chevron-down" class="cat-chev" style="width:12px;height:12px;stroke:currentColor"></i>${getCatIcon(cat)} ${escapeHtml(catLabel(cat))}<span class="cat-sum" id="cats-${ci}"></span></div><div class="cat-group" id="catg-${ci}" style="display:none">`;
     items.forEach(item=>{
       const proClick=isPro?'':(appLang==='es'?" onclick=\"openProModal('Editar partidas','Hazte Even Pro para editar las partidas.');this.blur();\"":" onclick=\"openProModal('Edit Line Items','Upgrade to Even Pro to edit line items.');this.blur();\"");
       html+=`<div class="li-row" id="lr-${item._i}">
@@ -3902,21 +3920,11 @@ function renderEstimate(data){
   const liTotal=(data.lineItems||[]).reduce((s,i)=>s+(+i.total||0),0);
   const summaryEl=document.getElementById('li-collapsed-summary');
   if(summaryEl) summaryEl.textContent=appLang==='es'?`${liCount} partida${liCount===1?'':'s'} · ${fmt(liTotal)}`:`${liCount} item${liCount===1?'':'s'} · ${fmt(liTotal)}`;
-  // Starts collapsed on every fresh estimate -- this only runs when a whole new
-  // estimate lands (calculate, or load a saved one), never on an in-place edit
-  // (recalc/addLine/delLine touch the DOM directly), so it won't yank the list
-  // shut on someone mid-edit.
-  const liBodyWrap=document.getElementById('li-collapsible');
-  const liChevron=document.getElementById('li-collapse-chevron');
-  // Desktop shows the table open in its own column; collapsing it there would
-  // leave the left half of the screen empty.
-  if(window.matchMedia&&window.matchMedia('(min-width:900px)').matches){
-    if(liBodyWrap){ liBodyWrap.style.display=''; if(summaryEl) summaryEl.style.display='none'; if(liChevron) liChevron.style.transform=''; }
-  }else if(liBodyWrap && liBodyWrap.style.display!=='none'){
-    liBodyWrap.style.display='none';
-    if(summaryEl) summaryEl.style.display='inline';
-    if(liChevron) liChevron.style.transform='rotate(-90deg)';
-  }
+  // Layout D: the table is always there; each category starts folded to one row
+  // (name, count, subtotal) and opens on tap.
+  const subEl=document.getElementById('work-sub');
+  if(subEl) subEl.textContent=appLang==='es'?`${liCount} partida${liCount===1?'':'s'} · ${fmt(liTotal)} antes de tu margen`:`${liCount} item${liCount===1?'':'s'} · ${fmt(liTotal)} before your markup`;
+  const liBodyWrap=document.getElementById('li-collapsible'); if(liBodyWrap) liBodyWrap.style.display='';
 
   // Variance rows — Pro only
   const sorted=(data.lineItems||[]).slice().sort((a,b)=>b.total-a.total);
@@ -4186,6 +4194,46 @@ function renderBidIntel(data,loMult,hiMult){
 // Collapses the line-item rows to a one-line summary (count + total) so a
 // contractor who just wants the bottom line isn't scrolling past 15 editable
 // rows to get to it. Starts expanded — this only adds the option to close it.
+// ── Layout D helpers ──
+// The price card: one big number (the price the client sees: your own price if
+// set, else the rounded midpoint, same rule as the proposal), the margin, the range.
+function renderPriceCard(){
+  const d=currentEstimate; if(!d) return;
+  const es=appLang==='es';
+  const ctx=window._ctx||{};
+  const price=window._finalBid||Math.round(d.totalBid||0);
+  const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+  set('pc-label',[d.projectName,(ctx.location||'').split(',')[0]].filter(Boolean).join(' · '));
+  set('pc-price',money0(price));
+  set('pc-margin',(document.getElementById('meter-pct')||{}).textContent||'—');
+  const rng=window._rangeLow!=null?`${money0(window._rangeLow)} ${es?'a':'to'} ${money0(window._rangeHigh)}`:'';
+  set('pc-sub',window._finalBid
+    ?(es?`Tu precio para el cliente · rango de Even ${rng}`:`Your price to the client · Even's range ${rng}`)
+    :(es?`Precio para el cliente · rango ${rng}`:`Price to the client · range ${rng}`));
+  const conf=document.getElementById('final-bid-confirm'); if(conf) conf.style.display='none';
+  const fb=document.getElementById('final-bid-input');
+  if(fb) fb.placeholder=es?`Déjalo vacío para usar ${money0(Math.round(d.totalBid||0))}`:`Leave blank to use ${money0(Math.round(d.totalBid||0))}`;
+}
+// "What this means" / "How it works": small link, opens a short note in place.
+function toggleInfo(id,btn){
+  const el=document.getElementById(id); if(!el) return;
+  el.hidden=!el.hidden; if(btn) btn.classList.toggle('open',!el.hidden);
+}
+function togglePriceDetails(btn){
+  const el=document.getElementById('price-details'); if(!el) return;
+  el.hidden=!el.hidden; if(btn) btn.classList.toggle('open',!el.hidden);
+}
+function toggleMoreOptions(btn){
+  const el=document.getElementById('more-options'); if(!el) return;
+  el.hidden=!el.hidden; el.style.display=el.hidden?'':'flex'; if(btn) btn.classList.toggle('open',!el.hidden);
+}
+// Client name on the proposal (it was only on the first screen before).
+function setProposalClient(v){
+  if(window._ctx) window._ctx.client=v.trim();
+  const cl=document.getElementById('est-client'); if(cl) cl.value=v;
+  liveProposalUpdate();
+}
+
 function toggleLineItems(){
   const body=document.getElementById('li-collapsible');
   const summary=document.getElementById('li-collapsed-summary');
@@ -4219,6 +4267,7 @@ function updateBidHeadline(){
     if(capEl) capEl.textContent=L==='en'?'Bid range · confidence-adjusted':'Rango de oferta · ajustado por confianza';
     if(confirmEl) confirmEl.style.display='none';
   }
+  renderPriceCard();
   // Replay the reveal animation each time the number lands, so the headline
   // figure always feels like a fresh result, not a static label.
   rangeEl.style.animation='none';
@@ -4226,31 +4275,38 @@ function updateBidHeadline(){
   rangeEl.style.animation='popIn .4s cubic-bezier(.2,.9,.3,1.3) both';
 }
 
-// Desktop panel order: summary, range, final bid, margin, labor cost, payment
-// schedule, then downloads. On a phone the cards stay where they always were.
+// Desktop: the download buttons sit in the sticky panel under the price. Phone:
+// they come after "Finish your proposal", since that's filled in first.
 function placeEstimateDownloads(){
-  const grid=document.getElementById('est-pdf-grid'), slot=document.getElementById('est-side-downloads'), home=document.getElementById('even-suggests');
+  const grid=document.getElementById('est-pdf-grid'), slot=document.getElementById('est-side-downloads'), home=document.getElementById('dl-home');
   if(!grid||!slot||!home) return;
   if(window.matchMedia('(min-width:900px)').matches){ if(grid.parentElement!==slot) slot.appendChild(grid); }
   else if(grid.parentElement===slot) home.after(grid);
 }
 if(window.matchMedia){ placeEstimateDownloads(); window.matchMedia('(min-width:900px)').addEventListener('change',placeEstimateDownloads); }
 
+// Labor, option 1 (user 2026-10-06): one line, and "How it works" opens the math.
 function renderLaborCard(data){
   const el=document.getElementById('est-labor-body');
   if(!el) return;
   const es=appLang==='es';
   const labor=(data.lineItems||[]).filter(l=>l.category==='Labor'&&(+l.total||0)>0);
-  const hrs=labor.reduce((t,l)=>t+(+l.qty||0),0), amt=labor.reduce((t,l)=>t+(+l.total||0),0);
+  const hrs=Math.round(labor.reduce((t,l)=>t+(+l.qty||0),0)*10)/10, amt=labor.reduce((t,l)=>t+(+l.total||0),0);
   const lb=data.laborBasis;
-  const basis=!lb?(es?'Estimado guardado: base no registrada':'Saved estimate: basis not recorded')
-    :lb.mode==='own'?(es?`Tu costo: $${lb.rate}/hr`:`Your cost: $${lb.rate}/hr`)
-    :(es?`Salario medio BLS × ${(+lb.mult).toFixed(1)}`:`BLS median wage × ${(+lb.mult).toFixed(1)}`)+(Math.abs(lb.mult-LABOR_MULT_DEFAULT)<0.001?(es?' (valor de Even)':' (Even default)'):'');
-  const pct=data.subtotal>0?Math.round(amt/data.subtotal*100):0;
-  el.innerHTML=`<div class="tot-row"><span class="tot-lbl">${es?'Base':'Basis'}</span><span class="tot-val" style="font-size:12px">${escapeHtml(basis)}</span></div>
-    <div class="tot-row"><span class="tot-lbl">${es?'Horas':'Hours'}</span><span class="tot-val">${Math.round(hrs*10)/10}</span></div>
-    <div class="tot-row"><span class="tot-lbl">${es?'Mano de obra':'Labor'} (${pct}% ${es?'de costos directos':'of direct costs'})</span><span class="tot-val">${fmt(amt)}</span></div>
-    <div style="font-size:10px;color:var(--muted);margin-top:6px;font-family:'DM Mono',monospace;line-height:1.5">${es?'Cambia el multiplicador o tu tarifa en la pantalla de alcance antes del próximo estimado.':'Change the multiplier or your rate on the scope screen before your next estimate.'}</div>`;
+  const isDefault=lb&&lb.mode!=='own'&&Math.abs(lb.mult-LABOR_MULT_DEFAULT)<0.001;
+  const basis=!lb?(es?'base no registrada':'basis not recorded')
+    :lb.mode==='own'?(es?`tu costo $${lb.rate}/h`:`your cost $${lb.rate}/hr`)
+    :(es?`salario BLS × ${(+lb.mult).toFixed(1)}`:`BLS wage × ${(+lb.mult).toFixed(1)}`);
+  const ex=labor.find(l=>l.wage&&l.priced==='bls x multiplier');
+  const example=ex&&lb&&lb.mode!=='own'?(es?`Ejemplo: $${(+ex.wage).toFixed(2)}/h × ${(+lb.mult).toFixed(1)} = $${(+ex.unitCost).toFixed(2)}/h.`:`Example: $${(+ex.wage).toFixed(2)}/hr × ${(+lb.mult).toFixed(1)} = $${(+ex.unitCost).toFixed(2)}/hr.`):'';
+  const how=lb&&lb.mode==='own'
+    ?(es?'Usamos tu costo por hora en cada partida de mano de obra. Tus gastos y ganancia se suman una sola vez, encima. Cámbialo en la primera pantalla, en Tu configuración.'
+        :'We use your hourly cost on every labor line. Your overhead and profit are added once, on top. Change it on the first screen under Your settings.')
+    :(es?`BLS es la encuesta de salarios del gobierno de EE.UU. para trabajadores del área de Miami. Tomamos el salario medio por hora de cada oficio y lo multiplicamos por ${(+(lb?lb.mult:LABOR_MULT_DEFAULT)).toFixed(1)} para cubrir impuestos de nómina, seguro, herramientas, camioneta y tiempo entre trabajos. ${example} Tus gastos y ganancia se suman una sola vez, encima.${isDefault?' El 2.2 es el valor de Even: mantiene los precios donde estaban y todavía no se basa en datos de contratistas locales.':''} Cámbialo (o pon tu propio costo por hora, Pro) en la primera pantalla, en Tu configuración.`
+        :`BLS is the U.S. government's wage survey for Miami-area workers. We take each trade's median hourly wage and multiply it by ${(+(lb?lb.mult:LABOR_MULT_DEFAULT)).toFixed(1)} to cover payroll taxes, insurance, tools, the truck and time between jobs. ${example} Your overhead and profit are added once, on top.${isDefault?" 2.2 is Even's default: it keeps prices where they were and isn't based on local contractor data yet.":''} Change it (or set your own hourly cost, Pro) on the first screen under Your settings.`);
+  el.innerHTML=`<div class="d-labor-line"><span class="d-labor-k">${es?'Mano de obra':'Labor'}</span><span>${escapeHtml(basis)} · ${hrs} ${es?'h':'hrs'} · <b>${fmt(amt)}</b></span></div>
+    <div class="d-info-wrap"><button class="d-info-link" onclick="toggleInfo('info-labor',this)">${es?'ⓘ Cómo funciona':'ⓘ How it works'}</button>
+    <div class="d-info" id="info-labor" hidden>${escapeHtml(how)}</div></div>`;
 }
 
 function renderTotals(data){
@@ -4283,6 +4339,8 @@ function renderTotals(data){
   if(pct>=22){fill.style.background='var(--green)';pctEl.style.color='var(--green)';verdict.style.color='var(--green)';verdict.textContent=L==='en'?'Strong — bid with confidence':'Fuerte — presenta con confianza'}
   else if(pct>=15){fill.style.background='var(--gold)';pctEl.style.color='var(--gold)';verdict.style.color='var(--gold)';verdict.textContent=L==='en'?'Acceptable — watch costs closely':'Aceptable — vigila los costos'}
   else{fill.style.background='var(--red)';pctEl.style.color='var(--red)';verdict.style.color='var(--red)';verdict.textContent=L==='en'?'Thin — consider adjusting margin':'Bajo — considera ajustar el margen'}
+  renderPriceCard();
+  const pm=document.getElementById('pc-margin'); if(pm) pm.style.color=pctEl.style.color;
 }
 
 // ══════════════════════════
@@ -5400,6 +5458,7 @@ function populateProposalAssumptions(){
   const b=getBiz();
   [['biz-company','company'],['biz-phone','phone'],['biz-email','email'],['biz-license','license']].forEach(([id,k])=>{const el=document.getElementById(id); if(el&&!el.value) el.value=b[k]||'';});
   const ja=document.getElementById('prop-job-address'); if(ja&&!ja.value) ja.value=currentEstimate?.jobAddress||window._ctx?.location||'';
+  const pc=document.getElementById('prop-client'); if(pc) pc.value=window._ctx?.client||'';
   const SHOW = 4;
   all.slice(0, SHOW).forEach(a=>_addAssumptionRow(a));
   if(all.length > SHOW){
