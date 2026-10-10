@@ -4610,10 +4610,10 @@ function renderProposalPreview(){
         </div>
         <div class="prop-meta"><strong>${e(P.title)}</strong>${e(Lb.number)} ${e(P.number)}<br>${e(Lb.date)}: ${e(P.date)}</div>
       </div>
-      <div style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px">
-        ${P.client?`<div><b>${e(Lb.prepared)}:</b> ${e(P.client)}</div>`:''}
-        ${P.jobAddress?`<div><b>${e(Lb.job)}:</b> ${e(P.jobAddress)}${P.project?` · ${e(P.project)}`:''}</div>`:''}
-      </div>
+      ${(P.client||P.jobAddress)?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:#f6f3ec;border-radius:6px;padding:9px 12px;margin-bottom:12px;font-size:12px;color:#333">
+        <div>${P.client?`<div style="font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:#888">${e(Lb.prepared)}</div><b>${e(P.client)}</b>`:''}</div>
+        <div>${P.jobAddress?`<div style="font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:#888">${e(Lb.job)}</div>${e(P.jobAddress)}${P.project?` · ${e(P.project)}`:''}`:''}</div>
+      </div>`:''}
       ${P.note?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${e(P.note)}</p>`:''}
       <div class="prop-sec">${e(Lb.scope)}</div>
       <p style="font-size:12px;color:#666;line-height:1.6;margin-bottom:8px">${e(P.scopeIntro)}</p>
@@ -4623,7 +4623,7 @@ function renderProposalPreview(){
       ${P.assumptions.length?`<div class="prop-sec">${e(Lb.assumptions)}</div>${box(P.assumptions)}`:''}
       <div class="prop-total-bar"><span class="pl">${e(P.priceLabel)}</span><span class="pv">${e(P.priceText)}</span></div>
       <div class="prop-sec">${e(Lb.payment)}</div>
-      <p style="font-size:11px;color:#666;margin-top:2px">${e(P.payment)}</p>
+      ${(()=>{const sp=paymentSplits(P.payment,P.price); return sp?`<div style="display:grid;grid-template-columns:repeat(${sp.length},minmax(0,1fr));gap:6px;margin-top:4px">${sp.map(r=>`<div style="border:1px solid #e3ddd0;border-radius:6px;padding:7px;text-align:center"><b style="display:block;font-size:13px;color:#222">${fmt(r.amount)}</b><span style="font-size:10px;color:#888">${r.pct}% ${e(r.label)}</span></div>`).join('')}</div>`:`<p style="font-size:11px;color:#666;margin-top:2px">${e(P.payment)}</p>`;})()}
       <p style="font-size:11px;color:#666;margin-top:4px">${e(P.validity)}</p>
       <p style="font-size:10px;color:#999;margin-top:10px">${e(Lb.accept)}</p>
       <div class="prop-sig">
@@ -4703,6 +4703,17 @@ async function downloadProposalPDF(){
   }
 }
 // Draws the client proposal PDF from buildClientProposal (same content as the preview).
+// Payment schedule in dollars (polish round 5): "30% ... · 40% ... · 30% ..."
+// becomes [{pct,label,amount}], amounts adding up exactly to the price.
+function paymentSplits(text,price){
+  const parts=String(text||'').split('·').map(x=>x.trim().replace(/\.$/,'')).filter(Boolean);
+  const rows=parts.map(x=>{const m=x.match(/^(\d+(?:\.\d+)?)%\s*(.*)$/);return m?{pct:+m[1],label:m[2].trim()}:null;});
+  if(!rows.length||rows.some(r=>!r)||Math.abs(rows.reduce((t,r)=>t+r.pct,0)-100)>0.01) return null;
+  let left=Math.round(+price||0);
+  rows.forEach((r,i)=>{ r.amount=i===rows.length-1?left:Math.round((+price||0)*r.pct/100); left-=i===rows.length-1?0:r.amount; });
+  return rows;
+}
+function initialsOf(name){ return String(name||'').split(/\s+/).filter(w=>/^[A-Za-z0-9]/.test(w)&&!/^(llc|inc|corp|co|ltd)\.?$/i.test(w)).slice(0,2).map(w=>w[0].toUpperCase()).join(''); }
 async function buildClientProposalPDF(jsPDF){
   const P=buildClientProposal(currentEstimate,window._ctx,appLang);
   window._lastProposal=P;
@@ -4719,6 +4730,11 @@ async function buildClientProposalPDF(jsPDF){
   if(logo){
     let w=logo.w,h=logo.h; const sc=Math.min(48/h,150/w,1); w*=sc; h*=sc;
     doc.addImage(logo.dataUri,'PNG',M,(78-h)/2,w,h); hx=M+w+14;
+  }else if(initialsOf(P.company)){
+    // No logo yet: the company's initials in its accent color.
+    doc.setFillColor(...accent);doc.roundedRect(M,17,44,44,7,7,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(255,255,255);
+    doc.text(initialsOf(P.company),M+22,45,{align:'center'}); hx=M+58;
   }
   doc.setFont('helvetica','bold');doc.setFontSize(15);doc.setTextColor(26,26,24);
   doc.text(P.company||P.title,hx,32);
@@ -4731,11 +4747,21 @@ async function buildClientProposalPDF(jsPDF){
   doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(110,110,110);
   doc.text(`${Lb.number} ${P.number}`,W-M,44,{align:'right'});
   doc.text(`${Lb.date}: ${P.date}`,W-M,56,{align:'right'});
-  y=104;
-  doc.setFontSize(9.5);doc.setTextColor(60,60,60);
-  if(P.client){ doc.setFont('helvetica','bold');doc.text(`${Lb.prepared}:`,M,y);doc.setFont('helvetica','normal');doc.text(P.client,M+90,y);y+=14; }
-  if(P.jobAddress){ doc.setFont('helvetica','bold');doc.text(`${Lb.job}:`,M,y);doc.setFont('helvetica','normal');doc.splitTextToSize(P.jobAddress+(P.project?'  ·  '+P.project:''),W-M*2-90).forEach(l=>{doc.text(l,M+90,y);y+=12;});y+=2; }
-  y+=6;
+  y=98;
+  // "Prepared for" and the job address side by side in a tinted box.
+  if(P.client||P.jobAddress){
+    const half=(W-M*2)/2, addr=doc.splitTextToSize(P.jobAddress+(P.project?'  ·  '+P.project:''),half-24);
+    const h=Math.max(40,28+addr.length*11);
+    doc.setFillColor(246,243,236);doc.roundedRect(M,y,W-M*2,h,5,5,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(140,140,140);
+    if(P.client) doc.text(Lb.prepared.toUpperCase(),M+12,y+14);
+    if(P.jobAddress) doc.text(Lb.job.toUpperCase(),M+half+12,y+14);
+    doc.setFontSize(10.5);doc.setTextColor(30,30,30);
+    if(P.client) doc.text(P.client,M+12,y+28);
+    doc.setFont('helvetica','normal');doc.setFontSize(9.5);
+    if(P.jobAddress) addr.forEach((l,n)=>doc.text(l,M+half+12,y+28+n*11));
+    y+=h+16;
+  }else y+=8;
   if(P.note){ doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(90,90,90);doc.splitTextToSize(P.note,W-M*2).forEach(l=>{need(12);doc.text(l,M,y);y+=12;});y+=6; }
   const section=t=>{ need(26); doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...accent.map(c=>Math.round(c*0.7)));doc.text(t.toUpperCase(),M,y);y+=4;doc.setDrawColor(226,221,214);doc.line(M,y,W-M,y);y+=12; };
   section(Lb.scope);
@@ -4753,16 +4779,36 @@ async function buildClientProposalPDF(jsPDF){
     arr.forEach(x=>doc.splitTextToSize('• '+x,W-M*2-10).forEach((l,n)=>{need(11);doc.text(l,M+(n?14:6),y);y+=10.5;})); y+=6; };
   bullets(Lb.excluded,P.exclusions);
   bullets(Lb.assumptions,P.assumptions);
-  need(60);
-  doc.setFillColor(26,26,24);doc.rect(M,y,W-M*2,38,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(255,255,255);
-  doc.text(P.priceLabel.toUpperCase(),M+12,y+24);
-  doc.setFontSize(15);doc.setTextColor(...accent);doc.text(P.priceText,W-M-12,y+25,{align:'right'});
-  y+=54;
+  need(70);
+  // The price stands out: dark band, the number large in the accent color.
+  doc.setFillColor(26,26,24);doc.roundedRect(M,y,W-M*2,52,6,6,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(190,190,190);
+  doc.text(P.priceLabel.toUpperCase(),M+14,y+22);
+  doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(160,160,160);
+  doc.text(P.validity,M+14,y+36,{maxWidth:(W-M*2)/2});
+  doc.setFont('helvetica','bold');doc.setFontSize(24);doc.setTextColor(...accent);doc.text(P.priceText,W-M-14,y+34,{align:'right'});
+  y+=68;
   section(Lb.payment);
-  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(70,70,70);
-  doc.splitTextToSize(P.payment,W-M*2).forEach(l=>{need(12);doc.text(l,M,y);y+=12;});
-  doc.splitTextToSize(P.validity,W-M*2).forEach(l=>{need(12);doc.text(l,M,y);y+=12;});
+  const splits=paymentSplits(P.payment,P.price);
+  if(splits){
+    // One box per payment, in dollars.
+    const gap=8, bw=(W-M*2-gap*(splits.length-1))/splits.length;
+    const lines=splits.map(r=>doc.splitTextToSize(`${r.pct}% ${r.label}`,bw-14));
+    const bh=26+Math.max(...lines.map(l=>l.length))*10;
+    need(bh+8);
+    splits.forEach((r,i)=>{
+      const x=M+i*(bw+gap);
+      doc.setDrawColor(227,221,208);doc.roundedRect(x,y,bw,bh,5,5,'S');
+      doc.setFont('helvetica','bold');doc.setFontSize(11.5);doc.setTextColor(30,30,30);doc.text(fmt(r.amount),x+bw/2,y+17,{align:'center'});
+      doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(120,120,120);
+      lines[i].forEach((l,n)=>doc.text(l,x+bw/2,y+29+n*10,{align:'center'}));
+    });
+    y+=bh+12;
+  }else{
+    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(70,70,70);
+    doc.splitTextToSize(P.payment,W-M*2).forEach(l=>{need(12);doc.text(l,M,y);y+=12;});
+    doc.splitTextToSize(P.validity,W-M*2).forEach(l=>{need(12);doc.text(l,M,y);y+=12;});
+  }
   y+=6; doc.setFontSize(8);doc.setTextColor(140,140,140); need(12); doc.text(Lb.accept,M,y); y+=34;
   need(40);
   doc.setDrawColor(190,180,170);doc.line(M,y,M+200,y);doc.line(W-M-200,y,W-M,y);
