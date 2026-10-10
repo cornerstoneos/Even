@@ -22,7 +22,8 @@ app.use(cors({
   exposedHeaders: ['X-Even-Cache', 'X-Even-Cache-Key'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Even-Cache', 'X-Even-Device']
 }));
-const { buildRequest } = require('./lib/guard');
+const { buildRequest, MAIN: mainModel, LIGHT: lightModel } = require('./lib/guard');
+const guardModels = { MAIN: mainModel, LIGHT: lightModel };
 const { makeUsage, LIMITS } = require('./lib/usage');
 const STARTED_AT = new Date().toISOString();
 
@@ -279,6 +280,8 @@ app.use(express.json({ limit: '25mb' }));
 app.get('/health', (req, res) => {
   res.json({
     ok: true,
+    // Which models are live right now (set on Railway: EVEN_MAIN_MODEL / EVEN_LIGHT_MODEL).
+    models: { main: guardModels.MAIN(), light: guardModels.LIGHT() },
     hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
     hasSupabaseKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
     hasStripeSecret: !!process.env.STRIPE_WEBHOOK_SECRET,
@@ -400,7 +403,7 @@ app.get('/api/market-data', async (req, res) => {
 });
 
 // ─── Scope cache: same job in = same scope out ───────────────────────────────
-// The model on this route (claude-sonnet-5) does not accept a temperature setting,
+// The models on this route (see lib/guard.js) do not accept a temperature setting,
 // so two identical requests can still come back with different scopes. The client
 // marks the scope-reading calls (questions, estimate scope) with X-Even-Cache: 1;
 // an identical request body is then answered from the first result instead of a
@@ -599,7 +602,7 @@ app.post('/api/estimate', async (req, res) => {
           'Content-Type': 'application/json',
           'x-api-key': process.env.ANTHROPIC_API_KEY,
           'anthropic-version': '2023-06-01',
-          'anthropic-beta': 'prompt-caching-2024-07-31'
+          'anthropic-beta': ['prompt-caching-2024-07-31', built.body.fallbacks ? 'server-side-fallback-2026-07-01' : null].filter(Boolean).join(',')
         },
         body: JSON.stringify(built.body)
       });
@@ -607,8 +610,8 @@ app.post('/api/estimate', async (req, res) => {
       // Errors always come back as a normal JSON body — read + forward it (never stream an error)
       if (!response.ok) {
         const data = await response.json().catch(() => ({ error: { message: 'HTTP ' + response.status } }));
-        console.error(`Anthropic ${response.status} for model=${req.body?.model}:`, JSON.stringify(data));
-        if (response.status >= 500 || response.status === 429) logError('anthropic_proxy', `HTTP ${response.status}: ${JSON.stringify(data).slice(0, 500)}`, { model: req.body?.model });
+        console.error(`Anthropic ${response.status} for model=${built.body.model}:`, JSON.stringify(data));
+        if (response.status >= 500 || response.status === 429) logError('anthropic_proxy', `HTTP ${response.status}: ${JSON.stringify(data).slice(0, 500)}`, { model: built.body.model });
         return res.status(response.status).json(data);
       }
 
@@ -650,7 +653,7 @@ app.post('/api/estimate', async (req, res) => {
           if (cacheKey && stopReason === 'end_turn') { scopeCacheSet(cacheKey, fullText); finishInflight(fullText); scopeDbPut(cacheKey, fullText); onFresh(); }
         } catch (streamErr) {
           console.error('Anthropic stream interrupted:', streamErr.message);
-          logError('anthropic_proxy', streamErr.message, { stage: 'stream', model: req.body?.model });
+          logError('anthropic_proxy', streamErr.message, { stage: 'stream', model: built.body.model });
         }
         return res.end();
       }
@@ -669,7 +672,7 @@ app.post('/api/estimate', async (req, res) => {
       if (attempt < MAX_TRIES) await new Promise(r => setTimeout(r, 1500 * attempt));
     }
   }
-  logError('anthropic_proxy', (lastErr && lastErr.message) || 'Upstream fetch failed after retries', { stage: 'exhausted', model: req.body?.model });
+  logError('anthropic_proxy', (lastErr && lastErr.message) || 'Upstream fetch failed after retries', { stage: 'exhausted', model: built.body.model });
   res.status(502).json({ error: { message: (lastErr && lastErr.message) || 'Upstream fetch failed after retries' } });
   } finally {
     // Anything that ended without a cacheable answer (error, cut-off) releases waiters.

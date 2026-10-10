@@ -2386,10 +2386,19 @@ function applyCacheBreakpoint(body,messages,useCache){
   body.messages=[{role:'user',content:cached},...messages.slice(1)];
 }
 
+// The model declined (a safety check fired). Rare on construction text, and the
+// server already asked Anthropic to retry on its fallback model, so a refusal here
+// means both declined: say so plainly instead of showing a blank error.
+function refusalError(){
+  const err=new Error(appLang==='es'
+    ?'No pudimos generar este estimado. Cambia un poco la descripción del trabajo e intenta de nuevo.'
+    :"We couldn't build this estimate. Reword the job description a little and try again.");
+  err.code='refusal'; err.noRetry=true; return err;
+}
 async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sameInSameOut=false,kind='estimate'){
-  // Sonnet 5: adaptive thinking is on by default — the model reasons through the
-  // math before writing. max_tokens caps thinking + response together, so callers
-  // pass larger budgets than the visible output alone would need.
+  // The server picks the model (lib/guard.js). It reasons before writing, and
+  // max_tokens caps thinking + response together, so callers pass larger budgets
+  // than the visible output alone would need.
   const body={even_kind:kind,model:'claude-sonnet-5',max_tokens:maxTokens,messages};
   if(effort) body.output_config={effort};
   applyCacheBreakpoint(body,messages,useCache);
@@ -2425,6 +2434,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sam
       // Same guard as the streaming path: a body cut off at the token ceiling can
       // still parse while missing line items. Don't hand a partial bid back.
       if(d.stop_reason==='max_tokens') throw new Error('truncated_output');
+      if(d.stop_reason==='refusal') throw refusalError();
       return d.content.map(b=>b.text||'').join('');
     }catch(e){
       // Truncation is deterministic — retrying the same request reproduces it.
@@ -2472,6 +2482,7 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
   if(!r.body||!ctype.includes('text/event-stream')){
     clearTimeout(tid);
     const d=await r.json().catch(()=>null);
+    if(d?.stop_reason==='refusal') throw refusalError();
     const full=Array.isArray(d?.content)?d.content.map(b=>b.text||'').join(''):'';
     if(full&&onDelta) onDelta(full,full);
     if(!full) throw new Error('Empty response from estimate API');
@@ -2512,6 +2523,7 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
     }
   }
   clearTimeout(tid);
+  if(stopReason==='refusal') throw refusalError();
   if(!full) throw new Error('Empty response from estimate API');
   // A truncated estimate is the dangerous failure: the JSON can still parse while
   // silently missing line items, so it looks like a finished bid. Thinking now

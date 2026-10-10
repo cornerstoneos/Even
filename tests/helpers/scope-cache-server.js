@@ -18,6 +18,11 @@ globalThis.fetch = async (url, opts = {}) => {
   const json = (b, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { 'content-type': 'application/json' } });
   if (url.includes('api.anthropic.com')) {
     log('anthropic');
+    { const b = JSON.parse(opts.body); log('req ' + JSON.stringify({ model: b.model, beta: (opts.headers || {})['anthropic-beta'], fallbacks: b.fallbacks || null, thinking: b.thinking || null, effort: b.output_config?.effort || null })); }
+    if (opts.body.includes('REFUSE_ME')) {
+      if (JSON.parse(opts.body).stream) return new Response(`data: {"type":"message_delta","delta":{"stop_reason":"refusal"}}\n\n`, { status: 200, headers: { 'content-type': 'text/event-stream' } });
+      return json({ content: [], stop_reason: 'refusal', stop_details: { type: 'refusal', category: null } });
+    }
     const n = fs.readFileSync(LOG, 'utf8').split('\n').filter(x => x === 'anthropic').length;
     const text = `{"projectName":"run${n}","tradeBreakdown":[{"trade":"Plumbing","icon":"x","items":[]}],"questions":[],"lineItems":[{"type":"other","category":"Labor","description":"Mock line","qty":1,"unit":"ea","unitCost":100}]}`;
     if (JSON.parse(opts.body).stream && opts.body.includes('CUT_OFF_STREAM')) {
