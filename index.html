@@ -686,6 +686,22 @@ body.has-gopro .topbar-brand{display:none}
 /* Desktop estimate screen: full width, two columns. Only the estimate screen
    drops the 1.3x zoom; every other screen keeps the scaled phone column. */
 .est-grid,.est-main,.est-side,.est-main2{display:contents}
+/* ── Dashboard (polish round 7) ── */
+/* Bug found 2026-10-10: the dashboard lives outside .app, whose min-height:100vh
+   pushed it below a full screen of empty space. */
+body:has(#s-dashboard.active) .app{min-height:0}
+#s-dashboard{max-width:480px;margin:0 auto}
+@media(min-width:900px){#s-dashboard{max-width:600px;zoom:1.3}}
+.dash-metrics.d-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+.d-seg{display:flex;gap:6px}.d-seg button{padding:8px 14px;border-radius:20px;font-size:13px;background:var(--panel);color:var(--muted);border:1px solid var(--rim);cursor:pointer;font-family:'DM Sans',sans-serif}
+.d-seg button.on{background:var(--white);color:#000;font-weight:700;border-color:var(--white)}
+.d-set-list{padding:2px 16px 4px}
+.d-set-list .d-row-link.d-fold{margin-top:0;padding:14px 2px;font-size:15px;font-weight:600;color:var(--white2)}
+.d-set-list .d-row-link.d-fold:first-child{border-top:none}
+.d-tabs{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-around;align-items:center;background:var(--bg);border-top:1px solid var(--rim);padding:8px 0 14px;z-index:50}
+.d-tabs button{background:none;border:none;color:var(--muted);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.d-tabs button.on{color:var(--text-accent);font-weight:700}
+.d-tabs .d-tab-plus{width:54px;height:54px;border-radius:50%;background:linear-gradient(#ffcd45,#ffb300);color:#000;font-size:28px;font-weight:800;justify-content:center;box-shadow:0 5px 0 #b37d00;margin-top:-26px}
 /* ── Sign-up / sign-in + pricing (polish round 6) ── */
 .d-auth-title{font-size:19px;font-weight:800;color:var(--white);line-height:1.25;margin-bottom:4px}
 .d-auth-sub{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.45}
@@ -5456,39 +5472,35 @@ async function submitDataTrade(){
 </div>
 <!-- Dashboard Screen -->
 <div class="screen" id="s-dashboard">
-  <div class="sbody" style="padding-top:20px">
+  <div class="sbody" style="padding-top:20px;padding-bottom:110px">
 
     <!-- Header -->
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
       <div>
-        <div style="font-size:19px;font-weight:700;color:var(--white);line-height:1">Command Center</div>
+        <div style="font-size:24px;font-weight:800;color:var(--white);line-height:1" data-es="Tus trabajos">Your jobs</div>
         <div style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px;letter-spacing:1px">✦ EVEN PRO</div>
       </div>
       <button onclick="navigate('input')" style="background:var(--gold);border:none;color:#000;padding:9px 15px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px">+ NEW JOB</button>
     </div>
 
     <!-- Metrics strip -->
-    <div class="dash-metrics">
+    <div class="dash-metrics d-stats">
       <div class="dash-metric">
-        <div class="dash-metric-label">Pipeline</div>
-        <div class="dash-metric-val" id="dm-pipeline">—</div>
-        <div class="dash-metric-sub" id="dm-pipeline-sub">open estimates</div>
-      </div>
-      <div class="dash-metric">
-        <div class="dash-metric-label">Won This Month</div>
+        <div class="dash-metric-label" data-es="Ganado este mes">Won this month</div>
         <div class="dash-metric-val" id="dm-won">—</div>
         <div class="dash-metric-sub" id="dm-won-sub">—</div>
       </div>
       <div class="dash-metric">
-        <div class="dash-metric-label">Active Jobs</div>
-        <div class="dash-metric-val" id="dm-active">—</div>
-        <div class="dash-metric-sub">in progress</div>
+        <div class="dash-metric-label" data-es="Margen promedio">Avg margin</div>
+        <div class="dash-metric-val" id="dm-margin">—</div>
+        <div class="dash-metric-sub" data-es="en todos los trabajos">across all jobs</div>
       </div>
       <div class="dash-metric">
-        <div class="dash-metric-label">Avg Margin</div>
-        <div class="dash-metric-val" id="dm-margin">—</div>
-        <div class="dash-metric-sub">across all jobs</div>
+        <div class="dash-metric-label" data-es="Ofertas abiertas">Open bids</div>
+        <div class="dash-metric-val" id="dm-pipeline">—</div>
+        <div class="dash-metric-sub" id="dm-pipeline-sub">—</div>
       </div>
+      <div class="dash-metric" style="display:none"><div id="dm-active"></div></div>
     </div>
 
     <!-- AI Insights -->
@@ -5499,9 +5511,13 @@ async function submitDataTrade(){
       <div id="dash-insights"></div>
     </div>
 
-    <!-- Jobs header -->
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace">All Jobs</div>
+    <!-- Jobs: Open / Won / All -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px">
+      <div class="d-seg" id="dash-filter">
+        <button class="on" onclick="filterJobs('open',this)" data-es="Abiertos">Open</button>
+        <button onclick="filterJobs('won',this)" data-es="Ganados">Won</button>
+        <button onclick="filterJobs('all',this)" data-es="Todos">All</button>
+      </div>
       <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace" id="dash-job-count"></div>
     </div>
 
@@ -5509,14 +5525,16 @@ async function submitDataTrade(){
     <div id="dashboard-list">
       <div id="dashboard-empty" style="text-align:center;padding:40px 20px;color:var(--muted);font-size:13px">
         <i data-lucide="folder" style="width:32px;height:32px;stroke:var(--muted);display:block;margin:0 auto 12px"></i>
-        No saved jobs yet. Run your first estimate.
+        <span data-es="Todavía no hay trabajos guardados. Corre tu primer estimado.">No saved jobs yet. Run your first estimate.</span>
       </div>
     </div>
 
-    <!-- Settings -->
-    <div style="margin-top:28px">
-      <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:10px">Settings</div>
-      <div class="gc">
+    <!-- Settings (polish round 7): four rows that open in place. -->
+    <div style="margin-top:24px" id="dash-settings">
+      <div class="d-k" style="margin:0 2px 6px" data-es="Configuración">Settings</div>
+      <div class="gc d-set-list">
+        <button class="d-row-link d-fold" onclick="toggleFold('set-biz',this)"><span><span data-es="Tu negocio">Your business</span><span class="d-fold-sum" data-es="Logo, color, licencia, contacto">Logo, color, license, contact</span></span><span class="d-chev">›</span></button>
+        <div id="set-biz" class="d-fold-body" hidden><div class="gc">
         <div class="gc-head">
           <div class="gc-title"><i data-lucide="building-2" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>Company Logo</div>
           <div class="gc-tag">Shows on proposals</div>
@@ -5550,11 +5568,10 @@ async function submitDataTrade(){
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- My Suppliers -->
-    <div style="margin-top:10px">
+      </div></div>
+        <button class="d-row-link d-fold" onclick="openYourSettings()"><span><span data-es="Mano de obra y márgenes">Labor and margins</span><span class="d-fold-sum" id="dash-settings-sum"></span></span><span class="d-chev">›</span></button>
+        <button class="d-row-link d-fold" onclick="toggleFold('set-sup',this)"><span><span data-es="Mis proveedores">My suppliers</span><span class="d-fold-sum" data-es="Tus propios precios de materiales">Your own material prices</span></span><span class="d-chev">›</span></button>
+        <div id="set-sup" class="d-fold-body" hidden><div style="margin-top:10px">
       <div class="gc">
         <div class="gc-head">
           <div class="gc-title"><i data-lucide="package" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>My Suppliers</div>
@@ -5573,12 +5590,9 @@ async function submitDataTrade(){
           <div id="supplier-scan-status" style="font-size:11px;color:var(--muted);margin-top:8px;display:none"></div>
         </div>
       </div>
-    </div>
-
-    <!-- My Subs — mirrors My Suppliers. Subbed labor is usually the largest cost on
-         a job, and without this the model falls back to a generic "subs bill 15-40%
-         over direct labor" guess on exactly the biggest number in the estimate. -->
-    <div style="margin-top:10px">
+    </div></div>
+        <button class="d-row-link d-fold" onclick="toggleFold('set-subs',this)"><span><span data-es="Mis subcontratistas">My subs</span><span class="d-fold-sum" data-es="Tus subcontratistas y sus tarifas">Your subs and their rates</span></span><span class="d-chev">›</span></button>
+        <div id="set-subs" class="d-fold-body" hidden><div style="margin-top:10px">
       <div class="gc">
         <div class="gc-head">
           <div class="gc-title"><i data-lucide="hard-hat" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>My Subs</div>
@@ -5592,7 +5606,16 @@ async function submitDataTrade(){
           </div>
         </div>
       </div>
+    </div></div>
+      </div>
     </div>
+
+    <div class="d-tabs">
+      <button class="on" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span>▤</span><span data-es="Trabajos">Jobs</span></button>
+      <button class="d-tab-plus" onclick="navigate('input')" aria-label="New estimate">+</button>
+      <button onclick="document.getElementById('dash-settings').scrollIntoView({behavior:'smooth'})"><span>⚙</span><span data-es="Configuración">Settings</span></button>
+    </div>
+
 
   </div>
 </div>
@@ -5603,6 +5626,26 @@ async function submitDataTrade(){
 // ══════════════════════════
 
 const STATUS_LABELS={draft:'Draft',sent:'Sent',won:'Won',active:'Active',complete:'Complete',lost:'Lost'};
+const STATUS_LABELS_ES={draft:'Borrador',sent:'Enviado',won:'Ganado',active:'En curso',complete:'Terminado',lost:'Perdido'};
+function statusLabel(k){ return (appLang==='es'?STATUS_LABELS_ES:STATUS_LABELS)[k]||k; }
+// Dashboard (polish round 7): Open / Won / All, settings as rows.
+function filterJobs(which,btn){
+  window._jobFilter=which;
+  document.querySelectorAll('#dash-filter button').forEach(b=>b.classList.toggle('on',b===btn));
+  const open=['draft','sent','active'];
+  document.querySelectorAll('#dashboard-list .job-card').forEach(c=>{
+    const st=c.dataset.st||'draft';
+    c.style.display=which==='all'||(which==='won'?['won','complete'].includes(st):open.includes(st))?'':'none';
+  });
+}
+function openYourSettings(){
+  navigate('input');
+  setTimeout(()=>{ const f=document.getElementById('your-settings'); if(f&&f.hidden){ const btn=f.previousElementSibling; toggleFold('your-settings',btn); } f&&f.scrollIntoView({behavior:'smooth',block:'start'}); },80);
+}
+function updateDashSettingsSummary(){
+  const el=document.getElementById('dash-settings-sum'), src=document.getElementById('settings-summary');
+  if(el&&src) el.textContent=src.textContent;
+}
 const STATUS_CLASS={draft:'status-draft',sent:'status-sent',won:'status-won',active:'status-active',complete:'status-complete',lost:'status-lost'};
 
 async function saveEstimateToCloud(data){
@@ -6205,13 +6248,15 @@ async function loadDashboard(){
     const avgMargin=margins.length?Math.round(margins.reduce((s,m)=>s+m,0)/margins.length):null;
 
     const dm=id=>document.getElementById(id);
-    if(dm('dm-pipeline')) dm('dm-pipeline').textContent=pipeline>0?fmtK(pipeline):'$0';
-    if(dm('dm-pipeline-sub')) dm('dm-pipeline-sub').textContent=openEsts.length+' open';
+    const esD=appLang==='es';
+    if(dm('dm-pipeline')) dm('dm-pipeline').textContent=String(openEsts.length);
+    if(dm('dm-pipeline-sub')) dm('dm-pipeline-sub').textContent=(pipeline>0?fmtK(pipeline):'$0')+(esD?' en ofertas':' in bids');
     if(dm('dm-won')) dm('dm-won').textContent=wonVal>0?fmtK(wonVal):'$0';
-    if(dm('dm-won-sub')) dm('dm-won-sub').textContent=wonThisMo.length+' closed';
+    if(dm('dm-won-sub')) dm('dm-won-sub').textContent=esD?`${wonThisMo.length} cerrado${wonThisMo.length===1?'':'s'}`:`${wonThisMo.length} closed`;
     if(dm('dm-active')) dm('dm-active').textContent=activeCount||'0';
     if(dm('dm-margin')) dm('dm-margin').textContent=avgMargin?avgMargin+'%':'—';
-    if(dm('dash-job-count')) dm('dash-job-count').textContent=estimates.length+' total';
+    if(dm('dash-job-count')) dm('dash-job-count').textContent=estimates.length+(esD?' en total':' total');
+    updateDashSettingsSummary();
 
     if(!estimates.length){
       if(listEl) listEl.innerHTML='';
@@ -6241,6 +6286,7 @@ async function loadDashboard(){
       </div>`;
     }
 
+    setTimeout(()=>{ const b=[...document.querySelectorAll('#dash-filter button')].find(x=>x.getAttribute('onclick').includes(`'${window._jobFilter||'open'}'`)); if(b) filterJobs(window._jobFilter||'open',b); },0);
     if(listEl) listEl.innerHTML=calBanner+estimates.map(est=>{
       const sk=est.status||'draft';
       const label=est.project_label||est.location||'Untitled Job';
@@ -6272,8 +6318,8 @@ async function loadDashboard(){
       // A job that's won/active/complete has real costs behind it by now — that's the
       // moment logging actuals is both possible and worth asking for.
       const needsActuals=isPro&&!actualTotal&&['won','active','complete'].includes(sk);
-      const statusOpts=Object.entries(STATUS_LABELS).map(([k,v])=>`<option value="${k}"${k===sk?' selected':''}>${v}</option>`).join('');
-      return `<div class="job-card" id="jc-${est.id}">
+      const statusOpts=Object.keys(STATUS_LABELS).map(k=>`<option value="${k}"${k===sk?' selected':''}>${statusLabel(k)}</option>`).join('');
+      return `<div class="job-card" id="jc-${est.id}" data-st="${sk}">
         <div class="job-card-top" onclick="loadSavedEstimate('${est.id}')">
           <div class="job-card-main">
             <div class="job-card-label">${escapeHtml(label)}</div>
@@ -6288,7 +6334,7 @@ async function loadDashboard(){
         ${showFU?`<div class="job-followup"><i data-lucide="clock" style="width:11px;height:11px;stroke:currentColor"></i> Sent ${daysSent} days ago — time to follow up</div>`:''}
         ${needsActuals?`<div class="job-followup job-log-actuals"><i data-lucide="calculator" style="width:11px;height:11px;stroke:currentColor"></i> ${STATUS_LABELS[sk]} — log what it actually cost to sharpen your next bid</div>`:''}
         <div class="job-card-actions">
-          <span class="status-pill ${STATUS_CLASS[sk]}">${STATUS_LABELS[sk]}</span>
+          <span class="status-pill ${STATUS_CLASS[sk]}">${statusLabel(sk)}</span>
           <select class="status-select" onchange="updateJobStatus('${est.id}',this.value)" onclick="event.stopPropagation()">${statusOpts}</select>
           <div style="flex:1"></div>
           <button class="job-action-btn" onclick="event.stopPropagation();toggleNotes('${est.id}')"><i data-lucide="file-text" style="width:11px;height:11px;stroke:currentColor"></i> Notes</button>

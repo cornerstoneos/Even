@@ -52,4 +52,12 @@ check('Google first, then email', panel.indexOf('signInWithGoogle()')<panel.inde
 check('plain words about the free account (EN/ES)', /Free account: \$\{more\} more estimates and PDF downloads\./.test(html)&&/Cuenta gratis: \$\{more\} estimados más/.test(html));
 check('"Create free account" button', /'Create free account'/.test(html)&&/'Crear cuenta gratis'/.test(html));
 check("Founder's Club card stays hidden until its Stripe link exists", /const FOUNDERS_LINK = '';/.test(html)&&/fc\.hidden=!FOUNDERS_LINK/.test(html));
+console.log('\n=== Dashboard (polish round 7) ===');
+const dash=html.slice(html.indexOf('<div class="screen" id="s-dashboard">'),html.indexOf('<div class="screen" id="s-dashboard">')+40000);
+check('"Your jobs" with 3 stats: won this month, avg margin, open bids', /Your jobs/.test(dash)&&/Won this month/.test(dash)&&/Avg margin/.test(dash)&&/Open bids/.test(dash));
+check('Open / Won / All filter', /filterJobs\('open'/.test(dash)&&/filterJobs\('won'/.test(dash)&&/filterJobs\('all'/.test(dash)&&/data-st="\$\{sk\}"/.test(html));
+check('settings as four rows, nothing removed', ['set-biz','set-sup','set-subs','dash-settings-sum','supplier-list','sub-list','logo-preview-img','accent-swatches'].every(id=>dash.includes(`id="${id}"`)));
+check('bottom tab bar with New estimate', /class="d-tabs"/.test(dash)&&/d-tab-plus/.test(dash));
+check('status tags in Spanish too', /STATUS_LABELS_ES=\{draft:'Borrador'/.test(html));
+check('dashboard no longer sits below an empty screen (bug)', /body:has\(#s-dashboard\.active\) \.app\{min-height:0\}/.test(html));
 console.log(`\n${pass} passed, ${fail} failed`);process.exit(fail?1:0);
