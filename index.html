@@ -686,6 +686,12 @@ body.has-gopro .topbar-brand{display:none}
 /* Desktop estimate screen: full width, two columns. Only the estimate screen
    drops the 1.3x zoom; every other screen keeps the scaled phone column. */
 .est-grid,.est-main,.est-side,.est-main2{display:contents}
+/* ── Questions screen (polish round 3) ── */
+.d-qprog{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin:10px 2px 6px}.d-qprog b{color:var(--white)}
+.d-track{height:6px;background:var(--rim);border-radius:4px;margin-bottom:12px;overflow:hidden}.d-track>div{height:100%;width:0;background:var(--gold);border-radius:4px;transition:width .2s}
+.q-other-chip{border-style:dashed!important;color:var(--muted)!important}
+.q-other-chip.selected{color:var(--text-accent)!important}
+.d-sticky{position:sticky;bottom:0;padding:14px 0 6px;background:linear-gradient(to bottom,transparent,var(--bg) 35%);z-index:5}
 /* ── Start screen (polish round 2) ── */
 .d-job .ftextarea{min-height:110px;font-size:15px}
 .upload-zone.d-upload{padding:12px;margin:10px 0 14px;border-style:dashed;display:flex;flex-direction:column;align-items:center;gap:2px}
@@ -1281,8 +1287,7 @@ body.has-gopro .topbar-brand{display:none}
       <div id="scope-extracted" style="display:none">
         <div class="gc">
           <div class="gc-head">
-            <div class="gc-title" data-en="What Even Read" data-es="Lo que Even Leyó">What Even Read</div>
-            <div class="gc-tag" data-en="Review before pricing" data-es="Revisa antes de cotizar">Review before pricing</div>
+            <div class="gc-title" data-en="What we read" data-es="Lo que leímos">What we read</div>
           </div>
           <div class="gc-body" style="padding:12px 14px">
             <div id="scope-grid"></div>
@@ -1298,10 +1303,14 @@ body.has-gopro .topbar-brand{display:none}
             <span data-en=" answer these and I'll lock in your estimate." data-es=" respóndelas y generaré tu estimado."> answer these and I'll lock in your estimate.</span>
           </div>
         </div>
+        <div class="d-qprog" id="q-progress" hidden><span data-en="A few answers lock in the price" data-es="Unas respuestas fijan el precio">A few answers lock in the price</span><b id="q-count"></b></div>
+        <div class="d-track" id="q-track" hidden><div id="q-bar"></div></div>
         <div id="q-list"></div>
-        <button class="cta" id="calc-btn" onclick="calculateEstimate()" style="display:none;margin-top:12px">
-          <span data-en="Calculate Estimate →" data-es="Calcular Estimado →">Calculate Estimate →</span>
+        <div class="d-sticky">
+        <button class="cta d-big-btn" id="calc-btn" onclick="calculateEstimate()" style="display:none;margin-top:12px">
+          <span data-en="Build estimate →" data-es="Generar estimado →">Build estimate →</span>
         </button>
+        </div>
       </div>
     </div>
   </div><!-- /s-refine -->
@@ -2984,13 +2993,14 @@ function renderQuestions(questions){
     return `<div class="q-block" id="qblock-${i}">
       <div class="q-label">${i+1}. ${escapeHtml(q.question)}</div>
       <div class="q-chips" id="qchips-${i}">
-        ${opts.map(o=>`<button class="q-chip" onclick="selectChip(${i},'${encodeURIComponent(o).replace(/'/g,'%27')}',this)">${escapeHtml(o)}</button>`).join('')}
+        ${opts.map(o=>`<button class="q-chip" onclick="selectChip(${i},'${encodeURIComponent(o).replace(/'/g,'%27')}',this)">${escapeHtml(o)}</button>`).join('')}<button class="q-chip q-other-chip" onclick="showOther(${i},this)">${appLang==='en'?'Other…':'Otro…'}</button>
       </div>
-      <input class="q-other" id="qother-${i}" placeholder="${appLang==='en'?'Other / additional detail…':'Otro / detalle adicional…'}" oninput="setQAnswer(${i},this.value)">
+      <input class="q-other" id="qother-${i}" style="display:none" placeholder="${appLang==='en'?'Type your answer…':'Escribe tu respuesta…'}" oninput="setQAnswer(${i},this.value)">
     </div>`;
   }).join('');
   container.innerHTML=`<div class="q-sheet">${blocks}</div>`;
   document.getElementById('calc-btn').style.display='block';
+  updateQuestionProgress();
 }
 
 function buildChipOptions(q){
@@ -3051,17 +3061,36 @@ function selectChip(idx,value,el){
   chips.forEach(c=>{c.classList.remove('selected');c.classList.remove('active');});
   el.classList.add('selected');
   const other=document.getElementById(`qother-${idx}`);
-  if(other){other.value=value;other.dataset.fromChip='1';}
+  if(other){other.value=value;other.dataset.fromChip='1';other.dataset.chipValue=value;other.style.display='none';}
   setQAnswer(idx,value);
 }
 
+// "Other…" opens the text box for that question only (it used to sit under every
+// question). Picking a chip after typing takes over again.
+function showOther(idx,el){
+  document.querySelectorAll(`#qchips-${idx} .q-chip`).forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  const inp=document.getElementById(`qother-${idx}`);
+  if(inp){ inp.style.display='block'; if(inp.dataset.chipValue===inp.value) inp.value=''; inp.focus(); setQAnswer(idx,inp.value); }
+}
+// "2 of 4" counter and bar above the questions.
+function updateQuestionProgress(){
+  const qs=window._allQuestions||[], a=window._qAnswers||{};
+  const done=qs.filter(q=>a[q.question]!=null&&String(a[q.question]).trim()!=='').length;
+  const show=qs.length>0;
+  ['q-progress','q-track'].forEach(id=>{const el=document.getElementById(id); if(el) el.hidden=!show;});
+  const c=document.getElementById('q-count'); if(c) c.textContent=appLang==='es'?`${done} de ${qs.length}`:`${done} of ${qs.length}`;
+  const bar=document.getElementById('q-bar'); if(bar) bar.style.width=(qs.length?done/qs.length*100:0)+'%';
+}
 function setQAnswer(idx,value){
   const q=window._allQuestions[idx];
   if(q) window._qAnswers[q.question]=value;
+  setTimeout(updateQuestionProgress,0);
   const other=document.getElementById(`qother-${idx}`);
   if(other&&!other.dataset.fromChip){
     const chips=document.querySelectorAll(`#qchips-${idx} .q-chip`);
     chips.forEach(c=>c.classList.remove('selected'));
+    if(other.style.display==='block') document.querySelector(`#qchips-${idx} .q-other-chip`)?.classList.add('selected');
   }
   if(other) delete other.dataset.fromChip;
 }

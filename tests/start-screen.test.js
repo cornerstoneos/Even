@@ -27,4 +27,8 @@ check('job box, city, trade first; then the folds; then Analyze', at('id="scope-
 check('settings are folded, not removed', ['st-oh','st-profit','st-cushion','st-lmult','labor-rate','market-adj','seg-bid','seg-labor'].every(id=>at(`id="${id}"`)>at('id="your-settings"')));
 check('folded settings show a summary line', /id="settings-summary"/.test(inp)&&/function _updateSettingsSummary/.test(html));
 check('"4 left" says why when signed in (bug 3)', /including any from before you signed up/.test(html)&&/contando los de antes de crear tu cuenta/.test(html));
+console.log('\n=== Questions screen (polish round 3) ===');
+check('"n of N" counter and bar', /id="q-count"/.test(html)&&/function updateQuestionProgress/.test(html));
+check('"Other…" chip opens the text box; the box is hidden until then', /q-other-chip/.test(html)&&/function showOther/.test(html)&&/id="qother-\$\{i\}" style="display:none"/.test(html));
+check('Build button stays in reach while scrolling', /<div class="d-sticky">\s*<button class="cta d-big-btn" id="calc-btn"/.test(html));
 console.log(`\n${pass} passed, ${fail} failed`);process.exit(fail?1:0);
