@@ -686,6 +686,27 @@ body.has-gopro .topbar-brand{display:none}
 /* Desktop estimate screen: full width, two columns. Only the estimate screen
    drops the 1.3x zoom; every other screen keeps the scaled phone column. */
 .est-grid,.est-main,.est-side,.est-main2{display:contents}
+/* ── Loading (polish round 4) ── */
+.d-load-card{width:100%;max-width:440px;background:var(--panel);border:1px solid var(--rim);border-radius:18px;padding:20px}
+.d-load-title{font-size:20px;font-weight:800;color:var(--white);margin-top:4px}
+.d-load-sub{font-size:13px;color:var(--muted);margin:2px 0 14px}
+.d-load-card .loading-progress-track{width:100%;max-width:none;margin:0 0 6px}
+.d-chk{display:flex;align-items:center;gap:12px;padding:10px 0;font-size:15px;border-bottom:1px solid var(--rim);color:var(--muted)}
+.d-chk:last-child{border-bottom:none}
+.d-chk i{width:22px;height:22px;border-radius:50%;border:1px solid var(--rim2);flex:none;display:inline-flex;align-items:center;justify-content:center;font-style:normal;font-size:12px}
+.d-chk.work{color:var(--white)}.d-chk.work i{border:2px solid var(--gold);border-top-color:transparent;animation:dSpin .8s linear infinite}
+.d-chk.done{color:var(--white2)}.d-chk.done i{background:var(--green);border-color:var(--green);color:#000}.d-chk.done i::after{content:'✓'}
+.d-chk small{margin-left:auto;font-size:11.5px;color:var(--muted);font-family:'DM Mono',monospace}
+@keyframes dSpin{to{transform:rotate(360deg)}}
+.d-load-card .loading-live{margin-top:10px}
+.d-load-note{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
+@media(min-width:900px){
+  /* Bug 5: the loading screen used the phone-size column on desktop. */
+  .d-load-card{max-width:620px;padding:28px 32px}
+  .d-load-title{font-size:26px}
+  .d-chk{font-size:17px;padding:13px 0}
+  #screen-loading{padding-top:56px}
+}
 /* ── Questions screen (polish round 3) ── */
 .d-qprog{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin:10px 2px 6px}.d-qprog b{color:var(--white)}
 .d-track{height:6px;background:var(--rim);border-radius:4px;margin-bottom:12px;overflow:hidden}.d-track>div{height:100%;width:0;background:var(--gold);border-radius:4px;transition:width .2s}
@@ -863,11 +884,18 @@ body.has-gopro .topbar-brand{display:none}
     <div class="brand-lockup-word" style="font-size:21px">even<b>.</b></div>
   </div>
 
-  <div class="loading-phase-wrap">
+  <!-- Loading (polish round 4, approved 2026-10-10): a card with the job and a
+       checklist that ticks off as it works. The old phase lines (which listed
+       overhead / profit / cushion) are kept in the page but hidden. -->
+  <div class="loading-phase-wrap" style="display:none">
     <div class="loading-phase-label" id="loading-phase-label" data-es="Leyendo el alcance">Reading Scope</div>
     <div class="loading-terminal" id="loading-terminal"></div>
   </div>
 
+  <div class="d-load-card">
+  <div class="d-k" data-es="Generando tu estimado">Building your estimate</div>
+  <div class="d-load-title" id="load-title"></div>
+  <div class="d-load-sub" id="load-sub"></div>
   <div class="loading-progress-track">
     <div class="loading-progress-bar-outer">
       <div class="loading-progress-bar-fill" id="loading-bar"></div>
@@ -878,7 +906,10 @@ body.has-gopro .topbar-brand{display:none}
     </div>
   </div>
 
+  <div id="loading-checklist"></div>
   <div class="loading-live" id="loading-live-items"></div>
+  </div>
+  <div class="d-load-note" data-es="Por lo general tarda un minuto. Mantén esta pantalla abierta.">Usually about a minute. Keep this screen open.</div>
   <div class="loading-reveal" id="loading-reveal" style="display:none">
     <div class="loading-reveal-amount" id="loading-reveal-amount">—</div>
     <div class="loading-reveal-label" data-es="RANGO ESTIMADO DE LA OFERTA">ESTIMATED BID RANGE</div>
@@ -2773,7 +2804,27 @@ function showLoading(){
   const live=document.getElementById('loading-live-items');if(live)live.innerHTML='';
   const rev=document.getElementById('loading-reveal');if(rev)rev.classList.remove('visible');
   currentEstimate=null;
+  // The job and a five-step checklist (reading, permit fees, materials, labor, check).
+  const isEs=appLang==='es', ctx=window._ctx||{}, m=window._marketMeta||null;
+  const city=(m&&m.municipality)||(ctx.location||'').split(',')[0]||'';
+  const t=document.getElementById('load-title'); if(t) t.textContent=window._scopeData?.projectName||(isEs?'Tu trabajo':'Your job');
+  const sub=document.getElementById('load-sub'); if(sub) sub.textContent=[ctx.location,tradeLabel(ctx.trade,appLang)].filter(Boolean).join(' · ');
+  const steps=isEs
+    ?['Leyendo el trabajo',`Tarifas de permisos${city?' de '+city:''}`,'Precios de materiales','Horas de mano de obra','Revisando el estimado']
+    :['Reading the job',`${city?city+' ':''}permit fees`,'Material prices','Labor hours','Checking the estimate'];
+  const cnt=m&&m.permitCount?(isEs?`${m.permitCount} tarifas`:`${m.permitCount} fees`):'';
+  const cl=document.getElementById('loading-checklist');
+  if(cl) cl.innerHTML=steps.map((x,i)=>`<div class="d-chk" id="lchk-${i}"><i></i><span>${escapeHtml(x)}</span>${i===1&&cnt?`<small>${escapeHtml(cnt)}</small>`:''}</div>`).join('');
+  _loadStep=-1; setLoadingStepByPct(0);
   document.getElementById('screen-loading').classList.add('active');
+}
+// Progress -> checklist step, so the list follows the real bar and never goes back:
+// <20% reading, <40 permits, <60 materials, <90 labor, <100 checking, 100 done.
+let _loadStep=-1;
+function setLoadingStepByPct(p){
+  const k=p>=100?5:p>=90?4:p>=60?3:p>=40?2:p>=20?1:0;
+  if(k<=_loadStep) return; _loadStep=k;
+  for(let i=0;i<5;i++){ const el=document.getElementById('lchk-'+i); if(el) el.className='d-chk '+(i<k?'done':i===k?'work':''); }
 }
 function hideLoading(){document.getElementById('screen-loading').classList.remove('active')}
 function animateCounter(el,target){
@@ -2810,6 +2861,7 @@ async function runLoadingPhases(phase1Lines,phase2Lines){
     },delay));
   }
   function setProgress(p,label){
+    setLoadingStepByPct(p);
     bar.style.width=p+'%';
     pct.textContent=p+'%';
     if(label) stepText.textContent=label;
@@ -3752,7 +3804,7 @@ Return the JSON for THIS job now.`;
     // model then took 60s for the remaining 44%. The bar now reflects the clock:
     // scripted work ends at 20%, the model owns 20-96%.
     let progShown=20;
-    const setProg=(p,l)=>{const v=Math.min(p,100);progShown=Math.max(progShown,v);bar.style.width=progShown+'%';pctEl.textContent=Math.round(progShown)+'%';if(l)stepEl.textContent=l;};
+    const setProg=(p,l)=>{const v=Math.min(p,100);progShown=Math.max(progShown,v);setLoadingStepByPct(progShown);bar.style.width=progShown+'%';pctEl.textContent=Math.round(progShown)+'%';if(l)stepEl.textContent=l;};
     setProg(20,appLang==='en'?'Reading local market data…':'Leyendo datos del mercado…');
 
     const EXPECT=15; let rendered=0; const seenCats=new Set();

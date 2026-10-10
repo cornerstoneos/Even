@@ -84,7 +84,7 @@ function englishHits(text){
     });
     await page.goto('https://even-os.com/',{waitUntil:'domcontentloaded'}); await page.waitForTimeout(2500);
     const visible=()=>page.evaluate(()=>document.body.innerText);
-    const grab=async step=>{const t=await visible(); fs.writeFileSync(`${out}/${LANG}-${vpName}-${step}.txt`,t); report.steps[`${vpName}:${step}`]=LANG==='es'?englishHits(t):[]; if(/P9 is add-on|I will use P1|dedicated electrical-only/.test(t)) report.reasoningSeen=true; await page.screenshot({path:`${out}/${LANG}-${vpName}-${step}.png`,fullPage:true});};
+    const grab=async step=>{const t=await visible(); fs.writeFileSync(`${out}/${LANG}-${vpName}-${step}.txt`,t); report.steps[`${vpName}:${step}`]=LANG==='es'?englishHits(t):[]; if(/P9 is add-on|I will use P1|dedicated electrical-only/.test(t)) report.reasoningSeen=true; await page.screenshot({path:`${out}/${LANG}-${vpName}-${step}.png`,fullPage:!/loading/.test(step)});};
     await page.evaluate(lang=>{
       if(lang==='es'){ const b=[...document.querySelectorAll('.lang-btn')].find(x=>x.textContent.trim()==='ES'); setLang('es',b); }
       currentUser={id:'x',email:'ventas@acmeelectric.com'};
@@ -102,7 +102,7 @@ function englishHits(text){
     await page.click('#calc-btn');
     // Watch the loading screen for model reasoning while it runs.
     for(let i=0;i<40;i++){ const t=await visible(); if(/P9 is add-on|I will use P1|dedicated electrical-only/.test(t)) report.reasoningSeen=true;
-      if(i===3) await grab('3-loading');
+      if(i===8) await grab('3-loading');
       if(await page.locator('#s-estimate.active').count()) break; await page.waitForTimeout(250); }
     await page.waitForSelector('#s-estimate.active',{timeout:60000}); await page.waitForTimeout(1500);
     await grab('4-estimate');

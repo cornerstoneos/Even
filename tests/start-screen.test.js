@@ -31,4 +31,8 @@ console.log('\n=== Questions screen (polish round 3) ===');
 check('"n of N" counter and bar', /id="q-count"/.test(html)&&/function updateQuestionProgress/.test(html));
 check('"Other…" chip opens the text box; the box is hidden until then', /q-other-chip/.test(html)&&/function showOther/.test(html)&&/id="qother-\$\{i\}" style="display:none"/.test(html));
 check('Build button stays in reach while scrolling', /<div class="d-sticky">\s*<button class="cta d-big-btn" id="calc-btn"/.test(html));
+console.log('\n=== Loading screen (polish round 4, bug 5) ===');
+check('checklist of five steps that follows the progress bar', /function setLoadingStepByPct/.test(html)&&/'Reading the job'/.test(html)&&/'Checking the estimate'/.test(html)&&/setLoadingStepByPct\(progShown\)/.test(html));
+check('old phase lines (overhead/profit/cushion) are hidden', /<div class="loading-phase-wrap" style="display:none">/.test(html));
+check('desktop gets a wider card (bug 5)', /Bug 5: the loading screen used the phone-size column on desktop/.test(html));
 console.log(`\n${pass} passed, ${fail} failed`);process.exit(fail?1:0);
