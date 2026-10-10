@@ -5478,9 +5478,9 @@ async function submitDataTrade(){
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
       <div>
         <div style="font-size:24px;font-weight:800;color:var(--white);line-height:1" data-es="Tus trabajos">Your jobs</div>
-        <div style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px;letter-spacing:1px">✦ EVEN PRO</div>
+        <div style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px;letter-spacing:1px" data-es="✦ EVEN PRO">✦ EVEN PRO</div>
       </div>
-      <button onclick="navigate('input')" style="background:var(--gold);border:none;color:#000;padding:9px 15px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px">+ NEW JOB</button>
+      <button onclick="navigate('input')" style="background:var(--gold);border:none;color:#000;padding:9px 15px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px"><span data-es="+ NUEVO TRABAJO">+ NEW JOB</span></button>
     </div>
 
     <!-- Metrics strip -->
@@ -5536,8 +5536,8 @@ async function submitDataTrade(){
         <button class="d-row-link d-fold" onclick="toggleFold('set-biz',this)"><span><span data-es="Tu negocio">Your business</span><span class="d-fold-sum" data-es="Logo, color, licencia, contacto">Logo, color, license, contact</span></span><span class="d-chev">›</span></button>
         <div id="set-biz" class="d-fold-body" hidden><div class="gc">
         <div class="gc-head">
-          <div class="gc-title"><i data-lucide="building-2" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>Company Logo</div>
-          <div class="gc-tag">Shows on proposals</div>
+          <div class="gc-title"><i data-lucide="building-2" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Logo de la empresa">Company Logo</span></div>
+          <div class="gc-tag" data-es="Aparece en las propuestas">Shows on proposals</div>
         </div>
         <div class="gc-body" style="padding:14px 12px">
           <div style="display:flex;align-items:center;gap:14px">
@@ -5546,16 +5546,16 @@ async function submitDataTrade(){
               <i data-lucide="building-2" id="logo-preview-placeholder" style="width:20px;height:20px;stroke:var(--muted)"></i>
             </div>
             <div style="flex:1">
-              <div style="font-size:12px;color:var(--white2);margin-bottom:7px">Upload your company logo to appear on client proposals.</div>
+              <div style="font-size:12px;color:var(--white2);margin-bottom:7px" data-es="Sube el logo de tu empresa para que aparezca en tus propuestas.">Upload your company logo to appear on client proposals.</div>
               <label style="display:inline-block;padding:7px 13px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--text-accent);cursor:pointer;font-family:'DM Mono',monospace">
                 <input type="file" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
-                <i data-lucide="upload-cloud" style="width:11px;height:11px;stroke:currentColor;vertical-align:middle;margin-right:4px"></i> Upload
+                <i data-lucide="upload-cloud" style="width:11px;height:11px;stroke:currentColor;vertical-align:middle;margin-right:4px"></i> <span data-es="Subir">Upload</span>
               </label>
               <span id="logo-upload-status" style="font-size:11px;color:var(--muted);margin-left:8px"></span>
             </div>
           </div>
           <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--rim)">
-            <div style="font-size:12px;color:var(--white2);margin-bottom:8px">Accent color on your PDFs</div>
+            <div style="font-size:12px;color:var(--white2);margin-bottom:8px" data-es="Color de tus PDF">Accent color on your PDFs</div>
             <div id="accent-swatches" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
               <div class="accent-swatch" data-color="#FFB300" onclick="selectAccentColor('#FFB300')" style="width:24px;height:24px;border-radius:50%;background:#FFB300;cursor:pointer;border:2px solid transparent"></div>
               <div class="accent-swatch" data-color="#2563EB" onclick="selectAccentColor('#2563EB')" style="width:24px;height:24px;border-radius:50%;background:#2563EB;cursor:pointer;border:2px solid transparent"></div>
@@ -5574,17 +5574,17 @@ async function submitDataTrade(){
         <div id="set-sup" class="d-fold-body" hidden><div style="margin-top:10px">
       <div class="gc">
         <div class="gc-head">
-          <div class="gc-title"><i data-lucide="package" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>My Suppliers</div>
-          <div class="gc-tag">Used in every estimate</div>
+          <div class="gc-title"><i data-lucide="package" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Mis proveedores">My Suppliers</span></div>
+          <div class="gc-tag" data-es="Se usa en cada estimado">Used in every estimate</div>
         </div>
         <div class="gc-body" style="padding:14px 12px">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5">Your prices override regional averages in every estimate. Tap any item to edit full details.</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5"><span data-es="Tus precios reemplazan los promedios regionales en cada estimado. Toca un material para editar todos sus datos.">Your prices override regional averages in every estimate. Tap any item to edit full details.</span></div>
           <div id="supplier-list"></div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--rim2)">
-            <button onclick="addSupplierRow()" style="background:none;border:none;color:var(--text-accent);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;padding:0">+ ADD MATERIAL</button>
+            <button onclick="addSupplierRow()" style="background:none;border:none;color:var(--text-accent);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;padding:0"><span data-es="+ AGREGAR MATERIAL">+ ADD MATERIAL</span></button>
             <label class="price-sheet-btn">
               <input type="file" accept="image/*" style="display:none" onchange="extractPriceSheet(this)">
-              <i data-lucide="scan" style="width:11px;height:11px;stroke:currentColor"></i> SCAN PRICE SHEET
+              <i data-lucide="scan" style="width:11px;height:11px;stroke:currentColor"></i> <span data-es="ESCANEAR LISTA DE PRECIOS">SCAN PRICE SHEET</span>
             </label>
           </div>
           <div id="supplier-scan-status" style="font-size:11px;color:var(--muted);margin-top:8px;display:none"></div>
@@ -5595,14 +5595,14 @@ async function submitDataTrade(){
         <div id="set-subs" class="d-fold-body" hidden><div style="margin-top:10px">
       <div class="gc">
         <div class="gc-head">
-          <div class="gc-title"><i data-lucide="hard-hat" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i>My Subs</div>
-          <div class="gc-tag">Used in every estimate</div>
+          <div class="gc-title"><i data-lucide="hard-hat" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Mis subcontratistas">My Subs</span></div>
+          <div class="gc-tag" data-es="Se usa en cada estimado">Used in every estimate</div>
         </div>
         <div class="gc-body" style="padding:14px 12px">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5">Your subs' real rates replace Even's generic markup on subbed trades. Add a trade and a rate — Even fills in the rest. <span style="color:var(--text-accent)">Private to your account.</span></div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5"><span data-es="Las tarifas reales de tus subcontratistas reemplazan el margen genérico de Even. Agrega un oficio y una tarifa; Even completa el resto.">Your subs' real rates replace Even's generic markup on subbed trades. Add a trade and a rate. Even fills in the rest.</span> <span style="color:var(--text-accent)" data-es="Privado para tu cuenta.">Private to your account.</span></div>
           <div id="sub-list"></div>
           <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid var(--rim2)">
-            <button onclick="addSubRow()" style="background:none;border:none;color:var(--text-accent);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;padding:0">+ ADD SUB</button>
+            <button onclick="addSubRow()" style="background:none;border:none;color:var(--text-accent);font-size:11px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;padding:0"><span data-es="+ AGREGAR SUBCONTRATISTA">+ ADD SUB</span></button>
           </div>
         </div>
       </div>
@@ -5805,12 +5805,12 @@ function selectAccentColor(hex){
   window._accentColor=hex;
   renderAccentSwatches();
   const status=document.getElementById('accent-save-status');
-  if(status) status.textContent='Saving…';
+  if(status) status.textContent=appLang==='es'?'Guardando…':'Saving…';
   if(!currentUser||!sbClient) return;
   sbClient.from('users').select('prefs').eq('id',currentUser.id).single().then(({data})=>{
     const prefs={...(data?.prefs||{}),accentColor:hex};
     sbClient.from('users').update({prefs}).eq('id',currentUser.id).then(({error})=>{
-      if(status) status.textContent=error?'':'Saved ✓';
+      if(status) status.textContent=error?'':(appLang==='es'?'Guardado ✓':'Saved ✓');
       if(error) console.error('Save accent color error:',error);
     });
   });
@@ -6106,7 +6106,7 @@ async function extractPriceSheet(input){
   const file = input.files?.[0];
   if(!file) return;
   const status = document.getElementById('supplier-scan-status');
-  if(status){ status.style.display='block'; status.textContent='Reading price sheet…'; }
+  if(status){ status.style.display='block'; status.textContent=appLang==='es'?'Leyendo la lista de precios…':'Reading price sheet…'; }
 
   try{
     const reader = new FileReader();
@@ -6151,11 +6151,11 @@ Include every distinct material/product with a price. If supplier name is visibl
 
       renderSupplierList();
       debounceSaveSuppliers();
-      if(status) status.textContent = `✓ ${extracted.length} items extracted`;
+      if(status) status.textContent = appLang==='es'?`✓ ${extracted.length} materiales leídos`:`✓ ${extracted.length} items extracted`;
     };
     reader.readAsDataURL(file);
   } catch(e){
-    if(status) status.textContent = `Error: ${e.message}`;
+    if(status) status.textContent = (appLang==='es'?'No se pudo leer la lista: ':'Error: ')+e.message;
   }
   input.value='';
 }
@@ -6207,7 +6207,7 @@ async function loadDashboard(){
   if(!currentUser||!sbClient||!isPro) return;
   const listEl=document.getElementById('dashboard-list');
   const emptyEl=document.getElementById('dashboard-empty');
-  if(listEl) listEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px;font-family:\'DM Mono\',monospace">Loading…</div>';
+  if(listEl) listEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px;font-family:\'DM Mono\',monospace">'+(appLang==='es'?'Cargando…':'Loading…')+'</div>';
 
   renderAccentSwatches();
   if(window._userLogoUrl){
@@ -6275,21 +6275,21 @@ async function loadDashboard(){
     if(isPro&&jobsWithActuals<CAL_MIN_JOBS){
       const remaining=CAL_MIN_JOBS-jobsWithActuals;
       calBanner=`<div class="cal-progress">
-        <div class="cal-progress-head"><i data-lucide="target" style="width:12px;height:12px;stroke:currentColor"></i> Cost calibration — ${jobsWithActuals} of ${CAL_MIN_JOBS} jobs logged</div>
+        <div class="cal-progress-head"><i data-lucide="target" style="width:12px;height:12px;stroke:currentColor"></i> ${appLang==='es'?`Calibración de costos: ${jobsWithActuals} de ${CAL_MIN_JOBS} trabajos registrados`:`Cost calibration: ${jobsWithActuals} of ${CAL_MIN_JOBS} jobs logged`}</div>
         <div class="cal-progress-bar"><div class="cal-progress-fill" style="width:${Math.round((jobsWithActuals/CAL_MIN_JOBS)*100)}%"></div></div>
-        <div class="cal-progress-sub">Log what ${remaining===1?'one more job':'your jobs'} actually cost and Even starts correcting future bids toward your real numbers, by category. Open a finished job below to enter actuals.</div>
+        <div class="cal-progress-sub">${appLang==='es'?`Registra lo que ${remaining===1?'un trabajo más':'tus trabajos'} costaron de verdad y Even empieza a ajustar tus próximas ofertas a tus números reales, por categoría. Abre un trabajo terminado abajo para anotar los costos reales.`:`Log what ${remaining===1?'one more job':'your jobs'} actually cost and Even starts correcting future bids toward your real numbers, by category. Open a finished job below to enter actuals.`}</div>
       </div>`;
     } else if(isPro&&jobsWithActuals>=CAL_MIN_JOBS){
       calBanner=`<div class="cal-progress active">
-        <div class="cal-progress-head"><i data-lucide="check-circle" style="width:12px;height:12px;stroke:currentColor"></i> Cost calibration active — ${jobsWithActuals} jobs logged</div>
-        <div class="cal-progress-sub">Future estimates in these categories are being adjusted toward your logged actuals.</div>
+        <div class="cal-progress-head"><i data-lucide="check-circle" style="width:12px;height:12px;stroke:currentColor"></i> ${appLang==='es'?`Calibración de costos activa: ${jobsWithActuals} trabajos registrados`:`Cost calibration active: ${jobsWithActuals} jobs logged`}</div>
+        <div class="cal-progress-sub">${appLang==='es'?'Los próximos estimados en estas categorías se ajustan a tus costos reales registrados.':'Future estimates in these categories are being adjusted toward your logged actuals.'}</div>
       </div>`;
     }
 
     setTimeout(()=>{ const b=[...document.querySelectorAll('#dash-filter button')].find(x=>x.getAttribute('onclick').includes(`'${window._jobFilter||'open'}'`)); if(b) filterJobs(window._jobFilter||'open',b); },0);
     if(listEl) listEl.innerHTML=calBanner+estimates.map(est=>{
       const sk=est.status||'draft';
-      const label=est.project_label||est.location||'Untitled Job';
+      const label=est.project_label||est.location||(appLang==='es'?'Trabajo sin nombre':'Untitled Job');
       const date=new Date(est.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
       const actualTotal=actuals[est.id]||0;
       let varHtml='';
@@ -6331,13 +6331,13 @@ async function loadDashboard(){
             ${varHtml}
           </div>
         </div>
-        ${showFU?`<div class="job-followup"><i data-lucide="clock" style="width:11px;height:11px;stroke:currentColor"></i> Sent ${daysSent} days ago — time to follow up</div>`:''}
-        ${needsActuals?`<div class="job-followup job-log-actuals"><i data-lucide="calculator" style="width:11px;height:11px;stroke:currentColor"></i> ${STATUS_LABELS[sk]} — log what it actually cost to sharpen your next bid</div>`:''}
+        ${showFU?`<div class="job-followup"><i data-lucide="clock" style="width:11px;height:11px;stroke:currentColor"></i> ${appLang==='es'?`Enviado hace ${daysSent} días. Es hora de dar seguimiento.`:`Sent ${daysSent} days ago. Time to follow up.`}</div>`:''}
+        ${needsActuals?`<div class="job-followup job-log-actuals"><i data-lucide="calculator" style="width:11px;height:11px;stroke:currentColor"></i> ${appLang==='es'?`${statusLabel(sk)}. Anota lo que costó de verdad para afinar tu próxima oferta.`:`${statusLabel(sk)}. Log what it actually cost to sharpen your next bid.`}</div>`:''}
         <div class="job-card-actions">
           <span class="status-pill ${STATUS_CLASS[sk]}">${statusLabel(sk)}</span>
           <select class="status-select" onchange="updateJobStatus('${est.id}',this.value)" onclick="event.stopPropagation()">${statusOpts}</select>
           <div style="flex:1"></div>
-          <button class="job-action-btn" onclick="event.stopPropagation();toggleNotes('${est.id}')"><i data-lucide="file-text" style="width:11px;height:11px;stroke:currentColor"></i> Notes</button>
+          <button class="job-action-btn" onclick="event.stopPropagation();toggleNotes('${est.id}')"><i data-lucide="file-text" style="width:11px;height:11px;stroke:currentColor"></i> ${appLang==='es'?'Notas':'Notes'}</button>
           <button class="job-action-btn" onclick="event.stopPropagation();redownloadEstimate('${est.id}')"><i data-lucide="file-bar-chart" style="width:11px;height:11px;stroke:currentColor"></i> PDF</button>
         </div>
         <div class="job-notes-wrap" id="notes-${est.id}">
@@ -6457,7 +6457,7 @@ async function handleLogoUpload(input){
   if(!input.files||!input.files[0]||!currentUser||!sbClient) return;
   const file=input.files[0];
   const statusEl=document.getElementById('logo-upload-status');
-  if(statusEl) statusEl.textContent='Uploading…';
+  if(statusEl) statusEl.textContent=appLang==='es'?'Subiendo…':'Uploading…';
   try{
     const ext=file.name.split('.').pop();
     const path=`${currentUser.id}/logo.${ext}`;
@@ -6471,12 +6471,12 @@ async function handleLogoUpload(input){
     const ph=document.getElementById('logo-preview-placeholder');
     if(img){img.src=publicUrl;img.style.display='block';}
     if(ph) ph.style.display='none';
-    if(statusEl) statusEl.textContent='Saved ✓';
-    showToast('Logo saved — will appear on all future proposals.');
+    if(statusEl) statusEl.textContent=appLang==='es'?'Guardado ✓':'Saved ✓';
+    showToast(appLang==='es'?'Logo guardado. Aparecerá en todas tus propuestas.':'Logo saved. It will appear on all future proposals.');
   }catch(e){
     console.error('Logo upload error:',e);
-    if(statusEl) statusEl.textContent='Upload failed';
-    showToast('Logo upload failed — please try again.');
+    if(statusEl) statusEl.textContent=appLang==='es'?'No se pudo subir':'Upload failed';
+    showToast(appLang==='es'?'No se pudo subir el logo. Intenta de nuevo.':'Logo upload failed. Please try again.');
   }
 }
 </script>
