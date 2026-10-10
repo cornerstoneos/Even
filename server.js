@@ -523,6 +523,23 @@ app.delete('/api/scope-cache/:key', async (req, res) => {
   res.json({ ok: r.ok, deleted: rows.length, note: 'Cleared here and in Supabase. Another running server instance keeps its in-memory copy until it restarts.' });
 });
 
+// ─── Trade stats (user 2026-10-10) ───────────────────────────────────────────
+// Read off the estimate's own job line ("Trade:...|Location:...\nLanguage:..."),
+// so nothing extra comes from the browser. Trade is kept only if it is one of the
+// app's trade options; city only if it names a known municipality (never the
+// typed text, which can be a street address).
+const STAT_TRADES = new Set(['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks']);
+function jobStats(body) {
+  try {
+    const job = (body.messages[0].content || []).map(b => b && b.text || '').find(t => /^Trade:/.test(t)) || '';
+    const trade = (job.match(/^Trade:([^|\n]*)/) || [])[1] || '';
+    const loc = ((job.match(/\|Location:([^|\n]*)/) || [])[1] || '').toLowerCase();
+    const lang = /\nLanguage:Spanish/.test(job) ? 'es' : 'en';
+    const muni = loc ? bestNameMatch(loc, MUNICIPALITIES, m => [m.name, ...(m.aliases || [])]) : { hit: null };
+    return { trade: STAT_TRADES.has(trade.trim()) ? trade.trim() : (trade.trim() ? 'Other' : null), city: muni.hit ? muni.hit.name : null, lang };
+  } catch (e) { return {}; }
+}
+
 // ─── Anthropic proxy ──────────────────────────────────────────────────────────
 app.post('/api/estimate', async (req, res) => {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -582,9 +599,9 @@ app.post('/api/estimate', async (req, res) => {
         U.pend(st.pkey, 1);
         let released = false;
         release = () => { if (!released) { released = true; U.pend(st.pkey, -1); } };
-        onFresh = () => { freshDone = true; U.record(ident, st).catch(e => logError('usage', e.message, null)).finally(release); U.event('estimate_run', ident); };
+        onFresh = () => { freshDone = true; U.record(ident, st).catch(e => logError('usage', e.message, null)).finally(release); U.event('estimate_run', ident, jobStats(built.body)); };
       } else if (built.spec.counts) {
-        onFresh = () => U.event('estimate_run', ident);
+        onFresh = () => U.event('estimate_run', ident, jobStats(built.body));
       }
     }
     if (!U.rateOk(ident.ipHash, built.kind)) { release(); return tooMany(); }

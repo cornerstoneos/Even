@@ -2612,7 +2612,20 @@ const TRADE_MATERIALS={
   'floor':['Flooring'],'tile':['Flooring'],
   'concrete':['Concrete'],'foundation':['Concrete'],
   'drywall':['Drywall'],
-  'siding':['Siding'],'stucco':['Siding']
+  'siding':['Siding'],'stucco':['Siding'],
+  // Spanish runs name trades in Spanish (bug found 2026-10-10): without these, the
+  // other trades the AI spots on a job no longer add their material prices.
+  'contratista general':null,'remodela':null,'renovaci':null,
+  'techo':['Roofing'],'techad':['Roofing'],
+  'eléctric':['Electrical'],
+  'plomer':['Plumbing'],'calentador':['Plumbing'],
+  'aire acondicionado':['HVAC'],'climatiz':['HVAC'],'mecánic':['HVAC'],
+  'estructura':['Framing'],'carpinter':['Framing'],'terraza':['Framing'],
+  'pintur':['Paint'],
+  'piso':['Flooring'],'azulejo':['Flooring'],'loseta':['Flooring'],
+  'concreto':['Concrete'],'cimiento':['Concrete'],'cimentaci':['Concrete'],
+  'tablaroca':['Drywall'],'yeso':['Drywall'],
+  'revestimiento':['Siding'],'estuco':['Siding']
 };
 
 // The categories this particular estimate will actually price against. Returns
