@@ -46,4 +46,10 @@ check('amounts always add up to the price (Spanish 25x4 of $1,001)', sp2&&sp2.re
 check('free text that is not a % schedule falls back to plain text', paymentSplits('Net 30 after completion',5000)===null);
 check('initials when there is no logo', initialsOf('Acme Plumbing LLC')==='AP'&&initialsOf('')==='');
 check('PDF and preview both use the dollar boxes', (html.match(/paymentSplits\(P\.payment,P\.price\)/g)||[]).length===2);
+console.log('\n=== Sign-up and pricing (polish round 6) ===');
+const panel=html.slice(html.indexOf('<div id="topbar-auth-panel"'),html.indexOf('<div id="auth-signed-in"'));
+check('Google first, then email', panel.indexOf('signInWithGoogle()')<panel.indexOf('id="auth-email"'));
+check('plain words about the free account (EN/ES)', /Free account: \$\{more\} more estimates and PDF downloads\./.test(html)&&/Cuenta gratis: \$\{more\} estimados más/.test(html));
+check('"Create free account" button', /'Create free account'/.test(html)&&/'Crear cuenta gratis'/.test(html));
+check("Founder's Club card stays hidden until its Stripe link exists", /const FOUNDERS_LINK = '';/.test(html)&&/fc\.hidden=!FOUNDERS_LINK/.test(html));
 console.log(`\n${pass} passed, ${fail} failed`);process.exit(fail?1:0);

@@ -686,6 +686,19 @@ body.has-gopro .topbar-brand{display:none}
 /* Desktop estimate screen: full width, two columns. Only the estimate screen
    drops the 1.3x zoom; every other screen keeps the scaled phone column. */
 .est-grid,.est-main,.est-side,.est-main2{display:contents}
+/* ── Sign-up / sign-in + pricing (polish round 6) ── */
+.d-auth-title{font-size:19px;font-weight:800;color:var(--white);line-height:1.25;margin-bottom:4px}
+.d-auth-sub{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.45}
+.d-gbtn{display:flex;align-items:center;justify-content:center;gap:10px;height:50px;background:#fff;border:none;border-radius:12px;color:#111;font-weight:700;font-size:15px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.d-auth-or{text-align:center;font-size:11px;color:var(--muted);margin:2px 0}
+#auth-email,#auth-password{padding:13px 14px!important;font-size:15px!important;border-radius:10px!important}
+.d-auth-submit{height:50px;border:none;border-radius:12px;font-weight:800;font-size:15px;cursor:pointer;background:linear-gradient(#ffcd45,#ffb300);color:#000;box-shadow:0 5px 0 #b37d00;font-family:'DM Sans',sans-serif}
+.d-auth-submit:active{transform:translateY(3px);box-shadow:0 2px 0 #b37d00}
+.d-auth-switch{text-align:center;font-size:12.5px;color:var(--muted)}.d-auth-switch a{color:var(--text-accent);font-weight:700;text-decoration:none}
+.d-fc{border:1px solid var(--gold-border);border-radius:16px;padding:16px;margin:4px 0 12px;background:linear-gradient(160deg,rgba(255,179,0,.12),var(--panel) 60%);text-align:left}
+.d-fc-k{font:700 10.5px 'DM Mono',monospace;letter-spacing:1px;color:var(--text-accent);text-transform:uppercase}
+.d-fc-amt{font-size:30px;font-weight:800;color:var(--white);margin-top:4px}.d-fc-amt span{font-size:14px;color:var(--muted);font-weight:500}
+.d-fc-feat{font-size:13px;color:var(--white2);line-height:1.7;margin-top:6px}
 /* ── Loading (polish round 4) ── */
 .d-load-card{width:100%;max-width:440px;background:var(--panel);border:1px solid var(--rim);border-radius:18px;padding:20px}
 .d-load-title{font-size:20px;font-weight:800;color:var(--white);margin-top:4px}
@@ -990,26 +1003,27 @@ body.has-gopro .topbar-brand{display:none}
   </div>
 
 <!-- Topbar Auth Dropdown -->
-<div id="topbar-auth-panel" style="display:none;position:fixed;top:56px;right:0;width:280px;background:var(--panel);border:1px solid var(--rim);border-radius:0 0 12px 12px;padding:20px;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,.6)">
+<div id="topbar-auth-panel" style="display:none;position:fixed;top:56px;right:0;width:min(360px,100vw);box-sizing:border-box;background:var(--panel);border:1px solid var(--rim);border-radius:0 0 12px 12px;padding:20px;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,.6)">
   <div id="auth-form-wrap">
-    <div style="display:flex;background:var(--bg);border-radius:8px;padding:3px;margin-bottom:16px;gap:3px">
+    <!-- Sign-up / sign-in (polish round 6): Google first, plain words about what
+         the free account gives. The old tabs stay (hidden) for switchAuthTab. -->
+    <div style="display:none"><div style="display:flex;background:var(--bg);border-radius:8px;padding:3px;margin-bottom:16px;gap:3px">
       <button id="panel-tab-login" onclick="switchAuthTab('login')" style="flex:1;padding:8px;border:none;border-radius:6px;background:var(--gold);color:#000;font-weight:600;font-size:11px;cursor:pointer" data-es="Iniciar sesión">Sign In</button>
       <button id="panel-tab-signup" onclick="switchAuthTab('signup')" style="flex:1;padding:8px;border:none;border-radius:6px;background:transparent;color:var(--muted);font-weight:600;font-size:11px;cursor:pointer" data-es="Crear cuenta">Sign Up</button>
-    </div>
+    </div></div>
+    <div class="d-auth-title" id="auth-title"></div>
+    <div class="d-auth-sub" id="auth-sub"></div>
     <div style="display:flex;flex-direction:column;gap:10px">
-      <input id="auth-email" type="email" placeholder="Email" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box" data-placeholder-es="Correo"/>
-      <input id="auth-password" type="password" placeholder="Password" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
-      <button id="auth-submit-btn" onclick="handleAuth()" style="padding:12px;background:var(--gold);border:none;border-radius:8px;color:#000;font-weight:700;font-size:13px;cursor:pointer">Sign In</button>
-      <div id="auth-error" style="color:#ff6b6b;font-size:11px;text-align:center;min-height:14px"></div>
-      <div style="display:flex;align-items:center;gap:8px;margin:2px 0">
-        <div style="flex:1;height:1px;background:var(--rim)"></div>
-        <span style="font-size:10px;color:var(--muted);white-space:nowrap">or</span>
-        <div style="flex:1;height:1px;background:var(--rim)"></div>
-      </div>
-      <button onclick="signInWithGoogle()" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-weight:600;font-size:13px;cursor:pointer;width:100%;box-sizing:border-box">
+      <button onclick="signInWithGoogle()" class="d-gbtn" style="width:100%;box-sizing:border-box">
         <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
         <span data-es="Continuar con Google">Continue with Google</span>
       </button>
+      <div class="d-auth-or" data-es="o con tu correo">or with email</div>
+      <input id="auth-email" type="email" placeholder="Email" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box" data-placeholder-es="Correo"/>
+      <input id="auth-password" type="password" placeholder="Password" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
+      <button id="auth-submit-btn" class="d-auth-submit" onclick="handleAuth()">Sign In</button>
+      <div id="auth-error" style="color:#ff6b6b;font-size:11px;text-align:center;min-height:14px"></div>
+      <div class="d-auth-switch" id="auth-switch"></div>
     </div>
   </div>
   <div id="auth-signed-in" style="display:none;text-align:center">
@@ -1674,8 +1688,9 @@ function openSignupPanel(msg){
   const panel=document.getElementById('topbar-auth-panel');
   if(panel&&panel.style.display==='none') toggleAuthPanel();
   switchAuthTab('signup');
-  const errEl=document.getElementById('auth-error');
-  if(errEl&&msg){ errEl.style.color='var(--gold)'; errEl.textContent=msg; }
+  // The reason the panel opened is the title ("Create a free account to download
+  // the PDF."), not an error line.
+  if(msg) renderAuthCopy('signup',msg);
   document.getElementById('auth-email')?.focus();
 }
 
@@ -1856,6 +1871,7 @@ function switchAuthTab(mode){
   });
   const submitBtn = document.getElementById('auth-submit-btn');
   if(submitBtn) submitBtn.textContent=authSubmitLabel(mode);
+  renderAuthCopy(mode);
   const errEl=document.getElementById('auth-error');
   if(errEl) errEl.textContent='';
 }
@@ -1867,6 +1883,7 @@ function toggleAuthPanel(){
   const isOpen = panel.style.display!=='none';
   panel.style.display = isOpen?'none':'block';
   overlay.style.display = isOpen?'none':'block';
+  if(!isOpen) renderAuthCopy(authMode);
 }
 
 function closeAuthPanel(){
@@ -1899,9 +1916,21 @@ function updateAuthPanel(){
 // background.
 const AUTH_TIMEOUT_MS=20000;
 const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,rej)=>setTimeout(()=>rej(new Error('auth_timeout')),ms))]);
+// Title, one plain line about what the free account gives, and the switch link.
+function renderAuthCopy(mode,title){
+  const es=appLang==='es';
+  const lim=window._usage?.limits||{anon:3,freeAccount:5};
+  const more=Math.max(0,(lim.freeAccount||5)-(lim.anon||3));
+  const t=document.getElementById('auth-title'), sb=document.getElementById('auth-sub'), sw=document.getElementById('auth-switch');
+  if(t) t.textContent=title||(mode==='signup'?(es?'Crea tu cuenta gratis':'Create your free account'):(es?'Inicia sesión':'Sign in'));
+  if(sb) sb.textContent=mode==='signup'?(es?`Cuenta gratis: ${more} estimados más y descargas en PDF.`:`Free account: ${more} more estimates and PDF downloads.`):(es?'Tus estimados y configuración, en todos tus dispositivos.':'Your estimates and settings, on every device.');
+  if(sw) sw.innerHTML=mode==='signup'
+    ?`${es?'¿Ya tienes cuenta?':'Have an account?'} <a href="#" onclick="switchAuthTab('login');return false">${es?'Inicia sesión':'Sign in'}</a>`
+    :`${es?'¿Eres nuevo?':'New here?'} <a href="#" onclick="switchAuthTab('signup');return false">${es?'Crea una cuenta gratis':'Create a free account'}</a>`;
+}
 function authSubmitLabel(mode){
   const es=appLang==='es';
-  return mode==='login'?(es?'Iniciar sesión':'Sign In'):(es?'Crear cuenta':'Create Account');
+  return mode==='login'?(es?'Iniciar sesión':'Sign in'):(es?'Crear cuenta gratis':'Create free account');
 }
 function resetAuthButton(){
   const btn=document.getElementById('auth-submit-btn');
@@ -2021,10 +2050,13 @@ async function handleSignOut(){
   updateUserBadge();
 }
 
+// Founder's Club: paste the Stripe payment link for the $30/mo price here and the
+// card appears in the Pro window. Empty = hidden (the price isn't set up yet).
+const FOUNDERS_LINK = '';
 function handleUpgrade(plan){
   const MONTHLY_LINK = 'https://buy.stripe.com/dRm4gy1IpgTnbUH00mgEg02';
   const ANNUAL_LINK  = 'https://buy.stripe.com/14A9AS3QxauZ1g328ugEg01';
-  const base = plan==='annual' ? ANNUAL_LINK : MONTHLY_LINK;
+  const base = plan==='founders'&&FOUNDERS_LINK ? FOUNDERS_LINK : plan==='annual' ? ANNUAL_LINK : MONTHLY_LINK;
   const email = currentUser?.email ? '&prefilled_email='+encodeURIComponent(currentUser.email) : '';
   window.location.href = base + '?client_reference_id='+(currentUser?.id||'guest') + email;
 }
@@ -2125,6 +2157,7 @@ function setLang(lang,btn){
   // Text built in code (free-estimate count, upsell) is redrawn in the new language.
   if(typeof updateUserBadge==='function') updateUserBadge();
   const _asb=document.getElementById('auth-submit-btn'); if(_asb&&!_asb.disabled) _asb.textContent=authSubmitLabel(authMode);
+  if(typeof renderAuthCopy==='function') renderAuthCopy(authMode);
   const _mab=document.querySelector('.market-adj-opt.active'); if(_mab&&typeof setMarketAdj==='function') setMarketAdj(_mab,marketAdj);
 }
 
@@ -4163,6 +4196,7 @@ function openProModal(title, desc, limitReached){
   document.getElementById('pro-modal-desc').textContent = desc || 'Upgrade to Even Pro to unlock this.';
   const dt=document.getElementById('pro-modal-datatrade');
   if(dt) dt.style.display=limitReached?'block':'none';
+  const fc=document.getElementById('pro-modal-fc'); if(fc) fc.hidden=!FOUNDERS_LINK;
   document.getElementById('pro-feature-modal').classList.add('open');
   trackEvent('pro_modal_shown');
 }
@@ -5368,6 +5402,14 @@ async function submitDataTrade(){
     <div class="pro-modal-features">
       <div data-es="✓ Estimados ilimitados &nbsp;·&nbsp; ✓ Sube fotos y planos<br>✓ Agrega y edita partidas<br>✓ Registro de costos reales<br>✓ Inglés y español &nbsp;·&nbsp; ✓ Precios del mercado regional">✓ Unlimited estimates &nbsp;·&nbsp; ✓ Photo &amp; plan upload<br>✓ Add &amp; edit line items<br>✓ Actual cost tracker<br>✓ English &amp; Spanish &nbsp;·&nbsp; ✓ Regional market pricing</div>
     </div>
+    <!-- Founder's Club (first 30, $30/mo for life). Shown only once FOUNDERS_LINK
+         (a Stripe payment link for the $30 price) is filled in below. -->
+    <div class="d-fc" id="pro-modal-fc" hidden>
+      <div class="d-fc-k" data-es="Club de Fundadores · primeros 30 contratistas">Founder's Club · first 30 contractors</div>
+      <div class="d-fc-amt">$30<span data-es="/mes de por vida">/mo for life</span></div>
+      <div class="d-fc-feat" data-es="✓ Estimados ilimitados<br>✓ Tu primer estimado hecho con el fundador<br>✓ Un mes gratis por cada referido">✓ Unlimited estimates<br>✓ Your first estimate built with the founder<br>✓ A free month for every referral</div>
+      <button class="cta d-big-btn" style="height:52px;font-size:16px;margin:10px 0 0" onclick="closeProModal();handleUpgrade('founders')" data-es="Únete al Club de Fundadores">Join the Founder's Club</button>
+    </div>
     <div class="pro-modal-pricing">
       <div class="pro-modal-plan hero">
         <div class="pro-modal-plan-label">MONTHLY</div>
@@ -5384,7 +5426,7 @@ async function submitDataTrade(){
       </div>
     </div>
     <button id="pro-modal-datatrade" onclick="closeProModal();openDataTrade()" style="display:none;margin:4px auto 0;background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline" data-en="Or share one past job's cost for 1 more free estimate" data-es="O comparte el costo de un trabajo pasado por 1 estimado gratis más">Or share one past job's cost for 1 more free estimate</button>
-    <button class="pro-modal-close" onclick="closeProModal()">Maybe later</button>
+    <button class="pro-modal-close" onclick="closeProModal()" data-es="Quizás después">Maybe later</button>
   </div>
 </div>
 
