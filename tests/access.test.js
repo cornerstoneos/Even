@@ -153,7 +153,8 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   const names=evs.map(e=>e.event);
   check('estimate_run recorded for counted estimates', names.filter(x=>x==='estimate_run').length>=10, names.filter(x=>x==='estimate_run').length);
   check('signup, pdf_download, pro_modal_shown recorded', ['signup','pdf_download','pro_modal_shown'].every(x=>names.includes(x)), JSON.stringify(names.slice(-5)));
-  check('events carry only event + user id or device hash', evs.every(e=>JSON.stringify(Object.keys(e).sort())==='["device_hash","event","user_id"]'), JSON.stringify(evs[0]));
+  // estimate_run also carries trade, city (municipality name) and language (approved 2026-10-10).
+  check('events carry only event + user id or device hash (+ trade/city/lang on estimate_run)', evs.every(e=>JSON.stringify(Object.keys(e).sort())===(e.event==='estimate_run'?'["city","device_hash","event","lang","trade","user_id"]':'["device_hash","event","user_id"]')), JSON.stringify(evs[0]));
   check('no emails, raw IPs or device ids stored', !JSON.stringify(db()).includes('free@example.com')&&!JSON.stringify(db()).includes('198.51.100.7')&&!JSON.stringify(db()).includes(phone.device));
 
   srv.kill();
