@@ -686,6 +686,22 @@ body.has-gopro .topbar-brand{display:none}
 /* Desktop estimate screen: full width, two columns. Only the estimate screen
    drops the 1.3x zoom; every other screen keeps the scaled phone column. */
 .est-grid,.est-main,.est-side,.est-main2{display:contents}
+/* ── Start screen (polish round 2) ── */
+.d-job .ftextarea{min-height:110px;font-size:15px}
+.upload-zone.d-upload{padding:12px;margin:10px 0 14px;border-style:dashed;display:flex;flex-direction:column;align-items:center;gap:2px}
+.d-upload .upload-title{font-size:13px;margin:0}.d-upload .upload-sub{font-size:10.5px}
+.d-suggest{margin-top:2px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:12px;padding:11px 12px;font-size:13px;color:var(--white2)}
+.d-suggest-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.d-suggest-yes{background:var(--gold);border:none;border-radius:8px;padding:8px 12px;font-weight:700;font-size:12.5px;color:#000;cursor:pointer;font-family:'DM Sans',sans-serif}
+.d-suggest-no{background:none;border:1px solid var(--rim);border-radius:8px;padding:8px 12px;font-size:12.5px;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif}
+.d-folds{padding:2px 16px 4px}
+.d-folds .d-row-link.d-fold{margin-top:0;padding:14px 2px;font-size:14px;font-weight:600;color:var(--white2)}
+.d-folds .d-row-link.d-fold:first-child{border-top:none}
+.d-fold-sum{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:3px}
+.d-fold-body{padding:4px 0 12px}
+.d-fold-body>.gc{background:transparent;border-color:var(--rim);margin-bottom:10px}
+.cta.d-big-btn{height:60px;font-size:18px;font-weight:800;border-radius:16px;background:linear-gradient(#ffcd45,#ffb300);color:#000;box-shadow:0 6px 0 #b37d00,0 12px 26px rgba(255,179,0,.25);margin:8px 0 14px;transition:transform .08s,box-shadow .08s}
+.cta.d-big-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #b37d00}
 /* ── Layout D (user 2026-10-07/10) ── */
 .d-card{background:var(--panel);border:1px solid var(--rim);border-radius:18px;padding:18px;margin-bottom:12px}
 .d-price{background:linear-gradient(160deg,rgba(255,179,0,.08),var(--panel) 55%)}
@@ -1005,28 +1021,26 @@ body.has-gopro .topbar-brand{display:none}
         <div style="font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5" data-en="Scope in. Winning bid out.<br>Built for contractors." data-es="Alcance adentro. Oferta ganadora afuera.<br>Hecho para contratistas.">Scope in. Winning bid out.<br>Built for contractors.</div>
       </div>
 
-      <!-- Upload -->
-      <div class="gc">
-        <div class="gc-head">
-          <div class="gc-title" data-en="Upload Plans or Paste Scope" data-es="Sube Planos o Pega Alcance">Upload Plans or Paste Scope</div>
-        </div>
+      <!-- Start screen (polish round 2, approved 2026-10-10): the job, city and trade
+           up top; extra details and your settings folded (kept, not removed). -->
+      <div class="gc d-job">
+        <div class="gc-head"><div class="gc-title" data-en="What's the job?" data-es="¿Cuál es el trabajo?">What's the job?</div></div>
         <div class="gc-body">
-          <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-in').click()">
+          <textarea id="scope-text" class="ftextarea" rows="5" data-placeholder-en="Paste scope of work, RFP, or describe the job…&#10;&#10;Example: Two full bathroom remodels — replace all fixtures, new ceramic tile, freestanding tub in master bath, new cabinetry, pocket door, all new flooring throughout 2,281 sf, kitchen counter + appliances + hood, full A/C replacement…" data-placeholder-es="Pega el alcance de trabajo o describe el trabajo…&#10;&#10;Ejemplo: Dos baños completos — reemplazar accesorios, cerámica nueva, tina independiente, gabinetes nuevos, puerta de bolsillo, pisos nuevos en 2,281 pies cuadrados…" placeholder="Paste scope of work, RFP, or describe the job…&#10;&#10;Example: Two full bathroom remodels — replace all fixtures, new ceramic tile, freestanding tub in master bath, new cabinetry, pocket door, all new flooring throughout 2,281 sf, kitchen counter + appliances + hood, full A/C replacement…"></textarea>
+          <div class="upload-zone d-upload" id="upload-zone" onclick="document.getElementById('file-in').click()">
             <input type="file" id="file-in" multiple accept="image/*,.pdf,.txt,.doc,.docx" style="display:none" onchange="handleFiles(this.files)">
-            <span class="upload-icon"><i data-lucide="upload-cloud" style="width:34px;height:34px;stroke:var(--gold);display:block;margin:0 auto"></i></span>
+            <span class="upload-icon"><i data-lucide="camera" style="width:18px;height:18px;stroke:var(--gold);vertical-align:middle"></i></span>
             <div class="upload-title" data-en="Drop plans, photos, or PDF scopes" data-es="Sube planos, fotos o PDFs">Drop plans, photos, or PDF scopes</div>
             <div class="upload-sub" data-en="Photographs of rolled-out plans work great • <span>Up to 10 photos + 3 PDFs</span>" data-es="Fotos de planos funcionan bien • <span>Hasta 10 fotos + 3 PDFs</span>">Photographs of rolled-out plans work great • <span>Up to 10 photos + 3 PDFs</span></div>
             <div class="img-strip" id="img-strip"></div>
           </div>
-          <div class="or-divider" data-en="or type / paste scope below" data-es="o escribe / pega el alcance abajo">or type / paste scope below</div>
-          <textarea id="scope-text" class="ftextarea" rows="5" data-placeholder-en="Paste scope of work, RFP, or describe the job…&#10;&#10;Example: Two full bathroom remodels — replace all fixtures, new ceramic tile, freestanding tub in master bath, new cabinetry, pocket door, all new flooring throughout 2,281 sf, kitchen counter + appliances + hood, full A/C replacement…" data-placeholder-es="Pega el alcance de trabajo o describe el trabajo…&#10;&#10;Ejemplo: Dos baños completos — reemplazar accesorios, cerámica nueva, tina independiente, gabinetes nuevos, puerta de bolsillo, pisos nuevos en 2,281 pies cuadrados…" placeholder="Paste scope of work, RFP, or describe the job…&#10;&#10;Example: Two full bathroom remodels — replace all fixtures, new ceramic tile, freestanding tub in master bath, new cabinetry, pocket door, all new flooring throughout 2,281 sf, kitchen counter + appliances + hood, full A/C replacement…"></textarea>
-        </div>
-      </div>
-
-      <!-- Job Details -->
-      <div class="gc">
-        <div class="gc-head"><div class="gc-title" data-en="Job Details" data-es="Detalles del Trabajo">Job Details</div></div>
-        <div class="gc-body">
+          <div class="field">
+            <div class="flabel"><i data-lucide="map-pin" class="ficon"></i><span data-en="City / Municipality" data-es="Ciudad / Municipio">City / Municipality</span></div>
+            <div style="position:relative">
+              <input id="est-location" type="text" class="finput" placeholder="City, State or ZIP code" data-placeholder-es="Ciudad, estado o código postal" autocomplete="off" oninput="cityAutocomplete(this.value)" onkeydown="cityKeyNav(event)">
+              <div id="city-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--panel);border:1.5px solid var(--gold);border-radius:10px;z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.4);margin-top:4px"></div>
+            </div>
+          </div>
           <div class="field">
             <div class="flabel"><i data-lucide="hammer" class="ficon"></i><span data-en="Trade" data-es="Oficio">Trade</span></div>
             <div class="fcontrol">
@@ -1047,13 +1061,16 @@ body.has-gopro .topbar-brand{display:none}
               <span class="fchev">›</span>
             </div>
           </div>
-          <div class="field">
-            <div class="flabel"><i data-lucide="map-pin" class="ficon"></i><span data-en="City / Municipality" data-es="Ciudad / Municipio">City / Municipality</span></div>
-            <div style="position:relative">
-              <input id="est-location" type="text" class="finput" placeholder="City, State or ZIP code" data-placeholder-es="Ciudad, estado o código postal" autocomplete="off" oninput="cityAutocomplete(this.value)" onkeydown="cityKeyNav(event)">
-              <div id="city-dropdown" style="display:none;position:absolute;top:100%;left:0;right:0;background:var(--panel);border:1.5px solid var(--gold);border-radius:10px;z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.4);margin-top:4px"></div>
-            </div>
+          <div class="d-suggest" id="trade-suggest" hidden>
+            <span id="trade-suggest-text"></span>
+            <div class="d-suggest-btns"><button class="d-suggest-yes" id="trade-suggest-yes" onclick="acceptTradeSuggestion()"></button><button class="d-suggest-no" onclick="dismissTradeSuggestion()" data-en="Keep General Contractor" data-es="Dejar Contratista General">Keep General Contractor</button></div>
           </div>
+        </div>
+      </div>
+
+      <div class="gc d-folds">
+        <button class="d-row-link d-fold" onclick="toggleFold('more-details',this)"><span data-en="More details (optional)" data-es="Más detalles (opcional)">More details (optional)</span><span class="d-chev">›</span></button>
+        <div id="more-details" class="d-fold-body" hidden>
           <div class="field">
             <div class="flabel"><i data-lucide="home" class="ficon"></i><span data-en="Project Type" data-es="Tipo de Proyecto">Project Type</span></div>
             <div class="fcontrol">
@@ -1079,6 +1096,9 @@ body.has-gopro .topbar-brand{display:none}
             <div class="flabel"><i data-lucide="user" class="ficon"></i><span data-en="Client Name" data-es="Nombre del Cliente">Client Name</span></div>
             <input id="est-client" type="text" class="finput" placeholder="Client or company name" data-placeholder-es="Nombre del cliente o empresa">
           </div>
+        </div>
+        <button class="d-row-link d-fold" onclick="toggleFold('your-settings',this)"><span><span data-en="Your settings" data-es="Tu configuración">Your settings</span><span class="d-fold-sum" id="settings-summary"></span></span><span class="d-chev">›</span></button>
+        <div id="your-settings" class="d-fold-body" hidden>
           <div class="field">
             <div class="flabel" data-en="Market Pricing Level" data-es="Nivel de Precios del Mercado">Market Pricing Level</div>
             <div class="market-adj" id="market-adj">
@@ -1088,11 +1108,7 @@ body.has-gopro .topbar-brand{display:none}
             </div>
             <div style="font-size:10px;color:var(--muted);margin-top:4px;padding-left:4px;font-family:'DM Mono',monospace" id="market-adj-hint" data-es="Tarifas estándar del mercado en tu zona">Standard market rates for your area</div>
           </div>
-        </div>
-      </div>
-
-      <!-- Bid config -->
-      <div class="gc">
+          <div class="gc">
         <div class="gc-head"><div class="gc-title" data-en="Bid Configuration" data-es="Configuración de Oferta">Bid Configuration</div></div>
         <div class="gc-body">
           <div class="field">
@@ -1112,9 +1128,7 @@ body.has-gopro .topbar-brand{display:none}
           </div>
         </div>
       </div>
-
-      <!-- Margin settings -->
-      <div class="gc">
+          <div class="gc">
         <div class="gc-head">
           <div class="gc-title" data-en="Margin Settings" data-es="Configuración de Margen">Margin Settings</div>
           <div class="gc-tag" data-en="✓ Saved" data-es="✓ Guardado">✓ Saved</div>
@@ -1185,9 +1199,7 @@ body.has-gopro .topbar-brand{display:none}
 
         </div>
       </div>
-
-      <!-- Labor cost: a contractor setting, never chosen by the AI -->
-      <div class="gc">
+          <div class="gc">
         <div class="gc-head">
           <div class="gc-title" data-en="Labor Cost" data-es="Costo de Mano de Obra">Labor Cost</div>
           <div class="gc-tag" id="labor-tag">Even default</div>
@@ -1210,11 +1222,7 @@ body.has-gopro .topbar-brand{display:none}
           </div>
         </div>
       </div>
-
-      <div id="free-count-display" style="text-align:center;font-size:11px;font-family:'DM Mono',monospace;letter-spacing:1px;color:var(--muted);margin-bottom:8px;display:none"></div>
-
-      <!-- Payment Schedule (input screen) -->
-      <div class="gc" style="margin-bottom:12px">
+          <div class="gc" style="margin-bottom:12px">
         <div class="gc-head">
           <div class="gc-title"><i data-lucide="credit-card" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-en="Payment Schedule" data-es="Calendario de Pagos">Payment Schedule</span></div>
           <div class="gc-tag" data-en="Shows on proposal" data-es="Aparece en propuesta">Shows on proposal</div>
@@ -1238,11 +1246,14 @@ body.has-gopro .topbar-brand{display:none}
           </div>
         </div>
       </div>
+        </div>
+      </div>
 
-      <button class="cta" id="gen-btn" onclick="startEstimate()">
+      <button class="cta d-big-btn" id="gen-btn" onclick="startEstimate()">
         <img src="assets/logo-hero.png" width="18" height="18" alt="" style="object-fit:contain;">
-        <span data-en="Analyze Scope & Build Estimate" data-es="Analizar Alcance y Generar Estimado">Analyze Scope & Build Estimate</span>
+        <span data-en="Analyze job →" data-es="Analizar trabajo →">Analyze job →</span>
       </button>
+      <div id="free-count-display" style="text-align:center;font-size:11px;font-family:'DM Mono',monospace;letter-spacing:1px;color:var(--muted);margin:2px 0 12px;display:none"></div>
 
     </div>
   </div><!-- /s-input -->
@@ -1742,7 +1753,11 @@ function updateUserBadge(){
       if(badge){ badge.style.display='none'; }
       if(freeDisplay){
         const es=appLang==='es';
-        freeDisplay.textContent = rem > 1 ? (es?`${rem} estimados gratis restantes`:`${rem} free estimates left`)
+        // Bug 3 (2026-10-06): after sign-up "4 left" looked wrong without the why.
+        // A free account gets FREE_LIMIT in total, and estimates run before
+        // signing up on this device count toward it.
+        freeDisplay.textContent = (rem >= 1 && currentUser) ? (es?`Cuenta gratis: te quedan ${rem} de ${FREE_LIMIT} estimados (${estimateCount} ya usado${estimateCount===1?'':'s'}, contando los de antes de crear tu cuenta)`:`Free account: ${rem} of ${FREE_LIMIT} estimates left (${estimateCount} used, including any from before you signed up)`)
+          : rem > 1 ? (es?`${rem} estimados gratis restantes`:`${rem} free estimates left`)
           : rem === 1 ? (es?'Último estimado gratis':'Last free estimate')
           : currentUser ? (es?'Estimados gratis usados. Pasa a Pro para seguir.':'Free estimates used. Go Pro to continue.')
           : (es?'Estimados gratis usados. Crea una cuenta gratis para 2 más.':'Free estimates used. Create a free account for 2 more.');
@@ -2066,6 +2081,7 @@ function setLang(lang,btn){
   updateBidHeadline();
   if(typeof renderLaborSettings==='function') renderLaborSettings();
   if(currentEstimate){ renderPriceCard(); renderLaborCard(currentEstimate); }
+  if(typeof updateSettingsSummary==='function'){ updateSettingsSummary(); refreshTradeSuggestion(); }
   // Text built in code (free-estimate count, upsell) is redrawn in the new language.
   if(typeof updateUserBadge==='function') updateUserBadge();
   const _asb=document.getElementById('auth-submit-btn'); if(_asb&&!_asb.disabled) _asb.textContent=authSubmitLabel(authMode);
@@ -2204,6 +2220,7 @@ function startSlide(e,trackId,labelId,min,max,suffix,cb){
 }
 
 function updateCombined(){
+  if(typeof updateSettingsSummary==='function') updateSettingsSummary();
   const {oh,profit,cushion}=sliderVals;
   const total=oh+profit+cushion;
   const el=document.getElementById('combined-val');
@@ -4818,6 +4835,64 @@ document.getElementById('est-location').addEventListener('change',function(){
   document.getElementById('sqft-hint').textContent=hint;
 });
 
+// ── Start screen (polish round 2) ──
+function toggleFold(id,btn){
+  const el=document.getElementById(id); if(!el) return;
+  el.hidden=!el.hidden; if(btn) btn.classList.toggle('open',!el.hidden);
+}
+// The folded "Your settings" row says what's inside, so nothing is hidden by surprise.
+function updateSettingsSummary(){ try{ _updateSettingsSummary(); }catch(e){ /* settings not loaded yet */ } }
+setTimeout(updateSettingsSummary,0);
+function _updateSettingsSummary(){
+  const el=document.getElementById('settings-summary'); if(!el) return;
+  const es=appLang==='es';
+  const lab=(typeof laborSettings!=='undefined'&&laborSettings.rate&&isPro)?(es?`Mano de obra $${laborSettings.rate}/h`:`Labor $${laborSettings.rate}/hr`)
+    :`${es?'Mano de obra':'Labor'} ${(typeof laborSettings!=='undefined'?laborSettings.mult:LABOR_MULT_DEFAULT).toFixed(1)}x`;
+  const adj=(typeof marketAdj!=='undefined'&&marketAdj!=='standard')?` · ${marketAdj==='aggressive'?(es?'Agresivo':'Aggressive'):'Premium'}`:'';
+  el.textContent=`${es?'Gastos':'Overhead'} ${sliderVals.oh}% · ${es?'Ganancia':'Profit'} ${sliderVals.profit}% · ${es?'Colchón':'Cushion'} ${sliderVals.cushion}% · ${lab}${adj}`;
+}
+// Trade suggestion (approved 2026-10-10). Only while Trade is still General
+// Contractor, only when the job clearly names ONE trade, never on remodel words
+// or when two trades show up. It never changes the trade by itself.
+const TRADE_SUGGEST_REMODEL=/\b(bath(room)?s?|kitchens?|remodel\w*|renovat\w*|gut|additions?|baños?|cocinas?|remodela\w*|renovaci\w*|ampliaci\w*)\b/i;
+const TRADE_SUGGEST_RULES=[
+  ['Electrical',/\b(panel|breakers?|\d{2,3}\s?a(mps?)?|amps?|outlets?|wiring|rewire|circuits?|generator|ev charger|electrical|eléctric\w*|tablero|interruptor(es)?|cableado|tomacorrientes?)\b/i],
+  ['Plumbing',/\b(water heater|toilets?|faucets?|pipes?|repipe|drains?|sewer|plumbing|calentador|inodoros?|tuberías?|plomer\w*|grifos?)\b/i],
+  ['HVAC',/(\ba\/c\b|\bac\b|air condition\w*|condenser|air handler|ducts?\b|ductwork|\bhvac\b|heat pump|aire acondicionado|condensador|ductos?\b)/i],
+  ['Roofing',/\b(roofs?|roofing|shingles?|re-?roof\w*|techos?|tejas?)\b/i]
+];
+function suggestTrade(text,trade){
+  if(trade!=='General Contractor') return null;
+  const t=String(text||'');
+  if(t.trim().length<8||TRADE_SUGGEST_REMODEL.test(t)) return null;
+  const hits=TRADE_SUGGEST_RULES.filter(([,re])=>re.test(t)).map(([n])=>n);
+  return hits.length===1?hits[0]:null;
+}
+let _tradeSuggestDismissed='';
+function refreshTradeSuggestion(){
+  const box=document.getElementById('trade-suggest'); if(!box) return;
+  const text=document.getElementById('scope-text')?.value||'';
+  const pick=suggestTrade(text,document.getElementById('est-trade')?.value);
+  if(!pick||_tradeSuggestDismissed===text){ box.hidden=true; return; }
+  const es=appLang==='es', label=tradeLabel(pick,appLang);
+  const work={Electrical:es?'eléctrico':'electrical',Plumbing:es?'de plomería':'plumbing',HVAC:es?'de aire acondicionado':'HVAC',Roofing:es?'de techo':'roofing'}[pick];
+  document.getElementById('trade-suggest-text').textContent=es?`Este trabajo parece solo ${work}.`:`This job reads as ${work} work only.`;
+  const yes=document.getElementById('trade-suggest-yes'); yes.textContent=es?`Cambiar oficio a ${label}`:`Set trade to ${label}`; yes.dataset.trade=pick;
+  box.hidden=false;
+}
+function acceptTradeSuggestion(){
+  const sel=document.getElementById('est-trade'), pick=document.getElementById('trade-suggest-yes')?.dataset.trade;
+  if(sel&&pick){ sel.value=pick; sel.dispatchEvent(new Event('change',{bubbles:true})); }
+  document.getElementById('trade-suggest').hidden=true;
+}
+function dismissTradeSuggestion(){
+  _tradeSuggestDismissed=document.getElementById('scope-text')?.value||'';
+  document.getElementById('trade-suggest').hidden=true;
+}
+let _tradeSuggestTimer=null;
+document.addEventListener('input',e=>{ if(e.target?.id==='scope-text'){ clearTimeout(_tradeSuggestTimer); _tradeSuggestTimer=setTimeout(refreshTradeSuggestion,500); } });
+document.addEventListener('change',e=>{ if(e.target?.id==='est-trade') refreshTradeSuggestion(); });
+
 // Market adjuster
 let marketAdj = 'standard';
 function setMarketAdj(btn, val) {
@@ -4836,6 +4911,7 @@ function setMarketAdj(btn, val) {
   };
   const hintMap = appLang === 'es' ? hintsEs : hints;
   document.getElementById('market-adj-hint').textContent = hintMap[val];
+  updateSettingsSummary();
 }
 
 // Delivery, disposal and floor protection are overhead on the work — they follow
@@ -5020,6 +5096,7 @@ function saveLaborSettings(){
   clearTimeout(window._laborSaveT); window._laborSaveT=setTimeout(savePrefs,1200);
 }
 function renderLaborSettings(){
+  if(typeof updateSettingsSummary==='function') updateSettingsSummary();
   const m=laborSettings.mult;
   const pct=(m-LABOR_MULT_MIN)/(LABOR_MULT_MAX-LABOR_MULT_MIN)*100;
   const f=document.getElementById('sf-lmult'),t=document.getElementById('sh-lmult'),b=document.getElementById('lv-lmult');
