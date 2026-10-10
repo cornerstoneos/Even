@@ -34,6 +34,7 @@ check('flip on Railway: EVEN_MAIN_MODEL takes effect', s2.body.model==='claude-s
 check('no fallback sent to a model that does not take it', !s2.body.fallbacks);
 check('flip on Railway: EVEN_LIGHT_MODEL takes effect, old Haiku keeps its default thinking', b2.body.model==='claude-haiku-4-5'&&!b2.body.thinking, JSON.stringify(b2.body));
 delete process.env.EVEN_MAIN_MODEL; delete process.env.EVEN_LIGHT_MODEL;
+check('the browser no longer names a model', !/model:'claude-|model: 'claude-/.test(html));
 
 console.log('\n=== Through the real server (Anthropic mocked) ===');
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),'even-models-'));

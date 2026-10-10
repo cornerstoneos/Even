@@ -2399,7 +2399,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sam
   // The server picks the model (lib/guard.js). It reasons before writing, and
   // max_tokens caps thinking + response together, so callers pass larger budgets
   // than the visible output alone would need.
-  const body={even_kind:kind,model:'claude-sonnet-5',max_tokens:maxTokens,messages};
+  const body={even_kind:kind,max_tokens:maxTokens,messages};
   if(effort) body.output_config={effort};
   applyCacheBreakpoint(body,messages,useCache);
   const MAX_RETRIES=2;
@@ -2452,7 +2452,7 @@ async function callClaude(messages,maxTokens=2500,useCache=false,effort=null,sam
 // as text arrives. Returns the full accumulated text. Falls back to callClaude on any
 // streaming failure so an estimate is never lost.
 async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}){
-  const body={even_kind:opts.kind||'estimate',model:'claude-sonnet-5',max_tokens:maxTokens,stream:true,messages};
+  const body={even_kind:opts.kind||'estimate',max_tokens:maxTokens,stream:true,messages};
   if(opts.effort) body.output_config={effort:opts.effort};
   // Sonnet 5 thinks by default and returns thinking blocks with EMPTY text unless
   // asked for a summary. That empty stream is what the dead progress bar was made
@@ -5335,7 +5335,7 @@ async function proposalBeautify(){
     const r=await fetch(`${API_ORIGIN}/api/estimate`,{
       method:'POST',headers:await apiHeaders(),
       body:JSON.stringify({
-        even_kind:'beautify',model:'claude-haiku-4-5',max_tokens:500,
+        even_kind:'beautify',max_tokens:500,
         messages:[{role:'user',content:`You are a professional proposal writer for contractors. Rewrite the following project scope into clean, client-facing proposal language. Sound professional and confident. Keep it concise (2-3 sentences max). Do NOT use jargon. Do NOT mention specific prices. Return ONLY the rewritten text, no quotes, no intro.\n\nOriginal scope: "${scope}"\nWork items: ${items}`}]
       })
     });
@@ -5755,7 +5755,6 @@ async function extractPriceSheet(input){
 
       const body = {
         even_kind: 'price_sheet',
-        model: 'claude-haiku-4-5',
         max_tokens: 1500,
         messages:[{
           role:'user',
@@ -6032,7 +6031,6 @@ async function generateInsights(estimates){
       headers:await apiHeaders(),
       body:JSON.stringify({
         even_kind:'insights',
-        model:'claude-haiku-4-5',
         max_tokens:400,
         messages:[{role:'user',content:`You are Even, a business intelligence AI for contractors. Analyze this contractor's estimate history. Return exactly 3 short, specific, actionable insights — each one sentence. Mention real numbers from their data. Focus on margin risk, pricing patterns, or win/loss trends. No generic advice.\n\nData:\n${summary}\n\nReturn ONLY valid JSON, no markdown: {"insights":["...","...","..."]}`}]
       })
