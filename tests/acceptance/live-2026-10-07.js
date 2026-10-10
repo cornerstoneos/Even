@@ -24,7 +24,7 @@ const REASON_RE=/\bI'll\b|\bI will\b|\bLet me\b|\bP\d+ is\b|\bthe catalog\b|\bre
       if(u.includes('/api/estimate')){const kind=JSON.parse(req.postData()||'{}').even_kind;R.cache.push({kind,status:resp.status,body:resp.status>=400?(await resp.clone().text()).slice(0,300):undefined,cache:resp.headers.get('x-even-cache'),key:(resp.headers.get('x-even-cache-key')||'').slice(0,8)});}
       const b=Buffer.from(await resp.arrayBuffer());const rh={};resp.headers.forEach((v,k)=>{if(!['content-encoding','content-length','transfer-encoding'].includes(k))rh[k]=v;});await r.fulfill({status:resp.status,headers:rh,body:b});}catch(e){await r.abort().catch(()=>{});}});
   await page.goto('https://even-os.com/',{waitUntil:'domcontentloaded'}); await page.waitForTimeout(3500);
-  R.deployOk=await page.evaluate(()=>typeof THINK_STEPS!=='undefined'||document.documentElement.innerHTML.includes('THINK_STEPS'));
+  R.deployOk=await page.evaluate(()=>document.documentElement.innerHTML.includes('Leyendo la lista de precios'));
   const text=()=>page.evaluate(()=>document.body.innerText);
   const snap=async step=>{const t=await text();fs.writeFileSync(`${out}/${step}.txt`,t);await page.screenshot({path:`${out}/${step}.png`,fullPage:true});if(LANG==='es')R.english[step]=englishHits(t);};
   if(LANG==='es') await page.evaluate(()=>{const b=[...document.querySelectorAll('.lang-btn')].find(x=>x.textContent.trim()==='ES');setLang('es',b);});
@@ -41,6 +41,7 @@ const REASON_RE=/\bI'll\b|\bI will\b|\bLet me\b|\bP\d+ is\b|\bthe catalog\b|\bre
   const nq=await page.locator('.q-block').count();
   for(let i=0;i<nq;i++){ await page.locator(`#qchips-${i} .q-chip`).first().click(); await page.waitForTimeout(200); }
   await page.waitForTimeout(700);
+  const t0=Date.now();
   await page.click('#calc-btn');
   for(let i=0;i<600;i++){
     const t=await page.evaluate(()=>{const a=document.getElementById('loading-step-text'),b=document.getElementById('loading-live-items');return (a?a.innerText:'')+' || '+(b?b.innerText:'');});
@@ -49,7 +50,7 @@ const REASON_RE=/\bI'll\b|\bI will\b|\bLet me\b|\bP\d+ is\b|\bthe catalog\b|\bre
     if(await page.locator('#s-estimate.active').count()) break;
     await page.waitForTimeout(250);
   }
-  await page.waitForSelector('#s-estimate.active',{timeout:180000}); await page.waitForTimeout(2000);
+  await page.waitForSelector('#s-estimate.active',{timeout:180000}); R.seconds=Math.round((Date.now()-t0)/100)/10; await page.waitForTimeout(2000);
   await snap('4-estimate');
   Object.assign(R,await page.evaluate(()=>({total:currentEstimate.totalBid,direct:currentEstimate.subtotal,
     lines:currentEstimate.lineItems.map(l=>`${l.category} | ${l.description} | ${l.qty} ${l.unit} x ${l.unitCost} = ${l.total}${l.ref?' ['+l.ref+']':''}`),
