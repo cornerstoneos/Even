@@ -744,6 +744,16 @@ body:has(#s-dashboard.active) .app{min-height:0}
 .d-sticky{position:sticky;bottom:0;padding:14px 0 6px;background:linear-gradient(to bottom,transparent,var(--bg) 35%);z-index:5}
 /* ── Start screen (polish round 2) ── */
 .d-job .ftextarea{min-height:110px;font-size:15px}
+.hero-tag{display:flex;flex-direction:column;align-items:center;font-size:30px;font-weight:800;line-height:1.12;letter-spacing:-.02em;margin-top:6px}
+.hero-w{color:var(--white)}.hero-g{color:var(--gold)}
+.hero-sub{font-size:13px;color:var(--muted);margin-top:8px;line-height:1.5}
+.d-upload2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 0}
+.up-note{font-size:11px;color:var(--muted);text-align:center;margin:6px 0 14px}
+.d-upload2.drag .up-btn{border-color:var(--gold)}
+.up-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 8px;background:transparent;border:1.5px dashed var(--rim2);border-radius:12px;color:var(--white);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.up-btn:hover{border-color:var(--gold)}
+.up-btn svg,.up-btn i{width:18px;height:18px;stroke:var(--gold)}
+#img-strip:empty{display:none}
 .upload-zone.d-upload{padding:12px;margin:10px 0 14px;border-style:dashed;display:flex;flex-direction:column;align-items:center;gap:2px}
 .d-upload .upload-title{font-size:13px;margin:0}.d-upload .upload-sub{font-size:10.5px}
 .d-suggest{margin-top:2px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:12px;padding:11px 12px;font-size:13px;color:var(--white2)}
@@ -1085,7 +1095,8 @@ body:has(#s-dashboard.active) .app{min-height:0}
           <img src="assets/logo-hero.png" alt="Even" style="width:62px;height:62px;object-fit:contain;display:block">
           <div class="brand-lockup-word" style="font-size:25px">even<b>.</b></div>
         </div>
-        <div style="font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5" data-en="Scope in. Winning bid out.<br>Built for contractors." data-es="Alcance adentro. Oferta ganadora afuera.<br>Hecho para contratistas.">Scope in. Winning bid out.<br>Built for contractors.</div>
+        <div class="hero-tag"><span class="hero-w" data-en="Scope in." data-es="Alcance adentro.">Scope in.</span><span class="hero-g" data-en="Winning bid out." data-es="Oferta ganadora afuera.">Winning bid out.</span></div>
+        <div class="hero-sub" data-en="Real local prices and your city's permit fees." data-es="Precios locales reales y las tarifas de permiso de tu ciudad.">Real local prices and your city's permit fees.</div>
       </div>
 
       <!-- Start screen (polish round 2, approved 2026-10-10): the job, city and trade
@@ -1094,13 +1105,14 @@ body:has(#s-dashboard.active) .app{min-height:0}
         <div class="gc-head"><div class="gc-title" data-en="What's the job?" data-es="¿Cuál es el trabajo?">What's the job?</div></div>
         <div class="gc-body">
           <textarea id="scope-text" class="ftextarea" rows="5" data-placeholder-en="Paste scope of work, RFP, or describe the job…&#10;&#10;Example: Two full bathroom remodels — replace all fixtures, new ceramic tile, freestanding tub in master bath, new cabinetry, pocket door, all new flooring throughout 2,281 sf, kitchen counter + appliances + hood, full A/C replacement…" data-placeholder-es="Pega el alcance de trabajo o describe el trabajo…&#10;&#10;Ejemplo: Dos baños completos — reemplazar accesorios, cerámica nueva, tina independiente, gabinetes nuevos, puerta de bolsillo, pisos nuevos en 2,281 pies cuadrados…" placeholder="Paste scope of work, RFP, or describe the job…&#10;&#10;Example: Two full bathroom remodels — replace all fixtures, new ceramic tile, freestanding tub in master bath, new cabinetry, pocket door, all new flooring throughout 2,281 sf, kitchen counter + appliances + hood, full A/C replacement…"></textarea>
-          <div class="upload-zone d-upload" id="upload-zone" onclick="document.getElementById('file-in').click()">
-            <input type="file" id="file-in" multiple accept="image/*,.pdf,.txt,.doc,.docx" style="display:none" onchange="handleFiles(this.files)">
-            <span class="upload-icon"><i data-lucide="camera" style="width:18px;height:18px;stroke:var(--gold);vertical-align:middle"></i></span>
-            <div class="upload-title" data-en="Drop plans, photos, or PDF scopes" data-es="Sube planos, fotos o PDFs">Drop plans, photos, or PDF scopes</div>
-            <div class="upload-sub" data-en="Photographs of rolled-out plans work great • <span>Up to 10 photos + 3 PDFs</span>" data-es="Fotos de planos funcionan bien • <span>Hasta 10 fotos + 3 PDFs</span>">Photographs of rolled-out plans work great • <span>Up to 10 photos + 3 PDFs</span></div>
-            <div class="img-strip" id="img-strip"></div>
+          <div class="d-upload2" id="upload-zone">
+            <input type="file" id="file-in" multiple accept="image/*,.heic,.heif" style="display:none" onchange="handleFiles(this.files,'img');this.value=''">
+            <input type="file" id="doc-in" multiple accept=".pdf,.txt,.doc,.docx" style="display:none" onchange="handleFiles(this.files,'doc');this.value=''">
+            <button type="button" class="up-btn" onclick="document.getElementById('file-in').click()"><i data-lucide="camera"></i><span data-en="Photos or plans" data-es="Fotos o planos">Photos or plans</span></button>
+            <button type="button" class="up-btn" onclick="document.getElementById('doc-in').click()"><i data-lucide="file-text"></i><span>PDF</span></button>
           </div>
+          <div class="up-note" data-en="Up to 10 photos + 3 PDFs" data-es="Hasta 10 fotos + 3 PDFs">Up to 10 photos + 3 PDFs</div>
+          <div class="img-strip" id="img-strip"></div>
           <div class="field">
             <div class="flabel"><i data-lucide="map-pin" class="ficon"></i><span data-en="City / Municipality" data-es="Ciudad / Municipio">City / Municipality</span></div>
             <div style="position:relative">
@@ -2401,18 +2413,20 @@ function processDocFile(file){
   });
 }
 
-function handleFiles(files){
+// kind 'img' / 'doc' = one of the two buttons: replace only that kind, keep the other.
+// No kind (drag and drop) = replace everything, as before.
+function handleFiles(files,kind){
   const strip=document.getElementById('img-strip');
-  strip.innerHTML='';
-  uploadedImages=[];
-  uploadedDocs=[];
+  if(!kind){strip.innerHTML='';uploadedImages=[];uploadedDocs=[];}
+  else if(kind==='img'){strip.querySelectorAll('.img-thumb,.img-more').forEach(n=>n.remove());uploadedImages=[];}
+  else{strip.querySelectorAll('.doc-chip').forEach(n=>n.remove());uploadedDocs=[];}
   // Only accept image files (including HEIC/HEIF by extension)
-  const allImgs=Array.from(files).filter(f=>
+  const allImgs=kind==='doc'?[]:Array.from(files).filter(f=>
     f.type.startsWith('image/') ||
     f.name.toLowerCase().endsWith('.heic') ||
     f.name.toLowerCase().endsWith('.heif')
   );
-  const allDocs=Array.from(files).filter(f=>
+  const allDocs=kind==='img'?[]:Array.from(files).filter(f=>
     f.type==='application/pdf' || f.name.toLowerCase().endsWith('.pdf')
   );
   // Cap on intake, not just on send. Images were previously uncapped here while
