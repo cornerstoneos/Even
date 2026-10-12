@@ -15,11 +15,11 @@ export const LIBRARY = {
     },
     {
       id: 'wwa-es', title: 'Who We Are (Spanish)', meta: '31s · silent text video', file: '/library/videos/even-who-we-are-es.mp4',
-      caption: `Tarifas de permisos reales, con la fuente a la vista. Mano de obra del sur de la Florida. Calcula tu trabajo en minutos, con números que puedes revisar. Prueba 3 estimados gratis, sin tarjeta de crédito. Link en el perfil.\n\n${ES_TAGS}`,
+      caption: `Tarifas de permisos reales, con la fuente a la vista. Mano de obra del sur de la Florida. Calcula tu trabajo en minutos, con números que puedes revisar. Empezamos en el sur de la Florida, hecho para cada mercado. Prueba 3 estimados gratis, sin tarjeta de crédito. Link en el perfil.\n\n${ES_TAGS}`,
     },
     {
       id: 'wwa-en', title: 'Who We Are (English)', meta: '31s · silent text video', file: '/library/videos/even-who-we-are-en.mp4',
-      caption: `Real permit fees, with the source shown. Local labor rates for South Florida. Prices your job in minutes, with numbers you can check. Try 3 estimates free, no credit card. Link in bio.\n\n${EN_TAGS}`,
+      caption: `Real permit fees, with the source shown. Local labor rates for South Florida. Prices your job in minutes, with numbers you can check. Starting in South Florida, built for every market. Try 3 estimates free, no credit card. Link in bio.\n\n${EN_TAGS}`,
     },
     {
       id: 'pp-es', title: 'Pain Point (Spanish)', meta: '25s · silent text video', file: '/library/videos/even-pain-point-es.mp4',

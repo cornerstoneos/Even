@@ -6,7 +6,7 @@ const SECTIONS_EN = [
   { label: 'Local Labor', body: "Local labor rates\nfor South Florida.", at: 6000 },
   { label: 'In Minutes', body: "Prices your job in minutes\nwith numbers you can check.", at: 11200 },
   { label: 'Not This', body: "Not a spreadsheet.\nNot a guess. Not your cousin's number from 2022.", at: 16400 },
-  { label: 'Built For Here', body: 'It already knows South Florida.', at: 21600 },
+  { label: 'Built To Scale', body: 'Starting in South Florida.\nBuilt for every market.', at: 21600 },
 ]
 
 const SECTIONS_ES = [
@@ -14,7 +14,7 @@ const SECTIONS_ES = [
   { label: 'Mano de Obra Local', body: "Tarifas de mano de obra\ndel sur de la Florida.", at: 6000 },
   { label: 'En Minutos', body: "Calcula tu trabajo en minutos\ncon números que puedes revisar.", at: 11200 },
   { label: 'No Es Esto', body: "No es una hoja de cálculo.\nNo es una adivinanza. No es el número de tu primo en 2022.", at: 16400 },
-  { label: 'Hecho Para Aquí', body: 'Ya conoce el sur de la Florida.', at: 21600 },
+  { label: 'Hecho Para Crecer', body: 'Empezamos en el sur de la Florida.\nHecho para cada mercado.', at: 21600 },
 ]
 
 const TAG_EN = { line1: 'You run the business.', line2: 'We run the numbers.' }
