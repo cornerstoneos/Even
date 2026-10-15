@@ -136,7 +136,30 @@ PROOF = {
  ]),
 }
 
+
+SQUEEZE = {
+ 'en': ('Swipe', [
+  dict(kind='text', title="Nobody sets out to be the contractor everyone complains about."),
+  dict(kind='text', eyebrow='The squeeze', title='It starts with a rushed number.', sub='A quick quote to win the job. The permit forgotten. The hours short. No cushion.'),
+  dict(kind='text', eyebrow='Then', title='The job costs more than the bid.', sub='Materials move. The inspection takes another trip. The margin is gone before the work is.'),
+  dict(kind='text', eyebrow='So', title='The pressure lands on the job.', sub='Change orders. Shortcuts. Slow calls. The client feels it, and the whole trade takes the blame.'),
+  dict(kind='table-total', eyebrow='The fix starts here', title='A number you can check.', rows=[('Permit, with its source', 'included'), ('Labor hours', 'shown'), ('Materials', 'itemized'), ('Overhead and risk cushion', 'yours'), ('Profit', 'yours')]),
+  dict(kind='text', title="I'm not promising you'll win every bid.", sub="I'm giving you a number you can stand behind, and the time back."),
+  dict(kind='cta', title='Check the math on your next bid.', sub='3 free estimates. No credit card.', cta='even-os.com'),
+ ]),
+ 'es': ('Desliza', [
+  dict(kind='text', title='Nadie empieza queriendo ser el contratista del que todos se quejan.'),
+  dict(kind='text', eyebrow='La presión', title='Empieza con un número apurado.', sub='Un presupuesto rápido para ganar el trabajo. El permiso olvidado. Las horas cortas. Sin colchón.'),
+  dict(kind='text', eyebrow='Luego', title='El trabajo cuesta más que la oferta.', sub='Los materiales suben. La inspección toma otro viaje. El margen se acaba antes que el trabajo.'),
+  dict(kind='text', eyebrow='Entonces', title='La presión cae sobre el trabajo.', sub='Órdenes de cambio. Atajos. Llamadas lentas. El cliente lo siente, y todo el gremio carga con la fama.'),
+  dict(kind='table-total', eyebrow='El arreglo empieza aquí', title='Un número que puedes revisar.', rows=[('Permiso, con su fuente', 'incluido'), ('Horas de mano de obra', 'a la vista'), ('Materiales', 'detallados'), ('Gastos y colchón', 'tuyos'), ('Ganancia', 'tuya')]),
+  dict(kind='text', title='No te prometo que ganarás todas las ofertas.', sub='Te doy un número que puedes defender, y el tiempo de vuelta.'),
+  dict(kind='cta', title='Revisa las cuentas en tu próximo presupuesto.', sub='3 estimados gratis. Sin tarjeta de crédito.', cta='even-os.com'),
+ ]),
+}
+
 for lang in ('en', 'es'):
     build('how-it-works', lang, HOW[lang][1], HOW[lang][0])
     build('where-numbers-come-from', lang, PROOF[lang][1], PROOF[lang][0])
+    build('the-squeeze', lang, SQUEEZE[lang][1], SQUEEZE[lang][0])
 print('done')

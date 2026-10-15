@@ -65,5 +65,13 @@ export const LIBRARY = {
       id: 'proof-en', title: 'Where every number comes from (English)', meta: '6 slides · 1080x1350 · proof post', dir: '/library/carousels/where-numbers-come-from-en', prefix: 'where-numbers-come-from-en', count: 6,
       caption: `A 200A panel upgrade in Aventura. Permit, labor, materials and your margins: every number with its source. Check the math on your next bid. 3 free estimates, no credit card. Link in bio.\n\n#electrician #contractors #aventura #miami #southflorida`,
     },
+    {
+      id: 'squeeze-en', title: 'The Squeeze (English)', meta: '7 slides · 1080x1350', dir: '/library/carousels/the-squeeze-en', prefix: 'the-squeeze-en', count: 7,
+      caption: `Nobody sets out to be the contractor everyone complains about. It starts with a rushed number: permit forgotten, hours short, no cushion. Then the job costs more than the bid. A number you can check is where it changes. I'm not promising you'll win every bid. I'm giving you a number you can stand behind, and the time back. Check the math on your next bid. 3 free estimates, no credit card. Link in bio.\n\n#contractors #electrician #bidding #southflorida #smallbusiness`,
+    },
+    {
+      id: 'squeeze-es', title: 'The Squeeze (Spanish)', meta: '7 slides · 1080x1350', dir: '/library/carousels/the-squeeze-es', prefix: 'the-squeeze-es', count: 7,
+      caption: `Nadie empieza queriendo ser el contratista del que todos se quejan. Empieza con un número apurado: permiso olvidado, horas cortas, sin colchón. Y el trabajo termina costando más que la oferta. Un número que puedes revisar cambia eso. No te prometo que ganarás todas las ofertas. Te doy un número que puedes defender, y tu tiempo de vuelta. Revisa las cuentas en tu próximo presupuesto. 3 estimados gratis, sin tarjeta de crédito. Link en el perfil.\n\n#contratistas #electricista #presupuesto #miami #sofla`,
+    },
   ],
 }
