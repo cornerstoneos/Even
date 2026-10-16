@@ -22,7 +22,7 @@ app.use(cors({
   exposedHeaders: ['X-Even-Cache', 'X-Even-Cache-Key'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Even-Cache', 'X-Even-Device']
 }));
-const { buildRequest, MAIN: mainModel, LIGHT: lightModel } = require('./lib/guard');
+const { buildRequest, MAIN: mainModel, LIGHT: lightModel, SCOPE_FIX_TEXT } = require('./lib/guard');
 const guardModels = { MAIN: mainModel, LIGHT: lightModel };
 const { makeUsage, LIMITS } = require('./lib/usage');
 const STARTED_AT = new Date().toISOString();
@@ -390,16 +390,19 @@ function filterPermits(permits, municipality, unincorporated) {
 const HVHZ_MARKETS = new Set(['Miami-Dade', 'Broward']);
 
 // ─── Local market data lookup (grounds estimates in real pipeline data) ──────
-app.get('/api/market-data', async (req, res) => {
-  const location = req.query.location || '';
-  const matched = await resolveMarket(location);
-  if (!matched) return res.json({ market: null, hvhz: null });
+// One function so the quote-link draft reads exactly what the app reads.
+async function marketPayload(location) {
+  const matched = await resolveMarket(location || '');
+  if (!matched) return { market: null, hvhz: null };
   const hvhz = HVHZ_MARKETS.has(matched.market);
   const data = await getMarketData(matched.market);
-  if (!data) return res.json({ market: matched.market, state: matched.state, zone: matched.zone, municipality: matched.municipality || null, hvhz, materials: null, labor: null, permits: null });
+  if (!data) return { market: matched.market, state: matched.state, zone: matched.zone, municipality: matched.municipality || null, hvhz, materials: null, labor: null, permits: null };
   const muniEntry = MUNICIPALITIES.find(m => m.name === matched.municipality && m.market === matched.market);
   const { permits, scope, municipality, missing } = filterPermits(data.permits, matched.municipality, !!muniEntry?.unincorporated);
-  res.json({ ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, permitMissing: missing || [], hvhz });
+  return { ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, permitMissing: missing || [], hvhz };
+}
+app.get('/api/market-data', async (req, res) => {
+  res.json(await marketPayload(req.query.location || ''));
 });
 
 // ─── Scope cache: same job in = same scope out ───────────────────────────────
@@ -728,6 +731,330 @@ app.post('/api/data-trade-credit', async (req, res) => {
   const U = usage(); const ident = await U.identify(req);
   if (!U.rateOk(ident.ipHash, 'event')) return res.status(429).json({ error: { code: 'rate_limited' } });
   try { res.json(await U.dataTradeCredit(ident)); } catch (e) { res.status(500).json({ ok: false }); }
+});
+
+// ─── Quote-request link (Phase B) ────────────────────────────────────────────
+// even-os.com/q/<slug>: a homeowner sends a job, the server builds a DRAFT with
+// the contractor's own settings through the app's own pipeline (lib/pipeline.js
+// runs index.html's prompt and pricing code), and the contractor reviews it in
+// the normal estimate screen. Nothing goes to the homeowner except a "we got
+// your request" confirmation, and only once email is switched on.
+// Tables contractor_pages and quote_requests: RLS on; homeowners never read
+// anything; rows are written only here (service role); a contractor reads and
+// updates only their own. Homeowner contact data stays in Supabase, never logs.
+const PIPE = (() => { try { return require('./lib/pipeline').loadPipeline(); } catch (e) { console.error('pipeline load failed:', e.message); return null; } })();
+const SLUG_RE = /^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/;
+const RESERVED_SLUGS = new Set(['admin', 'api', 'app', 'even', 'help', 'login', 'pro', 'q', 'signup', 'suppliers', 'support', 'test', 'www']);
+const QUOTE_TRADES = ['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks'];
+const svc = extra => ({ 'Content-Type': 'application/json', apikey: process.env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`, ...(extra || {}) });
+async function sbRest(method, pathQ, body, prefer) {
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) return { ok: false, status: 503, data: null };
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${pathQ}`, { method, headers: svc(prefer ? { Prefer: prefer } : {}), body: body ? JSON.stringify(body) : undefined });
+  const text = await r.text();
+  let data = null; try { data = text ? JSON.parse(text) : null; } catch (e) {}
+  return { ok: r.ok, status: r.status, data };
+}
+const clip = (v, n) => String(v == null ? '' : v).replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, n);
+const clipText = (v, n) => String(v == null ? '' : v).replace(/[\u0000-\u0009\u000b-\u001f\u007f]/g, ' ').trim().slice(0, n);
+
+// One AI call the way /api/estimate makes it: same request recipe, same cache
+// key, same stored scope, same free-limit count. Throws { code } on a refusal.
+async function anthropicCall(body) {
+  let lastErr;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const r = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01',
+          'anthropic-beta': ['prompt-caching-2024-07-31', body.fallbacks ? 'server-side-fallback-2026-07-01' : null].filter(Boolean).join(',') },
+        body: JSON.stringify(body)
+      });
+      if (!r.ok) { const e = new Error('anthropic_http_' + r.status); e.code = r.status >= 500 || r.status === 429 ? 'retry' : 'ai_error'; throw e; }
+      if (!body.stream) { const d = await r.json(); return { text: (d.content || []).map(b => b.text || '').join(''), stop: d.stop_reason }; }
+      const reader = r.body.getReader(), dec = new TextDecoder();
+      let buf = '', text = '', stop = null;
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        let i;
+        while ((i = buf.indexOf('\n\n')) >= 0) {
+          const frame = buf.slice(0, i); buf = buf.slice(i + 2);
+          for (const line of frame.split('\n')) {
+            if (!line.startsWith('data:')) continue;
+            try {
+              const ev = JSON.parse(line.slice(5).trim());
+              if (ev.type === 'content_block_delta' && ev.delta?.type === 'text_delta') text += ev.delta.text;
+              else if (ev.type === 'message_delta' && ev.delta?.stop_reason) stop = ev.delta.stop_reason;
+            } catch (e) {}
+          }
+        }
+      }
+      return { text, stop };
+    } catch (e) {
+      lastErr = e;
+      if (e.code === 'ai_error') throw e;
+      if (attempt < 3) await new Promise(r => setTimeout(r, 1500 * attempt));
+    }
+  }
+  throw lastErr;
+}
+async function serverAI(raw, ident) {
+  const built = buildRequest(raw);
+  if (built.error) { const e = new Error(built.error); e.code = 'request_not_allowed'; throw e; }
+  const key = (built.kind === 'scope' || built.kind === 'estimate') ? scopeCacheKey(built.body) : null;
+  if (key) {
+    let text = scopeCacheGet(key);
+    if (!text && scopeInflight.has(key)) text = await Promise.race([scopeInflight.get(key), new Promise(r => setTimeout(() => r(null), 170000))]);
+    if (!text) { text = await scopeDbGet(key); if (text) scopeCacheSet(key, text); }
+    if (text) return { text, key, cached: true };
+  }
+  const U = usage();
+  const st = await U.status(ident);
+  if (!st.allowed) { const e = new Error('limit'); e.code = 'limit'; throw e; }
+  if (built.spec.counts && !st.isPro) U.pend(st.pkey, 1);
+  const finish = key ? scopeInflightStart(key) : () => {};
+  try {
+    const { text, stop } = await anthropicCall(built.body);
+    if (stop === 'refusal') { const e = new Error('refusal'); e.code = 'refusal'; throw e; }
+    if (stop !== 'end_turn') { const e = new Error('cut_off_' + stop); e.code = 'cut_off'; throw e; }
+    if (key) { scopeCacheSet(key, text); finish(text); scopeDbPut(key, text); }
+    if (built.spec.counts) {
+      if (!st.isPro) await U.record(ident, st).catch(e => logError('usage', e.message, null));
+      U.event('estimate_run', ident, jobStats(built.body));
+    }
+    return { text, key, cached: false };
+  } finally {
+    finish(null);
+    if (built.spec.counts && !st.isPro) U.pend(st.pkey, -1);
+  }
+}
+
+// Same as the app's getCostCalibration (Pro only): logged actuals by category.
+async function costCalibrationFor(userId, trade) {
+  if (!trade) return null;
+  const jobs = (await sbRest('GET', `estimates?user_id=eq.${userId}&trade=ilike.${encodeURIComponent('*' + trade + '*')}&select=id,estimate_json&order=created_at.desc&limit=15`)).data || [];
+  if (!jobs.length) return null;
+  const entries = (await sbRest('GET', `cost_entries?estimate_id=in.(${jobs.map(j => j.id).join(',')})&select=estimate_id,line_index,actual_cost`)).data || [];
+  if (entries.length < 3) return null;
+  const byId = Object.fromEntries(jobs.map(j => [j.id, j.estimate_json]));
+  const byCategory = {};
+  entries.forEach(e => {
+    const line = byId[e.estimate_id]?.lineItems?.[e.line_index];
+    if (!line || !line.total) return;
+    (byCategory[line.category || 'Other'] = byCategory[line.category || 'Other'] || []).push(((e.actual_cost - line.total) / line.total) * 100);
+  });
+  return Object.entries(byCategory).filter(([, a]) => a.length >= 2)
+    .map(([category, a]) => ({ category, avgVariancePct: Math.round(a.reduce((s, v) => s + v, 0) / a.length), n: a.length }))
+    .filter(c => Math.abs(c.avgVariancePct) >= 5);
+}
+
+// The contractor's estimate inputs for a request: what the app would hold if
+// they typed this job in themselves (their saved settings, the homeowner's words).
+function quoteJobContext(row, prefs, isPro) {
+  const num = (v, d) => (Number.isFinite(+v) && v !== null && v !== '' ? +v : d);
+  const lang = prefs.lang === 'es' || prefs.lang === 'en' ? prefs.lang : (row.lang === 'es' ? 'es' : 'en');
+  return {
+    trade: QUOTE_TRADES.includes(row.trade) ? row.trade : 'General Contractor',
+    location: [row.city, row.zip].filter(Boolean).join(' '),
+    projtype: 'Residential — Single Family', sqft: 'not specified', client: row.name || '',
+    bidType: prefs.bidType || 'fixed', laborType: prefs.laborType || 'own',
+    oh: num(prefs.oh, 12), profit: num(prefs.profit, 22), cushion: num(prefs.cushion, 8),
+    laborMult: +prefs.laborMult > 0 ? +prefs.laborMult : PIPE.LABOR_MULT_DEFAULT,
+    laborRate: isPro && +prefs.laborRate > 0 ? +prefs.laborRate : null,
+    projectLabel: '', lang, marketAdj: ['aggressive', 'premium'].includes(prefs.marketAdj) ? prefs.marketAdj : 'standard'
+  };
+}
+
+// Builds the draft for one request. Same steps as the app: read the scope,
+// load the city's data, build the catalog, run the estimate prompt, price it in
+// code. The homeowner's job is never re-worded, so the contractor re-running
+// it by hand (same words, same city, questions skipped) gets the same number.
+async function buildQuoteDraft(row) {
+  const setRow = patch => sbRest('PATCH', `quote_requests?id=eq.${row.id}`, patch, 'return=minimal');
+  try {
+    if (!PIPE || !process.env.ANTHROPIC_API_KEY) throw Object.assign(new Error('pipeline_unavailable'), { code: 'failed' });
+    await setRow({ draft_status: 'building' });
+    const u = ((await sbRest('GET', `users?id=eq.${row.user_id}&select=prefs,is_pro,email`)).data || [])[0] || {};
+    const prefs = u.prefs || {}, isPro = !!u.is_pro;
+    const ctx = quoteJobContext(row, prefs, isPro);
+    const ident = { user: { id: row.user_id, email: u.email || null }, ipHash: 'quote-link', devHash: null, fpHash: 'quote-' + row.user_id };
+    const scopeText = row.description;
+    const first = { role: 'user', content: [{ type: 'text', text: PIPE.scopePromptText({ trade: ctx.trade, location: ctx.location, projtype: ctx.projtype, sqft: ctx.sqft, lang: ctx.lang, scope: scopeText, nDocs: 0, nImages: 0 }) }] };
+    const sRes = await serverAI({ even_kind: 'scope', max_tokens: 3000, messages: [first], output_config: { effort: 'low' } }, ident);
+    let scopeData = parseScopeText(sRes.text);
+    if (!scopeData) {
+      const fix = await serverAI({ even_kind: 'scope_fix', max_tokens: 1500, messages: [first, { role: 'assistant', content: sRes.text }, { role: 'user', content: SCOPE_FIX_TEXT }], output_config: { effort: 'low' } }, ident);
+      scopeData = parseScopeText(fix.text);
+    }
+    if (!scopeData) throw Object.assign(new Error('scope_unreadable'), { code: 'failed' });
+    let md = await marketPayload(ctx.location);
+    const hvhz = md && md.market && typeof md.hvhz === 'boolean' ? md.hvhz : false;
+    if (!md || !md.market || (!md.materials?.length && !md.labor?.length && !md.permits?.length)) md = null;
+    if (md && Array.isArray(md.materials)) md.materials = md.materials.filter(r => r?.tier !== 'invalid_cross_market_copy');
+    const scopeCats = PIPE.scopeMaterialCategories(ctx.trade, scopeData.tradeBreakdown);
+    const catalog = PIPE.buildCatalog(md, scopeCats, { suppliers: prefs.suppliers, subs: prefs.subs });
+    const hvhzNote = PIPE.hvhzNoteFor(hvhz);
+    const pricingBlock = PIPE.pricingBlockFor(md, hvhzNote, catalog, ctx.location);
+    const blocks = PIPE.estimatePromptBlocks({ ctx, scope: scopeText, ansText: '', tradeBreakdown: scopeData.tradeBreakdown || [], pricingBlock, lang: ctx.lang });
+    const eRes = await serverAI({ even_kind: 'estimate', max_tokens: 24000, stream: true, messages: [{ role: 'user', content: blocks }], output_config: { effort: 'medium' }, thinking: { type: 'adaptive', display: 'summarized' } }, ident);
+    const scoped = parseScopeText(eRes.text);
+    if (!scoped) throw Object.assign(new Error('estimate_unreadable'), { code: 'failed' });
+    const adj = PIPE.marketAdjFor(ctx.marketAdj);
+    const calibration = isPro ? await costCalibrationFor(row.user_id, ctx.trade).catch(() => null) : null;
+    const data = PIPE.priceScope(scoped, catalog, { marketAdj: adj.mult, laborMult: ctx.laborMult, laborRate: ctx.laborRate, oh: ctx.oh, profit: ctx.profit, cushion: ctx.cushion,
+      sqft: parseFloat(String(ctx.sqft).replace(/,/g, '')) || 0, hvhz, calibration, lang: ctx.lang });
+    if (data.pricingNotes.length) data.assumptions = [...data.pricingNotes, ...data.assumptions];
+    data.labelAdj = adj.label;
+    data.scopeKey = eRes.key || null;
+    data.confidenceTier = PIPE.computeConfidenceTier(md, scopeCats);
+    data.jobAddress = [row.address, row.city].filter(Boolean).join(', ');
+    const marketMeta = md ? {
+      market: md.market, municipality: md.municipality, permitScope: md.permitScope, permitMissing: md.permitMissing || [],
+      permitCount: (md.permits || []).length, materialCount: PIPE.inScopeMaterials(md.materials, scopeCats).length,
+      materialScope: scopeCats ? [...scopeCats].join(', ') : null, laborCount: (md.labor || []).length,
+      proMaterials: PIPE.materialSourceQuality(md.materials, scopeCats) >= 3,
+      permitCounty: (md.permits || []).map(p => p.municipality || '').find(n => /\bcounty\b/i.test(n)) || null
+    } : null;
+    const draft = { v: 1, ctx, scopeText, scopeData: { projectName: scopeData.projectName, tradeBreakdown: scopeData.tradeBreakdown || [], keyFacts: scopeData.keyFacts || [], questions: scopeData.questions || [] },
+      estimate: data, marketMeta, hvhz, builtAt: new Date().toISOString() };
+    await setRow({ draft, draft_status: 'ready' });
+    return { ok: true, draft };
+  } catch (e) {
+    const code = e.code === 'limit' ? 'limit' : 'failed';
+    if (code === 'failed') logError('quote_draft', e.message, { request: row.id });
+    await setRow({ draft_status: code }).catch(() => {});
+    return { ok: false, code };
+  }
+}
+
+// Email stays OFF until the founder turns it on: QUOTE_EMAIL_ENABLED=1 plus
+// RESEND_API_KEY and NOTIFY_FROM_EMAIL on Railway (even-os.com must be verified
+// in Resend first). No address is written in this public repo.
+const quoteEmailOn = () => process.env.QUOTE_EMAIL_ENABLED === '1' && !!process.env.RESEND_API_KEY && !!process.env.NOTIFY_FROM_EMAIL;
+async function sendEmail(to, subject, text) {
+  if (!quoteEmailOn() || !to) return false;
+  try {
+    const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+      body: JSON.stringify({ from: process.env.NOTIFY_FROM_EMAIL, to: [to], subject, text, ...(process.env.REPLY_TO_EMAIL ? { reply_to: process.env.REPLY_TO_EMAIL } : {}) }) });
+    if (!r.ok) logError('email', 'resend_' + r.status, null);
+    return r.ok;
+  } catch (e) { logError('email', e.message, null); return false; }
+}
+
+const quoteIpDay = new Map();
+function quoteIpOk(ipHash) {
+  const k = ipHash + ':' + new Date().toISOString().slice(0, 10);
+  const n = (quoteIpDay.get(k) || 0) + 1;
+  quoteIpDay.set(k, n);
+  if (quoteIpDay.size > 20000) quoteIpDay.delete(quoteIpDay.keys().next().value);
+  return n <= LIMITS.QUOTE_PER_IP_PER_DAY;
+}
+async function pageBySlug(slug) {
+  if (!SLUG_RE.test(slug)) return null;
+  const r = await sbRest('GET', `contractor_pages?slug=eq.${slug}&active=eq.true&select=user_id,slug,company,phone,logo_url,trades`);
+  return (r.data || [])[0] || null;
+}
+
+// Public: what the homeowner form shows. No prices, no pricing data, no user id.
+app.get('/api/q/:slug', async (req, res) => {
+  const U = usage(); const ident = await U.identify(req);
+  if (!U.rateOk(ident.ipHash, 'page')) return res.status(429).json({ error: { code: 'rate_limited' } });
+  const page = await pageBySlug(String(req.params.slug || '').toLowerCase());
+  if (!page) return res.status(404).json({ error: { code: 'not_found' } });
+  res.json({ slug: page.slug, company: page.company || '', phone: page.phone || '', logo: page.logo_url || '', trades: (page.trades || []).filter(t => QUOTE_TRADES.includes(t)) });
+});
+
+app.post('/api/quote-request', async (req, res) => {
+  if (!appOnly(req, res)) return;
+  const U = usage(); const ident = await U.identify(req);
+  const b = req.body || {};
+  if (!U.rateOk(ident.ipHash, 'quote') || !quoteIpOk(ident.ipHash)) return res.status(429).json({ error: { code: 'rate_limited' } });
+  // Honeypot: a hidden field people never see. A bot that fills it gets a normal
+  // "thanks" and nothing is stored or built.
+  if (clip(b.website, 200)) return res.json({ ok: true });
+  const row = {
+    slug: clip(b.slug, 40).toLowerCase(), name: clip(b.name, 100), phone: clip(b.phone, 40), email: clip(b.email, 200).toLowerCase(),
+    address: clip(b.address, 200), city: clip(b.city, 80), zip: clip(b.zip, 10), trade: clip(b.trade, 40),
+    description: clipText(b.description, 4000), lang: b.lang === 'es' ? 'es' : 'en'
+  };
+  const bad = [];
+  if (!row.name) bad.push('name');
+  if (!row.phone && !row.email) bad.push('contact');
+  if (row.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(row.email)) bad.push('email');
+  if (row.phone && (row.phone.replace(/\D/g, '').length < 7)) bad.push('phone');
+  if (!row.city) bad.push('city');
+  if (row.zip && !/^\d{5}$/.test(row.zip)) bad.push('zip');
+  if (row.description.length < 10) bad.push('description');
+  if (bad.length) return res.status(400).json({ error: { code: 'invalid', fields: bad } });
+  const page = await pageBySlug(row.slug);
+  if (!page) return res.status(404).json({ error: { code: 'not_found' } });
+  if (!(page.trades || []).includes(row.trade)) row.trade = 'General Contractor';
+  const since = new Date(Date.now() - 86400000).toISOString();
+  const recent = await sbRest('GET', `quote_requests?user_id=eq.${page.user_id}&created_at=gt.${encodeURIComponent(since)}&select=id`);
+  const overCap = (recent.data || []).length >= LIMITS.QUOTE_DRAFTS_PER_PAGE_PER_DAY;
+  const ins = await sbRest('POST', 'quote_requests', { ...row, user_id: page.user_id, status: 'new', draft_status: overCap ? 'capped' : 'pending' }, 'return=representation');
+  if (!ins.ok || !ins.data?.[0]) { logError('quote_request', 'insert_failed_' + ins.status, null); return res.status(500).json({ error: { code: 'unavailable' } }); }
+  const saved = ins.data[0];
+  res.json({ ok: true });
+  // After the answer: the homeowner never waits on the AI.
+  if (!overCap) buildQuoteDraft(saved).catch(() => {});
+  const es = row.lang === 'es';
+  sendEmail(row.email, es ? `Recibimos tu solicitud: ${page.company || ''}`.trim() : `We got your request: ${page.company || ''}`.trim(),
+    es ? `Hola ${row.name},\n\n${page.company || 'El contratista'} recibió tu solicitud de estimado y te contactará pronto.${page.phone ? '\nTeléfono: ' + page.phone : ''}\n` : `Hi ${row.name},\n\n${page.company || 'The contractor'} got your estimate request and will be in touch soon.${page.phone ? '\nPhone: ' + page.phone : ''}\n`);
+  sbRest('GET', `users?id=eq.${page.user_id}&select=email,prefs`).then(r => {
+    const u = (r.data || [])[0]; if (!u) return;
+    const ces = (u.prefs || {}).lang === 'es';
+    sendEmail(u.email, ces ? 'Nueva solicitud de estimado en Even' : 'New estimate request on Even',
+      ces ? `${row.name} (${row.city}) te pidió un estimado. Tu borrador se está preparando.\nÁbrelo en https://even-os.com/?requests=1\n` : `${row.name} (${row.city}) asked you for an estimate. Your draft is being built.\nOpen it at https://even-os.com/?requests=1\n`);
+  }).catch(() => {});
+});
+
+// Contractor side: their own page (any signed-in account; drafts count toward
+// the free-estimate limit for non-Pro accounts, Pro is unlimited).
+async function signedInUser(req, res) {
+  if (!appOnly(req, res)) return null;
+  const ident = await usage().identify(req);
+  if (!ident.user) { res.status(401).json({ error: { code: 'signin_required' } }); return null; }
+  return ident;
+}
+app.get('/api/my-page', async (req, res) => {
+  const ident = await signedInUser(req, res); if (!ident) return;
+  const r = await sbRest('GET', `contractor_pages?user_id=eq.${ident.user.id}&select=slug,company,phone,logo_url,trades,active`);
+  res.json({ page: (r.data || [])[0] || null, emailOn: quoteEmailOn() });
+});
+app.put('/api/my-page', async (req, res) => {
+  const ident = await signedInUser(req, res); if (!ident) return;
+  const U = usage();
+  if (!U.rateOk(ident.ipHash, 'event')) return res.status(429).json({ error: { code: 'rate_limited' } });
+  const b = req.body || {};
+  const slug = clip(b.slug, 40).toLowerCase();
+  if (!SLUG_RE.test(slug) || /--/.test(slug)) return res.status(400).json({ error: { code: 'bad_slug' } });
+  if (RESERVED_SLUGS.has(slug)) return res.status(409).json({ error: { code: 'slug_taken' } });
+  const trades = (Array.isArray(b.trades) ? b.trades : []).filter(t => QUOTE_TRADES.includes(t)).slice(0, 12);
+  const u = ((await sbRest('GET', `users?id=eq.${ident.user.id}&select=logo_url`)).data || [])[0] || {};
+  const row = { user_id: ident.user.id, slug, company: clip(b.company, 120), phone: clip(b.phone, 40), logo_url: u.logo_url || null,
+    trades: trades.length ? trades : ['General Contractor'], active: b.active !== false, updated_at: new Date().toISOString() };
+  const r = await sbRest('POST', 'contractor_pages?on_conflict=user_id', row, 'resolution=merge-duplicates,return=representation');
+  if (!r.ok) {
+    if (r.status === 409 || /duplicate|unique/i.test(JSON.stringify(r.data || ''))) return res.status(409).json({ error: { code: 'slug_taken' } });
+    logError('my_page', 'upsert_failed_' + r.status, null);
+    return res.status(500).json({ error: { code: 'unavailable' } });
+  }
+  const p = r.data[0];
+  res.json({ page: { slug: p.slug, company: p.company, phone: p.phone, logo_url: p.logo_url, trades: p.trades, active: p.active } });
+});
+// Retry a draft that failed (server restart, limit since lifted). Own rows only.
+app.post('/api/quote-requests/:id/draft', async (req, res) => {
+  const ident = await signedInUser(req, res); if (!ident) return;
+  const id = String(req.params.id || '');
+  if (!/^[0-9a-f-]{36}$/.test(id)) return res.status(400).json({ error: { code: 'bad_id' } });
+  if (!usage().rateOk(ident.ipHash, 'quote')) return res.status(429).json({ error: { code: 'rate_limited' } });
+  const row = ((await sbRest('GET', `quote_requests?id=eq.${id}&user_id=eq.${ident.user.id}&select=*`)).data || [])[0];
+  if (!row) return res.status(404).json({ error: { code: 'not_found' } });
+  if (row.draft_status === 'ready') return res.json({ ok: true, draft_status: 'ready' });
+  const out = await buildQuoteDraft(row);
+  res.json({ ok: out.ok, draft_status: out.ok ? 'ready' : out.code });
 });
 
 // ─── Client-side error reporting ──────────────────────────────────────────────

@@ -1,2 +1,8 @@
 [functions]
   directory = "netlify/functions"
+
+# Quote-request link: even-os.com/q/<slug> serves the homeowner form.
+[[redirects]]
+  from = "/q/*"
+  to = "/q.html"
+  status = 200

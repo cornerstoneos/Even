@@ -40,7 +40,7 @@ applyCacheBreakpoint(body,[],true);
 check('empty messages is safe',body.messages===undefined);
 
 console.log('\n=== Prompt content survived the split ===');
-const src=html.slice(html.indexOf('  const RULES=`'),html.indexOf('  const promptBlocks=['));
+const src=html.slice(html.indexOf('  const RULES=`'),html.indexOf('// ══ END SHARED PIPELINE ══'));
 for(const frag of [
   'YOUR JOB IS THE SCOPE, NOT THE PRICE',
   'Never write a price for a catalog item',

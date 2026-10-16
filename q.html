@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Request an estimate</title>
+<link rel="icon" type="image/png" href="/assets/favicon-64.png">
+<meta name="theme-color" content="#F6F3EC">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap');
+:root{--bg:#F6F3EC;--card:#FFFFFF;--ink:#17150F;--ink2:#4A463D;--muted:#857F72;--rim:rgba(0,0,0,0.09);--gold:#C8920A;--goldbg:#FFB300;--red:#C0392B;--green:#1E8E4E}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;font-size:15px;line-height:1.45;-webkit-text-size-adjust:100%}
+.wrap{max-width:560px;margin:0 auto;padding:18px 16px 40px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+.lang{display:flex;border:1px solid var(--rim);border-radius:999px;overflow:hidden;background:var(--card);flex-shrink:0}
+.lang button{border:0;background:none;padding:6px 12px;font:500 12px 'DM Mono',monospace;color:var(--muted);cursor:pointer}
+.lang button.on{background:var(--ink);color:#fff}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.logo{width:48px;height:48px;border-radius:10px;background:var(--ink);color:var(--goldbg);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;overflow:hidden;flex-shrink:0}
+.logo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.co{font-weight:700;font-size:18px;line-height:1.2;overflow-wrap:anywhere}
+.co-sub{font-size:13px;color:var(--muted)}
+.co-sub a{color:var(--ink2)}
+.card{background:var(--card);border:1px solid var(--rim);border-radius:14px;padding:18px 16px}
+h1{font-size:22px;line-height:1.2;margin-bottom:6px}
+.lead{color:var(--ink2);font-size:14px;margin-bottom:16px}
+label{display:block;font-size:12px;font-weight:600;color:var(--ink2);margin:12px 0 5px}
+label .opt{font-weight:400;color:var(--muted)}
+input,select,textarea{width:100%;border:1px solid var(--rim);border-radius:10px;padding:11px 12px;font:16px 'DM Sans',system-ui,sans-serif;color:var(--ink);background:#FBFAF7}
+textarea{min-height:130px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--goldbg);outline-offset:0;border-color:transparent}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:2fr 1fr;gap:10px}
+@media(max-width:380px){.row{grid-template-columns:1fr}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.hint{font-size:12px;color:var(--muted);margin-top:5px}
+.err{color:var(--red);font-size:13px;margin-top:12px;display:none}
+button.send{width:100%;margin-top:18px;border:0;border-radius:10px;padding:14px;background:var(--ink);color:#fff;font:700 15px 'DM Sans',system-ui,sans-serif;cursor:pointer}
+button.send:disabled{opacity:.55;cursor:default}
+.note{font-size:12px;color:var(--muted);margin-top:12px;text-align:center}
+.done{text-align:center;padding:26px 8px}
+.done .tick{width:52px;height:52px;border-radius:50%;background:var(--green);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.foot{text-align:center;font:500 11px 'DM Mono',monospace;color:var(--muted);margin-top:22px;letter-spacing:.4px}
+.foot a{color:var(--muted)}
+.missing{text-align:center;padding:40px 10px;color:var(--ink2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand" id="brand" hidden>
+      <div class="logo" id="logo"></div>
+      <div style="min-width:0"><div class="co" id="co"></div><div class="co-sub" id="co-sub"></div></div>
+    </div>
+    <div class="lang"><button id="l-en" class="on" onclick="setLang('en')">EN</button><button id="l-es" onclick="setLang('es')">ES</button></div>
+  </div>
+
+  <div id="loading" class="missing" data-t="loading"></div>
+  <div id="missing" class="missing" hidden data-t="missing"></div>
+
+  <div class="card" id="form-card" hidden>
+    <form id="qf" novalidate onsubmit="send(event)">
+      <h1 data-t="title"></h1>
+      <div class="lead" data-t="lead"></div>
+
+      <label for="f-desc" data-t="desc"></label>
+      <textarea id="f-desc" maxlength="4000" required></textarea>
+      <div class="hint" data-t="descHint"></div>
+
+      <div id="trade-wrap" hidden>
+        <label for="f-trade" data-t="trade"></label>
+        <select id="f-trade"></select>
+      </div>
+
+      <label for="f-address"><span data-t="address"></span> <span class="opt" data-t="optional"></span></label>
+      <input id="f-address" maxlength="200" autocomplete="street-address">
+      <div class="row3">
+        <div><label for="f-city" data-t="city"></label><input id="f-city" maxlength="80" autocomplete="address-level2" required></div>
+        <div><label for="f-zip"><span data-t="zip"></span> <span class="opt" data-t="optional"></span></label><input id="f-zip" maxlength="5" inputmode="numeric" autocomplete="postal-code"></div>
+      </div>
+
+      <label for="f-name" data-t="name"></label>
+      <input id="f-name" maxlength="100" autocomplete="name" required>
+      <div class="row">
+        <div><label for="f-phone" data-t="phone"></label><input id="f-phone" maxlength="40" inputmode="tel" autocomplete="tel"></div>
+        <div><label for="f-email" data-t="email"></label><input id="f-email" maxlength="200" type="email" autocomplete="email"></div>
+      </div>
+      <div class="hint" data-t="contactHint"></div>
+
+      <div class="hp" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" tabindex="-1" autocomplete="off"></div>
+
+      <div class="err" id="err"></div>
+      <button class="send" id="send-btn" type="submit" data-t="send"></button>
+      <div class="note" data-t="note"></div>
+    </form>
+    <div class="done" id="done" hidden>
+      <div class="tick">&#10003;</div>
+      <h1 data-t="doneTitle"></h1>
+      <div class="lead" id="done-text" style="margin:8px 0 0"></div>
+    </div>
+  </div>
+
+  <div class="foot"><span data-t="powered"></span> <a href="https://even-os.com" target="_blank" rel="noopener">Even</a></div>
+</div>
+<script>
+// Homeowner side of the quote-request link. Shows the contractor's name, logo
+// and phone, collects the job, and sends it. No prices are ever shown here.
+const API_ORIGIN='https://even-production.up.railway.app';
+const TEXT={
+  en:{loading:'Loading…',missing:'This estimate link is not active. Check the link with your contractor.',
+    title:'Request an estimate',lead:'Tell us about the job. We will review it and get back to you with a proposal.',
+    desc:'What do you need done?',descHint:'Sizes, materials, what is there now, anything you know helps.',
+    trade:'Type of work',address:'Street address',optional:'(optional)',city:'City',zip:'ZIP',
+    name:'Your name',phone:'Phone',email:'Email',contactHint:'A phone or an email, so we can reach you.',
+    send:'Send request',sending:'Sending…',note:'You will not be charged anything. This is a request, not an order.',
+    doneTitle:'Got it',doneText:c=>`${c||'Your contractor'} has your request and will be in touch soon.`,
+    powered:'Powered by',
+    errors:{name:'Add your name.',contact:'Add a phone or an email.',email:'Check the email address.',phone:'Check the phone number.',city:'Add the city.',zip:'ZIP should be 5 digits.',description:'Tell us a bit more about the job.',rate_limited:'Too many requests from this connection. Try again later.',not_found:'This estimate link is not active.',other:'Something went wrong. Try again in a minute.'}},
+  es:{loading:'Cargando…',missing:'Este enlace de estimados no está activo. Confirma el enlace con tu contratista.',
+    title:'Pide un estimado',lead:'Cuéntanos sobre el trabajo. Lo revisamos y te enviamos una propuesta.',
+    desc:'¿Qué necesitas hacer?',descHint:'Medidas, materiales, lo que hay ahora, todo lo que sepas ayuda.',
+    trade:'Tipo de trabajo',address:'Dirección',optional:'(opcional)',city:'Ciudad',zip:'Código postal',
+    name:'Tu nombre',phone:'Teléfono',email:'Correo',contactHint:'Un teléfono o un correo para poder contactarte.',
+    send:'Enviar solicitud',sending:'Enviando…',note:'No se te cobra nada. Esto es una solicitud, no una orden.',
+    doneTitle:'Recibido',doneText:c=>`${c||'Tu contratista'} recibió tu solicitud y te contactará pronto.`,
+    powered:'Funciona con',
+    errors:{name:'Agrega tu nombre.',contact:'Agrega un teléfono o un correo.',email:'Revisa el correo.',phone:'Revisa el teléfono.',city:'Agrega la ciudad.',zip:'El código postal debe tener 5 dígitos.',description:'Cuéntanos un poco más sobre el trabajo.',rate_limited:'Demasiadas solicitudes desde esta conexión. Intenta más tarde.',not_found:'Este enlace de estimados no está activo.',other:'Algo salió mal. Intenta de nuevo en un minuto.'}}
+};
+const TRADE_ES={'General Contractor':'Contratista general','Roofing':'Techado','Electrical':'Eléctrico','Plumbing':'Plomería','HVAC':'Aire acondicionado','Remodeling':'Remodelación','Framing':'Estructura','Painting':'Pintura','Flooring':'Pisos','Concrete':'Concreto','Siding':'Revestimiento','Decks':'Terrazas'};
+let lang=/^es\b/i.test(navigator.language||'')?'es':'en', page=null;
+const slug=(location.pathname.match(/\/q\/([a-z0-9-]+)/i)||[])[1]||new URLSearchParams(location.search).get('s')||'';
+const $=id=>document.getElementById(id);
+function setLang(l){
+  lang=l; document.documentElement.lang=l;
+  $('l-en').classList.toggle('on',l==='en'); $('l-es').classList.toggle('on',l==='es');
+  document.querySelectorAll('[data-t]').forEach(el=>{const v=TEXT[l][el.dataset.t]; if(typeof v==='string') el.textContent=v;});
+  document.title=TEXT[l].title+(page&&page.company?' · '+page.company:'');
+  renderTrades();
+  if(page) $('done-text').textContent=TEXT[l].doneText(page.company);
+}
+function renderTrades(){
+  if(!page) return;
+  const sel=$('f-trade'), cur=sel.value;
+  sel.innerHTML=page.trades.map(t=>`<option value="${t}">${lang==='es'?(TRADE_ES[t]||t):t}</option>`).join('');
+  if(cur) sel.value=cur;
+  $('trade-wrap').hidden=page.trades.length<2;
+}
+function initials(n){return String(n||'').split(/\s+/).filter(w=>/^[A-Za-z0-9]/.test(w)).slice(0,2).map(w=>w[0].toUpperCase()).join('')||'E';}
+async function load(){
+  setLang(lang);
+  try{
+    if(!/^[a-z0-9-]{3,40}$/i.test(slug)) throw new Error('missing');
+    const r=await fetch(`${API_ORIGIN}/api/q/${encodeURIComponent(slug.toLowerCase())}`);
+    if(!r.ok) throw new Error('missing');
+    page=await r.json();
+  }catch(e){ $('loading').hidden=true; $('missing').hidden=false; return; }
+  $('loading').hidden=true;
+  $('co').textContent=page.company||'';
+  if(page.phone){ const a=document.createElement('a'); a.href='tel:'+page.phone.replace(/[^\d+]/g,''); a.textContent=page.phone; $('co-sub').appendChild(a); }
+  if(page.logo&&/^https:\/\//.test(page.logo)){ const img=document.createElement('img'); img.src=page.logo; img.alt=''; img.onerror=()=>{img.remove();$('logo').textContent=initials(page.company);}; $('logo').appendChild(img); }
+  else $('logo').textContent=initials(page.company);
+  $('brand').hidden=!page.company&&!page.logo;
+  if(!page.trades||!page.trades.length) page.trades=['General Contractor'];
+  $('form-card').hidden=false;
+  setLang(lang);
+}
+function showErr(codes){
+  const E=TEXT[lang].errors;
+  const msg=(Array.isArray(codes)?codes:[codes]).map(c=>E[c]||E.other).join(' ');
+  $('err').textContent=msg; $('err').style.display='block';
+}
+async function send(ev){
+  ev.preventDefault();
+  $('err').style.display='none';
+  const v=id=>$(id).value.trim();
+  const body={slug:slug.toLowerCase(),description:v('f-desc'),trade:page.trades.length>1?v('f-trade'):page.trades[0],address:v('f-address'),city:v('f-city'),zip:v('f-zip'),
+    name:v('f-name'),phone:v('f-phone'),email:v('f-email'),website:v('f-website'),lang};
+  const bad=[];
+  if(body.description.length<10) bad.push('description');
+  if(!body.city) bad.push('city');
+  if(body.zip&&!/^\d{5}$/.test(body.zip)) bad.push('zip');
+  if(!body.name) bad.push('name');
+  if(!body.phone&&!body.email) bad.push('contact');
+  if(body.email&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(body.email)) bad.push('email');
+  if(bad.length) return showErr(bad);
+  const btn=$('send-btn'); btn.disabled=true; btn.textContent=TEXT[lang].sending;
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/quote-request`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok) throw Object.assign(new Error('x'),{codes:d.error?.fields||d.error?.code||'other'});
+    $('qf').hidden=true; $('done').hidden=false; $('done-text').textContent=TEXT[lang].doneText(page.company);
+    window.scrollTo({top:0});
+  }catch(e){ showErr(e.codes||'other'); }
+  finally{ btn.disabled=false; btn.textContent=TEXT[lang].send; }
+}
+load();
+</script>
+</body>
+</html>

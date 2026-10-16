@@ -903,6 +903,36 @@ body:has(#s-dashboard.active) .app{min-height:0}
 .supplier-input::placeholder{color:var(--muted)}
 .supplier-select{background:var(--panel);border:1px solid var(--rim);border-radius:6px;color:var(--white);font-size:12px;padding:7px 9px;font-family:'DM Sans',sans-serif;outline:none;width:100%;box-sizing:border-box;appearance:none}
 .price-sheet-btn{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--panel);border:1px solid var(--rim);border-radius:8px;font-size:11px;color:var(--text-accent);cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.3px;white-space:nowrap}
+/* Quote-request link + Requests inbox (quote engine phase B) */
+.req-count{display:inline-block;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--gold);color:#000;font:700 9px/16px 'DM Mono',monospace;text-align:center;vertical-align:middle}
+#req-dot{position:absolute;top:0;right:-2px}
+.req-card{background:var(--panel);border:1px solid var(--rim);border-radius:12px;margin-bottom:10px;padding:12px}
+.req-card.new{border-color:var(--gold-border)}
+.req-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.req-name{font-weight:700;color:var(--white);font-size:14px;overflow-wrap:anywhere}
+.req-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.req-total{font-weight:800;color:var(--white);font-size:15px;white-space:nowrap;text-align:right}
+.req-total small{display:block;font:500 9px 'DM Mono',monospace;color:var(--muted);letter-spacing:.5px;text-transform:uppercase}
+.req-desc{font-size:12px;color:var(--white2);margin:8px 0;line-height:1.45;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.req-contact{font-size:12px;display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.req-contact a{color:var(--text-accent);text-decoration:none;overflow-wrap:anywhere}
+.req-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.req-btn{background:var(--bg);border:1px solid var(--rim2);color:var(--white2);border-radius:8px;padding:7px 10px;font:600 10px 'DM Mono',monospace;letter-spacing:.3px;cursor:pointer}
+.req-btn.primary{background:var(--gold);border-color:var(--gold);color:#000}
+.req-note{font-size:11px;color:var(--muted);margin-top:6px}
+.link-label{display:block;font-size:11px;color:var(--muted);margin:12px 0 6px;font-family:'DM Mono',monospace;letter-spacing:.3px}
+.link-slug-row{display:flex;align-items:center;gap:4px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;padding:0 0 0 10px}
+.link-prefix{font:500 12px 'DM Mono',monospace;color:var(--muted);white-space:nowrap}
+.link-slug-row .finput{border:0;background:transparent;min-width:0;flex:1;padding:10px 10px 10px 0}
+.link-trades{display:flex;flex-wrap:wrap;gap:6px}
+.link-trades label{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--white2);background:var(--bg);border:1px solid var(--rim);border-radius:16px;padding:5px 10px;cursor:pointer}
+.link-switch{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--white2);margin-top:12px;cursor:pointer}
+.link-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.link-btn{background:var(--bg);border:1px solid var(--rim2);color:var(--white2);border-radius:8px;padding:8px 12px;font:600 10px 'DM Mono',monospace;letter-spacing:.3px;cursor:pointer}
+.link-btn.primary{background:var(--gold);border-color:var(--gold);color:#000}
+.link-btn:disabled{opacity:.45;cursor:default}
+.link-status{font-size:11px;color:var(--muted);margin-top:8px;min-height:14px;overflow-wrap:anywhere}
+.link-note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5}
 </style>
 
   <!-- Supabase -->
@@ -1018,7 +1048,7 @@ body:has(#s-dashboard.active) .app{min-height:0}
     </div>
     <div class="topbar-right" style="display:flex;align-items:center;gap:10px">
       <span id="user-badge" style="display:none"></span>
-      <button id="dashboard-topbar-btn" onclick="navigate('dashboard')" style="display:none;background:none;border:none;padding:5px;cursor:pointer;line-height:0" title="Saved Jobs"><i data-lucide="folder" style="width:17px;height:17px;stroke:var(--gold)"></i></button>
+      <button id="dashboard-topbar-btn" onclick="navigate('dashboard')" style="display:none;background:none;border:none;padding:5px;cursor:pointer;line-height:0;position:relative" title="Your jobs"><i data-lucide="folder" style="width:17px;height:17px;stroke:var(--gold)"></i><span id="req-dot" class="req-count" hidden></span></button>
       <button id="gopro-topbar-btn" onclick="handleUpgrade('monthly')" style="display:none;background:linear-gradient(135deg,#FFB300,#e09900);border:none;color:#000;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px"><img src="assets/logo-hero.png" width="16" height="16" alt="" style="object-fit:contain;vertical-align:middle;margin-right:3px"> <span data-es="HAZTE PRO">GO PRO</span></button>
       <button id="topbar-auth-btn" onclick="toggleAuthPanel()" style="background:var(--panel);border:1px solid var(--rim);color:var(--muted);padding:5px 10px;border-radius:6px;font-size:10px;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.5px" data-es="INICIAR SESIÓN">SIGN IN</button>
       <div class="lang-toggle">
@@ -1808,7 +1838,10 @@ async function loadUserData(){
       window._userLogoUrl = data.logo_url || null;
       if(data.prefs) applyPrefs(data.prefs);
     }
+    window._prefsLoaded=true;
     updateUserBadge();
+    refreshRequestBadge();
+    if(/[?&]requests=1\b/.test(location.search)){ history.replaceState(null,'',location.pathname); navigate('dashboard'); }
   } catch(e) {
     console.error('Load user error:', e);
   }
@@ -1832,7 +1865,8 @@ function updateUserBadge(){
       if(dashBtn) dashBtn.style.display='inline-block';
       document.body.classList.remove('has-gopro');
     } else {
-      if(dashBtn) dashBtn.style.display='none';
+      // Free accounts open it too: the estimate link and its Requests live there.
+      if(dashBtn) dashBtn.style.display=currentUser?'inline-block':'none';
       if(badge){ badge.style.display='none'; }
       if(freeDisplay){
         const es=appLang==='es';
@@ -1865,6 +1899,7 @@ function updateUserBadge(){
       freeDisplay.style.display='block';
     }
   }
+  const _dashBtn=document.getElementById('dashboard-topbar-btn'); if(_dashBtn) _dashBtn.style.display=currentUser?'inline-block':'none';
   if(currentUser){
     if(authBtn){ authBtn.textContent=currentUser.email.split('@')[0].substring(0,10).toUpperCase(); authBtn.style.color='var(--gold)'; authBtn.style.borderColor='var(--gold)'; }
   } else {
@@ -2187,6 +2222,7 @@ function setLang(lang,btn){
   const _asb=document.getElementById('auth-submit-btn'); if(_asb&&!_asb.disabled) _asb.textContent=authSubmitLabel(authMode);
   if(typeof renderAuthCopy==='function') renderAuthCopy(authMode);
   const _mab=document.querySelector('.market-adj-opt.active'); if(_mab&&typeof setMarketAdj==='function') setMarketAdj(_mab,marketAdj);
+  if(typeof renderQuoteLinkCard==='function'&&document.getElementById('s-dashboard')?.classList.contains('active')){ renderQuoteLinkCard(); renderRequests(); }
 }
 
 // ══════════════════════════
@@ -2218,6 +2254,7 @@ document.addEventListener('change',e=>{ if(DRAFT_FIELDS.includes(e.target?.id)) 
 
 function clearJob(){
   window._jobVersion++;
+  window._openRequestId=null;
     currentEstimate=null;
     document.getElementById('li-body').innerHTML='';
     document.getElementById('totals-body').innerHTML='';
@@ -2324,6 +2361,7 @@ function updateCombined(){
   if(typeof updateSettingsSummary==='function') updateSettingsSummary();
   const {oh,profit,cushion}=sliderVals;
   const total=oh+profit+cushion;
+  if(typeof queuePrefsSave==='function') queuePrefsSave();
   const el=document.getElementById('combined-val');
   if(el) el.textContent=total+'%';
   // update bar widths proportionally
@@ -3029,16 +3067,8 @@ async function startEstimate(){
   if(uploadedImages.length>0){
     uploadedImages.slice(0,MAX_IMAGES).forEach(img=>msgContent.push({type:'image',source:{type:'base64',media_type:img.type,data:img.data}}));
   }
-  // Build context-rich prompt with construction primer for better OCR + scope extraction
-  const attachedParts=[];
-  if(uploadedDocs.length>0) attachedParts.push(`${uploadedDocs.length} PDF plan/spec document(s)`);
-  if(uploadedImages.length>0) attachedParts.push(`${uploadedImages.length} construction plan/photo(s)`);
-  const imgContext=attachedParts.length>0?`\nATTACHED: ${attachedParts.join(' and ')}. Perform high-accuracy OCR on all text. Extract all dimensions, material callouts, notes, scope items, and quantities visible. Pay special attention to leader lines, revision clouds, and specification notes. Attachments may be multiple pages of the same scope — combine and reconcile all information across them before responding.`:'';
-    // The contractor reads every word of this in their language (founder ES test 2026-10-07).
-  const langRule=appLang==='es'
-    ?'\nLANGUAGE: Spanish. Write projectName, every trade name, item, keyFact, question and option in Spanish (Latin American, use tú). Keep brand names, product names and model numbers as written (Square D, NEMA 3R, THHN).'
-    :'';
-  msgContent.push({type:'text',text:`Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${appLang==='es'?'|Language:Spanish':''}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.${langRule}`});
+  // Same text the quote-request link sends for a homeowner's job (shared pipeline).
+  msgContent.push({type:'text',text:scopePromptText({trade,location,projtype,sqft,lang:appLang,scope,nDocs:uploadedDocs.length,nImages:uploadedImages.length})});
 
   try{
     const res=await callClaude([{role:'user',content:msgContent}],3000,false,'low',true,'scope');
@@ -3660,6 +3690,114 @@ function priceScope(scope,cat,s){
 }
 // ══ END PRICING ENGINE ══
 
+
+// ══ SHARED PIPELINE ══
+// The prompt text for a job, with no screen state in it. The app builds every
+// estimate with these, and the server builds a quote-link draft with the same
+// functions (lib/pipeline.js loads this block from this file), so a homeowner's
+// request and the same job typed by hand send identical prompts, hit the same
+// stored scope and price to the same number.
+// j = {trade,location,projtype,sqft,lang,scope,nDocs,nImages}
+function scopePromptText(j){
+  const attachedParts=[];
+  if(j.nDocs>0) attachedParts.push(`${j.nDocs} PDF plan/spec document(s)`);
+  if(j.nImages>0) attachedParts.push(`${j.nImages} construction plan/photo(s)`);
+  const imgContext=attachedParts.length>0?`\nATTACHED: ${attachedParts.join(' and ')}. Perform high-accuracy OCR on all text. Extract all dimensions, material callouts, notes, scope items, and quantities visible. Pay special attention to leader lines, revision clouds, and specification notes. Attachments may be multiple pages of the same scope — combine and reconcile all information across them before responding.`:'';
+  // The contractor reads every word of this in their language (founder ES test 2026-10-07).
+  const langRule=j.lang==='es'
+    ?'\nLANGUAGE: Spanish. Write projectName, every trade name, item, keyFact, question and option in Spanish (Latin American, use tú). Keep brand names, product names and model numbers as written (Square D, NEMA 3R, THHN).'
+    :'';
+  const {trade,location,projtype,sqft,scope}=j;
+  return `Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${j.lang==='es'?'|Language:Spanish':''}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.${langRule}`;
+}
+function hvhzNoteFor(isHVHZ){
+  return isHVHZ?'\n\nHVHZ COMPLIANCE REQUIRED: This job is in a High Velocity Hurricane Zone. Scope for it:\n- HVHZ-compliant (Miami-Dade NOA approved) products on exterior work (the app adds the HVHZ cost uplift to exterior catalog items itself)\n- Enhanced fasteners (6d ring shank, 6-inch spacing) on exterior work\n- Notice of Commencement for jobs over $2,500\n- Special inspector only when this scope requires one (an "other" line, $400-800)':'';
+}
+function marketAdjFor(v){
+  return {mult:v==='aggressive'?0.92:v==='premium'?1.12:1.0,
+    label:v==='aggressive'?'aggressive/competitive pricing (-8%)':v==='premium'?'premium market pricing (+12%)':'standard market pricing'};
+}
+// No local market data exists for this location yet: be honest about that
+// instead of handing the model specific-but-wrong numbers borrowed from an
+// unrelated market.
+function genericRatesText(location,hvhzNote){
+  return `No verified local labor, material, or permit data exists yet for ${location||'this location'}.${hvhzNote}
+
+PRICING MODE — GENERAL KNOWLEDGE (no local market data grounding this estimate):
+- Use your own general construction-estimating knowledge, calibrated realistically to ${location||'the stated location'} and current national trends. Do not borrow specific wage, material, or permit numbers from any other city or region — reason about this location on its own merits (regional cost of living, typical labor market, climate) instead.
+- With no local catalog, every line is an "other" line with your own unitCost (labor: hours as qty, your all-in hourly billing estimate as unitCost). Include material waste in the quantity. The app labels these lines as estimated and applies the market level, overhead, risk cushion and profit itself.
+- SUBCONTRACTOR RATES vs LABOR RATES: When a contractor is hiring subs (not direct labor), sub billing rates run 15-40% higher than direct labor. Always ask if work is self-performed or subcontracted — this moves the number significantly.
+- CONTRACTOR TIME: Always include project management labor — GC managing subs typically bills 10-15% of total project cost or 8-16 hours per week of project duration.
+- ACTUAL MATERIAL COST: Flag when contractor may have supplier pricing below retail. Prompt to adjust if they have trade accounts at ABC Supply, Beacon, or local suppliers.
+- FUEL AND LOGISTICS: For jobs over $5,000 always include fuel, vehicle wear, and site visits as a line item — minimum $150-400 depending on project duration and distance.
+
+MATERIAL SYSTEM CONSISTENCY — CRITICAL:
+- Schluter system (Kerdi, Kerdi-Board, Kerdi-Band): When specified, it REPLACES cement board AND liquid waterproofing (RedGard). Do NOT include both. Schluter-Kerdi Board kit for tub surround runs $500-700 including thinset. Remove cement board line items when Schluter is used.
+- RedGard waterproofing: Only include when Schluter is NOT specified. $169 per container covers ~35sf.
+- Wedi board system: Similar to Schluter — replaces cement board and waterproofing membrane. Price $8-12/sf installed.
+- Never mix waterproofing systems in the same estimate — flag the system used in assumptions.
+
+DEMO COMPLEXITY — LABOR HOUR GUIDELINES:
+- Standard tub removal (1st floor, fiberglass): 4-6 hours 2-man crew
+- Cast iron tub removal (any floor): Add 3-4 hours for weight management, rigging, disposal
+- 2nd floor cast iron tub removal: 6-8 hours minimum — stair navigation, floor protection, weight risk
+- Mud bed floor demo (1.5 inch): Add 6-8 hours per 50sf for jackhammering and debris — this is heavy work
+- Combined 2nd floor cast iron + mud bed: Budget 20-24 hours total demo labor minimum — 16 hours is consistently underbid
+- Tile demo over mud bed: Add 2 hours per 100sf vs tile over backer board
+
+FLOOR AND SURFACE PROTECTION — MINIMUM STANDARDS:
+- Floor protection materials alone (Ram Board + tape) for stairs + hallway + work path: $300-450 minimum before any labor
+- Never price floor protection under $400 total (materials + labor) for occupied luxury homes
+- 2nd floor work: Always include stair protection — minimum 2 rolls Ram Board ($180) + tape ($40) + 2 hours labor ($160) = $380 floor protection floor
+- Add carpet protection film for carpeted areas: $0.25-0.35/sf
+
+`;
+}
+function pricingBlockFor(marketData,hvhzNote,catalog,location){
+  if(marketData) return buildDynamicPricingBlock(marketData,hvhzNote,catalog);
+  const ownCatalog=catalogPromptText({materials:[],labor:[],permits:[],suppliers:catalog.suppliers,subs:catalog.subs});
+  return genericRatesText(location,hvhzNote)+(ownCatalog?'\n'+ownCatalog+'\n':'');
+}
+// Three blocks, ordered stable -> volatile, because caching is a prefix match.
+// j = {ctx,scope,ansText,tradeBreakdown,pricingBlock,lang}
+function estimatePromptBlocks(j){
+  const {ctx,scope,ansText,tradeBreakdown,pricingBlock,lang}=j;
+  const RULES=`You are Even, expert estimating AI. Return ONLY JSON.
+YOUR JOB IS THE SCOPE, NOT THE PRICE. The app prices every catalog line in code and adds overhead, risk cushion and profit itself. You decide which items this job needs, how many, and how many labor hours. Never write a price for a catalog item. The same job must always get the same scope: pick the single most standard item for each need, and size quantities and hours by the rules below, not by feel.
+LINE TYPES (each lineItems entry is one of these):
+- {"type":"material","ref":"M12","qty":2,"description":"short"} ref from MATERIALS, or S# from the contractor's own supplier list (prefer S# when it matches). qty in the catalog unit, before waste (the app adds waste).
+- {"type":"labor","ref":"L3","hours":6,"description":"Install and connect water heater"} ref from LABOR = the trade doing that work. hours = total crew hours for that task.
+- {"type":"sub","ref":"B1","qty":1,"description":"short"} the contractor's own sub at their own rate, qty in that sub's unit.
+- {"type":"permit","ref":"P4","qty":0,"description":"short"} ref from PERMIT FEES. One row per permit actually pulled: a single-trade job pulls one permit. When the city lists a permit row for this job's own trade (Electrical, Plumbing, Mechanical, Roofing), use it; pick a general building or master permit row only when no trade row covers the work. qty only for per-unit fees (sq ft, fixtures, tons), else 0. Never pick surcharges, renewals, reinspections, certificates or private-provider rows.
+- {"type":"other","category":"Disposal","description":"short","qty":1,"unit":"ea","unitCost":50} category and unit always in English: category is one of Materials, Labor, Disposal, Delivery, Equipment Rental, Protection, Cleanup, Supervision, Utility, Inspection, Other, or a trade name (Electrical, Plumbing, HVAC, Roofing, Drywall, Flooring, Tile, Paint, Framing, Concrete); unit is ea, hr, ft, sqft, job or day. ONLY for something the catalog does not have (a dumpster, a supplier delivery charge, an item not listed). You write unitCost; the app labels the line "not in our data, estimated". Use a catalog item only when it IS the item the job needs (same product or a direct equivalent, e.g. a 50 gal tank for a 40 gal tank); never stand in an unrelated product just because it is in the list. Only parts this scope actually installs: no parts for a fixture the job does not touch (no toilet wax ring on a water heater job).
+BE GRANULAR: 14-22 line items for a full remodel; fewer for a small single-trade job. Do not pad.
+LANGUAGE: write projectName, every description, assumption, exclusion and estimatedDays in the Language given with the job. Spanish is Latin American and uses tú. Keep brand names, product names and model numbers as written (Square D, NEMA 3R, THHN). In Spanish, give every material line a short Spanish description of the item.
+CLIENT-FACING TEXT (assumptions, exclusions, descriptions): plain short sentences a contractor would write by hand. No em dashes. Split into two sentences with a period instead of joining clauses with a dash.
+MARGIN PROTECTORS: include each one only when this scope actually calls for it: permit, debris removal, material delivery, drywall repair after trades, punch list and touch-up labor (2-4% of labor hours), project management hours when the contractor manages subs or a multi-trade job (First-Line Supervisors row, 8-16 hours per week of duration).
+SIZING ANCILLARY LINES (these scale with the job or they discredit the whole bid):
+- Material delivery is a real supplier delivery charge. Materials that fit in the contractor's truck: omit it, or a $40-75 trip charge. A supplier drop (lumber, drywall, tile, roofing, multi-pallet): $150-350.
+- Debris removal scales to debris volume. Bagged debris from a small job is $0-75. A dumpster ($400-700) only when demo generates real volume.
+- Floor and surface protection only for occupied homes with a work path through finished space.
+SIZING LABOR HOURS (a padded hour count kills trust the same way a padded fee does):
+- Like-for-like tank water heater swap (same fuel, same location): 4-6 plumber hours including drain, disconnect, set, connect, fill and test.
+- Simple surface installs on a prepped, no-demo surface (turf, vinyl, carpet tile, laminate) run roughly 15-25 sqft per labor-hour.
+- A separate supervision / site-verification line only on jobs with real coordination: multiple trades, a permit, or a scheduled inspection.
+{"projectName":"string","lineItems":[],"assumptions":["max 5 short assumptions, key scope decisions only"],"exclusions":["string"],"estimatedDays":"string e.g. 6-8 weeks"}`;
+  const MARKET=`${pricingBlock}`;
+  const JOB=`Trade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}
+Language:${lang==='es'?'Spanish':'English'}
+SCOPE:${scope}
+ANSWERS:${ansText}
+EXTRACTED:${JSON.stringify(tradeBreakdown||[])}
+Return the JSON for THIS job now.`;
+  return [
+    {type:'text',text:RULES},
+    {type:'text',text:MARKET,cache_control:{type:'ephemeral'}},
+    {type:'text',text:JOB}
+  ];
+}
+// ══ END SHARED PIPELINE ══
+
 async function calculateEstimate(){
   const btn=document.getElementById('calc-btn');
   if(window._runBusy>0||btn.disabled) return;
@@ -3713,56 +3851,22 @@ async function _calculateEstimate(btn,jobAtStart){
   const looksFlorida=/\b(fl|florida)\b/i.test(cityInput);
   const isHVHZ=serverHVHZ!==null?serverHVHZ
     :(looksFlorida&&HVHZ_FALLBACK.some(c=>new RegExp(`\\b${c.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\b`,'i').test(cityInput)));
-  const hvhzNote=isHVHZ?'\n\nHVHZ COMPLIANCE REQUIRED: This job is in a High Velocity Hurricane Zone. Scope for it:\n- HVHZ-compliant (Miami-Dade NOA approved) products on exterior work (the app adds the HVHZ cost uplift to exterior catalog items itself)\n- Enhanced fasteners (6d ring shank, 6-inch spacing) on exterior work\n- Notice of Commencement for jobs over $2,500\n- Special inspector only when this scope requires one (an "other" line, $400-800)':'';
+  const hvhzNote=hvhzNoteFor(isHVHZ);
   if(isHVHZ) console.log('HVHZ market detected:', cityInput);
 
-  // Apply market adjuster multiplier
-  const adjMultiplier = marketAdj==='aggressive' ? 0.92 : marketAdj==='premium' ? 1.12 : 1.0;
-  const adjLabel = marketAdj==='aggressive' ? 'aggressive/competitive pricing (-8%)' : marketAdj==='premium' ? 'premium market pricing (+12%)' : 'standard market pricing';
+  const {mult:adjMultiplier,label:adjLabel}=marketAdjFor(marketAdj);
 
   // No local market data exists for this location yet — be honest about that
   // instead of handing the model specific-but-wrong numbers borrowed from an
   // unrelated market. General estimating knowledge, calibrated to the actual
   // stated location, beats false precision from a city that isn't this one.
-  const GENERIC_RATES=`No verified local labor, material, or permit data exists yet for ${ctx.location||'this location'}.${hvhzNote}
-
-PRICING MODE — GENERAL KNOWLEDGE (no local market data grounding this estimate):
-- Use your own general construction-estimating knowledge, calibrated realistically to ${ctx.location||'the stated location'} and current national trends. Do not borrow specific wage, material, or permit numbers from any other city or region — reason about this location on its own merits (regional cost of living, typical labor market, climate) instead.
-- With no local catalog, every line is an "other" line with your own unitCost (labor: hours as qty, your all-in hourly billing estimate as unitCost). Include material waste in the quantity. The app labels these lines as estimated and applies the market level, overhead, risk cushion and profit itself.
-- SUBCONTRACTOR RATES vs LABOR RATES: When a contractor is hiring subs (not direct labor), sub billing rates run 15-40% higher than direct labor. Always ask if work is self-performed or subcontracted — this moves the number significantly.
-- CONTRACTOR TIME: Always include project management labor — GC managing subs typically bills 10-15% of total project cost or 8-16 hours per week of project duration.
-- ACTUAL MATERIAL COST: Flag when contractor may have supplier pricing below retail. Prompt to adjust if they have trade accounts at ABC Supply, Beacon, or local suppliers.
-- FUEL AND LOGISTICS: For jobs over $5,000 always include fuel, vehicle wear, and site visits as a line item — minimum $150-400 depending on project duration and distance.
-
-MATERIAL SYSTEM CONSISTENCY — CRITICAL:
-- Schluter system (Kerdi, Kerdi-Board, Kerdi-Band): When specified, it REPLACES cement board AND liquid waterproofing (RedGard). Do NOT include both. Schluter-Kerdi Board kit for tub surround runs $500-700 including thinset. Remove cement board line items when Schluter is used.
-- RedGard waterproofing: Only include when Schluter is NOT specified. $169 per container covers ~35sf.
-- Wedi board system: Similar to Schluter — replaces cement board and waterproofing membrane. Price $8-12/sf installed.
-- Never mix waterproofing systems in the same estimate — flag the system used in assumptions.
-
-DEMO COMPLEXITY — LABOR HOUR GUIDELINES:
-- Standard tub removal (1st floor, fiberglass): 4-6 hours 2-man crew
-- Cast iron tub removal (any floor): Add 3-4 hours for weight management, rigging, disposal
-- 2nd floor cast iron tub removal: 6-8 hours minimum — stair navigation, floor protection, weight risk
-- Mud bed floor demo (1.5 inch): Add 6-8 hours per 50sf for jackhammering and debris — this is heavy work
-- Combined 2nd floor cast iron + mud bed: Budget 20-24 hours total demo labor minimum — 16 hours is consistently underbid
-- Tile demo over mud bed: Add 2 hours per 100sf vs tile over backer board
-
-FLOOR AND SURFACE PROTECTION — MINIMUM STANDARDS:
-- Floor protection materials alone (Ram Board + tape) for stairs + hallway + work path: $300-450 minimum before any labor
-- Never price floor protection under $400 total (materials + labor) for occupied luxury homes
-- 2nd floor work: Always include stair protection — minimum 2 rolls Ram Board ($180) + tape ($40) + 2 hours labor ($160) = $380 floor protection floor
-- Add carpet protection film for carpeted areas: $0.25-0.35/sf
-
-`;
 
   // Resolved once, used twice: which categories this job actually buys from
   // decides both what gets priced into the estimate and how confident the app
   // is in that pricing. Must exist before the pricing block is built.
   const scopeCats=scopeMaterialCategories(ctx.trade,window._scopeData?.tradeBreakdown);
   const catalog=buildCatalog(marketData,scopeCats,{suppliers:window._mySuppliers,subs:window._mySubs});
-  const ownCatalog=catalogPromptText({materials:[],labor:[],permits:[],suppliers:catalog.suppliers,subs:catalog.subs});
-  const pricingBlock=marketData?buildDynamicPricingBlock(marketData,hvhzNote,catalog):GENERIC_RATES+(ownCatalog?'\n'+ownCatalog+'\n':'');
+  const pricingBlock=pricingBlockFor(marketData,hvhzNote,catalog,ctx.location);
   const confidenceTier=computeConfidenceTier(marketData,scopeCats);
   // Kept separately from the estimate payload so the permit-scope disclosure can be
   // rendered deterministically rather than depending on the model to mention it.
@@ -3790,39 +3894,7 @@ FLOOR AND SURFACE PROTECTION — MINIMUM STANDARDS:
   // estimate in the same market roughly 10k of the ~11k input tokens are served
   // from cache instead of being reprocessed. Previously the scope text sat inside
   // the cached block, so the key changed every time and nothing was ever reused.
-  const RULES=`You are Even, expert estimating AI. Return ONLY JSON.
-YOUR JOB IS THE SCOPE, NOT THE PRICE. The app prices every catalog line in code and adds overhead, risk cushion and profit itself. You decide which items this job needs, how many, and how many labor hours. Never write a price for a catalog item. The same job must always get the same scope: pick the single most standard item for each need, and size quantities and hours by the rules below, not by feel.
-LINE TYPES (each lineItems entry is one of these):
-- {"type":"material","ref":"M12","qty":2,"description":"short"} ref from MATERIALS, or S# from the contractor's own supplier list (prefer S# when it matches). qty in the catalog unit, before waste (the app adds waste).
-- {"type":"labor","ref":"L3","hours":6,"description":"Install and connect water heater"} ref from LABOR = the trade doing that work. hours = total crew hours for that task.
-- {"type":"sub","ref":"B1","qty":1,"description":"short"} the contractor's own sub at their own rate, qty in that sub's unit.
-- {"type":"permit","ref":"P4","qty":0,"description":"short"} ref from PERMIT FEES. One row per permit actually pulled: a single-trade job pulls one permit. When the city lists a permit row for this job's own trade (Electrical, Plumbing, Mechanical, Roofing), use it; pick a general building or master permit row only when no trade row covers the work. qty only for per-unit fees (sq ft, fixtures, tons), else 0. Never pick surcharges, renewals, reinspections, certificates or private-provider rows.
-- {"type":"other","category":"Disposal","description":"short","qty":1,"unit":"ea","unitCost":50} category and unit always in English: category is one of Materials, Labor, Disposal, Delivery, Equipment Rental, Protection, Cleanup, Supervision, Utility, Inspection, Other, or a trade name (Electrical, Plumbing, HVAC, Roofing, Drywall, Flooring, Tile, Paint, Framing, Concrete); unit is ea, hr, ft, sqft, job or day. ONLY for something the catalog does not have (a dumpster, a supplier delivery charge, an item not listed). You write unitCost; the app labels the line "not in our data, estimated". Use a catalog item only when it IS the item the job needs (same product or a direct equivalent, e.g. a 50 gal tank for a 40 gal tank); never stand in an unrelated product just because it is in the list. Only parts this scope actually installs: no parts for a fixture the job does not touch (no toilet wax ring on a water heater job).
-BE GRANULAR: 14-22 line items for a full remodel; fewer for a small single-trade job. Do not pad.
-LANGUAGE: write projectName, every description, assumption, exclusion and estimatedDays in the Language given with the job. Spanish is Latin American and uses tú. Keep brand names, product names and model numbers as written (Square D, NEMA 3R, THHN). In Spanish, give every material line a short Spanish description of the item.
-CLIENT-FACING TEXT (assumptions, exclusions, descriptions): plain short sentences a contractor would write by hand. No em dashes. Split into two sentences with a period instead of joining clauses with a dash.
-MARGIN PROTECTORS: include each one only when this scope actually calls for it: permit, debris removal, material delivery, drywall repair after trades, punch list and touch-up labor (2-4% of labor hours), project management hours when the contractor manages subs or a multi-trade job (First-Line Supervisors row, 8-16 hours per week of duration).
-SIZING ANCILLARY LINES (these scale with the job or they discredit the whole bid):
-- Material delivery is a real supplier delivery charge. Materials that fit in the contractor's truck: omit it, or a $40-75 trip charge. A supplier drop (lumber, drywall, tile, roofing, multi-pallet): $150-350.
-- Debris removal scales to debris volume. Bagged debris from a small job is $0-75. A dumpster ($400-700) only when demo generates real volume.
-- Floor and surface protection only for occupied homes with a work path through finished space.
-SIZING LABOR HOURS (a padded hour count kills trust the same way a padded fee does):
-- Like-for-like tank water heater swap (same fuel, same location): 4-6 plumber hours including drain, disconnect, set, connect, fill and test.
-- Simple surface installs on a prepped, no-demo surface (turf, vinyl, carpet tile, laminate) run roughly 15-25 sqft per labor-hour.
-- A separate supervision / site-verification line only on jobs with real coordination: multiple trades, a permit, or a scheduled inspection.
-{"projectName":"string","lineItems":[],"assumptions":["max 5 short assumptions, key scope decisions only"],"exclusions":["string"],"estimatedDays":"string e.g. 6-8 weeks"}`;
-  const MARKET=`${pricingBlock}`;
-  const JOB=`Trade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}
-Language:${appLang==='es'?'Spanish':'English'}
-SCOPE:${scope}
-ANSWERS:${ansText}
-EXTRACTED:${JSON.stringify(window._scopeData?.tradeBreakdown||[])}
-Return the JSON for THIS job now.`;
-  const promptBlocks=[
-    {type:'text',text:RULES},
-    {type:'text',text:MARKET,cache_control:{type:'ephemeral'}},
-    {type:'text',text:JOB}
-  ];
+  const promptBlocks=estimatePromptBlocks({ctx,scope,ansText,tradeBreakdown:window._scopeData?.tradeBreakdown||[],pricingBlock,lang:appLang});
 
   // Show loading screen
   showLoading();
@@ -4764,7 +4836,7 @@ async function downloadProposalPDF(){
   if(isPro && currentUser && sbClient && window._currentEstimateId){
     sbClient.from('estimates').update({status:'sent',sent_at:new Date().toISOString()}).eq('id',window._currentEstimateId).then(()=>{});
     showToast(appLang==='es'?'Propuesta descargada y marcada como enviada.':'Proposal downloaded. Marked as Sent in your dashboard.');
-  }
+  }  if(window._openRequestId&&currentUser&&sbClient) setRequestStatus(window._openRequestId,'sent');
 }
 // Draws the client proposal PDF from buildClientProposal (same content as the preview).
 // Payment schedule in dollars (polish round 5): "30% ... · 40% ... · 30% ..."
@@ -5103,6 +5175,7 @@ function setMarketAdj(btn, val) {
   const hintMap = appLang === 'es' ? hintsEs : hints;
   document.getElementById('market-adj-hint').textContent = hintMap[val];
   updateSettingsSummary();
+  queuePrefsSave();
 }
 
 // Delivery, disposal and floor protection are overhead on the work — they follow
@@ -5492,13 +5565,25 @@ async function submitDataTrade(){
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
       <div>
         <div style="font-size:24px;font-weight:800;color:var(--white);line-height:1" data-es="Tus trabajos">Your jobs</div>
-        <div style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px;letter-spacing:1px" data-es="✦ EVEN PRO">✦ EVEN PRO</div>
+        <div id="dash-pro-tag" style="font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:4px;letter-spacing:1px" data-es="✦ EVEN PRO">✦ EVEN PRO</div>
       </div>
       <button onclick="navigate('input')" style="background:var(--gold);border:none;color:#000;padding:9px 15px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Mono',monospace;letter-spacing:.4px"><span data-es="+ NUEVO TRABAJO">+ NEW JOB</span></button>
     </div>
 
+    <!-- Requests from the estimate link (quote engine phase B) -->
+    <div id="req-section" style="margin-bottom:18px" hidden>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin:0 2px 8px">
+        <div class="d-k" style="margin:0"><span data-es="Solicitudes">Requests</span> <span id="req-count" class="req-count" hidden></span></div>
+        <div class="d-seg" id="req-filter">
+          <button class="on" onclick="filterRequests('open',this)" data-es="Abiertas">Open</button>
+          <button onclick="filterRequests('archived',this)" data-es="Archivadas">Archived</button>
+        </div>
+      </div>
+      <div id="req-list"></div>
+    </div>
+
     <!-- Metrics strip -->
-    <div class="dash-metrics d-stats">
+    <div class="dash-metrics d-stats" id="dash-metrics">
       <div class="dash-metric">
         <div class="dash-metric-label" data-es="Ganado este mes">Won this month</div>
         <div class="dash-metric-val" id="dm-won">—</div>
@@ -5547,6 +5632,28 @@ async function submitDataTrade(){
     <div style="margin-top:24px" id="dash-settings">
       <div class="d-k" style="margin:0 2px 6px" data-es="Configuración">Settings</div>
       <div class="gc d-set-list">
+        <button class="d-row-link d-fold" onclick="toggleFold('set-link',this)"><span><span data-es="Tu enlace de estimados">Your estimate link</span><span class="d-fold-sum" id="link-sum" data-es="El cliente pide un estimado, tú recibes un borrador">Clients request a quote, you get a draft</span></span><span class="d-chev">›</span></button>
+        <div id="set-link" class="d-fold-body" hidden><div class="gc" style="margin-top:10px">
+          <div class="gc-head">
+            <div class="gc-title"><i data-lucide="link" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Tu enlace de estimados">Your estimate link</span></div>
+            <div class="gc-tag" id="link-state-tag"></div>
+          </div>
+          <div class="gc-body" style="padding:14px 12px">
+            <div style="font-size:12px;color:var(--white2);line-height:1.5;margin-bottom:12px" data-es="Pon este enlace en tu sitio web, tu perfil de Google o tus redes. El cliente describe el trabajo y Even arma un borrador con tus propios números. Tú lo revisas y envías la propuesta. Al cliente no le llega nada automático, solo un aviso de que recibiste su solicitud.">Put this link on your website, Google profile or socials. The client describes the job and Even builds a draft with your own numbers. You review it and send the proposal. Nothing goes to the client automatically except a note that you got the request.</div>
+            <label class="link-label" for="link-slug" data-es="Tu enlace">Your link</label>
+            <div class="link-slug-row"><span class="link-prefix">even-os.com/q/</span><input id="link-slug" class="finput" maxlength="40" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="your-company" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'')"></div>
+            <label class="link-label" data-es="Tipos de trabajo que el cliente puede elegir">Work types the client can pick</label>
+            <div id="link-trades" class="link-trades"></div>
+            <label class="link-switch"><input type="checkbox" id="link-active" checked> <span data-es="Enlace activo">Link is on</span></label>
+            <div class="link-actions">
+              <button class="link-btn primary" onclick="saveQuoteLink()" id="link-save-btn" data-es="GUARDAR">SAVE</button>
+              <button class="link-btn" onclick="copyQuoteLink()" id="link-copy-btn" disabled data-es="COPIAR ENLACE">COPY LINK</button>
+              <button class="link-btn" onclick="previewQuoteLink()" id="link-preview-btn" disabled data-es="VER">PREVIEW</button>
+            </div>
+            <div id="link-status" class="link-status"></div>
+            <div class="link-note" id="link-note"></div>
+          </div>
+        </div></div>
         <button class="d-row-link d-fold" onclick="toggleFold('set-biz',this)"><span><span data-es="Tu negocio">Your business</span><span class="d-fold-sum" data-es="Logo, color, licencia, contacto">Logo, color, license, contact</span></span><span class="d-chev">›</span></button>
         <div id="set-biz" class="d-fold-body" hidden><div class="gc">
         <div class="gc-head">
@@ -5787,6 +5894,7 @@ function _addAssumptionRow(text){
   list.appendChild(div);
 }
 
+function queuePrefsSave(){ if(!currentUser||!window._prefsLoaded) return; clearTimeout(window._prefsT); window._prefsT=setTimeout(savePrefs,1500); }
 function savePrefs(){
   if(!currentUser||!sbClient) return;
   const prefs={
@@ -5799,6 +5907,11 @@ function savePrefs(){
     accentColor: window._accentColor||'#FFB300',
     laborMult: laborSettings.mult,
     laborRate: laborSettings.rate,
+    // Margins, market level and language: the quote-request link builds a
+    // homeowner's draft with these, the same numbers this screen would use.
+    oh: sliderVals.oh, profit: sliderVals.profit, cushion: sliderVals.cushion,
+    marketAdj: marketAdj||'standard',
+    lang: appLang,
     biz: getBiz()
   };
   sbClient.from('users').update({prefs}).eq('id',currentUser.id)
@@ -6215,10 +6328,236 @@ function applyPrefs(prefs){
   if(+prefs.laborMult>0) laborSettings.mult=+prefs.laborMult;
   if(prefs.laborRate!==undefined) laborSettings.rate=+prefs.laborRate>0?+prefs.laborRate:null;
   renderLaborSettings();
+  [['oh',5,30],['profit',8,45],['cushion',3,20]].forEach(([k,min,max])=>{ if(Number.isFinite(+prefs[k])&&prefs[k]!==null&&prefs[k]!=='') setSliderVal(k,+prefs[k],min,max); });
+  if(['aggressive','standard','premium'].includes(prefs.marketAdj)){
+    const b=[...document.querySelectorAll('.market-adj-opt')].find(x=>(x.getAttribute('onclick')||'').includes(`'${prefs.marketAdj}'`));
+    if(b) setMarketAdj(b,prefs.marketAdj);
+  }
+  window._prefsLoaded=true;
+}
+// Puts a saved margin back on its slider (same drawing as a drag).
+function setSliderVal(key,val,min,max){
+  const v=Math.max(min,Math.min(max,Math.round(val)));
+  sliderVals[key]=v;
+  const pct=(v-min)/(max-min)*100;
+  const f=document.getElementById('sf-'+key), t=document.getElementById('sh-'+key), l=document.getElementById('lv-'+key);
+  if(f) f.style.width=pct+'%'; if(t) t.style.left=`calc(${pct}% - 11px)`; if(l) l.textContent=v+'%';
+  updateCombined();
+}
+
+// ══════════════════════════
+//  ESTIMATE LINK + REQUESTS (quote engine phase B)
+// ══════════════════════════
+// A client fills the form at even-os.com/q/<slug>; the server builds a draft
+// with this contractor's own settings; it lands here for review. Nothing is
+// sent to the client from here: the contractor opens the draft, edits, and
+// sends the proposal the normal way.
+const QL_TRADES=['General Contractor','Roofing','Electrical','Plumbing','HVAC','Remodeling','Framing','Painting','Flooring','Concrete','Siding','Decks'];
+window._myPage=null; window._requests=[]; window._reqFilter='open';
+function slugSuggest(){
+  const c=String(getBiz().company||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
+  return c.length>=3?c:'';
+}
+async function loadQuoteLink(){
+  if(!currentUser) return;
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/my-page`,{headers:await apiHeaders()});
+    if(!r.ok) return;
+    const d=await r.json();
+    window._myPage=d.page||null; window._quoteEmailOn=!!d.emailOn;
+    renderQuoteLinkCard();
+  }catch(e){ console.error('Load estimate link error:',e); }
+}
+function renderQuoteLinkCard(){
+  const es=appLang==='es', p=window._myPage;
+  const slugEl=document.getElementById('link-slug'); if(!slugEl) return;
+  if(document.activeElement!==slugEl) slugEl.value=p?p.slug:(slugEl.value||slugSuggest());
+  const picked=new Set(p?p.trades:[document.getElementById('est-trade')?.value||'General Contractor']);
+  const tw=document.getElementById('link-trades');
+  const prev=tw.querySelectorAll('input').length?new Set([...tw.querySelectorAll('input:checked')].map(i=>i.value)):picked;
+  tw.innerHTML=QL_TRADES.map(t=>`<label><input type="checkbox" value="${t}"${prev.has(t)?' checked':''}> ${escapeHtml(tradeLabel(t,appLang))}</label>`).join('');
+  document.getElementById('link-active').checked=p?p.active!==false:true;
+  const on=!!(p&&p.active!==false);
+  document.getElementById('link-state-tag').textContent=p?(on?(es?'Activo':'On'):(es?'Apagado':'Off')):(es?'Sin configurar':'Not set up');
+  document.getElementById('link-sum').textContent=p?`even-os.com/q/${p.slug}${on?'':(es?' (apagado)':' (off)')}`:(es?'El cliente pide un estimado, tú recibes un borrador':'Clients request a quote, you get a draft');
+  document.getElementById('link-copy-btn').disabled=!p; document.getElementById('link-preview-btn').disabled=!p;
+  document.getElementById('link-note').textContent=(window._quoteEmailOn
+    ?(es?'Te avisamos por correo cuando llega una solicitud.':'We email you when a request comes in.')
+    :(es?'Avisos por correo: todavía no. Las solicitudes nuevas aparecen arriba en Solicitudes, con un número en tu carpeta.':'Email alerts: not yet. New requests show up above in Requests, with a count on your folder icon.'))
+    +' '+(isPro?'':(es?'Cada borrador cuenta como un estimado gratis de tu cuenta.':'Each draft counts as one of your free estimates.'));
+}
+async function saveQuoteLink(){
+  const es=appLang==='es', st=document.getElementById('link-status'), btn=document.getElementById('link-save-btn');
+  const slug=document.getElementById('link-slug').value.trim().toLowerCase();
+  if(!/^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/.test(slug)||/--/.test(slug)){ st.textContent=es?'Usa de 3 a 40 letras, números o guiones (sin espacios).':'Use 3 to 40 letters, numbers or dashes (no spaces).'; return; }
+  const trades=[...document.querySelectorAll('#link-trades input:checked')].map(i=>i.value);
+  const biz=getBiz();
+  if(!biz.company){ st.textContent=es?'Agrega el nombre de tu negocio en Tu negocio para que el cliente vea quién eres.':'Add your company name under Your business so the client sees who you are.'; }
+  btn.disabled=true;
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/my-page`,{method:'PUT',headers:await apiHeaders(),body:JSON.stringify({slug,trades,active:document.getElementById('link-active').checked,company:biz.company||'',phone:biz.phone||''})});
+    const d=await r.json().catch(()=>({}));
+    if(!r.ok){ st.textContent=d.error?.code==='slug_taken'?(es?'Ese enlace ya está tomado. Prueba otro.':'That link is taken. Try another one.'):(es?'No se pudo guardar. Intenta de nuevo.':"Couldn't save. Try again."); return; }
+    window._myPage=d.page; renderQuoteLinkCard();
+    if(biz.company) st.textContent=es?'Guardado.':'Saved.';
+  }catch(e){ st.textContent=es?'No se pudo guardar. Revisa tu conexión.':"Couldn't save. Check your connection."; }
+  finally{ btn.disabled=false; }
+}
+function quoteLinkUrl(){ return window._myPage?`https://even-os.com/q/${window._myPage.slug}`:''; }
+async function copyQuoteLink(){
+  const u=quoteLinkUrl(); if(!u) return;
+  try{ await navigator.clipboard.writeText(u); showToast(appLang==='es'?'Enlace copiado.':'Link copied.'); }
+  catch(e){ prompt(appLang==='es'?'Copia tu enlace:':'Copy your link:',u); }
+}
+function previewQuoteLink(){ const u=quoteLinkUrl(); if(u) window.open(u,'_blank','noopener'); }
+
+async function refreshRequestBadge(){
+  if(!currentUser||!sbClient) return;
+  try{
+    const { count }=await sbClient.from('quote_requests').select('id',{count:'exact',head:true}).eq('user_id',currentUser.id).eq('status','new');
+    const dot=document.getElementById('req-dot');
+    if(dot){ dot.hidden=!count; dot.textContent=count>9?'9+':String(count||''); }
+  }catch(e){}
+}
+async function loadRequests(){
+  if(!currentUser||!sbClient) return;
+  try{
+    const { data, error }=await sbClient.from('quote_requests')
+      .select('id,name,phone,email,address,city,zip,trade,description,lang,status,draft_status,draft,estimate_id,created_at')
+      .eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(50);
+    if(error) throw error;
+    window._requests=data||[];
+    renderRequests();
+    refreshRequestBadge();
+  }catch(e){ console.error('Load requests error:',e); }
+}
+const REQ_STATUS={new:['New','Nueva'],reviewed:['Reviewed','Revisada'],sent:['Proposal sent','Propuesta enviada'],archived:['Archived','Archivada']};
+function filterRequests(which,btn){
+  window._reqFilter=which;
+  document.querySelectorAll('#req-filter button').forEach(b=>b.classList.toggle('on',b===btn));
+  renderRequests();
+}
+function renderRequests(){
+  const sec=document.getElementById('req-section'), list=document.getElementById('req-list');
+  if(!sec||!list) return;
+  const es=appLang==='es', all=window._requests||[];
+  sec.hidden=!all.length&&!window._myPage;
+  const n=all.filter(r=>r.status==='new').length;
+  const cnt=document.getElementById('req-count'); if(cnt){ cnt.hidden=!n; cnt.textContent=String(n); }
+  const rows=all.filter(r=>window._reqFilter==='archived'?r.status==='archived':r.status!=='archived');
+  if(!rows.length){
+    list.innerHTML=`<div class="req-note" style="padding:6px 2px 2px">${window._reqFilter==='archived'?(es?'Nada archivado.':'Nothing archived.'):(es?'Todavía no hay solicitudes. Comparte tu enlace para recibirlas aquí.':'No requests yet. Share your link and they land here.')}</div>`;
+    return;
+  }
+  list.innerHTML=rows.map(r=>{
+    const d=new Date(r.created_at).toLocaleDateString(es?'es-US':'en-US',{month:'short',day:'numeric'});
+    const total=r.draft_status==='ready'&&r.draft?.estimate?.totalBid?fmtK(r.draft.estimate.totalBid):'';
+    const draftNote={pending:es?'Preparando el borrador…':'Building the draft…',building:es?'Preparando el borrador…':'Building the draft…',
+      limit:es?'No se armó el borrador: ya usaste tus estimados gratis. Hazte Pro o ármalo tú.':'No draft yet: your free estimates are used up. Go Pro or build it yourself.',
+      failed:es?'El borrador no salió. Inténtalo otra vez o ármalo tú.':"The draft didn't come back. Try again or build it yourself.",
+      capped:es?'Muchas solicitudes hoy: este borrador no se armó solo. Ármalo cuando quieras.':"Lots of requests today: this one wasn't drafted automatically. Build it when you're ready."}[r.draft_status]||'';
+    const st=REQ_STATUS[r.status]||REQ_STATUS.new;
+    const tel=r.phone?`<a href="tel:${escapeHtml(r.phone.replace(/[^\d+]/g,''))}">${escapeHtml(r.phone)}</a>`:'';
+    const mail=r.email?`<a href="mailto:${escapeHtml(r.email)}">${escapeHtml(r.email)}</a>`:'';
+    const ready=r.draft_status==='ready';
+    return `<div class="req-card${r.status==='new'?' new':''}">
+      <div class="req-top">
+        <div style="min-width:0"><div class="req-name">${escapeHtml(r.name||'')}</div>
+          <div class="req-meta">${escapeHtml([tradeLabel(r.trade||'General Contractor',appLang),[r.address,r.city].filter(Boolean).join(', '),d].filter(Boolean).join(' · '))}</div></div>
+        <div class="req-total">${total?`${total}<small>${es?'borrador':'draft'}</small>`:''}</div>
+      </div>
+      <div class="req-desc">${escapeHtml(r.description||'')}</div>
+      ${tel||mail?`<div class="req-contact">${tel}${mail}</div>`:''}
+      <div class="req-actions">
+        <span class="status-pill ${r.status==='new'?'status-sent':r.status==='sent'?'status-won':'status-draft'}">${es?st[1]:st[0]}</span>
+        <div style="flex:1"></div>
+        ${ready?`<button class="req-btn primary" onclick="openRequest('${r.id}','estimate')">${es?'ABRIR BORRADOR':'OPEN DRAFT'}</button>
+          <button class="req-btn" onclick="openRequest('${r.id}','questions')">${es?'RESPONDER PREGUNTAS':'ANSWER QUESTIONS'}</button>`
+        :`${['limit','failed'].includes(r.draft_status)&&!(r.draft_status==='limit'&&!isPro)?`<button class="req-btn primary" onclick="retryRequestDraft('${r.id}',this)">${es?'ARMAR BORRADOR':'BUILD DRAFT'}</button>`:''}
+          ${r.draft_status==='limit'&&!isPro?`<button class="req-btn primary" onclick="handleUpgrade('monthly')">${es?'HAZTE PRO':'GO PRO'}</button>`:''}
+          ${['limit','failed','capped'].includes(r.draft_status)?`<button class="req-btn" onclick="openRequest('${r.id}','input')">${es?'ARMARLO YO':'BUILD IT MYSELF'}</button>`:''}`}
+        ${r.status==='archived'?`<button class="req-btn" onclick="setRequestStatus('${r.id}','reviewed')">${es?'RESTAURAR':'RESTORE'}</button>`:`<button class="req-btn" onclick="setRequestStatus('${r.id}','archived')">${es?'ARCHIVAR':'ARCHIVE'}</button>`}
+      </div>
+      ${draftNote&&!ready?`<div class="req-note">${draftNote}</div>`:''}
+    </div>`;
+  }).join('');
+}
+async function setRequestStatus(id,status){
+  if(!sbClient) return;
+  try{
+    const { error }=await sbClient.from('quote_requests').update({status}).eq('id',id);
+    if(error) throw error;
+    const r=(window._requests||[]).find(x=>x.id===id); if(r) r.status=status;
+    renderRequests(); refreshRequestBadge();
+  }catch(e){ console.error('Request status error:',e); }
+}
+async function retryRequestDraft(id,btn){
+  const es=appLang==='es';
+  if(btn){ btn.disabled=true; btn.textContent=es?'ARMANDO…':'BUILDING…'; }
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/quote-requests/${id}/draft`,{method:'POST',headers:await apiHeaders()});
+    const d=await r.json().catch(()=>({}));
+    if(d.draft_status==='limit'){ refreshUsage(); showLimitReached(currentUser?'pro_required':'signup_required'); }
+  }catch(e){}
+  await loadRequests();
+}
+// Puts the client's job on the screens exactly as if the contractor typed it:
+// same fields, same settings, so re-running it gives the same number.
+async function openRequest(id,where){
+  const es=appLang==='es';
+  const r=(window._requests||[]).find(x=>x.id===id); if(!r) return;
+  if(window._runBusy>0){ showToast(es?'Espera, tu estimado todavía se está calculando.':'Hold on, your estimate is still running.',3500); return; }
+  if(currentEstimate&&!confirm(es?'¿Abrir esta solicitud? El estimado en pantalla se borrará.':'Open this request? The estimate on screen will be cleared.')) return;
+  clearJob();
+  const d=r.draft||{}, c=d.ctx||{};
+  const set=(elId,v)=>{ const el=document.getElementById(elId); if(el&&v!=null) el.value=v; };
+  set('est-trade',c.trade||r.trade||'General Contractor');
+  set('est-location',c.location||[r.city,r.zip].filter(Boolean).join(' '));
+  if(c.projtype) set('est-projtype',c.projtype);
+  set('est-sqft',c.sqft&&c.sqft!=='not specified'?c.sqft:'');
+  set('scope-text',d.scopeText||r.description||'');
+  set('est-client',r.name||'');
+  set('prop-job-address',[r.address,r.city].filter(Boolean).join(', '));
+  saveDraft();
+  window._openRequestId=id;
+  if(r.status==='new') setRequestStatus(id,'reviewed');
+  if(where==='input'||r.draft_status!=='ready'){ navigate('input'); showToast(es?'El trabajo del cliente está cargado. Revisa y toca Generar.':"The client's job is loaded. Review it and tap Build.",4500); return; }
+  window._ctx={...c,lang:c.lang||appLang};
+  window._scopeData=d.scopeData||null;
+  if(where==='questions'){
+    navigate('refine');
+    document.getElementById('ai-summary-text').innerHTML=T[appLang].extracted;
+    renderScopeExtracted(d.scopeData||{});
+    renderQuestions((d.scopeData||{}).questions||[]);
+    document.getElementById('scope-extracted').style.display='block';
+    document.getElementById('questions-section').style.display='block';
+    return;
+  }
+  const data=JSON.parse(JSON.stringify(d.estimate));
+  currentEstimate=data;
+  window._marketMeta=d.marketMeta||null;
+  navigate('estimate');
+  renderEstimate(data);
+  const psEl=document.getElementById('pay-sched-section'); if(psEl) psEl.style.display='block';
+  const peCard=document.getElementById('proposal-edit-card'); if(peCard){ peCard.style.display='block'; populateProposalAssumptions(); }
+  // Pro: the draft becomes a saved job (Bid 1) the first time it is opened.
+  if(isPro&&currentUser&&!r.estimate_id){
+    await saveEstimateToCloud(data);
+    if(window._currentEstimateId){ r.estimate_id=window._currentEstimateId; sbClient.from('quote_requests').update({estimate_id:r.estimate_id}).eq('id',id).then(()=>{}); }
+  }else if(r.estimate_id){ window._currentEstimateId=r.estimate_id; }
 }
 
 async function loadDashboard(){
-  if(!currentUser||!sbClient||!isPro) return;
+  if(!currentUser||!sbClient) return;
+  loadQuoteLink(); loadRequests();
+  // Free accounts: the estimate link and Requests work; saved jobs are Pro.
+  const _proOnly=['dash-pro-tag','dash-metrics','dash-filter','dash-job-count'];
+  _proOnly.forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=isPro?'':'none'; });
+  if(!isPro){
+    const le=document.getElementById('dashboard-list');
+    if(le) le.innerHTML=`<div style="text-align:center;padding:26px 16px;color:var(--muted);font-size:13px">${appLang==='es'?'Guardar trabajos y el historial de ofertas vienen con Pro.':'Saved jobs and bid history come with Pro.'}<div style="margin-top:12px"><button class="req-btn primary" onclick="handleUpgrade('monthly')">${appLang==='es'?'HAZTE PRO':'GO PRO'}</button></div></div>`;
+    return;
+  }
   const listEl=document.getElementById('dashboard-list');
   const emptyEl=document.getElementById('dashboard-empty');
   if(listEl) listEl.innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px;font-family:\'DM Mono\',monospace">'+(appLang==='es'?'Cargando…':'Loading…')+'</div>';
