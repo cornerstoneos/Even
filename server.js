@@ -893,7 +893,8 @@ async function buildQuoteDraft(row) {
     if (!md || !md.market || (!md.materials?.length && !md.labor?.length && !md.permits?.length)) md = null;
     if (md && Array.isArray(md.materials)) md.materials = md.materials.filter(r => r?.tier !== 'invalid_cross_market_copy');
     const scopeCats = PIPE.scopeMaterialCategories(ctx.trade, scopeData.tradeBreakdown);
-    const catalog = PIPE.buildCatalog(md, scopeCats, { suppliers: prefs.suppliers, subs: prefs.subs });
+    const partner = md ? (await partnerRowsFor(row.user_id, md.market)).rows : [];
+    const catalog = PIPE.buildCatalog(md, scopeCats, { suppliers: prefs.suppliers, subs: prefs.subs, partner });
     const hvhzNote = PIPE.hvhzNoteFor(hvhz);
     const pricingBlock = PIPE.pricingBlockFor(md, hvhzNote, catalog, ctx.location);
     const blocks = PIPE.estimatePromptBlocks({ ctx, scope: scopeText, ansText: '', tradeBreakdown: scopeData.tradeBreakdown || [], pricingBlock, lang: ctx.lang });
@@ -927,6 +928,32 @@ async function buildQuoteDraft(row) {
     return { ok: false, code };
   }
 }
+
+// ─── Partner price rule (DECIDED founder 2026-10-14) ─────────────────────────
+// A partner supply house's prices reach ONLY a paid (Pro) contractor who picked
+// that supplier in My supply houses, labeled with the supplier's name. They live
+// in partner_prices (server only), never in market_data, so the general price
+// list, free and signed-out users, and contractors who picked another supplier
+// never receive them: this function is the only way out of that table.
+async function partnerRowsFor(userId, market) {
+  if (!userId || !market) return { rows: [], reason: 'no_user' };
+  const u = ((await sbRest('GET', `users?id=eq.${userId}&select=is_pro,prefs`)).data || [])[0];
+  if (!u || !u.is_pro) return { rows: [], reason: 'not_pro' };
+  const picked = [...new Set(((u.prefs || {}).shops || []).map(x => x && x.id).filter(id => /^V\d{3,4}$/.test(String(id || ''))))];
+  if (!picked.length) return { rows: [], reason: 'none_picked' };
+  const sup = (await sbRest('GET', `suppliers?id=in.(${picked.join(',')})&is_partner=eq.true&active=eq.true&select=id,name`)).data || [];
+  if (!sup.length) return { rows: [], reason: 'no_partner_picked' };
+  const names = Object.fromEntries(sup.map(x => [x.id, x.name]));
+  const rows = (await sbRest('GET', `partner_prices?supplier_id=in.(${sup.map(x => x.id).join(',')})&market=eq.${encodeURIComponent(market)}&select=supplier_id,category,item,unit,price,source,date`)).data || [];
+  return { rows: rows.filter(r => names[r.supplier_id]).map(r => ({ supplier_id: r.supplier_id, supplier: names[r.supplier_id], category: r.category, item: r.item, unit: r.unit, price: +r.price, source: r.source, date: r.date })), reason: rows.length ? null : 'no_rows_for_market' };
+}
+app.get('/api/partner-prices', async (req, res) => {
+  const ident = await signedInUser(req, res); if (!ident) return;
+  if (!usage().rateOk(ident.ipHash, 'event')) return res.status(429).json({ error: { code: 'rate_limited' } });
+  const m = await resolveMarket(String(req.query.location || ''));
+  const out = await partnerRowsFor(ident.user.id, m && m.market);
+  res.json(out);
+});
 
 // Email stays OFF until the founder turns it on: QUOTE_EMAIL_ENABLED=1 plus
 // RESEND_API_KEY and NOTIFY_FROM_EMAIL on Railway (even-os.com must be verified

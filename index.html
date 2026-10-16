@@ -953,6 +953,28 @@ body:has(#s-dashboard.active) .app{min-height:0}
 .bid-tag{display:inline-block;margin-left:4px;padding:1px 6px;border-radius:8px;background:var(--gold-dim);color:var(--text-accent);font:600 9px 'DM Mono',monospace}
 .req-count[hidden],.job-lost[hidden],.bid-bar[hidden],#req-section[hidden]{display:none!important}
 .job-lost{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:0 12px 10px;font-size:11px;color:var(--muted)}
+/* Material list + Where I shop */
+.matlist-btn{grid-column:1/-1;background:var(--panel);border:1px solid var(--rim2);border-radius:12px;color:var(--white);padding:12px 14px;text-align:left;cursor:pointer;font:700 14px 'DM Sans',sans-serif}
+.matlist-btn small{display:block;font-weight:400;font-size:11px;color:var(--muted);margin-top:2px}
+.ml-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9000;align-items:flex-end;justify-content:center}
+.ml-sheet{background:var(--l2);border:1px solid var(--rim2);border-radius:16px 16px 0 0;width:100%;max-width:560px;max-height:88vh;overflow:auto;padding:16px;box-sizing:border-box}
+@media(min-width:700px){.ml-modal{align-items:center}.ml-sheet{border-radius:16px}}
+.ml-head{display:flex;justify-content:space-between;align-items:center;font-size:16px;color:var(--white);margin-bottom:10px}
+.ml-to{font-size:14px;color:var(--white);font-weight:700;margin-bottom:4px;overflow-wrap:anywhere}.ml-to span{color:var(--muted);font-weight:400}
+.ml-meta{font-size:11px;color:var(--muted);margin-bottom:10px;overflow-wrap:anywhere}
+.ml-rows{border-top:1px solid var(--rim)}
+.ml-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--rim);font-size:13px;color:var(--white2)}
+.ml-row span{overflow-wrap:anywhere;min-width:0}.ml-row b{white-space:nowrap;color:var(--white)}
+.ml-note{font-size:11px;color:var(--muted);line-height:1.45;margin:8px 0}
+.ml-empty{font-size:13px;color:var(--white2);padding:12px 0}
+.ml-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.ml-actions .bid-btn{white-space:normal;text-align:left}
+.shop-add{display:flex;gap:6px}.shop-add .finput{flex:1;min-width:0}
+.shop-card{background:var(--bg);border:1px solid var(--rim);border-radius:10px;padding:10px;margin-top:8px}
+.shop-top{display:flex;align-items:center;gap:8px}.shop-primary{flex:1;display:flex;align-items:center;gap:6px;color:var(--white);font-size:13px;min-width:0;overflow-wrap:anywhere}
+.shop-tag{font:600 9px 'DM Mono',monospace;color:var(--text-accent)}
+.shop-rep{display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px}
+@media(min-width:520px){.shop-rep{grid-template-columns:1fr 1fr 1fr}}
 </style>
 
   <!-- Supabase -->
@@ -1634,6 +1656,7 @@ body:has(#s-dashboard.active) .app{min-height:0}
       <div class="pdf-grid d-dl" id="est-pdf-grid">
             <button class="d-btn gold" onclick="showEmailGate('proposal')"><span class="d-dl-ic">⤓</span><b data-es="Propuesta<br>al Cliente">Client<br>Proposal</b><small data-es="Para tu cliente">For your client</small></button>
             <button class="d-btn dark" onclick="showEmailGate('internal')"><span class="d-dl-ic">⤓</span><b data-es="Hoja de<br>Costos">Cost<br>Sheet</b><small data-es="Tus números">Your numbers</small></button>
+            <button class="matlist-btn" onclick="openMaterialList()"><span data-es="Lista de materiales para el proveedor">Material list for supplier</span><small data-es="Cantidades, sin precios. Para pedir cotización.">Quantities, no prices. Ask for a quote.</small></button>
           </div>
 
       <div class="gc" id="cost-tracker-section">
@@ -3339,6 +3362,16 @@ document.addEventListener('click',function(e){
   if(!e.target.closest('#est-location')&&!e.target.closest('#city-dropdown')) closeCityDropdown();
 });
 
+// Partner supply-house prices: the server only returns rows to a paid account
+// that picked that supplier in My supply houses; everyone else gets none.
+async function fetchPartnerPrices(location){
+  if(!isPro||!currentUser||!(window._myShops||[]).some(x=>x&&x.id)) return [];
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/partner-prices?location=${encodeURIComponent(location||'')}`,{headers:await apiHeaders(),signal:AbortSignal.timeout(8000)});
+    if(!r.ok) return [];
+    return (await r.json()).rows||[];
+  }catch(e){ return []; }
+}
 async function fetchMarketPricing(location){
   // Cleared up front so a failed lookup falls back to text matching for THIS address
   // instead of silently inheriting the previous estimate's hurricane-zone answer.
@@ -3578,7 +3611,7 @@ function computePermitFee(row,value,qty,sqft){
 // The menu the model scopes from. Refs are positional in a deterministic list, so
 // the same market data always produces the same refs (and the same cache key).
 function buildCatalog(md,scopeCats,own){
-  const cat={materials:[],labor:[],permits:[],suppliers:[],subs:[],byRef:{}};
+  const cat={materials:[],labor:[],permits:[],partner:[],suppliers:[],subs:[],byRef:{}};
   if(md){
     (md.materials||[]).filter(r=>r&&r.mid!=null&&(isEquipmentRental(r.category)||categoryInScope(r.category,scopeCats)))
       .forEach((row,i)=>{const e={ref:'M'+(i+1),kind:'material',row};cat.materials.push(e);cat.byRef[e.ref]=e;});
@@ -3586,6 +3619,11 @@ function buildCatalog(md,scopeCats,own){
       .forEach((row,i)=>{const e={ref:'L'+(i+1),kind:'labor',row};cat.labor.push(e);cat.byRef[e.ref]=e;});
     (md.permits||[]).forEach((row,i)=>{const e={ref:'P'+(i+1),kind:'permit',row};cat.permits.push(e);cat.byRef[e.ref]=e;});
   }
+  // A partner supply house's own price sheet. These rows only exist here when the
+  // server handed them over (paid contractor who picked that supplier); they are
+  // never part of the shared market data (partner price rule, founder 2026-10-14).
+  ((own&&own.partner)||[]).filter(r=>r&&r.item&&+r.price>0&&(isEquipmentRental(r.category)||categoryInScope(r.category,scopeCats)))
+    .forEach((row,i)=>{const e={ref:'H'+(i+1),kind:'partner',row};(cat.partner=cat.partner||[]).push(e);cat.byRef[e.ref]=e;});
   ((own&&own.suppliers)||[]).filter(s=>(s.product_name||s.material)&&parseFloat(s.price)>0)
     .forEach((row,i)=>{const e={ref:'S'+(i+1),kind:'supplier',row};cat.suppliers.push(e);cat.byRef[e.ref]=e;});
   ((own&&own.subs)||[]).filter(s=>s.trade&&parseFloat(s.rate)>0&&['hour','day','sqft','lump'].includes(s.rate_type))
@@ -3603,6 +3641,7 @@ function catalogPromptText(cat){
   const out=[];
   if(cat.labor.length) out.push('LABOR (pick the trade doing the work; give hours):\n'+cat.labor.map(e=>`${e.ref} ${e.row.trade}`).join('\n'));
   if(cat.materials.length) out.push('MATERIALS (qty in the unit shown, before waste):\n'+cat.materials.map(e=>`${e.ref} [${e.row.category||''}] ${e.row.item||''} | ${e.row.unit||'unit'}`).join('\n'));
+  if((cat.partner||[]).length) out.push("THE CONTRACTOR'S SUPPLY HOUSE PRICE SHEET (prefer these over MATERIALS when the item matches; use type material with this ref):\n"+cat.partner.map(e=>`${e.ref} [${e.row.category||''}] ${e.row.item} | ${e.row.unit||'unit'} (${e.row.supplier})`).join('\n'));
   if(cat.suppliers.length) out.push("CONTRACTOR'S OWN SUPPLIER PRICES (prefer these over MATERIALS when the item matches):\n"+cat.suppliers.map(e=>`${e.ref} ${e.row.category?'['+e.row.category+'] ':''}${e.row.product_name||e.row.material}${e.row.manufacturer?' by '+e.row.manufacturer:''} | ${e.row.unit||'unit'}`).join('\n'));
   if(cat.subs.length) out.push("CONTRACTOR'S OWN SUBS (use when this trade is subbed out; qty in the unit shown):\n"+cat.subs.map(e=>`${e.ref} ${e.row.trade}${e.row.company?' ('+e.row.company+')':''} | per ${e.row.rate_type==='lump'?'job (qty 1)':e.row.rate_type}`).join('\n'));
   if(cat.permits.length) out.push('PERMIT FEES (pick the row for each permit actually pulled):\n'+cat.permits.map(e=>`${e.ref} ${e.row.municipality||''} — ${e.row.work_type||''} (${permitBasisLabel(permitBasis(e.row))})`).join('\n'));
@@ -3640,6 +3679,14 @@ function priceScope(scope,cat,s){
       if(s.hvhz&&HVHZ_EXTERIOR_RE.test(e.row.category||'')){ unitCost=round2(unitCost*(1+HVHZ_UPLIFT)); desc+=' (HVHZ)'; }
       const qty=round2(q*(1+w));
       lines.push({category:catRoot(e.row.category),description:desc+(w?(es?` (incl. ${Math.round(w*100)}% de desperdicio)`:` (incl. ${Math.round(w*100)}% waste)`):''),qty,unit:e.row.unit||'ea',unitCost,total:round2(qty*unitCost),ref,priced:'catalog',source:e.row.source||'',catalogItem:e.row.item});
+    }else if(e&&e.kind==='partner'){
+      // The supply house's own sheet price: their number as given (no market
+      // level or HVHZ uplift on top), waste on bulk goods like any material.
+      const q=Math.max(0,+it.qty||0); if(!q) continue;
+      const w=wasteFor(e.row.category,e.row.unit);
+      const unitCost=round2(+e.row.price);
+      const qty=round2(q*(1+w));
+      lines.push({category:catRoot(e.row.category),description:`${(es&&it.description)?String(it.description):e.row.item} (${e.row.supplier})`+(w?(es?` (incl. ${Math.round(w*100)}% de desperdicio)`:` (incl. ${Math.round(w*100)}% waste)`):''),qty,unit:e.row.unit||'ea',unitCost,total:round2(qty*unitCost),ref,priced:'partner',supplier:e.row.supplier,source:e.row.source||'',priceDate:e.row.date||'',catalogItem:e.row.item});
     }else if(e&&e.kind==='supplier'){
       const q=Math.max(0,+it.qty||0); if(!q) continue;
       const unitCost=round2(parseFloat(e.row.price));
@@ -3889,7 +3936,8 @@ async function _calculateEstimate(btn,jobAtStart){
   // decides both what gets priced into the estimate and how confident the app
   // is in that pricing. Must exist before the pricing block is built.
   const scopeCats=scopeMaterialCategories(ctx.trade,window._scopeData?.tradeBreakdown);
-  const catalog=buildCatalog(marketData,scopeCats,{suppliers:window._mySuppliers,subs:window._mySubs});
+  const partnerRows=marketData?await fetchPartnerPrices(ctx.location):[];
+  const catalog=buildCatalog(marketData,scopeCats,{suppliers:window._mySuppliers,subs:window._mySubs,partner:partnerRows});
   const pricingBlock=pricingBlockFor(marketData,hvhzNote,catalog,ctx.location);
   const confidenceTier=computeConfidenceTier(marketData,scopeCats);
   // Kept separately from the estimate payload so the permit-scope disclosure can be
@@ -4242,6 +4290,7 @@ function lineSourceNote(item,i){
   else if(item.priced==='bls x multiplier') t=es?`Salario BLS $${item.wage}/h × tu multiplicador`:`BLS wage $${item.wage}/hr × your labor multiplier`;
   else if(item.priced==='your labor rate') t=(es?'Tu costo por hora':'Your labor cost per hour')+(item.wage?(es?` (salario medio BLS $${item.wage}/h)`:` (BLS median wage $${item.wage}/hr)`):'');
   else if(item.priced==='your supplier') t=es?'Tu precio de proveedor':'Your supplier price';
+  else if(item.priced==='partner') t=(es?`Precio de la lista de ${item.supplier}`:`Priced from ${item.supplier} sheet`)+(item.priceDate?`, ${item.priceDate}`:'');
   else if(item.priced==='your sub') t=es?'Tu tarifa de subcontratista':'Your sub rate';
   if(!t) return '';
   return `<div class="li-src${item.estimated?' est':''}" id="ls-${i}">${escapeHtml(t)}</div>`;
@@ -5724,6 +5773,16 @@ async function submitDataTrade(){
           </div>
         </div>
       </div></div>
+        <button class="d-row-link d-fold" onclick="toggleFold('set-shops',this);loadSupplierList();renderShops()"><span><span data-es="Dónde compro">Where I shop</span><span class="d-fold-sum" id="shop-sum" data-es="Tus casas de materiales y tu vendedor">Your supply houses and your rep</span></span><span class="d-chev">›</span></button>
+        <div id="set-shops" class="d-fold-body" hidden><div class="gc" style="margin-top:10px">
+          <div class="gc-head"><div class="gc-title"><i data-lucide="store" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Mis casas de materiales">My supply houses</span></div></div>
+          <div class="gc-body" style="padding:14px 12px">
+            <div style="font-size:12px;color:var(--white2);line-height:1.5;margin-bottom:10px" data-es="Tu lista de materiales va dirigida a tu casa principal, con un botón para mandársela a tu vendedor. Su contacto queda solo en tu cuenta.">Your material list is addressed to your primary supply house, with a button to send it to your rep. Their contact stays in your account only.</div>
+            <div class="shop-add"><input id="shop-input" class="finput" list="shop-options" maxlength="120" placeholder="84 Lumber" onkeydown="if(event.key==='Enter')addShop()"><datalist id="shop-options"></datalist><button class="bid-btn primary" onclick="addShop()" data-es="AGREGAR">ADD</button></div>
+            <div class="ml-note" data-es="Elige de la lista o escribe la tuya.">Pick from the list or type your own.</div>
+            <div id="shop-list"></div>
+          </div>
+        </div></div>
         <button class="d-row-link d-fold" onclick="openYourSettings()"><span><span data-es="Mano de obra y márgenes">Labor and margins</span><span class="d-fold-sum" id="dash-settings-sum"></span></span><span class="d-chev">›</span></button>
         <button class="d-row-link d-fold" onclick="toggleFold('set-sup',this)"><span><span data-es="Mis proveedores">My suppliers</span><span class="d-fold-sum" data-es="Tus propios precios de materiales">Your own material prices</span></span><span class="d-chev">›</span></button>
         <div id="set-sup" class="d-fold-body" hidden><div style="margin-top:10px">
@@ -5950,6 +6009,7 @@ function savePrefs(){
     oh: sliderVals.oh, profit: sliderVals.profit, cushion: sliderVals.cushion,
     marketAdj: marketAdj||'standard',
     lang: appLang,
+    shops: (window._myShops||[]).slice(0,20),
     biz: getBiz()
   };
   sbClient.from('users').update({prefs}).eq('id',currentUser.id)
@@ -6371,6 +6431,7 @@ function applyPrefs(prefs){
     const b=[...document.querySelectorAll('.market-adj-opt')].find(x=>(x.getAttribute('onclick')||'').includes(`'${prefs.marketAdj}'`));
     if(b) setMarketAdj(b,prefs.marketAdj);
   }
+  if(Array.isArray(prefs.shops)){ window._myShops=prefs.shops.filter(x=>x&&x.name); try{ localStorage.setItem('even_shops',JSON.stringify(window._myShops)); }catch(e){} renderShops(); }
   window._prefsLoaded=true;
 }
 // Puts a saved margin back on its slider (same drawing as a drag).
@@ -6381,6 +6442,169 @@ function setSliderVal(key,val,min,max){
   const f=document.getElementById('sf-'+key), t=document.getElementById('sh-'+key), l=document.getElementById('lv-'+key);
   if(f) f.style.width=pct+'%'; if(t) t.style.left=`calc(${pct}% - 11px)`; if(l) l.textContent=v+'%';
   updateCombined();
+}
+
+// ══════════════════════════
+//  MATERIAL LIST + WHERE I SHOP (quote engine phase A, founder 2026-10-13)
+// ══════════════════════════
+// The material list IS the cost sheet, filtered: same rows, same quantities
+// (waste included), from the same estimate. Labor, permits, overhead, profit and
+// every price are stripped: the supply house quotes its own price. It is a
+// request for quote, never a purchase order. Addressed to the contractor's
+// primary supply house when one is set (My supply houses, saved to the account).
+const MATLIST_SERVICE_CATS=new Set(['Labor','Permits','Subcontractor','Disposal','Delivery','Cleanup','Supervision','Utility','Inspection','Protection','Other']);
+function isMaterialLine(l){
+  if(!l||l.removed||!(+l.qty>0)) return false;
+  if(['catalog','your supplier','partner'].includes(l.priced)) return true;
+  const c=catRoot(l.category);
+  if(MATLIST_SERVICE_CATS.has(c)||/^Equipment Rental/.test(l.category||'')) return false;
+  return !/^(hr|hrs|hour|hours|day|days|job|permit|ls|lump)$/i.test(String(l.unit||'').trim());
+}
+window._myShops=[];
+try{ window._myShops=JSON.parse(localStorage.getItem('even_shops')||'[]')||[]; }catch(e){}
+function primaryShop(){ const s=(window._myShops||[]).filter(x=>x&&x.name); return s.find(x=>x.primary)||s[0]||null; }
+function buildMaterialList(data,lang){
+  const es=lang==='es', biz=getBiz(), shop=primaryShop();
+  const rows=(data.lineItems||[]).filter(isMaterialLine).map(l=>({
+    description:String(l.description||'').replace(/\s*\(incl\. \d+% (waste|de desperdicio)\)/i,'').trim(),
+    qty:+l.qty, unit:unitLabel(l.unit||'ea',lang)}));
+  const L=es?{title:'Lista de materiales',sub:'Solicitud de cotización',to:'Para',from:'De',job:'Trabajo',date:'Fecha',number:'Estimado n.º',item:'Material',qty:'Cant.',unit:'Unidad',
+      waste:'Las cantidades ya incluyen el desperdicio.',rfq:'Solicitud de cotización, no es una orden de compra.',please:'Por favor cotiza estos materiales.',prepared:'Preparado con Even',none:'Este estimado no tiene materiales. No hay nada que enviar al proveedor.',lic:'Lic.'}
+    :{title:'Material list',sub:'Request for quote',to:'To',from:'From',job:'Job',date:'Date',number:'Estimate #',item:'Material',qty:'Qty',unit:'Unit',
+      waste:'Quantities already include waste.',rfq:'Request for quote, not a purchase order.',please:'Please quote these materials.',prepared:'Prepared with Even',none:'This estimate has no material lines. There is nothing to send to a supplier.',lic:'Lic.'};
+  const job=data.jobAddress||document.getElementById('prop-job-address')?.value||window._ctx?.location||document.getElementById('est-location')?.value||'';
+  return {lang,labels:L,rows,shop,company:biz.company||'',phone:biz.phone||'',email:biz.email||'',license:biz.license||'',job,
+    date:new Date().toLocaleDateString(es?'es-US':'en-US',{month:'long',day:'numeric',year:'numeric'}),number:proposalNumber(data)};
+}
+function materialListText(M){
+  const L=M.labels, out=[];
+  out.push(`${L.title.toUpperCase()} · ${L.sub}`);
+  if(M.shop) out.push(`${L.to}: ${M.shop.name}${M.shop.rep_name?' ('+M.shop.rep_name+')':''}`);
+  const from=[M.company,M.phone,M.license?`${L.lic} ${M.license}`:''].filter(Boolean).join(' · ');
+  if(from) out.push(`${L.from}: ${from}`);
+  if(M.job) out.push(`${L.job}: ${M.job}`);
+  out.push(`${L.date}: ${M.date} · ${L.number} ${M.number}`,'',L.please,'');
+  M.rows.forEach((r,i)=>out.push(`${i+1}. ${r.description}: ${r.qty} ${r.unit}`));
+  out.push('',L.waste,L.rfq,L.prepared);
+  return out.join('\n');
+}
+function openMaterialList(){
+  if(!currentEstimate){ showToast(appLang==='es'?'Primero corre un estimado.':'Run an estimate first.'); return; }
+  const M=buildMaterialList(currentEstimate,appLang), L=M.labels, es=appLang==='es';
+  window._lastMatList=M;
+  const box=document.getElementById('matlist-body');
+  if(!M.rows.length){
+    box.innerHTML=`<div class="ml-empty">${escapeHtml(L.none)}</div>`;
+  }else{
+    const sendLbl=M.shop?(es?`ENVIAR A ${M.shop.name} PARA COTIZAR`:`SEND TO ${M.shop.name} FOR A QUOTE`):(es?'COMPARTIR':'SHARE');
+    box.innerHTML=`
+      ${M.shop?`<div class="ml-to"><span>${escapeHtml(L.to)}</span> ${escapeHtml(M.shop.name)}${M.shop.rep_name?` · ${escapeHtml(M.shop.rep_name)}`:''}</div>`
+        :`<div class="ml-note">${es?'Sin casa de materiales principal: la lista sale sin destinatario. Agrégala en Ajustes, Dónde compro.':'No primary supply house: the list goes out unaddressed. Add one in Settings, Where I shop.'}</div>`}
+      <div class="ml-meta">${escapeHtml([M.company,M.job,M.date,`${L.number} ${M.number}`].filter(Boolean).join(' · '))}</div>
+      <div class="ml-rows">${M.rows.map(r=>`<div class="ml-row"><span>${escapeHtml(r.description)}</span><b>${escapeHtml(String(r.qty))} ${escapeHtml(r.unit)}</b></div>`).join('')}</div>
+      <div class="ml-note">${escapeHtml(L.waste)} ${escapeHtml(L.rfq)}</div>
+      <div class="ml-actions">
+        <button class="bid-btn primary" onclick="sendMaterialList()">${escapeHtml(sendLbl)}</button>
+        <button class="bid-btn" onclick="downloadMaterialListPDF()">PDF</button>
+        <button class="bid-btn" onclick="copyMaterialList()">${es?'COPIAR TEXTO':'COPY TEXT'}</button>
+      </div>`;
+  }
+  document.getElementById('matlist-modal').style.display='flex';
+}
+function closeMaterialList(){ document.getElementById('matlist-modal').style.display='none'; }
+async function copyMaterialList(){
+  const t=materialListText(window._lastMatList);
+  try{ await navigator.clipboard.writeText(t); showToast(appLang==='es'?'Lista copiada.':'List copied.'); }catch(e){ prompt('',t); }
+}
+// Opens the contractor's own email or texting app, pre-filled to their rep.
+// Nothing is sent by Even; the rep's contact lives only in their account.
+function materialListSubject(M){ return `${M.labels.sub}: ${M.company||''} ${M.labels.number} ${M.number}`.replace(/\s+/g,' ').trim(); }
+// mailto: to the rep's email, else sms: to the rep's phone, else null (share sheet).
+function materialListSendUrl(M){
+  const t=materialListText(M), shop=M.shop;
+  if(shop&&shop.rep_email) return `mailto:${encodeURIComponent(shop.rep_email)}?subject=${encodeURIComponent(materialListSubject(M))}&body=${encodeURIComponent(t)}`;
+  if(shop&&shop.rep_phone) return `sms:${shop.rep_phone.replace(/[^\d+]/g,'')}?&body=${encodeURIComponent(t)}`;
+  return null;
+}
+async function sendMaterialList(){
+  const M=window._lastMatList; if(!M) return;
+  const t=materialListText(M), es=M.lang==='es', shop=M.shop, subject=materialListSubject(M);
+  const url=materialListSendUrl(M);
+  if(url){ location.href=url; return; }
+  if(navigator.share){ try{ await navigator.share({title:subject,text:t}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
+  copyMaterialList();
+  if(shop) showToast(es?'Agrega el correo o teléfono de tu vendedor en Dónde compro para enviarlo directo.':'Add your rep\'s email or phone in Where I shop to send it straight to them.',4500);
+}
+async function downloadMaterialListPDF(){
+  const M=window._lastMatList; if(!M||!M.rows.length) return;
+  const jsPDF=(window.jspdf||{}).jsPDF||window.jsPDF;
+  if(!jsPDF){ alert(appLang==='es'?'El PDF no cargó. Actualiza la página.':'PDF engine not loaded. Please refresh and try again.'); return; }
+  const doc=new jsPDF({unit:'pt',format:'letter'}), L=M.labels, W=612, X=48;
+  let y=56;
+  doc.setFont('helvetica','bold');doc.setFontSize(18);doc.text(L.title,X,y);
+  doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(110);doc.text(L.sub,X,y+16);doc.setTextColor(0);
+  y+=40;
+  const line=(k,v)=>{ if(!v) return; doc.setFont('helvetica','bold');doc.text(k+':',X,y);doc.setFont('helvetica','normal');doc.splitTextToSize(String(v),W-X*2-70).forEach((t,i)=>doc.text(t,X+70,y+i*12)); y+=14*Math.max(1,doc.splitTextToSize(String(v),W-X*2-70).length); };
+  if(M.shop) line(L.to,M.shop.name+(M.shop.rep_name?` (${M.shop.rep_name})`:''));
+  line(L.from,[M.company,M.phone,M.license?`${L.lic} ${M.license}`:''].filter(Boolean).join(' · '));
+  line(L.job,M.job); line(L.date,M.date); line(L.number,M.number);
+  y+=10; doc.setFont('helvetica','normal');doc.text(L.please,X,y); y+=18;
+  doc.setFillColor(240,237,232);doc.rect(X,y-11,W-X*2,16,'F');doc.setFont('helvetica','bold');doc.setFontSize(9);
+  doc.text(L.item,X+6,y);doc.text(L.qty,W-X-110,y);doc.text(L.unit,W-X-50,y); y+=16;
+  doc.setFont('helvetica','normal');
+  M.rows.forEach((r,i)=>{
+    const d=doc.splitTextToSize(`${i+1}. ${r.description}`,W-X*2-140), h=Math.max(14,d.length*11+3);
+    if(y+h>740){ doc.addPage(); y=56; }
+    d.forEach((t,k)=>doc.text(t,X+6,y+k*11)); doc.text(String(r.qty),W-X-110,y); doc.text(String(r.unit),W-X-50,y);
+    y+=h; doc.setDrawColor(225);doc.line(X,y-9,W-X,y-9);
+  });
+  y+=10; if(y>720){ doc.addPage(); y=56; }
+  doc.setFontSize(9);doc.text(L.waste,X,y);doc.setFont('helvetica','bold');doc.text(L.rfq,X,y+13);
+  doc.setFont('helvetica','normal');doc.setTextColor(140);doc.setFontSize(8);doc.text(L.prepared,X,770);doc.setTextColor(0);
+  savePDF(doc,`${(M.labels.title+'-'+M.number).replace(/[^A-Za-z0-9]+/g,'-')}.pdf`);
+}
+
+// My supply houses: pick from Even's list (names only, from Supabase) or type
+// one in; one is primary. The rep's contact stays in this account (prefs), never
+// in a repo. Picking a partner here is what lets the server hand its prices over
+// (Pro only, see server.js partnerRowsFor).
+window._supplierList=null;
+async function loadSupplierList(){
+  if(window._supplierList||!sbClient||!currentUser) return;
+  try{ const { data }=await sbClient.from('suppliers').select('id,name,service_area,is_partner').order('name',{ascending:true}); window._supplierList=data||[]; }catch(e){ window._supplierList=[]; }
+  const dl=document.getElementById('shop-options');
+  if(dl) dl.innerHTML=(window._supplierList||[]).map(s=>`<option value="${escapeHtml(s.name)}">`).join('');
+}
+function saveShops(){
+  try{ localStorage.setItem('even_shops',JSON.stringify(window._myShops||[])); }catch(e){}
+  queuePrefsSave();
+}
+function addShop(){
+  const inp=document.getElementById('shop-input'), name=(inp.value||'').trim().slice(0,120);
+  if(!name) return;
+  const hit=(window._supplierList||[]).find(s=>s.name.toLowerCase()===name.toLowerCase());
+  const shops=window._myShops=window._myShops||[];
+  if(shops.some(x=>(hit&&x.id===hit.id)||x.name.toLowerCase()===name.toLowerCase())){ inp.value=''; return; }
+  shops.push({id:hit?hit.id:null,name:hit?hit.name:name,primary:!shops.length,rep_name:'',rep_email:'',rep_phone:''});
+  inp.value=''; saveShops(); renderShops();
+}
+function setPrimaryShop(i){ (window._myShops||[]).forEach((x,k)=>x.primary=k===i); saveShops(); renderShops(); }
+function removeShop(i){ const s=window._myShops; const was=s[i]&&s[i].primary; s.splice(i,1); if(was&&s[0]) s[0].primary=true; saveShops(); renderShops(); }
+function updateShop(i,f,v){ const s=(window._myShops||[])[i]; if(!s) return; s[f]=String(v||'').trim().slice(0,200); saveShops(); }
+function renderShops(){
+  const el=document.getElementById('shop-list'); if(!el) return;
+  const es=appLang==='es', shops=window._myShops||[];
+  const sum=document.getElementById('shop-sum'); const p=primaryShop();
+  if(sum) sum.textContent=p?(es?`Principal: ${p.name}`:`Primary: ${p.name}`):(es?'Tus casas de materiales y tu vendedor':'Your supply houses and your rep');
+  el.innerHTML=shops.length?shops.map((s,i)=>`<div class="shop-card">
+      <div class="shop-top"><label class="shop-primary"><input type="radio" name="shop-primary" ${s.primary?'checked':''} onchange="setPrimaryShop(${i})"> <b>${escapeHtml(s.name)}</b></label>
+        <span class="shop-tag">${s.primary?(es?'Principal':'Primary'):''}</span><button class="li-del" onclick="removeShop(${i})" aria-label="Remove">×</button></div>
+      <div class="shop-rep">
+        <input class="finput" placeholder="${es?'Tu vendedor (nombre)':'Your rep (name)'}" value="${escapeHtml(s.rep_name||'')}" onchange="updateShop(${i},'rep_name',this.value)">
+        <input class="finput" type="email" placeholder="${es?'Correo del vendedor':'Rep email'}" value="${escapeHtml(s.rep_email||'')}" onchange="updateShop(${i},'rep_email',this.value)">
+        <input class="finput" inputmode="tel" placeholder="${es?'Teléfono del vendedor':'Rep phone'}" value="${escapeHtml(s.rep_phone||'')}" onchange="updateShop(${i},'rep_phone',this.value)">
+      </div></div>`).join('')
+    :`<div class="ml-note">${es?'Todavía no agregaste ninguna. Tu lista de materiales sale sin destinatario hasta que agregues una.':'None yet. Your material list goes out unaddressed until you add one.'}</div>`;
 }
 
 // ══════════════════════════
@@ -7074,5 +7298,11 @@ async function handleLogoUpload(input){
 </script>
 
 <script>document.addEventListener("DOMContentLoaded",function(){if(window.lucide)lucide.createIcons();});</script>
+<div id="matlist-modal" class="ml-modal" style="display:none" onclick="if(event.target===this)closeMaterialList()">
+  <div class="ml-sheet">
+    <div class="ml-head"><b data-es="Lista de materiales">Material list</b><button class="li-del" onclick="closeMaterialList()" aria-label="Close">×</button></div>
+    <div id="matlist-body"></div>
+  </div>
+</div>
 </body>
 </html>

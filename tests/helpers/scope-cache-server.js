@@ -11,7 +11,7 @@ const load = () => (fs.existsSync(DB) ? JSON.parse(fs.readFileSync(DB, 'utf8')) 
 const save = d => fs.writeFileSync(DB, JSON.stringify(d));
 const log = l => fs.appendFileSync(LOG, l + '\n');
 const table = (d, t) => (d['__' + t] = d['__' + t] || {});
-const USERS = { 'tok-free': { id: '11111111-1111-1111-1111-111111111111', email: 'free@example.com' }, 'tok-pro': { id: '22222222-2222-2222-2222-222222222222', email: 'pro@example.com' } };
+const USERS = { 'tok-free': { id: '11111111-1111-1111-1111-111111111111', email: 'free@example.com' }, 'tok-pro': { id: '22222222-2222-2222-2222-222222222222', email: 'pro@example.com' }, 'tok-pro2': { id: '33333333-3333-3333-3333-333333333333', email: 'pro2@example.com' } };
 const real = globalThis.fetch;
 globalThis.fetch = async (url, opts = {}) => {
   url = String(url);
@@ -24,7 +24,9 @@ globalThis.fetch = async (url, opts = {}) => {
       return json({ content: [], stop_reason: 'refusal', stop_details: { type: 'refusal', category: null } });
     }
     const n = fs.readFileSync(LOG, 'utf8').split('\n').filter(x => x === 'anthropic').length;
-    const text = `{"projectName":"run${n}","tradeBreakdown":[{"trade":"Plumbing","icon":"x","items":[]}],"questions":[],"lineItems":[{"type":"other","category":"Labor","description":"Mock line","qty":1,"unit":"ea","unitCost":100},{"type":"material","ref":"M1","qty":2},{"type":"labor","ref":"L1","hours":3},{"type":"permit","ref":"P1","qty":0}]}`;
+    // A partner supply-house row in the prompt (where-i-shop.test.js): the scope buys from it.
+    const hRef = /\\nH1 /.test(opts.body) ? ',{"type":"material","ref":"H1","qty":10}' : '';
+    const text = `{"projectName":"run${n}","tradeBreakdown":[{"trade":"Plumbing","icon":"x","items":[]}],"questions":[],"lineItems":[{"type":"other","category":"Labor","description":"Mock line","qty":1,"unit":"ea","unitCost":100},{"type":"material","ref":"M1","qty":2},{"type":"labor","ref":"L1","hours":3},{"type":"permit","ref":"P1","qty":0}${hRef}]}`;
     if (JSON.parse(opts.body).stream && opts.body.includes('CUT_OFF_STREAM')) {
       return new Response(`data: {"type":"message_delta","delta":{"stop_reason":"max_tokens"}}\n\n`, { status: 200, headers: { 'content-type': 'text/event-stream' } });
     }
@@ -72,6 +74,7 @@ globalThis.fetch = async (url, opts = {}) => {
     if (['select', 'order', 'limit', 'on_conflict'].includes(k)) return true;
     if (v.startsWith('eq.')) return String(row[k]) === v.slice(3);
     if (v.startsWith('gt.')) return String(row[k]) > v.slice(3);
+    if (v.startsWith('in.(')) return v.slice(4, -1).split(',').includes(String(row[k]));
     return true;
   });
   if (url.includes('/rest/v1/market_data')) {
@@ -80,7 +83,7 @@ globalThis.fetch = async (url, opts = {}) => {
     const m = batch.find(x => x.market === mkt);
     return json(m ? [{ market: m.market, state: m.state, zone: m.zone, materials: m.materials, labor: m.labor, permits: m.permits }] : []);
   }
-  for (const name of ['contractor_pages', 'quote_requests']) {
+  for (const name of ['contractor_pages', 'quote_requests', 'suppliers', 'partner_prices']) {
     if (!url.includes('/rest/v1/' + name)) continue;
     const t = rows(name);
     log(`db ${name} ${m} ${svc}`);
