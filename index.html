@@ -933,6 +933,26 @@ body:has(#s-dashboard.active) .app{min-height:0}
 .link-btn:disabled{opacity:.45;cursor:default}
 .link-status{font-size:11px;color:var(--muted);margin-top:8px;min-height:14px;overflow-wrap:anywhere}
 .link-note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5}
+/* Bid history */
+.bid-bar{margin-bottom:12px}
+.bid-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.bid-chips{display:flex;gap:6px;flex-wrap:wrap}
+.bid-chip{background:var(--bg);border:1px solid var(--rim2);color:var(--white2);border-radius:10px;padding:6px 10px;font:600 11px 'DM Mono',monospace;cursor:pointer;text-align:left}
+.bid-chip small{display:block;font:500 10px 'DM Sans',sans-serif;color:var(--muted)}
+.bid-chip.on{border-color:var(--gold);color:var(--text-accent)}
+.bid-btn{background:var(--bg);border:1px solid var(--rim2);color:var(--white2);border-radius:8px;padding:7px 11px;font:700 10px 'DM Mono',monospace;letter-spacing:.3px;cursor:pointer;white-space:nowrap}
+.bid-btn.primary{background:var(--gold);border-color:var(--gold);color:#000}
+.bid-btn:disabled{opacity:.5}
+.bid-note{font-size:11px;color:var(--muted);line-height:1.45;margin:6px 0}
+.bid-changes{margin-top:10px;padding-top:10px;border-top:1px solid var(--rim)}
+.bid-ch-head{font-size:12px;font-weight:700;color:var(--white);margin-bottom:6px;overflow-wrap:anywhere}
+.bid-changes ul{margin:0;padding-left:16px;font-size:12px;color:var(--white2);line-height:1.5}
+.bid-changes li{overflow-wrap:anywhere}
+.bid-changes li.bc-added{color:var(--green)}.bid-changes li.bc-removed{color:var(--red)}.bid-changes li.bc-sum{color:var(--muted)}
+.bid-reason{width:100%;box-sizing:border-box;margin-top:8px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font:13px 'DM Sans',sans-serif;padding:8px 10px;outline:none}
+.bid-tag{display:inline-block;margin-left:4px;padding:1px 6px;border-radius:8px;background:var(--gold-dim);color:var(--text-accent);font:600 9px 'DM Mono',monospace}
+.req-count[hidden],.job-lost[hidden],.bid-bar[hidden],#req-section[hidden]{display:none!important}
+.job-lost{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:0 12px 10px;font-size:11px;color:var(--muted)}
 </style>
 
   <!-- Supabase -->
@@ -1442,6 +1462,7 @@ body:has(#s-dashboard.active) .app{min-height:0}
            one column in this order, downloads after the proposal fields. -->
       <div class="est-grid">
       <div class="est-side">
+      <div class="d-card bid-bar" id="bid-bar" hidden></div>
       <div class="d-card d-price" id="price-card">
         <div class="d-k" id="pc-label"></div>
         <div class="d-price-row"><div class="d-big" id="pc-price">—</div><div class="d-margin"><b id="pc-margin">—</b><span data-es="margen">margin</span></div></div>
@@ -2255,6 +2276,9 @@ document.addEventListener('change',e=>{ if(DRAFT_FIELDS.includes(e.target?.id)) 
 function clearJob(){
   window._jobVersion++;
   window._openRequestId=null;
+  // A new job is not the saved one: nothing below may write to it any more.
+  clearTimeout(window._bidSaveT); window._currentEstimateId=null; window._job=null;
+  const _bb=document.getElementById('bid-bar'); if(_bb) _bb.hidden=true;
     currentEstimate=null;
     document.getElementById('li-body').innerHTML='';
     document.getElementById('totals-body').innerHTML='';
@@ -4126,6 +4150,7 @@ function esc(s){return escapeHtml(s)}
 function renderEstimate(data){
   const cats={};
   (data.lineItems||[]).forEach((item,i)=>{
+    if(item.removed) return;
     if(!cats[item.category]) cats[item.category]=[];
     cats[item.category].push({...item,_i:i});
   });
@@ -4149,7 +4174,7 @@ function renderEstimate(data){
   });
   document.getElementById('li-body').innerHTML=html;
   updateCategorySums();
-  const liCount=(data.lineItems||[]).length;
+  const liCount=(data.lineItems||[]).filter(i=>!i.removed).length;
   const liTotal=(data.lineItems||[]).reduce((s,i)=>s+(+i.total||0),0);
   const summaryEl=document.getElementById('li-collapsed-summary');
   if(summaryEl) summaryEl.textContent=appLang==='es'?`${liCount} partida${liCount===1?'':'s'} · ${fmt(liTotal)}`:`${liCount} item${liCount===1?'':'s'} · ${fmt(liTotal)}`;
@@ -4160,11 +4185,13 @@ function renderEstimate(data){
   const liBodyWrap=document.getElementById('li-collapsible'); if(liBodyWrap) liBodyWrap.style.display='';
 
   // Variance rows — Pro only
-  const sorted=(data.lineItems||[]).slice().sort((a,b)=>b.total-a.total);
+  // Each tracker row keeps its line's real position (data-li): actuals are saved
+  // and read back by that position, which is how the calibration reads them.
+  const sorted=(data.lineItems||[]).map((it,li)=>({...it,_li:li})).filter(i=>!i.removed).sort((a,b)=>b.total-a.total);
   const varBody=document.getElementById('var-body');
   if(isPro){
     varBody.innerHTML=sorted.map((item,i)=>`
-      <div class="var-row">
+      <div class="var-row" data-li="${item._li}">
         <span style="color:var(--white2);font-size:12px">${escapeHtml(item.description.substring(0,28))}${item.description.length>28?'…':''}</span>
         <span style="font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)">${fmt(item.total)}</span>
         <input placeholder="$0" onchange="calcVar(this,${item.total})" style="background:transparent;border:none;border-bottom:1px solid var(--rim);color:var(--white);font-size:12px;font-family:'DM Mono',monospace;outline:none;width:100%;padding:2px 0">
@@ -4198,6 +4225,7 @@ function renderEstimate(data){
   if(isPro && currentUser && sbClient) loadSimilarJobs(data);
   renderCalibrationBanner();
   renderPermitScopeNote();
+  renderBidBar();
 }
 
 // Where each number came from, under its row. App only, never on the client PDF.
@@ -4264,7 +4292,8 @@ async function saveActuals(){
     const actual=parseFloat(input.value.replace(/[$,]/g,''));
     if(!isNaN(actual)){
       const descEl=row.querySelector('span');
-      entries.push({estimate_id:window._currentEstimateId,line_index:i,actual_cost:actual,description:descEl?.textContent||''});
+      const li=row.dataset.li!=null?+row.dataset.li:i;
+      entries.push({estimate_id:window._currentEstimateId,line_index:li,actual_cost:actual,description:descEl?.textContent||''});
     }
   });
   if(!entries.length) return;
@@ -4281,7 +4310,10 @@ function recalc(idx){
   const el=document.getElementById('lt-'+idx);
   if(el) el.textContent=fmt(total);
   if(window._lines?.[idx]) window._lines[idx].total=total;
-  if(currentEstimate?.lineItems?.[idx]) currentEstimate.lineItems[idx].total=total;
+  // The line keeps what was typed (not just its total): Bid history compares
+  // quantities, prices and names between bids, and a reload shows the edit.
+  const li=currentEstimate?.lineItems?.[idx];
+  if(li){ li.total=total; li.qty=qty; li.unitCost=uc; const d=document.querySelector(`#lr-${idx} input`)?.value; if(d!=null&&d.trim()) li.description=d.trim(); }
   recompute();
 }
 
@@ -4289,7 +4321,7 @@ function delLine(idx){
   document.getElementById('lr-'+idx)?.remove();
   document.getElementById('ls-'+idx)?.remove();
   if(window._lines?.[idx]) window._lines[idx].total=0;
-  if(currentEstimate?.lineItems?.[idx]) currentEstimate.lineItems[idx].total=0;
+  if(currentEstimate?.lineItems?.[idx]){ currentEstimate.lineItems[idx].total=0; currentEstimate.lineItems[idx].removed=true; }
   recompute();
 }
 
@@ -4338,6 +4370,7 @@ function recompute(){
   updateCategorySums();
   currentEstimate.subtotal=sub;currentEstimate.overhead.amount=oh;currentEstimate.contingency.amount=cont;currentEstimate.profit.amount=prof;currentEstimate.totalBid=sub+oh+cont+prof;
   renderTotals(currentEstimate);
+  queueBidSave();
 }
 
 function renderMarginAlerts(data){
@@ -4691,7 +4724,7 @@ function buildClientProposal(data,ctx,lang){
   const validUntil=new Date(issued.getTime()+30*86400000);
   const price=window._finalBid?+window._finalBid:Math.round(+data.totalBid||0);
   const cats={};
-  (data.lineItems||[]).filter(i=>(+i.total||0)>0||i.category).forEach(i=>{const c=i.category||(es?'Trabajo':'Work'); const cn=es?(CAT_ES[c]||c):c; (cats[cn]=cats[cn]||[]).push(clientLineText(i.description));});
+  (data.lineItems||[]).filter(i=>!i.removed&&((+i.total||0)>0||i.category)).forEach(i=>{const c=i.category||(es?'Trabajo':'Work'); const cn=es?(CAT_ES[c]||c):c; (cats[cn]=cats[cn]||[]).push(clientLineText(i.description));});
   const detail=window._proposalDetail||'full';
   const scopeRows=detail==='lump'?[]:Object.entries(cats).map(([cat,items])=>({category:cat,items:detail==='category'?[items.join(', ')]:items}));
   const assumptions=(Array.isArray(data.clientAssumptions)?data.clientAssumptions:(data.assumptions||[]).filter(clientSafeText)).slice(0,6);
@@ -5021,6 +5054,7 @@ async function downloadCostSheet(){
   const DESC_W=cols[1]-cols[0]-10;   // description column, minus a gutter before QTY
   const LINE_H=10, ROW_PAD=5;
   (data.lineItems||[]).forEach((item,i)=>{
+    if(item.removed) return;
     doc.setFont('helvetica','normal');doc.setFontSize(8);
     const descLines=doc.splitTextToSize(String(item.description||''),DESC_W);
     const rowH=Math.max(14,descLines.length*LINE_H+ROW_PAD);
@@ -5788,7 +5822,10 @@ async function saveEstimateToCloud(data){
     const { data: saved, error } = await sbClient.from('estimates').insert(payload).select('id').single();
     if(error){ console.error('Save estimate error:',error); return; }
     window._currentEstimateId = saved.id;
-    showToast('✦ Estimate saved to your account.');
+    // A new saved estimate is a job with one bid (Bid 1).
+    window._job={rootId:saved.id,bids:[{id:saved.id,bid_no:1,total_bid:payload.total_bid,estimate_json:payload.estimate_json,change_note:null,status:'draft'}]};
+    renderBidBar();
+    showToast(appLang==='es'?'✦ Estimado guardado en tu cuenta.':'✦ Estimate saved to your account.');
   }catch(e){ console.error('Save estimate error:',e); }
 }
 
@@ -5810,7 +5847,7 @@ async function proposalBeautify(){
   const status=document.getElementById('beautify-status');
   if(btn) btn.disabled=true;
   if(status){status.textContent=appLang==='es'?'Mejorando el texto…':'Polishing scope language…';status.style.display='block';}
-  const items=(currentEstimate.lineItems||[]).map(i=>i.description).join(', ');
+  const items=(currentEstimate.lineItems||[]).filter(i=>!i.removed).map(i=>i.description).join(', ');
   const scope=document.getElementById('scope-text')?.value||currentEstimate.projectName||'';
   try{
     const r=await fetch(`${API_ORIGIN}/api/estimate`,{
@@ -5845,6 +5882,7 @@ function onFinalBidChange(val){
   window._finalBid=(val&&!isNaN(n)&&n>0)?n:null;
   updateBidHeadline();
   liveProposalUpdate();
+  queueBidSave();
 }
 function liveProposalUpdate(){
   if(!currentEstimate) return;
@@ -6450,6 +6488,8 @@ function renderRequests(){
     return;
   }
   list.innerHTML=rows.map(r=>{
+    // A draft still 'building' after 10 minutes was cut off (server restart): offer the retry.
+    if(['pending','building'].includes(r.draft_status)&&Date.now()-new Date(r.created_at).getTime()>600000) r={...r,draft_status:'failed'};
     const d=new Date(r.created_at).toLocaleDateString(es?'es-US':'en-US',{month:'short',day:'numeric'});
     const total=r.draft_status==='ready'&&r.draft?.estimate?.totalBid?fmtK(r.draft.estimate.totalBid):'';
     const draftNote={pending:es?'Preparando el borrador…':'Building the draft…',building:es?'Preparando el borrador…':'Building the draft…',
@@ -6524,6 +6564,8 @@ async function openRequest(id,where){
   if(where==='input'||r.draft_status!=='ready'){ navigate('input'); showToast(es?'El trabajo del cliente está cargado. Revisa y toca Generar.':"The client's job is loaded. Review it and tap Build.",4500); return; }
   window._ctx={...c,lang:c.lang||appLang};
   window._scopeData=d.scopeData||null;
+  // Already a saved job (Pro, opened before): open the job with its bids.
+  if(where==='estimate'&&isPro&&r.estimate_id){ await loadSavedEstimate(r.estimate_id); window._openRequestId=id; return; }
   if(where==='questions'){
     navigate('refine');
     document.getElementById('ai-summary-text').innerHTML=T[appLang].extracted;
@@ -6576,15 +6618,25 @@ async function loadDashboard(){
         // estimate_json is needed for the final-bid variance chip and its confidence
         // range — it was being read below but never selected, so that chip has never
         // rendered for anyone.
-        .select('id,client_name,project_label,location,trade,total_bid,margin_pct,created_at,status,notes,sent_at,estimate_json')
+        .select('id,client_name,project_label,location,trade,total_bid,margin_pct,created_at,status,notes,sent_at,estimate_json,job_id,bid_no,lost_reason')
         .eq('user_id',currentUser.id)
         .order('created_at',{ascending:false})
-        .limit(50),
+        .limit(150),
       sbClient.from('cost_entries')
         .select('estimate_id,actual_cost')
     ]);
 
-    const estimates = estRes.data || [];
+    // Bid history: one card per job, showing its latest bid (Bid N). Status,
+    // notes and the lost reason live on the job (Bid 1's row).
+    const rowsAll = estRes.data || [];
+    const byJob = {};
+    rowsAll.forEach(r=>{ const k=r.job_id||r.id; (byJob[k]=byJob[k]||[]).push(r); });
+    const estimates = Object.entries(byJob).map(([rootId,rows])=>{
+      const root=rows.find(r=>r.id===rootId)||rows[0];
+      const latest=rows.reduce((a,b)=>(+b.bid_no||1)>(+a.bid_no||1)?b:a,rows[0]);
+      return {...latest,id:latest.id,rootId,status:root.status,notes:root.notes,sent_at:root.sent_at,lost_reason:root.lost_reason,
+        client_name:root.client_name,project_label:root.project_label,created_at:root.created_at,bidCount:rows.length};
+    }).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,50);
     const actuals = {};
     (ceRes.data||[]).forEach(r=>{ actuals[r.estimate_id]=(actuals[r.estimate_id]||0)+r.actual_cost; });
 
@@ -6672,12 +6724,13 @@ async function loadDashboard(){
       // moment logging actuals is both possible and worth asking for.
       const needsActuals=isPro&&!actualTotal&&['won','active','complete'].includes(sk);
       const statusOpts=Object.keys(STATUS_LABELS).map(k=>`<option value="${k}"${k===sk?' selected':''}>${statusLabel(k)}</option>`).join('');
-      return `<div class="job-card" id="jc-${est.id}" data-st="${sk}">
-        <div class="job-card-top" onclick="loadSavedEstimate('${est.id}')">
+      const J=est.rootId;
+      return `<div class="job-card" id="jc-${J}" data-st="${sk}">
+        <div class="job-card-top" onclick="loadSavedEstimate('${J}')">
           <div class="job-card-main">
             <div class="job-card-label">${escapeHtml(label)}</div>
             ${est.client_name?`<div style="font-size:11px;color:var(--muted);margin-top:1px">${escapeHtml(est.client_name)}</div>`:''}
-            <div class="job-card-meta">${escapeHtml([est.trade,date].filter(Boolean).join(' · '))}</div>
+            <div class="job-card-meta">${escapeHtml([est.trade,date].filter(Boolean).join(' · '))}${est.bidCount>1?` <span class="bid-tag">${appLang==='es'?'Oferta':'Bid'} ${est.bid_no}</span>`:''}</div>
           </div>
           <div class="job-card-right">
             <div class="job-card-total">${fmtK(est.total_bid)}</div>
@@ -6685,16 +6738,17 @@ async function loadDashboard(){
           </div>
         </div>
         ${showFU?`<div class="job-followup"><i data-lucide="clock" style="width:11px;height:11px;stroke:currentColor"></i> ${appLang==='es'?`Enviado hace ${daysSent} días. Es hora de dar seguimiento.`:`Sent ${daysSent} days ago. Time to follow up.`}</div>`:''}
-        ${needsActuals?`<div class="job-followup job-log-actuals"><i data-lucide="calculator" style="width:11px;height:11px;stroke:currentColor"></i> ${appLang==='es'?`${statusLabel(sk)}. Anota lo que costó de verdad para afinar tu próxima oferta.`:`${statusLabel(sk)}. Log what it actually cost to sharpen your next bid.`}</div>`:''}
+        ${needsActuals?`<div class="job-followup job-log-actuals" style="cursor:pointer" onclick="loadSavedEstimate('${J}',{tracker:true})"><i data-lucide="calculator" style="width:11px;height:11px;stroke:currentColor"></i> ${appLang==='es'?`${statusLabel(sk)}. Anota lo que costó de verdad para afinar tu próxima oferta.`:`${statusLabel(sk)}. Log what it actually cost to sharpen your next bid.`}</div>`:''}
         <div class="job-card-actions">
           <span class="status-pill ${STATUS_CLASS[sk]}">${statusLabel(sk)}</span>
-          <select class="status-select" onchange="updateJobStatus('${est.id}',this.value)" onclick="event.stopPropagation()">${statusOpts}</select>
+          <select class="status-select" onchange="updateJobStatus('${J}',this.value)" onclick="event.stopPropagation()">${statusOpts}</select>
           <div style="flex:1"></div>
-          <button class="job-action-btn" onclick="event.stopPropagation();toggleNotes('${est.id}')"><i data-lucide="file-text" style="width:11px;height:11px;stroke:currentColor"></i> ${appLang==='es'?'Notas':'Notes'}</button>
+          <button class="job-action-btn" onclick="event.stopPropagation();toggleNotes('${J}')"><i data-lucide="file-text" style="width:11px;height:11px;stroke:currentColor"></i> ${appLang==='es'?'Notas':'Notes'}</button>
           <button class="job-action-btn" onclick="event.stopPropagation();redownloadEstimate('${est.id}')"><i data-lucide="file-bar-chart" style="width:11px;height:11px;stroke:currentColor"></i> PDF</button>
         </div>
-        <div class="job-notes-wrap" id="notes-${est.id}">
-          <textarea class="job-notes-input" placeholder="Notes — client contact, site conditions, what you'd do different…" onchange="saveJobNotes('${est.id}',this.value)">${est.notes||''}</textarea>
+        <div class="job-lost" id="lost-${J}"${sk==='lost'?'':' hidden'}>${lostReasonSelect(J,est.lost_reason)}</div>
+        <div class="job-notes-wrap" id="notes-${J}">
+          <textarea class="job-notes-input" placeholder="Notes — client contact, site conditions, what you'd do different…" onchange="saveJobNotes('${J}',this.value)">${escapeHtml(est.notes||'')}</textarea>
         </div>
       </div>`;
     }).join('');
@@ -6711,16 +6765,41 @@ function toggleNotes(estimateId){
   if(w.style.display==='block') w.querySelector('textarea')?.focus();
 }
 
+// Outcome lives on the job: every bid of it gets the same status. Lost can carry
+// an optional reason; Won opens the Actual Cost Tracker on the final bid.
+const LOST_REASONS={price:['Price','Precio'],timing:['Timing','Tiempo'],competitor:['Went with someone else','Se fue con otro'],other:['Other','Otro']};
+function lostReasonSelect(jobId,cur){
+  const es=appLang==='es';
+  return `<span>${es?'¿Por qué se perdió? (opcional)':'Why was it lost? (optional)'}</span>
+    <select class="status-select" onchange="saveLostReason('${jobId}',this.value)" onclick="event.stopPropagation()">
+      <option value="">${es?'Sin razón':'No reason'}</option>
+      ${Object.entries(LOST_REASONS).map(([k,v])=>`<option value="${k}"${k===cur?' selected':''}>${es?v[1]:v[0]}</option>`).join('')}
+    </select>`;
+}
+async function saveLostReason(jobId,reason){
+  if(!sbClient) return;
+  const { error }=await sbClient.from('estimates').update({lost_reason:reason||null}).eq('id',jobId);
+  if(error) console.error('Lost reason error:',error);
+}
 async function updateJobStatus(estimateId,status){
   if(!sbClient) return;
   const update={status};
   if(status==='sent') update.sent_at=new Date().toISOString();
+  if(status!=='lost') update.lost_reason=null;
   try{
-    await sbClient.from('estimates').update(update).eq('id',estimateId);
+    const { error }=await sbClient.from('estimates').update(update).or(`id.eq.${estimateId},job_id.eq.${estimateId}`);
+    if(error) throw error;
     const card=document.getElementById('jc-'+estimateId);
     if(card){
+      card.dataset.st=status;
       const pill=card.querySelector('.status-pill');
-      if(pill){pill.textContent=STATUS_LABELS[status];pill.className='status-pill '+STATUS_CLASS[status];}
+      if(pill){pill.textContent=statusLabel(status);pill.className='status-pill '+STATUS_CLASS[status];}
+      const lost=document.getElementById('lost-'+estimateId);
+      if(lost){ lost.hidden=status!=='lost'; if(status!=='lost'){ const sel=lost.querySelector('select'); if(sel) sel.value=''; } }
+    }
+    if(status==='won'){
+      showToast(appLang==='es'?'Ganado. Anota los costos reales en la oferta final para afinar tus próximas ofertas.':'Won. Log the real costs on the final bid to sharpen your next bids.',4500);
+      loadSavedEstimate(estimateId,{tracker:true});
     }
   }catch(e){ console.error('Status update error:',e); }
 }
@@ -6764,22 +6843,182 @@ async function generateInsights(estimates){
   }catch(e){ console.error('Insights error:',e); }
 }
 
-async function loadSavedEstimate(estimateId){
+async function loadSavedEstimate(estimateId,opts={}){
   if(!sbClient) return;
   try{
-    const { data, error }=await sbClient.from('estimates').select('estimate_json').eq('id',estimateId).single();
+    const { data, error }=await sbClient.from('estimates').select('id,job_id').eq('id',estimateId).single();
     if(error||!data) return;
-    window._currentEstimateId=estimateId;
-    currentEstimate=data.estimate_json;
-    // Permit scope isn't persisted on the saved estimate, so clear it rather than
-    // letting the previous estimate's disclosure carry over onto this one.
-    window._marketMeta=null;
-    navigate('estimate');
-    renderEstimate(currentEstimate);
-    const psEl=document.getElementById('pay-sched-section');
-    if(psEl) psEl.style.display='block';
-    loadActuals(estimateId);
+    const rootId=data.job_id||data.id;
+    const bids=await loadJobBids(rootId);
+    if(!bids.length) return;
+    // Opening a job shows its latest bid unless a specific bid was asked for.
+    const pick=opts.exact?bids.find(b=>b.id===estimateId):bids[bids.length-1];
+    window._job={rootId,bids};
+    showBid(pick||bids[bids.length-1]);
+    if(opts.tracker) setTimeout(()=>document.getElementById('cost-tracker-section')?.scrollIntoView({behavior:'smooth',block:'start'}),350);
   }catch(e){ console.error('Load saved estimate error:',e); }
+}
+
+
+// ══════════════════════════
+//  BID HISTORY (founder 2026-10-13)
+// ══════════════════════════
+// A saved estimate is a job; every bid sent on it is its own row (Bid 1 is the
+// job row itself, later bids point to it with job_id). Revise bid copies the
+// latest bid into a new one; nothing makes a new bid except that button. Each
+// bid keeps its own numbers. The proposal and cost sheet print the bid on
+// screen; the change list is never on the client's PDF.
+async function loadJobBids(rootId){
+  const { data, error }=await sbClient.from('estimates')
+    .select('id,job_id,bid_no,total_bid,estimate_json,change_note,status,lost_reason,created_at')
+    .or(`id.eq.${rootId},job_id.eq.${rootId}`).order('bid_no',{ascending:true});
+  if(error) throw error;
+  return data||[];
+}
+function bidPrice(j){ return +(j&&j.finalBid)||Math.round(+(j&&j.totalBid)||0); }
+function showBid(bid){
+  clearTimeout(window._bidSaveT);
+  window._currentEstimateId=bid.id;
+  currentEstimate=JSON.parse(JSON.stringify(bid.estimate_json||{}));
+  // Permit scope isn't persisted on the saved estimate, so clear it rather than
+  // letting the previous estimate's disclosure carry over onto this one.
+  window._marketMeta=null;
+  window._finalBid=+currentEstimate.finalBid>0?+currentEstimate.finalBid:null;
+  const fbi=document.getElementById('final-bid-input'); if(fbi) fbi.value=window._finalBid||'';
+  navigate('estimate');
+  renderEstimate(currentEstimate);
+  updateBidHeadline();
+  const psEl=document.getElementById('pay-sched-section'); if(psEl) psEl.style.display='block';
+  const peCard=document.getElementById('proposal-edit-card'); if(peCard){ peCard.style.display='block'; populateProposalAssumptions(); }
+  renderBidBar();
+  loadActuals(bid.id);
+}
+// Plain-words differences between two bids. Lines are matched by position: a
+// revised bid starts as an exact copy, edits change a line in place, a removed
+// line is flagged (never spliced out), and new lines are added at the end.
+function bidChanges(prevJ,curJ,lang){
+  const es=lang==='es', P=prevJ.lineItems||[], C=curJ.lineItems||[];
+  const name=l=>String(l.description||l.category||'').slice(0,60);
+  const out=[];
+  const n=Math.max(P.length,C.length);
+  for(let i=0;i<n;i++){
+    const a=P[i], b=C[i];
+    const aOn=a&&!a.removed, bOn=b&&!b.removed;
+    if(!aOn&&bOn){ out.push({kind:'added',text:(es?'Agregado: ':'Added: ')+`${name(b)} (${fmt(+b.total||0)})`}); continue; }
+    if(aOn&&!bOn){ out.push({kind:'removed',text:(es?'Quitado: ':'Removed: ')+`${name(a)} (${fmt(+a.total||0)})`}); continue; }
+    if(!aOn||!bOn) continue;
+    const parts=[];
+    if(String(a.description||'')!==String(b.description||'')) parts.push((es?'nombre: ':'name: ')+`"${name(a)}" → "${name(b)}"`);
+    if(+a.qty!==+b.qty) parts.push((es?'cantidad ':'qty ')+`${+a.qty} → ${+b.qty}`);
+    if(round2(+a.unitCost)!==round2(+b.unitCost)) parts.push((es?'precio ':'price ')+`${fmt(+a.unitCost)} → ${fmt(+b.unitCost)}`);
+    if(parts.length) out.push({kind:'changed',text:`${name(b)}: ${parts.join(', ')}`});
+  }
+  const sumCat=(L,c)=>L.filter(l=>!l.removed&&l.category===c).reduce((t,l)=>t+(+l.total||0),0);
+  const sign=v=>(v>0?'+':'-')+fmt(Math.abs(v));
+  const dPermit=round2(sumCat(C,'Permits')-sumCat(P,'Permits')), dLabor=round2(sumCat(C,'Labor')-sumCat(P,'Labor'));
+  const summary=[];
+  if(dPermit) summary.push((es?'Permisos: ':'Permit fees: ')+sign(dPermit));
+  if(dLabor) summary.push((es?'Mano de obra: ':'Labor: ')+sign(dLabor));
+  // The contractor's own price ("Set your own price") is a change too.
+  const fa=+prevJ.finalBid||0, fb=+curJ.finalBid||0;
+  if(fa!==fb) summary.push((es?'Tu precio: ':'Your price: ')+`${fa?fmt(fa):(es?'el de Even':"Even's")} → ${fb?fmt(fb):(es?'el de Even':"Even's")}`);
+  const pa=bidPrice(prevJ), pb=bidPrice(curJ), d=pb-pa;
+  return {prev:pa,cur:pb,diff:d,pct:pa?Math.round(d/pa*1000)/10:0,lines:out,summary};
+}
+function renderBidBar(){
+  const bar=document.getElementById('bid-bar'); if(!bar) return;
+  const es=appLang==='es';
+  if(!currentEstimate){ bar.hidden=true; return; }
+  if(!currentUser){
+    bar.hidden=false;
+    bar.innerHTML=`<div class="bid-head"><span class="d-k" style="margin:0">${es?'Historial de ofertas':'Bid history'}</span></div>
+      <div class="bid-note">${es?'Inicia sesión para guardar este trabajo y revisar la oferta después.':'Sign in to save this job and revise the bid later.'}</div>
+      <button class="bid-btn primary" onclick="openSignupPanel()">${es?'INICIAR SESIÓN':'SIGN IN'}</button>`;
+    return;
+  }
+  const job=window._job;
+  if(!isPro||!job||!job.bids.some(b=>b.id===window._currentEstimateId)){
+    if(isPro){ bar.hidden=true; return; }
+    bar.hidden=false;
+    bar.innerHTML=`<div class="bid-head"><span class="d-k" style="margin:0">${es?'Historial de ofertas':'Bid history'}</span></div>
+      <div class="bid-note">${es?'Guardar trabajos y revisar ofertas (Oferta 1, Oferta 2...) viene con Pro.':'Saving jobs and revising bids (Bid 1, Bid 2...) comes with Pro.'}</div>
+      <button class="bid-btn primary" onclick="handleUpgrade('monthly')">${es?'HAZTE PRO':'GO PRO'}</button>`;
+    return;
+  }
+  const cur=job.bids.find(b=>b.id===window._currentEstimateId);
+  const latest=job.bids[job.bids.length-1];
+  // The bid on screen, with the price the contractor typed in (if any).
+  const curJ={...currentEstimate,finalBid:window._finalBid||null};
+  const chips=job.bids.map(b=>`<button class="bid-chip${b.id===cur.id?' on':''}" onclick="viewBid('${b.id}')">${es?'Oferta':'Bid'} ${b.bid_no}<small>${fmtK(b.id===cur.id?bidPrice(curJ):bidPrice(b.estimate_json))}</small></button>`).join('');
+  let changes='';
+  const prev=job.bids.filter(b=>b.bid_no<cur.bid_no).pop();
+  if(prev){
+    const c=bidChanges(prev.estimate_json||{},curJ,appLang);
+    const head=`${es?'Oferta':'Bid'} ${cur.bid_no} vs ${es?'Oferta':'Bid'} ${prev.bid_no}: ${c.diff===0?(es?'mismo total':'same total'):`${c.diff>0?'+':'-'}${fmt(Math.abs(c.diff))} (${c.diff>0?'+':''}${c.pct}%)`}`;
+    const items=[...c.lines.map(l=>`<li class="bc-${l.kind}">${escapeHtml(l.text)}</li>`),...c.summary.map(t=>`<li class="bc-sum">${escapeHtml(t)}</li>`)];
+    changes=`<div class="bid-changes"><div class="bid-ch-head">${es?'Qué cambió':'What changed'} · ${escapeHtml(head)}</div>
+      ${items.length?`<ul>${items.join('')}</ul>`:`<div class="bid-note">${es?'Todavía no hay cambios. Edita las partidas o el precio y aparecen aquí.':'No changes yet. Edit lines or the price and they show here.'}</div>`}
+      <input class="bid-reason" maxlength="200" value="${escapeHtml(cur.change_note||'')}" placeholder="${es?'Razón (opcional): el cliente quitó los gabinetes':'Reason (optional): client cut countertops'}" onchange="saveChangeNote(this.value)">
+      <div class="bid-note" style="margin-top:6px">${es?'Solo tú ves esta lista. La propuesta imprime la oferta que estás viendo.':'Only you see this list. The proposal prints the bid you are viewing.'}</div></div>`;
+  }
+  bar.hidden=false;
+  bar.innerHTML=`<div class="bid-head"><span class="d-k" style="margin:0">${es?'Historial de ofertas':'Bid history'}</span>
+      <button class="bid-btn primary" onclick="reviseBid()" id="revise-btn">${es?'REVISAR OFERTA':'REVISE BID'}</button></div>
+    <div class="bid-chips">${chips}</div>
+    ${cur.id!==latest.id?`<div class="bid-note">${es?`Estás viendo una oferta anterior. Revisar copia la más reciente (Oferta ${latest.bid_no}).`:`You are viewing an earlier bid. Revise copies the latest one (Bid ${latest.bid_no}).`}</div>`:''}
+    ${changes}`;
+}
+async function persistCurrentBid(){
+  if(!isPro||!currentUser||!sbClient||!window._currentEstimateId||!currentEstimate) return;
+  const json={...currentEstimate,...(window._finalBid?{finalBid:window._finalBid}:{finalBid:null})};
+  const total=Math.round((+currentEstimate.totalBid||0)*100)/100;
+  const { error }=await sbClient.from('estimates').update({estimate_json:json,total_bid:total}).eq('id',window._currentEstimateId);
+  if(error){ console.error('Save bid error:',error); return; }
+  const b=window._job?.bids.find(x=>x.id===window._currentEstimateId);
+  if(b){ b.estimate_json=json; b.total_bid=total; }
+}
+function queueBidSave(){
+  if(!isPro||!window._currentEstimateId) return;
+  clearTimeout(window._bidSaveT);
+  window._bidSaveT=setTimeout(()=>{ persistCurrentBid(); },1200);
+  // Keep the change list live while editing.
+  clearTimeout(window._bidBarT); window._bidBarT=setTimeout(renderBidBar,250);
+}
+async function viewBid(id){
+  if(id===window._currentEstimateId) return;
+  clearTimeout(window._bidSaveT); await persistCurrentBid();
+  const b=window._job?.bids.find(x=>x.id===id); if(b) showBid(b);
+}
+async function reviseBid(){
+  const es=appLang==='es', job=window._job;
+  if(!job||!isPro||!currentUser) return;
+  const btn=document.getElementById('revise-btn'); if(btn) btn.disabled=true;
+  try{
+    clearTimeout(window._bidSaveT); await persistCurrentBid();
+    const fresh=await loadJobBids(job.rootId);
+    const latest=fresh[fresh.length-1], root=fresh[0];
+    const copy=JSON.parse(JSON.stringify(latest.estimate_json||{}));
+    const payload={user_id:currentUser.id,client_name:root.estimate_json?.clientName||document.getElementById('est-client')?.value||'',
+      project_label:document.getElementById('est-project-label')?.value||'',location:document.getElementById('est-location')?.value||'',
+      trade:document.getElementById('est-trade')?.value||'',total_bid:latest.total_bid,margin_pct:copy.profit?.pct||0,
+      status:latest.status||'draft',estimate_json:copy,job_id:job.rootId,bid_no:(latest.bid_no||1)+1,created_at:new Date().toISOString()};
+    // The job's own name and client come from Bid 1, so every bid lists under the same job.
+    const { data:r0 }=await sbClient.from('estimates').select('client_name,project_label,location,trade').eq('id',job.rootId).single();
+    if(r0) Object.assign(payload,{client_name:r0.client_name,project_label:r0.project_label,location:r0.location,trade:r0.trade});
+    const { data:saved, error }=await sbClient.from('estimates').insert(payload).select('id,job_id,bid_no,total_bid,estimate_json,change_note,status,created_at').single();
+    if(error) throw error;
+    window._job={rootId:job.rootId,bids:[...fresh,saved]};
+    showBid(saved);
+    showToast(es?`Oferta ${saved.bid_no} creada. Edita lo que cambió.`:`Bid ${saved.bid_no} created. Edit what changed.`);
+  }catch(e){ console.error('Revise bid error:',e); showToast(es?'No se pudo crear la oferta nueva. Intenta de nuevo.':"Couldn't create the new bid. Try again."); }
+  finally{ const b=document.getElementById('revise-btn'); if(b) b.disabled=false; }
+}
+async function saveChangeNote(v){
+  const id=window._currentEstimateId; if(!id||!sbClient) return;
+  const note=String(v||'').trim().slice(0,200)||null;
+  const { error }=await sbClient.from('estimates').update({change_note:note}).eq('id',id);
+  if(error){ console.error('Change note error:',error); return; }
+  const b=window._job?.bids.find(x=>x.id===id); if(b) b.change_note=note;
 }
 
 async function redownloadEstimate(estimateId){
@@ -6798,7 +7037,7 @@ async function loadActuals(estimateId){
     const { data }=await sbClient.from('cost_entries').select('*').eq('estimate_id',estimateId);
     if(!data||!data.length) return;
     data.forEach(entry=>{
-      const row=document.querySelector(`#var-body .var-row:nth-child(${entry.line_index+1})`);
+      const row=document.querySelector(`#var-body .var-row[data-li="${entry.line_index}"]`);
       if(!row) return;
       const input=row.querySelector('input');
       if(input){input.value=entry.actual_cost;calcVar(input,0);}
