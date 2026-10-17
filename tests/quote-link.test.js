@@ -41,7 +41,7 @@ const waitDraft=async(pred,ms=8000)=>{const t=Date.now();while(Date.now()-t<ms){
   check('a bad slug is refused', r.status===400&&r.body.error?.code==='bad_slug', JSON.stringify(r));
   r=await api('PUT','/api/my-page',{slug:'admin',trades:['Plumbing']},undefined,{authorization:'Bearer tok-free'});
   check('a reserved slug is refused', r.status===409, JSON.stringify(r));
-  r=await api('PUT','/api/my-page',{slug:'test-co',trades:['Plumbing','Electrical','Pools'],company:'Test Plumbing Co',phone:'(954) 555-0100'},undefined,{authorization:'Bearer tok-free'});
+  r=await api('PUT','/api/my-page',{slug:'test-co',trades:['Plumbing','Electrical','Fire Sprinklers'],company:'Test Plumbing Co',phone:'(954) 555-0100'},undefined,{authorization:'Bearer tok-free'});
   check('free account saves its link', r.status===200&&r.body.page?.slug==='test-co', JSON.stringify(r));
   check('unknown trades are dropped', JSON.stringify(r.body.page?.trades)==='["Plumbing","Electrical"]', JSON.stringify(r.body.page?.trades));
   r=await api('PUT','/api/my-page',{slug:'test-co',trades:['Plumbing']},undefined,{authorization:'Bearer tok-pro'});

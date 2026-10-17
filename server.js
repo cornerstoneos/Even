@@ -531,7 +531,7 @@ app.delete('/api/scope-cache/:key', async (req, res) => {
 // so nothing extra comes from the browser. Trade is kept only if it is one of the
 // app's trade options; city only if it names a known municipality (never the
 // typed text, which can be a street address).
-const STAT_TRADES = new Set(['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks']);
+const STAT_TRADES = new Set(['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks', 'Landscaping', 'Pools']);
 function jobStats(body) {
   try {
     const job = (body.messages[0].content || []).map(b => b && b.text || '').find(t => /^Trade:/.test(t)) || '';
@@ -745,7 +745,7 @@ app.post('/api/data-trade-credit', async (req, res) => {
 const PIPE = (() => { try { return require('./lib/pipeline').loadPipeline(); } catch (e) { console.error('pipeline load failed:', e.message); return null; } })();
 const SLUG_RE = /^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/;
 const RESERVED_SLUGS = new Set(['admin', 'api', 'app', 'even', 'help', 'login', 'pro', 'q', 'signup', 'suppliers', 'support', 'test', 'www']);
-const QUOTE_TRADES = ['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks'];
+const QUOTE_TRADES = ['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks', 'Landscaping', 'Pools'];
 const svc = extra => ({ 'Content-Type': 'application/json', apikey: process.env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`, ...(extra || {}) });
 async function sbRest(method, pathQ, body, prefer) {
   if (!process.env.SUPABASE_SERVICE_ROLE_KEY) return { ok: false, status: 503, data: null };
@@ -894,7 +894,7 @@ async function buildQuoteDraft(row) {
     if (md && Array.isArray(md.materials)) md.materials = md.materials.filter(r => r?.tier !== 'invalid_cross_market_copy');
     const scopeCats = PIPE.scopeMaterialCategories(ctx.trade, scopeData.tradeBreakdown);
     const partner = md ? (await partnerRowsFor(row.user_id, md.market)).rows : [];
-    const catalog = PIPE.buildCatalog(md, scopeCats, { suppliers: prefs.suppliers, subs: prefs.subs, partner });
+    const catalog = PIPE.buildCatalog(md, scopeCats, { suppliers: prefs.suppliers, subs: prefs.subs, partner, trade: ctx.trade });
     const hvhzNote = PIPE.hvhzNoteFor(hvhz);
     const pricingBlock = PIPE.pricingBlockFor(md, hvhzNote, catalog, ctx.location);
     const blocks = PIPE.estimatePromptBlocks({ ctx, scope: scopeText, ansText: '', tradeBreakdown: scopeData.tradeBreakdown || [], pricingBlock, lang: ctx.lang });
@@ -908,7 +908,8 @@ async function buildQuoteDraft(row) {
     if (data.pricingNotes.length) data.assumptions = [...data.pricingNotes, ...data.assumptions];
     data.labelAdj = adj.label;
     data.scopeKey = eRes.key || null;
-    data.confidenceTier = PIPE.computeConfidenceTier(md, scopeCats);
+    data.confidenceTier = PIPE.capConfidence(PIPE.computeConfidenceTier(md, scopeCats), ctx.trade);
+    if (PIPE.limitedTrade(ctx.trade)) data.limitedTrade = ctx.trade;
     data.jobAddress = [row.address, row.city].filter(Boolean).join(', ');
     const marketMeta = md ? {
       market: md.market, municipality: md.municipality, permitScope: md.permitScope, permitMissing: md.permitMissing || [],

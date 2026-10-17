@@ -128,7 +128,7 @@ const TEXT={
     powered:'Funciona con',
     errors:{name:'Agrega tu nombre.',contact:'Agrega un teléfono o un correo.',email:'Revisa el correo.',phone:'Revisa el teléfono.',city:'Agrega la ciudad.',zip:'El código postal debe tener 5 dígitos.',description:'Cuéntanos un poco más sobre el trabajo.',rate_limited:'Demasiadas solicitudes desde esta conexión. Intenta más tarde.',not_found:'Este enlace de estimados no está activo.',other:'Algo salió mal. Intenta de nuevo en un minuto.'}}
 };
-const TRADE_ES={'General Contractor':'Contratista general','Roofing':'Techado','Electrical':'Eléctrico','Plumbing':'Plomería','HVAC':'Aire acondicionado','Remodeling':'Remodelación','Framing':'Estructura','Painting':'Pintura','Flooring':'Pisos','Concrete':'Concreto','Siding':'Revestimiento','Decks':'Terrazas'};
+const TRADE_ES={'General Contractor':'Contratista general','Roofing':'Techado','Electrical':'Eléctrico','Plumbing':'Plomería','HVAC':'Aire acondicionado','Remodeling':'Remodelación','Framing':'Estructura','Painting':'Pintura','Flooring':'Pisos','Concrete':'Concreto','Siding':'Revestimiento','Decks':'Terrazas','Landscaping':'Paisajismo','Pools':'Piscinas'};
 let lang=/^es\b/i.test(navigator.language||'')?'es':'en', page=null;
 const slug=(location.pathname.match(/\/q\/([a-z0-9-]+)/i)||[])[1]||new URLSearchParams(location.search).get('s')||'';
 const $=id=>document.getElementById(id);

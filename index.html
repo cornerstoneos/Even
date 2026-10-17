@@ -978,6 +978,8 @@ body:has(#s-dashboard.active) .app{min-height:0}
 .biz-missing{font-size:12px;color:var(--white2);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:8px;padding:8px 10px;margin-bottom:8px;line-height:1.45}
 .biz-missing button{background:none;border:none;color:var(--text-accent);font-weight:700;cursor:pointer;padding:0;font-size:12px;text-decoration:underline}
 .biz-missing[hidden],#tracker-pro-tag[hidden]{display:none}
+.limited-note{font-size:12px;line-height:1.45;color:var(--orange);background:rgba(255,140,66,0.08);border:1px solid rgba(255,140,66,0.3);border-radius:8px;padding:8px 10px;margin:8px 0}
+.limited-note[hidden]{display:none}
 </style>
 
   <!-- Supabase -->
@@ -1211,10 +1213,13 @@ body:has(#s-dashboard.active) .app{min-height:0}
                 <option value="Concrete" data-es="Concreto">Concrete</option>
                 <option value="Siding" data-es="Revestimiento">Siding</option>
                 <option value="Decks" data-es="Terrazas">Decks</option>
+                <option value="Landscaping" data-es="Paisajismo">Landscaping</option>
+                <option value="Pools" data-es="Piscinas">Pools</option>
               </select>
               <span class="fchev">›</span>
             </div>
           </div>
+          <div class="limited-note" id="trade-limited" hidden></div>
           <div class="d-suggest" id="trade-suggest" hidden>
             <span id="trade-suggest-text"></span>
             <div class="d-suggest-btns"><button class="d-suggest-yes" id="trade-suggest-yes" onclick="acceptTradeSuggestion()"></button><button class="d-suggest-no" onclick="dismissTradeSuggestion()" data-en="Keep General Contractor" data-es="Dejar Contratista General">Keep General Contractor</button></div>
@@ -1487,6 +1492,7 @@ body:has(#s-dashboard.active) .app{min-height:0}
            one column in this order, downloads after the proposal fields. -->
       <div class="est-grid">
       <div class="est-side">
+      <div class="limited-note" id="limited-note" hidden></div>
       <div class="d-card bid-bar" id="bid-bar" hidden></div>
       <div class="d-card d-price" id="price-card">
         <div class="d-k" id="pc-label"></div>
@@ -2268,6 +2274,7 @@ function setLang(lang,btn){
   if(typeof renderLaborSettings==='function') renderLaborSettings();
   if(currentEstimate){ renderPriceCard(); renderLaborCard(currentEstimate); }
   if(typeof updateSettingsSummary==='function'){ updateSettingsSummary(); refreshTradeSuggestion(); }
+  if(typeof renderTradeLimited==='function'){ renderTradeLimited(); renderLimitedNote(); }
   // Text built in code (free-estimate count, upsell) is redrawn in the new language.
   if(typeof updateUserBadge==='function') updateUserBadge();
   const _asb=document.getElementById('auth-submit-btn'); if(_asb&&!_asb.disabled) _asb.textContent=authSubmitLabel(authMode);
@@ -2299,6 +2306,7 @@ function restoreDraft(){
     const d=JSON.parse(sessionStorage.getItem('even_draft')||'null'); if(!d) return;
     DRAFT_FIELDS.forEach(id=>{const el=document.getElementById(id); if(el&&!el.value&&d[id]) el.value=d[id];});
   }catch(e){}
+  if(typeof renderTradeLimited==='function') renderTradeLimited();
 }
 document.addEventListener('input',e=>{ if(DRAFT_FIELDS.includes(e.target?.id)) saveDraft(); });
 document.addEventListener('change',e=>{ if(DRAFT_FIELDS.includes(e.target?.id)) saveDraft(); });
@@ -2843,6 +2851,9 @@ const TRADE_MATERIALS={
   'concrete':['Concrete'],'foundation':['Concrete'],
   'drywall':['Drywall'],
   'siding':['Siding'],'stucco':['Siding'],
+  // Landscaping + Pools (founder 2026-10-17): launch on the rows we have.
+  'pool':['Pool','Plumbing'],'spa':['Pool','Plumbing'],
+  'landscap':['Landscaping','Irrigation'],'irrigat':['Irrigation'],'sprinkler':['Irrigation'],'sod':['Landscaping'],'lawn':['Landscaping','Irrigation'],
   // Spanish runs name trades in Spanish (bug found 2026-10-10): without these, the
   // other trades the AI spots on a job no longer add their material prices.
   'contratista general':null,'remodela':null,'renovaci':null,
@@ -2855,7 +2866,9 @@ const TRADE_MATERIALS={
   'piso':['Flooring'],'azulejo':['Flooring'],'loseta':['Flooring'],
   'concreto':['Concrete'],'cimiento':['Concrete'],'cimentaci':['Concrete'],
   'tablaroca':['Drywall'],'yeso':['Drywall'],
-  'revestimiento':['Siding'],'estuco':['Siding']
+  'revestimiento':['Siding'],'estuco':['Siding'],
+  'piscina':['Pool','Plumbing'],'alberca':['Pool','Plumbing'],
+  'paisaj':['Landscaping','Irrigation'],'jardin':['Landscaping','Irrigation'],'jardín':['Landscaping','Irrigation'],'riego':['Irrigation'],'césped':['Landscaping'],'grama':['Landscaping']
 };
 
 // The categories this particular estimate will actually price against. Returns
@@ -2872,6 +2885,9 @@ function scopeMaterialCategories(trade,tradeBreakdown){
     if(hit===undefined) continue;
     matched=true;
     const mapped=TRADE_MATERIALS[hit];
+    // A pool or landscaping job reads as a "remodel" in the breakdown; for these
+    // trades that word must not open every category (founder 2026-10-17).
+    if(mapped===null&&typeof LIMITED_TRADES!=='undefined'&&LIMITED_TRADES[trade]) continue;
     if(mapped===null) return null;   // a broad trade puts every category in play
     mapped.forEach(c=>cats.add(c));
   }
@@ -3517,6 +3533,17 @@ function renderCalibrationBanner(){
 // Today's effective billing multiplier (the old prompt let the model pick 2.0-2.8x
 // and it landed around 2.2x). A contractor setting now, never chosen by the AI.
 const LABOR_MULT_DEFAULT=2.2;
+// Trades launched on limited data (founder 2026-10-17): their labor is pinned to
+// the BLS rows the founder chose (no wage pull exists for pools or landscaping),
+// the estimate carries a "limited data" label, and confidence never reads HIGH.
+// The contractor's own labor rate still overrides, as on every trade.
+const LIMITED_TRADES={
+  'Pools':{labor:/^(Plumbers|Construction Laborers)/},
+  'Landscaping':{labor:/^Construction Laborers/}
+};
+const LIMITED_LABEL={en:'Limited local data for this trade. Check materials and labor.',es:'Datos locales limitados para este oficio. Revisa materiales y mano de obra.'};
+function limitedTrade(trade){ return LIMITED_TRADES[String(trade||'')]?String(trade):null; }
+function capConfidence(tier,trade){ return limitedTrade(trade)&&tier==='high'?'medium':tier; }
 const LABOR_MULT_MIN=1.0, LABOR_MULT_MAX=3.5;
 // Cuts and breakage on bulk goods. Counted items (a water heater, a breaker, a
 // fixture) carry none. The old prompt let the model pick 10-15% on everything.
@@ -3622,7 +3649,8 @@ function buildCatalog(md,scopeCats,own){
   if(md){
     (md.materials||[]).filter(r=>r&&r.mid!=null&&(isEquipmentRental(r.category)||categoryInScope(r.category,scopeCats)))
       .forEach((row,i)=>{const e={ref:'M'+(i+1),kind:'material',row};cat.materials.push(e);cat.byRef[e.ref]=e;});
-    (md.labor||[]).filter(r=>r&&r.mid!=null)
+    const lt=own&&LIMITED_TRADES[own.trade];
+    (md.labor||[]).filter(r=>r&&r.mid!=null&&(!lt||lt.labor.test(r.trade||'')))
       .forEach((row,i)=>{const e={ref:'L'+(i+1),kind:'labor',row};cat.labor.push(e);cat.byRef[e.ref]=e;});
     (md.permits||[]).forEach((row,i)=>{const e={ref:'P'+(i+1),kind:'permit',row};cat.permits.push(e);cat.byRef[e.ref]=e;});
   }
@@ -3944,9 +3972,9 @@ async function _calculateEstimate(btn,jobAtStart){
   // is in that pricing. Must exist before the pricing block is built.
   const scopeCats=scopeMaterialCategories(ctx.trade,window._scopeData?.tradeBreakdown);
   const partnerRows=marketData?await fetchPartnerPrices(ctx.location):[];
-  const catalog=buildCatalog(marketData,scopeCats,{suppliers:window._mySuppliers,subs:window._mySubs,partner:partnerRows});
+  const catalog=buildCatalog(marketData,scopeCats,{suppliers:window._mySuppliers,subs:window._mySubs,partner:partnerRows,trade:ctx.trade});
   const pricingBlock=pricingBlockFor(marketData,hvhzNote,catalog,ctx.location);
-  const confidenceTier=computeConfidenceTier(marketData,scopeCats);
+  const confidenceTier=capConfidence(computeConfidenceTier(marketData,scopeCats),ctx.trade);
   // Kept separately from the estimate payload so the permit-scope disclosure can be
   // rendered deterministically rather than depending on the model to mention it.
   window._marketMeta=marketData?{
@@ -4160,6 +4188,7 @@ async function _calculateEstimate(btn,jobAtStart){
     // a bad scope can be cleared on the server (DELETE /api/scope-cache/<key>).
     data.scopeKey=window._lastScopeKey||null;
     data.confidenceTier=confidenceTier;
+    if(limitedTrade(ctx.trade)) data.limitedTrade=ctx.trade;
     currentEstimate=data;
 
     // Animate to real total
@@ -4282,7 +4311,20 @@ function renderEstimate(data){
   renderCalibrationBanner();
   renderPermitScopeNote();
   renderBidBar();
+  renderLimitedNote();
 }
+// "Limited data" label for trades launched on thin data (Pools, Landscaping).
+function renderLimitedNote(){
+  const el=document.getElementById('limited-note'); if(!el) return;
+  const t=currentEstimate&&currentEstimate.limitedTrade;
+  el.hidden=!t; if(t) el.textContent=LIMITED_LABEL[appLang==='es'?'es':'en'];
+}
+function renderTradeLimited(){
+  const el=document.getElementById('trade-limited'); if(!el) return;
+  const t=limitedTrade(document.getElementById('est-trade')?.value);
+  el.hidden=!t; if(t) el.textContent=LIMITED_LABEL[appLang==='es'?'es':'en'];
+}
+document.getElementById('est-trade')?.addEventListener('change',renderTradeLimited);
 
 // Where each number came from, under its row. App only, never on the client PDF.
 function lineSourceNote(item,i){
@@ -6456,6 +6498,7 @@ function applyPrefs(prefs){
     const b=[...document.querySelectorAll('.market-adj-opt')].find(x=>(x.getAttribute('onclick')||'').includes(`'${prefs.marketAdj}'`));
     if(b) setMarketAdj(b,prefs.marketAdj);
   }
+  if(typeof renderTradeLimited==='function') renderTradeLimited();
   if(Array.isArray(prefs.shops)){ window._myShops=prefs.shops.filter(x=>x&&x.name); try{ localStorage.setItem('even_shops',JSON.stringify(window._myShops)); }catch(e){} renderShops(); }
   window._prefsLoaded=true;
 }
@@ -6639,7 +6682,7 @@ function renderShops(){
 // with this contractor's own settings; it lands here for review. Nothing is
 // sent to the client from here: the contractor opens the draft, edits, and
 // sends the proposal the normal way.
-const QL_TRADES=['General Contractor','Roofing','Electrical','Plumbing','HVAC','Remodeling','Framing','Painting','Flooring','Concrete','Siding','Decks'];
+const QL_TRADES=['General Contractor','Roofing','Electrical','Plumbing','HVAC','Remodeling','Framing','Painting','Flooring','Concrete','Siding','Decks','Landscaping','Pools'];
 window._myPage=null; window._requests=[]; window._reqFilter='open';
 function slugSuggest(){
   const c=String(getBiz().company||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
