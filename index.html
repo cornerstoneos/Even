@@ -975,6 +975,9 @@ body:has(#s-dashboard.active) .app{min-height:0}
 .shop-tag{font:600 9px 'DM Mono',monospace;color:var(--text-accent)}
 .shop-rep{display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px}
 @media(min-width:520px){.shop-rep{grid-template-columns:1fr 1fr 1fr}}
+.biz-missing{font-size:12px;color:var(--white2);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:8px;padding:8px 10px;margin-bottom:8px;line-height:1.45}
+.biz-missing button{background:none;border:none;color:var(--text-accent);font-weight:700;cursor:pointer;padding:0;font-size:12px;text-decoration:underline}
+.biz-missing[hidden],#tracker-pro-tag[hidden]{display:none}
 </style>
 
   <!-- Supabase -->
@@ -1590,6 +1593,7 @@ body:has(#s-dashboard.active) .app{min-height:0}
           <div class="d-info" id="info-finish" hidden data-es="Tu negocio, el cliente, la dirección, la forma de pago y la nota van en la Propuesta al Cliente. Los datos de tu negocio se guardan para la próxima vez.">Your business, the client, the job address, the payment schedule and the note go on the Client Proposal. Your business info is saved for next time.</div></div>
         <div class="gc-body" style="padding:10px 18px 14px;display:flex;flex-direction:column;gap:12px">
           <div><div class="d-lbl" data-es="Tu negocio">Your business</div>
+            <div id="biz-missing" class="biz-missing" hidden><span data-es="Tu propuesta dice &quot;Tu empresa&quot; hasta que agregues el nombre de tu negocio.">Your proposal says "Your company" until you add your business name.</span> <button onclick="focusBizCompany()" data-es="Agregar nombre">Add name</button></div>
             <div class="biz-grid">
               <input id="biz-company" data-en="1" data-es="1" class="finput" placeholder="Company name" data-placeholder-en="Company name" data-placeholder-es="Nombre de la empresa" oninput="setBiz('company',this.value)">
               <input id="biz-license" data-en="1" data-es="1" class="finput" placeholder="License #" data-placeholder-en="License #" data-placeholder-es="Licencia n.º" oninput="setBiz('license',this.value)">
@@ -1662,7 +1666,7 @@ body:has(#s-dashboard.active) .app{min-height:0}
       <div class="gc" id="cost-tracker-section">
         <div class="gc-head">
           <div class="gc-title" data-en="Actual Cost Tracker" data-es="Seguimiento de Costos">Actual Cost Tracker</div>
-          <div class="gc-tag" style="background:rgba(255,179,0,0.1);border-color:rgba(255,179,0,0.25);color:#FFB300" data-en="Pro Feature" data-es="Función Pro">Pro Feature</div>
+          <div class="gc-tag" id="tracker-pro-tag" style="background:rgba(255,179,0,0.1);border-color:rgba(255,179,0,0.25);color:#FFB300" data-en="Pro Feature" data-es="Función Pro">Pro Feature</div>
         </div>
         <div class="gc-body" style="padding:10px 12px">
           <div class="var-head">
@@ -1891,7 +1895,10 @@ async function loadUserData(){
   }
 }
 
+// The tracker's "Pro Feature" tag is an upsell: a Pro account already has it.
+function syncTrackerTag(){ const t=document.getElementById('tracker-pro-tag'); if(t) t.hidden=!!isPro; }
 function updateUserBadge(){
+  syncTrackerTag();
   const badge = document.getElementById('user-badge');
   const authBtn = document.getElementById('topbar-auth-btn');
   // Only show badge after at least 1 estimate has been run
@@ -4233,6 +4240,7 @@ function renderEstimate(data){
   const liBodyWrap=document.getElementById('li-collapsible'); if(liBodyWrap) liBodyWrap.style.display='';
 
   // Variance rows — Pro only
+  syncTrackerTag();
   // Each tracker row keeps its line's real position (data-li): actuals are saved
   // and read back by that position, which is how the calibration reads them.
   const sorted=(data.lineItems||[]).map((it,li)=>({...it,_li:li})).filter(i=>!i.removed).sort((a,b)=>b.total-a.total);
@@ -4745,6 +4753,14 @@ function tradeLabel(t,lang){
 function catLabel(c,lang){ return (lang||appLang)==='es'?(CAT_ES[c]||CAT_ES[String(c).replace(/s$/,'')]||c):c; }
 const UNIT_ES={each:'c/u',ea:'c/u',hr:'h',hour:'h',hours:'h',permit:'permiso','linear ft':'pie lineal',lf:'pie lineal',ft:'pie',sqft:'pie²','sq ft':'pie²',sf:'pie²',job:'trabajo',day:'día',days:'días',week:'semana',roll:'rollo',box:'caja',bag:'bolsa',gallon:'galón',gal:'galón',sheet:'hoja',piece:'pieza',pc:'pieza',pair:'par',set:'juego',kit:'kit',lot:'lote',ton:'tonelada',yd:'yarda','cu yd':'yarda³',bundle:'paquete',square:'cuadro',case:'caja',pack:'paquete',tube:'tubo',unit:'unidad',lump:'global',ls:'global',visit:'visita',trip:'viaje',load:'carga',month:'mes'};
 function unitLabel(u,lang){ if((lang||appLang)!=='es') return u; const k=String(u||'').trim().toLowerCase(); return UNIT_ES[k]||UNIT_ES[k.replace(/s$/,'')]||u; }
+// The company name on a proposal. A login email is never a company name (live
+// test 2026-10-13): blank, or anything that looks like an email, prints as
+// "Your company" and the screen asks for the business name.
+function bizCompanyName(b){
+  const c=String((b&&b.company)||'').trim();
+  if(!c||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c)||(currentUser?.email&&c.toLowerCase()===String(currentUser.email).toLowerCase())) return '';
+  return c;
+}
 function getBiz(){
   let b={};
   try{ b=JSON.parse(localStorage.getItem('even_biz')||'{}')||{}; }catch(e){}
@@ -4756,7 +4772,14 @@ function setBiz(field,val){
   try{ localStorage.setItem('even_biz',JSON.stringify(b)); }catch(e){}
   clearTimeout(window._bizSaveT); window._bizSaveT=setTimeout(()=>{ if(currentUser) savePrefs(); },1200);
   liveProposalUpdate();
+  renderBizPrompt();
 }
+// Ask for the business name until there is one (the proposal says "Your company").
+function renderBizPrompt(){
+  const el=typeof document!=='undefined'&&document.getElementById('biz-missing'); if(!el) return;
+  el.hidden=!!bizCompanyName(getBiz());
+}
+function focusBizCompany(){ const i=document.getElementById('biz-company'); if(i){ i.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(()=>i.focus(),300); } }
 function proposalNumber(data){
   if(!data.proposalNo){
     const d=new Date(), pad=n=>String(n).padStart(2,'0');
@@ -4785,7 +4808,7 @@ function buildClientProposal(data,ctx,lang){
   return {
     lang,
     title:es?'Propuesta':'Proposal',
-    company:biz.company||'', phone:biz.phone||'', email:biz.email||'', license:biz.license||'',
+    company:bizCompanyName(biz)||(es?'Tu empresa':'Your company'), companyMissing:!bizCompanyName(biz), phone:biz.phone||'', email:biz.email||'', license:biz.license||'',
     logo:!!window._userLogoUrl,
     number:proposalNumber(data), date:fmtDate(issued), validUntil:fmtDate(validUntil),
     client:(ctx?.client&&ctx.client!=='Client')?ctx.client:'',
@@ -4913,6 +4936,7 @@ async function downloadProposalPDF(){
   if(!jsPDF){alert(appLang==='es'?'El PDF no cargó. Actualiza la página.':'PDF engine not loaded. Please refresh and try again.');return;}
   const doc=await buildClientProposalPDF(jsPDF);
   const P=window._lastProposal;
+  if(P.companyMissing) showToast(appLang==='es'?'Tu propuesta dice "Tu empresa". Agrega el nombre de tu negocio en Tu negocio.':'Your proposal says "Your company". Add your business name under Your business.',5000);
   const safe=x=>String(x||'').replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'');
   savePDF(doc,`${[safe(P.company),safe(P.project)||'Proposal',P.number].filter(Boolean).join('-')}.pdf`);
   if(isPro && currentUser && sbClient && window._currentEstimateId){
@@ -4948,7 +4972,7 @@ async function buildClientProposalPDF(jsPDF){
   if(logo){
     let w=logo.w,h=logo.h; const sc=Math.min(48/h,150/w,1); w*=sc; h*=sc;
     doc.addImage(logo.dataUri,'PNG',M,(78-h)/2,w,h); hx=M+w+14;
-  }else if(initialsOf(P.company)){
+  }else if(!P.companyMissing&&initialsOf(P.company)){
     // No logo yet: the company's initials in its accent color.
     doc.setFillColor(...accent);doc.roundedRect(M,17,44,44,7,7,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(255,255,255);
@@ -5955,6 +5979,7 @@ function liveProposalUpdate(){
 }
 
 function populateProposalAssumptions(){
+  renderBizPrompt();
   const list = document.getElementById('prop-assumptions');
   if(!list) return;
   list.innerHTML='';
