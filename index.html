@@ -1760,7 +1760,7 @@ const DEVICE_ID = (()=>{
 // Headers every call to our server carries: who this is (device, and the signed-in
 // session if there is one). The server reads Pro status and counts itself.
 async function apiHeaders(extra){
-  const h={'Content-Type':'application/json','X-Even-Device':DEVICE_ID,...(extra||{})};
+  const h={'Content-Type':'application/json','X-Even-Device':DEVICE_ID,'X-Even-Lang':appLang==='es'?'es':'en',...(extra||{})};
   try{ const t=(await sbClient?.auth.getSession())?.data?.session?.access_token; if(t) h.Authorization='Bearer '+t; }catch(e){}
   return h;
 }

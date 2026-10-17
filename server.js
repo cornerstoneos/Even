@@ -20,7 +20,7 @@ const originAllowed = o => !!o && (ALLOWED_ORIGINS.includes(o) || /^http:\/\/(lo
 app.use(cors({
   origin: (o, cb) => cb(null, originAllowed(o)),
   exposedHeaders: ['X-Even-Cache', 'X-Even-Cache-Key'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Even-Cache', 'X-Even-Device']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Even-Cache', 'X-Even-Device', 'X-Even-Lang']
 }));
 const { buildRequest, MAIN: mainModel, LIGHT: lightModel, SCOPE_FIX_TEXT } = require('./lib/guard');
 const guardModels = { MAIN: mainModel, LIGHT: lightModel };
@@ -34,7 +34,9 @@ const usage = () => _usage || (_usage = makeUsage({
   supabaseUrl: SUPABASE_URL,
   serviceKey: () => process.env.SUPABASE_SERVICE_ROLE_KEY,
   secret: () => process.env.USAGE_HASH_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY || 'even-dev',
-  fetchImpl: (...a) => fetch(...a)
+  fetchImpl: (...a) => fetch(...a),
+  onNewUser: (user, lang) => require('./lib/welcome').sendWelcome({ user, lang, supabaseUrl: SUPABASE_URL, serviceKey: () => process.env.SUPABASE_SERVICE_ROLE_KEY,
+    fetchImpl: (...a) => fetch(...a), log: m => logError('email', m, null) })
 }));
 
 // ─── Market resolution (zip/city → nearest covered market) ───────────────────

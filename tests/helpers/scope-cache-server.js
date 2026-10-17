@@ -37,7 +37,7 @@ globalThis.fetch = async (url, opts = {}) => {
     return json({ content: [{ type: 'text', text: `{"projectName":"run${n}","tradeBreakdown":[{"trade":"Plumbing","icon":"x","items":[]}],"questions":[],"lineItems":[{"type":"other","category":"Labor","description":"Mock line","qty":1,"unit":"ea","unitCost":100},{"type":"material","ref":"M1","qty":2},{"type":"labor","ref":"L1","hours":3},{"type":"permit","ref":"P1","qty":0}]}` }], stop_reason: 'end_turn' });
   }
   if (url.includes('api.resend.com')) {
-    const b = JSON.parse(opts.body); log('email ' + JSON.stringify({ from: b.from, to: b.to, subject: b.subject, hasAttachment: !!(b.attachments && b.attachments.length), text: b.text }));
+    const b = JSON.parse(opts.body); log('email ' + JSON.stringify({ from: b.from, to: b.to, reply_to: b.reply_to || null, headers: b.headers || null, subject: b.subject, hasAttachment: !!(b.attachments && b.attachments.length), text: b.text }));
     return json({ id: 'email_test' });
   }
   if (url.includes('/storage/v1/object/sign/')) return json({ signedURL: '/object/sign/supplier-sheets/x?token=t' });
@@ -76,6 +76,10 @@ globalThis.fetch = async (url, opts = {}) => {
     const id = (u.searchParams.get('id') || '').replace(/^eq\./, '');
     if (m === 'GET') return json(t[id] ? [t[id]] : []);
     if (m === 'POST') { const b = JSON.parse(opts.body); if (!t[b.id]) t[b.id] = { estimate_count: 0, is_pro: b.id === USERS['tok-pro'].id }; save(d); return new Response('', { status: 201 }); }
+    if (m === 'PATCH' && u.searchParams.get('welcome_sent_at') === 'is.null') {
+      if (!t[id] || t[id].welcome_sent_at) return json([]);
+      Object.assign(t[id], JSON.parse(opts.body)); save(d); return json([{ id, ...t[id] }]);
+    }
     if (m === 'PATCH') { Object.assign(t[id] = t[id] || {}, JSON.parse(opts.body)); save(d); return new Response(null, { status: 204 }); }
   }
   if (url.includes('/rest/v1/app_events')) {
