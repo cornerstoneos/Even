@@ -36,6 +36,19 @@ globalThis.fetch = async (url, opts = {}) => {
     }
     return json({ content: [{ type: 'text', text: `{"projectName":"run${n}","tradeBreakdown":[{"trade":"Plumbing","icon":"x","items":[]}],"questions":[],"lineItems":[{"type":"other","category":"Labor","description":"Mock line","qty":1,"unit":"ea","unitCost":100},{"type":"material","ref":"M1","qty":2},{"type":"labor","ref":"L1","hours":3},{"type":"permit","ref":"P1","qty":0}]}` }], stop_reason: 'end_turn' });
   }
+  if (url.includes('api.resend.com')) {
+    const b = JSON.parse(opts.body); log('email ' + JSON.stringify({ from: b.from, to: b.to, subject: b.subject, hasAttachment: !!(b.attachments && b.attachments.length), text: b.text }));
+    return json({ id: 'email_test' });
+  }
+  if (url.includes('/storage/v1/object/sign/')) return json({ signedURL: '/object/sign/supplier-sheets/x?token=t' });
+  if (url.includes('/storage/v1/object/')) {
+    const d0 = load(); const st = (d0.__storage = d0.__storage || {});
+    const p0 = decodeURI(url.split('/storage/v1/object/')[1]);
+    const ok = (opts.headers || {}).apikey === 'svc-test-key';
+    if (!ok) return json({ error: 'unauthorized' }, 401);
+    st[p0] = { size: Buffer.from(opts.body).length, type: (opts.headers || {})['Content-Type'] }; save(d0);
+    return json({ Key: p0 });
+  }
   if (url.includes('/auth/v1/user')) {
     const tok = String((opts.headers || {}).Authorization || '').replace('Bearer ', '');
     return USERS[tok] ? json(USERS[tok]) : json({ msg: 'bad jwt' }, 401);
@@ -83,7 +96,7 @@ globalThis.fetch = async (url, opts = {}) => {
     const m = batch.find(x => x.market === mkt);
     return json(m ? [{ market: m.market, state: m.state, zone: m.zone, materials: m.materials, labor: m.labor, permits: m.permits }] : []);
   }
-  for (const name of ['contractor_pages', 'quote_requests', 'suppliers', 'partner_prices']) {
+  for (const name of ['contractor_pages', 'quote_requests', 'suppliers', 'partner_prices', 'supplier_signups']) {
     if (!url.includes('/rest/v1/' + name)) continue;
     const t = rows(name);
     log(`db ${name} ${m} ${svc}`);

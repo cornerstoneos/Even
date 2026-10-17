@@ -285,6 +285,10 @@ app.get('/health', (req, res) => {
     hasAnthropicKey: !!process.env.ANTHROPIC_API_KEY,
     hasSupabaseKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
     hasStripeSecret: !!process.env.STRIPE_WEBHOOK_SECRET,
+    // Email setup, as yes/no only (no addresses): founder alerts need a Resend key
+    // + FOUNDER_EMAIL or REPLY_TO_EMAIL; client mail needs a verified domain sender.
+    email: { resendKey: !!process.env.RESEND_API_KEY, founderAddress: !!(process.env.FOUNDER_EMAIL || process.env.REPLY_TO_EMAIL),
+      fromSet: !!process.env.NOTIFY_FROM_EMAIL, quoteEmailOn: process.env.QUOTE_EMAIL_ENABLED === '1', welcomeEmailOn: process.env.WELCOME_EMAIL_ENABLED === '1' },
     startedAt: STARTED_AT
   });
 });
@@ -1083,6 +1087,86 @@ app.post('/api/quote-requests/:id/draft', async (req, res) => {
   if (row.draft_status === 'ready') return res.json({ ok: true, draft_status: 'ready' });
   const out = await buildQuoteDraft(row);
   res.json({ ok: out.ok, draft_status: out.ok ? 'ready' : out.code });
+});
+
+// ─── Supplier signup page (even-os.com/suppliers, founder 2026-10-15) ────────
+// A supply house sends its contractor price sheet; no account. The file goes to
+// the PRIVATE bucket supplier-sheets, the details to supplier_signups (server
+// only), and the founder gets an email. The founder's address is read from
+// Railway (FOUNDER_EMAIL, else REPLY_TO_EMAIL), never written in this repo.
+// Sender: NOTIFY_FROM_EMAIL once even-os.com is verified in Resend; until then
+// Resend's own test sender, which only delivers to the Resend account's email.
+const founderEmail = () => process.env.FOUNDER_EMAIL || process.env.REPLY_TO_EMAIL || '';
+const notifyFrom = () => process.env.NOTIFY_FROM_EMAIL || 'Even <onboarding@resend.dev>';
+async function emailFounder(subject, text, attachment) {
+  if (!process.env.RESEND_API_KEY || !founderEmail()) return false;
+  try {
+    const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+      body: JSON.stringify({ from: notifyFrom(), to: [founderEmail()], subject, text, ...(attachment ? { attachments: [attachment] } : {}) }) });
+    if (!r.ok) logError('email', 'founder_resend_' + r.status + ' ' + (await r.text()).slice(0, 300), null);
+    return r.ok;
+  } catch (e) { logError('email', e.message, null); return false; }
+}
+const SHEET_TYPES = { pdf: 'application/pdf', csv: 'text/csv', xls: 'application/vnd.ms-excel', xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png' };
+const SHEET_MAX_BYTES = 10 * 1024 * 1024;
+const SUPPLIER_COUNTIES = ['Miami-Dade', 'Broward', 'Palm Beach', 'Other'];
+const SUPPLIER_TRADES = ['Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Lumber and framing', 'Drywall', 'Flooring and tile', 'Concrete', 'Windows and doors', 'Pools', 'Landscaping and irrigation', 'Other'];
+const supplierIpDay = new Map();
+app.post('/api/supplier-signup', async (req, res) => {
+  if (!appOnly(req, res)) return;
+  const U = usage(); const ident = await U.identify(req);
+  const k = ident.ipHash + ':' + new Date().toISOString().slice(0, 10);
+  const n = (supplierIpDay.get(k) || 0) + 1; supplierIpDay.set(k, n);
+  if (!U.rateOk(ident.ipHash, 'quote') || n > 10) return res.status(429).json({ error: { code: 'rate_limited' } });
+  const b = req.body || {};
+  if (clip(b.website, 200)) return res.json({ ok: true });   // honeypot
+  const row = {
+    company: clip(b.company, 120), contact_name: clip(b.contact_name, 100), phone: clip(b.phone, 40), email: clip(b.email, 200).toLowerCase(),
+    counties: (Array.isArray(b.counties) ? b.counties : []).filter(x => SUPPLIER_COUNTIES.includes(x)),
+    trades: (Array.isArray(b.trades) ? b.trades : []).filter(x => SUPPLIER_TRADES.includes(x)),
+    note: clipText(b.note, 1000), lang: b.lang === 'es' ? 'es' : 'en'
+  };
+  const bad = [];
+  if (!row.company) bad.push('company');
+  if (!row.phone && !row.email) bad.push('contact');
+  if (row.email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(row.email)) bad.push('email');
+  let file = null;
+  if (b.file && b.file.data) {
+    const name = clip(b.file.name, 120).replace(/[^\w.\- ]+/g, '_') || 'price-sheet';
+    const ext = (name.match(/\.([a-z0-9]+)$/i) || [])[1]?.toLowerCase();
+    const buf = Buffer.from(String(b.file.data), 'base64');
+    if (!ext || !SHEET_TYPES[ext]) bad.push('file_type');
+    else if (!buf.length || buf.length > SHEET_MAX_BYTES) bad.push('file_size');
+    else file = { name, ext, type: SHEET_TYPES[ext], buf };
+  } else bad.push('file');
+  if (bad.length) return res.status(400).json({ error: { code: 'invalid', fields: bad } });
+  const sk = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!sk) return res.status(503).json({ error: { code: 'unavailable' } });
+  const objPath = `${new Date().toISOString().slice(0, 7)}/${crypto.randomUUID()}-${file.name.replace(/\s+/g, '-')}`;
+  try {
+    const up = await fetch(`${SUPABASE_URL}/storage/v1/object/supplier-sheets/${encodeURI(objPath)}`, {
+      method: 'POST', headers: { apikey: sk, Authorization: `Bearer ${sk}`, 'Content-Type': file.type, 'x-upsert': 'false' }, body: file.buf });
+    if (!up.ok) { logError('supplier_signup', 'upload_' + up.status, null); return res.status(500).json({ error: { code: 'unavailable' } }); }
+  } catch (e) { logError('supplier_signup', e.message, null); return res.status(500).json({ error: { code: 'unavailable' } }); }
+  const ins = await sbRest('POST', 'supplier_signups', { ...row, file_path: objPath, file_name: file.name, file_type: file.type, file_size: file.buf.length }, 'return=representation');
+  if (!ins.ok || !ins.data?.[0]) { logError('supplier_signup', 'insert_' + ins.status, null); return res.status(500).json({ error: { code: 'unavailable' } }); }
+  res.json({ ok: true });
+  // After the answer: a 7-day private link + the file itself to the founder.
+  (async () => {
+    let link = '';
+    try {
+      const sg = await fetch(`${SUPABASE_URL}/storage/v1/object/sign/supplier-sheets/${encodeURI(objPath)}`, { method: 'POST', headers: { apikey: sk, Authorization: `Bearer ${sk}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ expiresIn: 7 * 86400 }) });
+      const j = sg.ok ? await sg.json() : null;
+      if (j && (j.signedURL || j.signedUrl)) link = `${SUPABASE_URL}/storage/v1${j.signedURL || j.signedUrl}`;
+    } catch (e) {}
+    const text = [`New supplier price sheet from even-os.com/suppliers (${row.lang.toUpperCase()})`, '',
+      `Company: ${row.company}`, `Contact: ${row.contact_name || '-'}`, `Phone: ${row.phone || '-'}`, `Email: ${row.email || '-'}`,
+      `Counties: ${row.counties.join(', ') || '-'}`, `Trades: ${row.trades.join(', ') || '-'}`, `Note: ${row.note || '-'}`, '',
+      `File: ${file.name} (${Math.round(file.buf.length / 1024)} KB), attached.`, link ? `Private link (7 days): ${link}` : 'Private link: not available, the file is in Supabase bucket supplier-sheets.',
+      `Supabase row: supplier_signups ${ins.data[0].id}`].join('\n');
+    const ok = await emailFounder(`New supplier price sheet: ${row.company}`, text, file.buf.length <= 7 * 1024 * 1024 ? { filename: file.name, content: file.buf.toString('base64') } : null);
+    if (ok) sbRest('PATCH', `supplier_signups?id=eq.${ins.data[0].id}`, { emailed: true }, 'return=minimal');
+  })().catch(() => {});
 });
 
 // ─── Client-side error reporting ──────────────────────────────────────────────

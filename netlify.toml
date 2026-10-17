@@ -6,3 +6,14 @@
   from = "/q/*"
   to = "/q.html"
   status = 200
+
+# Supplier signup: even-os.com/suppliers (permanent: the leave-behind QR points here).
+[[redirects]]
+  from = "/suppliers"
+  to = "/suppliers.html"
+  status = 200
+
+[[redirects]]
+  from = "/suppliers-es"
+  to = "/suppliers.html"
+  status = 200
