@@ -6,6 +6,46 @@ const ES_TAGS = '#contratistas #sofla #miami #construccion'
 export const LIBRARY = {
   videos: [
     {
+      id: 'app-1-describe-es', title: 'App clip Paso 1: Describe el trabajo (Spanish)', meta: '12s · real app screen recording · callouts · silent (add music)', file: '/library/videos/even-1-describe-es.mp4',
+      caption: `Paso 1: describe el trabajo. Escríbelo, pégalo o sube los planos. Prueba la app para hacer estimados gratis: 3 sin tarjeta de crédito. Link en el perfil.\n\n${ES_TAGS} #estimadosgratis`,
+    },
+    {
+      id: 'app-1-describe-en', title: 'App clip Step 1: Describe the job (English)', meta: '12s · real app screen recording · callouts · silent (add music)', file: '/library/videos/even-1-describe-en.mp4',
+      caption: `Step 1: describe the job. Type it, paste it, or upload the plans. Try 3 estimates free, no credit card. Link in bio.\n\n${EN_TAGS}`,
+    },
+    {
+      id: 'app-2-margins-es', title: 'App clip Paso 2: Tú pones los márgenes (Spanish)', meta: '12s · real app screen recording · callouts · silent (add music)', file: '/library/videos/even-2-margins-es.mp4',
+      caption: `Paso 2: tú pones los márgenes. Gastos, ganancia y riesgo son tuyos, Even nunca los decide por ti. Estimados gratis: prueba 3 sin tarjeta de crédito. Link en el perfil.\n\n${ES_TAGS} #estimadosgratis`,
+    },
+    {
+      id: 'app-2-margins-en', title: 'App clip Step 2: You set the margins (English)', meta: '12s · real app screen recording · callouts · silent (add music)', file: '/library/videos/even-2-margins-en.mp4',
+      caption: `Step 2: you set the margins. Overhead, profit and risk are yours, Even never picks them for you. Try 3 estimates free, no credit card. Link in bio.\n\n${EN_TAGS}`,
+    },
+    {
+      id: 'app-3-questions-es', title: 'App clip Paso 3: Responde unas preguntas (Spanish)', meta: '10s · real app screen recording · callouts · silent (add music)', file: '/library/videos/even-3-questions-es.mp4',
+      caption: `Paso 3: responde unas preguntas, solo las que cambian el precio. App para hacer estimados gratis: prueba 3 sin tarjeta de crédito. Link en el perfil.\n\n${ES_TAGS} #estimadosgratis`,
+    },
+    {
+      id: 'app-3-questions-en', title: 'App clip Step 3: Answer a few questions (English)', meta: '10s · real app screen recording · callouts · silent (add music)', file: '/library/videos/even-3-questions-en.mp4',
+      caption: `Step 3: answer a few questions, only the ones that change the price. Try 3 estimates free, no credit card. Link in bio.\n\n${EN_TAGS}`,
+    },
+    {
+      id: 'app-4-bid-es', title: 'App clip Paso 4: Recibe tu oferta (Spanish)', meta: '17s · real app screen recording · callouts · silent (add music)', file: '/library/videos/even-4-bid-es.mp4',
+      caption: `Paso 4: recibe tu oferta. Cada línea con su número, un rango de oferta, y tú pones el precio final. Corrida real: cambio de panel 200A, Aventura, FL. Estimados gratis: prueba 3 sin tarjeta de crédito. Link en el perfil.\n\n${ES_TAGS} #estimadosgratis`,
+    },
+    {
+      id: 'app-4-bid-en', title: 'App clip Step 4: Get your bid (English)', meta: '17s · real app screen recording · callouts · silent (add music)', file: '/library/videos/even-4-bid-en.mp4',
+      caption: `Step 4: get your bid. Every line with its number, a bid range, and you set the final price. Real run: 200A panel upgrade, Aventura, FL. Try 3 estimates free, no credit card. Link in bio.\n\n${EN_TAGS}`,
+    },
+    {
+      id: 'app-5-proposal-es', title: 'App clip Paso 5: Envía la propuesta (Spanish)', meta: '13s · real app screen recording · callouts · silent (add music)', file: '/library/videos/even-5-proposal-es.mp4',
+      caption: `Paso 5: envía la propuesta. Tú guardas la hoja de costos, tu cliente recibe una propuesta limpia. Estimados gratis: prueba 3 sin tarjeta de crédito. Link en el perfil.\n\n${ES_TAGS} #estimadosgratis`,
+    },
+    {
+      id: 'app-5-proposal-en', title: 'App clip Step 5: Send the proposal (English)', meta: '13s · real app screen recording · callouts · silent (add music)', file: '/library/videos/even-5-proposal-en.mp4',
+      caption: `Step 5: send the proposal. You keep the cost sheet, your client gets a clean proposal. Try 3 estimates free, no credit card. Link in bio.\n\n${EN_TAGS}`,
+    },
+    {
       id: 'explainer-es', title: 'App Explainer (Spanish)', meta: '43s · vertical 9:16 · voice + captions · POST #1', file: '/library/videos/even-explainer-es.mp4',
       caption: `¿Cuánto tiempo te toma sacar un estimado? Even calcula el trabajo con tarifas de permiso reales y te muestra de dónde sale cada número. Prueba 3 estimados gratis, sin tarjeta de crédito. Link en el perfil.\n\n#contratistas #electricista #construccion #miami #sofla`,
     },
