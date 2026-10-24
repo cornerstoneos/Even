@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Even Admin</title>
+<!-- Founder-only sales CRM. Data lives in Supabase crm_* tables, readable only by crm_members (RLS).
+     This page holds no data itself; the contractor app never loads it. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="core.js"></script>
+<style>
+:root{--bg:#0b0b0b;--panel:#151515;--l2:#1d1d1d;--rim:#2a2a2a;--gold:#FFB300;--white:#f4f4f4;--muted:#9a9a9a;--green:#3ecf8e;--red:#ff6b6b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--white);font:15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:70px}
+header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--rim);position:sticky;top:0;background:var(--bg);z-index:5}
+header b{color:var(--gold)}
+.wrap{max-width:820px;margin:0 auto;padding:12px 16px}
+.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:#101010;border-top:1px solid var(--rim);z-index:6}
+.tabs button{flex:1;background:none;border:0;color:var(--muted);padding:12px 2px 14px;font:inherit;font-size:12px;cursor:pointer}
+.tabs button.on{color:var(--gold);font-weight:700}
+.card{background:var(--panel);border:1px solid var(--rim);border-radius:12px;padding:12px;margin:10px 0}
+h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 6px}
+.big{font-size:40px;font-weight:800;color:var(--gold);line-height:1}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.grow{flex:1}
+.muted{color:var(--muted);font-size:13px}
+.bar{height:8px;background:var(--l2);border-radius:6px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--gold)}
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.chip{background:var(--l2);border:1px solid var(--rim);border-radius:10px;padding:8px}
+.chip b{font-size:20px}
+button.b,.b{background:var(--l2);color:var(--white);border:1px solid var(--rim);border-radius:9px;padding:9px 11px;font:inherit;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block}
+button.b.gold{background:var(--gold);color:#000;border-color:var(--gold);font-weight:700}
+button.b.sm{padding:6px 8px;font-size:12.5px}
+button.b.sel{border-color:var(--gold);color:var(--gold)}
+.oc{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.oc button{padding:10px 2px;font-size:12.5px}
+.oc .pos{border-color:#2f5d45}.oc .neg{border-color:#5d2f2f}
+select,input,textarea{background:var(--l2);color:var(--white);border:1px solid var(--rim);border-radius:8px;padding:8px;font:inherit;font-size:14px;max-width:100%}
+input.full,select.full,textarea.full{width:100%}
+.lead{border-top:1px solid var(--rim);padding:10px 0}.lead:first-child{border-top:0}
+.lead .nm{font-weight:700}.pill{font-size:11px;border:1px solid var(--rim);border-radius:20px;padding:1px 7px;color:var(--muted)}
+.pill.g{color:var(--gold);border-color:#5a4500}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:6px 4px;border-bottom:1px solid var(--rim);text-align:left}th{color:var(--muted);font-weight:600}
+td.n,th.n{text-align:right}
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--gold);color:#000;padding:8px 14px;border-radius:20px;font-weight:700;display:none;z-index:9}
+.hide{display:none!important}
+.cov-complete{color:var(--green)}.cov-partial{color:var(--gold)}.cov-not{color:var(--red)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:8px}.form .w2{grid-column:span 2}
+@media(max-width:520px){.oc{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:1fr}.form .w2{grid-column:auto}}
+</style>
+</head>
+<body>
+<header><div><b>even.</b> admin</div><div class="row"><span id="who" class="muted"></span><button class="b sm hide" id="out-btn">Sign out</button></div></header>
+
+<div class="wrap" id="gate">
+  <div class="card" id="login">
+    <h2>Sign in</h2>
+    <div class="row" style="flex-direction:column;align-items:stretch">
+      <input id="em" type="email" placeholder="Email" autocomplete="username">
+      <input id="pw" type="password" placeholder="Password" autocomplete="current-password">
+      <button class="b gold" id="pw-btn">Sign in</button>
+      <button class="b" id="g-btn">Sign in with Google</button>
+      <div class="muted" id="gate-msg"></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap hide" id="app">
+  <!-- TODAY -->
+  <section data-tab="today">
+    <div class="card">
+      <div class="row"><div class="grow"><div class="muted">Today's target</div><div class="big" id="t-target">-</div></div>
+        <div style="text-align:right"><div class="muted">Done today</div><div class="big" id="t-done" style="color:var(--white)">0</div></div></div>
+      <div class="bar"><i id="t-bar" style="width:0"></i></div>
+      <div class="muted" id="t-week" style="margin-top:8px"></div>
+    </div>
+    <h2>Channels today</h2>
+    <div class="chips" id="t-chips"></div>
+    <h2>Quick log (no lead on file)</h2>
+    <div class="card" id="quick"></div>
+    <h2>Follow-ups due</h2>
+    <div class="card" id="t-due"></div>
+    <h2>Call list (truck leads with a phone, not called yet)</h2>
+    <div class="card" id="t-calls"></div>
+  </section>
+
+  <!-- LEADS -->
+  <section data-tab="leads" class="hide">
+    <div class="row" style="margin-top:8px">
+      <input id="l-q" class="grow" placeholder="Search name, phone, city, trade">
+      <select id="l-stage"><option value="">All stages</option></select>
+      <select id="l-county"><option value="">All counties</option></select>
+      <button class="b gold" id="l-new">+ Lead</button>
+    </div>
+    <div class="card hide" id="l-form"></div>
+    <div class="muted" id="l-count" style="margin-top:8px"></div>
+    <div class="card" id="l-list"></div>
+  </section>
+
+  <!-- SUPPLY HOUSES -->
+  <section data-tab="supply" class="hide">
+    <div class="row" style="margin-top:8px">
+      <input id="s-q" class="grow" placeholder="Search supply houses">
+      <select id="s-stage"><option value="">All stages</option></select>
+      <button class="b gold" id="s-new">+ Supply house</button>
+    </div>
+    <div class="card hide" id="s-form"></div>
+    <div class="card" id="s-list"></div>
+  </section>
+
+  <!-- MONEY: objections + expenses -->
+  <section data-tab="money" class="hide">
+    <h2>Log an objection</h2>
+    <div class="card">
+      <div class="form">
+        <select id="o-cat" class="full"></select>
+        <select id="o-ch" class="full"><option value="">Channel (optional)</option></select>
+        <input id="o-text" class="full w2" placeholder="Their exact words (optional)">
+        <button class="b gold w2" id="o-save">Save objection</button>
+      </div>
+    </div>
+    <div class="card" id="o-list"></div>
+    <h2>Log an expense</h2>
+    <div class="card">
+      <div class="form">
+        <input id="e-date" type="date" class="full">
+        <select id="e-cat" class="full"></select>
+        <input id="e-amt" type="number" step="0.01" min="0" inputmode="decimal" placeholder="Amount $" class="full">
+        <input id="e-note" placeholder="Note (optional)" class="full">
+        <button class="b gold w2" id="e-save">Save expense</button>
+      </div>
+    </div>
+    <div class="card" id="e-list"></div>
+  </section>
+
+  <!-- STATS -->
+  <section data-tab="stats" class="hide">
+    <h2>Rates per channel</h2>
+    <div class="row"><button class="b sm sel" data-range="week">This week</button><button class="b sm" data-range="all">All time</button></div>
+    <div class="card" id="r-table"></div>
+    <div class="muted">Yes = yes, appointment or sale. Appointment = appointment or sale. Close = sales. All per touch.</div>
+    <h2>By city</h2>
+    <div class="card" id="c-table"></div>
+    <h2>Export</h2>
+    <div class="card row">
+      <button class="b" data-csv="leads">Leads CSV</button><button class="b" data-csv="touches">Touches CSV</button>
+      <button class="b" data-csv="supply">Supply houses CSV</button><button class="b" data-csv="expenses">Expenses CSV</button>
+      <button class="b" data-csv="objections">Objections CSV</button>
+    </div>
+    <h2>Targets</h2>
+    <div class="card form" id="cfg"></div>
+  </section>
+</div>
+
+<nav class="tabs hide" id="tabs">
+  <button data-go="today" class="on">Today</button><button data-go="leads">Leads</button><button data-go="supply">Supply</button>
+  <button data-go="money">Notes &amp; $</button><button data-go="stats">Stats</button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPABASE_URL = 'https://klgofcqrncabfhskiijn.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_nBf8FEP-zsgCGXlTImEDKQ_cknCqWok';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const S = { leads: [], sh: [], touches: [], objections: [], expenses: [], settings: {}, coverage: [], range: 'week', showLeads: 50 };
+const leadById = id => S.leads.find(l => l.id === id);
+const shById = id => S.sh.find(s => s.id === id);
+let toastT;
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.style.display = 'block'; clearTimeout(toastT); toastT = setTimeout(() => t.style.display = 'none', 1800); }
+function fail(e) { console.error(e); toast('Not saved: ' + (e.message || e)); }
+const today = () => CRM.etToday();
+const opts = (list, sel, labels) => list.map(v => `<option value="${esc(v)}"${v === sel ? ' selected' : ''}>${esc(labels ? labels[v] : v)}</option>`).join('');
+
+// ---------- auth gate ----------
+async function boot() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return showGate('');
+  $('who').textContent = session.user.email; $('out-btn').classList.remove('hide');
+  const { data: ok, error } = await sb.rpc('crm_can_access');
+  if (error || !ok) return showGate('This account has no admin access.');
+  $('gate').classList.add('hide'); $('app').classList.remove('hide'); $('tabs').classList.remove('hide');
+  await loadAll(); renderAll();
+}
+function showGate(msg) { $('gate').classList.remove('hide'); $('app').classList.add('hide'); $('tabs').classList.add('hide'); $('gate-msg').textContent = msg; }
+$('pw-btn').onclick = async () => {
+  const { error } = await sb.auth.signInWithPassword({ email: $('em').value.trim(), password: $('pw').value });
+  if (error) return $('gate-msg').textContent = error.message; boot();
+};
+$('g-btn').onclick = () => sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.origin + '/admin/' } });
+$('out-btn').onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+// ---------- data ----------
+async function all(table, order) {
+  const out = []; const step = 1000;
+  for (let from = 0; ; from += step) {
+    const { data, error } = await sb.from(table).select('*').order(order, { ascending: true }).range(from, from + step - 1);
+    if (error) throw error; out.push(...data); if (data.length < step) return out;
+  }
+}
+async function loadAll() {
+  const [leads, sh, touches, objections, expenses, settings] = await Promise.all([
+    all('crm_leads', 'id'), all('crm_supply_houses', 'id'), all('crm_touches', 'id'),
+    all('crm_objections', 'id'), all('crm_expenses', 'id'), all('crm_settings', 'key')]);
+  Object.assign(S, { leads, sh, touches, objections, expenses });
+  S.settings = Object.fromEntries(settings.map(r => [r.key, r.value]));
+  try { S.coverage = (await (await fetch('/data/city_coverage.json', { cache: 'no-store' })).json()).cities || []; } catch (e) { S.coverage = []; }
+}
+
+// ---------- logging a touch (the one-tap path) ----------
+async function logTouch({ lead_id = null, supply_house_id = null, channel, outcome, note = null, follow }) {
+  const t = today();
+  const next_follow_up = follow === undefined ? CRM.defaultFollowUp(outcome, t) : follow;
+  const { data, error } = await sb.from('crm_touches').insert({ lead_id, supply_house_id, channel, outcome, note, next_follow_up, touch_date: t }).select().single();
+  if (error) return fail(error);
+  // Older touches on the same lead/supply house are handled once a newer one is logged.
+  const prev = S.touches.filter(x => (lead_id && x.lead_id === lead_id) || (supply_house_id && x.supply_house_id === supply_house_id));
+  if (prev.some(x => !x.done)) {
+    const col = lead_id ? 'lead_id' : 'supply_house_id';
+    await sb.from('crm_touches').update({ done: true }).eq(col, lead_id || supply_house_id).lt('id', data.id).eq('done', false);
+    prev.forEach(x => x.done = true);
+  }
+  S.touches.push(data);
+  if (lead_id) {
+    const l = leadById(lead_id), st = CRM.stageAfter(l.stage, outcome);
+    if (st !== l.stage) { const { error: e2 } = await sb.from('crm_leads').update({ stage: st }).eq('id', lead_id); if (!e2) l.stage = st; }
+  }
+  if (supply_house_id) {
+    const s = shById(supply_house_id); const patch = { last_visit: t };
+    if (s.stage === 'not contacted') patch.stage = 'visited';
+    const { error: e3 } = await sb.from('crm_supply_houses').update(patch).eq('id', supply_house_id); if (!e3) Object.assign(s, patch);
+  }
+  toast(`${CRM.CHANNEL_LABEL[channel]}: ${outcome}`);
+  renderAll();
+}
+
+// A logging panel: channel buttons, note dropdown, follow-up chips, then one tap on an outcome saves it.
+function logPanel(key, channels, defChannel) {
+  return `<div class="row lp" data-k="${key}">
+    ${channels.map(c => `<button class="b sm ch${c === defChannel ? ' sel' : ''}" data-ch="${c}">${CRM.CHANNEL_LABEL[c]}</button>`).join('')}
+    <select class="note"><option value="">Note (optional)</option>${opts(CRM.NOTE_PRESETS)}<option value="__other">Other...</option></select>
+    <select class="fu"><option value="auto">Follow-up: auto</option><option value="1">+1 day</option><option value="3">+3 days</option><option value="7">+7 days</option><option value="14">+14 days</option><option value="none">No follow-up</option></select>
+  </div>
+  <div class="oc" data-k="${key}">${CRM.OUTCOMES.map(o => `<button class="b ${['yes', 'appointment', 'sale'].includes(o) ? 'pos' : o === 'not interested' ? 'neg' : ''}" data-oc="${esc(o)}">${esc(o)}</button>`).join('')}</div>`;
+}
+document.addEventListener('click', async e => {
+  const ch = e.target.closest('.lp .ch');
+  if (ch) { ch.parentNode.querySelectorAll('.ch').forEach(b => b.classList.remove('sel')); ch.classList.add('sel'); return; }
+  const oc = e.target.closest('.oc [data-oc]');
+  if (!oc) return;
+  const k = oc.parentNode.dataset.k, lp = oc.parentNode.previousElementSibling; // the panel right above these buttons
+  const channel = lp.querySelector('.ch.sel')?.dataset.ch;
+  if (!channel) return toast('Pick a channel first');
+  let note = lp.querySelector('.note').value;
+  if (note === '__other') { note = prompt('Note'); if (note == null) return; }
+  const fu = lp.querySelector('.fu').value;
+  const follow = fu === 'auto' ? undefined : fu === 'none' ? null : CRM.addDays(today(), Number(fu));
+  const [kind, id] = k.split(':');
+  oc.disabled = true;
+  await logTouch({ lead_id: kind === 'L' ? id : null, supply_house_id: kind === 'V' ? id : null, channel, outcome: oc.dataset.oc, note: note || null, follow });
+});
+
+// ---------- render ----------
+function renderAll() { renderToday(); renderLeads(); renderSupply(); renderMoney(); renderStats(); }
+
+function leadHead(l) {
+  const handles = [l.ig && `IG @${esc(l.ig)}`, l.fb && `FB ${esc(l.fb)}`, l.tiktok && `TT @${esc(l.tiktok)}`].filter(Boolean).join(' · ');
+  const tel = (l.phone || '').match(/\(?\d{3}\)?[\s.-]*\d{3}[\s.-]*\d{4}/);
+  return `<div class="row"><span class="nm grow">${esc(l.business)} <span class="muted">${esc(l.id)}</span></span><span class="pill g">${esc(l.stage)}</span></div>
+    <div class="muted">${esc([l.trade, l.city, l.county].filter(Boolean).join(' · '))}${handles ? ' · ' + handles : ''}</div>
+    <div class="row" style="margin-top:4px">${tel ? `<a class="b sm" href="tel:${tel[0].replace(/\D/g, '')}">Call ${esc(tel[0])}</a>` : '<span class="muted">No phone</span>'}
+    ${l.do_not_contact ? '<span class="pill" style="color:var(--red)">Do not contact</span>' : ''}</div>`;
+}
+function leadCard(l, def) {
+  return `<div class="lead">${leadHead(l)}${l.do_not_contact ? '' : logPanel('L:' + l.id, ['call', 'ig', 'fb', 'tiktok'], def || (l.phone ? 'call' : l.ig ? 'ig' : 'fb'))}</div>`;
+}
+
+function renderToday() {
+  const t = today(), set = S.settings, targets = set.channel_targets || {};
+  const rt = CRM.rollingTarget({ today: t, goal: Number(set.weekly_goal || 630), floor: Number(set.daily_floor || 10), workDays: set.work_days, touches: S.touches });
+  const todays = S.touches.filter(x => x.touch_date === t);
+  $('t-target').textContent = rt.dayOff ? 'Off' : rt.target;
+  $('t-done').textContent = todays.length;
+  $('t-bar').style.width = rt.dayOff ? '0' : Math.min(100, Math.round(todays.length / rt.target * 100)) + '%';
+  $('t-week').textContent = rt.dayOff ? 'Sunday: day off.' : `This week ${rt.doneWeek} of ${set.weekly_goal || 630} · ${rt.left} work day${rt.left === 1 ? '' : 's'} left including today`;
+  const by = CRM.countBy(todays, 'channel');
+  $('t-chips').innerHTML = CRM.CHANNELS.map(c => `<div class="chip"><div class="muted">${CRM.CHANNEL_LABEL[c]}</div><b>${by[c] || 0}</b>${targets[c] ? `<span class="muted"> / ${targets[c]}</span>` : ''}</div>`).join('');
+  $('quick').innerHTML = `<div class="muted" style="margin-bottom:6px">For DMs and posts to people not on the lead list. Pick the channel, then tap the outcome.</div>` + logPanel('Q:', ['ig', 'fb', 'tiktok', 'group_post'], 'ig');
+  const openLead = id => { const l = leadById(id); return l && !l.do_not_contact && l.stage !== 'Customer' && l.stage !== 'Lost'; };
+  const due = CRM.followUpsDue(S.touches, t, 'lead_id', openLead);
+  const dueSh = CRM.followUpsDue(S.touches, t, 'supply_house_id', id => shById(id)?.stage !== 'partner');
+  $('t-due').innerHTML = (due.length || dueSh.length)
+    ? due.map(x => `<div class="muted" style="margin-top:6px">Due ${esc(x.next_follow_up)} · last: ${esc(CRM.CHANNEL_LABEL[x.channel])}, ${esc(x.outcome)}${x.note ? ', ' + esc(x.note) : ''}</div>` + leadCard(leadById(x.lead_id), x.channel === 'supply_house' ? 'call' : x.channel)).join('')
+      + dueSh.map(x => shCard(shById(x.supply_house_id), `Due ${x.next_follow_up}`)).join('')
+    : '<div class="muted">Nothing due today.</div>';
+  const touched = new Set(S.touches.map(x => x.lead_id));
+  const calls = S.leads.filter(l => l.phone && l.source === 'truck' && !l.do_not_contact && !touched.has(l.id) && l.stage === 'New').slice(0, 10);
+  $('t-calls').innerHTML = calls.length ? calls.map(l => leadCard(l, 'call')).join('') : '<div class="muted">No uncalled truck leads with a phone.</div>';
+}
+
+function leadMatches(l, q) {
+  return !q || [l.business, l.name, l.phone, l.city, l.trade, l.id, l.ig, l.fb, l.tiktok].some(v => v && String(v).toLowerCase().includes(q));
+}
+function renderLeads() {
+  const q = $('l-q').value.trim().toLowerCase(), st = $('l-stage').value, co = $('l-county').value;
+  const list = S.leads.filter(l => leadMatches(l, q) && (!st || l.stage === st) && (!co || l.county === co));
+  $('l-count').textContent = `${list.length} lead${list.length === 1 ? '' : 's'}`;
+  $('l-list').innerHTML = list.slice(0, S.showLeads).map(l => `<div class="lead">${leadHead(l)}<div class="row" style="margin-top:6px"><button class="b sm" data-edit="${l.id}">Edit / log</button></div><div id="x-${l.id}"></div></div>`).join('')
+    + (list.length > S.showLeads ? `<button class="b" id="l-more">Show more</button>` : '') || '<div class="muted">No leads match.</div>';
+  const more = $('l-more'); if (more) more.onclick = () => { S.showLeads += 100; renderLeads(); };
+}
+const LEAD_FIELDS = [['business', 'Business'], ['name', 'Contact person'], ['trade', 'Trade'], ['phone', 'Phone'], ['city', 'City'], ['county', 'County'],
+  ['ig', 'Instagram handle'], ['fb', 'Facebook'], ['tiktok', 'TikTok handle'], ['source', 'Source (e.g. truck - Collins Ave)'], ['email', 'Email'], ['website', 'Website']];
+function leadForm(l) {
+  return `<div class="form">${LEAD_FIELDS.map(([k, lab]) => k === 'county'
+      ? `<select class="full" data-f="county"><option value="">County</option>${opts(CRM.COUNTIES, l.county)}</select>`
+      : `<input class="full" data-f="${k}" placeholder="${esc(lab)}" value="${esc(l[k] || '')}">`).join('')}
+    <select class="full" data-f="stage">${opts(CRM.STAGES, l.stage || 'New')}</select>
+    <label class="row"><input type="checkbox" data-f="do_not_contact"${l.do_not_contact ? ' checked' : ''}> Do not contact</label>
+    <textarea class="full w2" rows="3" data-f="notes" placeholder="Notes">${esc(l.notes || '')}</textarea>
+    <button class="b gold w2" data-save>${l.id ? 'Save changes' : 'Add lead'}</button></div>`;
+}
+function readForm(box) {
+  const o = {}; box.querySelectorAll('[data-f]').forEach(el => { o[el.dataset.f] = el.type === 'checkbox' ? el.checked : (el.value.trim() || null); }); return o;
+}
+document.addEventListener('click', async e => {
+  const ed = e.target.closest('[data-edit]');
+  if (ed) {
+    const l = leadById(ed.dataset.edit), box = $('x-' + l.id);
+    if (box.innerHTML) { box.innerHTML = ''; return; }
+    box.innerHTML = `<div style="margin-top:8px">${l.do_not_contact ? '' : logPanel('L:' + l.id, ['call', 'ig', 'fb', 'tiktok'], l.phone ? 'call' : 'ig')}</div>
+      <div class="muted" style="margin:8px 0 4px">History</div>${history('lead_id', l.id)}<div style="margin-top:8px">${leadForm(l)}</div>`;
+    box.querySelector('[data-save]').onclick = async () => {
+      const patch = readForm(box); if (!patch.business) return toast('Business name is required');
+      patch.do_not_contact = !!patch.do_not_contact; patch.stage = patch.stage || 'New';
+      const { error } = await sb.from('crm_leads').update(patch).eq('id', l.id); if (error) return fail(error);
+      Object.assign(l, patch); toast('Saved'); renderAll();
+    };
+  }
+});
+function history(col, id) {
+  const h = S.touches.filter(t => t[col] === id).sort((a, b) => b.id - a.id);
+  return h.length ? `<table>${h.map(t => `<tr><td>${esc(t.touch_date)}</td><td>${esc(CRM.CHANNEL_LABEL[t.channel])}</td><td>${esc(t.outcome)}</td><td>${esc(t.note || '')}</td><td>${t.next_follow_up ? 'next ' + esc(t.next_follow_up) : ''}</td></tr>`).join('')}</table>` : '<div class="muted">No touches yet.</div>';
+}
+$('l-new').onclick = () => {
+  const box = $('l-form'); box.classList.toggle('hide'); if (box.classList.contains('hide')) return;
+  box.innerHTML = leadForm({ stage: 'New' });
+  box.querySelector('[data-save]').onclick = async () => {
+    const row = readForm(box); if (!row.business) return toast('Business name is required');
+    row.id = CRM.nextId('L', S.leads); row.do_not_contact = !!row.do_not_contact; row.date_added = today();
+    const { data, error } = await sb.from('crm_leads').insert(row).select().single(); if (error) return fail(error);
+    S.leads.push(data); box.classList.add('hide'); toast('Added ' + data.id); renderAll();
+  };
+};
+['l-q', 'l-stage', 'l-county'].forEach(id => $(id).addEventListener('input', () => { S.showLeads = 50; renderLeads(); }));
+
+// ---------- supply houses ----------
+function shCard(s, extra) {
+  const tel = (s.phone || '').match(/\(?\d{3}\)?[\s.-]*\d{3}[\s.-]*\d{4}|1-\d{3}-\d{3}-\d{4}/);
+  return `<div class="lead"><div class="row"><span class="nm grow">${esc(s.name)} <span class="muted">${esc(s.id)}</span></span>
+    <select data-shstage="${s.id}">${opts(CRM.SH_STAGES, s.stage)}</select></div>
+    <div class="muted">${esc([(s.category || []).join(', '), s.city, s.county].filter(Boolean).join(' · '))}${s.last_visit ? ' · last visit ' + esc(s.last_visit) : ''}${extra ? ' · ' + esc(extra) : ''}</div>
+    <div class="row" style="margin-top:4px">${tel ? `<a class="b sm" href="tel:${tel[0].replace(/\D/g, '')}">Call</a>` : ''}<button class="b sm" data-shlog="${s.id}">Log visit / call</button></div>
+    <div id="y-${s.id}"></div></div>`;
+}
+function renderSupply() {
+  const q = $('s-q').value.trim().toLowerCase(), st = $('s-stage').value;
+  const list = S.sh.filter(s => (!q || [s.name, s.city, s.id, (s.category || []).join(' ')].some(v => v && v.toLowerCase().includes(q))) && (!st || s.stage === st));
+  $('s-list').innerHTML = list.map(s => shCard(s)).join('') || '<div class="muted">No supply houses match.</div>';
+}
+document.addEventListener('change', async e => {
+  const sel = e.target.closest('[data-shstage]'); if (!sel) return;
+  const { error } = await sb.from('crm_supply_houses').update({ stage: sel.value }).eq('id', sel.dataset.shstage); if (error) return fail(error);
+  shById(sel.dataset.shstage).stage = sel.value; toast('Stage saved');
+});
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-shlog]'); if (!b) return;
+  const box = $('y-' + b.dataset.shlog);
+  box.innerHTML = box.innerHTML ? '' : `<div style="margin-top:8px">${logPanel('V:' + b.dataset.shlog, ['supply_house', 'call'], 'supply_house')}</div><div class="muted" style="margin:8px 0 4px">History</div>${history('supply_house_id', b.dataset.shlog)}`;
+});
+$('s-new').onclick = () => {
+  const box = $('s-form'); box.classList.toggle('hide'); if (box.classList.contains('hide')) return;
+  box.innerHTML = `<div class="form"><input class="full" data-f="name" placeholder="Name"><input class="full" data-f="city" placeholder="City">
+    <select class="full" data-f="county"><option value="">County</option>${opts(CRM.COUNTIES)}</select><input class="full" data-f="contact" placeholder="Contact person">
+    <input class="full" data-f="phone" placeholder="Phone"><input class="full" data-f="website" placeholder="Website">
+    <textarea class="full w2" data-f="notes" rows="2" placeholder="Notes"></textarea><button class="b gold w2" data-save>Add supply house</button></div>`;
+  box.querySelector('[data-save]').onclick = async () => {
+    const row = readForm(box); if (!row.name) return toast('Name is required');
+    row.id = CRM.nextId('V', S.sh); row.date_added = today();
+    const { data, error } = await sb.from('crm_supply_houses').insert(row).select().single(); if (error) return fail(error);
+    S.sh.push(data); box.classList.add('hide'); toast('Added ' + data.id); renderAll();
+  };
+};
+['s-q', 's-stage'].forEach(id => $(id).addEventListener('input', renderSupply));
+
+// ---------- objections + expenses ----------
+function renderMoney() {
+  const oc = CRM.countBy(S.objections, 'category');
+  $('o-list').innerHTML = S.objections.length
+    ? `<table>${Object.entries(oc).sort((a, b) => b[1] - a[1]).map(([k, n]) => `<tr><td>${esc(k)}</td><td class="n">${n}</td></tr>`).join('')}</table>
+       <div class="muted" style="margin-top:8px">Latest</div>${S.objections.slice(-8).reverse().map(o => `<div class="muted">${esc(o.obj_date)} · ${esc(o.category)}${o.verbatim ? ': "' + esc(o.verbatim) + '"' : ''}</div>`).join('')}`
+    : '<div class="muted">No objections logged yet.</div>';
+  const month = today().slice(0, 7), mine = S.expenses.filter(x => x.exp_date.startsWith(month));
+  const sums = {}; mine.forEach(x => sums[x.category] = (sums[x.category] || 0) + Number(x.amount));
+  const total = mine.reduce((a, x) => a + Number(x.amount), 0);
+  $('e-list').innerHTML = `<div class="muted">This month (${month}): $${total.toFixed(2)}</div>
+    <table>${Object.entries(sums).map(([k, v]) => `<tr><td>${esc(k)}</td><td class="n">$${v.toFixed(2)}</td></tr>`).join('')}</table>
+    ${S.expenses.slice(-8).reverse().map(x => `<div class="muted">${esc(x.exp_date)} · ${esc(x.category)} · $${Number(x.amount).toFixed(2)}${x.note ? ' · ' + esc(x.note) : ''}</div>`).join('')}`;
+}
+$('o-cat').innerHTML = opts(CRM.OBJECTIONS) + '<option value="__other">Other...</option>';
+$('o-ch').innerHTML += opts(CRM.CHANNELS, '', CRM.CHANNEL_LABEL);
+$('o-save').onclick = async () => {
+  let category = $('o-cat').value;
+  if (category === '__other') { category = prompt('Objection category'); if (!category) return; }
+  const row = { category, verbatim: $('o-text').value.trim() || null, channel: $('o-ch').value || null };
+  const { data, error } = await sb.from('crm_objections').insert(row).select().single(); if (error) return fail(error);
+  S.objections.push(data); $('o-text').value = ''; toast('Objection saved'); renderMoney();
+};
+$('e-cat').innerHTML = opts(CRM.EXPENSE_CATS);
+$('e-date').value = today();
+$('e-save').onclick = async () => {
+  const amount = Number($('e-amt').value); if (!(amount >= 0) || $('e-amt').value === '') return toast('Enter an amount');
+  const row = { exp_date: $('e-date').value || today(), category: $('e-cat').value, amount, note: $('e-note').value.trim() || null };
+  const { data, error } = await sb.from('crm_expenses').insert(row).select().single(); if (error) return fail(error);
+  S.expenses.push(data); $('e-amt').value = ''; $('e-note').value = ''; toast('Expense saved'); renderMoney();
+};
+
+// ---------- stats ----------
+const pct = x => (x * 100).toFixed(1) + '%';
+function renderStats() {
+  const ws = CRM.weekStart(today());
+  const pool = S.range === 'week' ? S.touches.filter(t => t.touch_date >= ws) : S.touches;
+  const r = CRM.channelRates(pool);
+  $('r-table').innerHTML = `<table><tr><th>Channel</th><th class="n">Touches</th><th class="n">Yes</th><th class="n">Appt</th><th class="n">Close</th><th class="n">Touches / sale</th></tr>
+    ${CRM.CHANNELS.map(c => `<tr><td>${CRM.CHANNEL_LABEL[c]}</td><td class="n">${r[c].touches}</td><td class="n">${pct(r[c].yesRate)}</td><td class="n">${pct(r[c].apptRate)}</td><td class="n">${pct(r[c].closeRate)}</td><td class="n">${r[c].touchesPerSale == null ? '-' : r[c].touchesPerSale.toFixed(1)}</td></tr>`).join('')}</table>`;
+  const rows = CRM.byCity(S.leads, S.touches, S.coverage);
+  const cls = s => s === 'complete' ? 'cov-complete' : s === 'partial' ? 'cov-partial' : 'cov-not';
+  $('c-table').innerHTML = `<table><tr><th>City</th><th class="n">Leads</th><th class="n">Touches</th><th class="n">Yeses</th><th class="n">Customers</th><th>Permit data</th></tr>
+    ${rows.map(x => `<tr><td>${esc(x.city)}</td><td class="n">${x.leads}</td><td class="n">${x.touches}</td><td class="n">${x.yeses}</td><td class="n">${x.customers}</td><td class="${cls(x.coverage)}">${esc(x.coverage)}</td></tr>`).join('')}</table>`;
+  const set = S.settings, tg = set.channel_targets || {};
+  $('cfg').innerHTML = `<label>Weekly goal <input type="number" id="cf-goal" value="${esc(set.weekly_goal || 630)}"></label>
+    <label>Daily floor <input type="number" id="cf-floor" value="${esc(set.daily_floor || 10)}"></label>
+    ${['ig', 'fb', 'tiktok', 'supply_house'].map(c => `<label>${CRM.CHANNEL_LABEL[c]} a day <input type="number" data-tg="${c}" value="${esc(tg[c] || 0)}"></label>`).join('')}
+    <button class="b gold w2" id="cf-save">Save targets</button>`;
+  $('cf-save').onclick = async () => {
+    const targets = {}; document.querySelectorAll('[data-tg]').forEach(i => targets[i.dataset.tg] = Number(i.value) || 0);
+    const rows = [{ key: 'weekly_goal', value: Number($('cf-goal').value) || 0 }, { key: 'daily_floor', value: Number($('cf-floor').value) || 0 }, { key: 'channel_targets', value: targets }];
+    const { error } = await sb.from('crm_settings').upsert(rows.map(r => ({ ...r, updated_at: new Date().toISOString() }))); if (error) return fail(error);
+    rows.forEach(r => S.settings[r.key] = r.value); toast('Targets saved'); renderToday();
+  };
+}
+document.querySelectorAll('[data-range]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-range]').forEach(x => x.classList.remove('sel')); b.classList.add('sel'); S.range = b.dataset.range; renderStats();
+});
+const CSV = {
+  leads: () => [S.leads, ['id', 'business', 'name', 'trade', 'city', 'county', 'phone', 'email', 'website', 'address', 'license', 'ig', 'fb', 'tiktok', 'source', 'stage', 'do_not_contact', 'notes', 'tags', 'missing', 'date_added']],
+  touches: () => [S.touches.map(t => ({ ...t, business: leadById(t.lead_id)?.business || shById(t.supply_house_id)?.name || '' })), ['id', 'touch_date', 'lead_id', 'supply_house_id', 'business', 'channel', 'outcome', 'note', 'next_follow_up', 'done']],
+  supply: () => [S.sh, ['id', 'name', 'city', 'county', 'contact', 'phone', 'email', 'website', 'address', 'category', 'stage', 'pricing_status', 'last_visit', 'notes']],
+  expenses: () => [S.expenses, ['id', 'exp_date', 'business', 'category', 'amount', 'note']],
+  objections: () => [S.objections, ['id', 'obj_date', 'category', 'verbatim', 'channel', 'lead_id']],
+};
+document.querySelectorAll('[data-csv]').forEach(b => b.onclick = () => {
+  const [rows, cols] = CSV[b.dataset.csv]();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([CRM.toCSV(rows, cols)], { type: 'text/csv' }));
+  a.download = `even-${b.dataset.csv}-${today()}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+
+// ---------- tabs ----------
+document.querySelectorAll('[data-go]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-go]').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('section[data-tab]').forEach(s => s.classList.toggle('hide', s.dataset.tab !== b.dataset.go));
+  window.scrollTo(0, 0);
+});
+$('l-stage').innerHTML += opts(CRM.STAGES); $('l-county').innerHTML += opts(CRM.COUNTIES); $('s-stage').innerHTML += opts(CRM.SH_STAGES);
+sb.auth.onAuthStateChange(ev => { if (ev === 'SIGNED_IN' && $('app').classList.contains('hide')) boot(); });
+boot().catch(e => showGate('Could not load: ' + e.message));
+</script>
+</body>
+</html>
