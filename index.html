@@ -1014,6 +1014,20 @@ body.signed-in .sidebar nav .sb-signed-in{display:flex}
 .sb-chip{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.4px;border-radius:20px;padding:1px 7px;border:1px solid var(--rim);color:var(--muted);white-space:nowrap}
 .sb-chip.open{color:var(--white)}.sb-chip.won{color:#3ecf8e;border-color:#2f5d45}.sb-chip.lost{color:#ff6b6b;border-color:#5d2f2f}
 .sb-chip.ready{color:#000;background:var(--gold);border-color:var(--gold)}.sb-chip.building{color:var(--gold);border-color:#5a4500}
+.sq-sheet{max-width:640px}
+.sq-top{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.sq-top select,.sq-top input{width:100%;box-sizing:border-box;background:var(--l2,#1d1d1d);color:var(--white);border:1px solid var(--rim);border-radius:8px;padding:9px;font:inherit;font-size:13px}
+.sq-scan{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0 12px;font-size:12px;color:var(--muted)}
+.sq-row{border-top:1px solid var(--rim);padding:9px 0;display:grid;grid-template-columns:1fr auto;gap:6px 10px;align-items:center}
+.sq-row .d{font-size:13px;color:var(--white);min-width:0}.sq-row .d small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.sq-row .p{display:flex;align-items:center;gap:6px}
+.sq-row .p input[type=number]{width:96px;background:var(--l2,#1d1d1d);color:var(--white);border:1px solid var(--rim);border-radius:8px;padding:7px;font:inherit;font-size:13px;text-align:right}
+.sq-row label{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:4px;white-space:nowrap}
+.sq-sug{grid-column:1/-1;font-size:11.5px;color:var(--gold)}.sq-sug button{background:none;border:1px solid var(--gold);color:var(--gold);border-radius:6px;padding:3px 8px;font:inherit;font-size:11.5px;cursor:pointer;margin-left:6px}
+.sq-last{grid-column:1/-1;font-size:11px;color:var(--muted)}
+.sq-sum{font-size:12.5px;color:var(--muted);margin:10px 0}
+.li-src.quoted{color:var(--gold)}.li-src.oos{color:#ff6b6b}
+@media(max-width:520px){.sq-top{grid-template-columns:1fr}.sq-row{grid-template-columns:1fr}.sq-row .p{justify-content:flex-start}}
 </style>
 
   <!-- Supabase -->
@@ -1726,6 +1740,7 @@ body.signed-in .sidebar nav .sb-signed-in{display:flex}
             <button class="d-btn gold" onclick="showEmailGate('proposal')"><span class="d-dl-ic">⤓</span><b data-es="Propuesta<br>al Cliente">Client<br>Proposal</b><small data-es="Para tu cliente">For your client</small></button>
             <button class="d-btn dark" onclick="showEmailGate('internal')"><span class="d-dl-ic">⤓</span><b data-es="Hoja de<br>Costos">Cost<br>Sheet</b><small data-es="Tus números">Your numbers</small></button>
             <button class="matlist-btn" onclick="openMaterialList()"><span data-es="Lista de materiales para el proveedor">Material list for supplier</span><small data-es="Cantidades, sin precios. Para pedir cotización.">Quantities, no prices. Ask for a quote.</small></button>
+            <button class="matlist-btn" id="sq-btn" hidden onclick="openSupplierQuote()"><span data-es="Agregar cotización del proveedor">Add supplier quote</span><small data-es="Sus precios de hoy para este trabajo. Crea una oferta nueva.">Their prices for this job. Makes a new bid.</small></button>
           </div>
 
       <div class="gc" id="cost-tracker-section">
@@ -4403,6 +4418,9 @@ document.getElementById('est-trade')?.addEventListener('change',renderTradeLimit
 function lineSourceNote(item,i){
   const es=appLang==='es';
   let t='';
+  // A supplier's quote for this job (Add supplier quote): the contractor's own numbers.
+  if(item.notInStock) return `<div class="li-src oos" id="ls-${i}">${escapeHtml(es?`Sin existencia en ${item.notInStock.supplier}, ${item.notInStock.date}. Se quedó el precio anterior.`:`Not in stock at ${item.notInStock.supplier}, ${item.notInStock.date}. Kept at the earlier price.`)}</div>`;
+  if(item.quoted) return `<div class="li-src quoted" id="ls-${i}">${escapeHtml(es?`Cotizado por ${item.quoted.supplier}, ${item.quoted.date}`:`Quoted by ${item.quoted.supplier}, ${item.quoted.date}`)}</div>`;
   if(item.estimated) t=es?'No está en nuestros datos, estimado':'Not in our data, estimated';
   else if(item.permitRow){
     const p=item.permitRow;
@@ -7520,6 +7538,7 @@ function bidChanges(prevJ,curJ,lang){
 }
 function renderBidBar(){
   const bar=document.getElementById('bid-bar'); if(!bar) return;
+  const _sqb=document.getElementById('sq-btn'); if(_sqb) _sqb.hidden=true;
   const es=appLang==='es';
   if(!currentEstimate){ bar.hidden=true; return; }
   if(!currentUser){
@@ -7540,6 +7559,7 @@ function renderBidBar(){
   }
   const cur=job.bids.find(b=>b.id===window._currentEstimateId);
   const latest=job.bids[job.bids.length-1];
+  const sqb=document.getElementById('sq-btn'); if(sqb) sqb.hidden=false;
   // The bid on screen, with the price the contractor typed in (if any).
   const curJ={...currentEstimate,finalBid:window._finalBid||null};
   const chips=job.bids.map(b=>`<button class="bid-chip${b.id===cur.id?' on':''}" onclick="viewBid('${b.id}')">${es?'Oferta':'Bid'} ${b.bid_no}<small>${fmtK(b.id===cur.id?bidPrice(curJ):bidPrice(b.estimate_json))}</small></button>`).join('');
@@ -7614,6 +7634,201 @@ async function saveChangeNote(v){
   const b=window._job?.bids.find(x=>x.id===id); if(b) b.change_note=note;
 }
 
+// ══ SUPPLIER QUOTE BACK INTO THE JOB (founder 2026-10-27 / build 2026-10-31) ══
+// The material list is the request; this is the reply. The contractor enters the
+// supplier's price per material line (or 'not in stock'), or reads a photo/PDF of
+// the quote with the price-sheet scanner and taps to accept each match. Applying
+// makes Bid N+1 from the latest bid. Rows go to supplier_quotes, private to the
+// contractor (RLS); they never feed Even's shared price list.
+const SQ_ROUND=n=>Math.round((+n||0)*100)/100;
+function sqTotals(json){
+  // Same arithmetic as recompute(): lines, then overhead, cushion, profit on top.
+  const L=json.lineItems||[];
+  const sub=L.reduce((s,i)=>s+(i.removed?0:(+i.total||0)),0);
+  const oh=sub*((json.overhead?.pct||0)/100), cont=sub*((json.contingency?.pct||0)/100);
+  const prof=(sub+oh+cont)*((json.profit?.pct||0)/100);
+  json.subtotal=sub; if(json.overhead) json.overhead.amount=oh; if(json.contingency) json.contingency.amount=cont; if(json.profit) json.profit.amount=prof;
+  json.totalBid=sub+oh+cont+prof;
+  return json;
+}
+// Applies a quote to a copy of a bid. quotes: {[lineIndex]:{price}|{notInStock:true}}.
+function sqApply(baseJson,quotes,supplier,date){
+  const json=JSON.parse(JSON.stringify(baseJson||{}));
+  Object.entries(quotes).forEach(([i,q])=>{
+    const li=(json.lineItems||[])[+i]; if(!li||li.removed) return;
+    delete li.quoted; delete li.notInStock;
+    if(q.notInStock){ li.notInStock={supplier,date}; return; }
+    const prev=+li.unitCost;
+    li.unitCost=SQ_ROUND(q.price); li.total=SQ_ROUND((+li.qty||0)*li.unitCost);
+    li.quoted={supplier,date,prev};
+  });
+  return sqTotals(json);
+}
+// Words that identify a material, keeping sizes like 1/2 and 3/4 whole.
+const sqNorm=t=>sbNorm(t).replace(/["”]/g,' ').replace(/[^a-z0-9/ ]+/g,' ').split(/\s+/).filter(w=>(w.length>1||/\d/.test(w))&&!/^(the|and|with|for|de|la|el|y|con|incl|waste|desperdicio|in|x)$/.test(w));
+const sqSizes=ws=>ws.filter(w=>/^\d+\/\d+$/.test(w));
+function sqScore(desc,mat){
+  const a=sqNorm(desc), b=sqNorm(mat); if(!a.length||!b.length) return 0;
+  // A 1/2 in pipe is never a 3/4 in pipe: sizes on both sides must share one.
+  const sa=sqSizes(a), sb=sqSizes(b);
+  if(sa.length&&sb.length&&!sa.some(x=>sb.includes(x))) return 0;
+  const A=new Set(a), hit=[...new Set(b)].filter(w=>A.has(w)).length;
+  return hit/Math.max(A.size,new Set(b).size);
+}
+// Pairs quote lines with material lines, best first, each used once. Nothing is
+// applied until the contractor taps USE.
+function sqMatchAll(lines,items){
+  const pairs=[];
+  lines.forEach(({l,i})=>(items||[]).forEach((it,k)=>{ const sc=sqScore(l.description,it.material); if(sc>=0.34) pairs.push({i,k,sc}); }));
+  pairs.sort((x,y)=>y.sc-x.sc);
+  const usedI=new Set(), usedK=new Set(), out={};
+  pairs.forEach(p=>{ if(usedI.has(p.i)||usedK.has(p.k)) return; usedI.add(p.i); usedK.add(p.k); out[p.i]={...items[p.k],k:p.k}; });
+  return out;
+}
+function sqLines(){
+  return (currentEstimate?.lineItems||[]).map((l,i)=>({l,i})).filter(({l})=>isMaterialLine(l));
+}
+async function openSupplierQuote(){
+  const es=appLang==='es';
+  if(!isPro||!window._job||!currentUser){ openProModal(es?'Función Pro':'Supplier quotes',es?'Guardar trabajos y cotizaciones viene con Pro.':'Saved jobs and supplier quotes come with Pro.'); return; }
+  const rows=sqLines();
+  window._sq={scan:[],last:{}};
+  // Your last quote per item (any job), newest first: shown as a hint, never applied.
+  try{
+    const { data }=await sbClient.from('supplier_quotes').select('item,price,supplier,quote_date,in_stock,job_id').eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(500);
+    (data||[]).forEach(q=>{ if(q.in_stock&&q.price!=null&&!window._sq.last[q.item]) window._sq.last[q.item]=q; });
+  }catch(e){}
+  const shops=(window._myShops||[]).filter(x=>x&&x.name);
+  const today=new Date().toISOString().slice(0,10);
+  const box=document.getElementById('sq-body');
+  if(!rows.length){ box.innerHTML=`<div class="ml-empty">${es?'Este estimado no tiene materiales para cotizar.':'This estimate has no material lines to quote.'}</div>`; }
+  else box.innerHTML=`
+    <div class="sq-top">
+      <select id="sq-shop" onchange="document.getElementById('sq-new').hidden=this.value!=='__new'">
+        ${shops.map(x=>`<option value="${escapeHtml(x.id||x.name)}"${x.primary?' selected':''}>${escapeHtml(x.name)}</option>`).join('')}
+        <option value="__new"${shops.length?'':' selected'}>${es?'Otro proveedor…':'Another supplier…'}</option>
+      </select>
+      <input id="sq-date" type="date" value="${today}" aria-label="${es?'Fecha de la cotización':'Quote date'}">
+      <input id="sq-new" placeholder="${es?'Nombre del proveedor':'Supplier name'}" maxlength="120"${shops.length?' hidden':''}>
+    </div>
+    <div class="sq-scan">
+      <label class="bid-btn" style="cursor:pointer">${es?'LEER FOTO O PDF':'READ PHOTO OR PDF'}<input type="file" accept="image/*,application/pdf" hidden onchange="scanSupplierQuote(this)"></label>
+      <span id="sq-scan-status">${es?'Even lee la cotización y propone un precio por línea. Tú confirmas cada uno.':'Even reads the quote and suggests a price per line. You confirm each one.'}</span>
+    </div>
+    <div id="sq-rows">${rows.map(({l,i})=>{
+      const last=window._sq.last[l.description];
+      return `<div class="sq-row" data-i="${i}">
+        <div class="d">${escapeHtml(l.description||'')}<small>${escapeHtml(String(+l.qty))} ${escapeHtml(unitLabel(l.unit||'ea',appLang))} · ${es?'ahora':'now'} ${fmt(+l.unitCost||0)}/${escapeHtml(unitLabel(l.unit||'ea',appLang))}</small></div>
+        <div class="p"><input type="number" min="0" step="0.01" inputmode="decimal" id="sq-p-${i}" placeholder="${es?'Precio':'Price'}" oninput="sqUpdateSum()">
+          <label><input type="checkbox" id="sq-o-${i}" onchange="sqUpdateSum()"> ${es?'Sin existencia':'Not in stock'}</label></div>
+        <div class="sq-sug" id="sq-s-${i}" hidden></div>
+        ${last?`<div class="sq-last">${escapeHtml(es?`Tu última cotización: ${fmt(+last.price)} en ${last.supplier}, ${last.quote_date}`:`Your last quote: ${fmt(+last.price)} at ${last.supplier}, ${last.quote_date}`)}</div>`:''}
+      </div>`;}).join('')}</div>
+    <div class="sq-sum" id="sq-sum"></div>
+    <div class="ml-actions"><button class="bid-btn primary" id="sq-apply" onclick="applySupplierQuote()">${es?'APLICAR COMO OFERTA NUEVA':'APPLY AS A NEW BID'}</button></div>`;
+  sqUpdateSum();
+  document.getElementById('sq-modal').style.display='flex';
+}
+function closeSupplierQuote(){ document.getElementById('sq-modal').style.display='none'; }
+function sqCollect(){
+  const q={};
+  sqLines().forEach(({i})=>{
+    const oos=document.getElementById('sq-o-'+i)?.checked, v=document.getElementById('sq-p-'+i)?.value;
+    if(oos) q[i]={notInStock:true}; else if(v!==''&&v!=null&&+v>=0) q[i]={price:+v};
+  });
+  return q;
+}
+function sqUpdateSum(){
+  const es=appLang==='es', q=sqCollect(), el=document.getElementById('sq-sum'); if(!el) return;
+  const L=currentEstimate?.lineItems||[];
+  let diff=0,n=0,oos=0;
+  Object.entries(q).forEach(([i,x])=>{ const l=L[+i]; if(!l) return; if(x.notInStock){ oos++; return; } n++; diff+=SQ_ROUND((+l.qty||0)*SQ_ROUND(x.price))-SQ_ROUND(+l.total||0); });
+  el.textContent=n||oos?(es?`${n} precio${n===1?'':'s'} cotizado${n===1?'':'s'}${oos?`, ${oos} sin existencia`:''}. Materiales ${diff>=0?'+':'-'}${fmt(Math.abs(diff))} antes de gastos y ganancia.`
+    :`${n} quoted price${n===1?'':'s'}${oos?`, ${oos} not in stock`:''}. Materials ${diff>=0?'+':'-'}${fmt(Math.abs(diff))} before overhead and profit.`)
+    :(es?'Escribe los precios de la cotización o lee una foto.':'Type the prices from the quote, or read a photo.');
+  const btn=document.getElementById('sq-apply'); if(btn) btn.disabled=!(n||oos);
+}
+function sqSupplier(){
+  const sel=document.getElementById('sq-shop')?.value;
+  if(sel==='__new'||!sel) return {name:(document.getElementById('sq-new')?.value||'').trim().slice(0,120),id:null};
+  const s=(window._myShops||[]).find(x=>(x.id||x.name)===sel);
+  return {name:s?s.name:sel,id:s&&/^V\d+$/.test(String(s.id||''))?s.id:null};
+}
+// Reads a photo or PDF of the quote (Pro price-sheet scanner) and suggests a price per line.
+async function scanSupplierQuote(input){
+  const es=appLang==='es', file=input.files?.[0], st=document.getElementById('sq-scan-status');
+  if(!file) return;
+  if(file.size>10*1024*1024){ st.textContent=es?'El archivo es muy grande (máx. 10 MB).':'That file is too big (10 MB max).'; return; }
+  st.textContent=es?'Leyendo la cotización…':'Reading the quote…';
+  try{
+    const b64=await new Promise((res,rej)=>{ const r=new FileReader(); r.onload=e=>res(String(e.target.result).split(',')[1]); r.onerror=rej; r.readAsDataURL(file); });
+    const pdf=file.type==='application/pdf'||/\.pdf$/i.test(file.name);
+    const att=pdf?{type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}}:{type:'image',source:{type:'base64',media_type:/^image\/(jpeg|png|gif|webp)$/.test(file.type)?file.type:'image/jpeg',data:b64}};
+    const body={even_kind:'price_sheet',max_tokens:1500,messages:[{role:'user',content:[att,{type:'text',text:`Extract all material pricing from this supplier price sheet.
+It is a supplier's quote for one job. Return ONLY a JSON array, no markdown, no explanation:
+[{"supplier":"","material":"","price":0,"unit":""}]
+price = the unit price for one unit of that line (not the extended line total). Include every priced line. If the supplier name is visible include it.`}]}]};
+    const r=await fetch(`${API_ORIGIN}/api/estimate`,{method:'POST',headers:await apiHeaders(),body:JSON.stringify(body)});
+    if(r.status===402){ openProModal(es?'Función Pro':'Pro feature',es?'Leer cotizaciones con foto viene con Pro.':'Reading quotes from a photo comes with Pro.'); st.textContent=''; return; }
+    const d=await r.json();
+    const items=JSON.parse(String(d.content?.[0]?.text||'').replace(/```json|```/g,'').trim());
+    if(!Array.isArray(items)||!items.length) throw new Error('none');
+    window._sq.scan=items.filter(x=>x&&x.material&&+x.price>=0);
+    const sup=items.find(x=>x.supplier)?.supplier;
+    if(sup&&document.getElementById('sq-shop')?.value==='__new'&&!document.getElementById('sq-new').value) document.getElementById('sq-new').value=String(sup).slice(0,120);
+    let found=0;
+    const matches=sqMatchAll(sqLines(),window._sq.scan);
+    sqLines().forEach(({l,i})=>{
+      const m=matches[i], el=document.getElementById('sq-s-'+i); if(!el) return;
+      if(!m){ el.hidden=true; return; }
+      found++; el.hidden=false;
+      el.innerHTML=`${escapeHtml(es?`En la cotización: "${m.material}" ${fmt(+m.price)}${m.unit?'/'+m.unit:''}`:`On the quote: "${m.material}" ${fmt(+m.price)}${m.unit?'/'+m.unit:''}`)}<button onclick="sqUseMatch(${i},${+m.price})">${es?'USAR':'USE'}</button>`;
+    });
+    st.textContent=es?`Leímos ${window._sq.scan.length} líneas, ${found} coinciden con tus materiales. Toca USAR en cada una que esté bien.`:`Read ${window._sq.scan.length} lines, ${found} match your materials. Tap USE on each one that's right.`;
+  }catch(e){ st.textContent=es?'No se pudo leer la cotización. Escribe los precios.':"Couldn't read the quote. Type the prices instead."; }
+  input.value='';
+}
+function sqUseMatch(i,price){
+  const inp=document.getElementById('sq-p-'+i); if(inp) inp.value=price;
+  const o=document.getElementById('sq-o-'+i); if(o) o.checked=false;
+  const s=document.getElementById('sq-s-'+i); if(s) s.hidden=true;
+  sqUpdateSum();
+}
+// Bid N+1 = the latest bid with the quote applied; Bid 1..N stay as they were.
+async function applySupplierQuote(){
+  const es=appLang==='es', job=window._job;
+  if(!job||!isPro||!currentUser) return;
+  const quotes=sqCollect(), sup=sqSupplier();
+  const date=document.getElementById('sq-date')?.value||new Date().toISOString().slice(0,10);
+  if(!sup.name){ showToast(es?'Escribe el nombre del proveedor.':'Type the supplier name.'); return; }
+  if(!Object.keys(quotes).length) return;
+  const btn=document.getElementById('sq-apply'); if(btn) btn.disabled=true;
+  try{
+    clearTimeout(window._bidSaveT); await persistCurrentBid();
+    const fresh=await loadJobBids(job.rootId);
+    const latest=fresh[fresh.length-1];
+    const json=sqApply(latest.estimate_json,quotes,sup.name,date);
+    const note=(es?'Cotización del proveedor aplicada: ':'Supplier quote applied: ')+`${sup.name}, ${date}`;
+    const { data:r0 }=await sbClient.from('estimates').select('client_name,project_label,location,trade').eq('id',job.rootId).single();
+    const payload={user_id:currentUser.id,client_name:r0?.client_name||'',project_label:r0?.project_label||'',location:r0?.location||'',trade:r0?.trade||'',
+      total_bid:Math.round((+json.totalBid||0)*100)/100,margin_pct:json.profit?.pct||0,status:latest.status||'draft',estimate_json:json,job_id:job.rootId,
+      bid_no:(latest.bid_no||1)+1,change_note:note.slice(0,200),created_at:new Date().toISOString()};
+    const { data:saved, error }=await sbClient.from('estimates').insert(payload).select('id,job_id,bid_no,total_bid,estimate_json,change_note,status,created_at').single();
+    if(error) throw error;
+    const L=latest.estimate_json?.lineItems||[];
+    const rows=Object.entries(quotes).map(([i,q])=>({user_id:currentUser.id,job_id:job.rootId,bid_id:saved.id,supplier:sup.name,supplier_id:sup.id,
+      county:window._marketMeta?.market||null,item:String(L[+i]?.description||'').slice(0,300),unit:L[+i]?.unit||null,
+      price:q.notInStock?null:SQ_ROUND(q.price),in_stock:!q.notInStock,quote_date:date,line_index:+i})).filter(r=>r.item);
+    if(rows.length){ const { error:e2 }=await sbClient.from('supplier_quotes').insert(rows); if(e2) console.error('Supplier quote rows error:',e2); }
+    window._job={rootId:job.rootId,bids:[...fresh,saved]};
+    window._sbJobsAt=0;
+    closeSupplierQuote();
+    showBid(saved);
+    showToast(es?`Oferta ${saved.bid_no} creada con la cotización de ${sup.name}.`:`Bid ${saved.bid_no} created with ${sup.name}'s quote.`);
+  }catch(e){ console.error('Apply supplier quote error:',e); showToast(es?'No se pudo aplicar la cotización. Intenta de nuevo.':"Couldn't apply the quote. Try again."); }
+  finally{ const b=document.getElementById('sq-apply'); if(b) b.disabled=false; }
+}
+
 async function redownloadEstimate(estimateId){
   if(!sbClient) return;
   try{
@@ -7667,6 +7882,12 @@ async function handleLogoUpload(input){
 </script>
 
 <script>document.addEventListener("DOMContentLoaded",function(){if(window.lucide)lucide.createIcons();});</script>
+<div id="sq-modal" class="ml-modal" style="display:none" onclick="if(event.target===this)closeSupplierQuote()">
+  <div class="ml-sheet sq-sheet">
+    <div class="ml-head"><b data-es="Cotización del proveedor">Supplier quote</b><button class="li-del" onclick="closeSupplierQuote()" aria-label="Close">×</button></div>
+    <div id="sq-body"></div>
+  </div>
+</div>
 <div id="matlist-modal" class="ml-modal" style="display:none" onclick="if(event.target===this)closeMaterialList()">
   <div class="ml-sheet">
     <div class="ml-head"><b data-es="Lista de materiales">Material list</b><button class="li-del" onclick="closeMaterialList()" aria-label="Close">×</button></div>

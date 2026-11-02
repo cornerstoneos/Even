@@ -55,7 +55,10 @@ check('bid history code found', blk.length>3000);
 check('no em dashes in the bid history text', !blk.includes('—'), (blk.match(/.{30}—.{30}/)||[])[0]);
 for(const [en,esw] of [['Bid history','Historial de ofertas'],['REVISE BID','REVISAR OFERTA'],['What changed','Qué cambió'],["'Bid'","'Oferta'"]]) check(`EN/ES: ${en} / ${esw}`, blk.includes(en)&&blk.includes(esw));
 check('Revise copies the LATEST bid and numbers it N+1 under Bid 1', /const latest=fresh\[fresh\.length-1\]/.test(blk)&&/job_id:job\.rootId,bid_no:\(latest\.bid_no\|\|1\)\+1/.test(blk));
-check('a new bid is made only by the Revise button (one insert, in reviseBid)', (blk.match(/\.insert\(/g)||[]).length===1&&/async function reviseBid\(\)[\s\S]*\.insert\(payload\)/.test(blk));
+// A new bid is made only by a button the contractor taps: Revise bid, or (founder
+// 2026-10-31) Apply as a new bid on a supplier quote. Never by an edit.
+const bidInserts=[...blk.matchAll(/from\('estimates'\)\.insert\(payload\)/g)].map(m=>{const f=blk.lastIndexOf('async function ',m.index);return blk.slice(f+15,blk.indexOf('(',f+15));});
+check('a new bid is made only by a button: Revise bid or Apply supplier quote', bidInserts.join()==='reviseBid,applySupplierQuote'||bidInserts.join()==='applySupplierQuote,reviseBid', bidInserts.join());
 check('signed out: a sign-in prompt instead of Revise', /if\(!currentUser\)\{[\s\S]{0,700}openSignupPanel\(\)/.test(blk));
 check('deleting a line flags it (positions stay put)', /currentEstimate\.lineItems\[idx\]\.removed=true/.test(html)&&!/lineItems\.splice\(/.test(html));
 check('client proposal skips removed lines', /filter\(i=>!i\.removed&&\(\(\+i\.total\|\|0\)>0\|\|i\.category\)\)/.test(html));
