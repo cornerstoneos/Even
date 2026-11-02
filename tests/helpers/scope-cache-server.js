@@ -27,6 +27,21 @@ globalThis.fetch = async (url, opts = {}) => {
     // A partner supply-house row in the prompt (where-i-shop.test.js): the scope buys from it.
     const hRef = /\\nH1 /.test(opts.body) ? ',{"type":"material","ref":"H1","qty":10}' : '';
     const text = `{"projectName":"run${n}","tradeBreakdown":[{"trade":"Plumbing","icon":"x","items":[]}],"questions":[],"lineItems":[{"type":"other","category":"Labor","description":"Mock line","qty":1,"unit":"ea","unitCost":100},{"type":"material","ref":"M1","qty":2},{"type":"labor","ref":"L1","hours":3},{"type":"permit","ref":"P1","qty":0}${hRef}]}`;
+    // FAIL_ONCE (walk-away.test.js): the first try is cut off, the next one works.
+    if (opts.body.includes('FAIL_ONCE') && !fs.existsSync(LOG + '.failed-once')) {
+      fs.writeFileSync(LOG + '.failed-once', '1');
+      return new Response(`data: {"type":"message_delta","delta":{"stop_reason":"max_tokens"}}\n\n`, { status: 200, headers: { 'content-type': 'text/event-stream' } });
+    }
+    // SLOW_STREAM (walk-away.test.js): the answer arrives over ~1.2s so a test can close the page mid-build.
+    if (JSON.parse(opts.body).stream && opts.body.includes('SLOW_STREAM')) {
+      const enc = new TextEncoder(), half = Math.floor(text.length / 2);
+      const frame = t => `event: content_block_delta\ndata: ${JSON.stringify({ type: 'content_block_delta', delta: { type: 'text_delta', text: t } })}\n\n`;
+      const body = new ReadableStream({ async start(c) {
+        c.enqueue(enc.encode(frame(text.slice(0, half)))); await new Promise(r => setTimeout(r, 1200));
+        c.enqueue(enc.encode(frame(text.slice(half)) + 'event: message_delta\ndata: {"type":"message_delta","delta":{"stop_reason":"end_turn"}}\n\n')); c.close();
+      } });
+      return new Response(body, { status: 200, headers: { 'content-type': 'text/event-stream' } });
+    }
     if (JSON.parse(opts.body).stream && opts.body.includes('CUT_OFF_STREAM')) {
       return new Response(`data: {"type":"message_delta","delta":{"stop_reason":"max_tokens"}}\n\n`, { status: 200, headers: { 'content-type': 'text/event-stream' } });
     }
@@ -91,6 +106,8 @@ globalThis.fetch = async (url, opts = {}) => {
     if (['select', 'order', 'limit', 'on_conflict'].includes(k)) return true;
     if (v.startsWith('eq.')) return String(row[k]) === v.slice(3);
     if (v.startsWith('gt.')) return String(row[k]) > v.slice(3);
+    if (v.startsWith('lt.')) return String(row[k]) < v.slice(3);
+    if (v === 'is.null') return row[k] == null;
     if (v.startsWith('in.(')) return v.slice(4, -1).split(',').includes(String(row[k]));
     return true;
   });
@@ -99,6 +116,26 @@ globalThis.fetch = async (url, opts = {}) => {
     const batch = JSON.parse(fs.readFileSync(require('path').join(__dirname, '..', '..', 'data', 'batches', 'even_master_batch.json'), 'utf8'));
     const m = batch.find(x => x.market === mkt);
     return json(m ? [{ market: m.market, state: m.state, zone: m.zone, materials: m.materials, labor: m.labor, permits: m.permits }] : []);
+  }
+  // Walk-away builds + push subscriptions (walk-away.test.js). select a->b returns b like PostgREST.
+  for (const name of ['bg_builds', 'push_subscriptions']) {
+    if (!url.includes('/rest/v1/' + name)) continue;
+    const t = rows(name);
+    log(`db ${name} ${m} ${svc}`);
+    if (svc !== 'svc') return json({ message: 'no key' }, 401);
+    if (m === 'GET') {
+      const arrows = (u.searchParams.get('select') || '').split(',').filter(x => x.includes('->')).map(x => x.split('->'));
+      return json(t.filter(matches).map(r => { const o = { ...r }; for (const [a, b] of arrows) o[b] = r[a] ? r[a][b] : null; return o; }));
+    }
+    if (m === 'POST') {
+      const b = JSON.parse(opts.body);
+      if (name === 'push_subscriptions') { const i = t.findIndex(x => x.endpoint === b.endpoint); const row = { id: i >= 0 ? t[i].id : t.length + 1, ...b }; if (i >= 0) t[i] = row; else t.push(row); save(d); return new Response('', { status: 201 }); }
+      const now = new Date().toISOString();
+      const row = { id: require('crypto').randomUUID(), created_at: now, updated_at: now, result: null, error: null, client_gone: false, notified_at: null, opened_at: null, ...b };
+      t.push(row); save(d); return json([row], 201);
+    }
+    if (m === 'PATCH') { const b = JSON.parse(opts.body); t.filter(matches).forEach(r => Object.assign(r, b)); save(d); return new Response(null, { status: 204 }); }
+    if (m === 'DELETE') { d['__' + name] = t.filter(r => !matches(r)); save(d); return new Response(null, { status: 204 }); }
   }
   for (const name of ['contractor_pages', 'quote_requests', 'suppliers', 'partner_prices', 'supplier_signups']) {
     if (!url.includes('/rest/v1/' + name)) continue;
@@ -123,4 +160,6 @@ globalThis.fetch = async (url, opts = {}) => {
   if (url.includes('/rest/v1/')) return json([]);
   return real(url, opts);
 };
+// Web push is never sent for real in tests: the library's send is replaced with a logger.
+try { const wp = require('web-push'); wp.sendNotification = async (sub, body) => { if (sub.endpoint.includes('gone')) { const e = new Error('gone'); e.statusCode = 410; throw e; } log('push ' + JSON.stringify({ endpoint: sub.endpoint, body: JSON.parse(body) })); return { statusCode: 201 }; }; } catch (e) {}
 require('../../server.js');

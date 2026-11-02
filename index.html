@@ -980,6 +980,16 @@ body:has(#s-dashboard.active) .app{min-height:0}
 .biz-missing[hidden],#tracker-pro-tag[hidden]{display:none}
 .limited-note{font-size:12px;line-height:1.45;color:var(--orange);background:rgba(255,140,66,0.08);border:1px solid rgba(255,140,66,0.3);border-radius:8px;padding:8px 10px;margin:8px 0}
 .limited-note[hidden]{display:none}
+.bg-builds{max-width:760px;margin:8px auto 0;padding:0 16px;display:flex;flex-direction:column;gap:8px}
+.bg-card{display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--rim);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--white)}
+.bg-card.ready{border-color:var(--gold)}.bg-card.failed{border-color:#ff6b6b}
+.bg-card .bg-txt{flex:1;min-width:0;line-height:1.35}.bg-card .bg-sub{color:var(--muted);font-size:11.5px}
+.bg-chip{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;border-radius:20px;padding:2px 8px;border:1px solid var(--rim);color:var(--muted);white-space:nowrap}
+.bg-chip.ready{color:#000;background:var(--gold);border-color:var(--gold)}.bg-chip.failed{color:#ff6b6b;border-color:#ff6b6b}
+.bg-card button{background:var(--gold);color:#000;border:0;border-radius:8px;padding:7px 10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.bg-card button.ghost{background:none;color:var(--muted);border:1px solid var(--rim);font-weight:500}
+.bg-signin-note{font-size:12px;color:var(--muted);text-align:center;margin-top:8px}
+body.signed-in .bg-signin-note{display:none}
 </style>
 
   <!-- Supabase -->
@@ -1105,6 +1115,8 @@ body:has(#s-dashboard.active) .app{min-height:0}
     </div>
   </div>
 
+<!-- Build it and walk away: builds that finished (or failed) while away -->
+  <div id="bg-builds" class="bg-builds" hidden></div>
 <!-- Topbar Auth Dropdown -->
 <div id="topbar-auth-panel" style="display:none;position:fixed;top:56px;right:0;width:min(360px,100vw);box-sizing:border-box;background:var(--panel);border:1px solid var(--rim);border-radius:0 0 12px 12px;padding:20px;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,.6)">
   <div id="auth-form-wrap">
@@ -1463,6 +1475,7 @@ body:has(#s-dashboard.active) .app{min-height:0}
         <button class="cta d-big-btn" id="calc-btn" onclick="calculateEstimate()" style="display:none;margin-top:12px">
           <span data-en="Build estimate →" data-es="Generar estimado →">Build estimate →</span>
         </button>
+        <div class="bg-signin-note" id="bg-signin-note" data-en="Sign in and Even keeps building even if you leave." data-es="Inicia sesión y Even sigue construyendo aunque salgas.">Sign in and Even keeps building even if you leave.</div>
         </div>
       </div>
     </div>
@@ -1895,6 +1908,8 @@ async function loadUserData(){
     window._prefsLoaded=true;
     updateUserBadge();
     refreshRequestBadge();
+    loadBuilds(); refreshPushSubscription();
+    { const m=/[?&]build=([0-9a-f-]{36})\b/.exec(location.search); if(m){ history.replaceState(null,'',location.pathname); openBuild(m[1]); } }
     if(/[?&]requests=1\b/.test(location.search)){ history.replaceState(null,'',location.pathname); navigate('dashboard'); }
   } catch(e) {
     console.error('Load user error:', e);
@@ -1905,6 +1920,7 @@ async function loadUserData(){
 function syncTrackerTag(){ const t=document.getElementById('tracker-pro-tag'); if(t) t.hidden=!!isPro; }
 function updateUserBadge(){
   syncTrackerTag();
+  document.body.classList.toggle('signed-in',!!currentUser);
   const badge = document.getElementById('user-badge');
   const authBtn = document.getElementById('topbar-auth-btn');
   // Only show badge after at least 1 estimate has been run
@@ -2698,6 +2714,7 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
   // the summary turns that silence into visible reasoning.
   if(opts.onThinking) body.thinking={type:'adaptive',display:'summarized'};
   applyCacheBreakpoint(body,messages,useCache);
+  if(opts.bgBuild) body.even_build=opts.bgBuild;
   const ctrl=new AbortController();
   const tid=setTimeout(()=>ctrl.abort(),150000);
   let r;
@@ -2708,6 +2725,7 @@ async function callClaudeStream(messages,maxTokens,onDelta,useCache=true,opts={}
     });
   }catch(e){ clearTimeout(tid); throw e; }
   if(opts.sameInSameOut) window._lastScopeKey=r.headers.get('X-Even-Cache-Key')||null;
+  if(opts.bgBuild) window._bgBuildId=r.headers.get('X-Even-Build-Id')||null;
   if(!r.ok){
     clearTimeout(tid);
     const e=await r.json().catch(()=>({}));
@@ -4142,11 +4160,22 @@ async function _calculateEstimate(btn,jobAtStart){
     // reason to keep it tight, so it is set well above what a 22-line estimate
     // needs — unused budget costs nothing, a truncated bid costs trust.
     const EST_TOKENS=24000, EST_TOKENS_RETRY=48000;
+    // Every dollar is computed in code from the catalog and these settings. The
+    // same object goes to the server for a walk-away build, so both price alike.
+    const priceOpts={
+      marketAdj:adjMultiplier,laborMult:ctx.laborMult,laborRate:ctx.laborRate,
+      oh:ctx.oh,profit:ctx.profit,cushion:ctx.cushion,
+      sqft:parseFloat(String(ctx.sqft).replace(/,/g,''))||0,hvhz:isHVHZ,calibration:costCalibration,lang:ctx.lang||appLang
+    };
+    // Signed in: the server keeps building and saves the result if this page
+    // closes (Build it and walk away). Signed out: today's in-page flow only.
+    window._bgBuildId=null;
+    const bgBuild=currentUser?bgBuildPayload({ctx,catalog,priceOpts,adjLabel,confidenceTier,answers}):null;
     let res;
     let guard=makeStallGuard();
     try{
       try{
-        res=await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],EST_TOKENS,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true,kind:'estimate'}),guard.promise]);
+        res=await Promise.race([callClaudeStream([{role:'user',content:promptBlocks}],EST_TOKENS,onDelta,true,{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true,kind:'estimate',bgBuild}),guard.promise]);
         guard.cancel();
       }catch(streamErr){
         guard.cancel();
@@ -4177,11 +4206,7 @@ async function _calculateEstimate(btn,jobAtStart){
     const scoped=parseJ(res);
     // Every dollar from here on is computed in code from the catalog and the
     // contractor's own settings, so the same scope always prices the same.
-    const data=priceScope(scoped,catalog,{
-      marketAdj:adjMultiplier,laborMult:ctx.laborMult,laborRate:ctx.laborRate,
-      oh:ctx.oh,profit:ctx.profit,cushion:ctx.cushion,
-      sqft:parseFloat(String(ctx.sqft).replace(/,/g,''))||0,hvhz:isHVHZ,calibration:costCalibration,lang:ctx.lang||appLang
-    });
+    const data=priceScope(scoped,catalog,priceOpts);
     if(data.pricingNotes.length) data.assumptions=[...data.pricingNotes,...data.assumptions];
     data.labelAdj=adjLabel;
     // The scope's cache key (a hash, nothing personal): saved with the estimate so
@@ -4208,6 +4233,8 @@ async function _calculateEstimate(btn,jobAtStart){
       saveEstimateToCloud(data);
       savePrefs();
     }
+    // Watched to the end on this page: the server copy is done with.
+    if(window._bgBuildId) markBuildOpened(window._bgBuildId);
     btn.disabled=false;
   }catch(e){
     hideLoading();
@@ -6880,6 +6907,144 @@ async function openRequest(id,where){
     if(window._currentEstimateId){ r.estimate_id=window._currentEstimateId; sbClient.from('quote_requests').update({estimate_id:r.estimate_id}).eq('id',id).then(()=>{}); }
   }else if(r.estimate_id){ window._currentEstimateId=r.estimate_id; }
 }
+
+// ══ BUILD IT AND WALK AWAY (founder spec 2026-10-31) ══
+// Signed in, the estimate request carries the catalog and pricing settings this
+// page built, so the server can finish, price (same priceScope) and keep the job
+// if the page closes. When the contractor comes back the job is waiting here.
+function bgJobLabel(ctx){
+  const v=id=>(document.getElementById(id)?.value||'').trim();
+  return v('est-project-label')||v('est-client')||window._scopeData?.projectName||[tradeLabel(ctx.trade,appLang),ctx.location].filter(Boolean).join(', ');
+}
+function bgBuildPayload({ctx,catalog,priceOpts,adjLabel,confidenceTier,answers}){
+  const v=id=>document.getElementById(id)?.value??'';
+  const {byRef,...cat}=catalog;
+  return {label:bgJobLabel(ctx).slice(0,120),lang:appLang,catalog:cat,priceOpts,
+    meta:{labelAdj:adjLabel,confidenceTier,trade:ctx.trade,ctx,scopeData:window._scopeData||null,marketMeta:window._marketMeta||null,
+      answers:answers||{},questions:window._allQuestions||[],
+      fields:{trade:v('est-trade'),location:v('est-location'),projtype:v('est-projtype'),sqft:v('est-sqft'),scope:v('scope-text'),
+        client:v('est-client'),label:v('est-project-label'),address:v('prop-job-address')}}};
+}
+async function markBuildOpened(id){
+  try{ await fetch(`${API_ORIGIN}/api/builds/${id}/opened`,{method:'POST',headers:await apiHeaders()}); }catch(e){}
+  window._bgBuilds=(window._bgBuilds||[]).filter(b=>b.id!==id); renderBuilds();
+}
+async function loadBuilds(){
+  if(!currentUser) { window._bgBuilds=[]; renderBuilds(); return; }
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/builds`,{headers:await apiHeaders()});
+    if(!r.ok) return;
+    const d=await r.json();
+    // A build this page is still streaming shows as the loading screen, not a card.
+    window._bgBuilds=(d.builds||[]).filter(b=>!(b.status==='building'&&b.id===window._bgBuildId&&window._runBusy>0));
+    renderBuilds();
+  }catch(e){}
+  clearTimeout(window._bgPoll);
+  if((window._bgBuilds||[]).some(b=>b.status==='building')) window._bgPoll=setTimeout(()=>{ if(document.visibilityState==='visible') loadBuilds(); },15000);
+}
+function renderBuilds(){
+  const box=document.getElementById('bg-builds'); if(!box) return;
+  const es=appLang==='es', list=(window._bgBuilds||[]).slice(0,3);
+  box.hidden=!list.length&&!window._bgAsk;
+  const card=b=>{
+    const job=escapeHtml(b.label||(es?'tu trabajo':'your job'));
+    if(b.status==='ready') return `<div class="bg-card ready"><span class="bg-chip ready">${es?'LISTO':'READY'}</span><div class="bg-txt">${es?`Tu estimado para ${job} está listo.`:`Your estimate for ${job} is ready.`}${b.total?`<div class="bg-sub">${fmtK(b.total)}</div>`:''}</div><button onclick="openBuild('${b.id}')">${es?'ABRIR':'OPEN'}</button></div>`;
+    if(b.status==='failed') return `<div class="bg-card failed"><span class="bg-chip failed">${es?'FALLÓ':'FAILED'}</span><div class="bg-txt">${es?`No pudimos terminar ${job}. Toca para intentar de nuevo.`:`We couldn't finish ${job}. Tap to try again.`}</div><button onclick="retryBuild('${b.id}',this)">${es?'REINTENTAR':'TRY AGAIN'}</button><button class="ghost" onclick="markBuildOpened('${b.id}')" aria-label="${es?'Cerrar':'Dismiss'}">×</button></div>`;
+    return `<div class="bg-card"><span class="bg-chip">${es?'ARMANDO':'BUILDING'}</span><div class="bg-txt">${job}<div class="bg-sub">${es?'Even sigue construyendo. Puedes salir de esta página.':'Even is still building. You can leave this page.'}</div></div></div>`;
+  };
+  box.innerHTML=(window._bgAsk||'')+list.map(card).join('');
+}
+async function retryBuild(id,btn){
+  const es=appLang==='es';
+  if(btn){ btn.disabled=true; btn.textContent=es?'ARMANDO…':'BUILDING…'; }
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/builds/${id}/retry`,{method:'POST',headers:await apiHeaders()});
+    if(r.status===402){ refreshUsage(); showLimitReached(isPro?'limit_reached':'pro_required'); }
+  }catch(e){}
+  loadBuilds();
+}
+// Opens a finished build exactly like the page would have shown it.
+async function openBuild(id){
+  const es=appLang==='es';
+  if(window._runBusy>0){ showToast(es?'Espera, tu estimado todavía se está calculando.':'Hold on, your estimate is still running.',3500); return; }
+  let b;
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/builds/${id}`,{headers:await apiHeaders()});
+    if(!r.ok) throw new Error('http_'+r.status);
+    b=(await r.json()).build;
+  }catch(e){ showToast(es?'No se pudo abrir. Intenta de nuevo.':"Couldn't open it. Try again.",3500); return; }
+  if(b.status!=='ready'||!b.result){ loadBuilds(); return; }
+  if(currentEstimate&&!confirm(es?'¿Abrir este estimado? El estimado en pantalla se borrará.':'Open this estimate? The estimate on screen will be cleared.')) return;
+  clearJob();
+  const m=b.meta||{}, f=m.fields||{};
+  const set=(elId,v)=>{ const el=document.getElementById(elId); if(el&&v!=null) el.value=v; };
+  set('est-trade',f.trade); set('est-location',f.location); if(f.projtype) set('est-projtype',f.projtype);
+  set('est-sqft',f.sqft); set('scope-text',f.scope); set('est-client',f.client); set('est-project-label',f.label); set('prop-job-address',f.address);
+  saveDraft();
+  window._ctx=m.ctx||null; window._scopeData=m.scopeData||null; window._marketMeta=m.marketMeta||null;
+  window._allQuestions=m.questions||[]; window._qAnswers=m.answers||{};
+  const data=JSON.parse(JSON.stringify(b.result));
+  currentEstimate=data;
+  navigate('estimate');
+  renderEstimate(data);
+  const psEl=document.getElementById('pay-sched-section'); if(psEl) psEl.style.display='block';
+  const peCard=document.getElementById('proposal-edit-card'); if(peCard){ peCard.style.display='block'; populateProposalAssumptions(); }
+  if(isPro&&currentUser){ await saveEstimateToCloud(data); savePrefs(); }
+  await markBuildOpened(id);
+  if(b.clientGone) maybeAskPush();
+}
+
+// Web push: asked only after the first build that finished while the
+// contractor was away, never on page load. iPhone gets push only from the Home
+// Screen app (iOS 16.4+), so iPhone Safari gets a one-time hint instead.
+function isIphoneSafariTab(){
+  const ua=navigator.userAgent||'';
+  const iOS=/iPhone|iPod/.test(ua)||(/iPad/.test(ua));
+  const safari=/Safari\//.test(ua)&&!/CriOS|FxiOS|EdgiOS|OPiOS|GSA\//.test(ua);
+  const standalone=window.navigator.standalone===true||(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches);
+  return iOS&&safari&&!standalone;
+}
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+async function maybeAskPush(){
+  const es=appLang==='es';
+  if(isIphoneSafariTab()){
+    if(lsGet('even_ios_push_hint')) return;
+    lsSet('even_ios_push_hint','1');
+    window._bgAsk=`<div class="bg-card" id="bg-ask"><div class="bg-txt">${es?'Para recibir avisos en iPhone, agrega Even a tu pantalla de inicio: toca Compartir y luego Agregar a inicio.':'To get notified on iPhone, add Even to your Home Screen: tap Share, then Add to Home Screen.'}</div><button onclick="closePushAsk()">${es?'ENTENDIDO':'GOT IT'}</button></div>`;
+    renderBuilds(); return;
+  }
+  if(lsGet('even_push_asked')||!('Notification' in window)||!('serviceWorker' in navigator)||!('PushManager' in window)||Notification.permission!=='default') return;
+  let cfg={}; try{ cfg=await (await fetch(`${API_ORIGIN}/api/push/config`,{headers:await apiHeaders()})).json(); }catch(e){}
+  if(!cfg.enabled||!cfg.publicKey) return;
+  window._pushKey=cfg.publicKey;
+  window._bgAsk=`<div class="bg-card ready" id="bg-ask"><div class="bg-txt">${es?'¿Te avisamos cuando esté listo?':"Get a ping when it's ready?"}<div class="bg-sub">${es?'La próxima vez que salgas mientras Even construye, te avisamos.':"Next time you leave while Even builds, we'll notify you."}</div></div><button onclick="enablePush()">${es?'SÍ, AVÍSAME':'YES, NOTIFY ME'}</button><button class="ghost" onclick="closePushAsk()">${es?'AHORA NO':'NOT NOW'}</button></div>`;
+  renderBuilds();
+}
+function closePushAsk(){ lsSet('even_push_asked','1'); window._bgAsk=''; renderBuilds(); }
+function urlB64ToUint8Array(b64){ const p='='.repeat((4-b64.length%4)%4); const raw=atob((b64+p).replace(/-/g,'+').replace(/_/g,'/')); return Uint8Array.from([...raw].map(c=>c.charCodeAt(0))); }
+async function pushSubscribe(publicKey){
+  const reg=await navigator.serviceWorker.register('/sw.js');
+  await navigator.serviceWorker.ready;
+  const sub=(await reg.pushManager.getSubscription())||await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlB64ToUint8Array(publicKey)});
+  await fetch(`${API_ORIGIN}/api/push/subscribe`,{method:'POST',headers:await apiHeaders({'Content-Type':'application/json'}),body:JSON.stringify({subscription:sub.toJSON(),lang:appLang})});
+}
+async function enablePush(){
+  const es=appLang==='es';
+  closePushAsk();
+  try{
+    const perm=await Notification.requestPermission();
+    if(perm!=='granted') return;
+    await pushSubscribe(window._pushKey);
+    showToast(es?'Listo. Te avisamos cuando tu estimado esté listo.':"Done. We'll ping you when your estimate is ready.",3500);
+  }catch(e){ console.warn('push subscribe failed',e); }
+}
+// Already allowed on this device: keep its subscription current (endpoints rotate).
+async function refreshPushSubscription(){
+  if(!currentUser||!('Notification' in window)||Notification.permission!=='granted'||!('serviceWorker' in navigator)) return;
+  try{ const cfg=await (await fetch(`${API_ORIGIN}/api/push/config`,{headers:await apiHeaders()})).json(); if(cfg.enabled&&cfg.publicKey) await pushSubscribe(cfg.publicKey); }catch(e){}
+}
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible'&&currentUser) loadBuilds(); });
 
 async function loadDashboard(){
   if(!currentUser||!sbClient) return;

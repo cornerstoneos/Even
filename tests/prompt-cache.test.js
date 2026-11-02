@@ -64,7 +64,7 @@ check('scope text is NOT inside the cached prefix',
 console.log('\n=== Request config ===');
 check("estimate runs at medium effort", /const ESTIMATE_EFFORT='medium'/.test(html));
 check('streaming call passes effort + onThinking',
-  /callClaudeStream\(\[\{role:'user',content:promptBlocks\}\],EST_TOKENS,onDelta,true,\{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true,kind:'estimate'\}\)/.test(html));
+  /callClaudeStream\(\[\{role:'user',content:promptBlocks\}\],EST_TOKENS,onDelta,true,\{effort:ESTIMATE_EFFORT,onThinking,sameInSameOut:true,kind:'estimate'(,bgBuild)?\}\)/.test(html));
 check('non-streaming fallback passes effort too',
   /callClaude\(\[\{role:'user',content:promptBlocks\}\],12000,true,ESTIMATE_EFFORT,true\)/.test(html));
 check('scope extraction asks for the same-in-same-out cache', /callClaude\(\[\{role:'user',content:msgContent\}\],3000,false,'low',true,'scope'\)/.test(html));

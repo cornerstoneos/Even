@@ -19,7 +19,7 @@ const ALLOWED_ORIGINS = [
 const originAllowed = o => !!o && (ALLOWED_ORIGINS.includes(o) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(o));
 app.use(cors({
   origin: (o, cb) => cb(null, originAllowed(o)),
-  exposedHeaders: ['X-Even-Cache', 'X-Even-Cache-Key'],
+  exposedHeaders: ['X-Even-Cache', 'X-Even-Cache-Key', 'X-Even-Build-Id'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Even-Cache', 'X-Even-Device', 'X-Even-Lang']
 }));
 const { buildRequest, MAIN: mainModel, LIGHT: lightModel, SCOPE_FIX_TEXT } = require('./lib/guard');
@@ -290,7 +290,8 @@ app.get('/health', (req, res) => {
     // Email setup, as yes/no only (no addresses): founder alerts need a Resend key
     // + FOUNDER_EMAIL or REPLY_TO_EMAIL; client mail needs a verified domain sender.
     email: { resendKey: !!process.env.RESEND_API_KEY, founderAddress: !!(process.env.FOUNDER_EMAIL || process.env.REPLY_TO_EMAIL),
-      fromSet: !!process.env.NOTIFY_FROM_EMAIL, quoteEmailOn: process.env.QUOTE_EMAIL_ENABLED === '1', welcomeEmailOn: process.env.WELCOME_EMAIL_ENABLED === '1' },
+      fromSet: !!process.env.NOTIFY_FROM_EMAIL, quoteEmailOn: process.env.QUOTE_EMAIL_ENABLED === '1', welcomeEmailOn: process.env.WELCOME_EMAIL_ENABLED === '1', buildEmailOn: process.env.BUILD_EMAIL_ENABLED === '1' },
+    push: { on: process.env.PUSH_ENABLED === '1', vapidPublic: !!process.env.VAPID_PUBLIC_KEY, vapidPrivate: !!process.env.VAPID_PRIVATE_KEY },
     startedAt: STARTED_AT
   });
 });
@@ -562,7 +563,11 @@ app.post('/api/estimate', async (req, res) => {
     logError('proxy_reject', 'origin_not_allowed', { origin: origin.slice(0, 200) });
     return res.status(403).json({ error: { code: 'origin_not_allowed', message: 'Not allowed' } });
   }
-  const built = buildRequest(req.body);
+  // Build it and walk away: a signed-in estimate may carry what the server needs
+  // to finish and save it if the page closes. It is never part of the AI request.
+  const bgIn = req.body && typeof req.body === 'object' && !Array.isArray(req.body) ? req.body.even_build : null;
+  const rawReq = bgIn ? (({ even_build, ...rest }) => rest)(req.body) : req.body;
+  const built = buildRequest(rawReq);
   if (built.error) {
     logError('proxy_reject', built.error, { kind: String(req.body?.even_kind || '').slice(0, 40), model: String(req.body?.model || '').slice(0, 60) });
     return res.status(400).json({ error: { code: 'request_not_allowed', message: 'Request not allowed' } });
@@ -595,6 +600,8 @@ app.post('/api/estimate', async (req, res) => {
     }
     if (text) {
       res.setHeader('X-Even-Cache', `hit-${layer}`);
+      const bgId = built.kind === 'estimate' ? await bgStart(bgIn, rawReq, ident) : null;
+      if (bgId) { res.setHeader('X-Even-Build-Id', bgId); bgFinish(bgId, bgIn, text, cacheKey, false); }
       return res.json({ content: [{ type: 'text', text }], stop_reason: 'end_turn', cached: true });
     }
     // Not cached: this is a new AI call, so the free limit applies. A cached or
@@ -617,6 +624,16 @@ app.post('/api/estimate', async (req, res) => {
     finishInflight = scopeInflightStart(cacheKey);
     res.setHeader('X-Even-Cache', 'miss');
   } else if (!U.rateOk(ident.ipHash, built.kind)) return tooMany();
+  // From here the job runs to the end even if the page closes (the loop below
+  // never stops reading the AI's answer on a disconnect). A walk-away build
+  // records whether the contractor was still watching when it finished.
+  const bgId = cacheKey && built.kind === 'estimate' ? await bgStart(bgIn, rawReq, ident) : null;
+  let clientGone = false, bgDone = false;
+  if (bgId) {
+    res.setHeader('X-Even-Build-Id', bgId);
+    res.on('close', () => { if (!res.writableFinished) clientGone = true; });
+  }
+  const bgEnd = (ok, text, why) => { if (!bgId || bgDone) return; bgDone = true; ok ? bgFinish(bgId, bgIn, text, cacheKey, clientGone) : bgFail(bgId, why, clientGone); };
   try {
   const MAX_TRIES = 3;
   let lastErr;
@@ -638,6 +655,7 @@ app.post('/api/estimate', async (req, res) => {
         const data = await response.json().catch(() => ({ error: { message: 'HTTP ' + response.status } }));
         console.error(`Anthropic ${response.status} for model=${built.body.model}:`, JSON.stringify(data));
         if (response.status >= 500 || response.status === 429) logError('anthropic_proxy', `HTTP ${response.status}: ${JSON.stringify(data).slice(0, 500)}`, { model: built.body.model });
+        bgEnd(false, null, 'ai_http_' + response.status);
         return res.status(response.status).json(data);
       }
 
@@ -659,7 +677,7 @@ app.post('/api/estimate', async (req, res) => {
           for (;;) {
             const { done, value } = await reader.read();
             if (done) break;
-            res.write(Buffer.from(value));
+            if (!res.destroyed) res.write(Buffer.from(value));
             if (cacheKey) {
               sseBuf += decoder.decode(value, { stream: true });
               let idx;
@@ -677,9 +695,11 @@ app.post('/api/estimate', async (req, res) => {
             }
           }
           if (cacheKey && stopReason === 'end_turn') { scopeCacheSet(cacheKey, fullText); finishInflight(fullText); scopeDbPut(cacheKey, fullText); onFresh(); }
+          bgEnd(stopReason === 'end_turn', fullText, stopReason === 'refusal' ? 'refusal' : 'cut_off_' + stopReason);
         } catch (streamErr) {
           console.error('Anthropic stream interrupted:', streamErr.message);
           logError('anthropic_proxy', streamErr.message, { stage: 'stream', model: built.body.model });
+          bgEnd(false, null, 'stream_interrupted');
         }
         return res.end();
       }
@@ -689,6 +709,7 @@ app.post('/api/estimate', async (req, res) => {
         const text = data.content.map(b => b.text || '').join('');
         scopeCacheSet(cacheKey, text); finishInflight(text); scopeDbPut(cacheKey, text); onFresh();
       }
+      bgEnd(data?.stop_reason === 'end_turn', Array.isArray(data?.content) ? data.content.map(b => b.text || '').join('') : '', 'cut_off_' + data?.stop_reason);
       return res.status(response.status).json(data);
     } catch (err) {
       // Transient socket drops ("Premature close", ECONNRESET) during setup — retry with backoff
@@ -699,6 +720,7 @@ app.post('/api/estimate', async (req, res) => {
     }
   }
   logError('anthropic_proxy', (lastErr && lastErr.message) || 'Upstream fetch failed after retries', { stage: 'exhausted', model: built.body.model });
+  bgEnd(false, null, 'upstream_failed');
   res.status(502).json({ error: { message: (lastErr && lastErr.message) || 'Upstream fetch failed after retries' } });
   } finally {
     // Anything that ended without a cacheable answer (error, cut-off) releases waiters.
@@ -1089,6 +1111,133 @@ app.post('/api/quote-requests/:id/draft', async (req, res) => {
   if (row.draft_status === 'ready') return res.json({ ok: true, draft_status: 'ready' });
   const out = await buildQuoteDraft(row);
   res.json({ ok: out.ok, draft_status: out.ok ? 'ready' : out.code });
+});
+
+// ─── Build it and walk away (founder spec 2026-10-31) ─────────────────────────
+// A signed-in contractor taps Build; the estimate request carries what the server
+// needs to finish the job without the page: the price catalog and pricing
+// settings the page itself built. The server prices the AI's answer with the same
+// priceScope code (lib/pipeline.js loads it from index.html), so the result is the
+// number the page would have shown. Rows live in bg_builds (server only).
+const notify = require('./lib/notify');
+const BG_STALE_MS = 10 * 60 * 1000;
+function bgLabel(v) { return clip(v, 120); }
+async function bgStart(bgIn, rawReq, ident) {
+  if (!bgIn || typeof bgIn !== 'object' || !ident || !ident.user) return null;
+  const { catalog, priceOpts, meta } = bgIn;
+  if (!catalog || typeof catalog !== 'object' || !priceOpts || typeof priceOpts !== 'object' || !meta || typeof meta !== 'object') return null;
+  const inputs = { request: rawReq, catalog, priceOpts, meta };
+  if (JSON.stringify(inputs).length > 3000000) return null;
+  const r = await sbRest('POST', 'bg_builds', { user_id: ident.user.id, status: 'building', label: bgLabel(bgIn.label), lang: bgIn.lang === 'es' ? 'es' : 'en', inputs }, 'return=representation');
+  if (!r.ok || !r.data?.[0]) { logError('bg_build', 'insert_failed_' + r.status, null); return null; }
+  return r.data[0].id;
+}
+// The page sends the catalog without its byRef index (every entry would travel
+// twice); it is rebuilt here exactly as buildCatalog makes it.
+function bgCatalog(c) {
+  const cat = { materials: [], labor: [], permits: [], partner: [], suppliers: [], subs: [], ...c, byRef: {} };
+  for (const k of ['materials', 'labor', 'permits', 'partner', 'suppliers', 'subs']) for (const e of (cat[k] || [])) if (e && e.ref) cat.byRef[e.ref] = e;
+  return cat;
+}
+// Same steps as the page after the AI answers (index.html _calculateEstimate).
+function bgPrice(inputs, text, scopeKey) {
+  const scoped = parseScopeText(text);
+  if (!scoped) throw Object.assign(new Error('estimate_unreadable'), { code: 'failed' });
+  const m = inputs.meta || {};
+  const data = PIPE.priceScope(scoped, bgCatalog(inputs.catalog), inputs.priceOpts);
+  if (data.pricingNotes.length) data.assumptions = [...data.pricingNotes, ...data.assumptions];
+  data.labelAdj = m.labelAdj;
+  data.scopeKey = scopeKey || null;
+  data.confidenceTier = m.confidenceTier;
+  if (PIPE.limitedTrade(m.trade)) data.limitedTrade = m.trade;
+  return data;
+}
+async function bgFinish(id, bgIn, text, scopeKey, clientGone) {
+  try {
+    if (!PIPE) throw new Error('pipeline_unavailable');
+    const result = bgPrice({ catalog: bgIn.catalog, priceOpts: bgIn.priceOpts, meta: bgIn.meta }, text, scopeKey);
+    await sbRest('PATCH', `bg_builds?id=eq.${id}`, { status: 'ready', result, client_gone: !!clientGone, error: null, updated_at: new Date().toISOString() }, 'return=minimal');
+    if (clientGone) bgNotify(id, true);
+  } catch (e) { logError('bg_build', e.message, { build: id }); await bgFail(id, e.message, clientGone); }
+}
+async function bgFail(id, why, clientGone) {
+  await sbRest('PATCH', `bg_builds?id=eq.${id}`, { status: 'failed', error: clip(why, 200), client_gone: !!clientGone, updated_at: new Date().toISOString() }, 'return=minimal').catch(() => {});
+  if (clientGone) bgNotify(id, false);
+}
+// Push to every device the account turned on, and email if switched on. Once per build.
+async function bgNotify(id, ok) {
+  const row = ((await sbRest('GET', `bg_builds?id=eq.${id}&select=id,user_id,label,lang,notified_at,opened_at`)).data || [])[0];
+  if (!row || row.notified_at || row.opened_at) return { sent: false };
+  await sbRest('PATCH', `bg_builds?id=eq.${id}`, { notified_at: new Date().toISOString() }, 'return=minimal');
+  const msg = notify.buildMessage(ok, row.label, row.lang);
+  const url = `/?build=${row.id}`;
+  const push = await notify.pushToUser({ userId: row.user_id, payload: { title: msg.title, body: msg.body, url, tag: 'build-' + row.id }, sbRest }).catch(e => ({ sent: 0, error: e.message }));
+  let emailed = false;
+  if (notify.emailOn()) {
+    const u = ((await sbRest('GET', `users?id=eq.${row.user_id}&select=email`)).data || [])[0];
+    emailed = await notify.emailUser({ to: u && u.email, subject: msg.body, text: `${msg.body}\n\nhttps://even-os.com${url}\n` }).catch(() => false);
+  }
+  return { sent: true, push, emailed };
+}
+// Builds still 'building' after 10 minutes were cut off (server restart): failed.
+async function bgSweep(userId) {
+  const cut = new Date(Date.now() - BG_STALE_MS).toISOString();
+  await sbRest('PATCH', `bg_builds?user_id=eq.${userId}&status=eq.building&updated_at=lt.${encodeURIComponent(cut)}`, { status: 'failed', error: 'stale', updated_at: new Date().toISOString() }, 'return=minimal').catch(() => {});
+}
+const BG_ID_RE = /^[0-9a-f-]{36}$/;
+app.get('/api/builds', async (req, res) => {
+  const ident = await signedInUser(req, res); if (!ident) return;
+  await bgSweep(ident.user.id);
+  const since = new Date(Date.now() - 14 * 86400000).toISOString();
+  const r = await sbRest('GET', `bg_builds?user_id=eq.${ident.user.id}&opened_at=is.null&created_at=gt.${encodeURIComponent(since)}&select=id,label,status,client_gone,created_at,updated_at,result->totalBid&order=created_at.desc&limit=20`);
+  res.json({ builds: (r.data || []).map(b => ({ id: b.id, label: b.label, status: b.status, clientGone: b.client_gone, createdAt: b.created_at, updatedAt: b.updated_at, total: b.totalBid ?? null })) });
+});
+app.get('/api/builds/:id', async (req, res) => {
+  const ident = await signedInUser(req, res); if (!ident) return;
+  const id = String(req.params.id || ''); if (!BG_ID_RE.test(id)) return res.status(400).json({ error: { code: 'bad_id' } });
+  const row = ((await sbRest('GET', `bg_builds?id=eq.${id}&user_id=eq.${ident.user.id}&select=id,label,lang,status,client_gone,result,inputs->meta,created_at`)).data || [])[0];
+  if (!row) return res.status(404).json({ error: { code: 'not_found' } });
+  res.json({ build: { id: row.id, label: row.label, lang: row.lang, status: row.status, clientGone: row.client_gone, result: row.result, meta: row.meta, createdAt: row.created_at } });
+});
+app.post('/api/builds/:id/opened', async (req, res) => {
+  const ident = await signedInUser(req, res); if (!ident) return;
+  const id = String(req.params.id || ''); if (!BG_ID_RE.test(id)) return res.status(400).json({ error: { code: 'bad_id' } });
+  await sbRest('PATCH', `bg_builds?id=eq.${id}&user_id=eq.${ident.user.id}`, { opened_at: new Date().toISOString() }, 'return=minimal');
+  res.json({ ok: true });
+});
+// Try a failed build again on the server (same request, same cache key, counts
+// toward the free limit exactly like a normal estimate). The page can close.
+app.post('/api/builds/:id/retry', async (req, res) => {
+  const ident = await signedInUser(req, res); if (!ident) return;
+  const id = String(req.params.id || ''); if (!BG_ID_RE.test(id)) return res.status(400).json({ error: { code: 'bad_id' } });
+  if (!usage().rateOk(ident.ipHash, 'estimate')) return res.status(429).json({ error: { code: 'rate_limited' } });
+  const row = ((await sbRest('GET', `bg_builds?id=eq.${id}&user_id=eq.${ident.user.id}&select=id,status,inputs`)).data || [])[0];
+  if (!row) return res.status(404).json({ error: { code: 'not_found' } });
+  if (row.status !== 'failed') return res.json({ ok: true, status: row.status });
+  const st = await usage().status(ident);
+  if (!st.allowed) return res.status(402).json({ error: { code: st.reason || 'limit_reached' } });
+  await sbRest('PATCH', `bg_builds?id=eq.${id}`, { status: 'building', error: null, notified_at: null, updated_at: new Date().toISOString() }, 'return=minimal');
+  res.json({ ok: true, status: 'building' });
+  const inp = row.inputs || {};
+  serverAI(inp.request, ident)
+    .then(out => bgFinish(id, inp, out.text, out.key, true))
+    .catch(e => bgFail(id, e.code || e.message, true));
+});
+// Web push: the page asks permission only after a build finished while away.
+app.get('/api/push/config', (req, res) => {
+  if (!appOnly(req, res)) return;
+  res.json({ enabled: notify.pushOn(), publicKey: notify.pushOn() ? process.env.VAPID_PUBLIC_KEY : null });
+});
+app.post('/api/push/subscribe', async (req, res) => {
+  const ident = await signedInUser(req, res); if (!ident) return;
+  if (!usage().rateOk(ident.ipHash, 'event')) return res.status(429).json({ error: { code: 'rate_limited' } });
+  const sub = (req.body || {}).subscription || {};
+  const endpoint = clip(sub.endpoint, 1000), keys = sub.keys || {};
+  if (!/^https:\/\//.test(endpoint) || typeof keys.p256dh !== 'string' || typeof keys.auth !== 'string' || keys.p256dh.length > 200 || keys.auth.length > 100) return res.status(400).json({ error: { code: 'bad_subscription' } });
+  const r = await sbRest('POST', 'push_subscriptions?on_conflict=endpoint', { user_id: ident.user.id, endpoint, keys: { p256dh: keys.p256dh, auth: keys.auth },
+    lang: (req.body || {}).lang === 'es' ? 'es' : 'en', user_agent: clip(req.get('user-agent'), 200) }, 'resolution=merge-duplicates,return=minimal');
+  if (!r.ok) { logError('push', 'subscribe_failed_' + r.status, null); return res.status(500).json({ error: { code: 'unavailable' } }); }
+  res.json({ ok: true });
 });
 
 // ─── Supplier signup page (even-os.com/suppliers, founder 2026-10-15) ────────
