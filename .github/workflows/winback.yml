@@ -1,0 +1,29 @@
+# "Your free estimates are back" win-back email (founder spec 2026-10-31).
+# Once a day, asks the server to top up and email eligible free accounts.
+# Sends nothing until Railway has WINBACK_EMAIL_ENABLED=1 (+ Resend set up).
+# Needs the repo secret WINBACK_SECRET (same value as Railway's WINBACK_SECRET).
+# Run it by hand with dry_run = true to only list who would get it (no emails, no top-ups).
+name: Win-back email
+on:
+  schedule:
+    - cron: '7 15 * * 1-6'   # 11:07 am Eastern (EDT), Monday to Saturday
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Only list who would get it (true) or send (false)'
+        default: 'true'
+        required: true
+jobs:
+  winback:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run win-back
+        env:
+          WINBACK_SECRET: ${{ secrets.WINBACK_SECRET }}
+          DRY: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || 'false' }}
+        run: |
+          if [ -z "$WINBACK_SECRET" ]; then echo "WINBACK_SECRET is not set; skipping."; exit 0; fi
+          BODY=$([ "$DRY" = "false" ] && echo '{"dryRun":false}' || echo '{"dryRun":true}')
+          curl -sS --fail-with-body -X POST https://even-production.up.railway.app/api/winback \
+            -H "Content-Type: application/json" -H "X-Winback-Secret: $WINBACK_SECRET" -d "$BODY" \
+            | python3 -c "import sys,json;d=json.load(sys.stdin);print(json.dumps({k:d.get(k) for k in ['dryRun','checked','eligible','sent','failed','reason','skipped']},indent=1))"

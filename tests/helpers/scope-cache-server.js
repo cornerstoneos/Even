@@ -89,8 +89,17 @@ globalThis.fetch = async (url, opts = {}) => {
   if (url.includes('/rest/v1/users')) {
     const t = table(d, 'users');
     const id = (u.searchParams.get('id') || '').replace(/^eq\./, '');
+    if (m === 'GET' && !id && u.searchParams.get('is_pro')) {
+      // Win-back list (winback.test.js): not Pro, has an email, not unsubscribed.
+      return json(Object.entries(t).map(([k, v]) => ({ id: k, ...v })).filter(r => !r.is_pro && r.email && !r.email_unsub && (!u.searchParams.get('id') || u.searchParams.get('id') === 'eq.' + r.id)));
+    }
     if (m === 'GET') return json(t[id] ? [t[id]] : []);
     if (m === 'POST') { const b = JSON.parse(opts.body); if (!t[b.id]) t[b.id] = { estimate_count: 0, is_pro: b.id === USERS['tok-pro'].id }; save(d); return new Response('', { status: 201 }); }
+    if (m === 'PATCH' && u.searchParams.get('winback_count')) {
+      const want = +u.searchParams.get('winback_count').slice(3);
+      if (!t[id] || (t[id].winback_count || 0) !== want || t[id].email_unsub) return json([]);
+      Object.assign(t[id], JSON.parse(opts.body)); save(d); return json([{ id, ...t[id] }]);
+    }
     if (m === 'PATCH' && u.searchParams.get('welcome_sent_at') === 'is.null') {
       if (!t[id] || t[id].welcome_sent_at) return json([]);
       Object.assign(t[id], JSON.parse(opts.body)); save(d); return json([{ id, ...t[id] }]);
@@ -98,7 +107,9 @@ globalThis.fetch = async (url, opts = {}) => {
     if (m === 'PATCH') { Object.assign(t[id] = t[id] || {}, JSON.parse(opts.body)); save(d); return new Response(null, { status: 204 }); }
   }
   if (url.includes('/rest/v1/app_events')) {
-    const t = (d.__events = d.__events || []); t.push(JSON.parse(opts.body)); save(d); return new Response('', { status: 201 });
+    const t = (d.__events = d.__events || []);
+    if (m === 'GET') { const ids = (u.searchParams.get('user_id') || '').replace(/^in\.\(|\)$/g, '').split(','); return json(t.filter(e => e.event === 'estimate_run' && ids.includes(e.user_id))); }
+    t.push(JSON.parse(opts.body)); save(d); return new Response('', { status: 201 });
   }
   // Quote-request link tables (quote-link.test.js). Filters: eq. only, enough for the server's queries.
   const rows = name => (d['__' + name] = d['__' + name] || []);

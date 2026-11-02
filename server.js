@@ -290,7 +290,7 @@ app.get('/health', (req, res) => {
     // Email setup, as yes/no only (no addresses): founder alerts need a Resend key
     // + FOUNDER_EMAIL or REPLY_TO_EMAIL; client mail needs a verified domain sender.
     email: { resendKey: !!process.env.RESEND_API_KEY, founderAddress: !!(process.env.FOUNDER_EMAIL || process.env.REPLY_TO_EMAIL),
-      fromSet: !!process.env.NOTIFY_FROM_EMAIL, quoteEmailOn: process.env.QUOTE_EMAIL_ENABLED === '1', welcomeEmailOn: process.env.WELCOME_EMAIL_ENABLED === '1', buildEmailOn: process.env.BUILD_EMAIL_ENABLED === '1' },
+      fromSet: !!process.env.NOTIFY_FROM_EMAIL, quoteEmailOn: process.env.QUOTE_EMAIL_ENABLED === '1', welcomeEmailOn: process.env.WELCOME_EMAIL_ENABLED === '1', buildEmailOn: process.env.BUILD_EMAIL_ENABLED === '1', winbackOn: process.env.WINBACK_EMAIL_ENABLED === '1', winbackSecret: !!process.env.WINBACK_SECRET, welcomeFromSet: !!process.env.WELCOME_FROM_EMAIL },
     push: { on: process.env.PUSH_ENABLED === '1', vapidPublic: !!process.env.VAPID_PUBLIC_KEY, vapidPrivate: !!process.env.VAPID_PRIVATE_KEY },
     startedAt: STARTED_AT
   });
@@ -1239,6 +1239,69 @@ app.post('/api/push/subscribe', async (req, res) => {
   if (!r.ok) { logError('push', 'subscribe_failed_' + r.status, null); return res.status(500).json({ error: { code: 'unavailable' } }); }
   res.json({ ok: true });
 });
+
+// ─── "Your free estimates are back" win-back email (founder spec 2026-10-31) ──
+// Run once a day by .github/workflows/winback.yml with the WINBACK_SECRET header.
+// dryRun (the default) only lists who would get it. Sending needs the switch
+// (lib/winback.js). The answer never carries an email address (Action logs are public).
+const winback = require('./lib/winback');
+const API_PUBLIC = () => process.env.PUBLIC_API_ORIGIN || 'https://even-production.up.railway.app';
+const maskEmail = e => String(e || '').replace(/^(.).*(@.).*(\.[^.]+)$/, '$1***$2***$3');
+app.post('/api/winback', async (req, res) => {
+  const secret = process.env.WINBACK_SECRET;
+  const got = String(req.get('x-winback-secret') || '');
+  if (!secret) return res.status(503).json({ error: { code: 'not_configured' } });
+  if (got.length !== secret.length || !crypto.timingSafeEqual(Buffer.from(got), Buffer.from(secret))) return res.status(401).json({ error: { code: 'unauthorized' } });
+  const b = req.body || {};
+  const dryRun = b.dryRun !== false;
+  const only = typeof b.onlyUserId === 'string' && /^[0-9a-f-]{36}$/.test(b.onlyUserId) ? `&id=eq.${b.onlyUserId}` : '';
+  const ur = await sbRest('GET', `users?is_pro=eq.false&email=not.is.null&email_unsub=eq.false${only}&select=id,email,estimate_count,bonus_estimates,prefs,created_at,winback_count,winback_last_at,is_internal,is_pro,email_unsub&limit=5000`);
+  if (!ur.ok) return res.status(502).json({ error: { code: 'db_unavailable' } });
+  const users = ur.data || [];
+  const lastRun = {};
+  for (let i = 0; i < users.length; i += 100) {
+    const ids = users.slice(i, i + 100).map(u => u.id);
+    const ev = await sbRest('GET', `app_events?event=eq.estimate_run&user_id=in.(${ids.join(',')})&select=user_id,created_at&order=created_at.desc&limit=10000`);
+    (ev.data || []).forEach(e => { if (!lastRun[e.user_id] || e.created_at > lastRun[e.user_id]) lastRun[e.user_id] = e.created_at; });
+  }
+  const now = Date.now(), free = LIMITS.FREE_ACCOUNT_ESTIMATES;
+  const decided = users.map(u => ({ u, ...winback.whyEligible(u, { now, freeLimit: free, lastRun: lastRun[u.id] || null }) }));
+  const pick = decided.filter(d => d.ok);
+  const summary = { checked: users.length, eligible: pick.length, skipped: decided.filter(d => !d.ok).reduce((m, d) => (m[d.why] = (m[d.why] || 0) + 1, m), {}),
+    list: pick.map(d => ({ id: d.u.id, email: maskEmail(d.u.email), why: d.why, lang: (d.u.prefs || {}).lang === 'es' ? 'es' : 'en' })) };
+  if (dryRun) return res.json({ dryRun: true, ...summary });
+  if (!winback.enabled()) return res.json({ dryRun: false, sent: 0, reason: 'off', ...summary });
+  let sent = 0, failed = 0;
+  for (const d of pick) {
+    const u = d.u, n = u.winback_count || 0;
+    // Claim first (only if nothing changed since the read), so two runs can't both send.
+    const claim = await sbRest('PATCH', `users?id=eq.${u.id}&winback_count=eq.${n}&email_unsub=eq.false`,
+      { winback_count: n + 1, winback_last_at: new Date().toISOString(), bonus_estimates: winback.topUpBonus(u, free) }, 'return=representation');
+    if (!claim.ok || !(claim.data || []).length) continue;
+    const lang = (u.prefs || {}).lang === 'es' ? 'es' : 'en';
+    const unsubUrl = `${API_PUBLIC()}/api/unsubscribe?u=${u.id}&t=${winback.unsubToken(u.id)}&l=${lang}`;
+    const m = winback.email(lang, { appUrl: 'https://even-os.com/', unsubUrl });
+    try {
+      const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+        body: JSON.stringify({ from: process.env.WELCOME_FROM_EMAIL, to: [u.email], subject: m.subject, text: m.text, html: m.html,
+          headers: { 'List-Unsubscribe': `<${unsubUrl}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' },
+          ...(process.env.REPLY_TO_EMAIL ? { reply_to: process.env.REPLY_TO_EMAIL } : {}) }) });
+      if (r.ok) sent++; else { failed++; logError('winback', 'resend_' + r.status, { user: u.id }); }
+    } catch (e) { failed++; logError('winback', e.message, { user: u.id }); }
+  }
+  res.json({ dryRun: false, sent, failed, ...summary });
+});
+// The unsubscribe link in every win-back email (GET from the email, POST from one-click mail apps).
+async function unsubscribe(req, res) {
+  const u = String(req.query.u || ''), t = String(req.query.t || ''), es = req.query.l === 'es';
+  const page = (title, body) => res.type('html').send(`<!doctype html><html lang="${es ? 'es' : 'en'}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Even</title></head><body style="font-family:-apple-system,Segoe UI,Roboto,sans-serif;background:#0a0a0a;color:#f4f4f4;padding:40px 20px;text-align:center"><div style="font-size:24px;font-weight:800">even<span style="color:#FFB300">.</span></div><h1 style="font-size:20px">${title}</h1><p style="color:#9a9a9a">${body}</p></body></html>`);
+  if (!/^[0-9a-f-]{36}$/.test(u) || !winback.unsubOk(u, t)) { res.status(400); return page(es ? 'Enlace no válido' : 'Link not valid', es ? 'Este enlace para cancelar no es válido.' : 'This unsubscribe link is not valid.'); }
+  const r = await sbRest('PATCH', `users?id=eq.${u}`, { email_unsub: true }, 'return=minimal');
+  if (!r.ok) { res.status(502); return page(es ? 'Intenta de nuevo' : 'Try again', es ? 'No pudimos guardar tu cambio. Intenta de nuevo en un rato.' : "We couldn't save that. Please try again in a bit."); }
+  page(es ? 'Listo, cancelaste tu suscripción' : "You're unsubscribed", es ? 'No te enviaremos más correos de Even.' : "You won't get more emails from Even.");
+}
+app.get('/api/unsubscribe', unsubscribe);
+app.post('/api/unsubscribe', unsubscribe);
 
 // ─── Supplier signup page (even-os.com/suppliers, founder 2026-10-15) ────────
 // A supply house sends its contractor price sheet; no account. The file goes to
