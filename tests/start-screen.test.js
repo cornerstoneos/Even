@@ -57,7 +57,8 @@ const dash=html.slice(html.indexOf('<div class="screen" id="s-dashboard">'),html
 check('"Your jobs" with 3 stats: won this month, avg margin, open bids', /Your jobs/.test(dash)&&/Won this month/.test(dash)&&/Avg margin/.test(dash)&&/Open bids/.test(dash));
 check('Open / Won / All filter', /filterJobs\('open'/.test(dash)&&/filterJobs\('won'/.test(dash)&&/filterJobs\('all'/.test(dash)&&/data-st="\$\{sk\}"/.test(html));
 check('settings as four rows, nothing removed', ['set-biz','set-sup','set-subs','dash-settings-sum','supplier-list','sub-list','logo-preview-img','accent-swatches'].every(id=>dash.includes(`id="${id}"`)));
-check('bottom tab bar with New estimate', /class="d-tabs"/.test(dash)&&/d-tab-plus/.test(dash));
+// Founder 2026-10-31: the sidebar replaces the dashboard's bottom tab bar (Jobs / + / Settings live in it now).
+check('tab bar replaced by the sidebar (New estimate, Jobs, Settings in the menu)', !/class="d-tabs"/.test(html)&&/onclick="sbGo\('new'\)"/.test(html)&&/onclick="sbGo\('jobs'\)"/.test(html)&&/onclick="sbGo\('settings'\)"/.test(html));
 check('status tags in Spanish too', /STATUS_LABELS_ES=\{draft:'Borrador'/.test(html));
 check('dashboard no longer sits below an empty screen (bug)', /body:has\(#s-dashboard\.active\) \.app\{min-height:0\}/.test(html));
 console.log(`\n${pass} passed, ${fail} failed`);process.exit(fail?1:0);

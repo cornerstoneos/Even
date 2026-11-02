@@ -990,6 +990,30 @@ body:has(#s-dashboard.active) .app{min-height:0}
 .bg-card button.ghost{background:none;color:var(--muted);border:1px solid var(--rim);font-weight:500}
 .bg-signin-note{font-size:12px;color:var(--muted);text-align:center;margin-top:8px}
 body.signed-in .bg-signin-note{display:none}
+.menu-btn{position:relative}.menu-dot{position:absolute;top:2px;right:2px;width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.sb-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1200}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:min(320px,86vw);background:var(--panel);border-right:1px solid var(--rim);z-index:1201;transform:translateX(-105%);transition:transform .22s ease;display:flex;flex-direction:column;overflow-y:auto;padding:14px 14px 24px;box-sizing:border-box}
+.sidebar.open{transform:none}
+.sb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sb-x{background:none;border:0;color:var(--muted);font-size:26px;line-height:1;cursor:pointer;padding:0 4px}
+.sb-q{width:100%;box-sizing:border-box;background:var(--l2,#1d1d1d);border:1px solid var(--rim);border-radius:10px;color:var(--white);padding:10px 12px;font:inherit;font-size:14px;margin-bottom:10px}
+.sb-nav{display:flex;flex-direction:column;gap:2px;margin-bottom:10px}
+.sb-nav button{display:flex;align-items:center;gap:10px;background:none;border:0;color:var(--white);font:inherit;font-size:14px;padding:10px 8px;border-radius:8px;cursor:pointer;text-align:left}
+.sb-nav button:hover{background:rgba(255,179,0,.08)}
+.sb-nav .req-count{margin-left:auto}
+.sb-k{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:10px 8px 6px}
+.sb-item{display:block;width:100%;background:none;border:0;border-radius:8px;padding:9px 8px;text-align:left;cursor:pointer;color:var(--white);font:inherit}
+.sb-item:hover{background:rgba(255,179,0,.08)}
+.sb-item .t{display:flex;align-items:center;gap:8px;font-size:13.5px}.sb-item .t span:first-child{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-item .m{font-size:11.5px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-note{font-size:12px;color:var(--muted);padding:6px 8px}
+.sb-signin{width:100%;background:var(--gold);color:#000;border:0;border-radius:10px;padding:11px;font:inherit;font-weight:700;font-size:13px;cursor:pointer}
+.sidebar .sb-signed-out{display:block}.sidebar .sb-signed-in{display:none}
+body.signed-in .sidebar .sb-signed-out{display:none}body.signed-in .sidebar .sb-signed-in{display:block}
+body.signed-in .sidebar nav .sb-signed-in{display:flex}
+.sb-chip{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.4px;border-radius:20px;padding:1px 7px;border:1px solid var(--rim);color:var(--muted);white-space:nowrap}
+.sb-chip.open{color:var(--white)}.sb-chip.won{color:#3ecf8e;border-color:#2f5d45}.sb-chip.lost{color:#ff6b6b;border-color:#5d2f2f}
+.sb-chip.ready{color:#000;background:var(--gold);border-color:var(--gold)}.sb-chip.building{color:var(--gold);border-color:#5a4500}
 </style>
 
   <!-- Supabase -->
@@ -1098,6 +1122,7 @@ body.signed-in .bg-signin-note{display:none}
   <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-left">
+      <button class="icon-btn menu-btn" id="menu-btn" onclick="openSidebar()" aria-label="Menu" title="Menu"><i data-lucide="menu" style="width:18px;height:18px;stroke:currentColor"></i><span id="menu-dot" class="menu-dot" hidden></span></button>
       <button class="icon-btn theme-btn" onclick="toggleTheme()" title="Toggle theme"><i data-lucide="moon" class="theme-moon" style="width:16px;height:16px;stroke:currentColor"></i><i data-lucide="sun" class="theme-sun" style="width:16px;height:16px;stroke:currentColor;display:none"></i></button>
     </div>
     <div class="topbar-brand" onclick="goHome()" style="cursor:pointer" title="New estimate">
@@ -1115,6 +1140,27 @@ body.signed-in .bg-signin-note{display:none}
     </div>
   </div>
 
+<!-- Sidebar (founder 2026-10-31): search, New estimate, Jobs, Requests, Settings, Recents. Replaces the dashboard tab bar. -->
+  <div id="sb-overlay" class="sb-overlay" onclick="closeSidebar()" hidden></div>
+  <aside id="sidebar" class="sidebar" aria-hidden="true" aria-label="Menu">
+    <div class="sb-head"><div class="topbar-logo">even<b>.</b></div><button class="sb-x" onclick="closeSidebar()" aria-label="Close">×</button></div>
+    <div class="sb-signed-in">
+      <input id="sb-q" class="sb-q" type="search" autocomplete="off" placeholder="Search jobs" data-placeholder-es="Buscar trabajos" oninput="renderSidebar()">
+    </div>
+    <nav class="sb-nav">
+      <button onclick="sbGo('new')"><i data-lucide="plus" style="width:16px;height:16px"></i><span data-es="Nuevo estimado">New estimate</span></button>
+      <button class="sb-signed-in" onclick="sbGo('jobs')"><i data-lucide="folder" style="width:16px;height:16px"></i><span data-es="Trabajos">Jobs</span></button>
+      <button class="sb-signed-in" onclick="sbGo('requests')"><i data-lucide="inbox" style="width:16px;height:16px"></i><span data-es="Solicitudes">Requests</span><span id="sb-req-count" class="req-count" hidden></span></button>
+      <button class="sb-signed-in" onclick="sbGo('settings')"><i data-lucide="settings" style="width:16px;height:16px"></i><span data-es="Configuración">Settings</span></button>
+    </nav>
+    <div class="sb-signed-out">
+      <button class="sb-signin" onclick="closeSidebar();toggleAuthPanel()" data-es="Inicia sesión para guardar y buscar tus trabajos">Sign in to save and search your jobs</button>
+    </div>
+    <div class="sb-signed-in">
+      <div class="sb-k" id="sb-list-title" data-es="Recientes">Recents</div>
+      <div id="sb-list"></div>
+    </div>
+  </aside>
 <!-- Build it and walk away: builds that finished (or failed) while away -->
   <div id="bg-builds" class="bg-builds" hidden></div>
 <!-- Topbar Auth Dropdown -->
@@ -5735,7 +5781,7 @@ async function submitDataTrade(){
 </div>
 <!-- Dashboard Screen -->
 <div class="screen" id="s-dashboard">
-  <div class="sbody" style="padding-top:20px;padding-bottom:110px">
+  <div class="sbody" style="padding-top:20px;padding-bottom:40px">
 
     <!-- Header -->
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
@@ -5917,11 +5963,6 @@ async function submitDataTrade(){
       </div>
     </div>
 
-    <div class="d-tabs">
-      <button class="on" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span>▤</span><span data-es="Trabajos">Jobs</span></button>
-      <button class="d-tab-plus" onclick="navigate('input')" aria-label="New estimate">+</button>
-      <button onclick="document.getElementById('dash-settings').scrollIntoView({behavior:'smooth'})"><span>⚙</span><span data-es="Configuración">Settings</span></button>
-    </div>
 
 
   </div>
@@ -5968,12 +6009,14 @@ async function saveEstimateToCloud(data){
       total_bid: data.totalBid||0,
       margin_pct: data.profit?.pct||0,
       status: 'draft',
-      estimate_json: {...data, ...(window._finalBid?{finalBid:window._finalBid}:{})},
+      // The job description, so the sidebar search can find the job by what it is.
+      estimate_json: {...data, scopeText:(document.getElementById('scope-text')?.value||'').slice(0,4000), ...(window._finalBid?{finalBid:window._finalBid}:{})},
       created_at: new Date().toISOString()
     };
     const { data: saved, error } = await sbClient.from('estimates').insert(payload).select('id').single();
     if(error){ console.error('Save estimate error:',error); return; }
     window._currentEstimateId = saved.id;
+    window._sbJobsAt=0;
     // A new saved estimate is a job with one bid (Bid 1).
     window._job={rootId:saved.id,bids:[{id:saved.id,bid_no:1,total_bid:payload.total_bid,estimate_json:payload.estimate_json,change_note:null,status:'draft'}]};
     renderBidBar();
@@ -6774,6 +6817,9 @@ async function refreshRequestBadge(){
     const { count }=await sbClient.from('quote_requests').select('id',{count:'exact',head:true}).eq('user_id',currentUser.id).eq('status','new');
     const dot=document.getElementById('req-dot');
     if(dot){ dot.hidden=!count; dot.textContent=count>9?'9+':String(count||''); }
+    const sbc=document.getElementById('sb-req-count');
+    if(sbc){ sbc.hidden=!count; sbc.textContent=count>9?'9+':String(count||''); }
+    updateMenuDot();
   }catch(e){}
 }
 async function loadRequests(){
@@ -6908,6 +6954,94 @@ async function openRequest(id,where){
   }else if(r.estimate_id){ window._currentEstimateId=r.estimate_id; }
 }
 
+// ══ SIDEBAR: search + Recents (founder 2026-10-31) ══
+// Menu button top-left. Search finds any saved job by client, address, city,
+// trade, job description or bid notes as you type; Recents = last 10 jobs by
+// last edit (plus builds still building or ready). Replaces the dashboard's tab bar.
+function openSidebar(){
+  const sb=document.getElementById('sidebar'); if(!sb) return;
+  sb.classList.add('open'); sb.setAttribute('aria-hidden','false');
+  document.getElementById('sb-overlay').hidden=false;
+  renderSidebar(); loadSidebarJobs().then(renderSidebar);
+}
+function closeSidebar(){
+  const sb=document.getElementById('sidebar'); if(!sb) return;
+  sb.classList.remove('open'); sb.setAttribute('aria-hidden','true');
+  document.getElementById('sb-overlay').hidden=true;
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSidebar(); });
+(()=>{ let x0=null; const sb=()=>document.getElementById('sidebar');
+  document.addEventListener('touchstart',e=>{ if(sb()?.classList.contains('open')) x0=e.touches[0].clientX; },{passive:true});
+  document.addEventListener('touchend',e=>{ if(x0!=null&&e.changedTouches[0].clientX-x0<-60) closeSidebar(); x0=null; },{passive:true});
+})();
+function sbGo(where){
+  closeSidebar();
+  if(where==='new'){ goHome(); return; }
+  navigate('dashboard');
+  const id={requests:'req-section',settings:'dash-settings',jobs:'dash-filter'}[where];
+  setTimeout(()=>{ const el=document.getElementById(id); if(el&&!el.hidden) el.scrollIntoView({behavior:'smooth',block:'start'}); },350);
+}
+const sbNorm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+// One entry per job (Bid 1 + its later bids): last edit is the newest edit on any bid.
+function sbGroupJobs(rows){
+  const by={};
+  (rows||[]).forEach(r=>{ const k=r.job_id||r.id; (by[k]=by[k]||[]).push(r); });
+  return Object.entries(by).map(([rootId,rs])=>{
+    const root=rs.find(r=>r.id===rootId)||rs[0];
+    const last=rs.reduce((m,r)=>{ const t=r.updated_at||r.created_at||''; return t>m?t:m; },'');
+    const label=root.project_label||root.client_name||root.projectName||tradeLabel(root.trade||'',appLang);
+    const blob=sbNorm(rs.flatMap(r=>[r.client_name,r.project_label,r.location,r.trade,tradeLabel(r.trade||'','es'),r.jobAddress,r.scopeText,r.projectName,r.notes,r.change_note]).filter(Boolean).join(' \n '));
+    return {rootId,label,client:root.client_name||'',city:root.location||'',trade:root.trade||'',status:root.status||'draft',last,blob};
+  }).sort((a,b)=>a.last<b.last?1:a.last>b.last?-1:0);
+}
+async function loadSidebarJobs(force){
+  if(!currentUser||!sbClient||!isPro){ window._sbJobs=[]; return; }
+  if(!force&&window._sbJobsAt&&Date.now()-window._sbJobsAt<30000) return;
+  try{
+    const { data, error }=await sbClient.from('estimates')
+      .select('id,job_id,bid_no,client_name,project_label,location,trade,status,notes,change_note,created_at,updated_at,jobAddress:estimate_json->>jobAddress,scopeText:estimate_json->>scopeText,projectName:estimate_json->>projectName')
+      .eq('user_id',currentUser.id).order('created_at',{ascending:false}).limit(500);
+    if(error) throw error;
+    window._sbJobs=sbGroupJobs(data); window._sbJobsAt=Date.now();
+  }catch(e){ console.error('Sidebar jobs error:',e); }
+}
+function sbSearch(jobs,q){
+  const toks=sbNorm(q).split(/\s+/).filter(Boolean);
+  return toks.length?jobs.filter(j=>toks.every(t=>j.blob.includes(t))):jobs;
+}
+function sbChip(st){
+  const es=appLang==='es';
+  const k=['won','complete'].includes(st)?'won':st==='lost'?'lost':['ready','building','failed'].includes(st)?st:'open';
+  const t={open:['Open','Abierto'],won:['Won','Ganado'],lost:['Lost','Perdido'],ready:['Ready','Listo'],building:['Building','Armando'],failed:['Failed','Falló']}[k];
+  return `<span class="sb-chip ${k}">${es?t[1]:t[0]}</span>`;
+}
+function renderSidebar(){
+  const list=document.getElementById('sb-list'); if(!list) return;
+  const es=appLang==='es', q=(document.getElementById('sb-q')?.value||'').trim();
+  const dt=t=>t?new Date(t).toLocaleDateString(es?'es-US':'en-US',{month:'short',day:'numeric'}):'';
+  const builds=(window._bgBuilds||[]).map(b=>({build:b,label:b.label||'',city:'',status:b.status,last:b.updatedAt||b.createdAt||'',blob:sbNorm(b.label)}));
+  const jobs=window._sbJobs||[];
+  let items;
+  if(q){ items=[...sbSearch(builds,q),...sbSearch(jobs,q)]; }
+  else items=[...builds,...jobs].sort((a,b)=>a.last<b.last?1:a.last>b.last?-1:0).slice(0,10);
+  document.getElementById('sb-list-title').textContent=q?(es?'Resultados':'Results'):(es?'Recientes':'Recents');
+  const row=it=>{
+    const meta=[it.client&&it.client!==it.label?it.client:'',it.city,dt(it.last)].filter(Boolean).map(escapeHtml).join(' · ');
+    const click=it.build?(it.status==='ready'?`openBuild('${it.build.id}')`:it.status==='failed'?`retryBuild('${it.build.id}')`:`showToast('${es?'Todavía se está armando.':'Still building.'}',2500)`)
+      :`loadSavedEstimate('${it.rootId}')`;
+    return `<button class="sb-item" onclick="closeSidebar();${click}"><div class="t"><span>${escapeHtml(it.label||(es?'Trabajo sin nombre':'Untitled job'))}</span>${sbChip(it.status)}</div>${meta?`<div class="m">${meta}</div>`:''}</button>`;
+  };
+  let html=items.map(row).join('');
+  if(!html) html=`<div class="sb-note">${q?(es?'No hay trabajos que coincidan.':'No jobs match.'):(isPro?(es?'Tus trabajos guardados aparecen aquí.':'Your saved jobs show up here.'):'')}</div>`;
+  if(currentUser&&!isPro) html+=`<div class="sb-note">${es?'Guardar y buscar trabajos viene con Pro.':'Saving and searching jobs comes with Pro.'}</div>`;
+  list.innerHTML=html;
+}
+function updateMenuDot(){
+  const dot=document.getElementById('menu-dot'); if(!dot) return;
+  const reqN=+(document.getElementById('sb-req-count')?.textContent||0);
+  dot.hidden=!(reqN>0||(window._bgBuilds||[]).some(b=>b.status==='ready'));
+}
+
 // ══ BUILD IT AND WALK AWAY (founder spec 2026-10-31) ══
 // Signed in, the estimate request carries the catalog and pricing settings this
 // page built, so the server can finish, price (same priceScope) and keep the job
@@ -6953,6 +7087,8 @@ function renderBuilds(){
     return `<div class="bg-card"><span class="bg-chip">${es?'ARMANDO':'BUILDING'}</span><div class="bg-txt">${job}<div class="bg-sub">${es?'Even sigue construyendo. Puedes salir de esta página.':'Even is still building. You can leave this page.'}</div></div></div>`;
   };
   box.innerHTML=(window._bgAsk||'')+list.map(card).join('');
+  updateMenuDot();
+  if(document.getElementById('sidebar')?.classList.contains('open')) renderSidebar();
 }
 async function retryBuild(id,btn){
   const es=appLang==='es';
