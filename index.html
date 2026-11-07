@@ -3774,11 +3774,54 @@ function permitBasis(row){
 
 // value = the job's price before permit fees (what goes on the application as
 // construction cost); qty = sqft / fixtures / tons when the fee is per unit.
+// "$50,001", "$1M", "$5,000,001", "$50M" -> a number.
+function permitMoney(t){
+  const m=String(t||'').replace(/,/g,'').match(/(\d+(?:\.\d+)?)\s*([MK])?/i);
+  return m?+m[1]*(m[2]?(m[2].toUpperCase()==='M'?1e6:1e3):1):null;
+}
+// A base_plus_per_1000 row's bracket (EXPANSION DATA item 5, 2026-11-07): the base
+// fee covers the job up to `lo`; the rate is charged for each $1,000 or fraction
+// ABOVE lo; the row applies to values in (lo, hi]. The schedule's own words win
+// ("$220 first $25,000", "$26 up to and including $1,000"); otherwise the bracket
+// in the fee name ("$50,001-$200,000" starts after $50,000). null = unreadable.
+function permitBracket(row){
+  const wt=String(row&&row.work_type||''), notes=String(row&&row.notes||'');
+  let lo=null,hi=Infinity;
+  const range=wt.match(/\$\s?([\d,.]+\s*[MK]?)\s*(?:-|–|to)\s*\$\s?([\d,.]+\s*[MK]?)/i);
+  const open=wt.match(/\$\s?([\d,.]+\s*[MK]?)\s*(?:\+|and up|and over)|over\s*\$\s?([\d,.]+\s*[MK]?)/i);
+  if(range){ lo=permitMoney(range[1]); hi=permitMoney(range[2]); }
+  else if(open){ lo=permitMoney(open[1]||open[2]); }
+  if(lo!=null&&lo%1000===1) lo-=1;
+  const first=notes.match(/(?:\bfirst|up to(?: and including)?)\s*\$\s?([\d,.]+\s*[MK]?)/i);
+  if(first) lo=permitMoney(first[1]);
+  return lo==null?null:{lo,hi};
+}
+const isBasePlusPer1000=row=>/^base_plus_per_1000$/i.test(String(row&&row.method||'').trim());
+// The bracket row whose range holds the job's value, from the same fee family
+// (same city, same fee name before the bracket). The model picks a row; the
+// value decides the bracket.
+function permitBracketRow(row,value,permitEntries){
+  const br=isBasePlusPer1000(row)&&permitBracket(row);
+  if(!br||!(value>0)||(value>br.lo&&value<=br.hi)) return row;
+  const family=r=>{const w=String(r.work_type||'');const i=w.indexOf('$');return (i<0?w:w.slice(0,i)).replace(/[\s,—–-]*(value|valuation|over)?[\s,—–-]*$/i,'').trim().toLowerCase();};
+  const fam=family(row);
+  for(const e of permitEntries||[]){
+    const r=e.row||e;
+    if(r===row||r.municipality!==row.municipality||!isBasePlusPer1000(r)||family(r)!==fam) continue;
+    const b=permitBracket(r);
+    if(b&&value>b.lo&&value<=b.hi) return r;
+  }
+  return row;
+}
 function computePermitFee(row,value,qty,sqft){
   const basis=permitBasis(row);
   const r=permitNum(row.rate);
   const min=permitNum(row.min_fee)||0;
   let fee=null;
+  // Base + rate per $1,000 (or fraction) above the bracket's start. A row whose
+  // bracket can't be read keeps the older max(rate x value/1000, base) reading.
+  const br=isBasePlusPer1000(row)&&r!=null&&+value>0?permitBracket(row):null;
+  if(br) return {fee:round2(min+r*Math.max(0,Math.ceil(round2(+value-br.lo)/1000))),basis,approx:false};
   if(basis==='value'&&r!=null){
     // "$125 up to $5,000, plus 1.35% of cost": the rate is the number marked %, not the first one.
     const pm=typeof row.rate==='string'&&row.rate.replace(/,/g,'').match(/(\d*\.?\d+)\s*%/);
@@ -3931,13 +3974,14 @@ function priceScope(scope,cat,s){
     if(basis==='addon') continue;
     // Two base permits both charged on the job's value would bill the same work twice.
     if(basis==='value'||basis==='per1000'){ if(valueBased++) continue; }
-    const r=computePermitFee(e.row,jobValue,it.qty,s.sqft);
-    const name=`${e.row.municipality||''} ${e.row.work_type||'permit'}`.trim();
+    const row=permitBracketRow(e.row,jobValue,cat.permits);
+    const r=computePermitFee(row,jobValue,it.qty,s.sqft);
+    const name=`${row.municipality||''} ${row.work_type||'permit'}`.trim();
     // ES: the city's fee names are English-only, so the line uses the model's Spanish name plus the city.
-    const esName=`${it.description&&!/^permit\b/i.test(it.description)?it.description:'Permiso'} (${e.row.municipality||''})`;
+    const esName=`${it.description&&!/^permit\b/i.test(it.description)?it.description:'Permiso'} (${row.municipality||''})`;
     if(r.fee==null){ notes.push(es?`${esName}: no se pudo calcular la tarifa con la tabla que tenemos. Confírmala con el departamento de construcción.`:`${name}: the fee could not be figured from the schedule on file. Verify with the building department.`); continue; }
     if(r.approx) notes.push(es?`${esName}: se muestra la tarifa mínima de la tabla; la regla completa es ${PERMIT_BASIS_ES[r.basis]||r.basis}. Confírmala con el departamento de construcción.`:`${name}: shown at the schedule's minimum fee; the full rule is ${r.basis}. Verify with the building department.`);
-    data.lineItems.push({category:'Permits',description:es?esName:`Permit: ${name}`,qty:1,unit:'permit',unitCost:r.fee,total:r.fee,ref:e.ref,priced:'permit schedule',permitRow:{municipality:e.row.municipality,work_type:e.row.work_type,rate:e.row.rate,min_fee:e.row.min_fee,method:e.row.method,source:e.row.source||'',date:e.row.date||'',fl:cat.state==='FL'},jobValue});
+    data.lineItems.push({category:'Permits',description:es?esName:`Permit: ${name}`,qty:1,unit:'permit',unitCost:r.fee,total:r.fee,ref:e.ref,priced:'permit schedule',permitRow:{municipality:row.municipality,work_type:row.work_type,rate:row.rate,min_fee:row.min_fee,method:row.method,source:row.source||'',date:row.date||'',fl:cat.state==='FL'},jobValue});
   }
 
   data.subtotal=round2(data.lineItems.reduce((t,l)=>t+l.total,0));
