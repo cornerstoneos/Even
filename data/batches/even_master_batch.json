@@ -10410,6 +10410,42 @@
         "unit": "hourly",
         "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
         "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 18.34,
+        "mid": 24.68,
+        "high": 38.67,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 14.86,
+        "mid": 17.99,
+        "high": 23.18,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 17.9,
+        "mid": 23.34,
+        "high": 38.61,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Fence Erectors",
+        "low": 18.71,
+        "mid": 26.36,
+        "high": 26.36,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
       }
     ],
     "permits": [
@@ -21124,6 +21160,42 @@
         "low": 16.93,
         "mid": 22.26,
         "high": 34.91,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 18.34,
+        "mid": 24.68,
+        "high": 38.67,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 14.86,
+        "mid": 17.99,
+        "high": 23.18,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 17.9,
+        "mid": 23.34,
+        "high": 38.61,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Fence Erectors",
+        "low": 18.71,
+        "mid": 26.36,
+        "high": 26.36,
         "unit": "hourly",
         "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
         "date": "2025-05"
@@ -72038,7 +72110,206 @@
         "note": "Copied 2026-11-07 from the South Florida list: same published online price, not a local Jacksonville quote. HIGH confidence cannot come from this row."
       }
     ],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 18.82,
+        "mid": 27.61,
+        "high": 42.58,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 14.9,
+        "mid": 17.94,
+        "high": 22.26,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 18.23,
+        "mid": 23.36,
+        "high": 24.17,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 24.75,
+        "mid": 37.39,
+        "high": 50.38,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 17.8,
+        "mid": 24.3,
+        "high": 34.81,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tile and Stone Setters",
+        "low": 13,
+        "mid": 21.84,
+        "high": 34.75,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 18.39,
+        "mid": 23.68,
+        "high": 29.82,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 14.59,
+        "mid": 20.9,
+        "high": 27.74,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 18.89,
+        "mid": 23.52,
+        "high": 31.09,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 17.79,
+        "mid": 23.92,
+        "high": 28.28,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 18.31,
+        "mid": 28.02,
+        "high": 37.12,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 17.55,
+        "mid": 23.25,
+        "high": 33.26,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 17.5,
+        "mid": 22.47,
+        "high": 30.43,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 17.93,
+        "mid": 23.09,
+        "high": 28.25,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 19.24,
+        "mid": 28.33,
+        "high": 36.21,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plasterers and Stucco Masons",
+        "low": 16.71,
+        "mid": 23.43,
+        "high": 35.91,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 16.54,
+        "mid": 22.85,
+        "high": 30.74,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 17.06,
+        "mid": 23.73,
+        "high": 33.65,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.44,
+        "mid": 18.21,
+        "high": 23.58,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 15.28,
+        "mid": 17.7,
+        "high": 23.08,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 18.23,
+        "mid": 28.17,
+        "high": 38.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16.84,
+        "mid": 22.78,
+        "high": 36.36,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Jacksonville FL (CBSA 27260), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Jacksonville FL",
@@ -85145,7 +85416,215 @@
         "note": "Copied 2026-11-07 from the South Florida list: same published online price, not a local Orlando quote. HIGH confidence cannot come from this row."
       }
     ],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 18.36,
+        "mid": 24.69,
+        "high": 38.63,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 14.65,
+        "mid": 17.46,
+        "high": 22.22,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 13.6,
+        "mid": 20.2,
+        "high": 24.87,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 24.19,
+        "mid": 36.5,
+        "high": 54.32,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 17.58,
+        "mid": 23.92,
+        "high": 31.47,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tile and Stone Setters",
+        "low": 13.33,
+        "mid": 22.82,
+        "high": 34.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 18.22,
+        "mid": 22.98,
+        "high": 29.6,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 14.69,
+        "mid": 19.66,
+        "high": 27.9,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 18.88,
+        "mid": 24.53,
+        "high": 30.68,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 14.59,
+        "mid": 22.96,
+        "high": 29.13,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 18.18,
+        "mid": 24.43,
+        "high": 35.84,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 17.37,
+        "mid": 22.72,
+        "high": 30.28,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 17.33,
+        "mid": 22.65,
+        "high": 30.13,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 16.94,
+        "mid": 21.73,
+        "high": 29.4,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 19.19,
+        "mid": 26.62,
+        "high": 35.07,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plasterers and Stucco Masons",
+        "low": 18.65,
+        "mid": 24.02,
+        "high": 29.75,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 14.86,
+        "mid": 22.74,
+        "high": 30.32,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 16.89,
+        "mid": 23.52,
+        "high": 40.25,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 16.6,
+        "mid": 18.14,
+        "high": 22.28,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 15.45,
+        "mid": 18.29,
+        "high": 23.67,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Fence Erectors",
+        "low": 13,
+        "mid": 17.99,
+        "high": 22.86,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 18.28,
+        "mid": 24.74,
+        "high": 37.43,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16.73,
+        "mid": 22.15,
+        "high": 30.26,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Orlando-Kissimmee-Sanford FL (CBSA 36740), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Orlando FL",
@@ -96883,7 +97362,197 @@
         "note": "Copied 2026-11-07 from the South Florida list: same published online price, not a local Tampa quote. HIGH confidence cannot come from this row."
       }
     ],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 18.4,
+        "mid": 25.86,
+        "high": 39.5,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 14.83,
+        "mid": 17.89,
+        "high": 22.77,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 13,
+        "mid": 13,
+        "high": 23.6,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 23.77,
+        "mid": 36.05,
+        "high": 56.04,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 17.88,
+        "mid": 25.06,
+        "high": 33.63,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tile and Stone Setters",
+        "low": 13.38,
+        "mid": 22.25,
+        "high": 31.58,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 18.5,
+        "mid": 23.84,
+        "high": 36.09,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 16.15,
+        "mid": 21.04,
+        "high": 28.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 19.42,
+        "mid": 24.18,
+        "high": 35.25,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 17.6,
+        "mid": 23.83,
+        "high": 29.58,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 18.73,
+        "mid": 27.62,
+        "high": 36.87,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 17.65,
+        "mid": 22.84,
+        "high": 29.96,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 17.72,
+        "mid": 22.87,
+        "high": 28.3,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 20,
+        "mid": 25,
+        "high": 32.13,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plasterers and Stucco Masons",
+        "low": 16.33,
+        "mid": 23.2,
+        "high": 30.04,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 16,
+        "mid": 22.68,
+        "high": 30.57,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 17.25,
+        "mid": 23.8,
+        "high": 31.71,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 16.82,
+        "mid": 18.4,
+        "high": 23.7,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 14.2,
+        "mid": 18.71,
+        "high": 23.13,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 19.05,
+        "mid": 24.3,
+        "high": 36.2,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16,
+        "mid": 22.12,
+        "high": 31.9,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Tampa-St. Petersburg-Clearwater FL (CBSA 45300), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Tampa FL",
@@ -109980,6 +110649,42 @@
         "low": 16.93,
         "mid": 22.26,
         "high": 34.91,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 18.34,
+        "mid": 24.68,
+        "high": 38.67,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 14.86,
+        "mid": 17.99,
+        "high": 23.18,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 17.9,
+        "mid": 23.34,
+        "high": 38.61,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Fence Erectors",
+        "low": 18.71,
+        "mid": 26.36,
+        "high": 26.36,
         "unit": "hourly",
         "source": "BLS OEWS Query System, Miami-Fort Lauderdale-West Palm Beach FL (CBSA 33100), May 2025",
         "date": "2025-05"

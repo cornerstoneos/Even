@@ -54,7 +54,7 @@ check(`confidence not HIGH (${P.capConfidence(P.computeConfidenceTier(md,cats),'
 console.log('\n=== Spanish names map too; other trades unchanged ===');
 check('ES words map (piscina, paisajismo, riego, césped)', P.scopeMaterialCategories('Pools',[{trade:'Remodelación de piscina'}])?.has('Pool')&&P.scopeMaterialCategories('x',[{trade:'Paisajismo'}])?.has('Landscaping')&&P.scopeMaterialCategories('x',[{trade:'Riego'}])?.has('Irrigation')&&P.scopeMaterialCategories('x',[{trade:'Césped nuevo'}])?.has('Landscaping'));
 const plain=P.buildCatalog(md,new Set(['Plumbing']),{trade:'Plumbing'}), noTrade=P.buildCatalog(md,new Set(['Plumbing']),{});
-check('a normal trade keeps all 20 labor rows and the same prompt as before', plain.labor.length===20&&P.catalogPromptText(plain)===P.catalogPromptText(noTrade));
+check(`a normal trade keeps all ${md.labor.length} labor rows and the same prompt as before`, plain.labor.length===md.labor.length&&md.labor.length>=20&&P.catalogPromptText(plain)===P.catalogPromptText(noTrade));
 
 console.log('\n=== screens and labels ===');
 check('dropdown: Landscaping / Paisajismo, Pools / Piscinas', /<option value="Landscaping" data-es="Paisajismo">Landscaping<\/option>/.test(html)&&/<option value="Pools" data-es="Piscinas">Pools<\/option>/.test(html));
