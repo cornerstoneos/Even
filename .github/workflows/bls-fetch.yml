@@ -1,0 +1,27 @@
+# Manual, read-only: pulls BLS OEWS wage numbers for the labor rows and prints
+# them in the run log + a bls_oews.json artifact. Changes nothing.
+name: BLS OEWS fetch
+on:
+  workflow_dispatch:
+    inputs:
+      areas:
+        description: 'CBSA codes, comma separated'
+        default: '33100,45300,36740,27260'
+permissions:
+  contents: read
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node data-pipeline/bls_oews_fetch.js
+        env:
+          AREAS: ${{ inputs.areas }}
+          BLS_API_KEY: ${{ secrets.BLS_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bls-oews
+          path: bls_oews.json
