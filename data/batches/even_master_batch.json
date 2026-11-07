@@ -18540,6 +18540,156 @@
         "date": "2026-10-01",
         "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Building permit, new construction \u2014 zoning districts H30C/H40/H120/SD-B40",
+        "min_fee": 350.0,
+        "rate": "2.5%",
+        "method": "base_plus_percent",
+        "notes": "Base fee $350 + 2.5% of construction cost up to $50 million, plus 2.0% of cost over $50M up to $100M, plus 1.5% over $100M. Applies to all trades: building, electrical, mechanical, plumbing are calculated the same way (base + % of construction cost); a trade sub-permit under a master permit is $150 when its work was included in the master permit's cost. Cost of construction not less than $500/sq ft (commercial, multi-family) or $200/sq ft (detached single-family) unless the Building Official approves otherwise.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Building permit, alterations \u2014 zoning districts H30C/H40/H120/SD-B40",
+        "min_fee": 250.0,
+        "rate": "2.5%",
+        "method": "base_plus_percent",
+        "notes": "Alterations minimum permit fee $250; same percentage formula as new construction. Applies to all trades: building, electrical, mechanical, plumbing are calculated the same way (base + % of construction cost); a trade sub-permit under a master permit is $150 when its work was included in the master permit's cost. Cost of construction not less than $500/sq ft (commercial, multi-family) or $200/sq ft (detached single-family) unless the Building Official approves otherwise.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Building permit, new construction \u2014 zoning districts H30A/H30B",
+        "min_fee": 350.0,
+        "rate": "2.5%",
+        "method": "base_plus_percent",
+        "notes": "Base fee $350 + 2.5% of construction cost up to and including $5 million, plus 1.5% of cost over $5 million. Applies to all trades: building, electrical, mechanical, plumbing are calculated the same way (base + % of construction cost); a trade sub-permit under a master permit is $150 when its work was included in the master permit's cost. Cost of construction not less than $500/sq ft (commercial, multi-family) or $200/sq ft (detached single-family) unless the Building Official approves otherwise.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Building permit, alterations up to $200,000 \u2014 zoning districts H30A/H30B",
+        "min_fee": 150.0,
+        "rate": "1.5%",
+        "method": "base_plus_percent",
+        "notes": "Base fee $150 + 1.5% where estimated construction cost is $200,000 or less; above $200,000 the new-construction formula applies. Applies to all trades: building, electrical, mechanical, plumbing are calculated the same way (base + % of construction cost); a trade sub-permit under a master permit is $150 when its work was included in the master permit's cost. Cost of construction not less than $500/sq ft (commercial, multi-family) or $200/sq ft (detached single-family) unless the Building Official approves otherwise.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Trade sub-permit under a master permit (electrical, mechanical, plumbing)",
+        "min_fee": 150.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "When the sub-permit's work was included in the master permit's construction cost.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Swap-out permit (e.g., water heater, AC unit), per Building Official",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Planning review fee (with building permit)",
+        "min_fee": 75.0,
+        "rate": "0.75%",
+        "method": "percent_of_cost_with_min",
+        "notes": "0.75% of construction cost (0.50% noted for some H30A/H30B reviews), minimum $75.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Public Works review fee (new construction, marine, driveway/approach)",
+        "min_fee": 75.0,
+        "rate": "0.75%",
+        "method": "percent_of_cost_with_min",
+        "notes": "0.75% of construction cost (0.50% in H30A/H30B), minimum $75.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Fire review fee (with building permit)",
+        "min_fee": 75.0,
+        "rate": null,
+        "method": "flat_minimum",
+        "notes": "Per the Miami-Dade County Fire Prevention Fee Schedule (Implementing Order 04-123); Surfside minimum $75. Not charged on flooring, demolition, fence, driveway/approach, deck/pavers.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Technology / training / safety surcharge",
+        "min_fee": null,
+        "rate": 6.0,
+        "method": "percent_of_permit_fee",
+        "notes": "6% of every building permit fee.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "State surcharges (DBPR 1.0% + BCAI 1.5%)",
+        "min_fee": 4.0,
+        "rate": 2.5,
+        "method": "percent_of_permit_fee",
+        "notes": "1.0% + 1.5% of the permit fee, minimum $2.00 each.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Miami-Dade County code compliance surcharge",
+        "min_fee": null,
+        "rate": 0.6,
+        "method": "per_dollar_of_value",
+        "notes": "$0.60 per $1,000 of work valuation.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Sanitation surcharge (building, electrical, plumbing, mechanical, demolition)",
+        "min_fee": null,
+        "rate": 0.3,
+        "method": "percent_of_value",
+        "notes": "0.30% of estimated project cost; minimum and maximum apply (amounts not legible in the scanned copy).",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Construction parking plan (CPP) permit fee",
+        "min_fee": 144.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Town Code Sec. 14-28, when a construction parking plan is required.",
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
+      },
+      {
+        "municipality": "Surfside",
+        "work_type": "Annual boiler inspection",
+        "min_fee": 318.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-03-10",
+        "source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
       }
     ],
     "flag": " MIAMI-DADE COUNTY ROWS ADDED 2026-07-25 from official RER Fee Schedule (Implementing Order 4-63, effective 2025-10-01, first increase in 17+ years). IMPORTANT SCOPE NOTE: RER issues permits ONLY for unincorporated Miami-Dade. All 34 incorporated municipalities run their own building departments and set their own fees \u2014 so county rows serve as the FALLBACK approximation for those cities, not their actual schedule, and any estimate using them should disclose that. Timeline not published in the fee schedule; a third-party permit expediter reports 1-10 business days for initial plan review, which is NOT an official county figure and was deliberately not recorded as timeline_days. TIMELINE ADDED 2026-07-25: official Miami-Dade RER Plan Review page (miamidade.gov/global/economy/building/plan-review.page) states 24 hours to 10 business days for initial review, applied to all Miami-Dade County rows as timeline_days=5 (midpoint) with the full range preserved in timeline_note. Miramar and North Palm Beach checked but NOT added \u2014 only third-party sources found (permit expediters, contractor blogs), contradicting each other by 4x (5 to 21 business days) with no source claiming to quote the city's own stated policy. Omitted rather than guessed."
