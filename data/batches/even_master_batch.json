@@ -100113,6 +100113,286 @@
         "notes": "Additional 100% of the permit fee.",
         "date": "2024-10-05",
         "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Building permit fee (all permit types), per structure \u2014 valuation $0-$100,000",
+        "min_fee": 33.0,
+        "rate": 7.25,
+        "method": "base_plus_per_1000",
+        "notes": "$33.00 plus $7.25 per $1,000 of value or fraction thereof. Valuation = contract value. This fee applies to all types of permits (building, electrical, plumbing, mechanical, gas, roofing); combination permits add $30.00 per additional trade or permit type (no extra for swimming pools). Permits generally not required for minor work valued at $500 or less. Valuation-based: may change under Florida HB 803.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Building permit fee (all permit types), per structure \u2014 valuation $100,001-$500,000",
+        "min_fee": 700.0,
+        "rate": 6.15,
+        "method": "base_plus_per_1000",
+        "notes": "$700.00 plus $6.15 per $1,000 of value or fraction thereof. Valuation = contract value. This fee applies to all types of permits (building, electrical, plumbing, mechanical, gas, roofing); combination permits add $30.00 per additional trade or permit type (no extra for swimming pools). Permits generally not required for minor work valued at $500 or less. Valuation-based: may change under Florida HB 803.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Building permit fee (all permit types), per structure \u2014 valuation $500,001-$1,000,000",
+        "min_fee": 2940.0,
+        "rate": 3.9,
+        "method": "base_plus_per_1000",
+        "notes": "$2,940.00 plus $3.90 per $1,000 of value or fraction thereof. Valuation = contract value. This fee applies to all types of permits (building, electrical, plumbing, mechanical, gas, roofing); combination permits add $30.00 per additional trade or permit type (no extra for swimming pools). Permits generally not required for minor work valued at $500 or less. Valuation-based: may change under Florida HB 803.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Building permit fee (all permit types), per structure \u2014 valuation over $1,000,000",
+        "min_fee": 4600.0,
+        "rate": 1.65,
+        "method": "base_plus_per_1000",
+        "notes": "$4,600.00 plus $1.65 per $1,000 of value or fraction thereof. Valuation = contract value. This fee applies to all types of permits (building, electrical, plumbing, mechanical, gas, roofing); combination permits add $30.00 per additional trade or permit type (no extra for swimming pools). Permits generally not required for minor work valued at $500 or less. Valuation-based: may change under Florida HB 803.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Combination permit, each additional trade or permit type",
+        "min_fee": 30.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Added to the building permit fee for combination permits. Exception: no additional fees for swimming pools.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Plans examination fee \u2014 one or two-family residential, valuation $0 and up",
+        "min_fee": 16.0,
+        "rate": 1.0,
+        "method": "base_plus_per_1000",
+        "notes": "$16.00 plus $1.00 per $1,000 of value or fraction (contract). Reduced 50% when a private provider does plan review.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Plans examination fee \u2014 multifamily and commercial, valuation $0-$100,000",
+        "min_fee": 44.0,
+        "rate": 3.9,
+        "method": "base_plus_per_1000",
+        "notes": "$44.00 plus $3.90 per $1,000 of value or fraction thereof. Reduced 50% with a private provider.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Plans examination fee \u2014 multifamily and commercial, valuation $100,001-$500,000",
+        "min_fee": 380.0,
+        "rate": 2.8,
+        "method": "base_plus_per_1000",
+        "notes": "$380.00 plus $2.80 per $1,000 of value or fraction thereof. Reduced 50% with a private provider.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Plans examination fee \u2014 multifamily and commercial, valuation $500,001-$1,000,000",
+        "min_fee": 1275.0,
+        "rate": 2.25,
+        "method": "base_plus_per_1000",
+        "notes": "$1,275.00 plus $2.25 per $1,000 of value or fraction thereof. Reduced 50% with a private provider.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Plans examination fee \u2014 multifamily and commercial, valuation over $1,000,000",
+        "min_fee": 2050.0,
+        "rate": 1.65,
+        "method": "base_plus_per_1000",
+        "notes": "$2,050.00 plus $1.65 per $1,000 of value or fraction thereof. Reduced 50% with a private provider.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Mobile home / construction trailer \u2014 building permit (tie-down and site placement)",
+        "min_fee": 37.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Mobile home / construction trailer \u2014 electric permit",
+        "min_fee": 37.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Mobile home / construction trailer \u2014 gas permit",
+        "min_fee": 37.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Mobile home / construction trailer \u2014 plumbing permit",
+        "min_fee": 37.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Mobile home / construction trailer \u2014 mechanical permit",
+        "min_fee": 37.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Temporary power pole (not with a combination permit)",
+        "min_fee": 37.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Swimming pool permit \u2014 above-ground pool (all work)",
+        "min_fee": 37.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Demolition permit",
+        "min_fee": 53.0,
+        "rate": 0.1,
+        "method": "flat",
+        "notes": "$53.00 plus $0.10 per sq ft over 1,000 sq ft; maximum total $1,000.00.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Reinspection fee (work not ready) \u2014 first occurrence",
+        "min_fee": 32.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Second or subsequent occurrence: $80.00.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Reinspection fee (work not ready) \u2014 second or subsequent",
+        "min_fee": 80.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "After-hours or weekend inspection",
+        "min_fee": 100.0,
+        "rate": 53.0,
+        "method": "hourly",
+        "notes": "$53.00 per hour per inspection, minimum $100.00 per inspection.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Change to permitted plans / plan amendment review",
+        "min_fee": 53.0,
+        "rate": 53.0,
+        "method": "hourly",
+        "notes": "Per hour. Field-reviewed plan amendment $26.00.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Change of contractor, per contractor",
+        "min_fee": 26.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Certificate of occupancy \u2014 one or two-family, per unit",
+        "min_fee": 11.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Certificate of occupancy \u2014 multifamily and commercial, per application",
+        "min_fee": 26.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Expired permit fee",
+        "min_fee": 200.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "May be refunded on close-out through final inspection.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "After-the-fact permit (work without permit)",
+        "min_fee": null,
+        "rate": 300.0,
+        "method": "percent_of_permit_fee",
+        "notes": "Triple the permit fee; second or subsequent occurrence by the same contractor: 10 times the permit fee.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+      },
+      {
+        "municipality": "Clearwater",
+        "work_type": "Notice of commencement filing service fee",
+        "min_fee": 10.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "In addition to County Clerk charges.",
+        "date": "2026-06-26",
+        "source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
       }
     ],
     "source": "City of Tampa Development & Growth Management, Construction Services Division, Trade Permit Fee Schedule, effective 10/1/2018, updated 2/16/2023 (still the current linked doc on tampa.gov as of 2026)",
