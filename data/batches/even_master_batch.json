@@ -18386,6 +18386,160 @@
         "notes": null,
         "source": "Town of Bay Harbor Islands Resolution No. 2555, Exhibit B Building Department Permit Fee Schedule (amended Feb 11, 2026), bayharborislands-fl.gov/DocumentCenter/View/4556",
         "date": "2026-10-02"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Minimum building permit fee (all base permit fees)",
+        "min_fee": 200.0,
+        "rate": null,
+        "method": "flat_minimum",
+        "notes": "Cost-based schedule (no longer valuation-based). Actual fee = clerical intake (Exhibit H, $0-$200) + plan review (Exhibit H, $40-$825, two review rounds included) + inspections (Exhibit H, about $100-$1,300), by permit type and work class. Exhibit H itself is not in this document.",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Plan review fee (range by work class)",
+        "min_fee": 40.0,
+        "rate": 825.0,
+        "method": "flat_or_per_increment",
+        "notes": "Exhibit H range $40-$825 by permit type and work class; includes two review rounds. Rework after round 2 billed at the discipline's hourly rate.",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Inspection fee (range by work class)",
+        "min_fee": 100.0,
+        "rate": 1300.0,
+        "method": "flat_or_per_increment",
+        "notes": "Exhibit H range about $100-$1,300 for the standard number of inspections for the work class.",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Reinspection fee",
+        "min_fee": 103.73,
+        "rate": null,
+        "method": "flat",
+        "notes": "Per trip, includes technology fee. Each later re-inspection for the same item: 4x the trip rate (FS 553.80(2)(c)).",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "After-hours / overtime inspection",
+        "min_fee": 254.83,
+        "rate": 100.73,
+        "method": "flat",
+        "notes": "First hour $254.83 (unlimited inspections per trade in that hour); each additional hour $100.73.",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Plan revision after permit issuance \u2014 residential minimum",
+        "min_fee": 300.0,
+        "rate": null,
+        "method": "flat_minimum",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Plan revision after permit issuance \u2014 commercial minimum",
+        "min_fee": 450.0,
+        "rate": null,
+        "method": "flat_minimum",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Shop drawings (deferred submittal)",
+        "min_fee": 150.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Per submittal.",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Early start permitting review",
+        "min_fee": 125.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Work without permit penalty",
+        "min_fee": 100.0,
+        "rate": 100.0,
+        "method": "flat",
+        "notes": "$100 plus 100% of the base permit fee, on top of the required permit fee.",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Technology fee \u2014 per permit",
+        "min_fee": 75.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Plus $3.00 per inspection (BD596).",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "State surcharges (BCAI 1.5% + Florida Building Commission 1.0%)",
+        "min_fee": 4.0,
+        "rate": 2.5,
+        "method": "percent_of_permit_fee",
+        "notes": "2.5% of base permit fee, minimum $4.00 total.",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Miami-Dade County Code Compliance surcharge",
+        "min_fee": null,
+        "rate": 5.0,
+        "method": "percent_of_permit_fee",
+        "notes": "5% of base permit fee (effective 6/26/2026).",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
+      },
+      {
+        "municipality": "City of Doral",
+        "work_type": "Concurrency fee (new construction)",
+        "min_fee": null,
+        "rate": 6.0,
+        "method": "percent_of_permit_fee",
+        "notes": "6% of total permit fee where a concurrency review applies.",
+        "date": "2026-10-01",
+        "source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134",
+        "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       }
     ],
     "flag": " MIAMI-DADE COUNTY ROWS ADDED 2026-07-25 from official RER Fee Schedule (Implementing Order 4-63, effective 2025-10-01, first increase in 17+ years). IMPORTANT SCOPE NOTE: RER issues permits ONLY for unincorporated Miami-Dade. All 34 incorporated municipalities run their own building departments and set their own fees \u2014 so county rows serve as the FALLBACK approximation for those cities, not their actual schedule, and any estimate using them should disclose that. Timeline not published in the fee schedule; a third-party permit expediter reports 1-10 business days for initial plan review, which is NOT an official county figure and was deliberately not recorded as timeline_days. TIMELINE ADDED 2026-07-25: official Miami-Dade RER Plan Review page (miamidade.gov/global/economy/building/plan-review.page) states 24 hours to 10 business days for initial review, applied to all Miami-Dade County rows as timeline_days=5 (midpoint) with the full range preserved in timeline_note. Miramar and North Palm Beach checked but NOT added \u2014 only third-party sources found (permit expediters, contractor blogs), contradicting each other by 4x (5 to 21 business days) with no source claiming to quote the city's own stated policy. Omitted rather than guessed."
