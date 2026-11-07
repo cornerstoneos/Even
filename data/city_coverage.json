@@ -2,9 +2,9 @@
   "generated_by": "even-data tools/build_checklist.py",
   "rule": "complete = core fees in data/permit_core_fees.json",
   "counts": {
-    "complete": 40,
+    "complete": 42,
     "partial": 7,
-    "not started": 47
+    "not started": 80
   },
   "cities": [
     {
@@ -231,11 +231,11 @@
     {
       "city": "Surfside",
       "county": "Miami-Dade",
-      "status": "not started",
+      "status": "complete",
       "missing_core_fees": [],
-      "rows": 0,
-      "last_entry_date": null,
-      "schedule_source": null
+      "rows": 15,
+      "last_entry_date": "2026-03-10",
+      "schedule_source": "Town of Surfside Building Department Fee Guide, Exhibit A to Resolution No. 2026-3494 (adopted March 10, 2026, effective on adoption); clean adopted copy on townofsurfsidefl.gov, scanned PDF read by OCR on 2026-11-07"
     },
     {
       "city": "Bal Harbour",
@@ -887,6 +887,321 @@
     {
       "city": "Ruskin",
       "county": "Hillsborough",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Orlando",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Pine Hills",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Meadow Woods",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Hunters Creek",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Doctor Phillips",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Conway",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Azalea Park",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Union Park",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Winter Park",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "St. Petersburg",
+      "county": "Pinellas",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Clearwater",
+      "county": "Pinellas",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 28,
+      "last_entry_date": "2026-06-26",
+      "schedule_source": "City of Clearwater Schedule of Fees, Rates and Charges, Building Regulations (Planning & Development Department; 'Updated 06.26.2026'), myclearwater.com schedule-of-fees-rates-and-charges-building-regulations.pdf"
+    },
+    {
+      "city": "Largo",
+      "county": "Pinellas",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Pinellas Park",
+      "county": "Pinellas",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Dunedin",
+      "county": "Pinellas",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Tarpon Springs",
+      "county": "Pinellas",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Oldsmar",
+      "county": "Pinellas",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Safety Harbor",
+      "county": "Pinellas",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "New Port Richey",
+      "county": "Pasco",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Zephyrhills",
+      "county": "Pasco",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Dade City",
+      "county": "Pasco",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Wesley Chapel",
+      "county": "Pasco",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Land O' Lakes",
+      "county": "Pasco",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Kissimmee",
+      "county": "Osceola",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "St. Cloud",
+      "county": "Osceola",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Sanford",
+      "county": "Seminole",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Oviedo",
+      "county": "Seminole",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Altamonte Springs",
+      "county": "Seminole",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Casselberry",
+      "county": "Seminole",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Lake Mary",
+      "county": "Seminole",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Longwood",
+      "county": "Seminole",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Winter Springs",
+      "county": "Seminole",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Apopka",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Winter Garden",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Ocoee",
+      "county": "Orange",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Maitland",
+      "county": "Orange",
       "status": "not started",
       "missing_core_fees": [],
       "rows": 0,
