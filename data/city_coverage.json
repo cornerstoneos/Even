@@ -3,7 +3,7 @@
   "rule": "complete = core fees in data/permit_core_fees.json",
   "counts": {
     "complete": 40,
-    "not started": 38,
+    "not started": 48,
     "partial": 6
   },
   "cities": [
@@ -793,6 +793,96 @@
       "city": "Jupiter Farms",
       "county": "Palm Beach",
       "status": "county schedule (unincorporated)",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Tampa",
+      "county": "Hillsborough",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Temple Terrace",
+      "county": "Hillsborough",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Plant City",
+      "county": "Hillsborough",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Brandon",
+      "county": "Hillsborough",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Riverview",
+      "county": "Hillsborough",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Valrico",
+      "county": "Hillsborough",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Seffner",
+      "county": "Hillsborough",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Lutz",
+      "county": "Hillsborough",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Apollo Beach",
+      "county": "Hillsborough",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Ruskin",
+      "county": "Hillsborough",
+      "status": "not started",
       "missing_core_fees": [],
       "rows": 0,
       "last_entry_date": null,

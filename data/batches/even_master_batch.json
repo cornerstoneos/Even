@@ -18388,7 +18388,7 @@
         "date": "2026-10-02"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Minimum building permit fee (all base permit fees)",
         "min_fee": 200.0,
         "rate": null,
@@ -18399,7 +18399,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Plan review fee (range by work class)",
         "min_fee": 40.0,
         "rate": 825.0,
@@ -18410,7 +18410,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Inspection fee (range by work class)",
         "min_fee": 100.0,
         "rate": 1300.0,
@@ -18421,7 +18421,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Reinspection fee",
         "min_fee": 103.73,
         "rate": null,
@@ -18432,7 +18432,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "After-hours / overtime inspection",
         "min_fee": 254.83,
         "rate": 100.73,
@@ -18443,7 +18443,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Plan revision after permit issuance \u2014 residential minimum",
         "min_fee": 300.0,
         "rate": null,
@@ -18454,7 +18454,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Plan revision after permit issuance \u2014 commercial minimum",
         "min_fee": 450.0,
         "rate": null,
@@ -18465,7 +18465,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Shop drawings (deferred submittal)",
         "min_fee": 150.0,
         "rate": null,
@@ -18476,7 +18476,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Early start permitting review",
         "min_fee": 125.0,
         "rate": null,
@@ -18487,7 +18487,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Work without permit penalty",
         "min_fee": 100.0,
         "rate": 100.0,
@@ -18498,7 +18498,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Technology fee \u2014 per permit",
         "min_fee": 75.0,
         "rate": null,
@@ -18509,7 +18509,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "State surcharges (BCAI 1.5% + Florida Building Commission 1.0%)",
         "min_fee": 4.0,
         "rate": 2.5,
@@ -18520,7 +18520,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Miami-Dade County Code Compliance surcharge",
         "min_fee": null,
         "rate": 5.0,
@@ -18531,7 +18531,7 @@
         "flag": "partial: trade fees are set per work class in Exhibit H (Simplified Fee Matrix), not in this document"
       },
       {
-        "municipality": "City of Doral",
+        "municipality": "Doral",
         "work_type": "Concurrency fee (new construction)",
         "min_fee": null,
         "rate": 6.0,
