@@ -1129,7 +1129,7 @@ body.signed-in .sidebar nav .sb-signed-in{display:flex}
       </div>
     </div>
 
-    <button onclick="openDataTrade()" style="background:var(--panel);border:1px solid var(--rim);color:var(--white2);padding:13px;border-radius:10px;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px;font-weight:600"><i data-lucide="building-2" style="width:14px;height:14px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Comparte el costo de un trabajo y recibe 1 estimado gratis">Share a job cost — get 1 free estimate</span></button>
+    <button onclick="openDataTrade()" style="background:var(--panel);border:1px solid var(--rim);color:var(--white2);padding:13px;border-radius:10px;font-size:13px;cursor:pointer;width:100%;margin-bottom:8px;font-weight:600"><i data-lucide="building-2" style="width:14px;height:14px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Comparte el costo de un trabajo y recibe 1 estimado gratis">Share a job cost, get 1 free estimate</span></button>
     <button onclick="navigate('input')" style="background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;text-decoration:underline">Maybe later</button>
     <div style="margin-top:14px">
       <button onclick="handleSignOut()" style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer" data-es="Cerrar sesión">Sign out</button>
@@ -5783,11 +5783,6 @@ function openDataTrade(){
   }
 }
 
-function handleTradePhoto(input){
-  const label=document.getElementById('trade-photo-label');
-  if(input.files&&input.files[0]){label.textContent='✓ '+input.files[0].name;label.style.color='var(--green)';}
-}
-
 function closeDataTrade(){
   const modal = document.getElementById('data-trade-modal');
   if(modal) modal.style.display='none';
@@ -5799,11 +5794,10 @@ async function submitDataTrade(){
   const sqft = document.getElementById('trade-sqft').value.trim();
   const cost = document.getElementById('trade-cost').value.trim();
   const notes = document.getElementById('trade-notes').value.trim();
-  const photoInput = document.getElementById('trade-photo');
-  const hasPhoto = photoInput && photoInput.files && photoInput.files.length > 0;
 
   if(!trade || !city || !cost){ alert(appLang==='es'?'Completa el oficio, la ciudad y el costo real.':'Please fill in trade, city, and actual cost.'); return; }
-  if(!hasPhoto){ alert(appLang==='es'?'Se necesita una foto. Sube un recibo, una factura o una foto del trabajo.':'A photo is required — please upload a receipt, invoice, or job photo.'); return; }
+  // No photo step (founder 2026-11-05): the photo was never stored or checked.
+  // Trade + city + cost is the whole ask; the server grants the credit once.
 
   const hasUsedTrade = currentUser ? (currentUser._tradeUsed||false) : (sessionStorage.getItem('even_trade_used')==='1');
   if(hasUsedTrade){ alert(appLang==='es'?'Ya usaste tu estimado gratis por compartir datos.':'You have already used your free data trade estimate.'); return; }
@@ -5838,7 +5832,9 @@ async function submitDataTrade(){
 
   const modal = document.getElementById('data-trade-modal');
   if(modal) modal.style.display='none';
-  alert(credit?.ok?'Thank you. 1 free estimate unlocked.':'Thank you. Your free data trade estimate was already used on this account or device.');
+  const es=appLang==='es';
+  alert(credit?.ok?(es?'Gracias. Se desbloqueó 1 estimado gratis.':'Thank you. 1 free estimate unlocked.')
+    :(es?'Ya usaste tu estimado gratis por compartir datos en esta cuenta o dispositivo.':'Already used: your free data trade estimate was used on this account or device.'));
   navigate('input');
 }
 </script>
@@ -5890,19 +5886,12 @@ async function submitDataTrade(){
     <div id="trade-used-msg" style="display:none;background:rgba(255,91,91,0.1);border:1px solid rgba(255,91,91,0.3);border-radius:8px;padding:10px 12px;color:#FF5B5B;font-size:12px;text-align:center;margin-bottom:12px" data-es="Ya usaste tu estimado gratis por compartir datos. Hazte Pro para seguir.">You've already used your free data trade estimate. Upgrade to continue.</div>
     <div style="display:flex;flex-direction:column;gap:12px">
       <input id="trade-trade" placeholder="Trade (e.g. Roofing)" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box" data-placeholder-es="Oficio (ej. Techos)"/>
-      <input id="trade-city" placeholder="City / Market" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
-      <input id="trade-sqft" placeholder="Square footage or job size" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
+      <input id="trade-city" placeholder="City / Market" data-placeholder-es="Ciudad / mercado" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
+      <input id="trade-sqft" placeholder="Square footage or job size" data-placeholder-es="Pies cuadrados o tamaño del trabajo" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box"/>
       <input id="trade-cost" placeholder="Your actual total cost ($)" type="number" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box" data-placeholder-es="Tu costo total real ($)"/>
-      <textarea id="trade-notes" placeholder="Any notes — materials used, subs, what you'd do different" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box;min-height:70px;resize:none"></textarea>
-      <div>
-        <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:6px;display:flex;align-items:center;gap:5px"><i data-lucide="camera" style="width:11px;height:11px;stroke:currentColor"></i> <span data-es="FOTO REQUERIDA: recibo, factura o foto del trabajo">PHOTO REQUIRED — Receipt, invoice, or job photo</span></div>
-        <label for="trade-photo" style="display:block;border:1.5px dashed rgba(255,179,0,0.35);border-radius:8px;padding:14px;text-align:center;cursor:pointer;background:rgba(255,179,0,0.03)">
-          <input type="file" id="trade-photo" accept="image/*" style="display:none" onchange="handleTradePhoto(this)">
-          <span id="trade-photo-label" style="color:var(--muted);font-size:12px" data-es="Toca para subir una foto">Tap to upload photo</span>
-        </label>
-      </div>
+      <textarea id="trade-notes" placeholder="Any notes: materials used, subs, what you'd do different" data-placeholder-es="Notas: materiales, subcontratistas, qué harías diferente" style="padding:10px 12px;background:var(--bg);border:1px solid var(--rim);border-radius:8px;color:var(--white);font-size:13px;outline:none;width:100%;box-sizing:border-box;min-height:70px;resize:none"></textarea>
       <button id="trade-submit-btn" onclick="submitDataTrade()" style="padding:14px;background:var(--gold);border:none;border-radius:8px;color:#000;font-weight:700;font-size:14px;cursor:pointer" data-es="Enviar y desbloquear estimado">Submit &amp; Unlock Estimate</button>
-      <button onclick="closeDataTrade()" style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer" data-es="No, gracias. Prefiero hacerme Pro">No thanks — upgrade instead</button>
+      <button onclick="closeDataTrade()" style="background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer" data-es="No, gracias. Prefiero hacerme Pro">No thanks, upgrade instead</button>
     </div>
   </div>
 </div>
