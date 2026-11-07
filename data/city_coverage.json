@@ -3,8 +3,8 @@
   "rule": "complete = core fees in data/permit_core_fees.json",
   "counts": {
     "complete": 40,
-    "not started": 48,
-    "partial": 6
+    "partial": 7,
+    "not started": 47
   },
   "cities": [
     {
@@ -55,11 +55,16 @@
     {
       "city": "Doral",
       "county": "Miami-Dade",
-      "status": "not started",
-      "missing_core_fees": [],
-      "rows": 0,
-      "last_entry_date": null,
-      "schedule_source": null
+      "status": "partial",
+      "missing_core_fees": [
+        "electrical",
+        "plumbing",
+        "mechanical",
+        "roofing"
+      ],
+      "rows": 14,
+      "last_entry_date": "2026-10-01",
+      "schedule_source": "City of Doral Building Department Fund & Development Services Technology Fund Fee Schedule, effective October 1, 2026 (edited 10/22/2026), cityofdoral.com fee-schedule-2025.pdf link; Resolution 26-134"
     },
     {
       "city": "Homestead",
