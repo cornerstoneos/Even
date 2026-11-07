@@ -3802,6 +3802,9 @@ function permitBracket(row){
   if(first) lo=permitMoney(first[1]);
   return lo==null?null:{lo,hi};
 }
+const isBasePlusPercent=row=>/^base_plus_percent$/i.test(String(row&&row.method||'').trim());
+// A base_plus_percent row whose notes describe higher tiers ("plus 2.0% of cost over $50M").
+const permitFirstTierOnly=row=>isBasePlusPercent(row)&&/\b(over|above)\s+\$/i.test(String(row.notes||''));
 const isBasePlusPer1000=row=>/^base_plus_per_1000$/i.test(String(row&&row.method||'').trim());
 // The bracket row whose range holds the job's value, from the same fee family
 // (same city, same fee name before the bracket). The model picks a row; the
@@ -3828,6 +3831,14 @@ function computePermitFee(row,value,qty,sqft){
   // bracket can't be read keeps the older max(rate x value/1000, base) reading.
   const br=isBasePlusPer1000(row)&&r!=null&&+value>0?permitBracket(row):null;
   if(br) return {fee:round2(min+r*Math.max(0,Math.ceil(round2(+value-br.lo)/1000))),basis,approx:false};
+  // Base fee PLUS a percent of construction cost (Surfside, Res. 2026-3494: "$350 +
+  // 2.5% of construction cost"). Only the row's first percentage is priced; higher
+  // tiers in the notes are flagged on the line (permitFirstTierOnly).
+  // Only a rate written as a percent ("2.5%") is read this way; a bare number's unit
+  // is ambiguous (Pembroke Pines' over-$3M row: 0.0208 on the amount over $3M), so
+  // such a row keeps the older value reading until it is re-filed.
+  const pm=isBasePlusPercent(row)&&+value>0&&String(row.rate==null?'':row.rate).replace(/,/g,'').match(/(\d*\.?\d+)\s*%/);
+  if(pm) return {fee:round2(min+(+value)*parseFloat(pm[1])/100),basis,approx:false};
   if(basis==='value'&&r!=null){
     // "$125 up to $5,000, plus 1.35% of cost": the rate is the number marked %, not the first one.
     const pm=typeof row.rate==='string'&&row.rate.replace(/,/g,'').match(/(\d*\.?\d+)\s*%/);
@@ -3987,7 +3998,7 @@ function priceScope(scope,cat,s){
     const esName=`${it.description&&!/^permit\b/i.test(it.description)?it.description:'Permiso'} (${row.municipality||''})`;
     if(r.fee==null){ notes.push(es?`${esName}: no se pudo calcular la tarifa con la tabla que tenemos. Confírmala con el departamento de construcción.`:`${name}: the fee could not be figured from the schedule on file. Verify with the building department.`); continue; }
     if(r.approx) notes.push(es?`${esName}: se muestra la tarifa mínima de la tabla; la regla completa es ${PERMIT_BASIS_ES[r.basis]||r.basis}. Confírmala con el departamento de construcción.`:`${name}: shown at the schedule's minimum fee; the full rule is ${r.basis}. Verify with the building department.`);
-    data.lineItems.push({category:'Permits',description:es?esName:`Permit: ${name}`,qty:1,unit:'permit',unitCost:r.fee,total:r.fee,ref:e.ref,priced:'permit schedule',permitRow:{municipality:row.municipality,work_type:row.work_type,rate:row.rate,min_fee:row.min_fee,method:row.method,source:row.source||'',date:row.date||'',fl:cat.state==='FL'},jobValue});
+    data.lineItems.push({category:'Permits',description:es?esName:`Permit: ${name}`,qty:1,unit:'permit',unitCost:r.fee,total:r.fee,ref:e.ref,priced:'permit schedule',permitRow:{municipality:row.municipality,work_type:row.work_type,rate:row.rate,min_fee:row.min_fee,method:row.method,source:row.source||'',date:row.date||'',fl:cat.state==='FL',firstTierOnly:permitFirstTierOnly(row)||undefined},jobValue});
   }
 
   data.subtotal=round2(data.lineItems.reduce((t,l)=>t+l.total,0));
@@ -4574,6 +4585,8 @@ function lineSourceNote(item,i){
     // ES: the city's fee names are English-only text, so name the city and date, not the row.
     t=hb803Note(item,es?'es':'en')||(es?`Tarifa publicada por ${p.municipality}`+(p.date?` (${p.date})`:'')+'.'
       :'City schedule: '+`${p.municipality} ${p.work_type}`+(p.date?` (${p.date})`:'')+'.');
+    if(p.firstTierOnly) t+=es?' Calculado con el primer porcentaje de la tabla; los trabajos grandes pagan otro porcentaje en el tramo más alto, confírmalo con la ciudad.'
+      :' Priced at the schedule\'s first percentage; larger jobs pay a different rate on the higher tier, confirm with the city.';
   }
   else if(item.priced==='bls x multiplier') t=es?`Salario BLS $${item.wage}/h × tu multiplicador`:`BLS wage $${item.wage}/hr × your labor multiplier`;
   else if(item.priced==='your labor rate') t=(es?'Tu costo por hora':'Your labor cost per hour')+(item.wage?(es?` (salario medio BLS $${item.wage}/h)`:` (BLS median wage $${item.wage}/hr)`):'');

@@ -8,7 +8,7 @@ const P=require('../lib/pipeline').loadPipeline();
 const html=fs.readFileSync(path.join(__dirname,'..','index.html'),'utf8');
 const fn=n=>{const i=html.indexOf('function '+n+'(');return html.slice(i,html.indexOf('\n}',i)+2);};
 const E=new Function('round2','permitBasis','permitNum',
-  fn('permitMoney')+fn('permitBracket')+"const isBasePlusPer1000=row=>/^base_plus_per_1000$/i.test(String(row&&row.method||'').trim());"+fn('permitBracketRow')+fn('computePermitFee')+';return {permitBracket,permitBracketRow,computePermitFee};')(
+  fn('permitMoney')+fn('permitBracket')+"const isBasePlusPer1000=row=>/^base_plus_per_1000$/i.test(String(row&&row.method||'').trim());const isBasePlusPercent=row=>/^base_plus_percent$/i.test(String(row&&row.method||'').trim());"+fn('permitBracketRow')+fn('computePermitFee')+';return {permitBracket,permitBracketRow,computePermitFee};')(
   n=>Math.round(n*100)/100,()=>'per1000',v=>v==null||v===''?null:(typeof v==='number'?v:parseFloat(String(v).replace(/[$,]/g,''))));
 const batch=JSON.parse(fs.readFileSync(path.join(__dirname,'..','data','batches','even_master_batch.json'),'utf8'));
 const mk=n=>batch.find(m=>m.market===n);
