@@ -816,5 +816,76 @@
     "lat": 27.7209,
     "lng": -82.4332,
     "unincorporated": true
+  },
+  {
+    "name": "Orlando",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.5383,
+    "lng": -81.3792
+  },
+  {
+    "name": "Pine Hills",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.5578,
+    "lng": -81.4534,
+    "unincorporated": true
+  },
+  {
+    "name": "Meadow Woods",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.3856,
+    "lng": -81.3665,
+    "unincorporated": true
+  },
+  {
+    "name": "Hunters Creek",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.3606,
+    "lng": -81.4223,
+    "unincorporated": true
+  },
+  {
+    "name": "Doctor Phillips",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.4495,
+    "lng": -81.4923,
+    "unincorporated": true
+  },
+  {
+    "name": "Conway",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.5003,
+    "lng": -81.3306,
+    "unincorporated": true
+  },
+  {
+    "name": "Azalea Park",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.5411,
+    "lng": -81.3006,
+    "unincorporated": true
+  },
+  {
+    "name": "Union Park",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.5683,
+    "lng": -81.2437,
+    "unincorporated": true
   }
 ]

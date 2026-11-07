@@ -86166,6 +86166,496 @@
         "method": "flat",
         "notes": null,
         "date": "2023-05-22"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Building permit, one and two family dwelling (new, addition, alteration), by valuation",
+        "min_fee": 26.0,
+        "rate": 4.0,
+        "method": "base_plus_per_1000",
+        "notes": "Fee is on total valuation (contract price, or the county's minimum valuation table by occupancy and construction type x square feet, whichever is greater). $26.00 up to and including $1,000, plus $4.00 for each additional $1,000 or fraction. Covers the building permit only; electrical, mechanical, plumbing and gas are separate permits.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Building permit, accessory structure or use to one and two family dwelling, by valuation",
+        "min_fee": 27.0,
+        "rate": 4.0,
+        "method": "base_plus_per_1000",
+        "notes": "Fee is on total valuation (contract price, or the county's minimum valuation table by occupancy and construction type x square feet, whichever is greater). $27.00 up to and including $1,000, plus $4.00 for each additional $1,000 or fraction.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Roof permit on new dwelling only",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Re-roof, residential, by valuation",
+        "min_fee": 27.0,
+        "rate": 5.0,
+        "method": "base_plus_per_1000",
+        "notes": "Fee is on total valuation (contract price, or the county's minimum valuation table by occupancy and construction type x square feet, whichever is greater). $27.00 up to and including $1,000, plus $5.00 for each additional $1,000 or fraction.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Building permit, commercial/multifamily new construction, by valuation",
+        "min_fee": 26.0,
+        "rate": 5.0,
+        "method": "base_plus_per_1000",
+        "notes": "Fee is on total valuation (contract price, or the county's minimum valuation table by occupancy and construction type x square feet, whichever is greater). $26.00 up to and including $1,000, plus $5.00 for each additional $1,000 or fraction. Shell-only buildings: deduct 20% from the valuation table figure.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Building permit, commercial/multifamily other than new construction (alteration), by valuation",
+        "min_fee": 26.0,
+        "rate": 5.0,
+        "method": "base_plus_per_1000",
+        "notes": "Fee is on total valuation (contract price, or the county's minimum valuation table by occupancy and construction type x square feet, whichever is greater). $26.00 up to and including $1,000, plus $5.00 for each additional $1,000 or fraction.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Roof permit, commercial/multifamily, by valuation",
+        "min_fee": 56.0,
+        "rate": 5.0,
+        "method": "base_plus_per_1000",
+        "notes": "Fee is on total valuation (contract price, or the county's minimum valuation table by occupancy and construction type x square feet, whichever is greater). $56.00 up to and including $1,000, plus $5.00 for each additional $1,000 or fraction. On new construction where a licensed GC holds an active building permit, a separate no-fee roofing permit is required.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Re-roof, commercial, by valuation",
+        "min_fee": 28.0,
+        "rate": 5.0,
+        "method": "base_plus_per_1000",
+        "notes": "Fee is on total valuation (contract price, or the county's minimum valuation table by occupancy and construction type x square feet, whichever is greater). $28.00 up to and including $1,000, plus $5.00 for each additional $1,000 or fraction.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Permit for site work only (commercial/multifamily)",
+        "min_fee": 27.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Commercial fences, foundations, modular buildings, block walls, fire sprinkler systems and other construction not listed",
+        "min_fee": 26.0,
+        "rate": 5.0,
+        "method": "base_plus_per_1000",
+        "notes": "Charged on the contractor's valuation at the commercial fee: $26.00 up to $1,000 plus $5.00 per additional $1,000 or fraction.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Demolition permit",
+        "min_fee": 26.0,
+        "rate": 7.0,
+        "method": "per_unit",
+        "notes": "$7.00 for each 25,000 cubic feet or fraction, minimum $26.00, maximum $412.00.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Pre-demolition inspection",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Electrical permit, minimum fee",
+        "min_fee": 38.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Electrical service, 1 phase 240V, by amperage",
+        "min_fee": 77.0,
+        "rate": "0-150A $77; 151-200A $94; 201-400A $121; 401-600A $175; 601-800A $263; 801-1,000A $317; over 1,000A add $175 per additional 1,000A or fraction",
+        "method": "tiered",
+        "notes": "Normally one electrical permit per metered service. Alterations requiring a change in service: fee for the difference between new and previous amperage.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Electrical service, 3 phase 208/240V, by amperage",
+        "min_fee": 121.0,
+        "rate": "0-150A $121; 151-200A $148; 201-400A $186; 401-600A $279; 601-800A $383; 801-1,000A $482; over 1,000A add $289 per additional 1,000A or fraction",
+        "method": "tiered",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Electrical service, 3 phase 480V, by amperage",
+        "min_fee": 258.0,
+        "rate": "0-150A $258; 151-200A $322; 201-400A $411; 401-600A $624; 601-800A $820; 801-1,000A $1,011; over 1,000A add $602 per additional 1,000A or fraction",
+        "method": "tiered",
+        "notes": "Over 480V: proportional increase over the 480V fee.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Electrical additions, alterations and repairs not requiring a change in service, by valuation",
+        "min_fee": 39.0,
+        "rate": 11.0,
+        "method": "base_plus_per_1000",
+        "notes": "$39.00 up to and including $1,000 valuation, plus $11.00 per additional $1,000 or fraction (valuation = material and labor).",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Electrical, simple installation of one item of equipment (any amperage)",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Electrical, low voltage permit, by valuation",
+        "min_fee": 38.0,
+        "rate": 5.0,
+        "method": "base_plus_per_1000",
+        "notes": "$38.00 up to and including $1,000 valuation, plus $5.00 per additional $1,000 or fraction.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Electrical, temporary construction service, one and two family dwelling site",
+        "min_fee": 27.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Maximum 60 amps / 240 volts / single phase.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Electrical, pool wiring",
+        "min_fee": 61.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Electrical, temporary underground (T.U.G.) agreement",
+        "min_fee": 109.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Mechanical, air conditioning installation including heat pumps (duct work included), by tonnage",
+        "min_fee": 77.0,
+        "rate": "Up to 3 tons $77; over 3 to 10 tons $12 per ton; over 10 to 25 tons $165 plus $10 per ton over 10; over 25 to 50 tons $312 plus $6 per ton over 25; over 50 tons $405 plus $5 per ton over 50",
+        "method": "tiered",
+        "notes": "Multiple units on one permit: tonnage is summed. The directory's parenthetical text shows slightly different bases ($75 plus $12/ton; $160, $303, $393); the Cost column figures are used here.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Mechanical, air conditioning installation including heat pump (duct work not included), per ton",
+        "min_fee": 39.0,
+        "rate": 6.0,
+        "method": "per_unit",
+        "notes": "$6.00 per ton or fraction, minimum $39.00.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Mechanical, existing condenser or air handler relocated or replaced, per ton",
+        "min_fee": 39.0,
+        "rate": 6.0,
+        "method": "per_unit",
+        "notes": "$6.00 per ton or fraction, minimum $39.00.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Mechanical, single family replacement of existing condenser or air handler (no wiring update)",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Reconnected by the mechanical or A/C contractor and inspected by the mechanical inspector.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Mechanical, refrigeration, ductwork, hoods, ventilation, boilers and other mechanical installations, by valuation",
+        "min_fee": 39.0,
+        "rate": 10.0,
+        "method": "base_plus_per_1000",
+        "notes": "$39.00 first $1,000; $10.00 per additional $1,000 or fraction to $25,000; $6.00 per additional $1,000 above $25,000 (valuation = units, equipment, materials and labor).",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing permit, new construction, addition or alteration (commercial or residential)",
+        "min_fee": 77.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Plus $6.00 per plumbing fixture unless specified otherwise (see the per-fixture row).",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, per fixture (added, plugged, moved or future opening)",
+        "min_fee": null,
+        "rate": 6.0,
+        "method": "per_unit",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, water heater (stand alone)",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, solar water heater (stand alone)",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, backflow preventer (stand alone)",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, water softener (stand alone)",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, swimming pool permit",
+        "min_fee": 66.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, spa with permanent connections",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, sewer replacement",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, re-pipe (residential)",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, re-pipe (commercial, per unit)",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, lawn irrigation system, by number of heads",
+        "min_fee": 39.0,
+        "rate": "1-100 heads $39 (minimum); 101-200 heads $56; 201 and up $66",
+        "method": "tiered",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plumbing, second meter for irrigation",
+        "min_fee": 39.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Gas permit (equipment, piping, ventilation, combustion air, boilers), by valuation",
+        "min_fee": 66.0,
+        "rate": 6.0,
+        "method": "base_plus_per_1000",
+        "notes": "$66.00 up to and including the first $1,000, plus $6.00 per additional $1,000 or fraction (valuation = equipment, materials and labor).",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Sign permit, by sign area",
+        "min_fee": 39.0,
+        "rate": "Up to 25 sq ft $39; 26-50 $44; 51-100 $49; 101-150 $56; 151-200 $61; 201-250 $66; 251-300 $71; each additional 100 sq ft over 300 add $11",
+        "method": "tiered",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Re-inspection fee",
+        "min_fee": 76.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Not to exceed the original permit fee.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Special after-hours inspection (minimum 4 hours per inspector)",
+        "min_fee": 218.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "After the first four hours, $51.00 per additional hour. Request in writing 24 hours ahead.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Plan submittal fee, all occupancies other than one and two family dwellings, by total valuation",
+        "min_fee": 33.0,
+        "rate": "Less than $10,000 $33; $10,001-25,000 $56; $25,001-50,000 $109; $50,001-100,000 $218; $100,001-500,000 $437; $500,001-1,000,000 $656; $1,000,001 and above $874; over $2,000,000 add $23 per additional $100,000",
+        "method": "tiered",
+        "notes": "One and two family dwellings: no charge. Non-refundable.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Permit amendment fee",
+        "min_fee": 28.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Early start permit",
+        "min_fee": 109.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Notice of Commencement recording (with 1 certified copy)",
+        "min_fee": 13.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "$10 recording plus $3 certified copy.",
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Orange County FL",
+        "work_type": "Private provider fee reduction (Florida Statute 553.791)",
+        "min_fee": null,
+        "rate": "75% of the total permit fee if a private provider does plan review or inspections; 50% if both; never below the stated minimum",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "date": "2026-10-01",
+        "source": "Orange County, FL Fee Directory, Fiscal Year 2026-2027 (Office of Management and Budget), Building Safety section, effective October 2026 (unincorporated Orange County; FeeDirectory.pdf on ocfl.net, checked 2026-11-07)"
       }
     ],
     "source": "City of Orlando Economic Development Dept., Permitting Services Division fee schedule; cross-referenced via third-party verified calculator (permitcalculator.com, checked against city PDF March 2026) since the official 2023 commercial PDF at orlando.gov appears to be the same version still cited as current",
