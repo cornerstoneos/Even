@@ -3798,7 +3798,7 @@ function computePermitFee(row,value,qty,sqft){
 // The menu the model scopes from. Refs are positional in a deterministic list, so
 // the same market data always produces the same refs (and the same cache key).
 function buildCatalog(md,scopeCats,own){
-  const cat={materials:[],labor:[],permits:[],partner:[],suppliers:[],subs:[],byRef:{}};
+  const cat={materials:[],labor:[],permits:[],partner:[],suppliers:[],subs:[],byRef:{},state:(md&&md.state)||null};
   if(md){
     (md.materials||[]).filter(r=>r&&r.mid!=null&&(isEquipmentRental(r.category)||categoryInScope(r.category,scopeCats)))
       .forEach((row,i)=>{const e={ref:'M'+(i+1),kind:'material',row};cat.materials.push(e);cat.byRef[e.ref]=e;});
@@ -3934,7 +3934,7 @@ function priceScope(scope,cat,s){
     const esName=`${it.description&&!/^permit\b/i.test(it.description)?it.description:'Permiso'} (${e.row.municipality||''})`;
     if(r.fee==null){ notes.push(es?`${esName}: no se pudo calcular la tarifa con la tabla que tenemos. Confírmala con el departamento de construcción.`:`${name}: the fee could not be figured from the schedule on file. Verify with the building department.`); continue; }
     if(r.approx) notes.push(es?`${esName}: se muestra la tarifa mínima de la tabla; la regla completa es ${PERMIT_BASIS_ES[r.basis]||r.basis}. Confírmala con el departamento de construcción.`:`${name}: shown at the schedule's minimum fee; the full rule is ${r.basis}. Verify with the building department.`);
-    data.lineItems.push({category:'Permits',description:es?esName:`Permit: ${name}`,qty:1,unit:'permit',unitCost:r.fee,total:r.fee,ref:e.ref,priced:'permit schedule',permitRow:{municipality:e.row.municipality,work_type:e.row.work_type,rate:e.row.rate,min_fee:e.row.min_fee,method:e.row.method,source:e.row.source||'',date:e.row.date||''},jobValue});
+    data.lineItems.push({category:'Permits',description:es?esName:`Permit: ${name}`,qty:1,unit:'permit',unitCost:r.fee,total:r.fee,ref:e.ref,priced:'permit schedule',permitRow:{municipality:e.row.municipality,work_type:e.row.work_type,rate:e.row.rate,min_fee:e.row.min_fee,method:e.row.method,source:e.row.source||'',date:e.row.date||'',fl:cat.state==='FL'},jobValue});
   }
 
   data.subtotal=round2(data.lineItems.reduce((t,l)=>t+l.total,0));
@@ -4491,6 +4491,22 @@ function renderTradeLimited(){
 }
 document.getElementById('est-trade')?.addEventListener('change',renderTradeLimited);
 
+// HB 803 note under every Florida permit line (founder 2026-11-05): the app's
+// estimate screen and the cost sheet, never the client proposal. Florida only:
+// the market's state rides on the line; estimates saved before that read the
+// job's "City, FL" location.
+function permitIsFlorida(item){
+  const p=item&&item.permitRow; if(!p) return false;
+  if(typeof p.fl==='boolean') return p.fl;
+  return /,\s*FL\b/i.test((window._ctx&&window._ctx.location)||'');
+}
+function hb803Note(item,lang){
+  if(!permitIsFlorida(item)) return '';
+  const d=item.permitRow.date;
+  return lang==='es'
+    ?`Tarifa de permiso según la tabla publicada por la ciudad${d?` (al ${d})`:''}; puede cambiar por la ley HB 803 de Florida.`
+    :`Permit fee per the city's posted schedule${d?` (as of ${d})`:''}; may change under Florida HB 803.`;
+}
 // Where each number came from, under its row. App only, never on the client PDF.
 function lineSourceNote(item,i){
   const es=appLang==='es';
@@ -4502,8 +4518,8 @@ function lineSourceNote(item,i){
   else if(item.permitRow){
     const p=item.permitRow;
     // ES: the city's fee names are English-only text, so name the city and date, not the row.
-    t=es?`Tarifa publicada por ${p.municipality}`+(p.date?` (${p.date})`:'')+'. Puede cambiar bajo la ley HB 803 de Florida.'
-      :'City schedule: '+`${p.municipality} ${p.work_type}`+(p.date?` (${p.date})`:'')+'. May change under Florida HB 803.';
+    t=hb803Note(item,es?'es':'en')||(es?`Tarifa publicada por ${p.municipality}`+(p.date?` (${p.date})`:'')+'.'
+      :'City schedule: '+`${p.municipality} ${p.work_type}`+(p.date?` (${p.date})`:'')+'.');
   }
   else if(item.priced==='bls x multiplier') t=es?`Salario BLS $${item.wage}/h × tu multiplicador`:`BLS wage $${item.wage}/hr × your labor multiplier`;
   else if(item.priced==='your labor rate') t=(es?'Tu costo por hora':'Your labor cost per hour')+(item.wage?(es?` (salario medio BLS $${item.wage}/h)`:` (BLS median wage $${item.wage}/hr)`):'');
@@ -5352,7 +5368,10 @@ async function downloadCostSheet(){
     if(item.removed) return;
     doc.setFont('helvetica','normal');doc.setFontSize(8);
     const descLines=doc.splitTextToSize(String(item.description||''),DESC_W);
-    const rowH=Math.max(14,descLines.length*LINE_H+ROW_PAD);
+    // Florida permit lines carry the HB 803 note under the description.
+    const hb=hb803Note(item,L); doc.setFontSize(6.5);
+    const hbLines=hb?doc.splitTextToSize(hb,DESC_W):[]; doc.setFontSize(8);
+    const rowH=Math.max(14,descLines.length*LINE_H+hbLines.length*8+ROW_PAD);
     const headerH=item.category!==lc?13:0;
     // Break before drawing, measuring the row we are about to draw rather than
     // a fixed 14 — a three-line row used to run off the bottom of the page.
@@ -5361,6 +5380,7 @@ async function downloadCostSheet(){
     if(i%2===0){doc.setFillColor(250,248,244);doc.rect(M,y,W-M*2,rowH,'F')}
     doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(50,50,50);
     descLines.forEach((line,n)=>doc.text(line,cols[0],y+9+n*LINE_H));
+    if(hbLines.length){doc.setFontSize(6.5);doc.setTextColor(120,120,120);hbLines.forEach((line,n)=>doc.text(line,cols[0],y+9+descLines.length*LINE_H+n*8));doc.setFontSize(8);}
     // Numbers stay on the first line so the columns read straight across.
     doc.setTextColor(120,120,120);doc.text(String(item.qty),cols[1],y+9);doc.text(String(unitLabel(item.unit,L)),cols[2],y+9);
     doc.text(fmt(item.unitCost),cols[3],y+9,{align:'right'});
