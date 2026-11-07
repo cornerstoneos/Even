@@ -3794,7 +3794,7 @@ function permitBracket(row){
   const wt=String(row&&row.work_type||''), notes=String(row&&row.notes||'');
   let lo=null,hi=Infinity;
   const range=wt.match(/\$\s?([\d,.]+\s*[MK]?)\s*(?:-|–|to)\s*\$\s?([\d,.]+\s*[MK]?)/i);
-  const open=wt.match(/\$\s?([\d,.]+\s*[MK]?)\s*(?:\+|and up|and over)|over\s*\$\s?([\d,.]+\s*[MK]?)/i);
+  const open=wt.match(/\$\s?([\d,.]+\s*[MK]?)\s*(?:\+|and up|and over|and above)|over\s*\$\s?([\d,.]+\s*[MK]?)/i);
   if(range){ lo=permitMoney(range[1]); hi=permitMoney(range[2]); }
   else if(open){ lo=permitMoney(open[1]||open[2]); }
   if(lo!=null&&lo%1000===1) lo-=1;
@@ -3809,14 +3809,26 @@ const isBasePlusPer1000=row=>/^base_plus_per_1000$/i.test(String(row&&row.method
 // The bracket row whose range holds the job's value, from the same fee family
 // (same city, same fee name before the bracket). The model picks a row; the
 // value decides the bracket.
+// "Base + rate% of the amount over $X" (tasks/app.md item 7; rows normalized by
+// the CEO chat 2026-11-07: rate = percent number, threshold written as "over $X").
+// Only the exact method; DC/Raleigh's suffixed methods keep the older reading.
+const isBasePlusPercentOver=row=>/^base_plus_percent_over$/i.test(String(row&&row.method||'').trim());
+function percentOverThreshold(row){
+  const m=String(row&&row.notes||'').match(/\bover\s+(?:the\s+first\s+)?\$\s?([\d,.]+\s*[MK]?)/i);
+  if(m) return permitMoney(m[1]);
+  const br=permitBracket(row);
+  return br?br.lo:null;
+}
 function permitBracketRow(row,value,permitEntries){
-  const br=isBasePlusPer1000(row)&&permitBracket(row);
+  const kind=isBasePlusPer1000(row)?'per1000':isBasePlusPercentOver(row)?'pctover':null;
+  const sameKind=r=>kind==='per1000'?isBasePlusPer1000(r):isBasePlusPercentOver(r);
+  const br=kind&&permitBracket(row);
   if(!br||!(value>0)||(value>br.lo&&value<=br.hi)) return row;
   const family=r=>{const w=String(r.work_type||'');const i=w.indexOf('$');return (i<0?w:w.slice(0,i)).replace(/[\s,—–-]*(value|valuation|over)?[\s,—–-]*$/i,'').trim().toLowerCase();};
   const fam=family(row);
   for(const e of permitEntries||[]){
     const r=e.row||e;
-    if(r===row||r.municipality!==row.municipality||!isBasePlusPer1000(r)||family(r)!==fam) continue;
+    if(r===row||r.municipality!==row.municipality||!sameKind(r)||family(r)!==fam) continue;
     const b=permitBracket(r);
     if(b&&value>b.lo&&value<=b.hi) return r;
   }
@@ -3839,6 +3851,10 @@ function computePermitFee(row,value,qty,sqft){
   // such a row keeps the older value reading until it is re-filed.
   const pm=isBasePlusPercent(row)&&+value>0&&String(row.rate==null?'':row.rate).replace(/,/g,'').match(/(\d*\.?\d+)\s*%/);
   if(pm) return {fee:round2(min+(+value)*parseFloat(pm[1])/100),basis,approx:false};
+  if(isBasePlusPercentOver(row)&&r!=null&&+value>0){
+    const over=percentOverThreshold(row);
+    if(over!=null) return {fee:round2(min+(r/100)*Math.max(0,+value-over)),basis,approx:false};
+  }
   if(basis==='value'&&r!=null){
     // "$125 up to $5,000, plus 1.35% of cost": the rate is the number marked %, not the first one.
     const pm=typeof row.rate==='string'&&row.rate.replace(/,/g,'').match(/(\d*\.?\d+)\s*%/);

@@ -45,13 +45,15 @@ check('the H30A/H30B alteration row has no higher tier ("above $200,000" switche
 console.log('\n=== Nothing else moves ===');
 const uses=[];for(const m of batch)for(const r of m.permits)if(/^base_plus_percent$/i.test(String(r.method||'').trim()))uses.push(`${m.market}: ${r.municipality} (${r.rate})`);
 check(`base_plus_percent rows: ${uses.join(' | ')}`, uses.filter(x=>/Surfside/.test(x)).length===4);
-// Pembroke Pines' over-$3M row is tagged base_plus_percent with a bare 0.0208
-// (meaning 2.08% of the amount over $3M). The new reading only takes "%" rates, so
-// this row prices exactly as before this change: max(value x 0.0208, $93,329.67).
+// Pembroke Pines' over-$3M row was tagged base_plus_percent with a bare 0.0208;
+// the item 7 data pass re-filed it as base_plus_percent_over (rate 2.08, "over
+// $3,000,000"), so it now prices per the schedule: $93,329.67 + 2.08% of the
+// amount over $3M.
 const pp=batch.find(m=>m.market==='Broward').permits.find(r=>r.municipality==='Pembroke Pines'&&/Over \$3,000,000/.test(r.work_type));
 const cat=P.buildCatalog({...batch.find(m=>m.market==='Broward'),permits:[pp]},null,{});
 const ppl=P.priceScope({lineItems:[{type:'other',category:'Building',description:'Work',qty:1,unit:'job',unitCost:5000000},{type:'permit',ref:'P1'}]},cat,{marketAdj:1,laborMult:2,oh:0,profit:0,cushion:0,sqft:0,lang:'en'}).lineItems.find(x=>x.priced==='permit schedule');
-check(`Pembroke Pines over-$3M row (bare rate 0.0208) unchanged at $5M: max(104,000, 93,329.67) = $104,000 (got $${ppl&&ppl.total})`, ppl&&ppl.total===104000);
+check(`Pembroke Pines over-$3M row at $5M = 93,329.67 + 2.08% x 2,000,000 = $134,929.67 (got $${ppl&&ppl.total}; was $104,000 before item 7)`, ppl&&ppl.total===134929.67&&pp.method==='base_plus_percent_over');
+check('only Surfside rows remain base_plus_percent', uses.length===4&&uses.every(x=>/Surfside/.test(x)), uses.join(' | '));
 const pc=row('Planning review fee');
 l=permitLine(pc,20000);
 check(`a percent_of_cost_with_min row is unchanged: 0.75% x 20,000 = $150 vs $75 min (got $${l&&l.total})`, l&&l.total===150);
