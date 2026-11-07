@@ -2,9 +2,9 @@
   { "market": "Miami-Dade", "state": "FL", "zone": "Miami Proper", "zip": "33101", "lat": 25.7743, "lng": -80.1937 },
   { "market": "Broward", "state": "FL", "zone": "Fort Lauderdale", "zip": "33301", "lat": 26.1224, "lng": -80.1373 },
   { "market": "Palm Beach", "state": "FL", "zone": "Palm Beach County", "zip": "33401", "lat": 26.7153, "lng": -80.0534 },
-  { "market": "Tampa", "state": "FL", "zone": "Tampa Bay", "zip": "33602", "lat": 27.9506, "lng": -82.4572 },
-  { "market": "Orlando", "state": "FL", "zone": "Central Florida", "zip": "32801", "lat": 28.5384, "lng": -81.3789 },
-  { "market": "Jacksonville", "state": "FL", "zone": "Northeast Florida", "zip": "32202", "lat": 30.3322, "lng": -81.6557 },
+  { "market": "Tampa", "state": "FL", "zone": "Tampa Bay", "zip": "33602", "lat": 27.9506, "lng": -82.4572, "county": "Hillsborough" },
+  { "market": "Orlando", "state": "FL", "zone": "Central Florida", "zip": "32801", "lat": 28.5384, "lng": -81.3789, "county": "Orange" },
+  { "market": "Jacksonville", "state": "FL", "zone": "Northeast Florida", "zip": "32202", "lat": 30.3322, "lng": -81.6557, "county": "Duval" },
 
   { "market": "Charlotte", "state": "NC", "zone": "Mecklenburg County", "zip": "28202", "lat": 35.2271, "lng": -80.8431 },
   { "market": "Greensboro", "state": "NC", "zone": "Guilford County", "zip": "27401", "lat": 36.0726, "lng": -79.7920 },

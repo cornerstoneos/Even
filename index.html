@@ -3585,8 +3585,8 @@ function buildDynamicPricingBlock(md,hvhzNote,catalog){
     'municipality':`Permit rows below are ${md.municipality}'s own schedule (the issuing city). There are no county rows: never add a county permit.`,
     'municipality-partial':`Permit rows below are ${md.municipality}'s PARTIAL schedule. Its ${(md.permitMissing||[]).join(', ')||'core'} fees are not on file, so county rows stand in for those fees only. Never pick a county row when a city row covers the same permit, and say in assumptions that ${md.municipality}'s fee should be verified with the city.`,
     'unincorporated':`${md.municipality} is unincorporated: the county issues the permit, so the rows below are the county's own fees.`,
-    'county-fallback':`${md.municipality}'s own fee schedule is not on file yet. The rows below are the ${md.market} county schedule as a stand-in; say in assumptions that ${md.municipality}'s permit fees should be verified with the city.`,
-    'county':`Permit rows below are the ${md.market} county schedule (city not identified from the address).`,
+    'county-fallback':`${md.municipality}'s own fee schedule is not on file yet. The rows below are the ${md.permitCountyName||md.market+' county'} schedule as a stand-in; say in assumptions that ${md.municipality}'s permit fees should be verified with the city.`,
+    'county':`Permit rows below are the ${md.permitCountyName||md.market+' county'} schedule (city not identified from the address${md.permitCountyAssumed?'; this is the main county for the area, so say in assumptions that the job is assumed to be in '+md.permitCountyName:''}).`,
     'partial':`Permit rows below are a PARTIAL ${md.market} list; pick the issuing jurisdiction's row when present.`
   }[md.permitScope]||'';
   return `LOCAL DATA CATALOG — ${loc}.${hvhzNote}
@@ -3658,7 +3658,10 @@ function renderPermitScopeNote(){
   }else if(meta.permitScope==='unincorporated'){
     msg=`${escapeHtml(city||'This area')} is unincorporated, so permit fees come from the ${county} schedule.`;
   }else if(meta.permitScope==='county'){
-    msg=`Permit fees estimated from the ${county} schedule — a specific city wasn't identified from the address entered.`;
+    msg=meta.permitCountyAssumed
+      ?(appLang==='es'?`No identificamos la ciudad en la dirección, así que los permisos usan la tabla de ${county}, el condado principal de esta zona. Si el trabajo está en otro condado, escribe la ciudad.`
+        :`No city was identified from the address, so permit fees use the ${county} schedule, the main county for this area. If the job is in another county, enter the city.`)
+      :`Permit fees estimated from the ${county} schedule — a specific city wasn't identified from the address entered.`;
   }else{ el.style.display='none'; return; }
   el.innerHTML=`<div class="similar-recall" style="border-color:rgba(255,179,0,.25)"><span style="color:var(--text-accent);flex-shrink:0">⚑</span><span>${msg}</span></div>`;
   el.style.display='block';
@@ -4146,7 +4149,8 @@ async function _calculateEstimate(btn,jobAtStart){
     // Read the county's real name off the data rather than assuming it matches the
     // market name — that only holds in tri-county. Charlotte's permits are issued by
     // Mecklenburg County, so "the Charlotte County schedule" would be plainly wrong.
-    permitCounty:(marketData.permits||[]).map(p=>p.municipality||'').find(n=>/\bcounty\b/i.test(n))||null
+    permitCounty:marketData.permitCountyName||(marketData.permits||[]).map(p=>p.municipality||'').find(n=>/\bcounty\b/i.test(n))||null,
+    permitCountyAssumed:!!marketData.permitCountyAssumed
   }:null;
   const costCalibration=await getCostCalibration(ctx.trade);
   window._costCalibration=costCalibration;

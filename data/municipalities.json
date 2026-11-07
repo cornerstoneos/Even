@@ -895,5 +895,227 @@
     "county": "Orange",
     "lat": 28.5999,
     "lng": -81.3392
+  },
+  {
+    "name": "St. Petersburg",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pinellas",
+    "lat": 27.7676,
+    "lng": -82.6403,
+    "aliases": [
+      "St Petersburg",
+      "Saint Petersburg"
+    ]
+  },
+  {
+    "name": "Clearwater",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pinellas",
+    "lat": 27.9659,
+    "lng": -82.8001
+  },
+  {
+    "name": "Largo",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pinellas",
+    "lat": 27.9095,
+    "lng": -82.7873
+  },
+  {
+    "name": "Pinellas Park",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pinellas",
+    "lat": 27.8428,
+    "lng": -82.6995
+  },
+  {
+    "name": "Dunedin",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pinellas",
+    "lat": 28.0197,
+    "lng": -82.7718
+  },
+  {
+    "name": "Tarpon Springs",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pinellas",
+    "lat": 28.1461,
+    "lng": -82.7568
+  },
+  {
+    "name": "Oldsmar",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pinellas",
+    "lat": 28.0342,
+    "lng": -82.6651
+  },
+  {
+    "name": "Safety Harbor",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pinellas",
+    "lat": 27.9908,
+    "lng": -82.6929
+  },
+  {
+    "name": "New Port Richey",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pasco",
+    "lat": 28.2442,
+    "lng": -82.7193
+  },
+  {
+    "name": "Zephyrhills",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pasco",
+    "lat": 28.2336,
+    "lng": -82.1812
+  },
+  {
+    "name": "Dade City",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pasco",
+    "lat": 28.3647,
+    "lng": -82.1959
+  },
+  {
+    "name": "Wesley Chapel",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pasco",
+    "lat": 28.2397,
+    "lng": -82.3279,
+    "unincorporated": true
+  },
+  {
+    "name": "Land O' Lakes",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Pasco",
+    "lat": 28.2189,
+    "lng": -82.4576,
+    "aliases": [
+      "Land O Lakes",
+      "Land O'Lakes"
+    ],
+    "unincorporated": true
+  },
+  {
+    "name": "Kissimmee",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Osceola",
+    "lat": 28.292,
+    "lng": -81.4076
+  },
+  {
+    "name": "St. Cloud",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Osceola",
+    "lat": 28.2489,
+    "lng": -81.2812,
+    "aliases": [
+      "St Cloud",
+      "Saint Cloud"
+    ]
+  },
+  {
+    "name": "Sanford",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Seminole",
+    "lat": 28.8001,
+    "lng": -81.2731
+  },
+  {
+    "name": "Oviedo",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Seminole",
+    "lat": 28.67,
+    "lng": -81.2081
+  },
+  {
+    "name": "Altamonte Springs",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Seminole",
+    "lat": 28.6611,
+    "lng": -81.3656
+  },
+  {
+    "name": "Casselberry",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Seminole",
+    "lat": 28.6778,
+    "lng": -81.3279
+  },
+  {
+    "name": "Lake Mary",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Seminole",
+    "lat": 28.7589,
+    "lng": -81.3178
+  },
+  {
+    "name": "Longwood",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Seminole",
+    "lat": 28.7031,
+    "lng": -81.3384
+  },
+  {
+    "name": "Winter Springs",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Seminole",
+    "lat": 28.6989,
+    "lng": -81.3081
+  },
+  {
+    "name": "Apopka",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.6934,
+    "lng": -81.5322
+  },
+  {
+    "name": "Winter Garden",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.5653,
+    "lng": -81.5862
+  },
+  {
+    "name": "Ocoee",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.5692,
+    "lng": -81.544
+  },
+  {
+    "name": "Maitland",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.6278,
+    "lng": -81.3631
   }
 ]

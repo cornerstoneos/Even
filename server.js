@@ -142,7 +142,11 @@ async function resolveMarket(locationText) {
   // narrow someone who typed the county down to a single city's fee schedule.
   // Comparing match length lets "Miami-Dade" resolve to the market while
   // "Miami Gardens" and "North Miami Beach" still beat the shorter "Miami".
-  const muni = bestNameMatch(lower, MUNICIPALITIES, m => [m.name, ...(m.aliases || [])]);
+  // A state written after the city ("Edgewood, WA") rules out same-named places
+  // in other states, so a Florida municipality name never captures them.
+  const stateCode = (text.match(/,\s*([A-Za-z]{2})\b(?!\w)/) || [])[1];
+  const muniPool = stateCode ? MUNICIPALITIES.filter(m => m.state === stateCode.toUpperCase()) : MUNICIPALITIES;
+  const muni = bestNameMatch(lower, muniPool, m => [m.name, ...(m.aliases || [])]);
   const market = bestNameMatch(lower, MARKETS, m => [m.market, m.zone]);
 
   if (muni.hit && muni.len >= market.len) {
@@ -360,11 +364,17 @@ function countyRowsForMissing(countyRows, missing) {
   return countyRows.filter(r => !CORE.exclude.test(r.work_type || '') && tests.some(rx => rx.test(r.work_type || '')));
 }
 
-function filterPermits(permits, municipality, unincorporated) {
+// county: the county the job is in (the municipality's county, else the market's
+// main county). Multi-county markets (Tampa: Hillsborough + Pinellas + Pasco;
+// Orlando: Orange + Seminole + Osceola) carry several county schedules, and only
+// the job's own county ever applies. No county given = every county row (the
+// single-county markets, and markets with no municipality list).
+function filterPermits(permits, municipality, unincorporated, county) {
   if (!Array.isArray(permits) || !permits.length) return { permits, scope: 'none' };
 
   const isCounty = r => /\bcounty\b/i.test(r.municipality || '');
-  const countyRows = permits.filter(isCounty);
+  const countyRx = county ? new RegExp(`\\b${String(county).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i') : null;
+  const countyRows = permits.filter(r => isCounty(r) && (!countyRx || countyRx.test(r.municipality || '')));
 
   if (municipality) {
     if (unincorporated) return { permits: countyRows, scope: 'unincorporated', municipality };
@@ -396,6 +406,15 @@ function filterPermits(permits, municipality, unincorporated) {
 // "Hollywood, CA" from being priced as hurricane zone.
 const HVHZ_MARKETS = new Set(['Miami-Dade', 'Broward']);
 
+// The county a job's permit falls under: its municipality's county, else (no city
+// identified) the market's main county from markets.json, flagged as assumed so the
+// estimate can say so. Markets without a main county keep every county row.
+function jobCounty(matched, muniEntry) {
+  if (muniEntry?.county) return { county: muniEntry.county, countyAssumed: false };
+  const main = MARKETS.find(m => m.market === matched?.market)?.county;
+  return main ? { county: main, countyAssumed: true } : { county: null, countyAssumed: false };
+}
+
 // ─── Local market data lookup (grounds estimates in real pipeline data) ──────
 // One function so the quote-link draft reads exactly what the app reads.
 async function marketPayload(location) {
@@ -405,8 +424,10 @@ async function marketPayload(location) {
   const data = await getMarketData(matched.market);
   if (!data) return { market: matched.market, state: matched.state, zone: matched.zone, municipality: matched.municipality || null, hvhz, materials: null, labor: null, permits: null };
   const muniEntry = MUNICIPALITIES.find(m => m.name === matched.municipality && m.market === matched.market);
-  const { permits, scope, municipality, missing } = filterPermits(data.permits, matched.municipality, !!muniEntry?.unincorporated);
-  return { ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, permitMissing: missing || [], hvhz };
+  const { county, countyAssumed } = jobCounty(matched, muniEntry);
+  const { permits, scope, municipality, missing } = filterPermits(data.permits, matched.municipality, !!muniEntry?.unincorporated, county);
+  return { ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, permitMissing: missing || [], hvhz,
+    permitCountyName: county ? `${county} County` : null, permitCountyAssumed: countyAssumed };
 }
 app.get('/api/market-data', async (req, res) => {
   res.json(await marketPayload(req.query.location || ''));
@@ -947,7 +968,8 @@ async function buildQuoteDraft(row) {
       materialScope: scopeCats ? [...scopeCats].join(', ') : null, laborCount: (md.labor || []).length,
       proMaterials: !!matQ && matQ.rank >= 3,
       weakTrade: matQ && matQ.weak.length ? { cats: [...new Set(matQ.weak.flatMap(g => g.cats))], rank: matQ.weak[0].rank } : null,
-      permitCounty: (md.permits || []).map(p => p.municipality || '').find(n => /\bcounty\b/i.test(n)) || null
+      permitCounty: md.permitCountyName || (md.permits || []).map(p => p.municipality || '').find(n => /\bcounty\b/i.test(n)) || null,
+      permitCountyAssumed: !!md.permitCountyAssumed
     } : null;
     const draft = { v: 1, ctx, scopeText, scopeData: { projectName: scopeData.projectName, tradeBreakdown: scopeData.tradeBreakdown || [], keyFacts: scopeData.keyFacts || [], questions: scopeData.questions || [] },
       estimate: data, marketMeta, hvhz, builtAt: new Date().toISOString() };
