@@ -936,14 +936,17 @@ async function buildQuoteDraft(row) {
     if (data.pricingNotes.length) data.assumptions = [...data.pricingNotes, ...data.assumptions];
     data.labelAdj = adj.label;
     data.scopeKey = eRes.key || null;
-    data.confidenceTier = PIPE.capConfidence(PIPE.computeConfidenceTier(md, scopeCats), ctx.trade);
+    const confTrades = { trade: ctx.trade, tradeBreakdown: scopeData.tradeBreakdown || [] };
+    data.confidenceTier = PIPE.capConfidence(PIPE.computeConfidenceTier(md, scopeCats, confTrades), ctx.trade);
+    const matQ = md ? PIPE.tradeMaterialQuality(md.materials, confTrades.trade, confTrades.tradeBreakdown) : null;
     if (PIPE.limitedTrade(ctx.trade)) data.limitedTrade = ctx.trade;
     data.jobAddress = [row.address, row.city].filter(Boolean).join(', ');
     const marketMeta = md ? {
       market: md.market, municipality: md.municipality, permitScope: md.permitScope, permitMissing: md.permitMissing || [],
       permitCount: (md.permits || []).length, materialCount: PIPE.inScopeMaterials(md.materials, scopeCats).length,
       materialScope: scopeCats ? [...scopeCats].join(', ') : null, laborCount: (md.labor || []).length,
-      proMaterials: PIPE.materialSourceQuality(md.materials, scopeCats) >= 3,
+      proMaterials: !!matQ && matQ.rank >= 3,
+      weakTrade: matQ && matQ.weak.length ? { cats: [...new Set(matQ.weak.flatMap(g => g.cats))], rank: matQ.weak[0].rank } : null,
       permitCounty: (md.permits || []).map(p => p.municipality || '').find(n => /\bcounty\b/i.test(n)) || null
     } : null;
     const draft = { v: 1, ctx, scopeText, scopeData: { projectName: scopeData.projectName, tradeBreakdown: scopeData.tradeBreakdown || [], keyFacts: scopeData.keyFacts || [], questions: scopeData.questions || [] },

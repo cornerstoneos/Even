@@ -2989,17 +2989,22 @@ const TRADE_MATERIALS={
 // The categories this particular estimate will actually price against. Returns
 // null when everything is in play, which is the correct answer for a GC on a
 // full remodel — not a fallback.
+// One trade name -> its material categories: undefined when it matches nothing,
+// null for a broad trade (everything in play), else the category list.
+function tradeCats(raw){
+  const lower=String(raw).toLowerCase();
+  let hit,len=0;
+  for(const key in TRADE_MATERIALS){ if(key.length>len&&lower.includes(key)){hit=key;len=key.length;} }
+  return hit===undefined?undefined:TRADE_MATERIALS[hit];
+}
 function scopeMaterialCategories(trade,tradeBreakdown){
   const names=[trade,...((tradeBreakdown||[]).map(t=>t&&(t.trade||t.name)))].filter(Boolean);
   const cats=new Set();
   let matched=false;
   for(const raw of names){
-    const lower=String(raw).toLowerCase();
-    let hit,len=0;
-    for(const key in TRADE_MATERIALS){ if(key.length>len&&lower.includes(key)){hit=key;len=key.length;} }
-    if(hit===undefined) continue;
+    const mapped=tradeCats(raw);
+    if(mapped===undefined) continue;
     matched=true;
-    const mapped=TRADE_MATERIALS[hit];
     // A pool or landscaping job reads as a "remodel" in the breakdown; for these
     // trades that word must not open every category (founder 2026-10-17).
     if(mapped===null&&typeof LIMITED_TRADES!=='undefined'&&LIMITED_TRADES[trade]) continue;
@@ -3021,8 +3026,39 @@ function scopeMaterialCategories(trade,tradeBreakdown){
 function materialSourceQuality(materials,categories){
   const core=inScopeMaterials(materials,categories);
   if(!core.length) return 0;
-  const ranks=core.map(r=>MATERIAL_TIER_RANK[r.tier]||1).sort((a,b)=>a-b);
+  const ranks=core.map(r=>MATERIAL_TIER_RANK[effectiveTier(r)]||1).sort((a,b)=>a-b);
   return ranks[Math.floor(ranks.length/2)];
+}
+// A pro discount taken off a store shelf price is still a store price (founder
+// 2026-11-05): the interior paint row is Home Depot retail minus an assumed 20%,
+// tagged pro_distributor in the batch. Scored as retail-based, never as pro.
+function effectiveTier(r){
+  const t=r&&r.tier;
+  if((t==='pro_distributor'||t==='supplier_direct')&&(r.retail_mid!=null||/home depot|lowe'?s|pro xtra/i.test(`${r.adjustment||''} ${r.source||''}`))) return 'retail_adjusted';
+  return t;
+}
+// The weakest in-scope trade caps the tier (founder 2026-11-05). Each trade the
+// job names (its main trade + the scope's trade breakdown) is scored on its own
+// rows; the job's material rank is the lowest of those, so ten good plumbing
+// rows can't carry the retail-only drywall and tile on the same bathroom. A broad
+// name ("Remodel") names no trade; when the job names no specific trade at all,
+// the old median over everything in play is used. A trade with no rows scores 0.
+function tradeMaterialQuality(materials,trade,tradeBreakdown){
+  const names=[trade,...((tradeBreakdown||[]).map(t=>t&&(t.trade||t.name)))].filter(Boolean);
+  const groups=[],seen=new Set();
+  for(const raw of names){
+    let cats=tradeCats(raw);
+    if(!cats) continue;
+    // A pool job's own categories (Pool + Plumbing) are scored together.
+    const key=[...cats].sort().join('|'); if(seen.has(key)) continue; seen.add(key);
+    const set=new Set(cats);
+    groups.push({trade:String(raw),cats:[...cats],rank:materialSourceQuality(materials,set),rows:inScopeMaterials(materials,set).length});
+  }
+  if(!groups.length) return {rank:materialSourceQuality(materials,scopeMaterialCategories(trade,tradeBreakdown)),weakest:null,weak:[],groups};
+  const weakest=groups.reduce((a,b)=>b.rank<a.rank?b:a);
+  // Every trade below pro-tier, for the reason line (weakest first).
+  const weak=groups.filter(g=>g.rank<3).sort((a,b)=>a.rank-b.rank);
+  return {rank:weakest.rank,weakest,weak,groups};
 }
 
 // Equipment rental is national and priced per-job, so it never speaks to how
@@ -3051,7 +3087,7 @@ function inScopeMaterials(materials,categories){
     &&categoryInScope(r.category,categories));
 }
 
-function computeConfidenceTier(marketData,categories){
+function computeConfidenceTier(marketData,categories,trades){
   if(!marketData) return 'low';
   // Materials count as grounding only when this job's own categories are covered.
   // Twenty-eight electrical rows do not ground a paint job.
@@ -3062,7 +3098,9 @@ function computeConfidenceTier(marketData,categories){
   // All three layers present. "High" additionally requires that the materials are
   // actually pro-tier and that the permit rows are the issuing city's own — a county
   // baseline standing in for an unresearched city is not city-level grounding.
-  const proTierMaterials=materialSourceQuality(marketData.materials,categories)>=3;
+  const proTierMaterials=(trades
+    ?tradeMaterialQuality(marketData.materials,trades.trade,trades.tradeBreakdown).rank
+    :materialSourceQuality(marketData.materials,categories))>=3;
   const cityLevelPermits=marketData.permitScope==='municipality';
   return (proTierMaterials&&cityLevelPermits)?'high':'medium';
 }
@@ -3828,7 +3866,7 @@ function priceScope(scope,cat,s){
       let desc=(es&&it.description)?String(it.description):e.row.item;
       if(s.hvhz&&HVHZ_EXTERIOR_RE.test(e.row.category||'')){ unitCost=round2(unitCost*(1+HVHZ_UPLIFT)); desc+=' (HVHZ)'; }
       const qty=round2(q*(1+w));
-      lines.push({category:catRoot(e.row.category),description:desc+(w?(es?` (incl. ${Math.round(w*100)}% de desperdicio)`:` (incl. ${Math.round(w*100)}% waste)`):''),qty,unit:e.row.unit||'ea',unitCost,total:round2(qty*unitCost),ref,priced:'catalog',source:e.row.source||'',catalogItem:e.row.item});
+      lines.push({category:catRoot(e.row.category),description:desc+(w?(es?` (incl. ${Math.round(w*100)}% de desperdicio)`:` (incl. ${Math.round(w*100)}% waste)`):''),qty,unit:e.row.unit||'ea',unitCost,total:round2(qty*unitCost),ref,priced:'catalog',source:e.row.source||'',tier:e.row.tier||'',priceDate:e.row.date||'',catalogItem:e.row.item});
     }else if(e&&e.kind==='partner'){
       // The supply house's own sheet price: their number as given (no market
       // level or HVHZ uplift on top), waste on bulk goods like any material.
@@ -4089,7 +4127,9 @@ async function _calculateEstimate(btn,jobAtStart){
   const partnerRows=marketData?await fetchPartnerPrices(ctx.location):[];
   const catalog=buildCatalog(marketData,scopeCats,{suppliers:window._mySuppliers,subs:window._mySubs,partner:partnerRows,trade:ctx.trade});
   const pricingBlock=pricingBlockFor(marketData,hvhzNote,catalog,ctx.location);
-  const confidenceTier=capConfidence(computeConfidenceTier(marketData,scopeCats),ctx.trade);
+  const confTrades={trade:ctx.trade,tradeBreakdown:window._scopeData?.tradeBreakdown};
+  const confidenceTier=capConfidence(computeConfidenceTier(marketData,scopeCats,confTrades),ctx.trade);
+  const matQ=marketData?tradeMaterialQuality(marketData.materials,confTrades.trade,confTrades.tradeBreakdown):null;
   // Kept separately from the estimate payload so the permit-scope disclosure can be
   // rendered deterministically rather than depending on the model to mention it.
   window._marketMeta=marketData?{
@@ -4101,7 +4141,8 @@ async function _calculateEstimate(btn,jobAtStart){
     materialCount:inScopeMaterials(marketData.materials,scopeCats).length,
     materialScope:scopeCats?[...scopeCats].join(', '):null,
     laborCount:(marketData.labor||[]).length,
-    proMaterials:materialSourceQuality(marketData.materials,scopeCats)>=3,
+    proMaterials:!!matQ&&matQ.rank>=3,
+    weakTrade:matQ&&matQ.weak.length?{cats:[...new Set(matQ.weak.flatMap(g=>g.cats))],rank:matQ.weak[0].rank}:null,
     // Read the county's real name off the data rather than assuming it matches the
     // market name — that only holds in tri-county. Charlotte's permits are issued by
     // Mecklenburg County, so "the Charlotte County schedule" would be plainly wrong.
@@ -4469,6 +4510,11 @@ function lineSourceNote(item,i){
   else if(item.priced==='your supplier') t=es?'Tu precio de proveedor':'Your supplier price';
   else if(item.priced==='partner') t=(es?`Precio de la lista de ${item.supplier}`:`Priced from ${item.supplier} sheet`)+(item.priceDate?`, ${item.priceDate}`:'');
   else if(item.priced==='your sub') t=es?'Tu tarifa de subcontratista':'Your sub rate';
+  // Catalog material rows (founder 2026-11-05): SupplyHouse.com rows are a
+  // distributor's published online price, not a local quote, and say so. Local
+  // supply-house rows keep their own label.
+  else if(item.priced==='catalog'&&item.tier==='local_supply_house') t=(es?'Cotización de proveedor local':'Local supply house quote')+(item.priceDate?` (${item.priceDate})`:'');
+  else if(item.priced==='catalog'&&/supplyhouse\.com/i.test(item.source||'')) t=es?'Precio publicado de distribuidor':'Published distributor price';
   if(!t) return '';
   return `<div class="li-src${item.estimated?' est':''}" id="ls-${i}">${escapeHtml(t)}</div>`;
 }
@@ -4670,6 +4716,13 @@ function renderBidIntel(data,loMult,hiMult){
     rows.push(meta.materialCount>0
       ?`<div class="bi-row on">✓ <span>Materials — ${meta.materialCount} local price${meta.materialCount===1?'':'s'}${matFor}${meta.proMaterials?' · pro-tier':' · retail-based'}</span></div>`
       :`<div class="bi-row">— <span>Materials — no local pricing${matFor} yet</span></div>`);
+    // Which trade holds the tier down (weakest in-scope trade rule, 2026-11-05).
+    if(meta.weakTrade&&tier!=='high'){
+      const es=appLang==='es', names=meta.weakTrade.cats.map(c=>catLabel(c)).join(', ');
+      rows.push(`<div class="bi-row" id="bi-weak">— <span>${escapeHtml(meta.weakTrade.rank===0
+        ?(es?`Sin precios de materiales para ${names}: limita la confianza`:`No material prices for ${names}: caps confidence`)
+        :(es?`${names}: precios basados en tienda, limita la confianza`:`${names}: retail-based prices, caps confidence`))}</span></div>`);
+    }
     const lb=data.laborBasis;
     const lbTxt=lb?(lb.mode==='own'?` · your $${lb.rate}/hr`:` · wage × ${(+lb.mult).toFixed(1)}${Math.abs(lb.mult-LABOR_MULT_DEFAULT)<0.001?' (Even default)':''}`):'';
     rows.push(meta.laborCount>0

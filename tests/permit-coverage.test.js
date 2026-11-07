@@ -17,7 +17,7 @@ const {filterPermits,missingCoreFees}=new Function('require',srv.slice(s,e)+'\n;
 
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const hs=html.indexOf('const CONFIDENCE_RANGE=');
-const he=html.indexOf('\n}',html.indexOf('function computeConfidenceTier(marketData,categories){'))+2;
+const he=html.indexOf('\n}',html.indexOf('function computeConfidenceTier(marketData,categories,trades){'))+2;
 const {computeConfidenceTier}=new Function(html.slice(hs,he)+'\n;return {computeConfidenceTier};')();
 
 const batch=JSON.parse(fs.readFileSync(path.join(root,'data/batches/even_master_batch.json'),'utf8'));

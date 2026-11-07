@@ -11,7 +11,7 @@ const check=(n,c,d)=>{c?(pass++,console.log(`  PASS  ${n}`)):(fail++,console.log
 // moves every time unrelated code earlier in index.html changes, and a fixed
 // line range silently drifted three times this session already.
 const startMark='const CONFIDENCE_RANGE=';
-const endMark='function computeConfidenceTier(marketData,categories){';
+const endMark='function computeConfidenceTier(marketData,categories,trades){';
 const start=html.indexOf(startMark);
 const endFnStart=html.indexOf(endMark,start);
 const endFnClose=html.indexOf('\n}',endFnStart)+2;
