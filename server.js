@@ -559,7 +559,7 @@ app.delete('/api/scope-cache/:key', async (req, res) => {
 // so nothing extra comes from the browser. Trade is kept only if it is one of the
 // app's trade options; city only if it names a known municipality (never the
 // typed text, which can be a street address).
-const STAT_TRADES = new Set(['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks', 'Landscaping', 'Pools']);
+const STAT_TRADES = new Set(['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks', 'Landscaping', 'Pools', 'Fence']);
 function jobStats(body) {
   try {
     const job = (body.messages[0].content || []).map(b => b && b.text || '').find(t => /^Trade:/.test(t)) || '';
@@ -794,7 +794,7 @@ app.post('/api/data-trade-credit', async (req, res) => {
 const PIPE = (() => { try { return require('./lib/pipeline').loadPipeline(); } catch (e) { console.error('pipeline load failed:', e.message); return null; } })();
 const SLUG_RE = /^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/;
 const RESERVED_SLUGS = new Set(['admin', 'api', 'app', 'even', 'help', 'login', 'pro', 'q', 'signup', 'suppliers', 'support', 'test', 'www']);
-const QUOTE_TRADES = ['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks', 'Landscaping', 'Pools'];
+const QUOTE_TRADES = ['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks', 'Landscaping', 'Pools', 'Fence'];
 const svc = extra => ({ 'Content-Type': 'application/json', apikey: process.env.SUPABASE_SERVICE_ROLE_KEY, Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`, ...(extra || {}) });
 async function sbRest(method, pathQ, body, prefer) {
   if (!process.env.SUPABASE_SERVICE_ROLE_KEY) return { ok: false, status: 503, data: null };

@@ -1297,6 +1297,7 @@ body.signed-in .sidebar nav .sb-signed-in{display:flex}
                 <option value="Decks" data-es="Terrazas">Decks</option>
                 <option value="Landscaping" data-es="Paisajismo">Landscaping</option>
                 <option value="Pools" data-es="Piscinas">Pools</option>
+                <option value="Fence" data-es="Cercas">Fence</option>
               </select>
               <span class="fchev">›</span>
             </div>
@@ -2968,6 +2969,8 @@ const TRADE_MATERIALS={
   'siding':['Siding'],'stucco':['Siding'],
   // Landscaping + Pools (founder 2026-10-17): launch on the rows we have.
   'pool':['Pool','Plumbing'],'spa':['Pool','Plumbing'],
+  // Fence (2026-11-07): no fence material rows yet; posts set in concrete.
+  'fence':['Fence','Concrete'],
   'landscap':['Landscaping','Irrigation'],'irrigat':['Irrigation'],'sprinkler':['Irrigation'],'sod':['Landscaping'],'lawn':['Landscaping','Irrigation'],
   // Spanish runs name trades in Spanish (bug found 2026-10-10): without these, the
   // other trades the AI spots on a job no longer add their material prices.
@@ -2983,6 +2986,7 @@ const TRADE_MATERIALS={
   'tablaroca':['Drywall'],'yeso':['Drywall'],
   'revestimiento':['Siding'],'estuco':['Siding'],
   'piscina':['Pool','Plumbing'],'alberca':['Pool','Plumbing'],
+  'cerca':['Fence','Concrete'],'valla':['Fence','Concrete'],
   'paisaj':['Landscaping','Irrigation'],'jardin':['Landscaping','Irrigation'],'jardín':['Landscaping','Irrigation'],'riego':['Irrigation'],'césped':['Landscaping'],'grama':['Landscaping']
 };
 
@@ -3695,7 +3699,9 @@ const LABOR_MULT_DEFAULT=2.2;
 // The contractor's own labor rate still overrides, as on every trade.
 const LIMITED_TRADES={
   'Pools':{labor:/^(Plumbers|Construction Laborers)/},
-  'Landscaping':{labor:/^Construction Laborers/}
+  // BLS landscaping trades + fence erectors added 2026-11-07 (EXPANSION DATA).
+  'Landscaping':{labor:/^(Construction Laborers|Landscaping and Groundskeeping Workers|First-Line Supervisors of Landscaping|Tree Trimmers)/},
+  'Fence':{labor:/^(Fence Erectors|Construction Laborers)/}
 };
 const LIMITED_LABEL={en:'Limited local data for this trade. Check materials and labor.',es:'Datos locales limitados para este oficio. Revisa materiales y mano de obra.'};
 function limitedTrade(trade){ return LIMITED_TRADES[String(trade||'')]?String(trade):null; }
@@ -5027,7 +5033,7 @@ const PAY_ES={
   '25% deposit to schedule · 25% at material delivery · 25% at rough-in · 25% upon final walkthrough.':'25% de depósito para agendar · 25% al entregar materiales · 25% en la instalación inicial · 25% en la inspección final.',
   '100% payment due upon project completion.':'100% del pago al terminar el proyecto.'
 };
-const CAT_ES={Utility:'Compañía eléctrica',Supervision:'Supervisión',Inspection:'Inspección',Insulation:'Aislamiento',Cabinets:'Gabinetes',Countertops:'Encimeras',Appliances:'Electrodomésticos',Windows:'Ventanas',Doors:'Puertas',Siding:'Revestimiento',Landscaping:'Jardinería',Pool:'Piscina',Cleaning:'Limpieza',Patch:'Reparaciones',Repair:'Reparaciones',Repairs:'Reparaciones',Plumbing:'Plomería',Labor:'Mano de obra',Materials:'Materiales',Material:'Materiales',Disposal:'Desechos',Permits:'Permisos',Electrical:'Eléctrico',HVAC:'Aire acondicionado',Drywall:'Tablaroca',Flooring:'Pisos',Tile:'Azulejos',Paint:'Pintura',Painting:'Pintura',Roofing:'Techo',Framing:'Estructura',Concrete:'Concreto',Demolition:'Demolición',Demo:'Demolición',Delivery:'Entrega',Protection:'Protección',Fixtures:'Accesorios',Subcontractor:'Subcontratista','Equipment Rental':'Alquiler de equipo',Equipment:'Equipo',Other:'Otros',Cleanup:'Limpieza'};
+const CAT_ES={Utility:'Compañía eléctrica',Supervision:'Supervisión',Inspection:'Inspección',Insulation:'Aislamiento',Cabinets:'Gabinetes',Countertops:'Encimeras',Appliances:'Electrodomésticos',Windows:'Ventanas',Doors:'Puertas',Siding:'Revestimiento',Landscaping:'Jardinería',Pool:'Piscina',Fence:'Cercas',Cleaning:'Limpieza',Patch:'Reparaciones',Repair:'Reparaciones',Repairs:'Reparaciones',Plumbing:'Plomería',Labor:'Mano de obra',Materials:'Materiales',Material:'Materiales',Disposal:'Desechos',Permits:'Permisos',Electrical:'Eléctrico',HVAC:'Aire acondicionado',Drywall:'Tablaroca',Flooring:'Pisos',Tile:'Azulejos',Paint:'Pintura',Painting:'Pintura',Roofing:'Techo',Framing:'Estructura',Concrete:'Concreto',Demolition:'Demolición',Demo:'Demolición',Delivery:'Entrega',Protection:'Protección',Fixtures:'Accesorios',Subcontractor:'Subcontratista','Equipment Rental':'Alquiler de equipo',Equipment:'Equipo',Other:'Otros',Cleanup:'Limpieza'};
 // Categories and units are stored in English (the pricing rules read them) and
 // translated only where people read them.
 // The trade dropdown's own Spanish label (value stays English for the prompt).
@@ -6454,7 +6460,7 @@ function debounceSaveSuppliers(){
 // ══════════════════════════
 const SUB_TRADES=['Electrical','Plumbing','HVAC','Roofing','Framing / Carpentry','Drywall',
   'Painting','Flooring / Tile','Concrete / Masonry','Stucco','Demolition','General Labor',
-  'Landscaping','Pool','Solar','Other'];
+  'Landscaping','Pool','Fence','Solar','Other'];
 const SUB_RATE_TYPES=[['hour','$ / hour'],['day','$ / day'],['sqft','$ / sq ft'],['lump','Lump sum'],['pct','% of trade scope']];
 
 // Maps a sub trade onto the BLS OEWS occupation actually present in market labor data,
@@ -6916,7 +6922,7 @@ function renderShops(){
 // with this contractor's own settings; it lands here for review. Nothing is
 // sent to the client from here: the contractor opens the draft, edits, and
 // sends the proposal the normal way.
-const QL_TRADES=['General Contractor','Roofing','Electrical','Plumbing','HVAC','Remodeling','Framing','Painting','Flooring','Concrete','Siding','Decks','Landscaping','Pools'];
+const QL_TRADES=['General Contractor','Roofing','Electrical','Plumbing','HVAC','Remodeling','Framing','Painting','Flooring','Concrete','Siding','Decks','Landscaping','Pools','Fence'];
 window._myPage=null; window._requests=[]; window._reqFilter='open';
 function slugSuggest(){
   const c=String(getBiz().company||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40);
