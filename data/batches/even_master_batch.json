@@ -97370,6 +97370,976 @@
         "method": "flat",
         "notes": null,
         "date": "2023-02-16"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 A - Assembly",
+        "min_fee": 500.0,
+        "rate": 1.09,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 B - Business",
+        "min_fee": 500.0,
+        "rate": 0.85,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 E - Educational",
+        "min_fee": 500.0,
+        "rate": 1.09,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 F - Factory & Industrial",
+        "min_fee": 500.0,
+        "rate": 0.6,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 H - Hazard",
+        "min_fee": 500.0,
+        "rate": 1.09,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 I - Institutional",
+        "min_fee": 500.0,
+        "rate": 1.09,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 M - Mercantile",
+        "min_fee": 500.0,
+        "rate": 0.85,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 R-1, R-2, R-4 - Multi-Family",
+        "min_fee": 500.0,
+        "rate": 0.86,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 R-3 - Residential",
+        "min_fee": 380.0,
+        "rate": 1.0,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 S - Storage",
+        "min_fee": 500.0,
+        "rate": 0.6,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "New construction, additions & alterations (building permit) \u2014 U - Utility & Miscellaneous",
+        "min_fee": 380.0,
+        "rate": 0.6,
+        "method": "per_sqft_with_min",
+        "notes": "Per square foot under roof (new construction, interior alterations, additions, detached accessory structures). Fees include building, mechanical, electrical and plumbing disciplines. Min $380 (R-3, U) / $500 (others). Split 50% plan review (includes $50 application fee) / 50% inspection. Shell 67%; foundation only 40%, completion 80%. Fire, natural resources etc. extra.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Building (general) trade permit \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Exterior door and window replacement (up to 20 openings) \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Garage door replacement \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Exterior door/window/garage door replacement \u2014 different size \u2014 residential",
+        "min_fee": 250.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Awning/shutter \u2014 residential",
+        "min_fee": 160.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Stucco, exterior plaster & siding \u2014 residential",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Demolition \u2014 residential",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Roofing \u2014 residential",
+        "min_fee": 250.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Mechanical (general) \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "HVAC equal change-out \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Plumbing (general) \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "On-site piping \u2014 water, wastewater, stormwater \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Lawn sprinkler (irrigation) \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Backflow \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Gas (general) \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "LP gas tank set \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Electrical (general) \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Generator \u2014 residential",
+        "min_fee": 250.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Generator with gas \u2014 residential",
+        "min_fee": 320.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Photovoltaic (solar) \u2014 residential",
+        "min_fee": 250.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Building (general) trade permit \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Exterior door and window replacement (up to 20 openings) \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Garage door replacement \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Exterior door/window/garage door replacement \u2014 different size \u2014 commercial",
+        "min_fee": 380.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Stucco, exterior plaster & siding \u2014 commercial",
+        "min_fee": 320.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Multi-family building, per additional unit \u2014 commercial",
+        "min_fee": 75.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Roofing \u2014 commercial",
+        "min_fee": 380.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Mechanical (general) \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "HVAC equal change-out \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Multi-family mechanical, per additional unit \u2014 commercial",
+        "min_fee": 75.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Plumbing (general) \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "On-site piping \u2014 water, wastewater, stormwater \u2014 commercial",
+        "min_fee": 625.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Lawn sprinkler (irrigation) \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Multi-family plumbing, per additional unit \u2014 commercial",
+        "min_fee": 75.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Backflow \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Gas (general) \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "LP gas tank set \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Electrical (general) \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Low voltage \u2014 commercial",
+        "min_fee": 190.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Multi-family electrical, per additional unit \u2014 commercial",
+        "min_fee": 75.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Burglar alarm \u2014 commercial",
+        "min_fee": 40.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Trade permit: single trade, inspections only, no plan review. Full fee due at submission.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Misc project (deck, shed, carport, pool enclosure/screen room, other) \u2014 residential",
+        "min_fee": 380.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Exterior perimeter wall \u2014 residential",
+        "min_fee": 350.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Ground settlement investigation \u2014 residential",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Ground settlement remediation \u2014 residential",
+        "min_fee": 300.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Above-ground pool/spa \u2014 residential",
+        "min_fee": 150.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Pool/spa \u2014 residential",
+        "min_fee": 475.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Manufactured/mobile home set-up \u2014 residential",
+        "min_fee": 600.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Modular building installation \u2014 residential",
+        "min_fee": 720.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Misc building project (deck, shed, carport, screen room, other) \u2014 commercial",
+        "min_fee": 500.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Demolition \u2014 commercial",
+        "min_fee": 330.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Awning/shutter \u2014 commercial",
+        "min_fee": 350.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Exterior wall \u2014 commercial",
+        "min_fee": 475.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Cell tower \u2014 commercial",
+        "min_fee": 725.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Ground settlement investigation \u2014 commercial",
+        "min_fee": 130.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Ground settlement remediation \u2014 commercial",
+        "min_fee": 420.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Pool/spa \u2014 commercial",
+        "min_fee": 875.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Modular building installation \u2014 commercial",
+        "min_fee": 720.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Misc mechanical project (boiler, refrigeration, chilled pipe) \u2014 commercial",
+        "min_fee": 500.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Kitchen hood \u2014 commercial",
+        "min_fee": 500.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Misc plumbing project (boiler, medical gas, grease interceptor) \u2014 commercial",
+        "min_fee": 500.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Misc electrical project (service upgrade, re-wiring, site lighting) \u2014 commercial",
+        "min_fee": 500.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Generator \u2014 commercial",
+        "min_fee": 675.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Photovoltaic (solar) \u2014 commercial",
+        "min_fee": 750.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Sign \u2014 building, 3 or less \u2014 commercial",
+        "min_fee": 475.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Sign \u2014 pole \u2014 commercial",
+        "min_fee": 540.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Sign \u2014 monument \u2014 commercial",
+        "min_fee": 600.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Sign \u2014 entry feature \u2014 commercial",
+        "min_fee": 600.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Sign \u2014 miscellaneous/temporary \u2014 commercial",
+        "min_fee": 250.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Sign \u2014 billboard \u2014 commercial",
+        "min_fee": 575.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Miscellaneous permit: one or more trades, with plan review and inspections. Includes the $50 application fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Reinspection fee \u2014 residential",
+        "min_fee": 125.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Reinspection fee \u2014 commercial",
+        "min_fee": 125.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Plan revision \u2014 residential",
+        "min_fee": 140.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Plan revision \u2014 commercial",
+        "min_fee": 350.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "After-hours inspection \u2014 residential",
+        "min_fee": 310.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "After-hours inspection \u2014 commercial",
+        "min_fee": 375.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Inspection by appointment \u2014 residential",
+        "min_fee": 125.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Inspection by appointment \u2014 commercial",
+        "min_fee": 125.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Temporary certificate of occupancy \u2014 residential",
+        "min_fee": 530.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Temporary certificate of occupancy \u2014 commercial",
+        "min_fee": 825.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Permit transfer \u2014 residential",
+        "min_fee": 50.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Permit transfer \u2014 commercial",
+        "min_fee": 50.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Administrative fee \u2014 residential",
+        "min_fee": 50.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Administrative fee \u2014 commercial",
+        "min_fee": 50.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Private provider administrative fee \u2014 plan review only",
+        "min_fee": null,
+        "rate": 75.0,
+        "method": "percent_of_permit_fee",
+        "notes": "75% of total permit fee when a private provider does plan review only; 50% inspections only; 25% plan review and inspections. Residential and commercial.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
+      },
+      {
+        "municipality": "Hillsborough County FL",
+        "work_type": "Work without permit penalty",
+        "min_fee": null,
+        "rate": 100.0,
+        "method": "percent_of_permit_fee",
+        "notes": "Additional 100% of the permit fee.",
+        "date": "2024-10-05",
+        "source": "Hillsborough County Building Permit Fee Schedule, effective October 5, 2024 (unincorporated Hillsborough County; PDF linked as the current fee schedule on hcfl.gov, checked 2026-11-07)"
       }
     ],
     "source": "City of Tampa Development & Growth Management, Construction Services Division, Trade Permit Fee Schedule, effective 10/1/2018, updated 2/16/2023 (still the current linked doc on tampa.gov as of 2026)",

@@ -729,5 +729,92 @@
     "state": "FL",
     "county": "Palm Beach",
     "unincorporated": true
+  },
+  {
+    "name": "Tampa",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Hillsborough",
+    "lat": 27.9506,
+    "lng": -82.4572
+  },
+  {
+    "name": "Temple Terrace",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Hillsborough",
+    "lat": 28.0353,
+    "lng": -82.3893
+  },
+  {
+    "name": "Plant City",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Hillsborough",
+    "lat": 28.0186,
+    "lng": -82.1146
+  },
+  {
+    "name": "Brandon",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Hillsborough",
+    "lat": 27.9378,
+    "lng": -82.2859,
+    "unincorporated": true
+  },
+  {
+    "name": "Riverview",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Hillsborough",
+    "lat": 27.8661,
+    "lng": -82.3265,
+    "unincorporated": true
+  },
+  {
+    "name": "Valrico",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Hillsborough",
+    "lat": 27.9378,
+    "lng": -82.2365,
+    "unincorporated": true
+  },
+  {
+    "name": "Seffner",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Hillsborough",
+    "lat": 27.9839,
+    "lng": -82.2757,
+    "unincorporated": true
+  },
+  {
+    "name": "Lutz",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Hillsborough",
+    "lat": 28.1511,
+    "lng": -82.4615,
+    "unincorporated": true
+  },
+  {
+    "name": "Apollo Beach",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Hillsborough",
+    "lat": 27.7731,
+    "lng": -82.4076,
+    "unincorporated": true
+  },
+  {
+    "name": "Ruskin",
+    "market": "Tampa",
+    "state": "FL",
+    "county": "Hillsborough",
+    "lat": 27.7209,
+    "lng": -82.4332,
+    "unincorporated": true
   }
 ]
