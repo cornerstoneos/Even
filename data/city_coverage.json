@@ -2,8 +2,8 @@
   "generated_by": "even-data tools/build_checklist.py",
   "rule": "complete = core fees in data/permit_core_fees.json",
   "counts": {
-    "complete": 42,
-    "partial": 7,
+    "complete": 43,
+    "partial": 8,
     "not started": 80
   },
   "cities": [
@@ -1175,11 +1175,16 @@
     {
       "city": "Apopka",
       "county": "Orange",
-      "status": "not started",
-      "missing_core_fees": [],
-      "rows": 0,
-      "last_entry_date": null,
-      "schedule_source": null
+      "status": "partial",
+      "missing_core_fees": [
+        "electrical",
+        "plumbing",
+        "mechanical",
+        "roofing"
+      ],
+      "rows": 6,
+      "last_entry_date": "2011-01-05",
+      "schedule_source": "City of Apopka Code of Ordinances fee section on apopka.gov/256/Fees (Ord. No. 2207, Sec. I, Jan 5, 2011), read 2026-11-07"
     },
     {
       "city": "Winter Garden",
@@ -1207,6 +1212,24 @@
       "rows": 0,
       "last_entry_date": null,
       "schedule_source": null
+    },
+    {
+      "city": "Jacksonville",
+      "county": "Duval",
+      "status": "not started",
+      "missing_core_fees": [],
+      "rows": 0,
+      "last_entry_date": null,
+      "schedule_source": null
+    },
+    {
+      "city": "Jacksonville Beach",
+      "county": "Duval",
+      "status": "complete",
+      "missing_core_fees": [],
+      "rows": 19,
+      "last_entry_date": "2022-08-01",
+      "schedule_source": "City of Jacksonville Beach Resolution No. 2114-2022, Attachment A Schedule of Fees (adopted Aug 1, 2022; permits assessed under it from Aug 2, 2022), jacksonvillebeach.org DocumentCenter/View/340; scanned PDF read by OCR 2026-11-07"
     }
   ]
 }
