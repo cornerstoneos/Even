@@ -51,8 +51,8 @@ const hasHills=r=>(r.permits||[]).some(x=>/Hillsborough/.test(x.municipality||''
   check(`'Pine Hills, FL' -> Orange County rows, unincorporated`, r.permitScope==='unincorporated'&&munis(r).join()==='Orange County FL');
   r=await P.marketPayload('Orlando, FL');
   check(`'Orlando, FL' -> City of Orlando rows only (${munis(r)})`, munis(r).join()==='City of Orlando FL');
-  r=await P.marketPayload('Apopka, FL');
-  check(`'Apopka, FL' -> county-fallback with Orange County rows`, r.permitScope==='county-fallback'&&munis(r).join()==='Orange County FL');
+  r=await P.marketPayload('Ocoee, FL');
+  check(`'Ocoee, FL' -> county-fallback with Orange County rows`, r.permitScope==='county-fallback'&&munis(r).join()==='Orange County FL');
 
   console.log('\n=== No city identified: the main county, and it says so ===');
   r=await P.marketPayload('Tampa Bay');
