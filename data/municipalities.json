@@ -887,5 +887,13 @@
     "lat": 28.5683,
     "lng": -81.2437,
     "unincorporated": true
+  },
+  {
+    "name": "Winter Park",
+    "market": "Orlando",
+    "state": "FL",
+    "county": "Orange",
+    "lat": 28.5999,
+    "lng": -81.3392
   }
 ]
