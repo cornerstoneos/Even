@@ -3390,10 +3390,10 @@ function buildChipOptions(q){
     ['Occupied / active tenant','Vacant','New construction'];
   }
   if(text.includes('cast iron')||text.includes('tub type')){
-    return ['Fiberglass','Cast iron','Acrylic','Not sure'];
+    return appLang==='es'?['Fibra de vidrio','Hierro fundido','Acrílico','No estoy seguro']:['Fiberglass','Cast iron','Acrylic','Not sure'];
   }
   if(text.includes('waterproof')||text.includes('kerdi')||text.includes('schluter')){
-    return ['Schluter / Kerdi','RedGard / membrane','Cement board only','Not sure'];
+    return appLang==='es'?['Schluter / Kerdi','RedGard / membrana','Solo cement board','No estoy seguro']:['Schluter / Kerdi','RedGard / membrane','Cement board only','Not sure'];
   }
   if(text.includes('crew')||text.includes('sub')||text.includes('who is doing')){
     return appLang==='es'?['Mi equipo propio','Subcontratistas','Mixto']:
@@ -4364,7 +4364,7 @@ async function _calculateEstimate(btn,jobAtStart){
           seenCats.add(cat);
           const row=document.createElement('div');
           row.className='loading-live-row';
-          row.innerHTML=`<span class="loading-live-tick">✓</span><span class="loading-live-desc">${escapeHtml(cat)}</span>`;
+          row.innerHTML=`<span class="loading-live-tick">✓</span><span class="loading-live-desc">${escapeHtml(catLabel(cat))}</span>`;
           liveEl&&liveEl.appendChild(row);
           if(liveEl) liveEl.scrollTop=liveEl.scrollHeight;
         }
