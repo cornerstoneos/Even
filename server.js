@@ -22,7 +22,7 @@ app.use(cors({
   exposedHeaders: ['X-Even-Cache', 'X-Even-Cache-Key', 'X-Even-Build-Id'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Even-Cache', 'X-Even-Device', 'X-Even-Lang']
 }));
-const { buildRequest, MAIN: mainModel, LIGHT: lightModel, SCOPE_FIX_TEXT } = require('./lib/guard');
+const { buildRequest, planFileIds, MAIN: mainModel, LIGHT: lightModel, SCOPE_FIX_TEXT } = require('./lib/guard');
 const guardModels = { MAIN: mainModel, LIGHT: lightModel };
 const { makeUsage, LIMITS } = require('./lib/usage');
 const STARTED_AT = new Date().toISOString();
@@ -572,6 +572,67 @@ function jobStats(body) {
 }
 
 // ─── Anthropic proxy ──────────────────────────────────────────────────────────
+// ── Big plan sets (founder 2026-11-17) ──
+// A plan set over the app's 15 MB inline limit that the browser couldn't trim to
+// the job's trade is stored with the AI (Files API) and sent as a file reference.
+// Only ids this server issued are accepted, they expire after a day, and expired
+// files are deleted from the AI's storage (they are a customer's plans).
+const FILES_BETA = 'files-api-2025-04-14';
+const PLAN_FILE_TTL_MS = 24 * 3600 * 1000;
+const planFiles = new Map();        // file id -> { sha, at }
+const planFileBySha = new Map();    // sha256 of the PDF -> file id (same file, same id, so the scope cache still hits)
+const planFileOk = id => { const f = planFiles.get(id); return !!f && Date.now() - f.at < PLAN_FILE_TTL_MS; };
+async function deleteExpiredPlanFiles() {
+  for (const [id, f] of planFiles) {
+    if (Date.now() - f.at < PLAN_FILE_TTL_MS) continue;
+    planFiles.delete(id); if (planFileBySha.get(f.sha) === id) planFileBySha.delete(f.sha);
+    try {
+      await fetch(`https://api.anthropic.com/v1/files/${id}`, { method: 'DELETE', headers: { 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'anthropic-beta': FILES_BETA } });
+    } catch (e) { logError('plan_upload', 'delete failed: ' + e.message, null); }
+  }
+}
+setInterval(() => { deleteExpiredPlanFiles().catch(() => {}); }, 3600 * 1000).unref();
+app.post('/api/plan-upload', express.raw({ type: ['application/pdf', 'application/octet-stream'], limit: '60mb' }), async (req, res) => {
+  const es = String(req.get('x-even-lang') || '') === 'es';
+  if (!process.env.ANTHROPIC_API_KEY) return res.status(500).json({ error: { code: 'misconfigured', message: 'Server misconfigured' } });
+  if (!originAllowed(req.get('origin') || '')) return res.status(403).json({ error: { code: 'origin_not_allowed', message: 'Not allowed' } });
+  const U = usage();
+  const ident = await U.identify(req);
+  if (!U.rateOk(ident.ipHash, 'plan_upload')) return res.status(429).json({ error: { code: 'rate_limited', message: es ? 'Demasiados intentos. Espera un minuto.' : 'Too many requests. Wait a minute.' } });
+  const buf = req.body;
+  if (!Buffer.isBuffer(buf) || buf.length < 5 || buf.subarray(0, 5).toString('latin1') !== '%PDF-') {
+    return res.status(400).json({ error: { code: 'bad_file', message: es ? 'Ese archivo no es un PDF.' : 'That file is not a PDF.' } });
+  }
+  const sha = crypto.createHash('sha256').update(buf).digest('hex');
+  const known = planFileBySha.get(sha);
+  if (known && planFileOk(known)) return res.json({ fileId: known });
+  try {
+    const form = new FormData();
+    form.append('file', new Blob([buf], { type: 'application/pdf' }), 'plans.pdf');
+    const r = await fetch('https://api.anthropic.com/v1/files', {
+      method: 'POST',
+      headers: { 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01', 'anthropic-beta': FILES_BETA },
+      body: form
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok || !d.id) {
+      logError('plan_upload', `files api ${r.status}: ${String(d.error?.message || '').slice(0, 200)}`, { bytes: buf.length });
+      return res.status(502).json({ error: { code: 'upload_failed', message: es ? 'No pudimos subir los planos.' : "Couldn't upload the plans." } });
+    }
+    planFiles.set(d.id, { sha, at: Date.now() });
+    planFileBySha.set(sha, d.id);
+    U.event('plan_upload', ident, { bytes: buf.length });
+    res.json({ fileId: d.id });
+  } catch (e) {
+    logError('plan_upload', e.message, { bytes: buf.length });
+    res.status(502).json({ error: { code: 'upload_failed', message: es ? 'No pudimos subir los planos.' : "Couldn't upload the plans." } });
+  }
+});
+app.use('/api/plan-upload', (err, req, res, next) => {
+  if (err && err.type === 'entity.too.large') return res.status(413).json({ error: { code: 'too_large', message: 'Too large' } });
+  next(err);
+});
+
 app.post('/api/estimate', async (req, res) => {
   if (!process.env.ANTHROPIC_API_KEY) {
     console.error('ANTHROPIC_API_KEY is not set — cannot call Anthropic');
@@ -592,6 +653,11 @@ app.post('/api/estimate', async (req, res) => {
   if (built.error) {
     logError('proxy_reject', built.error, { kind: String(req.body?.even_kind || '').slice(0, 40), model: String(req.body?.model || '').slice(0, 60) });
     return res.status(400).json({ error: { code: 'request_not_allowed', message: 'Request not allowed' } });
+  }
+  const planIds = planFileIds(built.body);
+  if (planIds.some(id => !planFileOk(id))) {
+    const es = String(req.get('x-even-lang') || '') === 'es';
+    return res.status(400).json({ error: { code: 'plan_expired', message: es ? 'Tus planos ya no están disponibles. Súbelos otra vez.' : 'Your plans are no longer available. Upload them again.' } });
   }
   const U = usage();
   const ident = await U.identify(req);
@@ -666,7 +732,7 @@ app.post('/api/estimate', async (req, res) => {
           'Content-Type': 'application/json',
           'x-api-key': process.env.ANTHROPIC_API_KEY,
           'anthropic-version': '2023-06-01',
-          'anthropic-beta': ['prompt-caching-2024-07-31', built.body.fallbacks ? 'server-side-fallback-2026-07-01' : null].filter(Boolean).join(',')
+          'anthropic-beta': ['prompt-caching-2024-07-31', built.body.fallbacks ? 'server-side-fallback-2026-07-01' : null, planIds.length ? FILES_BETA : null].filter(Boolean).join(',')
         },
         body: JSON.stringify(built.body)
       });

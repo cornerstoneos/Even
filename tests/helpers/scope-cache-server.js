@@ -16,9 +16,16 @@ const real = globalThis.fetch;
 globalThis.fetch = async (url, opts = {}) => {
   url = String(url);
   const json = (b, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { 'content-type': 'application/json' } });
+  // Files API (big-plans.test.js): a stored plan set gets an id; deletes are logged.
+  if (url.includes('api.anthropic.com/v1/files')) {
+    if ((opts.method || 'GET') === 'DELETE') { log('files-delete ' + url.split('/').pop()); return json({ id: url.split('/').pop(), type: 'file_deleted' }); }
+    const f = opts.body && opts.body.get ? opts.body.get('file') : null;
+    log('files-upload ' + JSON.stringify({ beta: (opts.headers || {})['anthropic-beta'], size: f ? f.size : 0, type: f ? f.type : null }));
+    return json({ id: 'file_test' + Math.random().toString(36).slice(2, 12), type: 'file' });
+  }
   if (url.includes('api.anthropic.com')) {
     log('anthropic');
-    { const b = JSON.parse(opts.body); log('req ' + JSON.stringify({ model: b.model, beta: (opts.headers || {})['anthropic-beta'], fallbacks: b.fallbacks || null, thinking: b.thinking || null, effort: b.output_config?.effort || null })); }
+    { const b = JSON.parse(opts.body); log('req ' + JSON.stringify({ model: b.model, fileDoc: opts.body.includes('"type":"file"'), beta: (opts.headers || {})['anthropic-beta'], fallbacks: b.fallbacks || null, thinking: b.thinking || null, effort: b.output_config?.effort || null })); }
     if (opts.body.includes('REFUSE_ME')) {
       if (JSON.parse(opts.body).stream) return new Response(`data: {"type":"message_delta","delta":{"stop_reason":"refusal"}}\n\n`, { status: 200, headers: { 'content-type': 'text/event-stream' } });
       return json({ content: [], stop_reason: 'refusal', stop_details: { type: 'refusal', category: null } });
