@@ -274,7 +274,7 @@ function leadHead(l) {
     ${l.do_not_contact ? '<span class="pill" style="color:var(--red)">Do not contact</span>' : ''}</div>`;
 }
 function leadCard(l, def) {
-  return `<div class="lead">${leadHead(l)}${l.do_not_contact ? '' : logPanel('L:' + l.id, ['call', 'ig', 'fb', 'tiktok'], def || (l.phone ? 'call' : l.ig ? 'ig' : 'fb'))}</div>`;
+  return `<div class="lead">${leadHead(l)}${l.do_not_contact ? '' : logPanel('L:' + l.id, ['call', 'whatsapp', 'ig', 'fb', 'fb_personal', 'tiktok'], def || (l.phone ? 'call' : l.ig ? 'ig' : 'fb'))}</div>`;
 }
 
 function renderToday() {
@@ -287,7 +287,7 @@ function renderToday() {
   $('t-week').textContent = rt.dayOff ? 'Sunday: day off.' : `This week ${rt.doneWeek} of ${set.weekly_goal || 630} · ${rt.left} work day${rt.left === 1 ? '' : 's'} left including today`;
   const by = CRM.countBy(todays, 'channel');
   $('t-chips').innerHTML = CRM.CHANNELS.map(c => `<div class="chip"><div class="muted">${CRM.CHANNEL_LABEL[c]}</div><b>${by[c] || 0}</b>${targets[c] ? `<span class="muted"> / ${targets[c]}</span>` : ''}</div>`).join('');
-  $('quick').innerHTML = `<div class="muted" style="margin-bottom:6px">For DMs and posts to people not on the lead list. Pick the channel, then tap the outcome.</div>` + logPanel('Q:', ['ig', 'fb', 'tiktok', 'group_post'], 'ig');
+  $('quick').innerHTML = `<div class="muted" style="margin-bottom:6px">For DMs and posts to people not on the lead list. Pick the channel, then tap the outcome.</div>` + logPanel('Q:', ['ig', 'fb', 'fb_personal', 'tiktok', 'whatsapp', 'group_post'], 'ig');
   const openLead = id => { const l = leadById(id); return l && !l.do_not_contact && l.stage !== 'Customer' && l.stage !== 'Lost'; };
   const due = CRM.followUpsDue(S.touches, t, 'lead_id', openLead);
   const dueSh = CRM.followUpsDue(S.touches, t, 'supply_house_id', id => shById(id)?.stage !== 'partner');
@@ -330,7 +330,7 @@ document.addEventListener('click', async e => {
   if (ed) {
     const l = leadById(ed.dataset.edit), box = $('x-' + l.id);
     if (box.innerHTML) { box.innerHTML = ''; return; }
-    box.innerHTML = `<div style="margin-top:8px">${l.do_not_contact ? '' : logPanel('L:' + l.id, ['call', 'ig', 'fb', 'tiktok'], l.phone ? 'call' : 'ig')}</div>
+    box.innerHTML = `<div style="margin-top:8px">${l.do_not_contact ? '' : logPanel('L:' + l.id, ['call', 'whatsapp', 'ig', 'fb', 'fb_personal', 'tiktok'], l.phone ? 'call' : 'ig')}</div>
       <div class="muted" style="margin:8px 0 4px">History</div>${history('lead_id', l.id)}<div style="margin-top:8px">${leadForm(l)}</div>`;
     box.querySelector('[data-save]').onclick = async () => {
       const patch = readForm(box); if (!patch.business) return toast('Business name is required');

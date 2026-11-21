@@ -1,9 +1,12 @@
 // Even admin sales CRM: pure logic (no DOM, no network) so tests can run it in Node.
 // Loaded by admin/index.html only. The contractor app (index.html) never loads this.
 (function (root) {
-  const CHANNELS = ['call', 'ig', 'fb', 'tiktok', 'supply_house', 'group_post'];
-  const CHANNEL_LABEL = { call: 'Call', ig: 'Instagram', fb: 'Facebook', tiktok: 'TikTok', supply_house: 'Supply house', group_post: 'Group post' };
-  const OUTCOMES = ['answered', 'no answer', 'call back', 'follow up', 'not interested', 'yes', 'appointment', 'sale'];
+  // whatsapp and fb_personal added 2026-11-21 (first warm reply came on WhatsApp;
+  // Facebook outreach has to come from the founder's own profile, so the page and
+  // the profile are tracked apart). 'replied' = they wrote back.
+  const CHANNELS = ['call', 'ig', 'fb', 'fb_personal', 'tiktok', 'whatsapp', 'supply_house', 'group_post'];
+  const CHANNEL_LABEL = { call: 'Call', ig: 'Instagram', fb: 'Facebook (Even page)', fb_personal: 'Facebook (personal)', tiktok: 'TikTok', whatsapp: 'WhatsApp', supply_house: 'Supply house', group_post: 'Group post' };
+  const OUTCOMES = ['answered', 'replied', 'no answer', 'call back', 'follow up', 'not interested', 'yes', 'appointment', 'sale'];
   const STAGES = ['New', 'Contacted', 'Demo', 'Customer', 'Lost'];
   const SH_STAGES = ['not contacted', 'visited', 'talking', 'price sheet received', 'partner'];
   const COUNTIES = ['Miami-Dade', 'Broward', 'Palm Beach'];
