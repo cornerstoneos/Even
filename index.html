@@ -736,6 +736,19 @@ body:has(#s-dashboard.active) .app{min-height:0}
 .d-chk.done{color:var(--white2)}.d-chk.done i{background:var(--green);border-color:var(--green);color:#000}.d-chk.done i::after{content:'✓'}
 .d-chk small{margin-left:auto;font-size:11.5px;color:var(--muted);font-family:'DM Mono',monospace}
 @keyframes dSpin{to{transform:rotate(360deg)}}
+/* Questions screen (founder 2026-11-21, option A): the estimate builds as they
+   answer, in the loading screen's checklist style. No dollars here: prices only
+   exist after the build. */
+.q-build{margin-top:14px;padding:16px 18px;max-width:none}
+.q-build-head{display:flex;justify-content:space-between;align-items:center;font:700 11px 'DM Mono',monospace;letter-spacing:1.5px;color:var(--gold)}
+.q-build-head b{color:var(--muted);font-weight:500;letter-spacing:.5px}
+.q-build-bar{height:4px;background:var(--rim);border-radius:3px;margin:10px 0 4px;overflow:hidden}.q-build-bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .35s ease}
+.q-build .d-chk{font-size:14px;padding:9px 0;min-width:0}
+.q-build .d-chk span{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.q-build .d-chk small{max-width:46%;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.q-build .d-chk.done span{color:var(--white)}
+.q-build .d-chk.done{animation:qbIn .35s ease}
+@keyframes qbIn{from{background:rgba(255,179,0,.08)}to{background:transparent}}
 .d-load-card .loading-live{margin-top:10px}
 .d-load-note{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
 @media(min-width:900px){
@@ -1542,6 +1555,11 @@ body.signed-in .sidebar nav .sb-signed-in{display:flex}
         <div class="d-qprog" id="q-progress" hidden><span data-en="A few answers lock in the price" data-es="Unas respuestas fijan el precio">A few answers lock in the price</span><b id="q-count"></b></div>
         <div class="d-track" id="q-track" hidden><div id="q-bar"></div></div>
         <div id="q-list"></div>
+        <div class="d-load-card q-build" id="q-build" hidden>
+          <div class="q-build-head"><span data-en="YOUR ESTIMATE SO FAR" data-es="TU ESTIMADO HASTA AHORA">YOUR ESTIMATE SO FAR</span><b id="qb-count"></b></div>
+          <div class="q-build-bar"><i id="qb-bar"></i></div>
+          <div id="qb-list"></div>
+        </div>
         <div class="d-sticky">
         <button class="cta d-big-btn" id="calc-btn" onclick="calculateEstimate()" style="display:none;margin-top:12px">
           <span data-en="Build estimate →" data-es="Generar estimado →">Build estimate →</span>
@@ -3479,6 +3497,7 @@ function renderQuestions(questions){
   const container=document.getElementById('q-list');
   if(!questions||questions.length===0){
     container.innerHTML='';
+    renderQBuild([],{},0);
     document.getElementById('calc-btn').style.display='block';
     return;
   }
@@ -3570,11 +3589,40 @@ function showOther(idx,el){
   if(inp){ inp.style.display='block'; if(inp.dataset.chipValue===inp.value) inp.value=''; inp.focus(); setQAnswer(idx,inp.value); }
 }
 // "2 of 4" counter and bar above the questions.
+// Short topic for a question in the build card: no number, no "?", one line.
+function qTopic(q){
+  let t=String(q||'').replace(/^\s*\d+[.)]\s*/,'').replace(/^[¿\s]+/,'').replace(/[?？]\s*$/,'').trim();
+  if(t.length>44){ t=t.slice(0,44).replace(/\s+\S*$/,'')+'…'; }
+  return t;
+}
+// The "estimate so far" card under the questions (founder 2026-11-21): each
+// answer lands as a checked row the way the loading screen checks off steps.
+function renderQBuild(qs,a,done){
+  const box=document.getElementById('q-build'); if(!box) return;
+  box.hidden=!qs.length; if(!qs.length) return;
+  const es=appLang==='es';
+  const cnt=document.getElementById('qb-count'); if(cnt) cnt.textContent=es?`${done} de ${qs.length}`:`${done} of ${qs.length}`;
+  const bar=document.getElementById('qb-bar'); if(bar) bar.style.width=(done/qs.length*100)+'%';
+  const sd=window._scopeData?localizeScopeData(window._scopeData,appLang):null;
+  const nItems=(sd?.tradeBreakdown||[]).reduce((n,t)=>n+((t.items||[]).length),0);
+  const rows=[`<div class="d-chk done"><i></i><span>${es?'Trabajo leído':'Job read'}</span>${nItems?`<small>${es?`${nItems} tareas`:`${nItems} tasks`}</small>`:''}</div>`];
+  let workShown=false;
+  qs.forEach(q=>{
+    const v=a[q.question], has=v!=null&&String(v).trim()!=='';
+    if(has) rows.push(`<div class="d-chk done"><i></i><span>${escapeHtml(String(v))}</span><small>${escapeHtml(qTopic(q.question))}</small></div>`);
+    else { rows.push(`<div class="d-chk${workShown?'':' work'}"><i></i><span>${escapeHtml(qTopic(q.question))}</span></div>`); workShown=true; }
+  });
+  const ready=done===qs.length;
+  rows.push(`<div class="d-chk"><i></i><span>${ready?(es?'Listo para generar: precios, mano de obra y permisos':'Ready to build: prices, labor and permit fees'):(es?'Precios, mano de obra y permisos':'Prices, labor and permit fees')}</span></div>`);
+  const list=document.getElementById('qb-list'); if(list) list.innerHTML=rows.join('');
+}
 function updateQuestionProgress(){
   const qs=window._allQuestions||[], a=window._qAnswers||{};
   const done=qs.filter(q=>a[q.question]!=null&&String(a[q.question]).trim()!=='').length;
   const show=qs.length>0;
-  ['q-progress','q-track'].forEach(id=>{const el=document.getElementById(id); if(el) el.hidden=!show;});
+  // The build card carries the count now; the old bar above the list stays hidden.
+  ['q-progress','q-track'].forEach(id=>{const el=document.getElementById(id); if(el) el.hidden=true;});
+  renderQBuild(qs,a,done);
   const c=document.getElementById('q-count'); if(c) c.textContent=appLang==='es'?`${done} de ${qs.length}`:`${done} of ${qs.length}`;
   const bar=document.getElementById('q-bar'); if(bar) bar.style.width=(qs.length?done/qs.length*100:0)+'%';
 }

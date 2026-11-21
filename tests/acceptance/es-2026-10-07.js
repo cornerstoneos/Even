@@ -113,7 +113,10 @@ function englishHits(text){
     await page.click('#gen-btn'); await page.waitForSelector('.q-chip',{timeout:30000}); await page.waitForTimeout(700);
     await grab('2-refine');
     const nq=await page.locator('.q-block').count();
-    for(let i=0;i<nq;i++){ await page.locator(`#qchips-${i} .q-chip`).first().click(); await page.waitForTimeout(150); }
+    for(let i=0;i<nq;i++){ await page.locator(`#qchips-${i} .q-chip`).first().click(); await page.waitForTimeout(150);
+      // The "estimate so far" card part way through (2026-11-21).
+      if(i===1&&vpName==='phone'){ await page.locator('#q-build').scrollIntoViewIfNeeded().catch(()=>{}); await page.waitForTimeout(400); await page.screenshot({path:`${out}/${LANG}-phone-2b-building.png`}); }
+    }
     await page.waitForTimeout(600);
     await page.click('#calc-btn');
     // Watch the loading screen for model reasoning while it runs.
