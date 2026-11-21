@@ -106,6 +106,8 @@ function englishHits(text){
     },LANG);
     await page.selectOption('#est-trade',{label:LANG==='es'?/Electricidad|Eléctric/:'Electrical'}).catch(async()=>{await page.selectOption('#est-trade','Electrical').catch(()=>{});});
     await page.fill('#est-location','Aventura, FL');
+    // Long job address in the project label, no client (PDF job box check 2026-11-21).
+    if(process.env.PROJECT_LABEL) await page.fill('#est-project-label',process.env.PROJECT_LABEL).catch(()=>{});
     await page.fill('#scope-text',LANG==='es'&&!process.env.SAME_TEXT?'Cambiar el panel eléctrico de 100A a 200A en una casa unifamiliar':'Upgrade electrical panel from 100A to 200A in a single family home');
     await grab('1-input');
     await page.click('#gen-btn'); await page.waitForSelector('.q-chip',{timeout:30000}); await page.waitForTimeout(700);

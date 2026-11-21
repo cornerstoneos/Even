@@ -5291,6 +5291,16 @@ function buildClientProposal(data,ctx,lang){
                 :{prepared:'Prepared for',job:'Job',scope:'Scope of work',included:'Included',excluded:'Not included',assumptions:'Conditions',payment:'Payment schedule',license:'License',number:'Proposal #',date:'Date',clientSig:'Client signature and date',contractorSig:'Contractor signature and date',accept:'By signing, the client accepts this proposal.'}
   };
 }
+// The job line on a proposal: the project label, plus the city only when the
+// label doesn't already name it ("1316 NE 14th Ave, Fort Lauderdale" printed
+// "Fort Lauderdale, FL · 1316 NE 14th Ave, Fort Lauderdale"; found 2026-11-17).
+function proposalJobLine(P){
+  const loc=String(P.jobAddress||'').trim(), proj=String(P.project||'').trim();
+  if(!proj) return loc;
+  const city=loc.split(',')[0].trim().toLowerCase();
+  if(!loc||(city&&proj.toLowerCase().includes(city))) return proj;
+  return loc+'  ·  '+proj;
+}
 // All the words a client proposal shows, for the banned-words check.
 function clientProposalText(P){
   return [P.title,P.company,P.phone,P.email,P.license,P.number,P.date,P.client,P.jobAddress,P.project,P.note,P.scopeIntro,
@@ -5316,9 +5326,9 @@ function renderProposalPreview(){
         </div>
         <div class="prop-meta"><strong>${e(P.title)}</strong>${e(Lb.number)} ${e(P.number)}<br>${e(Lb.date)}: ${e(P.date)}</div>
       </div>
-      ${(P.client||P.jobAddress)?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;background:#f6f3ec;border-radius:6px;padding:9px 12px;margin-bottom:12px;font-size:12px;color:#333">
-        <div>${P.client?`<div style="font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:#888">${e(Lb.prepared)}</div><b>${e(P.client)}</b>`:''}</div>
-        <div>${P.jobAddress?`<div style="font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:#888">${e(Lb.job)}</div>${e(P.jobAddress)}${P.project?` · ${e(P.project)}`:''}`:''}</div>
+      ${(P.client||P.jobAddress)?`<div style="display:grid;grid-template-columns:${P.client?'1fr 1fr':'1fr'};gap:10px;background:#f6f3ec;border-radius:6px;padding:9px 12px;margin-bottom:12px;font-size:12px;color:#333">
+        ${P.client?`<div><div style="font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:#888">${e(Lb.prepared)}</div><b>${e(P.client)}</b></div>`:''}
+        <div>${P.jobAddress?`<div style="font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:#888">${e(Lb.job)}</div>${e(proposalJobLine(P))}`:''}</div>
       </div>`:''}
       ${P.note?`<p style="font-size:12px;color:#555;line-height:1.6;margin-bottom:10px;font-style:italic">${e(P.note)}</p>`:''}
       <div class="prop-sec">${e(Lb.scope)}</div>
@@ -5457,16 +5467,21 @@ async function buildClientProposalPDF(jsPDF){
   y=98;
   // "Prepared for" and the job address side by side in a tinted box.
   if(P.client||P.jobAddress){
-    const half=(W-M*2)/2, addr=doc.splitTextToSize(P.jobAddress+(P.project?'  ·  '+P.project:''),half-24);
+    // Measure with the font the address is printed in (it was measured in a
+    // smaller font and ran past the box), and use the whole box when there is
+    // no client name to share it with.
+    const half=(W-M*2)/2, jx=P.client?M+half+12:M+12, jw=P.client?half-24:W-M*2-24;
+    doc.setFont('helvetica','normal');doc.setFontSize(9.5);
+    const addr=doc.splitTextToSize(proposalJobLine(P),jw);
     const h=Math.max(40,28+addr.length*11);
     doc.setFillColor(246,243,236);doc.roundedRect(M,y,W-M*2,h,5,5,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(140,140,140);
     if(P.client) doc.text(Lb.prepared.toUpperCase(),M+12,y+14);
-    if(P.jobAddress) doc.text(Lb.job.toUpperCase(),M+half+12,y+14);
+    if(P.jobAddress) doc.text(Lb.job.toUpperCase(),jx,y+14);
     doc.setFontSize(10.5);doc.setTextColor(30,30,30);
     if(P.client) doc.text(P.client,M+12,y+28);
     doc.setFont('helvetica','normal');doc.setFontSize(9.5);
-    if(P.jobAddress) addr.forEach((l,n)=>doc.text(l,M+half+12,y+28+n*11));
+    if(P.jobAddress) addr.forEach((l,n)=>doc.text(l,jx,y+28+n*11));
     y+=h+16;
   }else y+=8;
   if(P.note){ doc.setFont('helvetica','italic');doc.setFontSize(9);doc.setTextColor(90,90,90);doc.splitTextToSize(P.note,W-M*2).forEach(l=>{need(12);doc.text(l,M,y);y+=12;});y+=6; }
@@ -5581,7 +5596,7 @@ async function downloadCostSheet(){
   const cols=[M+4,248,310,378,446,W-M-4];
   doc.setFillColor(240,235,226);doc.rect(M,y,W-M*2,17,'F');
   doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(100,100,100);
-  (L==='es'?['DESCRIPCIÓN','CANT.','UNIDAD','COSTO UNIT.','TOTAL','']:['DESCRIPTION','QTY','UNIT','UNIT COST','TOTAL','']).forEach((h,i)=>{if(i<5)doc.text(h,i===0?cols[0]:cols[i],y+11,{align:i>=3?'right':'left'})});
+  (L==='es'?['DESCRIPCIÓN','CANT.','UNIDAD','C. UNIT.','TOTAL','']:['DESCRIPTION','QTY','UNIT','UNIT COST','TOTAL','']).forEach((h,i)=>{if(i<5)doc.text(h,i===0?cols[0]:cols[i],y+11,{align:i>=3?'right':'left'})});
   y+=19;
   let lc='';
   // Descriptions were cut at a fixed 52 characters, which is both too long for
