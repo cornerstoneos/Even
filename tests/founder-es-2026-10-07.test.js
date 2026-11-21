@@ -56,8 +56,10 @@ check('ES permit line is Spanish', es.lineItems.find(l=>l.category==='Permits').
 check('ES "not in our data" label is Spanish', es.lineItems.find(l=>l.estimated).estLabel==='no está en nuestros datos, estimado');
 check('same scope in EN and ES prices the same', es.totalBid===en.totalBid, `${es.totalBid} vs ${en.totalBid}`);
 check('EN lines unchanged: catalog name and "Permit:" prefix', en.lineItems[0].description===mats[0].row.item&&/^Permit: Aventura Electrical Permit/.test(en.lineItems.find(l=>l.category==='Permits').description));
-check('scope prompt asks for Spanish when ES is on', /Language:Spanish/.test(html)&&/LANGUAGE: Spanish\. Write projectName, every trade name, item, keyFact, question and option in Spanish/.test(html));
-check('estimate rules require the job language', /LANGUAGE: write projectName, every description, assumption, exclusion and estimatedDays in the Language given with the job/.test(RULES));
+// Changed 2026-11-21 (same job = same number): prompts ask for both languages
+// every time; the app picks the Spanish words. See tests/same-number-lang.test.js.
+check('scope prompt asks for the Spanish twins every time', /BILINGUAL: write every text field in English, and give each its Spanish twin/.test(html)&&!/\|Language:Spanish/.test(html));
+check('estimate rules ask for the Spanish twins every time', /BILINGUAL: write projectName, every description, assumption, exclusion and estimatedDays in English, and give each its Spanish twin/.test(RULES));
 check('categories and units stay English for the pricing rules', /category and unit always in English/.test(RULES));
 check('demo detection reads Spanish', /demolici\[oó\]n/.test(slice('const LABOR_MULT_DEFAULT=','// ══ END PRICING ENGINE ══')));
 

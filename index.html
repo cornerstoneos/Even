@@ -3244,7 +3244,7 @@ function showLoading(){
   // The job and a five-step checklist (reading, permit fees, materials, labor, check).
   const isEs=appLang==='es', ctx=window._ctx||{}, m=window._marketMeta||null;
   const city=(m&&m.municipality)||(ctx.location||'').split(',')[0]||'';
-  const t=document.getElementById('load-title'); if(t) t.textContent=window._scopeData?.projectName||(isEs?'Tu trabajo':'Your job');
+  const t=document.getElementById('load-title'); if(t) t.textContent=localizeScopeData(window._scopeData,appLang)?.projectName||(isEs?'Tu trabajo':'Your job');
   const sub=document.getElementById('load-sub'); if(sub) sub.textContent=[ctx.location,tradeLabel(ctx.trade,appLang)].filter(Boolean).join(' · ');
   const steps=isEs
     ?['Leyendo el trabajo',`Tarifas de permisos${city?' de '+city:''}`,'Precios de materiales','Horas de mano de obra','Revisando el estimado']
@@ -3424,8 +3424,9 @@ async function startEstimate(){
     window._scopeData=data;
     stopStatus();
     document.getElementById('ai-summary-text').innerHTML=T[appLang].extracted;
-    renderScopeExtracted(data);
-    renderQuestions(data.questions);
+    const shown=localizeScopeData(data,appLang);
+    renderScopeExtracted(shown);
+    renderQuestions(shown.questions);
     document.getElementById('scope-extracted').style.display='block';
     document.getElementById('questions-section').style.display='block';
     document.getElementById('gen-btn').disabled=false;
@@ -3445,6 +3446,17 @@ async function startEstimate(){
   }
 }
 
+// The scope comes back in both languages (scopePromptText BILINGUAL); show the
+// words for the app's language. Each question keeps its English text and options
+// (q._en) so the answers sent to the estimate are the same in either language.
+function localizeScopeData(d,lang){
+  if(!d||typeof d!=='object') return d;
+  const es=lang==='es', pick=(en,sp)=>es&&sp!=null&&String(sp).trim()!==''?sp:en;
+  const arr=(en,sp)=>es&&Array.isArray(sp)&&sp.length===(en||[]).length?sp:en;
+  return {...d,projectName:pick(d.projectName,d.projectName_es),keyFacts:arr(d.keyFacts,d.keyFacts_es),
+    tradeBreakdown:(d.tradeBreakdown||[]).map(t=>({...t,trade:pick(t.trade,t.trade_es),items:arr(t.items,t.items_es)})),
+    questions:(Array.isArray(d.questions)?d.questions:[]).map(q=>q&&typeof q==='object'?{...q,question:pick(q.question,q.question_es),options:arr(q.options,q.options_es),_en:{question:q.question,options:q.options||[]}}:q)};
+}
 function renderScopeExtracted(data){
   const grid=document.getElementById('scope-grid');
   grid.innerHTML=(data.tradeBreakdown||[]).map((t,i)=>`
@@ -3485,55 +3497,57 @@ function renderQuestions(questions){
   updateQuestionProgress();
 }
 
-function buildChipOptions(q){
-  const text=(q.question||'').toLowerCase();
+function buildChipOptions(q,lang){
+  const L=lang||appLang;
+  // Keywords are English, so match on the English question when there is one.
+  const text=((q._en&&q._en.question)||q.question||'').toLowerCase();
   if(text.includes('permit')){
-    return appLang==='es'?['Sí, sacaré permiso','No, sin permiso','Cliente saca el permiso','No estoy seguro']:
+    return L==='es'?['Sí, sacaré permiso','No, sin permiso','Cliente saca el permiso','No estoy seguro']:
     ['Yes, pulling permit','No permit needed','Client pulling permit','Not sure yet'];
   }
   if(text.includes('floor')&&text.includes('level')||text.includes('story')){
-    return appLang==='es'?['1er piso','2do piso','3er piso o más','Mixto']:
+    return L==='es'?['1er piso','2do piso','3er piso o más','Mixto']:
     ['1st floor','2nd floor','3rd floor+','Mixed floors'];
   }
   if(text.includes('occupied')||text.includes('vacant')||text.includes('tenant')){
-    return appLang==='es'?['Ocupado','Vacante','Construcción nueva']:
+    return L==='es'?['Ocupado','Vacante','Construcción nueva']:
     ['Occupied / active tenant','Vacant','New construction'];
   }
   if(text.includes('cast iron')||text.includes('tub type')){
-    return appLang==='es'?['Fibra de vidrio','Hierro fundido','Acrílico','No estoy seguro']:['Fiberglass','Cast iron','Acrylic','Not sure'];
+    return L==='es'?['Fibra de vidrio','Hierro fundido','Acrílico','No estoy seguro']:['Fiberglass','Cast iron','Acrylic','Not sure'];
   }
   if(text.includes('waterproof')||text.includes('kerdi')||text.includes('schluter')){
-    return appLang==='es'?['Schluter / Kerdi','RedGard / membrana','Solo cement board','No estoy seguro']:['Schluter / Kerdi','RedGard / membrane','Cement board only','Not sure'];
+    return L==='es'?['Schluter / Kerdi','RedGard / membrana','Solo cement board','No estoy seguro']:['Schluter / Kerdi','RedGard / membrane','Cement board only','Not sure'];
   }
   if(text.includes('crew')||text.includes('sub')||text.includes('who is doing')){
-    return appLang==='es'?['Mi equipo propio','Subcontratistas','Mixto']:
+    return L==='es'?['Mi equipo propio','Subcontratistas','Mixto']:
     ['Own crew','Subs','Mixed'];
   }
   if(text.includes('material')||text.includes('finish')||text.includes('grade')||text.includes('quality')){
-    return appLang==='es'?['Básico','Estándar','Premium']:
+    return L==='es'?['Básico','Estándar','Premium']:
     ['Budget / basic','Standard / mid','Premium / luxury'];
   }
   if(text.includes('structural')||text.includes('load bearing')){
-    return appLang==='es'?['Sí, estructural','No estructural','Por confirmar']:
+    return L==='es'?['Sí, estructural','No estructural','Por confirmar']:
     ['Yes, structural','No structural','TBD'];
   }
   if(text.includes('hvac')||text.includes('ac ')||text.includes('duct')){
-    return appLang==='es'?['Reemplazo completo','Solo reparación','Sistema nuevo','Solo ductos']:
+    return L==='es'?['Reemplazo completo','Solo reparación','Sistema nuevo','Solo ductos']:
     ['Full replacement','Repair only','New install','Ductwork only'];
   }
   if(text.includes('roof')||text.includes('pitch')||text.includes('slope')){
-    return appLang==='es'?['Plano','Bajo','Medio','Alto']:
+    return L==='es'?['Plano','Bajo','Medio','Alto']:
     ['Flat','Low pitch','Medium pitch','Steep pitch'];
   }
   if(text.includes('timeline')||text.includes('when')||text.includes('urgency')){
-    return appLang==='es'?['Inmediato','1-2 meses','3-6 meses','Flexible']:
+    return L==='es'?['Inmediato','1-2 meses','3-6 meses','Flexible']:
     ['Immediate','1–2 months','3–6 months','Flexible'];
   }
   if(text.includes('disposal')||text.includes('haul')||text.includes('debris')){
-    return appLang==='es'?['Incluir precio','Cliente maneja','Dumpster en sitio','Por confirmar']:
+    return L==='es'?['Incluir precio','Cliente maneja','Dumpster en sitio','Por confirmar']:
     ['Include in scope','Client handles','Dumpster on-site','TBD'];
   }
-  return appLang==='es'?['Sí','No','Posiblemente','Por confirmar']:
+  return L==='es'?['Sí','No','Posiblemente','Por confirmar']:
   ['Yes','No','Possibly','TBD'];
 }
 
@@ -4029,7 +4043,21 @@ function catalogPromptText(cat){
 // cushion, sqft, hvhz, calibration}. Returns the estimate object the rest of the
 // app already renders (lineItems with qty/unitCost/total, overhead, contingency,
 // profit, totalBid), plus pricing notes that say what the code did.
+// Same job = same number in English and Spanish (founder 2026-11-21): the AI is
+// always asked for both languages at once (description + description_es...), so
+// switching the app's language never changes what the AI is asked or what it
+// scopes. Here the words are picked for the language the estimate is shown in.
+function localizeEstimateJSON(d,lang){
+  if(!d||typeof d!=='object') return d;
+  const es=lang==='es', pick=(en,sp)=>es&&sp!=null&&String(sp).trim()!==''?sp:en;
+  const arr=(en,sp)=>es&&Array.isArray(sp)&&sp.length?sp:en;
+  return {...d,projectName:pick(d.projectName,d.projectName_es),
+    assumptions:arr(d.assumptions,d.assumptions_es),exclusions:arr(d.exclusions,d.exclusions_es),
+    estimatedDays:pick(d.estimatedDays,d.estimatedDays_es),
+    lineItems:(d.lineItems||[]).map(it=>it&&typeof it==='object'?{...it,description:pick(it.description,it.description_es)}:it)};
+}
 function priceScope(scope,cat,s){
+  scope=localizeEstimateJSON(scope,s.lang);
   const adj=+s.marketAdj||1;
   const mult=Math.min(LABOR_MULT_MAX,Math.max(LABOR_MULT_MIN,+s.laborMult||LABOR_MULT_DEFAULT));
   const ownRate=+s.laborRate>0?+s.laborRate:null;
@@ -4152,12 +4180,13 @@ function scopePromptText(j){
   if(j.nDocs>0) attachedParts.push(`${j.nDocs} PDF plan/spec document(s)`);
   if(j.nImages>0) attachedParts.push(`${j.nImages} construction plan/photo(s)`);
   const imgContext=attachedParts.length>0?`\nATTACHED: ${attachedParts.join(' and ')}. Perform high-accuracy OCR on all text. Extract all dimensions, material callouts, notes, scope items, and quantities visible. Pay special attention to leader lines, revision clouds, and specification notes. Attachments may be multiple pages of the same scope — combine and reconcile all information across them before responding.`:'';
-  // The contractor reads every word of this in their language (founder ES test 2026-10-07).
-  const langRule=j.lang==='es'
-    ?'\nLANGUAGE: Spanish. Write projectName, every trade name, item, keyFact, question and option in Spanish (Latin American, use tú). Keep brand names, product names and model numbers as written (Square D, NEMA 3R, THHN).'
-    :'';
+  // Always both languages in one answer (founder 2026-11-21: same job = same
+  // number). The prompt no longer changes with the app's language, so English
+  // and Spanish get the same scope, the same questions and the same cache hit;
+  // the app shows the _es words in Spanish (localizeScopeData).
+  const langRule='\nBILINGUAL: write every text field in English, and give each its Spanish twin with the same meaning and order: projectName_es, trade_es, items_es, keyFacts_es, question_es, options_es (Latin American Spanish, use tú). Keep brand names, product names and model numbers as written (Square D, NEMA 3R, THHN).';
   const {trade,location,projtype,sqft,scope}=j;
-  return `Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${j.lang==='es'?'|Language:Spanish':''}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","tradeBreakdown":[{"trade":"string","icon":"emoji","items":["3-6 word task"]}],"keyFacts":["short fact"],"questions":[{"id":"q1","question":"string","options":["choice1","choice2","choice3"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.${langRule}`;
+  return `Construction estimating. Trade:${trade}|Location:${location}|Type:${projtype}|SqFt:${sqft}${imgContext}\n${scope?'SCOPE: '+scope:''}\n\nExtract scope. Return ONLY valid JSON:\n{"projectName":"string","projectName_es":"string","tradeBreakdown":[{"trade":"string","trade_es":"string","icon":"emoji","items":["3-6 word task"],"items_es":["same, in Spanish"]}],"keyFacts":["short fact"],"keyFacts_es":["same, in Spanish"],"questions":[{"id":"q1","question":"string","question_es":"string","options":["choice1","choice2","choice3"],"options_es":["same, in Spanish"]}]}\nRULES: Max 3 trades. Max 4 items per trade — short scan-friendly phrases only (e.g. "Remove existing drywall", "Paint 2 coats walls"). Max 3 keyFacts under 8 words each. Ask enough pricing-critical questions to price this accurately, scaled to how much the scope actually leaves unresolved — a thin/vague scope missing material grade, dimensions, or permit status needs more (up to 8); a detailed scope that already answers most of that needs fewer (as few as 2). Never ask something the scope or images already answered. 3-4 short options each.${langRule}`;
 }
 function hvhzNoteFor(isHVHZ){
   return isHVHZ?'\n\nHVHZ COMPLIANCE REQUIRED: This job is in a High Velocity Hurricane Zone. Scope for it:\n- HVHZ-compliant (Miami-Dade NOA approved) products on exterior work (the app adds the HVHZ cost uplift to exterior catalog items itself)\n- Enhanced fasteners (6d ring shank, 6-inch spacing) on exterior work\n- Notice of Commencement for jobs over $2,500\n- Special inspector only when this scope requires one (an "other" line, $400-800)':'';
@@ -4220,7 +4249,7 @@ LINE TYPES (each lineItems entry is one of these):
 - {"type":"permit","ref":"P4","qty":0,"description":"short"} ref from PERMIT FEES. One row per permit actually pulled: a single-trade job pulls one permit. When the city lists a permit row for this job's own trade (Electrical, Plumbing, Mechanical, Roofing), use it; pick a general building or master permit row only when no trade row covers the work. qty only for per-unit fees (sq ft, fixtures, tons), else 0. Never pick surcharges, renewals, reinspections, certificates or private-provider rows.
 - {"type":"other","category":"Disposal","description":"short","qty":1,"unit":"ea","unitCost":50} category and unit always in English: category is one of Materials, Labor, Disposal, Delivery, Equipment Rental, Protection, Cleanup, Supervision, Utility, Inspection, Other, or a trade name (Electrical, Plumbing, HVAC, Roofing, Drywall, Flooring, Tile, Paint, Framing, Concrete); unit is ea, hr, ft, sqft, job or day. ONLY for something the catalog does not have (a dumpster, a supplier delivery charge, an item not listed). You write unitCost; the app labels the line "not in our data, estimated". Use a catalog item only when it IS the item the job needs (same product or a direct equivalent, e.g. a 50 gal tank for a 40 gal tank); never stand in an unrelated product just because it is in the list. Only parts this scope actually installs: no parts for a fixture the job does not touch (no toilet wax ring on a water heater job).
 BE GRANULAR: 14-22 line items for a full remodel; fewer for a small single-trade job. Do not pad.
-LANGUAGE: write projectName, every description, assumption, exclusion and estimatedDays in the Language given with the job. Spanish is Latin American and uses tú. Keep brand names, product names and model numbers as written (Square D, NEMA 3R, THHN). In Spanish, give every material line a short Spanish description of the item.
+BILINGUAL: write projectName, every description, assumption, exclusion and estimatedDays in English, and give each its Spanish twin: projectName_es, description_es on every line item (a short Spanish description of the item), assumptions_es, exclusions_es, estimatedDays_es. Same meaning, same order. Spanish is Latin American and uses tú. Keep brand names, product names and model numbers as written (Square D, NEMA 3R, THHN).
 CLIENT-FACING TEXT (assumptions, exclusions, descriptions): plain short sentences a contractor would write by hand. No em dashes. Split into two sentences with a period instead of joining clauses with a dash.
 MARGIN PROTECTORS: include each one only when this scope actually calls for it: permit, debris removal, material delivery, drywall repair after trades, punch list and touch-up labor (2-4% of labor hours), project management hours when the contractor manages subs or a multi-trade job (First-Line Supervisors row, 8-16 hours per week of duration).
 SIZING ANCILLARY LINES (these scale with the job or they discredit the whole bid):
@@ -4231,10 +4260,9 @@ SIZING LABOR HOURS (a padded hour count kills trust the same way a padded fee do
 - Like-for-like tank water heater swap (same fuel, same location): 4-6 plumber hours including drain, disconnect, set, connect, fill and test.
 - Simple surface installs on a prepped, no-demo surface (turf, vinyl, carpet tile, laminate) run roughly 15-25 sqft per labor-hour.
 - A separate supervision / site-verification line only on jobs with real coordination: multiple trades, a permit, or a scheduled inspection.
-{"projectName":"string","lineItems":[],"assumptions":["max 5 short assumptions, key scope decisions only"],"exclusions":["string"],"estimatedDays":"string e.g. 6-8 weeks"}`;
+{"projectName":"string","projectName_es":"string","lineItems":[],"assumptions":["max 5 short assumptions, key scope decisions only"],"assumptions_es":["same, in Spanish"],"exclusions":["string"],"exclusions_es":["same, in Spanish"],"estimatedDays":"string e.g. 6-8 weeks","estimatedDays_es":"same, in Spanish"}`;
   const MARKET=`${pricingBlock}`;
   const JOB=`Trade:${ctx.trade}|Location:${ctx.location}|Type:${ctx.projtype}|SqFt:${ctx.sqft}|Labor:${ctx.laborType}|Bid:${ctx.bidType}
-Language:${lang==='es'?'Spanish':'English'}
 SCOPE:${scope}
 ANSWERS:${ansText}
 EXTRACTED:${JSON.stringify(tradeBreakdown||[])}
@@ -4272,8 +4300,14 @@ async function _calculateEstimate(btn,jobAtStart){
   }
   // Question order, not click order: the same answers must make the same prompt
   // (and hit the same cached scope) however the contractor tapped through them.
-  const ansText=(window._allQuestions||[]).map(q=>q.question).filter(q=>answers[q]!=null&&answers[q]!=='')
-    .map(q=>`Q: ${q}\nA: ${answers[q]}`).join('\n\n');
+  // Sent in English whatever language is on screen: a picked option maps back to
+  // its English option (same position), so EN and ES send the same answers.
+  const ansText=(window._allQuestions||[]).filter(q=>answers[q.question]!=null&&answers[q.question]!=='')
+    .map(q=>{const a=answers[q.question], en=q._en||{question:q.question,options:q.options||[]};
+      const shown=(q.options&&q.options.length)?q.options:buildChipOptions(q);
+      const enOpts=(q.options&&q.options.length)?en.options:buildChipOptions(q,'en');
+      const i=shown.indexOf(a); const aEn=i>=0&&enOpts[i]!=null?enOpts[i]:a;
+      return `Q: ${en.question}\nA: ${aEn}`;}).join('\n\n');
 
   // HVHZ detection. Florida Building Code R202 defines the High Velocity Hurricane
   // Zone as exactly two counties — Miami-Dade and Broward. Palm Beach is Wind-Borne
@@ -7357,7 +7391,7 @@ function updateMenuDot(){
 // if the page closes. When the contractor comes back the job is waiting here.
 function bgJobLabel(ctx){
   const v=id=>(document.getElementById(id)?.value||'').trim();
-  return v('est-project-label')||v('est-client')||window._scopeData?.projectName||[tradeLabel(ctx.trade,appLang),ctx.location].filter(Boolean).join(', ');
+  return v('est-project-label')||v('est-client')||localizeScopeData(window._scopeData,appLang)?.projectName||[tradeLabel(ctx.trade,appLang),ctx.location].filter(Boolean).join(', ');
 }
 function bgBuildPayload({ctx,catalog,priceOpts,adjLabel,confidenceTier,answers}){
   const v=id=>document.getElementById(id)?.value??'';

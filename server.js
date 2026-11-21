@@ -560,12 +560,14 @@ app.delete('/api/scope-cache/:key', async (req, res) => {
 // app's trade options; city only if it names a known municipality (never the
 // typed text, which can be a street address).
 const STAT_TRADES = new Set(['General Contractor', 'Roofing', 'Electrical', 'Plumbing', 'HVAC', 'Remodeling', 'Framing', 'Painting', 'Flooring', 'Concrete', 'Siding', 'Decks', 'Landscaping', 'Pools', 'Fence']);
-function jobStats(body) {
+function jobStats(body, fallbackLang) {
   try {
     const job = (body.messages[0].content || []).map(b => b && b.text || '').find(t => /^Trade:/.test(t)) || '';
     const trade = (job.match(/^Trade:([^|\n]*)/) || [])[1] || '';
     const loc = ((job.match(/\|Location:([^|\n]*)/) || [])[1] || '').toLowerCase();
-    const lang = /\nLanguage:Spanish/.test(job) ? 'es' : 'en';
+    // Prompts no longer name a language (they ask for both); the app's language
+    // comes from the X-Even-Lang header. Older prompt shapes still carry it.
+    const lang = /\nLanguage:Spanish/.test(job) ? 'es' : (fallbackLang === 'es' ? 'es' : 'en');
     const muni = loc ? bestNameMatch(loc, MUNICIPALITIES, m => [m.name, ...(m.aliases || [])]) : { hit: null };
     return { trade: STAT_TRADES.has(trade.trim()) ? trade.trim() : (trade.trim() ? 'Other' : null), city: muni.hit ? muni.hit.name : null, lang };
   } catch (e) { return {}; }
@@ -702,9 +704,9 @@ app.post('/api/estimate', async (req, res) => {
         U.pend(st.pkey, 1);
         let released = false;
         release = () => { if (!released) { released = true; U.pend(st.pkey, -1); } };
-        onFresh = () => { freshDone = true; U.record(ident, st).catch(e => logError('usage', e.message, null)).finally(release); U.event('estimate_run', ident, jobStats(built.body)); };
+        onFresh = () => { freshDone = true; U.record(ident, st).catch(e => logError('usage', e.message, null)).finally(release); U.event('estimate_run', ident, jobStats(built.body, ident.lang)); };
       } else if (built.spec.counts) {
-        onFresh = () => U.event('estimate_run', ident, jobStats(built.body));
+        onFresh = () => U.event('estimate_run', ident, jobStats(built.body, ident.lang));
       }
     }
     if (!U.rateOk(ident.ipHash, built.kind)) { release(); return tooMany(); }
@@ -936,7 +938,7 @@ async function serverAI(raw, ident) {
     if (key) { scopeCacheSet(key, text); finish(text); scopeDbPut(key, text); }
     if (built.spec.counts) {
       if (!st.isPro) await U.record(ident, st).catch(e => logError('usage', e.message, null));
-      U.event('estimate_run', ident, jobStats(built.body));
+      U.event('estimate_run', ident, jobStats(built.body, ident.lang));
     }
     return { text, key, cached: false };
   } finally {

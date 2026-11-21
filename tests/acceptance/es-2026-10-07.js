@@ -18,6 +18,19 @@ const SCOPE={
   en:{projectName:'100A to 200A panel upgrade',tradeBreakdown:[{trade:'Electrical',icon:'⚡',items:['Remove existing 100A panel','Install new 200A panel','Reconnect existing circuits']}],keyFacts:['Single family home in Aventura','200A service'],
     questions:[{id:'q1',question:'Panel location?',options:['Indoor garage','Outdoor exterior wall','Utility closet']},{id:'q2',question:'Is this a straight swap or relocation?',options:['Same location','Relocate panel']},{id:'q3',question:'Permit and inspection included?',options:['Yes, include permit','No, owner handles','Unsure']}]}
 };
+// Since 2026-11-21 the AI always answers in both languages (field + field_es).
+function bilingualScope(){
+  const en=SCOPE.en, es=SCOPE.es;
+  return {projectName:en.projectName,projectName_es:es.projectName,
+    tradeBreakdown:en.tradeBreakdown.map((t,i)=>({...t,trade_es:es.tradeBreakdown[i].trade,items_es:es.tradeBreakdown[i].items})),
+    keyFacts:en.keyFacts,keyFacts_es:es.keyFacts,
+    questions:en.questions.map((q,i)=>({...q,question_es:es.questions[i].question,options_es:es.questions[i].options}))};
+}
+function bilingualEstimate(prompt){
+  const e=JSON.parse(estimateJSON(prompt,'en')), s=JSON.parse(estimateJSON(prompt,'es'));
+  return JSON.stringify({...e,projectName_es:s.projectName,assumptions_es:s.assumptions,exclusions_es:s.exclusions,estimatedDays_es:s.estimatedDays,
+    lineItems:e.lineItems.map((li,i)=>({...li,description_es:s.lineItems[i].description}))});
+}
 function estimateJSON(prompt,lang){
   const ref=re=>{const m=prompt.match(re);return m?m[1]:null;};
   const es=lang==='es';
@@ -67,9 +80,10 @@ function englishHits(text){
       if(u.startsWith(API+'/api/estimate')){
         const body=JSON.parse(req.postData()||'{}');
         const text=JSON.stringify(body.messages);
-        const lang=/Language:Spanish/.test(text)?'es':'en';
-        if(body.even_kind==='scope') return r.fulfill({status:200,contentType:'application/json',headers:{'X-Even-Cache':'miss','X-Even-Cache-Key':'k1'},body:JSON.stringify({content:[{type:'text',text:JSON.stringify(SCOPE[lang])}]})});
-        const est=estimateJSON(body.messages[0].content.map(b=>b.text||'').join('\n'),lang);
+        if(/Language:Spanish/.test(text)) report.promptHadLanguage=true;
+        if(body.even_kind==='scope') return r.fulfill({status:200,contentType:'application/json',headers:{'X-Even-Cache':'miss','X-Even-Cache-Key':'k1'},body:JSON.stringify({content:[{type:'text',text:JSON.stringify(bilingualScope())}]})});
+        report.estimatePrompts=(report.estimatePrompts||0)+1; report.lastEstimatePromptHash=require('crypto').createHash('sha256').update(JSON.stringify(body.messages)).digest('hex');
+        const est=bilingualEstimate(body.messages[0].content.map(b=>b.text||'').join('\n'));
         await new Promise(res=>setTimeout(res,1500));
         return r.fulfill({status:200,contentType:'text/event-stream',headers:{'X-Even-Cache':'miss','X-Even-Cache-Key':'k2'},body:sse([
           {type:'message_start'},{type:'content_block_start',index:0,content_block:{type:'thinking'}},
@@ -92,7 +106,7 @@ function englishHits(text){
     },LANG);
     await page.selectOption('#est-trade',{label:LANG==='es'?/Electricidad|Eléctric/:'Electrical'}).catch(async()=>{await page.selectOption('#est-trade','Electrical').catch(()=>{});});
     await page.fill('#est-location','Aventura, FL');
-    await page.fill('#scope-text',LANG==='es'?'Cambiar el panel eléctrico de 100A a 200A en una casa unifamiliar':'Upgrade electrical panel from 100A to 200A in a single family home');
+    await page.fill('#scope-text',LANG==='es'&&!process.env.SAME_TEXT?'Cambiar el panel eléctrico de 100A a 200A en una casa unifamiliar':'Upgrade electrical panel from 100A to 200A in a single family home');
     await grab('1-input');
     await page.click('#gen-btn'); await page.waitForSelector('.q-chip',{timeout:30000}); await page.waitForTimeout(700);
     await grab('2-refine');
