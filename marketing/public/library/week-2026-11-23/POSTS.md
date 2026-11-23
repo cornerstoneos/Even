@@ -3,7 +3,7 @@
 Same setup as last week: Facebook + Instagram (Meta Business Suite) and TikTok. English 6:30 PM ET, Spanish 7:30 PM ET (change freely).
 Offer A = "3 free estimates. No card." Offer B = "Sign up free. Get 5 estimates." One per post.
 EN link: even-os.com. ES link: even-os.com/?lang=es. Facebook/Instagram links: bio or first comment.
-New this week: the static images (PNG, 4:5) post as photo posts; on TikTok use them in a photo carousel or skip.
+New this week: the photo posts (PNG, 4:5) show real app screenshots. On TikTok use them as a photo carousel or skip.
 
 ---
 
@@ -52,7 +52,7 @@ Permisos reales, de la tabla publicada por la ciudad. Cada n√∫mero muestra de d√
 #contratista #permisos #miami #surdelaflorida #estimados
 
 ## Wed: Feature 1, your quote link (photo post)
-Files: `3-wed-feature-1-quote-link-{en,es}.png`
+Files: `3-wed-feature-1-quote-link-{en,es}.png` (real screenshots: the client's request form and the contractor's inbox with a priced draft. Sample client; the $1,990 draft is priced by Even's real engine with Pembroke Pines permit data and default settings, and the image says it's a sample.)
 
 **EN**
 Feature 1: your quote link.
