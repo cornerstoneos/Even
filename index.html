@@ -2506,6 +2506,7 @@ function navigate(scr){
   document.getElementById('s-'+scr).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
   if(scr==='dashboard'){ loadDashboard(); renderSupplierList(); renderSubList(); }
+  else returnYourSettings();
   _lastNavAt=Date.now();
 }
 
@@ -5280,10 +5281,17 @@ function getBiz(){
   if(!b.email&&currentUser?.email) b.email=currentUser.email;
   return b;
 }
+const BIZ_FIELDS=['company','license','phone','email'];
+// Settings -> Your business and the proposal card edit the same four fields.
+function fillBizFields(){
+  const b=getBiz();
+  BIZ_FIELDS.forEach(k=>['biz-','sbiz-'].forEach(pre=>{ const el=document.getElementById(pre+k); if(el&&document.activeElement!==el) el.value=b[k]||''; }));
+}
 function setBiz(field,val){
   const b=getBiz(); b[field]=String(val||'').slice(0,120);
   try{ localStorage.setItem('even_biz',JSON.stringify(b)); }catch(e){}
-  clearTimeout(window._bizSaveT); window._bizSaveT=setTimeout(()=>{ if(currentUser) savePrefs(); },1200);
+  if(typeof document!=='undefined'&&BIZ_FIELDS.includes(field)) ['biz-','sbiz-'].forEach(pre=>{ const el=document.getElementById(pre+field); if(el&&document.activeElement!==el) el.value=b[field]; });
+  clearTimeout(window._bizSaveT); window._bizSaveT=setTimeout(()=>{ if(currentUser){ savePrefs(); if(field==='company'||field==='phone') syncQuoteLinkBiz(); } },1200);
   liveProposalUpdate();
   renderBizPrompt();
 }
@@ -6282,8 +6290,22 @@ async function submitDataTrade(){
             <div class="link-note" id="link-note"></div>
           </div>
         </div></div>
-        <button class="d-row-link d-fold" onclick="toggleFold('set-biz',this)"><span><span data-es="Tu negocio">Your business</span><span class="d-fold-sum" data-es="Logo, color, licencia, contacto">Logo, color, license, contact</span></span><span class="d-chev">›</span></button>
-        <div id="set-biz" class="d-fold-body" hidden><div class="gc">
+        <button class="d-row-link d-fold" onclick="toggleFold('set-biz',this);fillBizFields()"><span><span data-es="Tu negocio">Your business</span><span class="d-fold-sum" data-es="Logo, color, licencia, contacto">Logo, color, license, contact</span></span><span class="d-chev">›</span></button>
+        <div id="set-biz" class="d-fold-body" hidden><div class="gc" style="margin-top:10px;margin-bottom:10px">
+        <div class="gc-head">
+          <div class="gc-title"><i data-lucide="briefcase" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Datos del negocio">Business info</span></div>
+          <div class="gc-tag" data-es="Propuestas y tu enlace">Proposals and your link</div>
+        </div>
+        <div class="gc-body" style="padding:14px 12px">
+          <div class="biz-grid">
+            <input id="sbiz-company" data-en="1" data-es="1" class="finput" placeholder="Company name" data-placeholder-en="Company name" data-placeholder-es="Nombre de la empresa" oninput="setBiz('company',this.value)">
+            <input id="sbiz-license" data-en="1" data-es="1" class="finput" placeholder="License #" data-placeholder-en="License #" data-placeholder-es="Licencia n.º" oninput="setBiz('license',this.value)">
+            <input id="sbiz-phone" data-en="1" data-es="1" class="finput" type="tel" placeholder="Phone" data-placeholder-en="Phone" data-placeholder-es="Teléfono" oninput="setBiz('phone',this.value)">
+            <input id="sbiz-email" data-en="1" data-es="1" class="finput" type="email" placeholder="Email" data-placeholder-en="Email" data-placeholder-es="Correo" oninput="setBiz('email',this.value)">
+          </div>
+          <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5" data-es="Sale en tus propuestas y en tu enlace de estimados. Se guarda solo.">Shows on your proposals and your estimate link. Saves on its own.</div>
+        </div>
+      </div><div class="gc">
         <div class="gc-head">
           <div class="gc-title"><i data-lucide="building-2" style="width:13px;height:13px;stroke:currentColor;vertical-align:middle;margin-right:5px"></i><span data-es="Logo de la empresa">Company Logo</span></div>
           <div class="gc-tag" data-es="Aparece en las propuestas">Shows on proposals</div>
@@ -6328,7 +6350,8 @@ async function submitDataTrade(){
             <div id="shop-list"></div>
           </div>
         </div></div>
-        <button class="d-row-link d-fold" onclick="openYourSettings()"><span><span data-es="Mano de obra y márgenes">Labor and margins</span><span class="d-fold-sum" id="dash-settings-sum"></span></span><span class="d-chev">›</span></button>
+        <button class="d-row-link d-fold" id="dash-margins-btn" onclick="openYourSettings()"><span><span data-es="Mano de obra y márgenes">Labor and margins</span><span class="d-fold-sum" id="dash-settings-sum"></span></span><span class="d-chev">›</span></button>
+        <div id="dash-margins-host" style="margin-top:10px"></div>
         <button class="d-row-link d-fold" onclick="toggleFold('set-sup',this)"><span><span data-es="Mis proveedores">My suppliers</span><span class="d-fold-sum" data-es="Tus propios precios de materiales">Your own material prices</span></span><span class="d-chev">›</span></button>
         <div id="set-sup" class="d-fold-body" hidden><div style="margin-top:10px">
       <div class="gc">
@@ -6392,9 +6415,23 @@ function filterJobs(which,btn){
     c.style.display=which==='all'||(which==='won'?['won','complete'].includes(st):open.includes(st))?'':'none';
   });
 }
+// Labor and margins opens in place on the dashboard (founder 2026-11-24: it used
+// to jump to the estimate screen). The one settings panel is moved here, not
+// copied, so every control keeps working; it goes back when the estimate screen opens.
 function openYourSettings(){
-  navigate('input');
-  setTimeout(()=>{ const f=document.getElementById('your-settings'); if(f&&f.hidden){ const btn=f.previousElementSibling; toggleFold('your-settings',btn); } f&&f.scrollIntoView({behavior:'smooth',block:'start'}); },80);
+  const f=document.getElementById('your-settings'), host=document.getElementById('dash-margins-host'), btn=document.getElementById('dash-margins-btn');
+  if(!f||!host) return;
+  if(!window._ysHome) window._ysHome={parent:f.parentNode,next:f.nextSibling};
+  if(f.parentNode!==host){ host.appendChild(f); f.hidden=false; }
+  else f.hidden=!f.hidden;
+  if(btn) btn.classList.toggle('open',!f.hidden);
+}
+function returnYourSettings(){
+  const f=document.getElementById('your-settings'), h=window._ysHome;
+  if(!f||!h||f.parentNode===h.parent) return;
+  h.parent.insertBefore(f,h.next); f.hidden=true;
+  const btn=document.getElementById('dash-margins-btn'); if(btn) btn.classList.remove('open');
+  if(f.previousElementSibling) f.previousElementSibling.classList.remove('open');
 }
 function updateDashSettingsSummary(){
   const el=document.getElementById('dash-settings-sum'), src=document.getElementById('settings-summary');
@@ -7208,6 +7245,16 @@ async function saveQuoteLink(){
     if(biz.company) st.textContent=es?'Guardado.':'Saved.';
   }catch(e){ st.textContent=es?'No se pudo guardar. Revisa tu conexión.':"Couldn't save. Check your connection."; }
   finally{ btn.disabled=false; }
+}
+// The estimate link shows the company and phone saved with it; keep them current
+// when the contractor edits their business info (no second Save needed).
+async function syncQuoteLinkBiz(){
+  const p=window._myPage, b=getBiz(); if(!p||!currentUser) return;
+  if((p.company||'')===(b.company||'')&&(p.phone||'')===(b.phone||'')) return;
+  try{
+    const r=await fetch(`${API_ORIGIN}/api/my-page`,{method:'PUT',headers:await apiHeaders(),body:JSON.stringify({slug:p.slug,trades:p.trades,active:p.active!==false,company:b.company||'',phone:b.phone||''})});
+    if(r.ok){ const d=await r.json(); window._myPage=d.page; }
+  }catch(e){}
 }
 function quoteLinkUrl(){ return window._myPage?`https://even-os.com/q/${window._myPage.slug}`:''; }
 async function copyQuoteLink(){
