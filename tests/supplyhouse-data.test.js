@@ -73,16 +73,21 @@ const plumbCats=scopeMaterialCategories('Plumbing',null);
 const plumbTier=materialSourceQuality(mia.materials,plumbCats);
 check(`Plumbing material tier including water heaters (got rank ${plumbTier})`, plumbTier>=3);
 
-// A trade this data does NOT cover should still read honestly, not inherit
-// the electrical/plumbing/HVAC upgrade.
+// Roofing: Miami-Dade has a written local supply-house quote (2026-11-24, 7 rows),
+// so its roofing median is local now. Broward has no roofing quote yet and must
+// still read honestly as retail, not inherit Miami-Dade's upgrade.
 const roofCats=scopeMaterialCategories('Roofing',null);
 const roofTier=materialSourceQuality(mia.materials,roofCats);
-check(`Roofing is unaffected — still retail-tier (got rank ${roofTier})`, roofTier<3);
+check(`Miami-Dade roofing reads the local quote (got rank ${roofTier})`, roofTier===4);
+const bro=batch.find(m=>m.market==='Broward');
+const broRoofTier=materialSourceQuality(bro.materials,roofCats);
+check(`Broward roofing is unaffected — still retail-tier (got rank ${broRoofTier})`, broRoofTier<3);
 
 console.log('\n=== Confidence tier end to end (with real permits present) ===');
 const withCityPermits={...mia,permitScope:'municipality'};
 check('Electrical + city permits → high', computeConfidenceTier(withCityPermits,elecCats)==='high');
-check('Roofing + city permits → still medium (data has not improved)', computeConfidenceTier(withCityPermits,roofCats)==='medium');
+check('Miami-Dade roofing + city permits → high (local quote)', computeConfidenceTier(withCityPermits,roofCats)==='high');
+check('Broward roofing + city permits → still medium (no local roofing quote)', computeConfidenceTier({...bro,permitScope:'municipality'},roofCats)==='medium');
 
 console.log('\n=== invalid_cross_market_copy rows never reach the model ===');
 const chi=batch.find(m=>m.market==='Chicago');

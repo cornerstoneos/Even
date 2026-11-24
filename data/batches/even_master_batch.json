@@ -10228,6 +10228,90 @@
         "sku": "OBR-21F",
         "brand": "Denco",
         "tier": "national_estimate"
+      },
+      {
+        "category": "Roofing",
+        "item": "GAF Timberline architectural shingles",
+        "unit": "per square",
+        "low": 118.0,
+        "mid": 118.0,
+        "high": 118.0,
+        "source": "Local supply house written quote, Miami-Dade County (contractor pricing, before tax)",
+        "date": "2026-11-24",
+        "tier": "local_supply_house",
+        "note": "Written email quote 2026-11-24 from a Miami roofing supply house (store kept private). Contractor price before sales tax."
+      },
+      {
+        "category": "Roofing",
+        "item": "Hip and ridge shingles",
+        "unit": "per bundle",
+        "low": 56.0,
+        "mid": 56.0,
+        "high": 56.0,
+        "source": "Local supply house written quote, Miami-Dade County (contractor pricing, before tax)",
+        "date": "2026-11-24",
+        "tier": "local_supply_house",
+        "note": "Written email quote 2026-11-24 from a Miami roofing supply house (store kept private). Contractor price before sales tax."
+      },
+      {
+        "category": "Roofing",
+        "item": "Self-adhered underlayment, APOC SB1 (peel and stick)",
+        "unit": "per roll",
+        "low": 62.0,
+        "mid": 62.0,
+        "high": 62.0,
+        "source": "Local supply house written quote, Miami-Dade County (contractor pricing, before tax)",
+        "date": "2026-11-24",
+        "tier": "local_supply_house",
+        "note": "Written email quote 2026-11-24 from a Miami roofing supply house (store kept private). Contractor price before sales tax."
+      },
+      {
+        "category": "Roofing",
+        "item": "Self-adhered underlayment, Polyglass IRXE (peel and stick)",
+        "unit": "per roll",
+        "low": 77.5,
+        "mid": 77.5,
+        "high": 77.5,
+        "source": "Local supply house written quote, Miami-Dade County (contractor pricing, before tax)",
+        "date": "2026-11-24",
+        "tier": "local_supply_house",
+        "note": "Written email quote 2026-11-24 from a Miami roofing supply house (store kept private). Contractor price before sales tax."
+      },
+      {
+        "category": "Roofing",
+        "item": "Drip edge, galvanized, 10 ft",
+        "unit": "each",
+        "low": 8.5,
+        "mid": 8.5,
+        "high": 8.5,
+        "source": "Local supply house written quote, Miami-Dade County (contractor pricing, before tax)",
+        "date": "2026-11-24",
+        "tier": "local_supply_house",
+        "note": "Written email quote 2026-11-24 from a Miami roofing supply house (store kept private). Contractor price before sales tax."
+      },
+      {
+        "category": "Roofing",
+        "item": "Drip edge, color, 10 ft",
+        "unit": "each",
+        "low": 12.5,
+        "mid": 12.5,
+        "high": 12.5,
+        "source": "Local supply house written quote, Miami-Dade County (contractor pricing, before tax)",
+        "date": "2026-11-24",
+        "tier": "local_supply_house",
+        "note": "Written email quote 2026-11-24 from a Miami roofing supply house (store kept private). Contractor price before sales tax."
+      },
+      {
+        "category": "Roofing",
+        "item": "Coil roofing nails 1-1/4\"",
+        "unit": "per box",
+        "low": 68.5,
+        "mid": 68.5,
+        "high": 68.5,
+        "source": "Local supply house written quote, Miami-Dade County (contractor pricing, before tax)",
+        "date": "2026-11-24",
+        "tier": "local_supply_house",
+        "note": "Written email quote 2026-11-24 from a Miami roofing supply house (store kept private). Contractor price before sales tax."
       }
     ],
     "labor": [
