@@ -38264,6 +38264,161 @@
         "notes": "",
         "date": "2026-07-17"
       }
+    ],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 16.96,
+        "mid": 26.38,
+        "high": 37.44,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 13.81,
+        "mid": 17.73,
+        "high": 22.75,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 25.17,
+        "mid": 37.78,
+        "high": 53.65,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 15.58,
+        "mid": 21.59,
+        "high": 31.29,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 14.3,
+        "mid": 22.04,
+        "high": 42.99,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 12.56,
+        "mid": 18.12,
+        "high": 26.63,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 18.37,
+        "mid": 23.47,
+        "high": 34.09,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 18.68,
+        "mid": 28.09,
+        "high": 40.46,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 16.35,
+        "mid": 21.09,
+        "high": 30.11,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 17.12,
+        "mid": 22.14,
+        "high": 27.17,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 18.07,
+        "mid": 29.1,
+        "high": 37.9,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 15.15,
+        "mid": 23.43,
+        "high": 27.94,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 18.51,
+        "mid": 24.32,
+        "high": 34.44,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 15.49,
+        "mid": 17.95,
+        "high": 24.48,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 14.58,
+        "mid": 18.21,
+        "high": 21.49,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 17.76,
+        "mid": 24.89,
+        "high": 36.95,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 15.75,
+        "mid": 22.39,
+        "high": 33.52,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Savannah GA (CBSA 42340), May 2025",
+        "date": "2025-05"
+      }
     ]
   },
   {
@@ -60715,7 +60870,197 @@
         "notes": "Estimate-grade national range, not a rate card (Sunbelt/United/BigRentz gate real pricing behind quote requests) \u2014 treat as planning range, not precise figure. This market trends toward the low end of the national range based on regional cost-of-living/competition."
       }
     ],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 20.32,
+        "mid": 28.35,
+        "high": 37.89,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 14.52,
+        "mid": 18.51,
+        "high": 23.09,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 12.6,
+        "mid": 24.17,
+        "high": 30.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 27.16,
+        "mid": 38.7,
+        "high": 60.1,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 17.88,
+        "mid": 24.37,
+        "high": 30.39,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 17.33,
+        "mid": 22.48,
+        "high": 37.43,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 13.6,
+        "mid": 20.2,
+        "high": 27.95,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 19.04,
+        "mid": 23.77,
+        "high": 31.1,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 18.42,
+        "mid": 28.69,
+        "high": 39.09,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 17.97,
+        "mid": 28.2,
+        "high": 40.39,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 18.02,
+        "mid": 26.31,
+        "high": 47.15,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 18.22,
+        "mid": 23.83,
+        "high": 28.38,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 18.22,
+        "mid": 28.07,
+        "high": 39.22,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 16.13,
+        "mid": 23.61,
+        "high": 30.82,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 19.62,
+        "mid": 27.28,
+        "high": 38.43,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.42,
+        "mid": 19.34,
+        "high": 26.18,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 16.81,
+        "mid": 19.06,
+        "high": 22.1,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Roofers",
+        "low": 21.03,
+        "mid": 22.89,
+        "high": 27.15,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Fence Erectors",
+        "low": 11.18,
+        "mid": 21.8,
+        "high": 28.85,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 18.42,
+        "mid": 28.35,
+        "high": 39.78,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 17.12,
+        "mid": 23.86,
+        "high": 36.08,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Atlanta-Sandy Springs-Roswell GA (CBSA 12060), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Atlanta GA",
@@ -61291,7 +61636,215 @@
     "market": "Raleigh",
     "state": "NC",
     "materials": [],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 22.29,
+        "mid": 27.86,
+        "high": 37.49,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 16.78,
+        "mid": 18.51,
+        "high": 22.77,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 17.71,
+        "mid": 24.06,
+        "high": 41.24,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 26.72,
+        "mid": 37.35,
+        "high": 57.81,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 16.04,
+        "mid": 24.43,
+        "high": 31.17,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tile and Stone Setters",
+        "low": 17.57,
+        "mid": 21.57,
+        "high": 26.35,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 18.35,
+        "mid": 22.8,
+        "high": 30.45,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 17.25,
+        "mid": 21.95,
+        "high": 28.78,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 19.49,
+        "mid": 24.57,
+        "high": 31.71,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 15.39,
+        "mid": 22.07,
+        "high": 29.46,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 21.97,
+        "mid": 27.31,
+        "high": 35.46,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 18.61,
+        "mid": 22.62,
+        "high": 29.25,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 16.84,
+        "mid": 22.13,
+        "high": 31.3,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 17.71,
+        "mid": 21.81,
+        "high": 27.85,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 20.64,
+        "mid": 29.1,
+        "high": 37.31,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 18.5,
+        "mid": 24.39,
+        "high": 29.12,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 18.34,
+        "mid": 24.31,
+        "high": 31.65,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.84,
+        "mid": 21.5,
+        "high": 23.41,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 16.83,
+        "mid": 21.64,
+        "high": 25.8,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Roofers",
+        "low": 19.22,
+        "mid": 21.21,
+        "high": 22.73,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Fence Erectors",
+        "low": 18.62,
+        "mid": 19.51,
+        "high": 28.8,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 18.83,
+        "mid": 28.32,
+        "high": 37.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 17.57,
+        "mid": 23.98,
+        "high": 35.01,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Raleigh-Cary NC (CBSA 39580), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Raleigh NC",
@@ -74841,7 +75394,188 @@
     "market": "Columbia",
     "state": "SC",
     "materials": [],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 18.08,
+        "mid": 28.9,
+        "high": 36.15,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 12.71,
+        "mid": 17.4,
+        "high": 23.22,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 15.71,
+        "mid": 19.32,
+        "high": 28.55,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 24.39,
+        "mid": 35,
+        "high": 48.71,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 17.49,
+        "mid": 23.11,
+        "high": 37.44,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 18.66,
+        "mid": 24.36,
+        "high": 36.89,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 14.57,
+        "mid": 20.49,
+        "high": 30.01,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 18.34,
+        "mid": 23.27,
+        "high": 29.92,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 17.49,
+        "mid": 21.54,
+        "high": 31.25,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 21.8,
+        "mid": 29.03,
+        "high": 37.65,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 19,
+        "mid": 24.67,
+        "high": 33.66,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 20.04,
+        "mid": 24.4,
+        "high": 32.62,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 16.74,
+        "mid": 22.47,
+        "high": 27.77,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 18.27,
+        "mid": 25.04,
+        "high": 36.33,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 17.52,
+        "mid": 21.47,
+        "high": 29.16,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 17.05,
+        "mid": 24.12,
+        "high": 36.43,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 13.98,
+        "mid": 18.11,
+        "high": 23.63,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 14.93,
+        "mid": 18.67,
+        "high": 22.99,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 18.97,
+        "mid": 27.7,
+        "high": 35.5,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16.01,
+        "mid": 22.53,
+        "high": 33.4,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Columbia SC (CBSA 17900), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Columbia SC",
@@ -87609,7 +88343,179 @@
     "market": "Charleston",
     "state": "SC",
     "materials": [],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 19.59,
+        "mid": 29.85,
+        "high": 38.82,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 15.02,
+        "mid": 18.13,
+        "high": 22.78,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 14.23,
+        "mid": 21.03,
+        "high": 30.32,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 27.29,
+        "mid": 37.24,
+        "high": 51.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 17.67,
+        "mid": 24.22,
+        "high": 37.85,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 18.98,
+        "mid": 25.27,
+        "high": 39.2,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 14.99,
+        "mid": 20.98,
+        "high": 31.21,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 19.49,
+        "mid": 24.35,
+        "high": 34.66,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 15.55,
+        "mid": 18.59,
+        "high": 33.21,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 21.91,
+        "mid": 28.37,
+        "high": 36.38,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 13.96,
+        "mid": 19.29,
+        "high": 31.59,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 17.18,
+        "mid": 22.84,
+        "high": 33,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 18.8,
+        "mid": 27.58,
+        "high": 36,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 18.5,
+        "mid": 23.09,
+        "high": 34.34,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 19.23,
+        "mid": 28.68,
+        "high": 39,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 14.91,
+        "mid": 21.46,
+        "high": 24.13,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 16.06,
+        "mid": 20.68,
+        "high": 23.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 19.37,
+        "mid": 28.08,
+        "high": 37.05,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 17.29,
+        "mid": 23.34,
+        "high": 36.53,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charleston-North Charleston SC (CBSA 16700), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Charleston SC",
@@ -88067,7 +88973,197 @@
         "notes": "Estimate-grade national range, not a rate card (Sunbelt/United/BigRentz gate real pricing behind quote requests) \u2014 treat as planning range, not precise figure. This market trends toward the low end of the national range based on regional cost-of-living/competition."
       }
     ],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 22.28,
+        "mid": 28.84,
+        "high": 38.09,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 16.46,
+        "mid": 18.57,
+        "high": 23.22,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 17.15,
+        "mid": 22.48,
+        "high": 30.76,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 27.61,
+        "mid": 37.16,
+        "high": 51.48,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 18.39,
+        "mid": 24.5,
+        "high": 31.56,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 18.51,
+        "mid": 23.17,
+        "high": 30.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 14.29,
+        "mid": 22.04,
+        "high": 29.81,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 20.18,
+        "mid": 24.46,
+        "high": 33.85,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 16.59,
+        "mid": 22.07,
+        "high": 28.79,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 21.04,
+        "mid": 28.41,
+        "high": 36.69,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 18.49,
+        "mid": 23.2,
+        "high": 34.36,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 14.98,
+        "mid": 21.4,
+        "high": 29.89,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 16.7,
+        "mid": 21.59,
+        "high": 27.86,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 20.35,
+        "mid": 28.22,
+        "high": 36.54,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 19.18,
+        "mid": 23.28,
+        "high": 29.67,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 18.21,
+        "mid": 24.46,
+        "high": 37.73,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.1,
+        "mid": 20.51,
+        "high": 24.1,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 18.35,
+        "mid": 22.38,
+        "high": 23.15,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Roofers",
+        "low": 19.02,
+        "mid": 21.34,
+        "high": 23.7,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 19.29,
+        "mid": 28.77,
+        "high": 38.08,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 17.62,
+        "mid": 24.52,
+        "high": 36.37,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Charlotte-Concord-Gastonia NC-SC (CBSA 16740), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "Charlotte NC / Mecklenburg County LUESA",
@@ -100886,7 +101982,188 @@
     "market": "Greensboro",
     "state": "NC",
     "materials": [],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 19.15,
+        "mid": 25.61,
+        "high": 32.38,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 15,
+        "mid": 18.19,
+        "high": 22.18,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 25.63,
+        "mid": 35.16,
+        "high": 48.56,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 17.39,
+        "mid": 24,
+        "high": 30,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tile and Stone Setters",
+        "low": 17.39,
+        "mid": 23.64,
+        "high": 28.72,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 17.81,
+        "mid": 22.13,
+        "high": 28.92,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 14.62,
+        "mid": 19.28,
+        "high": 27.84,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 18.78,
+        "mid": 23.71,
+        "high": 30.19,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 14.8,
+        "mid": 24.29,
+        "high": 28.93,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 20.88,
+        "mid": 28.07,
+        "high": 35.14,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 17.83,
+        "mid": 21.75,
+        "high": 30.52,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 14.14,
+        "mid": 22.36,
+        "high": 26.67,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 14.13,
+        "mid": 20.13,
+        "high": 27.12,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 19.02,
+        "mid": 27.65,
+        "high": 35.51,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 18.5,
+        "mid": 23.61,
+        "high": 29.27,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 19.57,
+        "mid": 26.85,
+        "high": 31.45,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.01,
+        "mid": 20.51,
+        "high": 23.6,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 17.52,
+        "mid": 22.32,
+        "high": 24,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 18.28,
+        "mid": 28.14,
+        "high": 36.72,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16.44,
+        "mid": 22.75,
+        "high": 35.09,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Greensboro-High Point NC (CBSA 24660), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Greensboro NC",
@@ -122054,7 +123331,206 @@
         "notes": "Estimate-grade national range, not a rate card (Sunbelt/United/BigRentz gate real pricing behind quote requests) \u2014 treat as planning range, not precise figure. This market trends toward the middle of the national range of the national range based on regional cost-of-living/competition."
       }
     ],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 17.86,
+        "mid": 22.46,
+        "high": 33.26,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 14.26,
+        "mid": 17.44,
+        "high": 22.45,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 18.5,
+        "mid": 19.07,
+        "high": 22.03,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 23.16,
+        "mid": 36.55,
+        "high": 57.26,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 18.98,
+        "mid": 23.88,
+        "high": 32.93,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 17.46,
+        "mid": 22.4,
+        "high": 29.96,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 16.77,
+        "mid": 19.88,
+        "high": 28.04,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 18.83,
+        "mid": 24.54,
+        "high": 34.6,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 14.64,
+        "mid": 22.89,
+        "high": 29.09,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 18.66,
+        "mid": 28.45,
+        "high": 40.61,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 17.68,
+        "mid": 23.24,
+        "high": 29.68,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 17.76,
+        "mid": 23.14,
+        "high": 30.41,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 18.01,
+        "mid": 22.18,
+        "high": 28.07,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 19.19,
+        "mid": 29.47,
+        "high": 41.19,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plasterers and Stucco Masons",
+        "low": 19.55,
+        "mid": 24,
+        "high": 29.03,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 16.38,
+        "mid": 21.87,
+        "high": 28.41,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 17.71,
+        "mid": 24.94,
+        "high": 39.86,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.36,
+        "mid": 21.56,
+        "high": 27.23,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 17.89,
+        "mid": 21.52,
+        "high": 28.17,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Roofers",
+        "low": 15.07,
+        "mid": 18.31,
+        "high": 21.95,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 18.65,
+        "mid": 28.34,
+        "high": 39.96,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 15.2,
+        "mid": 22.46,
+        "high": 36.64,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Houston-Pasadena-The Woodlands TX (CBSA 26420), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Houston TX",
@@ -123548,7 +125024,215 @@
         "notes": "Estimate-grade national range, not a rate card (Sunbelt/United/BigRentz gate real pricing behind quote requests) \u2014 treat as planning range, not precise figure. This market trends toward the middle of the national range of the national range based on regional cost-of-living/competition."
       }
     ],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 18.3,
+        "mid": 23,
+        "high": 36.22,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 14.58,
+        "mid": 18.12,
+        "high": 22.91,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 14.91,
+        "mid": 19.14,
+        "high": 23.89,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 24.17,
+        "mid": 36.65,
+        "high": 50.23,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 17.52,
+        "mid": 23.44,
+        "high": 30.71,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tile and Stone Setters",
+        "low": 17.71,
+        "mid": 23.04,
+        "high": 46.63,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 18.28,
+        "mid": 23.45,
+        "high": 29.1,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 17.06,
+        "mid": 21.14,
+        "high": 27.38,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 20.05,
+        "mid": 24.7,
+        "high": 34.17,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 17.23,
+        "mid": 23.18,
+        "high": 29.34,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 18.63,
+        "mid": 28.37,
+        "high": 39.26,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 17.99,
+        "mid": 23.78,
+        "high": 29.07,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 17.74,
+        "mid": 24,
+        "high": 30.83,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 17.45,
+        "mid": 21.9,
+        "high": 29.03,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 18.92,
+        "mid": 29.45,
+        "high": 39.53,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plasterers and Stucco Masons",
+        "low": 21.98,
+        "mid": 27.4,
+        "high": 30,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 17.35,
+        "mid": 22.59,
+        "high": 30.77,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 18.11,
+        "mid": 27.04,
+        "high": 37.72,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.32,
+        "mid": 21.39,
+        "high": 28.38,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 17.15,
+        "mid": 21,
+        "high": 26.55,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Roofers",
+        "low": 15,
+        "mid": 19.16,
+        "high": 27.48,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 19.37,
+        "mid": 28.63,
+        "high": 40.81,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16.86,
+        "mid": 23.49,
+        "high": 36.57,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Dallas TX",
@@ -125313,7 +126997,197 @@
     "market": "San Antonio",
     "state": "TX",
     "materials": [],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 17.51,
+        "mid": 21.88,
+        "high": 34.69,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 13.77,
+        "mid": 17.13,
+        "high": 23.13,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 14,
+        "mid": 17.54,
+        "high": 25.23,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 23.01,
+        "mid": 35.35,
+        "high": 50.05,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 18,
+        "mid": 23.51,
+        "high": 28.63,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tile and Stone Setters",
+        "low": 17.68,
+        "mid": 21.48,
+        "high": 26.72,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 17.62,
+        "mid": 22.6,
+        "high": 29.22,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 16.41,
+        "mid": 18.94,
+        "high": 24.61,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 19.15,
+        "mid": 23.44,
+        "high": 33.67,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 17.1,
+        "mid": 22.38,
+        "high": 28.42,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 18.01,
+        "mid": 27.41,
+        "high": 36.38,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 17.85,
+        "mid": 22.95,
+        "high": 28.5,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 17.42,
+        "mid": 22.63,
+        "high": 29.17,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 16.77,
+        "mid": 20.88,
+        "high": 27.68,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 17.91,
+        "mid": 27.97,
+        "high": 37.76,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 14.39,
+        "mid": 21.02,
+        "high": 29.69,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 18.58,
+        "mid": 27.59,
+        "high": 36.76,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 15.34,
+        "mid": 19.55,
+        "high": 27.36,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 17.07,
+        "mid": 18.94,
+        "high": 23.72,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 18.25,
+        "mid": 28.17,
+        "high": 39.62,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 15,
+        "mid": 21.82,
+        "high": 34.56,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, San Antonio-New Braunfels TX (CBSA 41700), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of San Antonio TX",
@@ -129363,7 +131237,170 @@
         "notes": "Estimate-grade national range, not a rate card (Sunbelt/United/BigRentz gate real pricing behind quote requests) \u2014 treat as planning range, not precise figure. This market trends toward the middle of the national range of the national range based on regional cost-of-living/competition."
       }
     ],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 18.88,
+        "mid": 23.26,
+        "high": 34.85,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 15.03,
+        "mid": 18.45,
+        "high": 23.94,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 17.76,
+        "mid": 21.73,
+        "high": 27.26,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 24.5,
+        "mid": 37.4,
+        "high": 50.5,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 19.04,
+        "mid": 24.16,
+        "high": 33.75,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 18.73,
+        "mid": 23.76,
+        "high": 29.1,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 16.31,
+        "mid": 21.16,
+        "high": 28.34,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 19.43,
+        "mid": 24.5,
+        "high": 34.32,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 18.27,
+        "mid": 24.28,
+        "high": 30.75,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 18.87,
+        "mid": 29.03,
+        "high": 37.9,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 17.92,
+        "mid": 23.72,
+        "high": 29.85,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 18.83,
+        "mid": 22.38,
+        "high": 28.83,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 19.62,
+        "mid": 30.2,
+        "high": 38.9,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 17.37,
+        "mid": 22.76,
+        "high": 33.24,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 18.28,
+        "mid": 30.29,
+        "high": 37.43,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 17.54,
+        "mid": 21.31,
+        "high": 27.15,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 21.17,
+        "mid": 29.24,
+        "high": 44.32,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16.96,
+        "mid": 23.43,
+        "high": 35.76,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Austin-Round Rock-San Marcos TX (CBSA 12420), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Austin TX",
@@ -132901,7 +134938,215 @@
     "market": "Fort Worth",
     "state": "TX",
     "materials": [],
-    "labor": [],
+    "labor": [
+      {
+        "trade": "First-Line Supervisors of Landscaping, Lawn Service, and Groundskeeping Workers",
+        "low": 18.3,
+        "mid": 23,
+        "high": 36.22,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Landscaping and Groundskeeping Workers",
+        "low": 14.58,
+        "mid": 18.12,
+        "high": 22.91,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tree Trimmers and Pruners",
+        "low": 14.91,
+        "mid": 19.14,
+        "high": 23.89,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "First-Line Supervisors of Construction Trades and Extraction Workers",
+        "low": 24.17,
+        "mid": 36.65,
+        "high": 50.23,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Carpenters",
+        "low": 17.52,
+        "mid": 23.44,
+        "high": 30.71,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Tile and Stone Setters",
+        "low": 17.71,
+        "mid": 23.04,
+        "high": 46.63,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Cement Masons and Concrete Finishers",
+        "low": 18.28,
+        "mid": 23.45,
+        "high": 29.1,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Laborers",
+        "low": 17.06,
+        "mid": 21.14,
+        "high": 27.38,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Construction Equipment Operators",
+        "low": 20.05,
+        "mid": 24.7,
+        "high": 34.17,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Drywall and Ceiling Tile Installers",
+        "low": 17.23,
+        "mid": 23.18,
+        "high": 29.34,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Electricians",
+        "low": 18.63,
+        "mid": 28.37,
+        "high": 39.26,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Glaziers",
+        "low": 17.99,
+        "mid": 23.78,
+        "high": 29.07,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Insulation Workers, Floor, Ceiling, and Wall",
+        "low": 17.74,
+        "mid": 24,
+        "high": 30.83,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Painters, Construction and Maintenance",
+        "low": 17.45,
+        "mid": 21.9,
+        "high": 29.03,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plumbers, Pipefitters, and Steamfitters",
+        "low": 18.92,
+        "mid": 29.45,
+        "high": 39.53,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Plasterers and Stucco Masons",
+        "low": 21.98,
+        "mid": 27.4,
+        "high": 30,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Roofers",
+        "low": 17.35,
+        "mid": 22.59,
+        "high": 30.77,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Sheet Metal Workers",
+        "low": 18.11,
+        "mid": 27.04,
+        "high": 37.72,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Electricians",
+        "low": 17.32,
+        "mid": 21.39,
+        "high": 28.38,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Pipelayers, Plumbers, Pipefitters, and Steamfitters",
+        "low": 17.15,
+        "mid": 21,
+        "high": 26.55,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Helpers--Roofers",
+        "low": 15,
+        "mid": 19.16,
+        "high": 27.48,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+        "low": 19.37,
+        "mid": 28.63,
+        "high": 40.81,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      },
+      {
+        "trade": "Maintenance and Repair Workers, General",
+        "low": 16.86,
+        "mid": 23.49,
+        "high": 36.57,
+        "unit": "hourly",
+        "source": "BLS OEWS Query System, Dallas-Fort Worth-Arlington TX (CBSA 19100), May 2025",
+        "date": "2025-05"
+      }
+    ],
     "permits": [
       {
         "municipality": "City of Fort Worth TX",
