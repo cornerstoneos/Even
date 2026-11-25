@@ -152504,51 +152504,6 @@
     "permits": [
       {
         "municipality": "Charlotte NC / Mecklenburg County LUESA",
-        "work_type": "Building Permit (BEMP) \u2014 under $100,000 valuation",
-        "min_fee": 62.0,
-        "rate": null,
-        "method": "flat_plus_sqft_rate",
-        "notes": "Cross-verified third-party figure; official LUESA Fee Ordinance not directly accessible for exact confirmation",
-        "date": "2026-01-01"
-      },
-      {
-        "municipality": "Charlotte NC / Mecklenburg County LUESA",
-        "work_type": "Electrical Permit (BEMP) \u2014 under $100,000 valuation",
-        "min_fee": 82.0,
-        "rate": null,
-        "method": "flat_plus_sqft_rate",
-        "notes": null,
-        "date": "2026-01-01"
-      },
-      {
-        "municipality": "Charlotte NC / Mecklenburg County LUESA",
-        "work_type": "Plumbing Permit (BEMP) \u2014 under $100,000 valuation",
-        "min_fee": 62.0,
-        "rate": null,
-        "method": "flat_plus_sqft_rate",
-        "notes": null,
-        "date": "2026-01-01"
-      },
-      {
-        "municipality": "Charlotte NC / Mecklenburg County LUESA",
-        "work_type": "Mechanical Permit (BEMP) \u2014 under $100,000 valuation",
-        "min_fee": 62.0,
-        "rate": null,
-        "method": "flat_plus_sqft_rate",
-        "notes": null,
-        "date": "2026-01-01"
-      },
-      {
-        "municipality": "Charlotte NC / Mecklenburg County LUESA",
-        "work_type": "Homeowner Recovery Fund fee",
-        "min_fee": 10.0,
-        "rate": null,
-        "method": "flat_per_permit",
-        "notes": "Baked into above fees per cross-verified source",
-        "date": "2026-01-01"
-      },
-      {
-        "municipality": "Charlotte NC / Mecklenburg County LUESA",
         "work_type": "Urban Forestry Review \u2014 Residential Single-Lot Tree Preservation Tier 1",
         "min_fee": 180.0,
         "rate": null,
@@ -152744,6 +152699,127 @@
         "method": "flat",
         "notes": null,
         "date": "2026-01-01"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Building permit, all trades (BEMP: building, electrical, mechanical, plumbing), by total construction permit value",
+        "min_fee": 59.7,
+        "rate": "$1-$3,000: $59.70 | $3,001-$50,000: $59.70 + $12.19 per $1,000 over $3,000 | $50,001-$100,000: $632.57 + $5.49 per $1,000 over $50,000 | $100,001-$150,000: $907.12 + $5.93 per $1,000 over $100,000 | $150,001-$250,000: $1,203.52 + $4.59 per $1,000 over $150,000 | $250,001-$1,000,000: $1,662.37 + $5.05 per $1,000 over $250,000 | $1,000,001-$10,000,000: $5,445.74 + $2.64 per $1,000 over $1,000,000 | over $10,000,000: $29,214.74 + $1.35 per $1,000 over $10,000,000 (each $1,000 or part)",
+        "method": "tiered",
+        "notes": "Mecklenburg County Code Enforcement issues building and trade permits county-wide (City of Charlotte and the Mecklenburg towns). One valuation schedule covers all trades. Total construction permit value = all project costs except land (labor, materials, contractor and design fees), and not less than the county building valuation data. Fee is this schedule or the per-trade rule for projects under $100,000, whichever is greater.",
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Renovation/alteration/upfit, or any project under $100,000 value, per trade (BEMP)",
+        "min_fee": 79.61,
+        "rate": "$79.61 per trade (BEMP) + $0.12 per sq ft for the building trade + $0.08 per sq ft for each electrical, mechanical or plumbing trade involved (sq ft = area of the room or space where the work happens)",
+        "method": "base_plus_per_sqft",
+        "notes": "Note a of the ordinance: applies to residential and commercial. Whichever is greater: this or the valuation schedule.",
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Minimum permit fee, project not requiring plan review",
+        "min_fee": 59.7,
+        "rate": null,
+        "method": "flat_minimum",
+        "notes": "Lowest bracket of the valuation schedule ($1-$3,000).",
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Appliance/equipment change-out (water heater, heating/cooling unit, kitchen appliance), residential, 2 trade permits combined",
+        "min_fee": 89.55,
+        "rate": "1.5 x the minimum permit fee when issued through the online Trades Internet Permit (TIP); other methods: 2 x the maximum permit fee",
+        "method": "flat",
+        "notes": "$89.55 = 1.5 x $59.70 (computed here from the ordinance). Water heaters under 50 gal / 5,500 W electric or 50 gal / 55,000 BTU gas.",
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Technology charge, every permit",
+        "min_fee": 3.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": "Note f: added to all permits issued.",
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Homeowner Recovery Fund, single-family construction or alteration permit issued to a general contractor",
+        "min_fee": 10.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Certificate of Occupancy",
+        "min_fee": 10.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Plan re-review, third and later reviews",
+        "min_fee": 145.0,
+        "rate": "$145 per hour per trade",
+        "method": "hourly",
+        "notes": "Two reviews are included in the permit fee.",
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Temporary utilities, initial inspection and placard",
+        "min_fee": 100.0,
+        "rate": "$100 per open mechanical or electrical permit",
+        "method": "flat_each",
+        "notes": null,
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Demolition permit, per structure (Code Enforcement + Air Quality + Environmental Health + Historic Landmarks)",
+        "min_fee": 500.0,
+        "rate": "Under 500 sq ft: $500 | 500-4,999 sq ft: $700 | 5,000 sq ft and up: $1,025",
+        "method": "tiered",
+        "notes": "Totals of the four agency charges in the ordinance table.",
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Mecklenburg County NC (LUESA)",
+        "work_type": "Zoning permit, single-family residential (county zoning jurisdictions only)",
+        "min_fee": 20.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Charged where Mecklenburg County staff do zoning review (unincorporated county and towns that use county zoning; Mint Hill and Huntersville set their own). City of Charlotte zoning fees are separate.",
+        "source": "Mecklenburg County LUESA Fee Ordinance (Document Book 55, Document 58), revised July 1, 2026, Section I (Permit Fees) and Section II.D (Other Fees). Official PDF linked from code.mecknc.gov/permitting.",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-25"
       }
     ],
     "source": "Mixed: Mecklenburg County LUESA Code Enforcement issues actual building/electrical/plumbing/mechanical permits county-wide (BEMP flat-fee system for <$100k, valuation table above); City of Charlotte separately charges UDO/zoning/stormwater/urban forestry/CDOT review fees via CLT Development Center FY2026 Individual Residential Lot Fee Schedule (official PDF) and FY2024 Non-Residential Fee Schedule (most recent commercial PDF found)",
