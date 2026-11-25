@@ -321,7 +321,7 @@ function normalizeMuni(s) {
   return String(s || '')
     .toLowerCase()
     .replace(/\b(city|town|village|county) of\b/g, '')
-    .replace(/\bfl\b|\bflorida\b/g, '')
+    .replace(/\b(fl|florida|ga|georgia|nc|north carolina|sc|south carolina|tx|texas)\b/g, '')
     .replace(/[^a-z\s-]/g, '')
     .replace(/\s+/g, ' ')
     .trim();

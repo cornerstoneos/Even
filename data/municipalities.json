@@ -1133,5 +1133,900 @@
     "county": "Duval",
     "lat": 30.2947,
     "lng": -81.3931
+  },
+  {
+    "name": "Acworth",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cobb",
+    "lat": 34.062,
+    "lng": -84.6811
+  },
+  {
+    "name": "Alpharetta",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 34.0709,
+    "lng": -84.2726
+  },
+  {
+    "name": "Atlanta",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 33.7629,
+    "lng": -84.4227,
+    "note": "Spans DeKalb County, Fulton County"
+  },
+  {
+    "name": "Auburn",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 34.0152,
+    "lng": -83.8337,
+    "note": "Spans Barrow County, Gwinnett County"
+  },
+  {
+    "name": "Austell",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cobb",
+    "lat": 33.8198,
+    "lng": -84.6438,
+    "note": "Spans Cobb County, Douglas County"
+  },
+  {
+    "name": "Avondale Estates",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.7687,
+    "lng": -84.2647
+  },
+  {
+    "name": "Ball Ground",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cherokee",
+    "lat": 34.3417,
+    "lng": -84.3669
+  },
+  {
+    "name": "Berkeley Lake",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 33.9814,
+    "lng": -84.1856
+  },
+  {
+    "name": "Braselton",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 34.1076,
+    "lng": -83.8129,
+    "note": "Spans Barrow County, Gwinnett County, Hall County, Jackson County"
+  },
+  {
+    "name": "Brookhaven",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.8631,
+    "lng": -84.3375
+  },
+  {
+    "name": "Buford",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 34.1186,
+    "lng": -83.9886,
+    "note": "Spans Gwinnett County, Hall County"
+  },
+  {
+    "name": "Canton",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cherokee",
+    "lat": 34.2472,
+    "lng": -84.4907
+  },
+  {
+    "name": "Chamblee",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.8811,
+    "lng": -84.3017
+  },
+  {
+    "name": "Chattahoochee Hills",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 33.5811,
+    "lng": -84.7459,
+    "note": "Spans Coweta County, Fulton County"
+  },
+  {
+    "name": "Clarkston",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.8135,
+    "lng": -84.2418
+  },
+  {
+    "name": "College Park",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 33.6414,
+    "lng": -84.4635,
+    "note": "Spans Clayton County, Fulton County"
+  },
+  {
+    "name": "Cumming",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Forsyth",
+    "lat": 34.2061,
+    "lng": -84.1338
+  },
+  {
+    "name": "Dacula",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 33.982,
+    "lng": -83.9011
+  },
+  {
+    "name": "Decatur",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.7711,
+    "lng": -84.2958
+  },
+  {
+    "name": "Doraville",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.9083,
+    "lng": -84.2699
+  },
+  {
+    "name": "Duluth",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 34.0015,
+    "lng": -84.1505
+  },
+  {
+    "name": "Dunwoody",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.9414,
+    "lng": -84.3127
+  },
+  {
+    "name": "East Point",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 33.6711,
+    "lng": -84.4734
+  },
+  {
+    "name": "Fairburn",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 33.5478,
+    "lng": -84.5873
+  },
+  {
+    "name": "Forest Park",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Clayton",
+    "lat": 33.6205,
+    "lng": -84.3582
+  },
+  {
+    "name": "Grayson",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 33.8908,
+    "lng": -83.9581
+  },
+  {
+    "name": "Hapeville",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 33.6609,
+    "lng": -84.4094
+  },
+  {
+    "name": "Holly Springs",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cherokee",
+    "lat": 34.1672,
+    "lng": -84.4845
+  },
+  {
+    "name": "Johns Creek",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 34.0327,
+    "lng": -84.2038
+  },
+  {
+    "name": "Jonesboro",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Clayton",
+    "lat": 33.5208,
+    "lng": -84.3547
+  },
+  {
+    "name": "Kennesaw",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cobb",
+    "lat": 34.0272,
+    "lng": -84.6171
+  },
+  {
+    "name": "Lake City",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Clayton",
+    "lat": 33.6065,
+    "lng": -84.3412
+  },
+  {
+    "name": "Lawrenceville",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 33.9529,
+    "lng": -83.9922
+  },
+  {
+    "name": "Lilburn",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 33.8906,
+    "lng": -84.1369
+  },
+  {
+    "name": "Lithonia",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.713,
+    "lng": -84.1062
+  },
+  {
+    "name": "Loganville",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 33.8365,
+    "lng": -83.8961,
+    "note": "Spans Gwinnett County, Walton County"
+  },
+  {
+    "name": "Lovejoy",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Clayton",
+    "lat": 33.4437,
+    "lng": -84.3189
+  },
+  {
+    "name": "Mableton",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cobb",
+    "lat": 33.813,
+    "lng": -84.5769,
+    "note": "Incorporated 2023 (Census 2020 lists it as a CDP)."
+  },
+  {
+    "name": "Marietta",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cobb",
+    "lat": 33.9536,
+    "lng": -84.5425
+  },
+  {
+    "name": "Milton",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 34.1443,
+    "lng": -84.3142
+  },
+  {
+    "name": "Morrow",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Clayton",
+    "lat": 33.5783,
+    "lng": -84.3356
+  },
+  {
+    "name": "Mountain Park",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 34.083,
+    "lng": -84.4136,
+    "note": "Spans Cherokee County, Fulton County"
+  },
+  {
+    "name": "Nelson",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cherokee",
+    "lat": 34.3765,
+    "lng": -84.369,
+    "note": "Spans Cherokee County, Pickens County"
+  },
+  {
+    "name": "Norcross",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 33.9374,
+    "lng": -84.2056
+  },
+  {
+    "name": "Palmetto",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 33.536,
+    "lng": -84.6738,
+    "note": "Spans Coweta County, Fulton County"
+  },
+  {
+    "name": "Peachtree Corners",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 33.9671,
+    "lng": -84.2323
+  },
+  {
+    "name": "Pine Lake",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.7907,
+    "lng": -84.2058
+  },
+  {
+    "name": "Powder Springs",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cobb",
+    "lat": 33.8644,
+    "lng": -84.6812
+  },
+  {
+    "name": "Rest Haven",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 34.1364,
+    "lng": -83.9745,
+    "note": "Spans Gwinnett County, Hall County"
+  },
+  {
+    "name": "Riverdale",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Clayton",
+    "lat": 33.5639,
+    "lng": -84.411
+  },
+  {
+    "name": "Roswell",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 34.0395,
+    "lng": -84.3509,
+    "note": "Spans Cobb County, Fulton County"
+  },
+  {
+    "name": "Sandy Springs",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 33.9315,
+    "lng": -84.3689
+  },
+  {
+    "name": "Smyrna",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cobb",
+    "lat": 33.8626,
+    "lng": -84.5161
+  },
+  {
+    "name": "Snellville",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 33.8602,
+    "lng": -84.0063
+  },
+  {
+    "name": "South Fulton",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 33.6357,
+    "lng": -84.5834
+  },
+  {
+    "name": "Stonecrest",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.6807,
+    "lng": -84.1453
+  },
+  {
+    "name": "Stone Mountain",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.8042,
+    "lng": -84.1714
+  },
+  {
+    "name": "Sugar Hill",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 34.086,
+    "lng": -84.034
+  },
+  {
+    "name": "Suwanee",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Gwinnett",
+    "lat": 34.0511,
+    "lng": -84.0659
+  },
+  {
+    "name": "Tucker",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "DeKalb",
+    "lat": 33.8452,
+    "lng": -84.2021
+  },
+  {
+    "name": "Union City",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "lat": 33.5938,
+    "lng": -84.5626
+  },
+  {
+    "name": "Waleska",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cherokee",
+    "lat": 34.316,
+    "lng": -84.5436
+  },
+  {
+    "name": "Woodstock",
+    "market": "Atlanta",
+    "state": "GA",
+    "county": "Cherokee",
+    "lat": 34.1031,
+    "lng": -84.513
+  },
+  {
+    "name": "Belmont",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.2213,
+    "lng": -81.0411
+  },
+  {
+    "name": "Bessemer City",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.2843,
+    "lng": -81.2829
+  },
+  {
+    "name": "Charlotte",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Mecklenburg",
+    "lat": 35.209,
+    "lng": -80.831
+  },
+  {
+    "name": "Cherryville",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.3846,
+    "lng": -81.3789
+  },
+  {
+    "name": "Concord",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Cabarrus",
+    "lat": 35.3921,
+    "lng": -80.6355
+  },
+  {
+    "name": "Cornelius",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Mecklenburg",
+    "lat": 35.4732,
+    "lng": -80.8813
+  },
+  {
+    "name": "Cramerton",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.23,
+    "lng": -81.0733
+  },
+  {
+    "name": "Davidson",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Mecklenburg",
+    "lat": 35.4804,
+    "lng": -80.8209,
+    "note": "Spans Iredell County, Mecklenburg County"
+  },
+  {
+    "name": "Fairview",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 35.156,
+    "lng": -80.5244
+  },
+  {
+    "name": "Gastonia",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.2488,
+    "lng": -81.1864
+  },
+  {
+    "name": "Harrisburg",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Cabarrus",
+    "lat": 35.3075,
+    "lng": -80.6456
+  },
+  {
+    "name": "Hemby Bridge",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 35.1087,
+    "lng": -80.6249
+  },
+  {
+    "name": "High Shoals",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.39,
+    "lng": -81.2021
+  },
+  {
+    "name": "Huntersville",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Mecklenburg",
+    "lat": 35.4068,
+    "lng": -80.8687
+  },
+  {
+    "name": "Indian Trail",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 35.0686,
+    "lng": -80.6512
+  },
+  {
+    "name": "Kannapolis",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Cabarrus",
+    "lat": 35.4793,
+    "lng": -80.638,
+    "note": "Spans Cabarrus County, Rowan County"
+  },
+  {
+    "name": "Kings Mountain",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.2358,
+    "lng": -81.3504,
+    "note": "Spans Cleveland County, Gaston County"
+  },
+  {
+    "name": "Locust",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Cabarrus",
+    "lat": 35.2686,
+    "lng": -80.4367,
+    "note": "Spans Cabarrus County, Stanly County"
+  },
+  {
+    "name": "Lowell",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.2758,
+    "lng": -81.1049
+  },
+  {
+    "name": "McAdenville",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.2654,
+    "lng": -81.0799
+  },
+  {
+    "name": "Marshville",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 34.9862,
+    "lng": -80.369
+  },
+  {
+    "name": "Marvin",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 34.9996,
+    "lng": -80.8167
+  },
+  {
+    "name": "Matthews",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Mecklenburg",
+    "lat": 35.1198,
+    "lng": -80.7097
+  },
+  {
+    "name": "Midland",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Cabarrus",
+    "lat": 35.2492,
+    "lng": -80.5301,
+    "note": "Spans Cabarrus County, Mecklenburg County"
+  },
+  {
+    "name": "Mineral Springs",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 34.9442,
+    "lng": -80.6864
+  },
+  {
+    "name": "Mint Hill",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Mecklenburg",
+    "lat": 35.1785,
+    "lng": -80.6557,
+    "note": "Spans Mecklenburg County, Union County"
+  },
+  {
+    "name": "Monroe",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 35.0016,
+    "lng": -80.5613
+  },
+  {
+    "name": "Mount Holly",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.3144,
+    "lng": -81.0066
+  },
+  {
+    "name": "Mount Pleasant",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Cabarrus",
+    "lat": 35.3943,
+    "lng": -80.4318
+  },
+  {
+    "name": "Pineville",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Mecklenburg",
+    "lat": 35.0937,
+    "lng": -80.8935
+  },
+  {
+    "name": "Ranlo",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.2899,
+    "lng": -81.1291
+  },
+  {
+    "name": "Stallings",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 35.1103,
+    "lng": -80.6601,
+    "note": "Spans Mecklenburg County, Union County"
+  },
+  {
+    "name": "Stanley",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Gaston",
+    "lat": 35.3547,
+    "lng": -81.0918
+  },
+  {
+    "name": "Unionville",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 35.0785,
+    "lng": -80.5171
+  },
+  {
+    "name": "Waxhaw",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 34.9375,
+    "lng": -80.74
+  },
+  {
+    "name": "Weddington",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 35.0221,
+    "lng": -80.7354,
+    "note": "Spans Mecklenburg County, Union County"
+  },
+  {
+    "name": "Wingate",
+    "market": "Charlotte",
+    "state": "NC",
+    "county": "Union",
+    "lat": 34.9875,
+    "lng": -80.4476
+  },
+  {
+    "name": "Clover",
+    "market": "Charlotte",
+    "state": "SC",
+    "county": "York",
+    "lat": 35.1116,
+    "lng": -81.2203
+  },
+  {
+    "name": "Fort Mill",
+    "market": "Charlotte",
+    "state": "SC",
+    "county": "York",
+    "lat": 35.006,
+    "lng": -80.94
+  },
+  {
+    "name": "Hickory Grove",
+    "market": "Charlotte",
+    "state": "SC",
+    "county": "York",
+    "lat": 34.9773,
+    "lng": -81.4194
+  },
+  {
+    "name": "McConnells",
+    "market": "Charlotte",
+    "state": "SC",
+    "county": "York",
+    "lat": 34.877,
+    "lng": -81.2316
+  },
+  {
+    "name": "Rock Hill",
+    "market": "Charlotte",
+    "state": "SC",
+    "county": "York",
+    "lat": 34.9382,
+    "lng": -81.0192
+  },
+  {
+    "name": "Sharon",
+    "market": "Charlotte",
+    "state": "SC",
+    "county": "York",
+    "lat": 34.952,
+    "lng": -81.3435
+  },
+  {
+    "name": "Smyrna",
+    "market": "Charlotte",
+    "state": "SC",
+    "county": "York",
+    "lat": 35.042,
+    "lng": -81.4094,
+    "note": "Spans Cherokee County, York County"
+  },
+  {
+    "name": "Tega Cay",
+    "market": "Charlotte",
+    "state": "SC",
+    "county": "York",
+    "lat": 35.0393,
+    "lng": -81.0106
+  },
+  {
+    "name": "York",
+    "market": "Charlotte",
+    "state": "SC",
+    "county": "York",
+    "lat": 34.9983,
+    "lng": -81.2331
   }
 ]

@@ -82667,6 +82667,171 @@
         "method": "flat_each",
         "notes": null,
         "date": "2026-01-01"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Residential building permit (one- and two-family), by construction cost",
+        "min_fee": 80.0,
+        "rate": "Up to $15,000: $80 | $15,001-$25,000: $150 | $25,001-$50,000: $300 | $50,001-$75,000: $450 | over $75,000: $6.00 per $1,000 of construction cost",
+        "method": "tiered",
+        "notes": "Unincorporated Cobb County. Includes plan review and building inspections. New construction cost from ICC Building Valuation Data: heated sq ft x $165.67 + unheated sq ft x $31.50.",
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Commercial and multifamily building permit, by construction cost",
+        "min_fee": 100.0,
+        "rate": "Up to $15,000: $100 | $15,001-$25,000: $175 | $25,001-$50,000: $350 | $50,001-$75,000: $525 | over $75,000: $7.00 per $1,000 of calculated construction cost",
+        "method": "tiered",
+        "notes": "Includes plan review and building inspections.",
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Commercial remodel, construction cost factor",
+        "min_fee": null,
+        "rate": "Calculated construction cost x 0.5 (Type I-A or I-B construction) or x 0.75 (all other types), then the commercial schedule",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Trade permit (Electrical, Plumbing, HVAC, Gas), residential",
+        "min_fee": 80.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Commercial re-roof or solar panels, letter of completion fee",
+        "min_fee": 50.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": "Permit itself priced by construction cost on the commercial schedule. Residential re-roof is not listed separately in the schedule.",
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Technology fee, every permit",
+        "min_fee": 15.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Site plan review (new homes, additions, decks, pools, retaining walls, accessory structures)",
+        "min_fee": 100.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Certificate of Occupancy or letter of completion, new homes",
+        "min_fee": 50.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Reinspection",
+        "min_fee": 50.0,
+        "rate": "1st: $50 | 2nd: $75 | 3rd and each after: $100",
+        "method": "tiered",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Plan revision, residential",
+        "min_fee": 50.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Plan revision, commercial",
+        "min_fee": 150.0,
+        "rate": "Minor (under 10 pages changed): $150 | major (10+ pages): $500",
+        "method": "tiered",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Swimming pool permit",
+        "min_fee": 250.0,
+        "rate": "$250 minimum",
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Demolition or retaining wall permit",
+        "min_fee": 100.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Power reconnect (power use only)",
+        "min_fee": 80.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "Cobb County GA",
+        "work_type": "Temporary Certificate of Occupancy (subject to approval, max 30 days)",
+        "min_fee": 500.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
+        "date": "2024-07-01",
+        "last_verified": "2026-11-25"
       }
     ],
     "source": "City of Atlanta Dept. of City Planning, Office of Buildings -- official fee table published on atlantaga.gov 'Getting Started with ZD&P Services' page (current); building valuation addendum and MEP/sign/CO/general fee tables all captured"
