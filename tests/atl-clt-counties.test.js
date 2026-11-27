@@ -29,7 +29,11 @@ const hasHills=r=>(r.permits||[]).some(x=>/Hillsborough/.test(x.municipality||''
   r=await P.marketPayload('Marietta, GA');
   check(`'Marietta, GA' -> Cobb County rows, labeled fallback (${r.permitScope}, ${munis(r)})`, r.market==='Atlanta'&&munis(r).join()==='Cobb County GA'&&r.permitScope==='county-fallback'&&r.permitCountyName==='Cobb County');
   r=await P.marketPayload('Lawrenceville, GA');
-  check(`'Lawrenceville, GA' (Gwinnett) -> no Cobb or City of Atlanta rows (${r.permitScope}, ${(r.permits||[]).length} rows)`, r.market==='Atlanta'&&!(r.permits||[]).length&&r.permitCountyName==='Gwinnett County');
+  check(`'Lawrenceville, GA' -> its own city rows only (${r.permitScope}, ${munis(r)})`, r.market==='Atlanta'&&munis(r).join()==='City of Lawrenceville GA');
+  r=await P.marketPayload('Buford, GA');
+  check(`'Buford, GA' (Gwinnett, no rows filed) -> no other county's or city's rows (${r.permitScope}, ${(r.permits||[]).length} rows)`, r.market==='Atlanta'&&!(r.permits||[]).length&&r.permitCountyName==='Gwinnett County');
+  r=await P.marketPayload('Gastonia, NC');
+  check(`'Gastonia, NC' -> Gaston County rows (${r.permitScope}, ${munis(r)})`, r.market==='Charlotte'&&munis(r).join()==='Gaston County NC');
   r=await P.marketPayload('Charlotte, NC');
   check(`'Charlotte, NC' -> Mecklenburg rows incl. the LUESA ordinance (${r.permitScope}, ${munis(r)})`, r.market==='Charlotte'&&(r.permits||[]).some(x=>x.municipality==='Mecklenburg County NC (LUESA)')&&r.permitCountyName==='Mecklenburg County');
   r=await P.marketPayload('Monroe, NC');

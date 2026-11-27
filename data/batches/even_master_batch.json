@@ -83558,6 +83558,127 @@
         "source": "City of South Fulton Citywide Fee Schedule, May 2023, Building Fees pp. 6-7 (cityofsouthfultonga.gov DocumentCenter 8095)",
         "date": "2023-05-01",
         "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Lawrenceville GA",
+        "work_type": "Building permit (ICC valuation)",
+        "min_fee": null,
+        "rate": "ICC Building Valuation Data construction cost x 0.004 ($4 per $1,000). Plan review fee $150. Shell only: 80% of valuation.",
+        "method": "percent_of_value",
+        "notes": "Includes plan review and building inspections. ICC chart updated each January 1. Trade permit fees are not listed in this attachment.",
+        "source": "City of Lawrenceville Planning Fees, Attachment A (Building Permit Fees, p. 4), adopted by Council resolution May 27, 2026, effective July 1, 2026",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Lawrenceville GA",
+        "work_type": "Building permit plan review",
+        "min_fee": 150.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Lawrenceville Planning Fees, Attachment A (Building Permit Fees, p. 4), adopted by Council resolution May 27, 2026, effective July 1, 2026",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Lawrenceville GA",
+        "work_type": "Tenant change permit (plan review)",
+        "min_fee": 150.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Lawrenceville Planning Fees, Attachment A (Building Permit Fees, p. 4), adopted by Council resolution May 27, 2026, effective July 1, 2026",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Lawrenceville GA",
+        "work_type": "Reinspection",
+        "min_fee": 0.0,
+        "rate": "1st follow-up: $0 | 2nd and each later follow-up: $75",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Lawrenceville Planning Fees, Attachment A (Building Permit Fees, p. 4), adopted by Council resolution May 27, 2026, effective July 1, 2026",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Lawrenceville GA",
+        "work_type": "Plan revision after permit issuance",
+        "min_fee": 75.0,
+        "rate": "$75 plus added fees if cost increases | resubmittal after 3rd review: 25% of permit fee",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Lawrenceville Planning Fees, Attachment A (Building Permit Fees, p. 4), adopted by Council resolution May 27, 2026, effective July 1, 2026",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Lawrenceville GA",
+        "work_type": "Building permit extension or renewal",
+        "min_fee": 75.0,
+        "rate": "Extension $75 | renewal $75 + 50% of total building permit fee",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Lawrenceville Planning Fees, Attachment A (Building Permit Fees, p. 4), adopted by Council resolution May 27, 2026, effective July 1, 2026",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Alpharetta GA",
+        "work_type": "Building permit base fee, residential (ICC valuation)",
+        "min_fee": 50.0,
+        "rate": "$5.50 per $1,000 of construction cost (latest ICC Building Valuation Data), minimum $50",
+        "method": "percent_of_value",
+        "notes": "Trade (mechanical, electrical, plumbing) permit fees are not printed in the residential procedures; commercial uses separate procedures.",
+        "source": "City of Alpharetta Residential Permitting Procedures, REVISED 2026, pp. 18 and 20 (Calculating Building Permit Fees), City of Alpharetta Inspection & Code Enforcement",
+        "date": "2026-01-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Alpharetta GA",
+        "work_type": "Plan review fee, residential",
+        "min_fee": 25.0,
+        "rate": "$2.75 per $1,000 of construction cost, minimum $25",
+        "method": "percent_of_value",
+        "notes": null,
+        "source": "City of Alpharetta Residential Permitting Procedures, REVISED 2026, pp. 18 and 20 (Calculating Building Permit Fees), City of Alpharetta Inspection & Code Enforcement",
+        "date": "2026-01-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Alpharetta GA",
+        "work_type": "Erosion inspection fee (residential building permits, except interior finish only)",
+        "min_fee": 85.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "City of Alpharetta Residential Permitting Procedures, REVISED 2026, pp. 18 and 20 (Calculating Building Permit Fees), City of Alpharetta Inspection & Code Enforcement",
+        "date": "2026-01-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Alpharetta GA",
+        "work_type": "Sewer inspection fee, per new connection",
+        "min_fee": 35.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "City of Alpharetta Residential Permitting Procedures, REVISED 2026, pp. 18 and 20 (Calculating Building Permit Fees), City of Alpharetta Inspection & Code Enforcement",
+        "date": "2026-01-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Alpharetta GA",
+        "work_type": "Demolition permit, residential",
+        "min_fee": 200.0,
+        "rate": "Whole building $300 | partial building or structure $200",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Alpharetta Residential Permitting Procedures, REVISED 2026, pp. 18 and 20 (Calculating Building Permit Fees), City of Alpharetta Inspection & Code Enforcement",
+        "date": "2026-01-01",
+        "last_verified": "2026-11-27"
       }
     ],
     "source": "City of Atlanta Dept. of City Planning, Office of Buildings -- official fee table published on atlantaga.gov 'Getting Started with ZD&P Services' page (current); building valuation addendum and MEP/sign/CO/general fee tables all captured"
@@ -153716,11 +153837,11 @@
         "municipality": "Gaston County NC",
         "work_type": "Building permit by valuation (ICC table or contract price, whichever is greater)",
         "min_fee": 90.0,
-        "rate": "$1-$5,000: $90 minimum | $5,001-$50,000: $60 + $6 per $1,000 | $50,001-$100,000: $320 + $5 per $1,000 over $50,000 | $100,001-$250,000: $570 + $4.50 per $1,000 over $100,000 | $250,001-$500,000: $1,245 + $4 per $1,000 over $250,000 | $500,001-$1,000,000: $2,245 + $3.50 per $1,000 over $500,000 | $1,000,001-$10,000,000: $3,995 + $2.50 per $1,000 | over $10,000,000: $26,495 + $1.50 per $1,000 (as printed)",
+        "rate": "$1-$5,000: $90 minimum | $5,001-$50,000: $60 + $6 per $1,000 over $5,000 | $50,001-$100,000: $320 + $5 per $1,000 over $50,000 | $100,001-$250,000: $570 + $4.50 per $1,000 over $100,000 | $250,001-$500,000: $1,245 + $4 per $1,000 over $250,000 | $500,001-$1,000,000: $2,245 + $3.50 per $1,000 over $500,000 | $1,000,001-$10,000,000: $3,995 + $2.50 per $1,000 | over $10,000,000: $26,495 + $1.50 per $1,000 (as printed)",
         "method": "tiered",
-        "notes": "Gaston County issues building permits for all Gaston towns incl. Gastonia, Belmont, Mount Holly (Kings Mountain excepted). Minimum for a new home $990. Unheated space, garages, porches, decks priced per sq ft. FY26 schedule (July 2025-June 2026); a FY27 schedule may exist.",
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "notes": "Gaston County issues building permits for all Gaston towns incl. Gastonia, Belmont, Mount Holly (Kings Mountain excepted). Minimum for a new home $990. Unheated space, garages, porches, decks priced per sq ft. FY27 schedule (July 2026-June 2027).",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153730,8 +153851,8 @@
         "rate": null,
         "method": "flat_each",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153741,8 +153862,8 @@
         "rate": null,
         "method": "flat_each",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153752,8 +153873,8 @@
         "rate": null,
         "method": "flat_each",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153763,8 +153884,8 @@
         "rate": null,
         "method": "flat_each",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153774,8 +153895,8 @@
         "rate": null,
         "method": "flat_each",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153785,8 +153906,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153796,8 +153917,8 @@
         "rate": "20% of permit fee (1st review)",
         "method": "percent_of_permit_fee",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153807,8 +153928,8 @@
         "rate": "#1: $90 | #2: $180 | #3: $270 | not ready for inspection: $350",
         "method": "tiered",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153818,8 +153939,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153829,8 +153950,8 @@
         "rate": "$180 + $90 per trade (electrical, mechanical, plumbing)",
         "method": "flat",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153840,8 +153961,8 @@
         "rate": null,
         "method": "flat_each",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153851,8 +153972,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153862,8 +153983,8 @@
         "rate": "Above ground: $180 | in ground: $540",
         "method": "tiered",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -153873,8 +153994,8 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "Gaston County Fee Schedule, Building & Development Services, FY26 Adopted (gastongov.com DocumentCenter 7877)",
-        "date": "2025-07-01",
+        "source": "Gaston County FY 2027 Adopted Fee Schedule, Building & Development Services (adopted May 12, 2026; gastongov.com DocumentCenter 9279/9277). Building fees unchanged from FY26.",
+        "date": "2026-07-01",
         "last_verified": "2026-11-27"
       },
       {
@@ -154105,6 +154226,193 @@
         "method": "flat",
         "notes": "New homes only.",
         "source": "City of Tega Cay Development Services & Impact Fee Schedule, effective July 1, 2026 (tegacaysc.org DocumentCenter 7220), page 2",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Residential new construction/additions, building trade",
+        "min_fee": null,
+        "rate": "$0.23 per sq ft (roofed or unroofed); modular home $360",
+        "method": "per_sqft",
+        "notes": "Waxhaw runs its own inspections (Union County issues elsewhere in Union except Monroe). A 10% technology fee applies to all permits.",
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Residential new construction/additions, plumbing",
+        "min_fee": null,
+        "rate": "$0.20 per sq ft; modular home $125",
+        "method": "per_sqft",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Residential new construction/additions, electrical",
+        "min_fee": null,
+        "rate": "$0.20 per sq ft; service change with no new circuits $120; additional circuits $100; saw service or low voltage $75",
+        "method": "per_sqft",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Residential new construction/additions, mechanical",
+        "min_fee": 150.0,
+        "rate": "$150 per appliance; change-out $120",
+        "method": "per_unit",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Renovations and basement up-fits",
+        "min_fee": null,
+        "rate": "Building $0.20/sf, plumbing $0.20/sf, electrical $0.20/sf, mechanical ductwork $0.20/sf, mechanical additional units $140 each",
+        "method": "per_sqft",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Water heater change-out (plumbing)",
+        "min_fee": 75.0,
+        "rate": "$75 + $20 each additional unit same trip (gas water heater mechanical: $75 + $25)",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "HVAC change-out: heat pump, gas pack, furnace with A/C",
+        "min_fee": 75.0,
+        "rate": "$75 + $25 each additional unit same trip",
+        "method": "flat",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Electrical power service or sub panel",
+        "min_fee": 82.5,
+        "rate": "0-100A $82.50 | 101-200A $121 | 201-400A $220 | 401-600A $275 | 601-1,000A $385 | 1,001-2,000A $660 | 2,001A+ $1,210 (or $0.16/sf, whichever is more)",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Graduated fee (work not priced by sq ft)",
+        "min_fee": null,
+        "rate": "$0-$100,000: 0.02 x cost | $100,001-$500,000: $1,100 + 0.0012 x cost | $500,001-$1,000,000: $1,650 + 0.00076 x cost | over $1,000,000: $2,475 + 0.0006 x cost",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Commercial building and trades",
+        "min_fee": null,
+        "rate": "$0.22 per sq ft per trade (commercial, institutional, multifamily, storage/utility)",
+        "method": "per_sqft",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Minimum permit fee",
+        "min_fee": 75.0,
+        "rate": null,
+        "method": "flat_minimum",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Technology fee",
+        "min_fee": null,
+        "rate": "10% of the underlying fee, all permits",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Homeowners Recovery Fund",
+        "min_fee": 10.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Pool permit (other permits also required)",
+        "min_fee": 200.0,
+        "rate": "Residential $200 | commercial pool electrical $300",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Reinspection",
+        "min_fee": 125.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Demolition permit",
+        "min_fee": 250.0,
+        "rate": "$250 | contributing structure in historic district $500",
+        "method": "tiered",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
+        "date": "2026-07-01",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Waxhaw NC",
+        "work_type": "Certificate of Occupancy",
+        "min_fee": 15.0,
+        "rate": null,
+        "method": "flat_each",
+        "notes": null,
+        "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
         "date": "2026-07-01",
         "last_verified": "2026-11-27"
       }
