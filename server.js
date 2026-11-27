@@ -115,17 +115,68 @@ function bestNameMatch(lower, list, namesOf) {
   return { hit, len };
 }
 
-// Resolves free-text location input ("City, State" or a 5-digit zip) to the nearest
-// covered market, and — where we can tell — the specific municipality within it.
+// Street addresses (founder 2026-11-28): the free US Census geocoder returns the
+// exact incorporated place and county for an address, so a job near a city line
+// gets the right permit office instead of the nearest city center. No key, no
+// account; only the address the contractor typed is sent. Any failure (timeout,
+// no match) falls back to the zip and name matching below.
+const GEO_CACHE = new Map();
+function looksLikeStreetAddress(t) {
+  const rest = String(t || '').replace(/^\s*\d{1,6}[a-z]?\s+/i, '');
+  return /^\s*\d{1,6}[a-z]?\s+[a-z0-9]/i.test(t || '') && /[a-z]{2,}/i.test(rest) && (/,/.test(rest) || /\b\d{5}\b/.test(rest));
+}
+async function geocodeAddress(text) {
+  const key = String(text).toLowerCase().replace(/\s+/g, ' ').trim();
+  if (GEO_CACHE.has(key)) return GEO_CACHE.get(key);
+  try {
+    const url = 'https://geocoding.geo.census.gov/geocoder/geographies/onelineaddress?address=' + encodeURIComponent(text)
+      + '&benchmark=Public_AR_Current&vintage=Current_Current&layers=' + encodeURIComponent('Counties,Incorporated Places') + '&format=json';
+    const r = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    if (!r.ok) return null;
+    const d = await r.json();
+    const m = d && d.result && d.result.addressMatches && d.result.addressMatches[0];
+    if (!m || !m.coordinates) return null;
+    const g = m.geographies || {};
+    const place = (g['Incorporated Places'] || [])[0], cty = (g['Counties'] || [])[0];
+    const out = { lat: +m.coordinates.y, lng: +m.coordinates.x, place: place ? place.BASENAME : null,
+      county: cty ? cty.BASENAME : null, state: (m.addressComponents || {}).state || null };
+    if (!Number.isFinite(out.lat) || !Number.isFinite(out.lng)) return null;
+    if (GEO_CACHE.size > 5000) GEO_CACHE.delete(GEO_CACHE.keys().next().value);
+    GEO_CACHE.set(key, out);
+    return out;
+  } catch (e) { return null; }
+}
+
+// Resolves free-text location input (a street address, "City, State" or a 5-digit
+// zip) to the nearest covered market, and — where we can tell — the specific
+// municipality within it.
 async function resolveMarket(locationText) {
   if (!locationText) return null;
   const text = locationText.trim();
   const lower = text.toLowerCase();
 
+  if (looksLikeStreetAddress(text)) {
+    const g = await geocodeAddress(text);
+    if (g) {
+      const market = nearestMarket(g.lat, g.lng);
+      if (!market) return null;
+      if (g.place) {
+        const target = normalizeMuni(g.place);
+        const muni = MUNICIPALITIES.find(m => m.market === market.market && (!g.state || !m.state || m.state === g.state)
+          && [m.name, ...(m.aliases || [])].some(n => normalizeMuni(n) === target));
+        return { ...market, municipality: muni ? muni.name : g.place, county: g.county, geocoded: true };
+      }
+      // No incorporated place at that address: unincorporated county land.
+      return { ...market, county: g.county, unincorporatedCounty: !!g.county, geocoded: true };
+    }
+  }
+
   // A zip is the most precise signal available and is checked first — a street name
   // can contain a city name ("123 Miami St, Boise ID 83702"), so trusting free text
   // over the zip would resolve that address to Florida.
-  const zipMatch = text.match(/\b(\d{5})\b/);
+  // The LAST 5-digit number is the zip: a street number can have 5 digits too
+  // ("12345 SW 8th St, Miami, FL 33184").
+  const zipMatch = (text.match(/\b\d{5}\b/g) || []).slice(-1).map(z => [z, z])[0];
   if (zipMatch) {
     const coords = await zipToLatLng(zipMatch[1]);
     if (coords) {
@@ -414,6 +465,7 @@ const HVHZ_MARKETS = new Set(['Miami-Dade', 'Broward']);
 // identified) the market's main county from markets.json, flagged as assumed so the
 // estimate can say so. Markets without a main county keep every county row.
 function jobCounty(matched, muniEntry) {
+  if (matched?.geocoded && matched.county) return { county: matched.county, countyAssumed: false };
   if (muniEntry?.county) return { county: muniEntry.county, countyAssumed: false };
   const main = MARKETS.find(m => m.market === matched?.market)?.county;
   return main ? { county: main, countyAssumed: true } : { county: null, countyAssumed: false };
@@ -429,7 +481,8 @@ async function marketPayload(location) {
   if (!data) return { market: matched.market, state: matched.state, zone: matched.zone, municipality: matched.municipality || null, hvhz, materials: null, labor: null, permits: null };
   const muniEntry = MUNICIPALITIES.find(m => m.name === matched.municipality && m.market === matched.market);
   const { county, countyAssumed } = jobCounty(matched, muniEntry);
-  const { permits, scope, municipality, missing } = filterPermits(data.permits, matched.municipality, !!muniEntry?.unincorporated, county, muniEntry?.permitsBy === 'county');
+  const muniName = matched.municipality || (matched.unincorporatedCounty ? `Unincorporated ${matched.county} County` : null);
+  const { permits, scope, municipality, missing } = filterPermits(data.permits, muniName, !!muniEntry?.unincorporated || !!matched.unincorporatedCounty, county, muniEntry?.permitsBy === 'county');
   return { ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, permitMissing: missing || [], hvhz,
     permitCountyName: county ? `${county} County` : null, permitCountyAssumed: countyAssumed };
 }
