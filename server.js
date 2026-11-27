@@ -890,14 +890,27 @@ app.get('/api/usage', async (req, res) => {
   res.json({ signedIn: st.signedIn, isPro: st.isPro, used: st.used, limit: st.limit, remaining: st.remaining, allowed: st.allowed, reason: st.reason,
     limits: { anon: LIMITS.ANON_ESTIMATES, freeAccount: LIMITS.FREE_ACCOUNT_ESTIMATES } });
 });
-const CLIENT_EVENTS = new Set(['signup', 'pdf_download', 'pro_modal_shown']);
+const CLIENT_EVENTS = new Set(['signup', 'pdf_download', 'pro_modal_shown', 'visit']);
+// 'visit' (demand map, founder 2026-11-28): the visitor's city + state as the web
+// host reported it ("Gastonia, NC"; outside the US "City, CC"). Never an IP.
+function visitCity(b) {
+  const city = clip(b.city, 60).replace(/[^\p{L}\p{N} .'-]/gu, '').trim();
+  const region = clip(b.region, 6).replace(/[^A-Za-z0-9-]/g, '').toUpperCase();
+  const country = clip(b.country, 2).replace(/[^A-Za-z]/g, '').toUpperCase();
+  if (!city) return null;
+  return country && country !== 'US' ? `${city}, ${country}` : (region ? `${city}, ${region}` : city);
+}
 app.post('/api/event', async (req, res) => {
   if (!appOnly(req, res)) return;
   const name = String(req.body?.event || '');
   if (!CLIENT_EVENTS.has(name)) return res.status(400).json({ error: { code: 'unknown_event' } });
   const U = usage(); const ident = await U.identify(req);
   if (!U.rateOk(ident.ipHash, 'event')) return res.status(429).json({ error: { code: 'rate_limited' } });
-  await U.event(name, ident);
+  if (name === 'visit') {
+    const city = visitCity(req.body || {});
+    if (!city) return res.status(400).json({ error: { code: 'invalid' } });
+    await U.event('visit', ident, { city, lang: req.body.lang === 'es' ? 'es' : 'en' });
+  } else await U.event(name, ident);
   res.json({ ok: true });
 });
 app.post('/api/data-trade-credit', async (req, res) => {

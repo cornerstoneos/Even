@@ -1883,6 +1883,20 @@ async function refreshUsage(){
 function trackEvent(event){
   apiHeaders().then(h=>fetch(`${API_ORIGIN}/api/event`,{method:'POST',headers:h,body:JSON.stringify({event})})).catch(()=>{});
 }
+// Demand map (founder 2026-11-28): once a day per browser, record the visitor's
+// city and state (from our web host's geo lookup, never the IP) as a 'visit'.
+function trackVisit(){
+  try{
+    if(!/(^|\.)even-os\.com$/.test(location.hostname)) return;
+    const day=new Date().toISOString().slice(0,10);
+    try{ if(localStorage.getItem('even_visit_day')===day) return; localStorage.setItem('even_visit_day',day); }catch(e){}
+    fetch('/api/geo',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(g=>{
+      if(!g||!g.city) return;
+      return apiHeaders().then(h=>fetch(`${API_ORIGIN}/api/event`,{method:'POST',headers:h,body:JSON.stringify({event:'visit',city:g.city,region:g.region,country:g.country,lang:appLang})}));
+    }).catch(()=>{});
+  }catch(e){}
+}
+setTimeout(trackVisit,2500);
 // The server said no to a new estimate. Say why, and offer the next step.
 function showLimitReached(code){
   const es=appLang==='es';
