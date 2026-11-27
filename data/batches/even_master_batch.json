@@ -82832,6 +82832,116 @@
         "source": "Cobb County Development & Inspections Building Permit Fee Schedule, effective July 1, 2024 (assets.cobbcounty.gov, 2024 Fee Schedule Update_Final.pdf), pages 1-3",
         "date": "2024-07-01",
         "last_verified": "2026-11-25"
+      },
+      {
+        "municipality": "City of Powder Springs GA",
+        "work_type": "New construction building permit, residential one- and two-family (R-3), fee per sq ft by building size",
+        "min_fee": null,
+        "rate": "Type V-B (wood frame): up to 2,500 sf $0.78/sf | 5,000 sf $0.50/sf | 10,000 sf $0.54/sf | 100,000 sf and up $0.58/sf. Type V-A: $0.81 / $1.01 / $0.58 / $0.61 per sf. Other construction types and occupancies: city rate tables (A1 to U).",
+        "method": "per_sqft",
+        "notes": "Values copied as printed in the city rate table (the R-3 rows are not monotonic as printed; check the table before relying on a large job).",
+        "source": "City of Powder Springs Fee Schedule, Exhibit A (Resolution 2026-102), adopted April 20, 2026, amended June 1 and June 15, 2026 (powderspringsga.gov/856/Fee-Schedule), pages 4-5 and construction rate tables",
+        "date": "2026-06-15",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Powder Springs GA",
+        "work_type": "Trade permits (electrical, plumbing, mechanical)",
+        "min_fee": null,
+        "rate": "$0.05 per square foot",
+        "method": "per_sqft",
+        "notes": null,
+        "source": "City of Powder Springs Fee Schedule, Exhibit A (Resolution 2026-102), adopted April 20, 2026, amended June 1 and June 15, 2026 (powderspringsga.gov/856/Fee-Schedule), pages 4-5 and construction rate tables",
+        "date": "2026-06-15",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Powder Springs GA",
+        "work_type": "Plan review, single-family new construction",
+        "min_fee": 150.0,
+        "rate": "Up to 2,000 sf: $150 | 2,001-5,000 sf: $250 | 5,001 sf and up: $50 per 1,000 sf",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Powder Springs Fee Schedule, Exhibit A (Resolution 2026-102), adopted April 20, 2026, amended June 1 and June 15, 2026 (powderspringsga.gov/856/Fee-Schedule), pages 4-5 and construction rate tables",
+        "date": "2026-06-15",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Powder Springs GA",
+        "work_type": "Plan review, residential renovation/addition, multifamily or commercial",
+        "min_fee": null,
+        "rate": "50% of the permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Powder Springs Fee Schedule, Exhibit A (Resolution 2026-102), adopted April 20, 2026, amended June 1 and June 15, 2026 (powderspringsga.gov/856/Fee-Schedule), pages 4-5 and construction rate tables",
+        "date": "2026-06-15",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Powder Springs GA",
+        "work_type": "Reinspection",
+        "min_fee": 50.0,
+        "rate": "1st: $50 | 2nd: $75 | each additional: $100",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Powder Springs Fee Schedule, Exhibit A (Resolution 2026-102), adopted April 20, 2026, amended June 1 and June 15, 2026 (powderspringsga.gov/856/Fee-Schedule), pages 4-5 and construction rate tables",
+        "date": "2026-06-15",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Powder Springs GA",
+        "work_type": "Temporary power",
+        "min_fee": 25.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Powder Springs Fee Schedule, Exhibit A (Resolution 2026-102), adopted April 20, 2026, amended June 1 and June 15, 2026 (powderspringsga.gov/856/Fee-Schedule), pages 4-5 and construction rate tables",
+        "date": "2026-06-15",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Powder Springs GA",
+        "work_type": "Demolition permit",
+        "min_fee": 50.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Powder Springs Fee Schedule, Exhibit A (Resolution 2026-102), adopted April 20, 2026, amended June 1 and June 15, 2026 (powderspringsga.gov/856/Fee-Schedule), pages 4-5 and construction rate tables",
+        "date": "2026-06-15",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Powder Springs GA",
+        "work_type": "Swimming pool permit",
+        "min_fee": 75.0,
+        "rate": "In-ground: $150 | above-ground: $75",
+        "method": "tiered",
+        "notes": null,
+        "source": "City of Powder Springs Fee Schedule, Exhibit A (Resolution 2026-102), adopted April 20, 2026, amended June 1 and June 15, 2026 (powderspringsga.gov/856/Fee-Schedule), pages 4-5 and construction rate tables",
+        "date": "2026-06-15",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Powder Springs GA",
+        "work_type": "Utility release inspection",
+        "min_fee": 50.0,
+        "rate": null,
+        "method": "flat",
+        "notes": null,
+        "source": "City of Powder Springs Fee Schedule, Exhibit A (Resolution 2026-102), adopted April 20, 2026, amended June 1 and June 15, 2026 (powderspringsga.gov/856/Fee-Schedule), pages 4-5 and construction rate tables",
+        "date": "2026-06-15",
+        "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "City of Powder Springs GA",
+        "work_type": "Plan review resubmittal (after second submittal) or revisions",
+        "min_fee": null,
+        "rate": "50% of the initial plan review fee",
+        "method": "percent_of_permit_fee",
+        "notes": null,
+        "source": "City of Powder Springs Fee Schedule, Exhibit A (Resolution 2026-102), adopted April 20, 2026, amended June 1 and June 15, 2026 (powderspringsga.gov/856/Fee-Schedule), pages 4-5 and construction rate tables",
+        "date": "2026-06-15",
+        "last_verified": "2026-11-27"
       }
     ],
     "source": "City of Atlanta Dept. of City Planning, Office of Buildings -- official fee table published on atlantaga.gov 'Getting Started with ZD&P Services' page (current); building valuation addendum and MEP/sign/CO/general fee tables all captured"
