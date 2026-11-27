@@ -369,7 +369,10 @@ function countyRowsForMissing(countyRows, missing) {
 // Orlando: Orange + Seminole + Osceola) carry several county schedules, and only
 // the job's own county ever applies. No county given = every county row (the
 // single-county markets, and markets with no municipality list).
-function filterPermits(permits, municipality, unincorporated, county) {
+// countyIssued: the county building department issues permits for this town
+// (most North Carolina towns, founder 2026-11-28), so the county rows ARE the
+// town's own fees, not a stand-in.
+function filterPermits(permits, municipality, unincorporated, county, countyIssued) {
   if (!Array.isArray(permits) || !permits.length) return { permits, scope: 'none' };
 
   const isCounty = r => /\bcounty\b/i.test(r.municipality || '');
@@ -378,6 +381,7 @@ function filterPermits(permits, municipality, unincorporated, county) {
 
   if (municipality) {
     if (unincorporated) return { permits: countyRows, scope: 'unincorporated', municipality };
+    if (countyIssued) return { permits: countyRows, scope: 'county-issued', municipality, missing: countyRows.length ? missingCoreFees(countyRows) : [] };
     const target = normalizeMuni(municipality);
     const cityRows = permits.filter(r => !isCounty(r) && normalizeMuni(r.municipality) === target);
     if (cityRows.length) {
@@ -425,7 +429,7 @@ async function marketPayload(location) {
   if (!data) return { market: matched.market, state: matched.state, zone: matched.zone, municipality: matched.municipality || null, hvhz, materials: null, labor: null, permits: null };
   const muniEntry = MUNICIPALITIES.find(m => m.name === matched.municipality && m.market === matched.market);
   const { county, countyAssumed } = jobCounty(matched, muniEntry);
-  const { permits, scope, municipality, missing } = filterPermits(data.permits, matched.municipality, !!muniEntry?.unincorporated, county);
+  const { permits, scope, municipality, missing } = filterPermits(data.permits, matched.municipality, !!muniEntry?.unincorporated, county, muniEntry?.permitsBy === 'county');
   return { ...data, permits, municipality: municipality || matched.municipality || null, permitScope: scope, permitMissing: missing || [], hvhz,
     permitCountyName: county ? `${county} County` : null, permitCountyAssumed: countyAssumed };
 }

@@ -1658,7 +1658,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.2213,
-    "lng": -81.0411
+    "lng": -81.0411,
+    "permitsBy": "county"
   },
   {
     "name": "Bessemer City",
@@ -1666,7 +1667,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.2843,
-    "lng": -81.2829
+    "lng": -81.2829,
+    "permitsBy": "county"
   },
   {
     "name": "Charlotte",
@@ -1674,7 +1676,8 @@
     "state": "NC",
     "county": "Mecklenburg",
     "lat": 35.209,
-    "lng": -80.831
+    "lng": -80.831,
+    "permitsBy": "county"
   },
   {
     "name": "Cherryville",
@@ -1682,7 +1685,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.3846,
-    "lng": -81.3789
+    "lng": -81.3789,
+    "permitsBy": "county"
   },
   {
     "name": "Concord",
@@ -1690,7 +1694,8 @@
     "state": "NC",
     "county": "Cabarrus",
     "lat": 35.3921,
-    "lng": -80.6355
+    "lng": -80.6355,
+    "permitsBy": "county"
   },
   {
     "name": "Cornelius",
@@ -1698,7 +1703,8 @@
     "state": "NC",
     "county": "Mecklenburg",
     "lat": 35.4732,
-    "lng": -80.8813
+    "lng": -80.8813,
+    "permitsBy": "county"
   },
   {
     "name": "Cramerton",
@@ -1706,7 +1712,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.23,
-    "lng": -81.0733
+    "lng": -81.0733,
+    "permitsBy": "county"
   },
   {
     "name": "Davidson",
@@ -1715,7 +1722,8 @@
     "county": "Mecklenburg",
     "lat": 35.4804,
     "lng": -80.8209,
-    "note": "Spans Iredell County, Mecklenburg County"
+    "note": "Spans Iredell County, Mecklenburg County",
+    "permitsBy": "county"
   },
   {
     "name": "Fairview",
@@ -1723,7 +1731,8 @@
     "state": "NC",
     "county": "Union",
     "lat": 35.156,
-    "lng": -80.5244
+    "lng": -80.5244,
+    "permitsBy": "county"
   },
   {
     "name": "Gastonia",
@@ -1731,7 +1740,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.2488,
-    "lng": -81.1864
+    "lng": -81.1864,
+    "permitsBy": "county"
   },
   {
     "name": "Harrisburg",
@@ -1739,7 +1749,8 @@
     "state": "NC",
     "county": "Cabarrus",
     "lat": 35.3075,
-    "lng": -80.6456
+    "lng": -80.6456,
+    "permitsBy": "county"
   },
   {
     "name": "Hemby Bridge",
@@ -1747,7 +1758,8 @@
     "state": "NC",
     "county": "Union",
     "lat": 35.1087,
-    "lng": -80.6249
+    "lng": -80.6249,
+    "permitsBy": "county"
   },
   {
     "name": "High Shoals",
@@ -1755,7 +1767,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.39,
-    "lng": -81.2021
+    "lng": -81.2021,
+    "permitsBy": "county"
   },
   {
     "name": "Huntersville",
@@ -1763,7 +1776,8 @@
     "state": "NC",
     "county": "Mecklenburg",
     "lat": 35.4068,
-    "lng": -80.8687
+    "lng": -80.8687,
+    "permitsBy": "county"
   },
   {
     "name": "Indian Trail",
@@ -1771,7 +1785,8 @@
     "state": "NC",
     "county": "Union",
     "lat": 35.0686,
-    "lng": -80.6512
+    "lng": -80.6512,
+    "permitsBy": "county"
   },
   {
     "name": "Kannapolis",
@@ -1780,7 +1795,8 @@
     "county": "Cabarrus",
     "lat": 35.4793,
     "lng": -80.638,
-    "note": "Spans Cabarrus County, Rowan County"
+    "note": "Spans Cabarrus County, Rowan County",
+    "permitsBy": "county"
   },
   {
     "name": "Kings Mountain",
@@ -1798,7 +1814,8 @@
     "county": "Cabarrus",
     "lat": 35.2686,
     "lng": -80.4367,
-    "note": "Spans Cabarrus County, Stanly County"
+    "note": "Spans Cabarrus County, Stanly County",
+    "permitsBy": "county"
   },
   {
     "name": "Lowell",
@@ -1806,7 +1823,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.2758,
-    "lng": -81.1049
+    "lng": -81.1049,
+    "permitsBy": "county"
   },
   {
     "name": "McAdenville",
@@ -1814,7 +1832,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.2654,
-    "lng": -81.0799
+    "lng": -81.0799,
+    "permitsBy": "county"
   },
   {
     "name": "Marshville",
@@ -1822,7 +1841,8 @@
     "state": "NC",
     "county": "Union",
     "lat": 34.9862,
-    "lng": -80.369
+    "lng": -80.369,
+    "permitsBy": "county"
   },
   {
     "name": "Marvin",
@@ -1830,7 +1850,8 @@
     "state": "NC",
     "county": "Union",
     "lat": 34.9996,
-    "lng": -80.8167
+    "lng": -80.8167,
+    "permitsBy": "county"
   },
   {
     "name": "Matthews",
@@ -1838,7 +1859,8 @@
     "state": "NC",
     "county": "Mecklenburg",
     "lat": 35.1198,
-    "lng": -80.7097
+    "lng": -80.7097,
+    "permitsBy": "county"
   },
   {
     "name": "Midland",
@@ -1847,7 +1869,8 @@
     "county": "Cabarrus",
     "lat": 35.2492,
     "lng": -80.5301,
-    "note": "Spans Cabarrus County, Mecklenburg County"
+    "note": "Spans Cabarrus County, Mecklenburg County",
+    "permitsBy": "county"
   },
   {
     "name": "Mineral Springs",
@@ -1855,7 +1878,8 @@
     "state": "NC",
     "county": "Union",
     "lat": 34.9442,
-    "lng": -80.6864
+    "lng": -80.6864,
+    "permitsBy": "county"
   },
   {
     "name": "Mint Hill",
@@ -1864,7 +1888,8 @@
     "county": "Mecklenburg",
     "lat": 35.1785,
     "lng": -80.6557,
-    "note": "Spans Mecklenburg County, Union County"
+    "note": "Spans Mecklenburg County, Union County",
+    "permitsBy": "county"
   },
   {
     "name": "Monroe",
@@ -1880,7 +1905,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.3144,
-    "lng": -81.0066
+    "lng": -81.0066,
+    "permitsBy": "county"
   },
   {
     "name": "Mount Pleasant",
@@ -1888,7 +1914,8 @@
     "state": "NC",
     "county": "Cabarrus",
     "lat": 35.3943,
-    "lng": -80.4318
+    "lng": -80.4318,
+    "permitsBy": "county"
   },
   {
     "name": "Pineville",
@@ -1896,7 +1923,8 @@
     "state": "NC",
     "county": "Mecklenburg",
     "lat": 35.0937,
-    "lng": -80.8935
+    "lng": -80.8935,
+    "permitsBy": "county"
   },
   {
     "name": "Ranlo",
@@ -1904,7 +1932,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.2899,
-    "lng": -81.1291
+    "lng": -81.1291,
+    "permitsBy": "county"
   },
   {
     "name": "Stallings",
@@ -1913,7 +1942,8 @@
     "county": "Union",
     "lat": 35.1103,
     "lng": -80.6601,
-    "note": "Spans Mecklenburg County, Union County"
+    "note": "Spans Mecklenburg County, Union County",
+    "permitsBy": "county"
   },
   {
     "name": "Stanley",
@@ -1921,7 +1951,8 @@
     "state": "NC",
     "county": "Gaston",
     "lat": 35.3547,
-    "lng": -81.0918
+    "lng": -81.0918,
+    "permitsBy": "county"
   },
   {
     "name": "Unionville",
@@ -1929,7 +1960,8 @@
     "state": "NC",
     "county": "Union",
     "lat": 35.0785,
-    "lng": -80.5171
+    "lng": -80.5171,
+    "permitsBy": "county"
   },
   {
     "name": "Waxhaw",
@@ -1946,7 +1978,8 @@
     "county": "Union",
     "lat": 35.0221,
     "lng": -80.7354,
-    "note": "Spans Mecklenburg County, Union County"
+    "note": "Spans Mecklenburg County, Union County",
+    "permitsBy": "county"
   },
   {
     "name": "Wingate",
@@ -1954,7 +1987,8 @@
     "state": "NC",
     "county": "Union",
     "lat": 34.9875,
-    "lng": -80.4476
+    "lng": -80.4476,
+    "permitsBy": "county"
   },
   {
     "name": "Clover",
@@ -1978,7 +2012,8 @@
     "state": "SC",
     "county": "York",
     "lat": 34.9773,
-    "lng": -81.4194
+    "lng": -81.4194,
+    "permitsBy": "county"
   },
   {
     "name": "McConnells",
@@ -2002,7 +2037,8 @@
     "state": "SC",
     "county": "York",
     "lat": 34.952,
-    "lng": -81.3435
+    "lng": -81.3435,
+    "permitsBy": "county"
   },
   {
     "name": "Smyrna",

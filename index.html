@@ -3233,7 +3233,8 @@ function computeConfidenceTier(marketData,categories,trades){
   const proTierMaterials=(trades
     ?tradeMaterialQuality(marketData.materials,trades.trade,trades.tradeBreakdown).rank
     :materialSourceQuality(marketData.materials,categories))>=3;
-  const cityLevelPermits=marketData.permitScope==='municipality';
+  // A county that issues the town's permits (NC) counts like a city schedule once its core fees are on file.
+  const cityLevelPermits=marketData.permitScope==='municipality'||(marketData.permitScope==='county-issued'&&(marketData.permits||[]).length>0&&!(marketData.permitMissing||[]).length);
   return (proTierMaterials&&cityLevelPermits)?'high':'medium';
 }
 function savePDF(doc,filename){if(/iPad|iPhone|iPod/.test(navigator.userAgent)){const url=URL.createObjectURL(doc.output('blob'));const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';document.body.appendChild(a);a.click();setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url);},1000);}else{doc.save(filename);}}
@@ -3762,6 +3763,7 @@ function buildDynamicPricingBlock(md,hvhzNote,catalog){
     'municipality':`Permit rows below are ${md.municipality}'s own schedule (the issuing city). There are no county rows: never add a county permit.`,
     'municipality-partial':`Permit rows below are ${md.municipality}'s PARTIAL schedule. Its ${(md.permitMissing||[]).join(', ')||'core'} fees are not on file, so county rows stand in for those fees only. Never pick a county row when a city row covers the same permit, and say in assumptions that ${md.municipality}'s fee should be verified with the city.`,
     'unincorporated':`${md.municipality} is unincorporated: the county issues the permit, so the rows below are the county's own fees.`,
+    'county-issued':`${md.permitCountyName||'The county'} building department issues permits for ${md.municipality}, so the rows below are the fees that actually apply there (not a stand-in). Never add a separate city building permit.`,
     'county-fallback':`${md.municipality}'s own fee schedule is not on file yet. The rows below are the ${md.permitCountyName||md.market+' county'} schedule as a stand-in; say in assumptions that ${md.municipality}'s permit fees should be verified with the city.`,
     'county':`Permit rows below are the ${md.permitCountyName||md.market+' county'} schedule (city not identified from the address${md.permitCountyAssumed?'; this is the main county for the area, so say in assumptions that the job is assumed to be in '+md.permitCountyName:''}).`,
     'partial':`Permit rows below are a PARTIAL ${md.market} list; pick the issuing jurisdiction's row when present.`
@@ -3832,6 +3834,10 @@ function renderPermitScopeNote(){
     msg=`Permit fees use ${escapeHtml(city||'this city')}'s schedule where we have it${gaps?` — its ${escapeHtml(gaps)} fees aren't in our database yet, so those are estimated from the ${county} schedule`:''}. Verify with the building department.`;
   }else if(meta.permitScope==='partial'){
     msg=`Permit fees drawn from a partial ${escapeHtml(meta.market)} schedule — not every municipality in this metro is covered yet. Verify with the issuing jurisdiction.`;
+  }else if(meta.permitScope==='county-issued'){
+    msg=meta.permitCount>0
+      ?(appLang==='es'?`${county} emite los permisos de ${escapeHtml(city||'esta ciudad')}, así que se usan sus tarifas.`:`${county} issues building permits for ${escapeHtml(city||'this town')}, so its fees are the ones that apply.`)
+      :(appLang==='es'?`${county} emite los permisos de ${escapeHtml(city||'esta ciudad')}, pero sus tarifas todavía no están en nuestra base. Los permisos aquí son un estimado general; verifícalos con el condado.`:`${county} issues building permits for ${escapeHtml(city||'this town')}, but its fee schedule isn't in our database yet. Permit costs here are a general estimate; verify with the county.`);
   }else if(meta.permitScope==='unincorporated'){
     msg=`${escapeHtml(city||'This area')} is unincorporated, so permit fees come from the ${county} schedule.`;
   }else if(meta.permitScope==='county'){
@@ -4998,7 +5004,7 @@ function renderBidIntel(data,loMult,hiMult){
   const tierLabel={high:'HIGH',medium:'MEDIUM',low:'LOW'}[tier]||'MEDIUM';
   const rows=[];
   if(meta&&meta.market){
-    const scopeWord={'unincorporated':`${meta.permitCounty||'county'} schedule (unincorporated)`,'municipality':`${meta.municipality||meta.market} city schedule`,'municipality-partial':`${meta.municipality||meta.market} city schedule, partial`,'county-fallback':`${meta.permitCounty||'county'} baseline`,'county':`${meta.permitCounty||'county'} schedule`,'partial':'partial metro list'}[meta.permitScope];
+    const scopeWord={'county-issued':`${meta.permitCounty||'county'} schedule (issues permits here)`,'unincorporated':`${meta.permitCounty||'county'} schedule (unincorporated)`,'municipality':`${meta.municipality||meta.market} city schedule`,'municipality-partial':`${meta.municipality||meta.market} city schedule, partial`,'county-fallback':`${meta.permitCounty||'county'} baseline`,'county':`${meta.permitCounty||'county'} schedule`,'partial':'partial metro list'}[meta.permitScope];
     rows.push(meta.permitCount>0
       ?`<div class="bi-row on">✓ <span>Permits — ${escapeHtml(scopeWord||meta.market)} (${meta.permitCount} fees)</span></div>`
       :`<div class="bi-row">— <span>Permits — none local yet</span></div>`);
