@@ -46,6 +46,19 @@ const hasHills=r=>(r.permits||[]).some(x=>/Hillsborough/.test(x.municipality||''
     const r=await P.marketPayload(t);
     check(`same-name '${t}' stays ${mk} (got ${r.market})`, r.market===mk);
   }
+  console.log('\n=== Arizona + Tennessee cities (2026-11-28) ===');
+  for(const [t,mk,muni] of [['Nashville, TN','Nashville','Metro Nashville TN'],['Phoenix, AZ','Phoenix','City of Phoenix AZ']]){
+    const r=await P.marketPayload(t);
+    check(`'${t}' keeps its own city rows (${r.permitScope}, ${munis(r)})`, r.market===mk&&munis(r).join()===muni);
+  }
+  for(const [t,mk] of [['Franklin, TN','Nashville'],['Murfreesboro, TN','Nashville'],['Mesa, AZ','Phoenix'],['Gilbert, AZ','Phoenix'],['Oro Valley, AZ','Tucson'],['Germantown, TN','Memphis']]){
+    const r=await P.marketPayload(t);
+    check(`'${t}' -> ${mk}, no big-city rows borrowed (${r.market}, ${munis(r)})`, r.market===mk&&!munis(r).some(x=>/^(City of Phoenix AZ|Metro Nashville TN)$/.test(x)));
+  }
+  for(const [t,mk] of [['Columbia','Columbia'],['Columbia, SC','Columbia'],['Columbia, TN','Nashville'],['Portland','Portland'],['Portland, TN','Nashville'],['Arlington, TX','Fort Worth']]){
+    const r=await P.marketPayload(t);
+    check(`same-name '${t}' -> ${mk} (got ${r&&r.market})`, r&&r.market===mk);
+  }
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);
 })().catch(e=>{console.error(e);process.exit(1);});

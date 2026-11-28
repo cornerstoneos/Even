@@ -4814,5 +4814,830 @@
     "lat": 33.0291,
     "lng": -96.527,
     "note": "Spans Collin County, Dallas County, Rockwall County"
+  },
+  {
+    "name": "Apache Junction",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.3828,
+    "lng": -111.5405,
+    "note": "Spans Maricopa County, Pinal County"
+  },
+  {
+    "name": "Avondale",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.3132,
+    "lng": -112.3289
+  },
+  {
+    "name": "Buckeye",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.4316,
+    "lng": -112.6416
+  },
+  {
+    "name": "Carefree",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.8232,
+    "lng": -111.9133
+  },
+  {
+    "name": "Casa Grande",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Pinal",
+    "lat": 32.9069,
+    "lng": -111.7635
+  },
+  {
+    "name": "Cave Creek",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.8362,
+    "lng": -111.9821
+  },
+  {
+    "name": "Chandler",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.2828,
+    "lng": -111.8518
+  },
+  {
+    "name": "Coolidge",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Pinal",
+    "lat": 32.9336,
+    "lng": -111.5236
+  },
+  {
+    "name": "El Mirage",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.5902,
+    "lng": -112.3271
+  },
+  {
+    "name": "Eloy",
+    "market": "Tucson",
+    "state": "AZ",
+    "county": "Pinal",
+    "lat": 32.7413,
+    "lng": -111.594
+  },
+  {
+    "name": "Florence",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Pinal",
+    "lat": 33.0694,
+    "lng": -111.414
+  },
+  {
+    "name": "Fountain Hills",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.6078,
+    "lng": -111.7384
+  },
+  {
+    "name": "Gila Bend",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 32.9662,
+    "lng": -112.7155
+  },
+  {
+    "name": "Gilbert",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.3103,
+    "lng": -111.7431
+  },
+  {
+    "name": "Glendale",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.5331,
+    "lng": -112.1899
+  },
+  {
+    "name": "Goodyear",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.254,
+    "lng": -112.3665
+  },
+  {
+    "name": "Guadalupe",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.3665,
+    "lng": -111.9632
+  },
+  {
+    "name": "Hayden",
+    "market": "Tucson",
+    "state": "AZ",
+    "county": "Pinal",
+    "lat": 32.995,
+    "lng": -110.7799,
+    "note": "Spans Gila County, Pinal County"
+  },
+  {
+    "name": "Kearny",
+    "market": "Tucson",
+    "state": "AZ",
+    "county": "Pinal",
+    "lat": 33.0564,
+    "lng": -110.9071
+  },
+  {
+    "name": "Litchfield Park",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.5018,
+    "lng": -112.3595
+  },
+  {
+    "name": "Mammoth",
+    "market": "Tucson",
+    "state": "AZ",
+    "county": "Pinal",
+    "lat": 32.6852,
+    "lng": -110.7293
+  },
+  {
+    "name": "Marana",
+    "market": "Tucson",
+    "state": "AZ",
+    "county": "Pima",
+    "lat": 32.4659,
+    "lng": -111.1354,
+    "note": "Spans Pima County, Pinal County"
+  },
+  {
+    "name": "Maricopa",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Pinal",
+    "lat": 33.0419,
+    "lng": -111.9993
+  },
+  {
+    "name": "Mesa",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.4006,
+    "lng": -111.7165
+  },
+  {
+    "name": "Oro Valley",
+    "market": "Tucson",
+    "state": "AZ",
+    "county": "Pima",
+    "lat": 32.4207,
+    "lng": -110.977
+  },
+  {
+    "name": "Paradise Valley",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.5522,
+    "lng": -111.9613
+  },
+  {
+    "name": "Peoria",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.7862,
+    "lng": -112.308,
+    "note": "Spans Maricopa County, Yavapai County"
+  },
+  {
+    "name": "Phoenix",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.5722,
+    "lng": -112.0901
+  },
+  {
+    "name": "Queen Creek",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.2394,
+    "lng": -111.6133,
+    "note": "Spans Maricopa County, Pinal County"
+  },
+  {
+    "name": "Sahuarita",
+    "market": "Tucson",
+    "state": "AZ",
+    "county": "Pima",
+    "lat": 31.9322,
+    "lng": -110.9654
+  },
+  {
+    "name": "Scottsdale",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.6843,
+    "lng": -111.8614
+  },
+  {
+    "name": "South Tucson",
+    "market": "Tucson",
+    "state": "AZ",
+    "county": "Pima",
+    "lat": 32.1955,
+    "lng": -110.9692
+  },
+  {
+    "name": "Superior",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Pinal",
+    "lat": 33.2716,
+    "lng": -111.1242
+  },
+  {
+    "name": "Surprise",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.6708,
+    "lng": -112.4525
+  },
+  {
+    "name": "Tempe",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.3884,
+    "lng": -111.9318
+  },
+  {
+    "name": "Tolleson",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.4484,
+    "lng": -112.256
+  },
+  {
+    "name": "Tucson",
+    "market": "Tucson",
+    "state": "AZ",
+    "county": "Pima",
+    "lat": 32.153,
+    "lng": -110.8708
+  },
+  {
+    "name": "Wickenburg",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.9858,
+    "lng": -112.7683,
+    "note": "Spans Maricopa County, Yavapai County"
+  },
+  {
+    "name": "Winkelman",
+    "market": "Tucson",
+    "state": "AZ",
+    "county": "Pinal",
+    "lat": 32.9817,
+    "lng": -110.7617,
+    "note": "Spans Gila County, Pinal County"
+  },
+  {
+    "name": "Youngtown",
+    "market": "Phoenix",
+    "state": "AZ",
+    "county": "Maricopa",
+    "lat": 33.585,
+    "lng": -112.3049
+  },
+  {
+    "name": "Adams",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Robertson",
+    "lat": 36.5828,
+    "lng": -87.0651
+  },
+  {
+    "name": "Arlington",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Shelby",
+    "lat": 35.2525,
+    "lng": -89.6611
+  },
+  {
+    "name": "Atoka",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Tipton",
+    "lat": 35.4259,
+    "lng": -89.7844
+  },
+  {
+    "name": "Bartlett",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Shelby",
+    "lat": 35.2342,
+    "lng": -89.8203
+  },
+  {
+    "name": "Belle Meade",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Davidson",
+    "lat": 36.0994,
+    "lng": -86.8563
+  },
+  {
+    "name": "Berry Hill",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Davidson",
+    "lat": 36.1196,
+    "lng": -86.7675
+  },
+  {
+    "name": "Braden",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Fayette",
+    "lat": 35.3685,
+    "lng": -89.5718
+  },
+  {
+    "name": "Brentwood",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Williamson",
+    "lat": 35.9939,
+    "lng": -86.7708
+  },
+  {
+    "name": "Brighton",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Tipton",
+    "lat": 35.4803,
+    "lng": -89.7347
+  },
+  {
+    "name": "Burlison",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Tipton",
+    "lat": 35.5569,
+    "lng": -89.7846
+  },
+  {
+    "name": "Cedar Hill",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Robertson",
+    "lat": 36.5512,
+    "lng": -87.0013
+  },
+  {
+    "name": "Collierville",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Shelby",
+    "lat": 35.0489,
+    "lng": -89.6971
+  },
+  {
+    "name": "Columbia",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Maury",
+    "lat": 35.6256,
+    "lng": -87.0442
+  },
+  {
+    "name": "Coopertown",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Robertson",
+    "lat": 36.4142,
+    "lng": -86.9658
+  },
+  {
+    "name": "Covington",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Tipton",
+    "lat": 35.5659,
+    "lng": -89.6485
+  },
+  {
+    "name": "Cross Plains",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Robertson",
+    "lat": 36.5412,
+    "lng": -86.6766
+  },
+  {
+    "name": "Eagleville",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Rutherford",
+    "lat": 35.7421,
+    "lng": -86.6528,
+    "note": "Spans Rutherford County, Williamson County"
+  },
+  {
+    "name": "Fairview",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Williamson",
+    "lat": 35.9824,
+    "lng": -87.127
+  },
+  {
+    "name": "Forest Hills",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Davidson",
+    "lat": 36.07,
+    "lng": -86.8362
+  },
+  {
+    "name": "Franklin",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Williamson",
+    "lat": 35.914,
+    "lng": -86.8522
+  },
+  {
+    "name": "Gallatin",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Sumner",
+    "lat": 36.3815,
+    "lng": -86.467
+  },
+  {
+    "name": "Gallaway",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Fayette",
+    "lat": 35.3209,
+    "lng": -89.6085
+  },
+  {
+    "name": "Garland",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Tipton",
+    "lat": 35.5878,
+    "lng": -89.7531
+  },
+  {
+    "name": "Germantown",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Shelby",
+    "lat": 35.082,
+    "lng": -89.7826
+  },
+  {
+    "name": "Gilt Edge",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Tipton",
+    "lat": 35.5341,
+    "lng": -89.8307
+  },
+  {
+    "name": "Goodlettsville",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Davidson",
+    "lat": 36.333,
+    "lng": -86.7042,
+    "note": "Spans Davidson County, Sumner County"
+  },
+  {
+    "name": "Grand Junction",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Fayette",
+    "lat": 35.05,
+    "lng": -89.1889,
+    "note": "Spans Fayette County, Hardeman County"
+  },
+  {
+    "name": "Greenbrier",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Robertson",
+    "lat": 36.4216,
+    "lng": -86.7902
+  },
+  {
+    "name": "Hendersonville",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Sumner",
+    "lat": 36.3073,
+    "lng": -86.5989
+  },
+  {
+    "name": "La Grange",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Fayette",
+    "lat": 35.0476,
+    "lng": -89.2409
+  },
+  {
+    "name": "Lakeland",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Shelby",
+    "lat": 35.2628,
+    "lng": -89.725
+  },
+  {
+    "name": "La Vergne",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Rutherford",
+    "lat": 36.0222,
+    "lng": -86.5594
+  },
+  {
+    "name": "Lebanon",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Wilson",
+    "lat": 36.1994,
+    "lng": -86.3446
+  },
+  {
+    "name": "Mason",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Tipton",
+    "lat": 35.4128,
+    "lng": -89.5412
+  },
+  {
+    "name": "Memphis",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Shelby",
+    "lat": 35.1092,
+    "lng": -89.9685
+  },
+  {
+    "name": "Millersville",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Robertson",
+    "lat": 36.3968,
+    "lng": -86.7111,
+    "note": "Spans Robertson County, Sumner County"
+  },
+  {
+    "name": "Millington",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Shelby",
+    "lat": 35.3337,
+    "lng": -89.8995
+  },
+  {
+    "name": "Mitchellville",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Sumner",
+    "lat": 36.6343,
+    "lng": -86.54
+  },
+  {
+    "name": "Moscow",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Fayette",
+    "lat": 35.0624,
+    "lng": -89.3823
+  },
+  {
+    "name": "Mount Juliet",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Wilson",
+    "lat": 36.1992,
+    "lng": -86.5095
+  },
+  {
+    "name": "Mount Pleasant",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Maury",
+    "lat": 35.5481,
+    "lng": -87.1869
+  },
+  {
+    "name": "Munford",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Tipton",
+    "lat": 35.4429,
+    "lng": -89.8159
+  },
+  {
+    "name": "Murfreesboro",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Rutherford",
+    "lat": 35.8539,
+    "lng": -86.4212
+  },
+  {
+    "name": "Nashville",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Davidson",
+    "lat": 36.1718,
+    "lng": -86.785,
+    "note": "Nashville-Davidson metropolitan government (balance); Metro Codes"
+  },
+  {
+    "name": "Nolensville",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Williamson",
+    "lat": 35.9571,
+    "lng": -86.6719
+  },
+  {
+    "name": "Oak Hill",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Davidson",
+    "lat": 36.0684,
+    "lng": -86.7931
+  },
+  {
+    "name": "Oakland",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Fayette",
+    "lat": 35.2261,
+    "lng": -89.5382
+  },
+  {
+    "name": "Orlinda",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Robertson",
+    "lat": 36.5938,
+    "lng": -86.7016
+  },
+  {
+    "name": "Piperton",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Fayette",
+    "lat": 35.0528,
+    "lng": -89.6096
+  },
+  {
+    "name": "Portland",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Robertson",
+    "lat": 36.5975,
+    "lng": -86.5266,
+    "note": "Spans Robertson County, Sumner County"
+  },
+  {
+    "name": "Ridgetop",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Davidson",
+    "lat": 36.4037,
+    "lng": -86.7677,
+    "note": "Spans Davidson County, Robertson County"
+  },
+  {
+    "name": "Rossville",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Fayette",
+    "lat": 35.0309,
+    "lng": -89.562
+  },
+  {
+    "name": "Smyrna",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Rutherford",
+    "lat": 35.969,
+    "lng": -86.5286,
+    "note": "Spans Rutherford County, Williamson County"
+  },
+  {
+    "name": "Somerville",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Fayette",
+    "lat": 35.2322,
+    "lng": -89.3754
+  },
+  {
+    "name": "Springfield",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Robertson",
+    "lat": 36.4936,
+    "lng": -86.8722
+  },
+  {
+    "name": "Spring Hill",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Maury",
+    "lat": 35.7466,
+    "lng": -86.9168,
+    "note": "Spans Maury County, Williamson County"
+  },
+  {
+    "name": "Thompson's Station",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Williamson",
+    "lat": 35.8125,
+    "lng": -86.91
+  },
+  {
+    "name": "Watertown",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Wilson",
+    "lat": 36.1007,
+    "lng": -86.1394
+  },
+  {
+    "name": "Westmoreland",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Sumner",
+    "lat": 36.5654,
+    "lng": -86.244
+  },
+  {
+    "name": "White House",
+    "market": "Nashville",
+    "state": "TN",
+    "county": "Robertson",
+    "lat": 36.4649,
+    "lng": -86.6685,
+    "note": "Spans Robertson County, Sumner County"
+  },
+  {
+    "name": "Williston",
+    "market": "Memphis",
+    "state": "TN",
+    "county": "Fayette",
+    "lat": 35.1585,
+    "lng": -89.3754
   }
 ]

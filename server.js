@@ -200,7 +200,10 @@ async function resolveMarket(locationText) {
   const muni = bestNameMatch(lower, muniPool, m => [m.name, ...(m.aliases || [])]);
   const market = bestNameMatch(lower, MARKETS, m => [m.market, m.zone]);
 
-  if (muni.hit && muni.len >= market.len) {
+  // A town named exactly like another market ("Columbia" TN vs the Columbia SC market)
+  // only wins over that market when the state is typed ("Columbia, TN").
+  const sameNameOtherMarket = !stateCode && market.hit && muni.hit && muni.len === market.len && market.hit.market !== muni.hit.market;
+  if (muni.hit && muni.len >= market.len && !sameNameOtherMarket) {
     const parent = MARKETS.find(m => m.market === muni.hit.market);
     if (parent) return { ...parent, municipality: muni.hit.name, distanceMiles: 0 };
   }
@@ -375,7 +378,11 @@ function normalizeMuni(s) {
     .replace(/\b(fl|florida|ga|georgia|nc|north carolina|sc|south carolina|tx|texas)\b/g, '')
     .replace(/[^a-z\s-]/g, '')
     .replace(/\s+/g, ' ')
-    .trim();
+    .trim()
+    // Rows in newer markets end in their state code ("City of Phoenix AZ") and some
+    // use the consolidated government's name ("Metro Nashville TN").
+    .replace(/\s(al|ak|az|ar|ca|co|ct|de|dc|hi|id|il|in|ia|ks|ky|la|me|md|ma|mi|mn|ms|mo|mt|ne|nv|nh|nj|nm|ny|nd|oh|ok|or|pa|ri|sd|tn|ut|vt|va|wa|wv|wi|wy)$/, '')
+    .replace(/^metro\s/, '');
 }
 
 // A single city row used to count as city-level grounding, so a city with 4 rows
