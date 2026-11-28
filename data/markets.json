@@ -18,9 +18,6 @@
 
   { "market": "Dallas", "state": "TX", "zone": "Dallas County", "zip": "75201", "lat": 32.7767, "lng": -96.7970 },
   { "market": "Fort Worth", "state": "TX", "zone": "Tarrant County", "zip": "76102", "lat": 32.7555, "lng": -97.3308 },
-  { "market": "Prosper", "state": "TX", "zone": "Collin County", "zip": "75078", "lat": 33.2362, "lng": -96.8011 },
-  { "market": "Frisco", "state": "TX", "zone": "Collin/Denton County", "zip": "75034", "lat": 33.1507, "lng": -96.8236 },
-  { "market": "McKinney", "state": "TX", "zone": "Collin County", "zip": "75069", "lat": 33.1972, "lng": -96.6398 },
   { "market": "Houston", "state": "TX", "zone": "Harris County", "zip": "77002", "lat": 29.7604, "lng": -95.3698 },
   { "market": "Austin", "state": "TX", "zone": "Travis County", "zip": "78701", "lat": 30.2672, "lng": -97.7431 },
 

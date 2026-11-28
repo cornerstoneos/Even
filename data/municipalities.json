@@ -2064,5 +2064,2755 @@
     "county": "York",
     "lat": 34.9983,
     "lng": -81.2331
+  },
+  {
+    "name": "Addison",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.9637,
+    "lng": -96.8338
+  },
+  {
+    "name": "Alamo Heights",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.4828,
+    "lng": -98.4682
+  },
+  {
+    "name": "Aledo",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.6983,
+    "lng": -97.6084
+  },
+  {
+    "name": "Allen",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.1097,
+    "lng": -96.673
+  },
+  {
+    "name": "Alvarado",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.4094,
+    "lng": -97.2108
+  },
+  {
+    "name": "Alvin",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.4248,
+    "lng": -95.2244
+  },
+  {
+    "name": "Angleton",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.1718,
+    "lng": -95.4293
+  },
+  {
+    "name": "Anna",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.3482,
+    "lng": -96.5535
+  },
+  {
+    "name": "Annetta",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.7013,
+    "lng": -97.6694
+  },
+  {
+    "name": "Annetta North",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.7128,
+    "lng": -97.6424
+  },
+  {
+    "name": "Annetta South",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.6727,
+    "lng": -97.6166
+  },
+  {
+    "name": "Arcola",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.5038,
+    "lng": -95.4696
+  },
+  {
+    "name": "Argyle",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1055,
+    "lng": -97.1775
+  },
+  {
+    "name": "Arlington",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.7007,
+    "lng": -97.1247
+  },
+  {
+    "name": "Aubrey",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.3085,
+    "lng": -96.9791
+  },
+  {
+    "name": "Austin",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 30.2986,
+    "lng": -97.7541,
+    "note": "Spans Bastrop County, Hays County, Travis County, Williamson County"
+  },
+  {
+    "name": "Azle",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.8955,
+    "lng": -97.5392,
+    "note": "Spans Parker County, Tarrant County"
+  },
+  {
+    "name": "Bailey's Prairie",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.1478,
+    "lng": -95.4998
+  },
+  {
+    "name": "Balch Springs",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.7139,
+    "lng": -96.6181
+  },
+  {
+    "name": "Balcones Heights",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.4902,
+    "lng": -98.5491
+  },
+  {
+    "name": "Bartlett",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.7949,
+    "lng": -97.4323,
+    "note": "Spans Bell County, Williamson County"
+  },
+  {
+    "name": "Bartonville",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.0847,
+    "lng": -97.1492
+  },
+  {
+    "name": "Bayou Vista",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.3256,
+    "lng": -94.9392
+  },
+  {
+    "name": "Baytown",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7648,
+    "lng": -94.9675,
+    "note": "Spans Chambers County, Harris County"
+  },
+  {
+    "name": "Bear Creek",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 30.1824,
+    "lng": -97.9401
+  },
+  {
+    "name": "Beasley",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.4949,
+    "lng": -95.9157
+  },
+  {
+    "name": "Bedford",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8458,
+    "lng": -97.1351
+  },
+  {
+    "name": "Bee Cave",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.3077,
+    "lng": -97.9626
+  },
+  {
+    "name": "Bellaire",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.704,
+    "lng": -95.4609
+  },
+  {
+    "name": "Benbrook",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.6783,
+    "lng": -97.4636
+  },
+  {
+    "name": "Blue Mound",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8543,
+    "lng": -97.3384
+  },
+  {
+    "name": "Blue Ridge",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.2984,
+    "lng": -96.3988
+  },
+  {
+    "name": "Bonney",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.3013,
+    "lng": -95.4508
+  },
+  {
+    "name": "Brazoria",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.0447,
+    "lng": -95.5647
+  },
+  {
+    "name": "Briarcliff",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.4093,
+    "lng": -98.0445
+  },
+  {
+    "name": "Briaroaks",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.4954,
+    "lng": -97.3033
+  },
+  {
+    "name": "Brookside Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.5908,
+    "lng": -95.318
+  },
+  {
+    "name": "Buda",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 30.0804,
+    "lng": -97.8557
+  },
+  {
+    "name": "Bulverde",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Comal",
+    "lat": 29.7745,
+    "lng": -98.435
+  },
+  {
+    "name": "Bunker Hill Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7648,
+    "lng": -95.5317
+  },
+  {
+    "name": "Burleson",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.5165,
+    "lng": -97.3274,
+    "note": "Spans Johnson County, Tarrant County"
+  },
+  {
+    "name": "Carrollton",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 32.9894,
+    "lng": -96.8999,
+    "note": "Spans Collin County, Dallas County, Denton County"
+  },
+  {
+    "name": "Castle Hills",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.5247,
+    "lng": -98.5191
+  },
+  {
+    "name": "Cedar Hill",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.5843,
+    "lng": -96.9589,
+    "note": "Spans Dallas County, Ellis County"
+  },
+  {
+    "name": "Cedar Park",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.5102,
+    "lng": -97.8186,
+    "note": "Spans Travis County, Williamson County"
+  },
+  {
+    "name": "Celina",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.323,
+    "lng": -96.7988,
+    "note": "Spans Collin County, Denton County"
+  },
+  {
+    "name": "China Grove",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.3929,
+    "lng": -98.3456
+  },
+  {
+    "name": "Cibolo",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.5701,
+    "lng": -98.2178,
+    "note": "Spans Bexar County, Guadalupe County"
+  },
+  {
+    "name": "Clear Lake Shores",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.5443,
+    "lng": -95.0325
+  },
+  {
+    "name": "Cleburne",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.355,
+    "lng": -97.4116
+  },
+  {
+    "name": "Cleveland",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.3382,
+    "lng": -95.0903,
+    "note": "Spans Liberty County, Montgomery County, San Jacinto County"
+  },
+  {
+    "name": "Clute",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.0259,
+    "lng": -95.3982
+  },
+  {
+    "name": "Cockrell Hill",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.7382,
+    "lng": -96.8886
+  },
+  {
+    "name": "Colleyville",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8915,
+    "lng": -97.1497
+  },
+  {
+    "name": "Combine",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.5901,
+    "lng": -96.5172,
+    "note": "Spans Dallas County, Kaufman County"
+  },
+  {
+    "name": "Conroe",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.3287,
+    "lng": -95.4846
+  },
+  {
+    "name": "Converse",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.5125,
+    "lng": -98.3046
+  },
+  {
+    "name": "Cool",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.7983,
+    "lng": -98.0123
+  },
+  {
+    "name": "Coppell",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.9633,
+    "lng": -96.9906,
+    "note": "Spans Dallas County, Denton County"
+  },
+  {
+    "name": "Copper Canyon",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.0967,
+    "lng": -97.0971
+  },
+  {
+    "name": "Corinth",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1447,
+    "lng": -97.0708
+  },
+  {
+    "name": "Coupland",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.4569,
+    "lng": -97.3924
+  },
+  {
+    "name": "Coyote Flats",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.3559,
+    "lng": -97.2924
+  },
+  {
+    "name": "Creedmoor",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 30.0738,
+    "lng": -97.7373,
+    "note": "Spans Hays County, Travis County"
+  },
+  {
+    "name": "Cresson",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.5299,
+    "lng": -97.6153,
+    "note": "Spans Hood County, Johnson County, Parker County"
+  },
+  {
+    "name": "Cross Roads",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.2204,
+    "lng": -96.9958
+  },
+  {
+    "name": "Cross Timber",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.4829,
+    "lng": -97.3267
+  },
+  {
+    "name": "Crowley",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.5765,
+    "lng": -97.3593,
+    "note": "Spans Johnson County, Tarrant County"
+  },
+  {
+    "name": "Cut and Shoot",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.3355,
+    "lng": -95.3451
+  },
+  {
+    "name": "Dallas",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 32.7933,
+    "lng": -96.7665,
+    "note": "Spans Collin County, Dallas County, Denton County, Kaufman County, Rockwall County"
+  },
+  {
+    "name": "Dalworthington Gardens",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.6863,
+    "lng": -97.1551
+  },
+  {
+    "name": "Danbury",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.2274,
+    "lng": -95.3462
+  },
+  {
+    "name": "Deer Park",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.6873,
+    "lng": -95.1159
+  },
+  {
+    "name": "Denton",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.2174,
+    "lng": -97.1413
+  },
+  {
+    "name": "DeSoto",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.5993,
+    "lng": -96.8629
+  },
+  {
+    "name": "Dickinson",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.4517,
+    "lng": -95.0562
+  },
+  {
+    "name": "DISH",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1287,
+    "lng": -97.3079
+  },
+  {
+    "name": "Double Oak",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.0625,
+    "lng": -97.1074
+  },
+  {
+    "name": "Dripping Springs",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 30.1959,
+    "lng": -98.0937
+  },
+  {
+    "name": "Duncanville",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.6459,
+    "lng": -96.9139
+  },
+  {
+    "name": "Edgecliff Village",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.6561,
+    "lng": -97.3406
+  },
+  {
+    "name": "Elgin",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.3544,
+    "lng": -97.3914,
+    "note": "Spans Bastrop County, Travis County"
+  },
+  {
+    "name": "El Lago",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.5715,
+    "lng": -95.0452
+  },
+  {
+    "name": "Elmendorf",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.2533,
+    "lng": -98.323,
+    "note": "Spans Bexar County, Wilson County"
+  },
+  {
+    "name": "Euless",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8494,
+    "lng": -97.0786
+  },
+  {
+    "name": "Everman",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.6288,
+    "lng": -97.2842
+  },
+  {
+    "name": "Fairchilds",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.4366,
+    "lng": -95.777
+  },
+  {
+    "name": "Fair Oaks Ranch",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.7461,
+    "lng": -98.6381,
+    "note": "Spans Bexar County, Comal County, Kendall County"
+  },
+  {
+    "name": "Fairview",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.1405,
+    "lng": -96.613
+  },
+  {
+    "name": "Farmers Branch",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.9278,
+    "lng": -96.8785
+  },
+  {
+    "name": "Farmersville",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.1609,
+    "lng": -96.3607
+  },
+  {
+    "name": "Fate",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Rockwall",
+    "lat": 32.9493,
+    "lng": -96.3832
+  },
+  {
+    "name": "Ferris",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.5367,
+    "lng": -96.6755,
+    "note": "Spans Dallas County, Ellis County"
+  },
+  {
+    "name": "Florence",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.8413,
+    "lng": -97.7918
+  },
+  {
+    "name": "Flower Mound",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 33.0379,
+    "lng": -97.1134,
+    "note": "Spans Denton County, Tarrant County"
+  },
+  {
+    "name": "Forest Hill",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.6619,
+    "lng": -97.2662
+  },
+  {
+    "name": "Fort Worth",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.782,
+    "lng": -97.3486,
+    "note": "Spans Denton County, Johnson County, Parker County, Tarrant County, Wise County"
+  },
+  {
+    "name": "Freeport",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 28.9433,
+    "lng": -95.3561
+  },
+  {
+    "name": "Friendswood",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.5077,
+    "lng": -95.2006,
+    "note": "Spans Galveston County, Harris County"
+  },
+  {
+    "name": "Frisco",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.1554,
+    "lng": -96.8226,
+    "note": "Spans Collin County, Denton County"
+  },
+  {
+    "name": "Fulshear",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.6924,
+    "lng": -95.8866
+  },
+  {
+    "name": "Galena Park",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7452,
+    "lng": -95.2346
+  },
+  {
+    "name": "Galveston",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.1863,
+    "lng": -94.9658
+  },
+  {
+    "name": "Garden Ridge",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Comal",
+    "lat": 29.6365,
+    "lng": -98.2925
+  },
+  {
+    "name": "Garland",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 32.9098,
+    "lng": -96.6303,
+    "note": "Spans Collin County, Dallas County, Rockwall County"
+  },
+  {
+    "name": "Georgetown",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.6681,
+    "lng": -97.6987
+  },
+  {
+    "name": "Glenn Heights",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.5513,
+    "lng": -96.8544,
+    "note": "Spans Dallas County, Ellis County"
+  },
+  {
+    "name": "Godley",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.4589,
+    "lng": -97.5329
+  },
+  {
+    "name": "Grand Prairie",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.6861,
+    "lng": -97.0208,
+    "note": "Spans Dallas County, Ellis County, Tarrant County"
+  },
+  {
+    "name": "Grandview",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.2684,
+    "lng": -97.1789
+  },
+  {
+    "name": "Granger",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.7183,
+    "lng": -97.4411
+  },
+  {
+    "name": "Grapevine",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.935,
+    "lng": -97.0759,
+    "note": "Spans Dallas County, Denton County, Tarrant County"
+  },
+  {
+    "name": "Grey Forest",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.6157,
+    "lng": -98.6833
+  },
+  {
+    "name": "Hackberry",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1497,
+    "lng": -96.9183
+  },
+  {
+    "name": "Haltom City",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8177,
+    "lng": -97.2712
+  },
+  {
+    "name": "Haslet",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.9665,
+    "lng": -97.3378,
+    "note": "Spans Denton County, Tarrant County"
+  },
+  {
+    "name": "Hays",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 30.1215,
+    "lng": -97.8724
+  },
+  {
+    "name": "Heath",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Rockwall",
+    "lat": 32.8535,
+    "lng": -96.4636,
+    "note": "Spans Kaufman County, Rockwall County"
+  },
+  {
+    "name": "Hebron",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.0462,
+    "lng": -96.8871,
+    "note": "Spans Collin County, Denton County"
+  },
+  {
+    "name": "Hedwig Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7799,
+    "lng": -95.5192
+  },
+  {
+    "name": "Helotes",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.578,
+    "lng": -98.6805
+  },
+  {
+    "name": "Hickory Creek",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1109,
+    "lng": -97.0347
+  },
+  {
+    "name": "Highland Park",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.8311,
+    "lng": -96.8012
+  },
+  {
+    "name": "Highland Village",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.0897,
+    "lng": -97.0615
+  },
+  {
+    "name": "Hill Country Village",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.582,
+    "lng": -98.4857
+  },
+  {
+    "name": "Hilshire Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7909,
+    "lng": -95.4885
+  },
+  {
+    "name": "Hitchcock",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.2826,
+    "lng": -95.0076
+  },
+  {
+    "name": "Holiday Lakes",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.2072,
+    "lng": -95.5153
+  },
+  {
+    "name": "Hollywood Park",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.5992,
+    "lng": -98.4855
+  },
+  {
+    "name": "Houston",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.7857,
+    "lng": -95.3888,
+    "note": "Spans Fort Bend County, Harris County, Montgomery County, Waller County"
+  },
+  {
+    "name": "Hudson Oaks",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.751,
+    "lng": -97.7004
+  },
+  {
+    "name": "Humble",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.9882,
+    "lng": -95.2644
+  },
+  {
+    "name": "Hunters Creek Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7727,
+    "lng": -95.4981
+  },
+  {
+    "name": "Hurst",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8366,
+    "lng": -97.1806
+  },
+  {
+    "name": "Hutchins",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.6434,
+    "lng": -96.7098
+  },
+  {
+    "name": "Hutto",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.5416,
+    "lng": -97.5442
+  },
+  {
+    "name": "Iowa Colony",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.4411,
+    "lng": -95.4238
+  },
+  {
+    "name": "Irving",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.8577,
+    "lng": -96.97
+  },
+  {
+    "name": "Jacinto City",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7664,
+    "lng": -95.2412
+  },
+  {
+    "name": "Jamaica Beach",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.1904,
+    "lng": -94.9793
+  },
+  {
+    "name": "Jarrell",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.8103,
+    "lng": -97.6151
+  },
+  {
+    "name": "Jersey Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.8929,
+    "lng": -95.5772
+  },
+  {
+    "name": "Jones Creek",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 28.975,
+    "lng": -95.4685
+  },
+  {
+    "name": "Jonestown",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.4817,
+    "lng": -97.932
+  },
+  {
+    "name": "Josephine",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.0631,
+    "lng": -96.3166,
+    "note": "Spans Collin County, Hunt County"
+  },
+  {
+    "name": "Joshua",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.4591,
+    "lng": -97.3838
+  },
+  {
+    "name": "Justin",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.0818,
+    "lng": -97.3142
+  },
+  {
+    "name": "Katy",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.7909,
+    "lng": -95.8407,
+    "note": "Spans Fort Bend County, Harris County, Waller County"
+  },
+  {
+    "name": "Keene",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.3961,
+    "lng": -97.3235
+  },
+  {
+    "name": "Keller",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.9329,
+    "lng": -97.2245
+  },
+  {
+    "name": "Kemah",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.5286,
+    "lng": -95.02
+  },
+  {
+    "name": "Kendleton",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.4438,
+    "lng": -96.0066
+  },
+  {
+    "name": "Kennedale",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.644,
+    "lng": -97.2172
+  },
+  {
+    "name": "Kingsbury",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Guadalupe",
+    "lat": 29.65,
+    "lng": -97.8186
+  },
+  {
+    "name": "Kirby",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.4617,
+    "lng": -98.3853
+  },
+  {
+    "name": "Krugerville",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.2775,
+    "lng": -96.9898
+  },
+  {
+    "name": "Krum",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.265,
+    "lng": -97.2249
+  },
+  {
+    "name": "Kyle",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 29.9941,
+    "lng": -97.8833
+  },
+  {
+    "name": "Lago Vista",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.4526,
+    "lng": -97.991
+  },
+  {
+    "name": "Lake Dallas",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1278,
+    "lng": -97.0228
+  },
+  {
+    "name": "Lake Jackson",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.0509,
+    "lng": -95.4512
+  },
+  {
+    "name": "Lakeside",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8208,
+    "lng": -97.4794
+  },
+  {
+    "name": "Lakeway",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.355,
+    "lng": -97.9863
+  },
+  {
+    "name": "Lakewood Village",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1361,
+    "lng": -96.9765
+  },
+  {
+    "name": "Lake Worth",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.813,
+    "lng": -97.4305
+  },
+  {
+    "name": "La Marque",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.3698,
+    "lng": -94.9942
+  },
+  {
+    "name": "Lancaster",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.5962,
+    "lng": -96.7738
+  },
+  {
+    "name": "La Porte",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.6674,
+    "lng": -95.0491
+  },
+  {
+    "name": "Lavon",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.0239,
+    "lng": -96.433
+  },
+  {
+    "name": "League City",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.4901,
+    "lng": -95.1091,
+    "note": "Spans Galveston County, Harris County"
+  },
+  {
+    "name": "Leander",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.5743,
+    "lng": -97.8617,
+    "note": "Spans Travis County, Williamson County"
+  },
+  {
+    "name": "Leon Valley",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.4954,
+    "lng": -98.6143
+  },
+  {
+    "name": "Lewisville",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 33.0507,
+    "lng": -96.9746,
+    "note": "Spans Dallas County, Denton County"
+  },
+  {
+    "name": "Liberty Hill",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.6634,
+    "lng": -97.9055
+  },
+  {
+    "name": "Little Elm",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1925,
+    "lng": -96.92
+  },
+  {
+    "name": "Live Oak",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.5554,
+    "lng": -98.34
+  },
+  {
+    "name": "Liverpool",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.3018,
+    "lng": -95.2745
+  },
+  {
+    "name": "Lowry Crossing",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.1693,
+    "lng": -96.545
+  },
+  {
+    "name": "Lucas",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.101,
+    "lng": -96.5812
+  },
+  {
+    "name": "Luling",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Guadalupe",
+    "lat": 29.6817,
+    "lng": -97.6467,
+    "note": "Spans Caldwell County, Guadalupe County"
+  },
+  {
+    "name": "Lytle",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.2346,
+    "lng": -98.7937,
+    "note": "Spans Atascosa County, Bexar County, Medina County"
+  },
+  {
+    "name": "McKinney",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.2011,
+    "lng": -96.6642
+  },
+  {
+    "name": "McLendon-Chisholm",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Rockwall",
+    "lat": 32.8471,
+    "lng": -96.3912,
+    "note": "Spans Kaufman County, Rockwall County"
+  },
+  {
+    "name": "Magnolia",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.213,
+    "lng": -95.7426
+  },
+  {
+    "name": "Manor",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.3542,
+    "lng": -97.5583
+  },
+  {
+    "name": "Mansfield",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.5692,
+    "lng": -97.1205,
+    "note": "Spans Ellis County, Johnson County, Tarrant County"
+  },
+  {
+    "name": "Manvel",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.4854,
+    "lng": -95.3623
+  },
+  {
+    "name": "Marion",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Guadalupe",
+    "lat": 29.5726,
+    "lng": -98.1429
+  },
+  {
+    "name": "Meadows Place",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.6509,
+    "lng": -95.5869
+  },
+  {
+    "name": "Melissa",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.2885,
+    "lng": -96.5576
+  },
+  {
+    "name": "Mesquite",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.7595,
+    "lng": -96.5842,
+    "note": "Spans Dallas County, Kaufman County"
+  },
+  {
+    "name": "Millsap",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.7499,
+    "lng": -98.0115
+  },
+  {
+    "name": "Mineral Wells",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.8235,
+    "lng": -98.0788,
+    "note": "Spans Palo Pinto County, Parker County"
+  },
+  {
+    "name": "Missouri City",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.5629,
+    "lng": -95.536,
+    "note": "Spans Fort Bend County, Harris County"
+  },
+  {
+    "name": "Mobile City",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Rockwall",
+    "lat": 32.9228,
+    "lng": -96.4111
+  },
+  {
+    "name": "Montgomery",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.3904,
+    "lng": -95.6982
+  },
+  {
+    "name": "Morgan's Point",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.6718,
+    "lng": -94.9982,
+    "note": "Spans Chambers County, Harris County"
+  },
+  {
+    "name": "Mountain City",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 30.0392,
+    "lng": -97.8915
+  },
+  {
+    "name": "Murphy",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.0164,
+    "lng": -96.6082
+  },
+  {
+    "name": "Mustang Ridge",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.0511,
+    "lng": -97.7016,
+    "note": "Spans Bastrop County, Caldwell County, Travis County"
+  },
+  {
+    "name": "Nassau Bay",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.5448,
+    "lng": -95.0874
+  },
+  {
+    "name": "Needville",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.395,
+    "lng": -95.8382
+  },
+  {
+    "name": "Nevada",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.0353,
+    "lng": -96.3706
+  },
+  {
+    "name": "Newark",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 33.0135,
+    "lng": -97.4884,
+    "note": "Spans Tarrant County, Wise County"
+  },
+  {
+    "name": "New Berlin",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Guadalupe",
+    "lat": 29.489,
+    "lng": -98.1094
+  },
+  {
+    "name": "New Braunfels",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Comal",
+    "lat": 29.6993,
+    "lng": -98.1151,
+    "note": "Spans Comal County, Guadalupe County"
+  },
+  {
+    "name": "New Fairview",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1091,
+    "lng": -97.4346,
+    "note": "Spans Denton County, Wise County"
+  },
+  {
+    "name": "New Hope",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.2119,
+    "lng": -96.5587
+  },
+  {
+    "name": "Niederwald",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 29.9942,
+    "lng": -97.7757,
+    "note": "Spans Caldwell County, Hays County"
+  },
+  {
+    "name": "Northlake",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.0738,
+    "lng": -97.2562
+  },
+  {
+    "name": "North Richland Hills",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8606,
+    "lng": -97.2191
+  },
+  {
+    "name": "Oak Point",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1705,
+    "lng": -96.9875
+  },
+  {
+    "name": "Oak Ridge North",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.1569,
+    "lng": -95.4416
+  },
+  {
+    "name": "Olmos Park",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.4749,
+    "lng": -98.4866
+  },
+  {
+    "name": "Orchard",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.6029,
+    "lng": -95.9688
+  },
+  {
+    "name": "Ovilla",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.5413,
+    "lng": -96.8835,
+    "note": "Spans Dallas County, Ellis County"
+  },
+  {
+    "name": "Oyster Creek",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 28.9981,
+    "lng": -95.3293
+  },
+  {
+    "name": "Panorama Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.3826,
+    "lng": -95.4934
+  },
+  {
+    "name": "Pantego",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.7149,
+    "lng": -97.1539
+  },
+  {
+    "name": "Parker",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.0608,
+    "lng": -96.6252
+  },
+  {
+    "name": "Pasadena",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.655,
+    "lng": -95.1511
+  },
+  {
+    "name": "Patton Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.1964,
+    "lng": -95.1651
+  },
+  {
+    "name": "Pearland",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.5557,
+    "lng": -95.323,
+    "note": "Spans Brazoria County, Fort Bend County, Harris County"
+  },
+  {
+    "name": "Pelican Bay",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.9228,
+    "lng": -97.5189
+  },
+  {
+    "name": "Pflugerville",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.4478,
+    "lng": -97.6021,
+    "note": "Spans Travis County, Williamson County"
+  },
+  {
+    "name": "Pilot Point",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.3983,
+    "lng": -96.9555,
+    "note": "Spans Cooke County, Denton County, Grayson County"
+  },
+  {
+    "name": "Piney Point Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7565,
+    "lng": -95.5154
+  },
+  {
+    "name": "Plano",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.0508,
+    "lng": -96.7479,
+    "note": "Spans Collin County, Denton County"
+  },
+  {
+    "name": "Pleak",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.4743,
+    "lng": -95.8023
+  },
+  {
+    "name": "Point Venture",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.3841,
+    "lng": -97.9982
+  },
+  {
+    "name": "Ponder",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1717,
+    "lng": -97.2965
+  },
+  {
+    "name": "Princeton",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.1845,
+    "lng": -96.5094
+  },
+  {
+    "name": "Prosper",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.2413,
+    "lng": -96.8124,
+    "note": "Spans Collin County, Denton County"
+  },
+  {
+    "name": "Providence Village",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.2378,
+    "lng": -96.9568
+  },
+  {
+    "name": "Quintana",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 28.9151,
+    "lng": -95.332
+  },
+  {
+    "name": "Reno",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.9488,
+    "lng": -97.566,
+    "note": "Spans Parker County, Tarrant County"
+  },
+  {
+    "name": "Richardson",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 32.9723,
+    "lng": -96.7081,
+    "note": "Spans Collin County, Dallas County"
+  },
+  {
+    "name": "Richland Hills",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8102,
+    "lng": -97.2265
+  },
+  {
+    "name": "Richmond",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.5812,
+    "lng": -95.7605
+  },
+  {
+    "name": "Richwood",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.0639,
+    "lng": -95.4022
+  },
+  {
+    "name": "Rio Vista",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.2345,
+    "lng": -97.3748
+  },
+  {
+    "name": "River Oaks",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.7766,
+    "lng": -97.3984
+  },
+  {
+    "name": "Roanoke",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 33.0147,
+    "lng": -97.229,
+    "note": "Spans Denton County, Tarrant County"
+  },
+  {
+    "name": "Rockwall",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Rockwall",
+    "lat": 32.9181,
+    "lng": -96.4381
+  },
+  {
+    "name": "Rollingwood",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.2736,
+    "lng": -97.7868
+  },
+  {
+    "name": "Roman Forest",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.182,
+    "lng": -95.1523
+  },
+  {
+    "name": "Rosenberg",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.55,
+    "lng": -95.8214
+  },
+  {
+    "name": "Round Rock",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.5261,
+    "lng": -97.6635,
+    "note": "Spans Travis County, Williamson County"
+  },
+  {
+    "name": "Rowlett",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.9159,
+    "lng": -96.5486,
+    "note": "Spans Dallas County, Rockwall County"
+  },
+  {
+    "name": "Royse City",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 32.9759,
+    "lng": -96.3147,
+    "note": "Spans Collin County, Hunt County, Rockwall County"
+  },
+  {
+    "name": "Sachse",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 32.969,
+    "lng": -96.5795,
+    "note": "Spans Collin County, Dallas County"
+  },
+  {
+    "name": "Saginaw",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8656,
+    "lng": -97.3652
+  },
+  {
+    "name": "St. Hedwig",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.4202,
+    "lng": -98.207
+  },
+  {
+    "name": "St. Paul",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.0475,
+    "lng": -96.5534
+  },
+  {
+    "name": "San Antonio",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.4628,
+    "lng": -98.5246,
+    "note": "Spans Bexar County, Comal County, Medina County"
+  },
+  {
+    "name": "Sanctuary",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.9132,
+    "lng": -97.5877
+  },
+  {
+    "name": "Sandy Oaks",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.1817,
+    "lng": -98.4092
+  },
+  {
+    "name": "Sandy Point",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.4013,
+    "lng": -95.4817
+  },
+  {
+    "name": "Sanger",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.3821,
+    "lng": -97.1654,
+    "note": "Spans Cooke County, Denton County"
+  },
+  {
+    "name": "San Leanna",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.144,
+    "lng": -97.8194
+  },
+  {
+    "name": "San Marcos",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 29.8736,
+    "lng": -97.9367,
+    "note": "Spans Caldwell County, Guadalupe County, Hays County"
+  },
+  {
+    "name": "Sansom Park",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8027,
+    "lng": -97.4021
+  },
+  {
+    "name": "Santa Clara",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Guadalupe",
+    "lat": 29.5931,
+    "lng": -98.1606
+  },
+  {
+    "name": "Santa Fe",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.3876,
+    "lng": -95.1015
+  },
+  {
+    "name": "Schertz",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.5633,
+    "lng": -98.2509,
+    "note": "Spans Bexar County, Comal County, Guadalupe County"
+  },
+  {
+    "name": "Seabrook",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.5947,
+    "lng": -94.9915,
+    "note": "Spans Chambers County, Galveston County, Harris County"
+  },
+  {
+    "name": "Seagoville",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.6534,
+    "lng": -96.5451,
+    "note": "Spans Dallas County, Kaufman County"
+  },
+  {
+    "name": "Seguin",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Guadalupe",
+    "lat": 29.5902,
+    "lng": -97.9686
+  },
+  {
+    "name": "Selma",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.5865,
+    "lng": -98.3153,
+    "note": "Spans Bexar County, Comal County, Guadalupe County"
+  },
+  {
+    "name": "Shady Shores",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.1621,
+    "lng": -97.035
+  },
+  {
+    "name": "Shavano Park",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.5844,
+    "lng": -98.5562
+  },
+  {
+    "name": "Shenandoah",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.184,
+    "lng": -95.4557
+  },
+  {
+    "name": "Shoreacres",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.621,
+    "lng": -95.019,
+    "note": "Spans Chambers County, Harris County"
+  },
+  {
+    "name": "Simonton",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.6766,
+    "lng": -95.9734
+  },
+  {
+    "name": "Somerset",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.2286,
+    "lng": -98.6569
+  },
+  {
+    "name": "South Houston",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.661,
+    "lng": -95.2284
+  },
+  {
+    "name": "Southlake",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.9545,
+    "lng": -97.1489,
+    "note": "Spans Denton County, Tarrant County"
+  },
+  {
+    "name": "Southside Place",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7087,
+    "lng": -95.4355
+  },
+  {
+    "name": "Splendora",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.2284,
+    "lng": -95.1624
+  },
+  {
+    "name": "Spring Branch",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Comal",
+    "lat": 29.8763,
+    "lng": -98.4085
+  },
+  {
+    "name": "Springtown",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.9693,
+    "lng": -97.6804,
+    "note": "Spans Parker County, Wise County"
+  },
+  {
+    "name": "Spring Valley Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7898,
+    "lng": -95.504
+  },
+  {
+    "name": "Stafford",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.6257,
+    "lng": -95.5657,
+    "note": "Spans Fort Bend County, Harris County"
+  },
+  {
+    "name": "Stagecoach",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.1418,
+    "lng": -95.7001
+  },
+  {
+    "name": "Staples",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Guadalupe",
+    "lat": 29.7623,
+    "lng": -97.8245
+  },
+  {
+    "name": "Sugar Land",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.5928,
+    "lng": -95.6338
+  },
+  {
+    "name": "Sunnyvale",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.7998,
+    "lng": -96.5585
+  },
+  {
+    "name": "Sunset Valley",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.2258,
+    "lng": -97.8158
+  },
+  {
+    "name": "Surfside Beach",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 28.9531,
+    "lng": -95.2838
+  },
+  {
+    "name": "Sweeny",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.0464,
+    "lng": -95.6985
+  },
+  {
+    "name": "Taylor",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.572,
+    "lng": -97.4304
+  },
+  {
+    "name": "Taylor Lake Village",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.5748,
+    "lng": -95.0553
+  },
+  {
+    "name": "Terrell Hills",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.4771,
+    "lng": -98.4472
+  },
+  {
+    "name": "Texas City",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.4337,
+    "lng": -94.8927,
+    "note": "Spans Chambers County, Galveston County"
+  },
+  {
+    "name": "The Colony",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Denton",
+    "lat": 33.0896,
+    "lng": -96.9034
+  },
+  {
+    "name": "The Hills",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.3465,
+    "lng": -97.9864
+  },
+  {
+    "name": "Thompsons",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.4818,
+    "lng": -95.6369
+  },
+  {
+    "name": "Thorndale",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.614,
+    "lng": -97.2065,
+    "note": "Spans Milam County, Williamson County"
+  },
+  {
+    "name": "Thrall",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.5882,
+    "lng": -97.2977
+  },
+  {
+    "name": "Tiki Island",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Galveston",
+    "lat": 29.2973,
+    "lng": -94.9149
+  },
+  {
+    "name": "Tomball",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 30.0951,
+    "lng": -95.6197,
+    "note": "Spans Harris County, Montgomery County"
+  },
+  {
+    "name": "Trenton",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.4263,
+    "lng": -96.3446,
+    "note": "Spans Collin County, Fannin County, Grayson County"
+  },
+  {
+    "name": "Trophy Club",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.9925,
+    "lng": -97.173,
+    "note": "Spans Denton County, Tarrant County"
+  },
+  {
+    "name": "Uhland",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 29.9666,
+    "lng": -97.7881,
+    "note": "Spans Caldwell County, Hays County"
+  },
+  {
+    "name": "Universal City",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.552,
+    "lng": -98.3076
+  },
+  {
+    "name": "University Park",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.8486,
+    "lng": -96.7952
+  },
+  {
+    "name": "Van Alstyne",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.4217,
+    "lng": -96.5832,
+    "note": "Spans Collin County, Grayson County"
+  },
+  {
+    "name": "Venus",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Johnson",
+    "lat": 32.4262,
+    "lng": -97.1022,
+    "note": "Spans Ellis County, Johnson County"
+  },
+  {
+    "name": "Volente",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.4453,
+    "lng": -97.9079
+  },
+  {
+    "name": "Von Ormy",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.2774,
+    "lng": -98.6574
+  },
+  {
+    "name": "Waller",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 30.0724,
+    "lng": -95.9316,
+    "note": "Spans Harris County, Waller County"
+  },
+  {
+    "name": "Watauga",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.8718,
+    "lng": -97.2515
+  },
+  {
+    "name": "Weatherford",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.7532,
+    "lng": -97.7719
+  },
+  {
+    "name": "Webberville",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.2261,
+    "lng": -97.4996
+  },
+  {
+    "name": "Webster",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.5321,
+    "lng": -95.1165
+  },
+  {
+    "name": "Weir",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Williamson",
+    "lat": 30.6767,
+    "lng": -97.5911
+  },
+  {
+    "name": "West Columbia",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Brazoria",
+    "lat": 29.1419,
+    "lng": -95.6495
+  },
+  {
+    "name": "Westlake",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.9855,
+    "lng": -97.2038,
+    "note": "Spans Denton County, Tarrant County"
+  },
+  {
+    "name": "West Lake Hills",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Travis",
+    "lat": 30.2916,
+    "lng": -97.8142
+  },
+  {
+    "name": "Weston Lakes",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Fort Bend",
+    "lat": 29.6573,
+    "lng": -95.931
+  },
+  {
+    "name": "Westover Hills",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.7437,
+    "lng": -97.4123
+  },
+  {
+    "name": "West University Place",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Harris",
+    "lat": 29.7154,
+    "lng": -95.4316
+  },
+  {
+    "name": "Westworth Village",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.7619,
+    "lng": -97.4233
+  },
+  {
+    "name": "White Settlement",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Tarrant",
+    "lat": 32.7551,
+    "lng": -97.4607
+  },
+  {
+    "name": "Willis",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.4342,
+    "lng": -95.4842
+  },
+  {
+    "name": "Willow Park",
+    "market": "Fort Worth",
+    "state": "TX",
+    "county": "Parker",
+    "lat": 32.7539,
+    "lng": -97.6502
+  },
+  {
+    "name": "Wilmer",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Dallas",
+    "lat": 32.599,
+    "lng": -96.6816
+  },
+  {
+    "name": "Wimberley",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 29.9848,
+    "lng": -98.0906
+  },
+  {
+    "name": "Windcrest",
+    "market": "San Antonio",
+    "state": "TX",
+    "county": "Bexar",
+    "lat": 29.5148,
+    "lng": -98.3813
+  },
+  {
+    "name": "Woodbranch",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.1813,
+    "lng": -95.1836
+  },
+  {
+    "name": "Woodcreek",
+    "market": "Austin",
+    "state": "TX",
+    "county": "Hays",
+    "lat": 30.0266,
+    "lng": -98.1115
+  },
+  {
+    "name": "Woodloch",
+    "market": "Houston",
+    "state": "TX",
+    "county": "Montgomery",
+    "lat": 30.2172,
+    "lng": -95.413
+  },
+  {
+    "name": "Wylie",
+    "market": "Dallas",
+    "state": "TX",
+    "county": "Collin",
+    "lat": 33.0291,
+    "lng": -96.527,
+    "note": "Spans Collin County, Dallas County, Rockwall County"
   }
 ]
