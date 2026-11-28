@@ -34,6 +34,10 @@ const hasHills=r=>(r.permits||[]).some(x=>/Hillsborough/.test(x.municipality||''
     check(`'${t}' -> ${mk}, materials + labor present, no big-city rows borrowed (${r.market}, ${(r.materials||[]).length}/${(r.labor||[]).length}, ${munis(r)})`,
       r.market===mk&&(r.materials||[]).length>0&&(r.labor||[]).length>0&&!munis(r).some(x=>/^City of (Dallas|Houston|Fort Worth|Austin|San Antonio) TX$/.test(x)));
   }
+  for(const [t,mk,muni] of [['Frisco, TX','Dallas','City of Frisco TX'],['Allen, TX 75002','Dallas','City of Allen TX'],['Round Rock, TX','Austin','City of Round Rock TX']]){
+    const r=await P.marketPayload(t);
+    check(`'${t}' -> its own rows only, core fees complete (${r.permitScope}, ${munis(r)})`, r.market===mk&&munis(r).join()===muni&&r.permitScope==='municipality'&&!(r.permitMissing||[]).length, JSON.stringify(r.permitMissing));
+  }
   for(const [t,mk] of [['Dallas, TX','Dallas'],['Houston, TX','Houston'],['Fort Worth, TX','Fort Worth'],['Austin, TX','Austin'],['San Antonio, TX','San Antonio']]){
     const r=await P.marketPayload(t);
     check(`'${t}' keeps its own city rows (${r.permitScope}, ${munis(r)})`, r.market===mk&&munis(r).join()===`City of ${mk} TX`);
