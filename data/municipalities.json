@@ -5464,7 +5464,11 @@
     "state": "TN",
     "county": "Wilson",
     "lat": 36.1992,
-    "lng": -86.5095
+    "lng": -86.5095,
+    "aliases": [
+      "Mt. Juliet",
+      "Mt Juliet"
+    ]
   },
   {
     "name": "Mount Pleasant",
