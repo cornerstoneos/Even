@@ -51,11 +51,11 @@ const hasHills=r=>(r.permits||[]).some(x=>/Hillsborough/.test(x.municipality||''
     const r=await P.marketPayload(t);
     check(`'${t}' keeps its own city rows (${r.permitScope}, ${munis(r)})`, r.market===mk&&munis(r).join()===muni);
   }
-  for(const [t,mk,muni,complete] of [['Phoenix, AZ','Phoenix','City of Phoenix AZ',true],['Mt. Juliet, TN','Nashville','City of Mount Juliet TN',true],['Scottsdale, AZ','Phoenix','City of Scottsdale AZ',false],['Surprise, AZ','Phoenix','City of Surprise AZ',false]]){
+  for(const [t,mk,muni,complete] of [['Phoenix, AZ','Phoenix','City of Phoenix AZ',true],['Mt. Juliet, TN','Nashville','City of Mount Juliet TN',true],['Scottsdale, AZ','Phoenix','City of Scottsdale AZ',false],['Surprise, AZ','Phoenix','City of Surprise AZ',false],['Mesa, AZ','Phoenix','City of Mesa AZ',true],['Peoria, AZ','Phoenix','City of Peoria AZ',false]]){
     const r=await P.marketPayload(t);
     check(`'${t}' -> its own rows (${r.permitScope}, ${munis(r)})`, r.market===mk&&munis(r).includes(muni)&&(complete?r.permitScope==='municipality'&&!(r.permitMissing||[]).length:true), JSON.stringify(r.permitMissing));
   }
-  for(const [t,mk] of [['Franklin, TN','Nashville'],['Murfreesboro, TN','Nashville'],['Mesa, AZ','Phoenix'],['Gilbert, AZ','Phoenix'],['Oro Valley, AZ','Tucson'],['Germantown, TN','Memphis']]){
+  for(const [t,mk] of [['Franklin, TN','Nashville'],['Murfreesboro, TN','Nashville'],['Gilbert, AZ','Phoenix'],['Oro Valley, AZ','Tucson'],['Germantown, TN','Memphis']]){
     const r=await P.marketPayload(t);
     check(`'${t}' -> ${mk}, no big-city rows borrowed (${r.market}, ${munis(r)})`, r.market===mk&&!munis(r).some(x=>/^(City of Phoenix AZ|Metro Nashville TN)$/.test(x)));
   }
