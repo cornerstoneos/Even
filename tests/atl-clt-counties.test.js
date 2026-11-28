@@ -51,6 +51,8 @@ const hasHills=r=>(r.permits||[]).some(x=>/Hillsborough/.test(x.municipality||''
   check(`'Rock Hill, SC' -> Charlotte market, York County (${r.market}, ${r.permitCountyName})`, r.market==='Charlotte'&&r.permitCountyName==='York County');
   r=await P.marketPayload('East Point, GA');
   check(`'East Point, GA' -> its own FY 2026 rows, core fees complete (${r.permitScope}, ${munis(r)})`, r.market==='Atlanta'&&munis(r).join()==='City of East Point GA'&&r.permitScope==='municipality'&&!(r.permitMissing||[]).length, JSON.stringify(r.permitMissing));
+  r=await P.marketPayload('Peachtree Corners, GA');
+  check(`'Peachtree Corners, GA' -> its own July 2026 rows, core fees complete (${r.permitScope}, ${munis(r)})`, r.market==='Atlanta'&&munis(r).join()==='City of Peachtree Corners GA'&&r.permitScope==='municipality'&&!(r.permitMissing||[]).length, JSON.stringify(r.permitMissing));
   r=await P.marketPayload('Fort Mill, SC');
   check(`'Fort Mill, SC' -> its own FY 2026-27 rows, partial: no trade fees on file (${r.permitScope}, ${munis(r)})`, r.market==='Charlotte'&&munis(r).includes('Town of Fort Mill SC')&&r.permitScope==='municipality-partial', JSON.stringify(r.permitMissing));
   console.log('\n=== Same-name places stay where they were ===');

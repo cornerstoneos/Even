@@ -82949,10 +82949,10 @@
         "min_fee": 175.0,
         "rate": "Construction cost (ICC Building Valuation Data, sq ft x rate) x 0.0065 = $6.50 per $1,000 of cost. Minimum $175. R-3 one- and two-family: Type V-B $175.92/sf, V-A $187.70/sf.",
         "method": "percent_of_value",
-        "notes": "Unincorporated DeKalb County. Schedule prints \"$6.50 per 1,000 Sq. ft.\" next to the 0.0065 multiplier; the multiplier applies to construction cost. Extensive renovations valued per Georgia law + ICC data.",
-        "source": "DeKalb County Development Services Fee Schedule (dekalbcountyga.gov, last update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
-        "date": "2026-06-08",
-        "last_verified": "2026-11-27"
+        "notes": "Unincorporated DeKalb County. Schedule prints \"$6.50 per 1,000 Sq. ft.\" next to the 0.0065 multiplier; the multiplier applies to construction cost. Extensive renovations valued per Georgia law + ICC data. Sept 2026 revision adds: Extensive Renovation Projects (Georgia law) are valued with the current adopted ICC Building Valuation Data; amounts unchanged from the 6/8/2026 version (checked 2026-11-28).",
+        "source": "DeKalb County Development Services Fee Schedule, revised PDF posted Sept 2026 (dekalbcountyga.gov/sites/default/files/2026-09/2026 - Fee Schedule Revised Updated- final.1.pdf, created Sep 2, 2026; page footers still say Last Update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
+        "date": "2026-09-02",
+        "last_verified": "2026-11-28"
       },
       {
         "municipality": "DeKalb County GA",
@@ -82961,9 +82961,9 @@
         "rate": null,
         "method": "flat_each",
         "notes": null,
-        "source": "DeKalb County Development Services Fee Schedule (dekalbcountyga.gov, last update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
-        "date": "2026-06-08",
-        "last_verified": "2026-11-27"
+        "source": "DeKalb County Development Services Fee Schedule, revised PDF posted Sept 2026 (dekalbcountyga.gov/sites/default/files/2026-09/2026 - Fee Schedule Revised Updated- final.1.pdf, created Sep 2, 2026; page footers still say Last Update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
+        "date": "2026-09-02",
+        "last_verified": "2026-11-28"
       },
       {
         "municipality": "DeKalb County GA",
@@ -82972,9 +82972,9 @@
         "rate": null,
         "method": "flat",
         "notes": null,
-        "source": "DeKalb County Development Services Fee Schedule (dekalbcountyga.gov, last update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
-        "date": "2026-06-08",
-        "last_verified": "2026-11-27"
+        "source": "DeKalb County Development Services Fee Schedule, revised PDF posted Sept 2026 (dekalbcountyga.gov/sites/default/files/2026-09/2026 - Fee Schedule Revised Updated- final.1.pdf, created Sep 2, 2026; page footers still say Last Update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
+        "date": "2026-09-02",
+        "last_verified": "2026-11-28"
       },
       {
         "municipality": "DeKalb County GA",
@@ -82983,9 +82983,9 @@
         "rate": "Minimum $100. $10 each: water closet, sink, lavatory, tub, shower, water heater, dishwasher, washing machine, floor drain, laundry tub, roof drain; gas lines $25; backflow preventer $15; sump pump / pressure reducing valve / sewer ejector $12; sewer or water service $30; lawn sprinkler system $26; fire sprinkler $18",
         "method": "per_unit",
         "notes": null,
-        "source": "DeKalb County Development Services Fee Schedule (dekalbcountyga.gov, last update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
-        "date": "2026-06-08",
-        "last_verified": "2026-11-27"
+        "source": "DeKalb County Development Services Fee Schedule, revised PDF posted Sept 2026 (dekalbcountyga.gov/sites/default/files/2026-09/2026 - Fee Schedule Revised Updated- final.1.pdf, created Sep 2, 2026; page footers still say Last Update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
+        "date": "2026-09-02",
+        "last_verified": "2026-11-28"
       },
       {
         "municipality": "DeKalb County GA",
@@ -82994,9 +82994,9 @@
         "rate": "Minimum $100. Heating appliance up to 300,000 BTU $25, above $35; A/C refrigeration appliance up to 10: $25, 11-30: $35, 31-100: $40, 101+: $60; duct work per system $25; gas line per connection $25; residential vent fan $20; dryer vent $20; residential hood $20; decorative fireplace $35",
         "method": "per_unit",
         "notes": null,
-        "source": "DeKalb County Development Services Fee Schedule (dekalbcountyga.gov, last update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
-        "date": "2026-06-08",
-        "last_verified": "2026-11-27"
+        "source": "DeKalb County Development Services Fee Schedule, revised PDF posted Sept 2026 (dekalbcountyga.gov/sites/default/files/2026-09/2026 - Fee Schedule Revised Updated- final.1.pdf, created Sep 2, 2026; page footers still say Last Update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
+        "date": "2026-09-02",
+        "last_verified": "2026-11-28"
       },
       {
         "municipality": "DeKalb County GA",
@@ -83005,9 +83005,9 @@
         "rate": "Minimum $100. Service (meter loop): 100A $10, 150A $14, 200A $16, 300A $20, 400A $25, 401-599A $30, 600A+ $40; panel change $50 each; temporary service pole $10; outlets/switches/lights $2.00 each residential, $2.50 commercial; water heater $8; dryer $8; furnace $7; swimming pool $50; spa/hot tub $25",
         "method": "per_unit",
         "notes": null,
-        "source": "DeKalb County Development Services Fee Schedule (dekalbcountyga.gov, last update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
-        "date": "2026-06-08",
-        "last_verified": "2026-11-27"
+        "source": "DeKalb County Development Services Fee Schedule, revised PDF posted Sept 2026 (dekalbcountyga.gov/sites/default/files/2026-09/2026 - Fee Schedule Revised Updated- final.1.pdf, created Sep 2, 2026; page footers still say Last Update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
+        "date": "2026-09-02",
+        "last_verified": "2026-11-28"
       },
       {
         "municipality": "DeKalb County GA",
@@ -83016,9 +83016,9 @@
         "rate": null,
         "method": "flat_each",
         "notes": null,
-        "source": "DeKalb County Development Services Fee Schedule (dekalbcountyga.gov, last update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
-        "date": "2026-06-08",
-        "last_verified": "2026-11-27"
+        "source": "DeKalb County Development Services Fee Schedule, revised PDF posted Sept 2026 (dekalbcountyga.gov/sites/default/files/2026-09/2026 - Fee Schedule Revised Updated- final.1.pdf, created Sep 2, 2026; page footers still say Last Update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
+        "date": "2026-09-02",
+        "last_verified": "2026-11-28"
       },
       {
         "municipality": "DeKalb County GA",
@@ -83027,9 +83027,9 @@
         "rate": "Residential site plan: $25 | other: $50 | each resubmittal after the 2nd: 25% of permit fee",
         "method": "tiered",
         "notes": null,
-        "source": "DeKalb County Development Services Fee Schedule (dekalbcountyga.gov, last update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
-        "date": "2026-06-08",
-        "last_verified": "2026-11-27"
+        "source": "DeKalb County Development Services Fee Schedule, revised PDF posted Sept 2026 (dekalbcountyga.gov/sites/default/files/2026-09/2026 - Fee Schedule Revised Updated- final.1.pdf, created Sep 2, 2026; page footers still say Last Update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
+        "date": "2026-09-02",
+        "last_verified": "2026-11-28"
       },
       {
         "municipality": "DeKalb County GA",
@@ -83038,9 +83038,9 @@
         "rate": "1st: $25 | 2nd: $50 | 3rd and after: $100",
         "method": "tiered",
         "notes": null,
-        "source": "DeKalb County Development Services Fee Schedule (dekalbcountyga.gov, last update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
-        "date": "2026-06-08",
-        "last_verified": "2026-11-27"
+        "source": "DeKalb County Development Services Fee Schedule, revised PDF posted Sept 2026 (dekalbcountyga.gov/sites/default/files/2026-09/2026 - Fee Schedule Revised Updated- final.1.pdf, created Sep 2, 2026; page footers still say Last Update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
+        "date": "2026-09-02",
+        "last_verified": "2026-11-28"
       },
       {
         "municipality": "DeKalb County GA",
@@ -83049,9 +83049,9 @@
         "rate": "$50 per hour, 4-hour minimum",
         "method": "hourly",
         "notes": null,
-        "source": "DeKalb County Development Services Fee Schedule (dekalbcountyga.gov, last update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
-        "date": "2026-06-08",
-        "last_verified": "2026-11-27"
+        "source": "DeKalb County Development Services Fee Schedule, revised PDF posted Sept 2026 (dekalbcountyga.gov/sites/default/files/2026-09/2026 - Fee Schedule Revised Updated- final.1.pdf, created Sep 2, 2026; page footers still say Last Update 6/8/2026), Building, Plumbing, HVAC and Electrical permit pages",
+        "date": "2026-09-02",
+        "last_verified": "2026-11-28"
       },
       {
         "municipality": "City of Roswell GA",
@@ -83920,6 +83920,204 @@
         "notes": "Must contact the Police Department. Adoption date not printed; footer says FY 2026, file dated 2026-08-07 (replaces the Feb 2026 and Dec 2025 versions on the site).",
         "source": "City of East Point Dept. of Planning & Community Development Fee Schedule, FY 2026 (eastpointga.gov/wp-content/uploads/2026/08/Fee-Schedule-08072026.pdf, uploaded Aug 7, 2026; newest version on the city site)",
         "date": "2026-08-07",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Building permit, new construction, single family residential",
+        "min_fee": null,
+        "rate": 0.004,
+        "method": "per_dollar_of_value",
+        "notes": "Construction cost from ICC Building Valuation Data (total sq ft) x 0.004 = $4 per $1,000. ICC chart updated semi-annually. Fee includes CO/CC and regular-hours inspections. Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Single Family Residential Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/196, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Renovation, alteration, remodel permit, single family residential",
+        "min_fee": 150.0,
+        "rate": "Up to $25,000: $150 | $25,001-$75,000: $500 | over $75,000: $4 per $1,000 of construction cost (ICC Building Valuation Data)",
+        "method": "tiered",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Single Family Residential Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/196, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Trade permit, mechanical, electrical or plumbing (MEP), single family residential",
+        "min_fee": 250.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Each MEP trade permit. Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Single Family Residential Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/196, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Reroof / siding permit, single family residential",
+        "min_fee": 250.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Single Family Residential Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/196, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Demolition permit, single family residential",
+        "min_fee": 250.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Single Family Residential Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/196, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Swimming pool permit, single family residential",
+        "min_fee": 500.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Single Family Residential Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/196, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Building permit, new construction, non-residential and multi-family",
+        "min_fee": null,
+        "rate": 0.004,
+        "method": "per_dollar_of_value",
+        "notes": "Construction cost from ICC Building Valuation Data (total sq ft) x 0.004 = $4 per $1,000. ICC chart updated semi-annually. Shell-only construction: 50% of the calculated building valuation. Fee includes CO/CC and regular-hours inspections. Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Renovation, alteration, remodel permit, non-residential and multi-family",
+        "min_fee": 250.0,
+        "rate": "Up to $25,000: $250 | $25,001-$75,000: $550 | over $75,000: $4 per $1,000 of construction cost (ICC Building Valuation Data)",
+        "method": "tiered",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Trade permit, mechanical, electrical or plumbing (MEP), non-residential and multi-family",
+        "min_fee": 350.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Each MEP trade permit. Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Reroof permit, non-residential and multi-family",
+        "min_fee": 350.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Demolition permit, non-residential and multi-family",
+        "min_fee": 350.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Swimming pool permit, non-residential and multi-family",
+        "min_fee": 750.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Plan review fee",
+        "min_fee": null,
+        "rate": "50% of the calculated building permit fee",
+        "method": "percent_of_permit_fee",
+        "notes": "Listed under fees for all permit types. Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Plan revision to an open permit",
+        "min_fee": 100.0,
+        "rate": "$0.01 x construction valuation change (plan review and building permit), minimum $100",
+        "method": "percent_of_value",
+        "notes": "Listed under fees for all permit types. Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Re-inspection fee",
+        "min_fee": 75.0,
+        "rate": "1st $75 | 2nd $150 | 3rd or more $225",
+        "method": "tiered",
+        "notes": "Assessed for repeat/failed inspections or not ready; paid before scheduling more inspections. Listed under fees for all permit types. Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Temporary certificate of occupancy",
+        "min_fee": 250.0,
+        "rate": "$250 | 1st extension $500 | 2nd extension $1,000",
+        "method": "tiered",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Business license CO inspection fee",
+        "min_fee": 100.0,
+        "rate": null,
+        "method": "flat",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "City of Peachtree Corners GA",
+        "work_type": "Moving permit",
+        "min_fee": 100.0,
+        "rate": "$100 per structure",
+        "method": "flat_each",
+        "notes": "Adoption date not printed (date unknown); PDF created 2026-07-22.",
+        "source": "City of Peachtree Corners Non-Residential & Multi-family Building Permit Fee Schedule (peachtreecornersga.gov DocumentCenter/View/195, PDF created July 22, 2026, linked from the city Forms page)",
+        "date": "2026-07-22",
         "last_verified": "2026-11-28"
       }
     ],
