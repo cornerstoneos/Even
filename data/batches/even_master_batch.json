@@ -154415,6 +154415,127 @@
         "source": "Town of Waxhaw FY 2026-27 Fee Schedule Addendum, Sections 06-09 Building Inspection Fees (Ordinance ORD2026009, adopted June 9, 2026, effective July 1, 2026; waxhaw.civicweb.net meeting packet)",
         "date": "2026-07-01",
         "last_verified": "2026-11-27"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Building & sign permit fee (by total valuation)",
+        "min_fee": 25.0,
+        "rate": "$1,000 and under $25 | $1,001-$50,000: $25 for first $1,000 + $6 per additional $1,000 or fraction | $50,001-$100,000: $319 for first $50,000 + $5 per addl $1,000 | $100,001-$500,000: $569 for first $100,000 + $4 per addl $1,000 | $500,001-$1,000,000: $2,169 for first $500,000 + $3 per addl $1,000 | $1,000,001-$10,000,000: $3,669 for first $1,000,000 + $2 per addl $1,000 | over $10,000,000: $21,669 for first $10,000,000 + $1 per addl $1,000",
+        "method": "tiered",
+        "notes": "Valuation = greater of the contract price on the application or the value from the most recent ICC Square Foot Construction Cost Table. Chapter 6 lists no separate fees for electrical, plumbing or mechanical work (unverified whether this fee covers them; ask Fort Mill Building & Codes). Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Post facto permit (work begun without permit)",
+        "min_fee": null,
+        "rate": "Building permit fees doubled",
+        "method": "percent_of_permit_fee",
+        "notes": "Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Permit cancellation (refund processing) fee",
+        "min_fee": 10.0,
+        "rate": "25% of the original permit fee, $10 minimum",
+        "method": "percent_of_permit_fee",
+        "notes": "Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Standard plan review fee",
+        "min_fee": null,
+        "rate": "25% of building permit fee amount, $10,000 maximum",
+        "method": "percent_of_permit_fee",
+        "notes": "Non-refundable. Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Express plan review fee",
+        "min_fee": 200.0,
+        "rate": "Single-family, duplexes & accessory structures $200 | all other building types 50% of the standard plan review fee ($500 minimum)",
+        "method": "tiered",
+        "notes": "In addition to standard plan review; processed within 3 business days; Building Official may deny. Non-refundable. Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Revision to approved plans",
+        "min_fee": 50.0,
+        "rate": "Single-family, duplexes & accessory: major $100, minor $50 | all other building types: major $400, minor $200 (per occurrence)",
+        "method": "tiered",
+        "notes": "Major = structural, life/safety, alarm/sprinkler plans, or more than 1 hour of staff time. Non-refundable. Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Re-inspection fees",
+        "min_fee": 50.0,
+        "rate": "Residential: 1st re-inspection $50, 2nd $75, 3rd $100, re-inspection of building final $150 | Non-residential: 1st $100, 2nd $150, 3rd $200, building final $300",
+        "method": "tiered",
+        "notes": "1st inspection included in permit fee. Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Same day certificate of occupancy",
+        "min_fee": 150.0,
+        "rate": "$150",
+        "method": "flat",
+        "notes": "Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Appeal to Board of Appeals",
+        "min_fee": 100.0,
+        "rate": "$100",
+        "method": "flat",
+        "notes": "Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Building moving permit",
+        "min_fee": 100.0,
+        "rate": "$100 plus cost of police escort (if required)",
+        "method": "flat",
+        "notes": "Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
+      },
+      {
+        "municipality": "Town of Fort Mill SC",
+        "work_type": "Demolition permit",
+        "min_fee": 25.0,
+        "rate": "Residential structure $50 | commercial structure $150 | accessory/partial structure $25",
+        "method": "tiered",
+        "notes": "Effective date not printed on the document; title says FY 2026-27, PDF created 2026-10-20.",
+        "source": "Town of Fort Mill FY 2026-27 Complete Fee Schedule, Chapter 6 Building & Codes (fortmillsc.gov DocumentCenter/View/592/FY-2026-27-Building-Fees, PDF created Oct 20, 2026)",
+        "date": "2026-10-20",
+        "last_verified": "2026-11-28"
       }
     ],
     "source": "Mixed: Mecklenburg County LUESA Code Enforcement issues actual building/electrical/plumbing/mechanical permits county-wide (BEMP flat-fee system for <$100k, valuation table above); City of Charlotte separately charges UDO/zoning/stormwater/urban forestry/CDOT review fees via CLT Development Center FY2026 Individual Residential Lot Fee Schedule (official PDF) and FY2024 Non-Residential Fee Schedule (most recent commercial PDF found)",

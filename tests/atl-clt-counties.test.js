@@ -49,6 +49,8 @@ const hasHills=r=>(r.permits||[]).some(x=>/Hillsborough/.test(x.municipality||''
   check(`'Monroe, NC' (Union) -> no Mecklenburg rows (${(r.permits||[]).length} rows)`, r.market==='Charlotte'&&!(r.permits||[]).some(x=>/Mecklenburg/.test(x.municipality))&&r.permitCountyName==='Union County');
   r=await P.marketPayload('Rock Hill, SC');
   check(`'Rock Hill, SC' -> Charlotte market, York County (${r.market}, ${r.permitCountyName})`, r.market==='Charlotte'&&r.permitCountyName==='York County');
+  r=await P.marketPayload('Fort Mill, SC');
+  check(`'Fort Mill, SC' -> its own FY 2026-27 rows, partial: no trade fees on file (${r.permitScope}, ${munis(r)})`, r.market==='Charlotte'&&munis(r).includes('Town of Fort Mill SC')&&r.permitScope==='municipality-partial', JSON.stringify(r.permitMissing));
   console.log('\n=== Same-name places stay where they were ===');
   for(const [t,mk] of [['Dallas','Dallas'],['Dallas, TX','Dallas'],['Lake Park, FL','Palm Beach'],['Lake Park','Palm Beach']]){
     r=await P.marketPayload(t);
